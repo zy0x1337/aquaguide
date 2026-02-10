@@ -7,7 +7,7 @@ export const neonTetraDisease: Disease = {
   aliases: ['Pleistophora hyphessobryconis'],
   type: 'parasitic', // Microsporidian parasite
   severity: 'critical',
-  isContagious: true, // Frisst tote Fische -> Ansteckung
+  isContagious: true,
   isIncurable: true,
 
   symptoms: [
