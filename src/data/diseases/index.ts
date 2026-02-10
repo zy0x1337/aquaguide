@@ -20,3 +20,7 @@ export const resolveDiseaseReference = (identifier: string): Disease | string =>
   // Wenn NICHT gefunden -> Gib den String zurück (wird zum grauen Text)
   return found ? found : identifier;
 };
+
+export const getDiseaseBySlug = (slug: string): Disease | undefined => {
+  return allDiseases.find(d => d.slug === slug);
+};
