@@ -191,6 +191,45 @@ input[type="search"]::-webkit-search-results-decoration {
 .dark .text-rose-500 { color: #fb7185 !important; }
 .dark .text-amber-500 { color: #fbbf24 !important; }
 
+/* 6b. CHIP COLORS FOR DARK MODE (SpeciesCard) */
+/* Entspricht deinen Light-Mode-Farben, nur dunkler/kontrastreich für Dark Mode */
+
+.dark .bg-emerald-100 {
+  background-color: rgba(6, 95, 70, 0.25) !important;  /* Emerald-700-ish, transparent */
+  border-color: rgba(16, 185, 129, 0.4) !important;
+}
+.dark .text-emerald-700 { color: #6ee7b7 !important; }
+
+.dark .bg-amber-100 {
+  background-color: rgba(180, 83, 9, 0.25) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}
+.dark .text-amber-700 { color: #facc15 !important; }
+
+.dark .bg-indigo-100 {
+  background-color: rgba(55, 48, 163, 0.25) !important;
+  border-color: rgba(79, 70, 229, 0.4) !important;
+}
+.dark .text-indigo-700 { color: #a5b4fc !important; }
+
+.dark .bg-rose-100 {
+  background-color: rgba(159, 18, 57, 0.25) !important;
+  border-color: rgba(244, 63, 94, 0.4) !important;
+}
+.dark .text-rose-700 { color: #fda4af !important; }
+
+.dark .bg-cyan-100 {
+  background-color: rgba(8, 47, 73, 0.25) !important;
+  border-color: rgba(34, 211, 238, 0.4) !important;
+}
+.dark .text-cyan-700 { color: #67e8f9 !important; }
+
+.dark .bg-slate-100 {
+  background-color: rgba(15, 23, 42, 0.35) !important;
+  border-color: rgba(148, 163, 184, 0.4) !important;
+}
+.dark .text-slate-700 { color: #e5e7eb !important; }
+
 /* =========================================
    7. TRANSITIONS
    ========================================= */
