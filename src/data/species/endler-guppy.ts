@@ -1,78 +1,89 @@
 import type { Species } from '../../types/species';
 
 export const endlerGuppy: Species = {
-  id: 'livebearer-001',
+  id: 'guppy-001',
   slug: 'endler-guppy',
   imageUrl: '/images/species/endler-guppy.jpg',
-  funFact: "Discovered by Prof. John Endler in 1975. Pure strains are rare; most 'Endlers' in pet stores are hybrids with common Guppies. Unlike common Guppies, Endler females rarely eat their own fry.",
-  
+  funFact: "Endlers were rediscovered in 1975 by John Endler in Venezuela. They are distinct from common Guppies, staying smaller and having more metallic, psychedelic patterns.",
+
   taxonomy: {
     scientificName: 'Poecilia wingei',
     commonName: 'Endler\'s Livebearer',
     family: 'Poeciliidae',
-    origin: 'Venezuela (Campoma & Cumana Lagoons)',
+    origin: 'Venezuela (Campoma & Cumana lagoons)',
+    region: 'South America',
+    biotope: 'Warm, hard, algae-rich lagoons (often brackish influence)',
   },
-  
+
   visuals: {
     iconShape: 'fusiform',
-    adultSizeCM: 2.5, // Männchen sind winzig! Weibchen ca 4cm.
+    adultSizeCM: 2.5, // Männchen sind winzig!
   },
-  
+
   environment: {
-    type: 'freshwater',
-    minTankSizeLiters: 40,
-    tempC: { min: 22, max: 28, ideal: 26 },
-    ph: { min: 7.0, max: 8.5, ideal: 7.5 }, // Hassen weiches/saures Wasser!
-    gh: { min: 10, max: 25 }, // Hartes Wasser ist Pflicht
-    flow: 'slow',
+    type: 'freshwater', // Toleriert leichtes Brackwasser
+    minTankSizeLiters: 40, // Kleiner als normale Guppies
+    tempC: { min: 24, max: 29, ideal: 27 }, // Mag es sehr warm
+    ph: { min: 7.0, max: 8.5, ideal: 7.5 }, // Hartes Wasser
+    gh: { min: 10, max: 25 }, // PFLICHT: Mineralienreich
+    flow: 'low',
     substrate: 'any',
   },
-  
+
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Floating plants (like Hornwort or Guppy Grass) are essential to protect fry, although Endlers are less cannibalistic than other livebearers.',
-    hardscape: ['Limestone (to raise hardness)', 'Driftwood'],
+    plantingNotes: 'Floating plants and moss are mandatory if you want any fry to survive (or if you want females to hide from males).',
+    hardscape: ['Rocks', 'Driftwood (careful with pH drop)'],
   },
-  
+
   behavior: {
-    tags: ['shoaler', 'peaceful', 'surface', 'active'],
+    tags: ['shoaler', 'livebearer', 'surface_dweller', 'active'],
     minGroupSize: 6,
-    description: 'Hyperactive and extremely colorful males that dance for females constantly. Best kept in a ratio of 1 male to 2-3 females to disperse aggression, or in "all-male" bachelor tanks to prevent breeding.',
+    description: 'Hyperactive, constantly moving explosions of color. Males spend 100% of their time displaying to females. They occupy the top level of the tank.',
     compatibility: {
-      goodMates: ['Cherry Shrimp', 'Corydoras', 'Snails', 'Otocinclus'],
-      badMates: ['Angelfish', 'Betta (sometimes works, often risky)', 'Large Tetras'],
-      notes: 'Will hybridize with common Guppies (Poecilia reticulata) - do not mix if you want pure strains.',
-    }
+      goodMates: ['Shrimp (safe-ish)', 'Corydoras', 'Small Rasboras'],
+      badMates: ['Bettas (will attack colorful males)', 'Angelfish', 'Large Tetras'],
+      notes: 'Can hybridize with common Guppies (Poecilia reticulata). Do not mix if you want to keep the strain pure.',
+    },
   },
-  
+
   care: {
     difficulty: 'beginner',
     diet: 'omnivore',
     effort: 'low',
     cost: 'low',
-    specialRequirements: ['Hard water (High GH/KH)', 'Population control plan'],
-  },
-  
-  health: {
-    lifespanYears: 2,
-    commonDiseases: [
-      'ich',
-      'Shimmies', // Mineralienmangel (zu weiches Wasser)
-      'Fin Clamp'
+    specialRequirements: ['Hard water (GH > 10)', 'Ratio: 1 Male per 2-3 Females'],
+
+    proTips: [
+      "Keep only males if you don't want babies. They are colorful and peaceful together.",
+      "If keeping both sexes, you WILL be overrun with fry. Have a plan (sell to store, or let nature take its course).",
+      "They love vegetable matter. Spirulina flakes or blanched zucchini intensify their colors."
     ],
-    sensitivities: ['Soft water', 'Acidic pH (< 6.5)'],
+
+    commonMistakes: [
+      "Keeping in soft/acidic water. They get 'shimmies' and die. They need minerals.",
+      "Too many males. They will harass females to death from exhaustion.",
+      "Mixing with common Guppies (ruins the wild genetics)."
+    ],
+  },
+
+  health: {
+    lifespanYears: 2, // Leben schnell und kurz
+    commonDiseases: ['ich', 'fin-rot', 'shimmies'], // Shimmies = Mineralmangel
+    sensitivities: ['Soft water', 'Acidic pH', 'Cold water'],
   },
 
   scientificContext: {
-    wildHabitat: "Warm, hard, and algae-rich lagoons in Venezuela. Often brackish environments.",
-    sexualDimorphism: "Extreme. Males are tiny (2cm) and psychedelic neon-colored. Females are larger (4cm) and usually plain silver/tan.",
-    variants: ['Tiger Endler', 'Japan Blue', 'Black Bar'],
+    wildHabitat: "Isolated lagoons in Venezuela. The water is very warm and hard, often green with algae.",
+    sexualDimorphism: "Extreme. Males are tiny (2cm) and neon-colored. Females are larger (4cm) and plain silver/grey.",
+    variants: ['Tiger Endler', 'Black Bar', 'Japan Blue', 'El Silverado'],
   },
 
   breeding: {
     method: 'livebearer',
     difficulty: 'beginner',
-    trigger: 'Just add water. They breed constantly (every 23-28 days).',
-    fryCare: 'Fry are born fully formed and independent. Feed crushed flakes. Survival rate is very high.',
+    trigger: 'Existing (Just add water).',
+    fryCare: 'None needed. They are born large enough to eat crushed flakes. Parents rarely eat their own fry compared to common Guppies.',
+    notes: 'Females store sperm and can give birth for months after being separated from males.',
   },
 };

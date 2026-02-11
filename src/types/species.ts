@@ -1,93 +1,113 @@
+// src/types/species.ts
+
+// --- HELPER TYPES ---
 export type Difficulty = 'beginner' | 'medium' | 'expert';
+export type WaterType = 'freshwater' | 'brackish' | 'marine';
+export type Diet = 'carnivore' | 'herbivore' | 'omnivore';
+export type Temperament = 'peaceful' | 'aggressive' | 'semi-aggressive';
 
-// Hier auch nochmal sicherstellen, dass 'midwater' dabei ist
-export type EthologyTag = 
-  | 'architect'
-  | 'jumper'
-  | 'gardener'
-  | 'fin_nipper'
-  | 'shy'
-  | 'shoaler'
-  | 'schooler'
-  | 'surface'
-  | 'midwater'
-  | 'bottom_dweller'
-  | 'predator'
-  | 'peaceful'
-  | 'territorial'
-  | 'active'
-  | 'social';
+// NEU: Shapes für Visuals (inkl. Shrimp/Frog Fix)
+export type Shape = 
+  | 'fusiform' 
+  | 'compressed' 
+  | 'eel-like' 
+  | 'depressed' 
+  | 'globiform' 
+  | 'shrimp'  // <--- NEU
+  | 'frog';   // <--- NEU
 
+export type Region = 
+  | 'South America' 
+  | 'Central America' 
+  | 'North America' 
+  | 'Asia' 
+  | 'Africa' 
+  | 'Australia' 
+  | 'Europe';
 
+// --- MAIN INTERFACE ---
 export interface Species {
   id: string;
-  slug: string;
-  funFact: string;
+  slug: string; // URL-Friendly ID
+  
+  // Header / Meta
   imageUrl?: string;
+  funFact?: string; // Kurzer "Wow"-Fakt für den Header
 
   taxonomy: {
     scientificName: string;
     commonName: string;
     family: string;
-    origin: string;
+    origin: string; // Detail-Text (z.B. "Rio Negro")
+    region: Region; // Grober Filter
+    biotope?: string; // Detail-Biotop (z.B. "Blackwater stream")
   };
 
   visuals: {
-    iconShape: 'fusiform' | 'eel-like' | 'compressed' | 'round'; // Ggf. erweitern
+    iconShape: Shape; // <--- Hier wird jetzt 'shrimp' akzeptiert
     adultSizeCM: number;
+    color?: string; // Optional: für den Simulator (z.B. 'red')
   };
 
   environment: {
-    type: 'freshwater' | 'brackish' | 'marine';
+    type: WaterType;
     minTankSizeLiters: number;
     tempC: { min: number; max: number; ideal: number };
     ph: { min: number; max: number; ideal: number };
-    gh: { min: number; max: number };
-    flow: 'slow' | 'medium' | 'fast';
-    substrate: 'sand' | 'gravel' | 'soil' | 'any';
+    gh?: { min: number; max: number }; // General Hardness (Optional gemacht, falls alte Daten fehlen)
+    kh?: { min: number; max: number }; // Carbonate Hardness
+    flow: 'low' | 'moderate' | 'high'; // <--- Angepasst an deine Data-Files
+    substrate?: string;
   };
 
   habitat: {
-    planting: 'sparse' | 'medium' | 'dense' | 'none';
+    planting: 'sparse' | 'medium' | 'dense';
     plantingNotes: string;
-    hardscape: string[];
+    hardscape: string[]; // z.B. ["Driftwood", "Round stones"]
   };
 
   behavior: {
-    tags: EthologyTag[];
+    tags: string[]; // z.B. ["shoaler", "fin_nipper"]
     minGroupSize: number;
     description: string;
     compatibility: {
       goodMates: string[];
       badMates: string[];
-      notes: string;
+      notes?: string;
     };
   };
 
   care: {
-    difficulty: Difficulty; // Nutzt jetzt 'beginner' | 'medium' | 'expert'
-    diet: 'carnivore' | 'herbivore' | 'omnivore';
+    difficulty: Difficulty;
+    diet: Diet;
     effort: 'low' | 'medium' | 'high';
     cost: 'low' | 'medium' | 'high';
-    specialRequirements: string[];
+    specialRequirements?: string[];
+    
+    // v2.0 UPGRADE FELDER:
+    proTips?: string[];       // 3-5 Experten-Tipps
+    commonMistakes?: string[]; // Häufige Fehler
   };
 
   health: {
     lifespanYears: number;
-    commonDiseases: string[]; // Hier stehen jetzt die Slugs oder Namen drin
-    sensitivities: string[];
+    commonDiseases: string[]; // Slugs oder Namen
+    sensitivities: string[]; // z.B. ["Copper", "Nitrate"]
   };
 
   scientificContext?: {
     wildHabitat: string;
     sexualDimorphism: string;
-    variants: string[];
+    variants?: string[];
+    notes?: string;
   };
 
   breeding?: {
-    method: 'egg_scatterer' | 'mouthbrooder' | 'bubble_nester' | 'livebearer' | 'cave_spawner';
-    difficulty: Difficulty; // Nutzt auch den neuen Typ
-    trigger: string;
-    fryCare: string;
+    // Liste erweitert für Wirbellose
+    method: 'egg_scatterer' | 'mouthbrooder' | 'bubble_nester' | 'livebearer' | 'cave_spawner' | 'egg_layer' | 'substrate_spawner' | 'other'; 
+    difficulty: Difficulty;
+    trigger?: string;
+    fryCare?: string;
+    notes?: string; // Hilfreich für Zusatzinfos
   };
 }

@@ -1,4 +1,5 @@
 import type { Species } from '../../types/species';
+
 import { bettaSplendens } from './betta-splendens';
 import { bettaSplendensFemale } from './betta-splendens-female';
 import { neonTetra } from './neon-tetra';
@@ -12,7 +13,23 @@ import { bristlenosePleco } from './bristlenose-pleco';
 import { bronzeCory } from './bronze-cory';
 import { pandaCory } from './panda-cory';
 import { africanDwarfFrog } from './african-dwarf-frog';
-import { neocaridinaDavidi } from './neocaridina-davidi';
+import { neocaridinaDavidiRedCherry } from './neocaridina-davidi-red-cherry';
+
+// Batch A (7)
+import { harlequinRasbora } from './harlequin-rasbora';
+import { chiliRasbora } from './chili-rasbora';
+import { cherryBarb } from './cherry-barb';
+import { celestialPearlDanio } from './celestial-pearl-danio';
+import { platy } from './platy';
+import { cardinalTetra } from './cardinal-tetra';
+import { honeyGourami } from './honey-gourami';
+
+// Batch B (5)
+import { siameseAlgaeEater } from './siamese-algae-eater';
+import { rummynoseTetra } from './rummynose-tetra';
+import { ramCichlid } from './ram-cichlid';
+import { molly } from './molly';
+import { blackSkirtTetra } from './black-skirt-tetra';
 
 const allSpecies: Species[] = [
   bettaSplendens,
@@ -28,7 +45,23 @@ const allSpecies: Species[] = [
   bronzeCory,
   pandaCory,
   africanDwarfFrog,
-  neocaridinaDavidi,
+  neocaridinaDavidiRedCherry,
+
+  // Batch A
+  harlequinRasbora,
+  chiliRasbora,
+  cherryBarb,
+  celestialPearlDanio,
+  platy,
+  cardinalTetra,
+  honeyGourami,
+
+  // Batch B
+  siameseAlgaeEater,
+  rummynoseTetra,
+  ramCichlid,
+  molly,
+  blackSkirtTetra,
 ];
 
 export const speciesRepository = {
@@ -41,7 +74,8 @@ export const speciesRepository = {
     return allSpecies.filter(s => {
       if (tag === 'beginner') return s.care.difficulty === 'beginner';
       if (tag === 'nano') return s.environment.minTankSizeLiters <= 40;
-      if (tag === 'community') return s.behavior.tags.includes('peaceful') || s.behavior.tags.includes('shoaler'); // Simplifizierte Logik
+      if (tag === 'community')
+        return s.behavior.tags.includes('peaceful') || s.behavior.tags.includes('shoaler'); // Simplifizierte Logik
       return true;
     });
   }

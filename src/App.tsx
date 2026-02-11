@@ -24,10 +24,8 @@ function App() {
         <Route path="/species" element={<SpeciesIndexPage />} />
         <Route path="/species/:slug" element={<SpeciesDetailPage />} />
 
-        {/* Disease Routes */}
+        {/* Disease Routes (NUR PLURAL FÜR KONSISTENZ) */}
         <Route path="/diseases" element={<DiseaseIndexPage />} />
-        <Route path="/disease/:slug" element={<DiseaseDetailPage />} />
-        {/* Alias (falls du später Plural nutzt) */}
         <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
 
         {/* About Page */}

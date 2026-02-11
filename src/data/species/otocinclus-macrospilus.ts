@@ -1,78 +1,88 @@
 import type { Species } from '../../types/species';
 
 export const otocinclusMacrospilus: Species = {
-  id: 'catfish-002',
+  id: 'oto-002',
   slug: 'otocinclus-macrospilus',
-  imageUrl: '/images/species/otocinclus-macrospilus.jpg',
-  funFact: "Often confused with O. vittatus. The macrospilus has a distinct 'Mickey Mouse' pattern on its tail root, while vittatus has a solid black stripe extending into the tail fin.",
-  
+  imageUrl: '/images/species/otocinclus-macrospilus.jpg', // Oft schwer zu unterscheiden
+  funFact: "Often confused with O. vittatus. The main difference is the tail pattern: Macrospilus has a large spot at the tail base that is NOT connected to the body stripe.",
+
   taxonomy: {
     scientificName: 'Otocinclus macrospilus',
-    commonName: 'Macrospilus Oto',
+    commonName: 'Marbled Otocinclus',
     family: 'Loricariidae',
-    origin: 'Peru (Rio Nanay, Amazon)',
+    origin: 'Peru (Amazon)',
+    region: 'South America',
+    biotope: 'Vegetation-rich river margins with moderate flow',
   },
-  
+
   visuals: {
-    iconShape: 'fusiform',
-    adultSizeCM: 4.5, // Ticken kleiner als vittatus
+    iconShape: 'depressed',
+    adultSizeCM: 4,
   },
-  
+
   environment: {
     type: 'freshwater',
     minTankSizeLiters: 40,
     tempC: { min: 21, max: 26, ideal: 24 },
-    ph: { min: 5.5, max: 7.5, ideal: 6.5 },
-    gh: { min: 3, max: 12 },
-    flow: 'medium',
+    ph: { min: 6.0, max: 7.5, ideal: 6.8 },
+    gh: { min: 4, max: 15 },
+    flow: 'moderate',
     substrate: 'any',
   },
-  
+
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Requires established tanks with plenty of leaf surfaces (Anubias, Swords) to graze on biofilm. Fresh drift wood is highly recommended.',
-    hardscape: ['Round River Stones', 'Driftwood'],
+    plantingNotes: 'Broad-leaved plants (Swords, Anubias) provide grazing surfaces for biofilm.',
+    hardscape: ['Driftwood (mandatory)', 'Round Stones'],
   },
-  
+
   behavior: {
-    tags: ['shoaler', 'peaceful', 'bottom_dweller', 'shy'],
+    tags: ['shoaler', 'algae_eater', 'peaceful', 'shy'],
     minGroupSize: 6,
-    description: 'A gentle, cleaning crew favorite. They are strictly social and will pine away if kept alone. They are safer for shrimp fry than almost any other fish.',
+    description: 'Small, nervous algae eaters. Identical behavior to O. vittatus.',
     compatibility: {
-      goodMates: ['Shrimp', 'Corydoras', 'Small Rasboras', 'Apistogramma'],
-      badMates: ['Goldfish', 'Large Cichlids', 'Aggressive Barbs'],
-      notes: 'Can be kept with Betta fish if the tank is large enough.',
-    }
+      goodMates: ['Shrimp', 'Neon Tetras', 'Corydoras', 'Discus'],
+      badMates: ['Goldfish', 'Large Cichlids'],
+      notes: 'Can be mixed with O. vittatus in a school.',
+    },
   },
-  
+
   care: {
-    difficulty: 'expert', // Wegen Futter-Empfindlichkeit
+    difficulty: 'expert', // Wegen Futter
     diet: 'herbivore',
-    effort: 'medium', // Zufüttern (Zucchini/Tabs) nötig
-    cost: 'low',
-    specialRequirements: ['Mature tank only!', 'Vegetable supplementation'],
-  },
-  
-  health: {
-    lifespanYears: 5,
-    commonDiseases: [
-      'Starvation', // Hauptproblem im Handel
-      'ich',
-      'Bacterial infections'
+    effort: 'medium',
+    cost: 'medium',
+    specialRequirements: ['Mature tank (6 months+) ONLY', 'Constant supply of algae'],
+
+    proTips: [
+      "NEVER add to a new tank. Starvation risk.",
+      "Check tail pattern to distinguish from O. vittatus (disconnected tail spot).",
+      "Supplement with zucchini and Repashy Soilent Green."
     ],
-    sensitivities: ['Ammonia', 'Nitrite', 'Medications (Scaleless-ish)'],
+
+    commonMistakes: [
+      "Adding to a sterile/new tank.",
+      "Keeping singly."
+    ],
+  },
+
+  health: {
+    lifespanYears: 4,
+    commonDiseases: ['starvation'],
+    sensitivities: ['Ammonia', 'Nitrite', 'Medications'],
   },
 
   scientificContext: {
-    wildHabitat: "Found in floating meadows of vegetation in the river. They hold onto roots in the current.",
-    sexualDimorphism: "Females are significantly broader and rounder than males.",
+    wildHabitat: "Maturing floating vegetation rafts in the Amazon.",
+    sexualDimorphism: "Females are wider/rounder.",
     variants: [],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
-    trigger: 'Cool water changes and high protein diet conditioning. Eggs are adhesive.',
-    fryCare: 'Extremely difficult. Fry are microscopic and need constant biofilm access.',
+    trigger: 'Cool water changes + Heavy feeding.',
+    fryCare: 'Microscopic food needed.',
+    notes: 'Rarely bred.',
   },
 };

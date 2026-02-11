@@ -1,26 +1,42 @@
 // src/data/diseases/index.ts
-import { ich } from './ich';
-import { finRot } from './fin-rot';
-import { neonTetraDisease } from './neon-tetra-disease';
-import type { Disease } from '../../types/disease';
 
-// 1. Hier müssen ALLE Krankheiten rein, sonst werden sie nicht gefunden!
-export const allDiseases: Disease[] = [
-  ich,
-  finRot,
-  neonTetraDisease
-];
+import { shrimpDiseases } from './shrimp-diseases';
+import type { Disease } from './shrimp-diseases';
+import { fishDiseases } from './fish-diseases';
 
-// 2. Die Suchfunktion
-export const resolveDiseaseReference = (identifier: string): Disease | string => {
-  // Suche nach exaktem Slug-Match
-  const found = allDiseases.find(d => d.slug === identifier);
-  
-  // Wenn gefunden -> Gib das Objekt zurück (wird zum Link)
-  // Wenn NICHT gefunden -> Gib den String zurück (wird zum grauen Text)
-  return found ? found : identifier;
-};
+export type { Disease };
 
-export const getDiseaseBySlug = (slug: string): Disease | undefined => {
-  return allDiseases.find(d => d.slug === slug);
-};
+class DiseaseRepository {
+  private diseases: Disease[] = [
+    ...shrimpDiseases,
+    ...fishDiseases, // <--- Jetzt eingebunden
+  ];
+
+  getAll(): Disease[] {
+    return this.diseases;
+  }
+
+  getById(id: string): Disease | undefined {
+    return this.diseases.find(d => d.id === id);
+  }
+
+  getByIds(ids: string[]): Disease[] {
+    return ids
+      .map(id => this.getById(id))
+      .filter((d): d is Disease => d !== undefined);
+  }
+
+  getByCategory(category: Disease['category']): Disease[] {
+    return this.diseases.filter(d => d.category === category);
+  }
+
+  search(term: string): Disease[] {
+    const lower = term.toLowerCase();
+    return this.diseases.filter(d => 
+      d.name.toLowerCase().includes(lower) || 
+      d.symptoms.some(s => s.toLowerCase().includes(lower))
+    );
+  }
+}
+
+export const diseaseRepository = new DiseaseRepository();

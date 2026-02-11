@@ -1,47 +1,100 @@
-// src/hooks/useSpeciesSearch.ts
-import { useState, useMemo } from 'react';
-import type { Species } from '../types/species';
+import { useMemo, useState } from 'react';
+import type { Species, Difficulty, Region } from '../types/species';
+
+type Category = 'fish' | 'invertebrate' | 'amphibian';
+
+const inferCategory = (s: Species): Category => {
+  // NOTE: Das ist bewusst ein Interim-Hack über die ID. Später besser als explizites Feld im Species-Typ.
+  if (s.id.startsWith('shrimp-')) return 'invertebrate';
+  if (s.id.startsWith('amphibian-')) return 'amphibian';
+  return 'fish';
+};
 
 export const useSpeciesSearch = (data: Species[]) => {
   const [searchTerm, setSearchTerm] = useState('');
-  
-  // Filter States
-  const [filterDifficulty, setFilterDifficulty] = useState<string | null>(null);
-  const [filterRegion, setFilterRegion] = useState<string | null>(null); // NEU: z.B. "South America"
-  
-  // Du könntest hier auch noch filterWaterType (Freshwater/Brackish) hinzufügen, falls deine Daten das hergeben
 
-  const filteredSpecies = useMemo(() => {
+  const [filterDifficulty, setFilterDifficulty] = useState<Difficulty | null>(null);
+  const [filterRegion, setFilterRegion] = useState<Region | null>(null);
+
+  // NEU
+  const [filterTankLiters, setFilterTankLiters] = useState<number | null>(null);
+  const [filterBiotopeTerm, setFilterBiotopeTerm] = useState<string>('');
+  const [filterCategory, setFilterCategory] = useState<Category | null>(null);
+
+  const results = useMemo(() => {
     const term = searchTerm.toLowerCase().trim();
+    const bio = filterBiotopeTerm.toLowerCase().trim();
 
-    return data.filter(species => {
-      // 1. Text Search
-      const matchesSearch = 
-        species.taxonomy.commonName.toLowerCase().includes(term) ||
-        species.taxonomy.scientificName.toLowerCase().includes(term) ||
-        species.taxonomy.family.toLowerCase().includes(term);
+    return data.filter((s) => {
+      // Textsuche (Name etc.)
+      const matchesSearch =
+        !term ||
+        s.taxonomy.commonName.toLowerCase().includes(term) ||
+        s.taxonomy.scientificName.toLowerCase().includes(term) ||
+        s.taxonomy.family.toLowerCase().includes(term);
 
-      // 2. Difficulty
-      const matchesDifficulty = filterDifficulty 
-        ? species.care.difficulty === filterDifficulty 
-        : true;
+      // Level
+      const matchesDifficulty = filterDifficulty ? s.care.difficulty === filterDifficulty : true;
 
-      // 3. Region (Origin) Check
-      // Wir prüfen, ob der Filter-String (z.B. "Asia") im Origin-String (z.B. "South East Asia") enthalten ist
-      const matchesRegion = filterRegion
-        ? species.taxonomy.origin.toLowerCase().includes(filterRegion.toLowerCase())
-        : true;
+      // Region
+      const matchesRegion = filterRegion ? s.taxonomy.region === filterRegion : true;
 
-      return matchesSearch && matchesDifficulty && matchesRegion;
+      // Tank liters gate (hart)
+      const matchesTank =
+        filterTankLiters !== null ? s.environment.minTankSizeLiters <= filterTankLiters : true;
+
+      // Category
+      const matchesCategory = filterCategory ? inferCategory(s) === filterCategory : true;
+
+      // Biotope/Place search (soft)
+      const haystack = [
+        s.taxonomy.origin,
+        (s.taxonomy as any).biotope ?? '', // falls du es schon eingeführt hast
+        s.scientificContext?.wildHabitat ?? '',
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      const matchesBiotope = !bio || haystack.includes(bio);
+
+      return (
+        matchesSearch &&
+        matchesDifficulty &&
+        matchesRegion &&
+        matchesTank &&
+        matchesCategory &&
+        matchesBiotope
+      );
     });
-  }, [data, searchTerm, filterDifficulty, filterRegion]);
+  }, [
+    data,
+    searchTerm,
+    filterDifficulty,
+    filterRegion,
+    filterTankLiters,
+    filterBiotopeTerm,
+    filterCategory,
+  ]);
 
   return {
-    searchTerm, setSearchTerm,
-    filterDifficulty, setFilterDifficulty,
-    filterRegion, setFilterRegion, // <-- NEU exportieren
-    results: filteredSpecies,
+    // existing
+    searchTerm,
+    setSearchTerm,
+    filterDifficulty,
+    setFilterDifficulty,
+    filterRegion,
+    setFilterRegion,
+
+    // new
+    filterTankLiters,
+    setFilterTankLiters,
+    filterBiotopeTerm,
+    setFilterBiotopeTerm,
+    filterCategory,
+    setFilterCategory,
+
+    results,
     totalCount: data.length,
-    resultCount: filteredSpecies.length
+    resultCount: results.length,
   };
 };

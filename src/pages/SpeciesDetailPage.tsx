@@ -2,7 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
   MapPin, AlertTriangle, Info, Activity, DollarSign, Heart, Sprout, 
-  Mountain, Trees, Box, Sparkles, Microscope, Egg, BookOpen, Utensils
+  Mountain, Trees, Box, Sparkles, Microscope, Egg, BookOpen, Utensils,
+  Lightbulb, XCircle
 } from 'lucide-react';
 import { speciesRepository } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
@@ -20,20 +21,36 @@ const SpeciesDetailPage = () => {
   const seoTitle = `${data.taxonomy.commonName} Care Guide`;
   const seoDesc = `Complete care guide for ${data.taxonomy.commonName}. Habitat, tank mates, breeding, and scientific background.`;
 
+  // Bild-URL auflösen
+  const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
+
   return (
-    <div className="min-h-screen bg-surface-body pb-20">
+    <div className="min-h-screen bg-surface-body pb-20 animate-fade-in">
       <SEOHead title={seoTitle} description={seoDesc} />
 
       {/* HEADER */}
       <header className="relative bg-slate-900 text-white overflow-hidden pb-32 pt-12">
-        {/* ... (Header Code bleibt gleich) ... */}
-        <div className="absolute inset-0 z-0 opacity-30">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4"></div>
+        
+        {/* 1. BACKGROUND IMAGE (NEU HINZUGEFÜGT) */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={headerImageUrl} 
+            alt={data.taxonomy.commonName}
+            className="w-full h-full object-cover opacity-50" // Opacity steuert Helligkeit des Bildes
+          />
+          {/* Gradient Overlay: Damit Text lesbar bleibt und weicher Übergang nach unten */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/30"></div>
+        </div>
+
+        {/* 2. DECORATIVE BLURS (Bleibt erhalten für Atmosphere) */}
+        <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay pointer-events-none">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4"></div>
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
         </div>
 
+        {/* 3. CONTENT (Layer z-10 liegt über dem Bild) */}
         <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors text-sm font-medium">
+          <Link to="/" className="inline-flex items-center text-slate-300 hover:text-white mb-8 transition-colors text-sm font-bold bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Database
           </Link>
           
@@ -43,36 +60,37 @@ const SpeciesDetailPage = () => {
                 <Badge text={data.environment.type} color="brand" />
                 <Badge text={data.care.difficulty} color={data.care.difficulty} />
               </div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-2 leading-none">
+              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-2 leading-none drop-shadow-lg">
                 {data.taxonomy.commonName}
               </h1>
-              <p className="text-lg text-slate-300 font-serif italic opacity-80">
+              <p className="text-lg text-slate-200 font-serif italic opacity-90 drop-shadow-md">
                 {data.taxonomy.scientificName} • {data.taxonomy.family}
               </p>
             </div>
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10">
-              <div className="p-2 bg-indigo-500 rounded-lg"><MapPin className="w-5 h-5 text-white" /></div>
+            
+            {/* Origin Box */}
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10 shadow-lg">
+              <div className="p-2 bg-indigo-500 rounded-lg shadow-inner"><MapPin className="w-5 h-5 text-white" /></div>
               <div>
-                <p className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Origin</p>
-                <p className="font-medium text-sm">{data.taxonomy.origin}</p>
+                <p className="text-[10px] uppercase font-bold text-indigo-200 tracking-wider">Origin</p>
+                <p className="font-medium text-sm text-white">{data.taxonomy.origin}</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* CONTENT */}
+      {/* CONTENT GRID */}
       <main className="relative z-20 max-w-6xl mx-auto px-4 -mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* LEFT COL */}
+          {/* LEFT COL (2/3) */}
           <div className="lg:col-span-2 space-y-8">
             
-            {/* Quick Stats */}
+            {/* Quick Stats Grid */}
             <div className="bg-surface-card rounded-2xl shadow-soft border border-border-subtle p-6 md:p-8">
-               {/* ... (Quick Stats bleibt gleich) ... */}
               <h2 className="text-lg font-extrabold text-slate-900 mb-6 flex items-center">
-                <Info className="w-5 h-5 mr-2 text-brand-500" /> Quick Parameters
+                <Info className="w-5 h-5 mr-2 text-indigo-500" /> Quick Parameters
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <StatCard icon={<Thermometer className="text-rose-500" />} label="Temperature" value={`${data.environment.tempC.min}-${data.environment.tempC.max}°C`} sub={`Ideal: ${data.environment.tempC.ideal}°C`} />
@@ -84,10 +102,49 @@ const SpeciesDetailPage = () => {
               </div>
             </div>
 
+            {/* PRO TIPS & MISTAKES */}
+            {(data.care.proTips || data.care.commonMistakes) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* Pro Tips */}
+                {data.care.proTips && (
+                  <div className="bg-amber-50 rounded-2xl p-6 border border-amber-100 shadow-sm">
+                    <h3 className="text-lg font-bold text-amber-900 mb-4 flex items-center gap-2">
+                      <Lightbulb className="w-5 h-5 text-amber-500 fill-amber-500" /> Pro Tips
+                    </h3>
+                    <ul className="space-y-3">
+                      {data.care.proTips.map((tip, i) => (
+                        <li key={i} className="flex gap-3 text-sm text-amber-900/90 leading-relaxed font-medium">
+                          <span className="font-bold text-amber-500 select-none">•</span>
+                          {tip}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Common Mistakes */}
+                {data.care.commonMistakes && (
+                  <div className="bg-rose-50 rounded-2xl p-6 border border-rose-100 shadow-sm">
+                    <h3 className="text-lg font-bold text-rose-900 mb-4 flex items-center gap-2">
+                      <XCircle className="w-5 h-5 text-rose-500 fill-rose-500" /> Common Mistakes
+                    </h3>
+                    <ul className="space-y-3">
+                      {data.care.commonMistakes.map((mistake, i) => (
+                        <li key={i} className="flex gap-3 text-sm text-rose-900/90 leading-relaxed font-medium">
+                          <span className="font-bold text-rose-500 select-none">×</span>
+                          {mistake}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Fun Fact Card */}
             {data.funFact && (
                <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-1 rounded-2xl transform hover:scale-[1.01] transition-transform cursor-default shadow-lg group">
-                  {/* ... (Fun Fact bleibt gleich) ... */}
                  <div className="bg-slate-900 rounded-xl p-6 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><Sparkles className="w-24 h-24 text-white" /></div>
                     <h3 className="text-indigo-300 font-bold uppercase tracking-widest text-xs mb-2 flex items-center">
@@ -102,11 +159,9 @@ const SpeciesDetailPage = () => {
 
             {/* Behavior & Description */}
             <div className="bg-surface-card rounded-2xl shadow-soft border border-border-subtle p-6 md:p-8">
-               {/* ... (Behavior bleibt gleich) ... */}
               <h2 className="text-lg font-extrabold text-slate-900 mb-4">Behavior & Temperament</h2>
               <p className="text-slate-600 leading-relaxed text-base mb-6">{data.behavior.description}</p>
               
-              {/* Interactive Tags */}
               <div>
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Key Traits (Hover for info)</h4>
                 <div className="flex flex-wrap gap-2">
@@ -131,12 +186,10 @@ const SpeciesDetailPage = () => {
 
             {/* Habitat & Setup */}
             <div className="bg-surface-card rounded-2xl shadow-soft border border-border-subtle p-6 md:p-8">
-               {/* ... (Habitat bleibt gleich) ... */}
               <h2 className="text-lg font-extrabold text-slate-900 mb-6 flex items-center">
                 <Mountain className="w-5 h-5 mr-2 text-emerald-600" /> Habitat & Setup
               </h2>
               
-              {/* Interactive Scales */}
               <div className="mb-8 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Target Parameters</h4>
                 <div className="space-y-6">
@@ -159,7 +212,6 @@ const SpeciesDetailPage = () => {
                 </div>
               </div>
 
-              {/* Flow & Substrate */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Flow</span>
@@ -183,35 +235,31 @@ const SpeciesDetailPage = () => {
                     <Sprout className="w-4 h-4 mr-2 text-emerald-500" /> Vegetation
                   </h4>
                   <div className="pl-6 border-l-2 border-emerald-100">
-  <div className="flex items-center gap-2 mb-2">
-    {[1,2,3].map(i => (
-      <div key={i} className={`h-1.5 w-6 rounded-full ${
-        // KORRIGIERTE LOGIK:
-        // Sparse = 1 Balken
-        // Medium = 2 Balken
-        // Dense  = 3 Balken
-        (data.habitat.planting === 'sparse' && i === 1) || 
-        (data.habitat.planting === 'medium' && i <= 2) || 
-        (data.habitat.planting === 'dense' && i <= 3) 
-        ? 'bg-emerald-500' : 'bg-slate-200'
-      }`} />
-    ))}
-    <span className="text-xs font-bold text-emerald-700 uppercase ml-2">
-      {data.habitat.planting}
-    </span>
-  </div>
-  <p className="text-sm text-slate-600 leading-relaxed">
-    {data.habitat.plantingNotes}
-  </p>
-</div>
-</div>
+                    <div className="flex items-center gap-2 mb-2">
+                      {[1,2,3].map(i => (
+                        <div key={i} className={`h-1.5 w-6 rounded-full ${
+                          (data.habitat.planting === 'sparse' && i === 1) || 
+                          (data.habitat.planting === 'medium' && i <= 2) || 
+                          (data.habitat.planting === 'dense' && i <= 3) 
+                          ? 'bg-emerald-500' : 'bg-slate-200'
+                        }`} />
+                      ))}
+                      <span className="text-xs font-bold text-emerald-700 uppercase ml-2">
+                        {data.habitat.planting}
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      {data.habitat.plantingNotes}
+                    </p>
+                  </div>
+                </div>
                 <div>
                   <h4 className="flex items-center text-sm font-bold text-slate-700 mb-3">
                     <Trees className="w-4 h-4 mr-2 text-amber-700" /> Hardscape
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {data.habitat.hardscape.map(item => (
-                      <span key={item} className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm bg-amber-50 text-amber-800 border border-amber-100">{item}</span>
+                      <span key={item} className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm bg-amber-50 text-amber-800 border border-amber-100 font-medium">{item}</span>
                     ))}
                   </div>
                 </div>
@@ -220,7 +268,6 @@ const SpeciesDetailPage = () => {
 
             {/* Compatibility */}
             <div className="bg-surface-card rounded-2xl shadow-soft border border-border-subtle p-6 md:p-8">
-               {/* ... (Compatibility bleibt gleich) ... */}
               <h2 className="text-lg font-extrabold text-slate-900 mb-6">Compatibility & Tank Mates</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
@@ -244,9 +291,11 @@ const SpeciesDetailPage = () => {
                   </ul>
                 </div>
               </div>
-              <p className="mt-6 text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                💡 <strong>Note:</strong> {data.behavior.compatibility.notes}
-              </p>
+              {data.behavior.compatibility.notes && (
+                <p className="mt-6 text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                  💡 <strong>Note:</strong> {data.behavior.compatibility.notes}
+                </p>
+              )}
             </div>
 
             {/* Health & Cost */}
@@ -261,21 +310,18 @@ const SpeciesDetailPage = () => {
                     <p className="font-medium text-slate-900">{data.health.lifespanYears} Years (Average)</p>
                   </div>
                   
-                  {/* --- 2. HIER IST DIE ÄNDERUNG (DiseaseList) --- */}
                   <div>
                     <span className="text-xs text-slate-400 uppercase font-bold">Common Diseases</span>
                     <div className="mt-1">
-                      {/* Vorher war hier ein map-Loop. Jetzt die Komponente: */}
                       <DiseaseList diseases={data.health.commonDiseases} />
                     </div>
                   </div>
-                  {/* --------------------------------------------- */}
 
                   <div>
                     <span className="text-xs text-slate-400 uppercase font-bold">Sensitivities</span>
                     <div className="flex flex-wrap gap-1 mt-1">
-                      {data.health.sensitivities.map(s => (
-                        <span key={s} className="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100">{s}</span>
+                      {(data.health.sensitivities || []).map(s => (
+                        <span key={s} className="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 font-medium">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -283,7 +329,6 @@ const SpeciesDetailPage = () => {
               </div>
 
               <div className="bg-surface-card rounded-2xl shadow-soft border border-border-subtle p-6">
-                 {/* ... (Cost bleibt gleich) ... */}
                 <h2 className="text-md font-extrabold text-slate-900 mb-4 flex items-center">
                   <DollarSign className="w-4 h-4 mr-2 text-emerald-500" /> Total Ownership Cost
                 </h2>
@@ -318,7 +363,6 @@ const SpeciesDetailPage = () => {
 
             {/* 🌟 ADVANCED KNOWLEDGE SECTION */}
             <div className="mt-12 pt-8 border-t-2 border-slate-200">
-               {/* ... (Advanced Knowledge bleibt gleich) ... */}
               <h2 className="text-2xl font-black text-slate-900 mb-6 flex items-center">
                 <BookOpen className="w-6 h-6 mr-2 text-indigo-600" />
                 Deep Dive: Science & Breeding
@@ -342,7 +386,7 @@ const SpeciesDetailPage = () => {
                           <span className="font-bold text-slate-700 block mb-1">Sexual Dimorphism:</span>
                           {data.scientificContext.sexualDimorphism}
                         </div>
-                        {data.scientificContext.variants && (
+                        {data.scientificContext.variants && data.scientificContext.variants.length > 0 && (
                           <div>
                             <span className="font-bold text-slate-700 block mb-2">Common Variants:</span>
                             <div className="flex flex-wrap gap-2">
@@ -370,37 +414,43 @@ const SpeciesDetailPage = () => {
                         <h3 className="font-bold text-slate-900">Breeding Guide</h3>
                         <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${
                           data.breeding.difficulty === 'beginner' 
-      ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-    data.breeding.difficulty === 'medium' 
-      ? 'bg-amber-50 text-amber-700 border-amber-200' :
-      // Fallback für 'expert'
-      'bg-rose-50 text-rose-700 border-rose-200'
-  }`}>
-    {data.breeding.difficulty}
-                        `{'>'}`
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                          data.breeding.difficulty === 'medium' 
+                            ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                            'bg-rose-50 text-rose-700 border-rose-200'
+                        }`}>
                           {data.breeding.difficulty}
                         </span>
                       </div>
                       
                       <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                              <span className="text-xs font-bold text-slate-400 uppercase block mb-1">Method</span>
-                              <p className="font-medium text-slate-800 capitalize">{data.breeding.method.replace(/_/g, ' ')}</p>
-                            </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <span className="text-xs font-bold text-slate-400 uppercase block mb-1">Method</span>
+                            <p className="font-medium text-slate-800 capitalize">{data.breeding.method.replace(/_/g, ' ')}</p>
                           </div>
-                          
-                          {data.breeding.trigger && (
-                            <div>
-                              <span className="font-bold text-slate-700 block mb-1">Breeding Triggers:</span>
-                              {data.breeding.trigger}
-                            </div>
-                          )}
-                          
+                        </div>
+                        
+                        {data.breeding.trigger && (
+                          <div>
+                            <span className="font-bold text-slate-700 block mb-1">Breeding Triggers:</span>
+                            {data.breeding.trigger}
+                          </div>
+                        )}
+                        
+                        {data.breeding.fryCare && (
                           <div>
                             <span className="font-bold text-slate-700 block mb-1">Fry Care:</span>
                             {data.breeding.fryCare}
                           </div>
+                        )}
+
+                        {data.breeding.notes && (
+                          <div>
+                            <span className="font-bold text-slate-700 block mb-1">Notes:</span>
+                            {data.breeding.notes}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -416,7 +466,8 @@ const SpeciesDetailPage = () => {
               <TankSimulator 
                 fishLengthCM={data.visuals.adultSizeCM} 
                 fishShape={data.visuals.iconShape} 
-                minGroupSize={data.behavior.minGroupSize} 
+                minGroupSize={data.behavior.minGroupSize}
+                minTankSizeLiters={data.environment.minTankSizeLiters}
               />
               
               {data.behavior.tags.includes('jumper') && (
@@ -448,13 +499,12 @@ const NotFound = () => (
   </div>
 );
 
-// 3. WICHTIG: Hier habe ich auch das 'intermediate' -> 'medium' Problem gefixt, sicherheitshalber
 const Badge = ({ text, color }: { text: string, color: string }) => {
   const styles = {
     brand: 'bg-brand-500/20 text-brand-100 border-brand-400/20',
     beginner: 'bg-emerald-500/20 text-emerald-100 border-emerald-400/30',
-    medium: 'bg-amber-500/20 text-amber-100 border-amber-400/30', // Hier angepasst!
-    intermediate: 'bg-amber-500/20 text-amber-100 border-amber-400/30', // Legacy Support
+    medium: 'bg-amber-500/20 text-amber-100 border-amber-400/30',
+    intermediate: 'bg-amber-500/20 text-amber-100 border-amber-400/30',
     expert: 'bg-rose-500/20 text-rose-100 border-rose-400/30',
   }[color === 'brand' ? 'brand' : text] || 'bg-slate-700 text-slate-300';
   return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide border ${styles}`}>{text}</span>;
@@ -474,5 +524,22 @@ const StatCard = ({ icon, label, value, sub }: any) => (
 );
 
 const capitalize = (s: string) => s ? s[0].toUpperCase() + s.slice(1) : s;
+
+/**
+ * Ensures the header image always resolves to /images/species/...
+ * - Accepts absolute (/images/species/xxx.jpg)
+ * - Accepts relative (images/species/xxx.jpg or xxx.jpg)
+ * - Fallback: /images/species/{slug}.jpg
+ */
+const resolveHeaderImageUrl = (imageUrl?: string, slug?: string) => {
+  if (imageUrl) {
+    if (imageUrl.startsWith('/images/species/')) return imageUrl;
+    if (imageUrl.startsWith('images/species/')) return `/${imageUrl}`;
+    if (imageUrl.startsWith('/')) return imageUrl;
+    return `/images/species/${imageUrl}`;
+  }
+  if (slug) return `/images/species/${slug}.jpg`;
+  return '';
+};
 
 export default SpeciesDetailPage;
