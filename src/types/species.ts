@@ -25,6 +25,25 @@ export type Region =
   | 'Australia' 
   | 'Europe';
 
+// --- BEHAVIOR TAGS (Fix für Glossary Error) ---
+// Diese Liste muss exakt mit den Keys in glossary.ts übereinstimmen
+export type EthologyTag = 
+  | 'architect'
+  | 'jumper'
+  | 'gardener'
+  | 'fin_nipper'
+  | 'shy'
+  | 'shoaler'
+  | 'schooler'
+  | 'surface'
+  | 'midwater'
+  | 'bottom_dweller'
+  | 'predator'
+  | 'peaceful'
+  | 'territorial'
+  | 'active'
+  | 'social';
+
 // --- MAIN INTERFACE ---
 export interface Species {
   id: string;
@@ -67,7 +86,7 @@ export interface Species {
   };
 
   behavior: {
-    tags: string[]; // z.B. ["shoaler", "fin_nipper"]
+    tags: EthologyTag[]; // <--- Jetzt streng typisiert statt string[]
     minGroupSize: number;
     description: string;
     compatibility: {

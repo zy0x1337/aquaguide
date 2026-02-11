@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X } from 'lucide-react';
 import { speciesRepository } from '../data/species';
 import { searchBiotopes } from '../data/biotopes';

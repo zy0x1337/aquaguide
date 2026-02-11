@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search, SlidersHorizontal, Fish } from 'lucide-react';
 import { speciesRepository } from '../data/species';
 import { SpeciesCard } from '../components/species/SpeciesCard';
