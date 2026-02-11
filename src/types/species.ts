@@ -6,15 +6,15 @@ export type WaterType = 'freshwater' | 'brackish' | 'marine';
 export type Diet = 'carnivore' | 'herbivore' | 'omnivore';
 export type Temperament = 'peaceful' | 'aggressive' | 'semi-aggressive';
 
-// NEU: Shapes für Visuals (inkl. Shrimp/Frog Fix)
+// NEU: Shapes für Visuals
 export type Shape = 
   | 'fusiform' 
   | 'compressed' 
   | 'eel-like' 
   | 'depressed' 
   | 'globiform' 
-  | 'shrimp'  // <--- NEU
-  | 'frog';   // <--- NEU
+  | 'shrimp' 
+  | 'frog';
 
 export type Region = 
   | 'South America' 
@@ -25,9 +25,10 @@ export type Region =
   | 'Australia' 
   | 'Europe';
 
-// --- BEHAVIOR TAGS (Fix für Glossary Error) ---
-// Diese Liste muss exakt mit den Keys in glossary.ts übereinstimmen
+// --- BEHAVIOR TAGS ---
+// Aktualisierte Liste basierend auf deinen Fehlermeldungen
 export type EthologyTag = 
+  // Original
   | 'architect'
   | 'jumper'
   | 'gardener'
@@ -42,30 +43,48 @@ export type EthologyTag =
   | 'peaceful'
   | 'territorial'
   | 'active'
-  | 'social';
+  | 'social'
+  // Neu hinzugefügt (Data File Fixes)
+  | 'surface_dweller'
+  | 'bubble_nester'
+  | 'centerpiece'
+  | 'labyrinth_fish'
+  | 'nocturnal'
+  | 'scaleless'
+  | 'livebearer'
+  | 'algae_eater'
+  | 'nano_safe'
+  | 'nano'
+  | 'diurnal'
+  | 'colorful'
+  | 'cichlid'
+  | 'semi-aggressive'
+  | 'coldwater'
+  | 'amphibian'
+  | 'slow_eater'
+  | 'robust';
 
 // --- MAIN INTERFACE ---
 export interface Species {
   id: string;
-  slug: string; // URL-Friendly ID
+  slug: string;
   
-  // Header / Meta
   imageUrl?: string;
-  funFact?: string; // Kurzer "Wow"-Fakt für den Header
+  funFact?: string;
 
   taxonomy: {
     scientificName: string;
     commonName: string;
     family: string;
-    origin: string; // Detail-Text (z.B. "Rio Negro")
-    region: Region; // Grober Filter
-    biotope?: string; // Detail-Biotop (z.B. "Blackwater stream")
+    origin: string;
+    region: Region;
+    biotope?: string;
   };
 
   visuals: {
-    iconShape: Shape; // <--- Hier wird jetzt 'shrimp' akzeptiert
+    iconShape: Shape;
     adultSizeCM: number;
-    color?: string; // Optional: für den Simulator (z.B. 'red')
+    color?: string;
   };
 
   environment: {
@@ -73,20 +92,20 @@ export interface Species {
     minTankSizeLiters: number;
     tempC: { min: number; max: number; ideal: number };
     ph: { min: number; max: number; ideal: number };
-    gh?: { min: number; max: number }; // General Hardness (Optional gemacht, falls alte Daten fehlen)
-    kh?: { min: number; max: number }; // Carbonate Hardness
-    flow: 'low' | 'moderate' | 'high'; // <--- Angepasst an deine Data-Files
+    gh?: { min: number; max: number };
+    kh?: { min: number; max: number };
+    flow: 'low' | 'moderate' | 'high';
     substrate?: string;
   };
 
   habitat: {
     planting: 'sparse' | 'medium' | 'dense';
     plantingNotes: string;
-    hardscape: string[]; // z.B. ["Driftwood", "Round stones"]
+    hardscape: string[];
   };
 
   behavior: {
-    tags: EthologyTag[]; // <--- Jetzt streng typisiert statt string[]
+    tags: EthologyTag[];
     minGroupSize: number;
     description: string;
     compatibility: {
@@ -102,16 +121,14 @@ export interface Species {
     effort: 'low' | 'medium' | 'high';
     cost: 'low' | 'medium' | 'high';
     specialRequirements?: string[];
-    
-    // v2.0 UPGRADE FELDER:
-    proTips?: string[];       // 3-5 Experten-Tipps
-    commonMistakes?: string[]; // Häufige Fehler
+    proTips?: string[];
+    commonMistakes?: string[];
   };
 
   health: {
     lifespanYears: number;
-    commonDiseases: string[]; // Slugs oder Namen
-    sensitivities: string[]; // z.B. ["Copper", "Nitrate"]
+    commonDiseases: string[];
+    sensitivities: string[];
   };
 
   scientificContext?: {
@@ -122,11 +139,10 @@ export interface Species {
   };
 
   breeding?: {
-    // Liste erweitert für Wirbellose
     method: 'egg_scatterer' | 'mouthbrooder' | 'bubble_nester' | 'livebearer' | 'cave_spawner' | 'egg_layer' | 'substrate_spawner' | 'other'; 
     difficulty: Difficulty;
     trigger?: string;
     fryCare?: string;
-    notes?: string; // Hilfreich für Zusatzinfos
+    notes?: string;
   };
 }
