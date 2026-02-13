@@ -10,9 +10,12 @@ export const PlantsIndexPage = () => {
   const allPlants = plantRepository.getAll();
   const {
     searchTerm, setSearchTerm,
-    filterDifficulty, setFilterDifficulty,
-    filterType, setFilterType,
-    filterHeight, setFilterHeight,
+    filterDifficulty: _filterDifficulty,      // ← FIX: _
+    setFilterDifficulty,
+    filterType: _filterType,                 // ← FIX: _
+    setFilterType,
+    filterHeight: _filterHeight,             // ← FIX: _
+    setFilterHeight,
     results
   } = usePlantSearch(allPlants);
 
@@ -39,7 +42,7 @@ export const PlantsIndexPage = () => {
       case 'nano':
         setFilterDifficulty(null);
         setFilterType(null);
-        setFilterHeight('nano');  // ← MAX 10cm!
+        setFilterHeight('nano');  // MAX 10cm!
         break;
       case 'stem':
         setFilterDifficulty(null);

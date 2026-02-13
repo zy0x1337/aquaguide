@@ -1,11 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Droplets, BookOpen, Fish, Leaf, Stethoscope, Menu, X } from 'lucide-react';
+import { Droplets, BookOpen, Fish, Leaf, Stethoscope } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 
 export const Navbar = () => {
   const location = useLocation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [_isMobileMenuOpen, _setIsMobileMenuOpen] = useState(false); // ← FIX: _
   
   // Helper: Ist der Pfad aktiv? (Auch für Sub-Routen wie /plants/anubias)
   const isActive = (path: string) => {
@@ -57,8 +57,6 @@ export const Navbar = () => {
                 }
               `}
             >
-              {/* Optional: Icon auch auf Desktop anzeigen */}
-              {/* <link.icon className="w-4 h-4" /> */}
               {link.label}
             </Link>
           ))}
