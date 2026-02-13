@@ -13,6 +13,10 @@ import SpeciesDetailPage from './pages/SpeciesDetailPage';
 import DiseaseIndexPage from './pages/DiseaseIndexPage';
 import DiseaseDetailPage from './pages/DiseaseDetailPage';
 
+// 🌱 PLANT PAGES (NEU)
+import { PlantsIndexPage } from './pages/PlantsIndexPage';
+import { PlantDetailPage } from './pages/PlantDetailPage';
+
 function App() {
   return (
     <Layout>
@@ -24,9 +28,13 @@ function App() {
         <Route path="/species" element={<SpeciesIndexPage />} />
         <Route path="/species/:slug" element={<SpeciesDetailPage />} />
 
-        {/* Disease Routes (NUR PLURAL FÜR KONSISTENZ) */}
+        {/* Disease Routes */}
         <Route path="/diseases" element={<DiseaseIndexPage />} />
         <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
+
+        {/* 🌱 Plant Routes */}
+        <Route path="/plants" element={<PlantsIndexPage />} />
+        <Route path="/plants/:slug" element={<PlantDetailPage />} />
 
         {/* About Page */}
         <Route path="/about" element={<AboutPage />} />
@@ -35,7 +43,7 @@ function App() {
         <Route
           path="*"
           element={
-            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0c0a09]">
               <div className="text-center">
                 <h1 className="text-4xl font-black text-slate-300 mb-4">404</h1>
                 <p className="text-slate-500 mb-6">Page not found</p>

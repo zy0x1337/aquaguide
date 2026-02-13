@@ -5,6 +5,7 @@ export type Difficulty = 'beginner' | 'medium' | 'expert';
 export type WaterType = 'freshwater' | 'brackish' | 'marine';
 export type Diet = 'carnivore' | 'herbivore' | 'omnivore';
 export type Temperament = 'peaceful' | 'aggressive' | 'semi-aggressive';
+import type { ImageCredit } from './common';
 
 // NEU: Shapes für Visuals
 export type Shape = 
@@ -70,6 +71,7 @@ export interface Species {
   slug: string;
   
   imageUrl?: string;
+  imageCredit?: ImageCredit;
   funFact?: string;
 
   taxonomy: {

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 export const useTheme = () => {
   const [theme, setTheme] = useState(() => {
-    // Check local storage or system preference on mount
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedPrefs = window.localStorage.getItem('color-theme');
       if (typeof storedPrefs === 'string') {
@@ -13,15 +12,13 @@ export const useTheme = () => {
         return 'dark';
       }
     }
-    return 'light'; // Default fallback
+    return 'light';
   });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    // Remove old class, add new class
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
-    // Save preference
     localStorage.setItem('color-theme', theme);
   }, [theme]);
 

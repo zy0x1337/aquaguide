@@ -51,7 +51,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Selection Style (Markierter Text) */
+/* Selection Style */
 ::selection { background-color: #6366f1; color: #ffffff; }
 .dark ::selection { background-color: #818cf8; color: #ffffff; }
 
@@ -73,8 +73,7 @@ body {
 /* =========================================
    3. UTILITIES & COMPONENT FIXES
    ========================================= */
-
-/* Navbar Utility Klassen (für Layout.tsx) */
+/* Navbar Utility Klassen */
 .bg-theme-nav { background-color: var(--nav-bg); }
 .border-theme { border-color: var(--nav-border); }
 .text-theme-main { color: var(--text-main); }
@@ -93,10 +92,9 @@ body {
 }
 
 /* =========================================
-   4. INPUTS & SEARCHBAR FIXES (CRITICAL)
+   4. INPUTS & SEARCHBAR FIXES
    ========================================= */
-
-/* Entfernt Webkit-Standard-Styling (das "hässliche Rechteck") */
+/* Reset Webkit Search */
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
@@ -105,18 +103,16 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
-/* Globaler Input Reset für Dark Mode */
+/* Global Dark Mode Input Reset */
 .dark input, 
 .dark select,
 .dark textarea {
   color: #f5f5f4 !important;
   border-color: #44403c;
-  /* Standard Hintergrund für normale Inputs */
   background-color: #292524; 
 }
 
-/* 🔥 WICHTIG: Fix für Suchleisten mit transparentem Hintergrund */
-/* Wenn die Klasse 'bg-transparent' im HTML steht, darf CSS das nicht überschreiben! */
+/* Transparent Inputs Fix */
 .dark input.bg-transparent,
 .dark input[class*="bg-transparent"] {
   background-color: transparent !important;
@@ -125,7 +121,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .dark input::placeholder { color: #78716c !important; }
 
-/* Autofill Fix (verhindert gelben/weißen Hintergrund bei Chrome) */
+/* Autofill Fix */
 .dark input:-webkit-autofill,
 .dark input:-webkit-autofill:hover, 
 .dark input:-webkit-autofill:focus, 
@@ -138,7 +134,7 @@ input[type="search"]::-webkit-search-results-decoration {
 /* =========================================
    5. COMPATIBILITY MAPPINGS (Slate -> Stone)
    ========================================= */
-/* Light Mode Mappings */
+/* Light Mode */
 .bg-slate-50 { background-color: #fafaf9 !important; }
 .bg-white { background-color: #ffffff !important; }
 .text-slate-900 { color: #1c1917 !important; }
@@ -147,7 +143,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .text-slate-500 { color: #78716c !important; }
 .border-slate-200 { border-color: #e7e5e4 !important; }
 
-/* Dark Mode Mappings */
+/* Dark Mode */
 .dark .bg-slate-50, 
 .dark .bg-[fafaf9],
 .dark .bg-surface-body { background-color: #0c0a09 !important; }
@@ -170,32 +166,31 @@ input[type="search"]::-webkit-search-results-decoration {
 /* =========================================
    6. DETAIL PAGE BADGES (Glassmorphism)
    ========================================= */
-/* Amber */
+/* General Badges (Amber, Rose, Emerald, Indigo, Blue) */
 .dark .bg-amber-50 { background-color: rgba(120, 53, 15, 0.15) !important; border-color: rgba(180, 83, 9, 0.2) !important; }
 .dark .text-amber-900 { color: #fcd34d !important; }
-/* Rose */
+
 .dark .bg-rose-50 { background-color: rgba(136, 19, 55, 0.15) !important; border-color: rgba(159, 18, 57, 0.2) !important; }
 .dark .text-rose-900 { color: #fda4af !important; }
-/* Emerald */
+
 .dark .bg-emerald-50 { background-color: rgba(6, 78, 59, 0.15) !important; border-color: rgba(6, 95, 70, 0.2) !important; }
 .dark .text-emerald-800, .dark .text-emerald-700 { color: #6ee7b7 !important; }
-/* Indigo */
+
 .dark .bg-indigo-50 { background-color: rgba(49, 46, 129, 0.15) !important; border-color: rgba(67, 56, 202, 0.2) !important; }
 .dark .text-indigo-700 { color: #a5b4fc !important; }
-/* Blue */
+
 .dark .bg-blue-50 { background-color: #0c0a09 !important; border-color: #1e293b !important; }
 
-/* Icons */
+/* Icons Colors */
 .dark .text-indigo-500 { color: #818cf8 !important; }
 .dark .text-emerald-500 { color: #34d399 !important; }
 .dark .text-rose-500 { color: #fb7185 !important; }
 .dark .text-amber-500 { color: #fbbf24 !important; }
 
-/* 6b. CHIP COLORS FOR DARK MODE (SpeciesCard) */
-/* Entspricht deinen Light-Mode-Farben, nur dunkler/kontrastreich für Dark Mode */
 
+/* 6b. CHIP COLORS FOR DARK MODE (SpeciesCard / 100er Series) */
 .dark .bg-emerald-100 {
-  background-color: rgba(6, 95, 70, 0.25) !important;  /* Emerald-700-ish, transparent */
+  background-color: rgba(6, 95, 70, 0.25) !important;
   border-color: rgba(16, 185, 129, 0.4) !important;
 }
 .dark .text-emerald-700 { color: #6ee7b7 !important; }
@@ -230,6 +225,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .dark .text-slate-700 { color: #e5e7eb !important; }
 
+
 /* =========================================
    7. TRANSITIONS
    ========================================= */
@@ -242,3 +238,57 @@ a, svg, path {
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+
+/* =========================================
+   8. PLANT BADGES & ICONS (Dark Mode / 50er & Text Series)
+   ========================================= */
+
+/* Amber (für "Light Demand" Icons) */
+.dark .text-amber-500 { color: #fbbf24 !important; }
+.dark .bg-amber-50 { 
+  background-color: rgba(245, 158, 11, 0.15) !important; 
+  border-color: rgba(245, 158, 11, 0.25) !important; 
+}
+.dark .text-amber-700 { color: #fcd34d !important; }
+
+/* Emerald (für "Growth", "Planting Chips") */
+.dark .text-emerald-500 { color: #34d399 !important; }
+.dark .bg-emerald-50 { 
+  background-color: rgba(16, 185, 129, 0.15) !important; 
+  border-color: rgba(16, 185, 129, 0.25) !important; 
+}
+.dark .text-emerald-700 { color: #6ee7b7 !important; }
+
+/* Indigo (für "Placement") */
+.dark .text-indigo-500 { color: #818cf8 !important; }
+.dark .bg-indigo-50 { 
+  background-color: rgba(99, 102, 241, 0.15) !important; 
+  border-color: rgba(99, 102, 241, 0.25) !important; 
+}
+.dark .text-indigo-700 { color: #a5b4fc !important; }
+
+/* Cyan/Sky (für "CO2") */
+.dark .text-cyan-500, .dark .text-sky-500 { color: #22d3ee !important; }
+.dark .bg-cyan-50, .dark .bg-sky-50 { 
+  background-color: rgba(6, 182, 212, 0.15) !important; 
+  border-color: rgba(6, 182, 212, 0.25) !important; 
+}
+.dark .text-cyan-700, .dark .text-sky-700 { color: #67e8f9 !important; }
+
+/* Purple (für "Height") */
+.dark .text-purple-500 { color: #c084fc !important; }
+.dark .bg-purple-50 { 
+  background-color: rgba(147, 51, 234, 0.15) !important; 
+  border-color: rgba(147, 51, 234, 0.25) !important; 
+}
+.dark .text-purple-700 { color: #d8b4fe !important; }
+
+/* Rose (für Warnings/Temp) */
+.dark .text-rose-500 { color: #fb7185 !important; }
+.dark .bg-rose-50 { 
+  background-color: rgba(244, 63, 94, 0.15) !important; 
+  border-color: rgba(244, 63, 94, 0.25) !important; 
+}
+.dark .text-rose-700 { color: #fda4af !important; }
+.dark .text-rose-800 { color: #fecdd3 !important; }

@@ -1,15 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Droplets, BookOpen, Settings } from 'lucide-react';
+import { Home, Droplets, BookOpen, Fish, Leaf, Stethoscope, Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { useState } from 'react';
 
 export const Navbar = () => {
   const location = useLocation();
-  const isActive = (path: string) => location.pathname === path;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Helper: Ist der Pfad aktiv? (Auch für Sub-Routen wie /plants/anubias)
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+
+  const navLinks = [
+    { path: '/', label: 'Fish', icon: Fish },
+    { path: '/plants', label: 'Plants', icon: Leaf },
+    { path: '/diseases', label: 'Diseases', icon: Stethoscope },
+    { path: '/about', label: 'About', icon: BookOpen },
+  ];
 
   return (
     <>
       {/* 🖥️ DESKTOP NAV */}
-      {/* WICHTIG: bg-white/90 im Light Mode sorgt für Helligkeit, border-stone-200 für warme Kanten */}
       <nav className="hidden md:flex fixed top-0 w-full z-50 
         bg-white/90 dark:bg-[#1c1917]/90 
         backdrop-blur-md 
@@ -24,18 +37,31 @@ export const Navbar = () => {
           </div>
           
           <div className="flex flex-col justify-center">
-            {/* Styled AquaGuide Text */}
             <span className="text-xl font-black tracking-tighter leading-none text-stone-900 dark:text-white">
               Aqua<span className="text-indigo-600 dark:text-indigo-400">Guide</span>
             </span>
           </div>
         </Link>
 
-        {/* CENTER LINKS */}
+        {/* CENTER LINKS (Pill Shape) */}
         <div className="flex items-center gap-1 bg-stone-100/50 dark:bg-stone-800/50 p-1.5 rounded-full border border-stone-200/50 dark:border-stone-700/30">
-          <NavLink to="/" label="Database" active={isActive('/')} />
-          <NavLink to="/calculator" label="Calculator" active={isActive('/calculator')} />
-          <NavLink to="/glossary" label="Glossary" active={isActive('/glossary')} />
+          {navLinks.map(link => (
+            <Link 
+              key={link.path}
+              to={link.path}
+              className={`
+                px-5 py-1.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2
+                ${isActive(link.path)
+                  ? 'bg-white dark:bg-stone-700 text-indigo-600 dark:text-white shadow-sm' 
+                  : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-700/50'
+                }
+              `}
+            >
+              {/* Optional: Icon auch auf Desktop anzeigen */}
+              {/* <link.icon className="w-4 h-4" /> */}
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         {/* RIGHT ACTIONS */}
@@ -65,43 +91,26 @@ export const Navbar = () => {
       </nav>
 
       {/* 📱 MOBILE BOTTOM NAV */}
-      <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white dark:bg-[#1c1917] border-t border-stone-200 dark:border-stone-800 pb-safe pt-1 px-2 flex justify-around items-center shadow-[0_-5px_30px_rgba(0,0,0,0.04)] dark:shadow-none transition-colors duration-300">
-        <MobileNavLink to="/" icon={<Home className="w-6 h-6" />} label="Home" active={isActive('/')} />
-        <MobileNavLink to="/calculator" icon={<Settings className="w-6 h-6" />} label="Tools" active={isActive('/calculator')} />
-        <MobileNavLink to="/glossary" icon={<BookOpen className="w-6 h-6" />} label="Learn" active={isActive('/glossary')} />
+      <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white dark:bg-[#1c1917] border-t border-stone-200 dark:border-stone-800 pb-safe pt-1 px-1 flex justify-around items-center shadow-[0_-5px_30px_rgba(0,0,0,0.04)] dark:shadow-none transition-colors duration-300">
+        {navLinks.map(link => (
+          <Link 
+            key={link.path}
+            to={link.path} 
+            className={`flex flex-col items-center justify-center w-full py-2 rounded-xl transition-all active:scale-95 ${
+              isActive(link.path) ? 'text-indigo-600 dark:text-indigo-400' : 'text-stone-400 dark:text-stone-500'
+            }`}
+          >
+            <div className={`p-1 rounded-full transition-all duration-300 ${
+              isActive(link.path) ? 'bg-indigo-50 dark:bg-indigo-500/10 -translate-y-1' : ''
+            }`}>
+              <link.icon className="w-5 h-5" />
+            </div>
+            <span className={`text-[10px] font-bold mt-0.5 transition-opacity ${isActive(link.path) ? 'opacity-100' : 'opacity-80'}`}>
+              {link.label}
+            </span>
+          </Link>
+        ))}
       </nav>
     </>
   );
 };
-
-// --- STYLED COMPONENTS ---
-
-const NavLink = ({ to, label, active }: { to: string, label: string, active: boolean }) => (
-  <Link 
-    to={to} 
-    className={`
-      px-5 py-1.5 rounded-full text-sm font-bold transition-all duration-200
-      ${active 
-        ? 'bg-white dark:bg-stone-700 text-indigo-600 dark:text-white shadow-sm' 
-        : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-700/50'
-      }
-    `}
-  >
-    {label}
-  </Link>
-);
-
-const MobileNavLink = ({ to, icon, label, active }: { to: string, icon: any, label: string, active: boolean }) => (
-  <Link to={to} className={`flex flex-col items-center justify-center w-full py-2 rounded-xl transition-all active:scale-95 ${
-    active ? 'text-indigo-600 dark:text-indigo-400' : 'text-stone-400 dark:text-stone-500'
-  }`}>
-    <div className={`p-1 rounded-full transition-all duration-300 ${
-      active ? 'bg-indigo-50 dark:bg-indigo-500/10 -translate-y-1' : ''
-    }`}>
-      {icon}
-    </div>
-    <span className={`text-[10px] font-bold mt-1 transition-opacity ${active ? 'opacity-100' : 'opacity-80'}`}>
-      {label}
-    </span>
-  </Link>
-);

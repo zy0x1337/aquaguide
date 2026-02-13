@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Github, Fish } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 interface Props {
@@ -15,7 +15,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
   const navItems = [
-    { path: '/', label: 'Database', icon: Fish },
+    { path: '/', label: 'Fish', icon: Fish },
+    { path: '/plants', label: 'Plants', icon: Leaf },      // <--- NEU
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
   ];
@@ -131,7 +132,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
       <footer className="bg-theme-nav border-t border-theme mt-auto transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-theme-muted">© 2026 AquaGuide.</p>
+            <p className="text-sm text-theme-muted">© 2026 AquaGuide. Not advice. Consult a vet for sick fish.</p>
             <div className="flex gap-6">
               <Link to="/about" className="text-sm text-theme-muted hover:text-indigo-600 transition-colors">About</Link>
             </div>
