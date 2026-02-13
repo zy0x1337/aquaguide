@@ -14,8 +14,6 @@ import { bronzeCory } from './bronze-cory';
 import { pandaCory } from './panda-cory';
 import { africanDwarfFrog } from './african-dwarf-frog';
 import { neocaridinaDavidiRedCherry } from './neocaridina-davidi-red-cherry';
-
-// Batch A (7)
 import { harlequinRasbora } from './harlequin-rasbora';
 import { chiliRasbora } from './chili-rasbora';
 import { cherryBarb } from './cherry-barb';
@@ -23,13 +21,19 @@ import { celestialPearlDanio } from './celestial-pearl-danio';
 import { platy } from './platy';
 import { cardinalTetra } from './cardinal-tetra';
 import { honeyGourami } from './honey-gourami';
-
-// Batch B (5)
 import { siameseAlgaeEater } from './siamese-algae-eater';
 import { rummynoseTetra } from './rummynose-tetra';
 import { ramCichlid } from './ram-cichlid';
 import { molly } from './molly';
 import { blackSkirtTetra } from './black-skirt-tetra';
+import { zebraDanio } from './danio-rerio';
+import { corydorasPaleatus } from './corydoras-paleatus';
+import { rosyBarb } from './rosy-barb';
+import { oscar } from './oscar';
+import { goldSpotPleco } from './gold-spot-pleco';
+import { electricYellowLab } from './electric-yellow-lab';
+import { bumblebeeGoby } from './bumblebee-goby';
+import { amanoShrimp } from './amano-shrimp';
 
 const allSpecies: Species[] = [
   bettaSplendens,
@@ -46,8 +50,6 @@ const allSpecies: Species[] = [
   pandaCory,
   africanDwarfFrog,
   neocaridinaDavidiRedCherry,
-
-  // Batch A
   harlequinRasbora,
   chiliRasbora,
   cherryBarb,
@@ -55,13 +57,19 @@ const allSpecies: Species[] = [
   platy,
   cardinalTetra,
   honeyGourami,
-
-  // Batch B
   siameseAlgaeEater,
   rummynoseTetra,
   ramCichlid,
   molly,
   blackSkirtTetra,
+  zebraDanio,
+  corydorasPaleatus,
+  rosyBarb,
+  oscar,
+  goldSpotPleco,
+  electricYellowLab,
+  bumblebeeGoby,
+  amanoShrimp
 ];
 
 export const speciesRepository = {

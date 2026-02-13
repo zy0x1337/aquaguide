@@ -1,49 +1,65 @@
 import type { Species } from '../../types/species';
 
 export const rummynoseTetra: Species = {
-  id: 'tetra-003',
-  slug: 'rummynose-tetra',
-  imageUrl: '/images/species/rummynose-tetra.jpg',
-  funFact: "Their red nose intensifies when they are stressed or scared. A faded nose is a sign of poor water conditions or illness.",
+  id: 'rummy-nose-tetra',
+  slug: 'rummy-nose-tetra',
+  imageUrl: '/images/species/rummy-nose-tetra.jpg',
+  funFact: "The brilliant red nose fades under stress - it's a real-time water quality barometer! Perfect health = flaming red noses.",
 
   taxonomy: {
-    scientificName: 'Hemigrammus bleheri',
-    commonName: 'Rummynose Tetra',
-    family: 'Characidae',
-    origin: 'Brazil (Amazon, Rio Negro)',
+    scientificName: 'Petitella rhodostoma',
+    commonName: 'Rummy Nose Tetra',
+    family: 'Acestrorhampidae',
+    origin: 'Lower Amazon basin (Rio Tapajós, Pará, Brazil)',
     region: 'South America',
-    biotope: 'Blackwater tributaries with dense vegetation',
+    biotope: 'Blackwater streams - ultra-soft, acidic, tannin-stained with dense marginal vegetation',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 5,
+    color: 'iridescent silver body, flaming red head, black caudal peduncle bar',
   },
 
   environment: {
     type: 'freshwater',
-    minTankSizeLiters: 60,
-    tempC: { min: 22, max: 27, ideal: 24 },
-    ph: { min: 5.0, max: 7.0, ideal: 6.0 },
-    gh: { min: 2, max: 12 },
+    minTankSizeLiters: 75, // 12 individuals minimum school
+    tempC: { min: 24, max: 28, ideal: 26 },
+    ph: { min: 5.5, max: 7.0, ideal: 6.2 },
+    gh: { min: 1, max: 8 },
     flow: 'low',
-    substrate: 'any',
+    substrate: 'fine sand',
   },
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Dense vegetation with open swimming space. They look best in blackwater setups.',
-    hardscape: ['Driftwood', 'Leaf Litter'],
+    plantingNotes: 'Amazon swordplants, Cryptocoryne wendtii, floating plants. Blackwater tannins essential for best color.',
+    hardscape: [
+      'Driftwood branches', 
+      'Leaf litter (catappa/oak)', 
+      'Fine sand substrate', 
+      'Marginal plant thickets'
+    ],
   },
 
   behavior: {
-    tags: ['shoaler', 'peaceful', 'midwater', 'shy'],
-    minGroupSize: 12,
-    description: 'Peaceful schooling fish with a striking red head. Very responsive to tank conditions (nose color = barometer).',
+    tags: ['shoaler', 'peaceful', 'midwater', 'shy', 'colorful', 'nano_safe'],
+    minGroupSize: 12, // <8 = stress, faded noses guaranteed
+    description: 'Tight, synchronized schoolers that flash brilliant red noses when healthy. Nervousness causes nose color loss within hours - perfect water quality indicators.',
     compatibility: {
-      goodMates: ['Other Tetras', 'Corydoras', 'Rasboras', 'Small Gouramis'],
-      badMates: ['Large predatory fish'],
-      notes: 'Perfect community fish. Safe with shrimp.',
+      goodMates: [
+        'Corydoras (all peaceful species)', 
+        'Rasbora hengeli', 
+        'Honey Gourami', 
+        'Otocinclus', 
+        'Pygmy Corydoras'
+      ],
+      badMates: [
+        'Fin nippers', 
+        'Aggressive barbs', 
+        'Large cichlids'
+      ],
+      notes: 'Ultra-peaceful nano schooler. **Safe with adult shrimp but eats shrimp fry/eggs**. Needs pristine water + large school for confidence.',
     },
   },
 
@@ -52,38 +68,44 @@ export const rummynoseTetra: Species = {
     diet: 'omnivore',
     effort: 'low',
     cost: 'low',
-    specialRequirements: ['Soft/acidic water', 'Groups of 12+'],
-
-    proTips: [
-      "The red nose is a stress indicator. If it fades, check water parameters (especially nitrate).",
-      "They are sensitive to ammonia and nitrite. Test your tank.",
-      "Feed high-quality micro-pellets or crushed flakes."
+    specialRequirements: [
+      'Large school (12+)', 
+      'Zero ammonia/nitrite', 
+      'Tannins (catappa leaves)', 
+      'Nitrate <20ppm'
     ],
-
+    proTips: [
+      "Nose color diagnosis: Full red = perfect conditions. 50% red = nitrates >20ppm. No red = ammonia/nitrite issues.",
+      "Indian almond leaves + peat filtration = wild blackwater conditions, maximum color intensity.",
+      "Feed micro-pellets + baby brine shrimp. Schooling tightens with quality food.",
+      "Weekly 30% water changes prevent nitrate creep - their #1 killer.",
+      "Add floating plants - reduces jumping stress."
+    ],
     commonMistakes: [
-      "Keeping too few (stress fading).",
-      "Ignoring the faded nose (early warning sign).",
-      "Hard water (coloration poor)."
+      "Small groups (6 or fewer) → Chronic stress, faded noses, short lifespan.",
+      "Tap water without remineralization → Osmotic stress, faded color.",
+      "Ignoring faded noses → Early deaths from undetected water issues.",
+      "Overfeeding → Water quality crashes → Nose color loss → cascade failure."
     ],
   },
 
   health: {
-    lifespanYears: 5,
-    commonDiseases: ['ich', 'fin-rot'],
-    sensitivities: ['High nitrate', 'Ammonia spikes', 'Hard water'],
+    lifespanYears: 5, // 7+ in perfect blackwater
+    commonDiseases: ['Ich', 'Fin rot', 'Columnaris'],
+    sensitivities: ['Nitrate >20ppm', 'Ammonia/nitrite', 'pH >7.5', 'Copper'],
   },
 
   scientificContext: {
-    wildHabitat: "Acidic, oxygen-rich blackwater streams with dense vegetation.",
-    sexualDimorphism: "Females are slightly rounder. Males have a more vibrant red nose.",
-    variants: [],
+    wildHabitat: "Rio Tapajós blackwaters. Ultra-soft (GH <2), pH 5.5-6.5, heavy tannins. Tight schools evade predators.",
+    sexualDimorphism: "Females rounder abdomen, slightly larger. Males more intense red, streamlined.",
+    variants: ['Classic Rummy (Petitella rhodostoma)', 'Brilliant Rummy (P. bleheri)', 'False Rummy (P. georgiae)'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'medium',
-    trigger: 'Soft, acidic water + Live food.',
-    fryCare: 'Eggs are adhesive. Fry need infusoria.',
-    notes: 'Fairly easy to breed in proper conditions.',
+    trigger: 'pH 5.5-6.0, GH <4, heavy peat filtration, live foods.',
+    fryCare: 'Adhesive eggs on plants/glass. Fry need infusoria → baby brine shrimp.',
+    notes: 'Prolific in blackwater. Parents eat eggs - separate or use spawning mop.',
   },
 };

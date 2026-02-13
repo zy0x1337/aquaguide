@@ -22,28 +22,40 @@ export const honeyGourami: Species = {
 
   environment: {
     type: 'freshwater',
-    minTankSizeLiters: 40,
+    minTankSizeLiters: 40, // Single ok, 75L+ for pairs/groups
     tempC: { min: 22, max: 28, ideal: 25 },
     ph: { min: 6.0, max: 8.0, ideal: 7.0 },
     gh: { min: 5, max: 20 },
-    flow: 'low', // Kritisch
+    flow: 'low', // Critical
     substrate: 'any',
   },
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Floating plants are essential for bubble nest building. Live plants reduce stress.',
+    plantingNotes: 'Floating plants essential for bubble nest building. Live plants reduce stress.',
     hardscape: ['Driftwood', 'Caves'],
   },
 
   behavior: {
     tags: ['bubble_nester', 'peaceful', 'centerpiece', 'labyrinth_fish'],
-    minGroupSize: 1,
-    description: 'Small, non-aggressive Gourami. Males are territorial but do not fight violently. Excellent for peaceful community tanks.',
+    minGroupSize: 1, // Singles ok, 2 pairs ideal in 75L+
+    description: 'Small, non-aggressive Gourami. Males territorial but non-violent. Perfect for peaceful community tanks or 2 pairs in larger setups.',
     compatibility: {
-      goodMates: ['Small Tetras', 'Rasboras', 'Corydoras', 'Shrimp'],
-      badMates: ['Aggressive fish', 'Large fish'],
-      notes: 'Safe with everything. Even females can be kept in groups in larger tanks (60L+).',
+      goodMates: [
+        'Small Tetras (Rasboras, Ember)', 
+        'Corydoras', 
+        'Pygmy Corydoras', 
+        'Shrimp (adults safe, eats fry)', 
+        'Snails'
+      ],
+      badMates: [
+        'Aggressive Cichlids', 
+        'Tiger Barbs', 
+        'Fin-nippers', 
+        'Large predatory fish', 
+        'Bettas'
+      ],
+      notes: 'Very peaceful but males may chase slow/small fish during breeding/feeding. Keep with fast, peaceful nano fish. Shrimp adults safe but fry will be eaten. Pairs or 2 pairs (75L+) work well with hiding spots.',
     },
   },
 
@@ -55,35 +67,37 @@ export const honeyGourami: Species = {
     specialRequirements: ['Low flow filter', 'Floating plants'],
 
     proTips: [
-      "Males turn almost black during breeding. It's a sign of health/aggression, not disease.",
-      "They are less aggressive than other Gouramis (Pearls, Blues are meaner).",
-      "Feed live food occasionally (Daphnia). Their color intensifies."
+      "Males turn almost black during breeding - sign of health, not disease.",
+      "Less aggressive than Pearl/Blue Gouramis.",
+      "2 pairs work well in 75L+ with plenty of hiding spots.",
+      "Feed live food occasionally (Daphnia) for intense colors."
     ],
 
     commonMistakes: [
-      "Strong filter flow (destroys bubble nests).",
-      "Keeping with aggressive fish.",
-      "No floating plants for nest building."
+      "Strong filter flow destroys bubble nests.",
+      "Housing with aggressive fish.",
+      "No floating plants for nest building.",
+      "Tank too small for pairs (under 60L)."
     ],
   },
 
   health: {
-    lifespanYears: 4,
-    commonDiseases: ['ich', 'fin-rot', 'velvet'],
+    lifespanYears: 5, // 4-6 years with good care
+    commonDiseases: ['Ich', 'Fin rot', 'Velvet', 'Bacterial infections', 'Dropsy'],
     sensitivities: ['Strong current', 'Cold water'],
   },
 
   scientificContext: {
     wildHabitat: "Slow, weedy rivers and ponds in South Asia.",
-    sexualDimorphism: "Males are more colorful (golden-yellow). Females are paler.",
-    variants: [],
+    sexualDimorphism: "Males more colorful (golden-orange) and slimmer. Females paler/browner and rounder.",
+    variants: ['Yellow/Gold', 'Red/Sunset', 'Orange'],
   },
 
   breeding: {
     method: 'bubble_nester',
     difficulty: 'medium',
-    trigger: 'Warm water (26-28°C) + Live food.',
+    trigger: 'Warm water (26-28°C) + live food.',
     fryCare: 'Male guards nest. Remove female. Fry need infusoria initially.',
-    notes: 'Easier than Bettas to breed.',
+    notes: 'Easier than Bettas. 2 pairs can breed simultaneously with enough space.',
   },
 };

@@ -4,6 +4,9 @@ import { anubiasNanaPetite } from './anubias-nana-petite';
 import {bacopaMonnieri} from './bacopa-monnieri';
 import {microsorumPteropus} from './microsorum-pteropus';
 import {myriophyllumMattogrossense} from './myriophyllum-mattogrossense'
+import { hornwort } from './hornwort';
+import { aponogetonMadagascariensis } from './aponogeton-madagascariensis';
+import { limnobiumLaevigatum } from './limnoboium-laevigatum';
 
 // 1. Array aller Pflanzen sammeln
 const plants: Plant[] = [
@@ -11,7 +14,10 @@ const plants: Plant[] = [
   anubiasNanaPetite,
   bacopaMonnieri,
   microsorumPteropus,
-  myriophyllumMattogrossense
+  myriophyllumMattogrossense,
+  hornwort,
+  aponogetonMadagascariensis,
+  limnobiumLaevigatum
   // Hier später weitere Pflanzen importieren:
   // javaFern,
   // cryptocoryneWendtii,
