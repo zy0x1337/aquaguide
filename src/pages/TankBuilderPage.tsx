@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Plus, Trash2, Layers, Ruler, Fish as FishIcon, Leaf, AlertTriangle, Download, Info, Lock, Unlock, Mountain, Minus, ChevronUp, ChevronDown, Droplets, Thermometer } from 'lucide-react';
+import { Plus, Trash2, Layers, Ruler, Fish as FishIcon, Leaf, AlertTriangle, Download, Info, Lock, Unlock, Mountain, ChevronUp, ChevronDown, Droplets, Thermometer } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
