@@ -1,14 +1,15 @@
 {
   "name": "aquarium-guide",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "release": "standard-version"
+    "release": "standard-version",
+    "test": "vitest"
   },
   "dependencies": {
     "clsx": "^2.1.1",
