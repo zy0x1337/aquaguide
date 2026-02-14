@@ -288,8 +288,6 @@ const Tank3DView = ({ tankConfig, items, onRemoveItem }: {
   items: TankItem[];
   onRemoveItem: (id: string) => void;
 }) => {
-  // aspectRatio was unused, removed it.
-  
   return (
     <div className="relative bg-gradient-to-b from-cyan-100 via-blue-200 to-blue-400 aspect-[16/9] overflow-hidden">
       {/* Grid lines for depth */}
@@ -397,4 +395,10 @@ const ItemCard = ({ name, image, onClick }: { name: string; image?: string; onCl
 const StatRow = ({ label, value, warning }: { label: string; value: string; warning?: boolean }) => (
   <div className="flex items-center justify-between">
     <span className="text-sm text-slate-600">{label}</span>
-    <span className={`font-bold text-sm ${\n      warning ? 'text-rose-600' : 'text-slate-900'\n    }`}>\n      {value}\n    </span>\n  </div>\n);\n
+    <span className={`font-bold text-sm ${
+      warning ? 'text-rose-600' : 'text-slate-900'
+    }`}>
+      {value}
+    </span>
+  </div>
+);
