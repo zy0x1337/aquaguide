@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Plus, Trash2, Layers, Ruler, Fish as FishIcon, Leaf, AlertTriangle, Download, Save, Info, Lock, Unlock, Mountain } from 'lucide-react';
+import { Plus, Trash2, Layers, Ruler, Fish as FishIcon, Leaf, AlertTriangle, Download, Info, Lock, Unlock, Mountain } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
@@ -100,8 +100,15 @@ export const TankBuilderPage = () => {
 
   // Add item to tank
   const addItem = (data: Species | Plant | HardscapeItem, type: 'fish' | 'plant' | 'hardscape') => {
+    let itemId: string;
+    if ('id' in data) {
+      itemId = data.id;
+    } else {
+      itemId = (data as HardscapeItem).name;
+    }
+    
     const newItem: TankItem = {
-      id: `${type}-${('id' in data ? data.id : data.name)}-${Date.now()}`,
+      id: `${type}-${itemId}-${Date.now()}`,
       type,
       data,
       position: { 
@@ -196,15 +203,15 @@ export const TankBuilderPage = () => {
     warnings.push(`Bioload too high! ${totalBioload.toFixed(0)}cm vs recommended ${bioloadLimit}cm`);
   }
 
-  // Aggressive fish check
+  // Aggressive fish check (using correct tag name)
   const aggressiveFish = fishItems.filter(item => {
     const species = item.data as Species;
-    return species.behavior.tags.includes('aggressive') || species.behavior.tags.includes('territorial');
+    return species.behavior.tags.includes('semi-aggressive') || species.behavior.tags.includes('territorial');
   });
   if (aggressiveFish.length > 0 && fishItems.length > aggressiveFish.length) {
     aggressiveFish.forEach(item => {
       const species = item.data as Species;
-      warnings.push(`⚠️ ${species.taxonomy.commonName} is aggressive - check compatibility`);
+      warnings.push(`⚠️ ${species.taxonomy.commonName} may be aggressive - check compatibility`);
     });
   }
 
@@ -338,7 +345,6 @@ export const TankBuilderPage = () => {
               
               <Tank3DView 
                 items={items}
-                tankConfig={tankConfig}
                 onRemoveItem={removeItem}
                 onToggleLock={toggleLock}
                 onUpdatePosition={updatePosition}
@@ -465,7 +471,6 @@ const getSwimZone = (item: TankItem): 'surface' | 'mid' | 'bottom' | null => {
 // 3D Tank View Component with Drag & Drop
 const Tank3DView = ({ 
   items, 
-  tankConfig,
   onRemoveItem, 
   onToggleLock,
   onUpdatePosition,
@@ -473,7 +478,6 @@ const Tank3DView = ({
   setDraggedItem
 }: { 
   items: TankItem[];
-  tankConfig: TankConfig;
   onRemoveItem: (id: string) => void;
   onToggleLock: (id: string) => void;
   onUpdatePosition: (id: string, x: number, y: number) => void;
@@ -715,13 +719,13 @@ const StatRow = ({ label, value, warning }: { label: string; value: string; warn
 );
 
 // Generate shopping list
-const generateShoppingList = (items: TankItem[], tankConfig: TankConfig): string => {
+const generateShoppingList = (items: TankItem[], config: TankConfig): string => {
   const fish = items.filter(i => i.type === 'fish');
   const plants = items.filter(i => i.type === 'plant');
   const hardscape = items.filter(i => i.type === 'hardscape');
   
   let text = `🐠 AQUARIUM SHOPPING LIST\n`;
-  text += `Tank: ${tankConfig.volume}L (${tankConfig.length}×${tankConfig.width}×${tankConfig.height}cm)\n\n`;
+  text += `Tank: ${config.volume}L (${config.length}×${config.width}×${config.height}cm)\n\n`;
   
   if (fish.length > 0) {
     text += `🐟 FISH:\n`;
@@ -756,8 +760,8 @@ const generateShoppingList = (items: TankItem[], tankConfig: TankConfig): string
   }, 0);
   
   text += `📊 EQUIPMENT RECOMMENDATIONS:\n`;
-  text += `- Filter: ${tankConfig.volume * 5} L/h minimum\n`;
-  text += `- Heater: ${Math.ceil(tankConfig.volume / 4) * 25}W\n`;
+  text += `- Filter: ${config.volume * 5} L/h minimum\n`;
+  text += `- Heater: ${Math.ceil(config.volume / 4) * 25}W\n`;
   text += `- Light: Check plant requirements\n`;
   text += `\n💡 Total Bioload: ${bioload.toFixed(0)}cm fish\n`;
   
