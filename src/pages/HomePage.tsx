@@ -8,6 +8,7 @@ import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
 import { FilterBadge } from '../components/ui/FilterBadge';
 import { useToast, Toast } from '../components/ui/Toast';
 import { cn } from '../lib/utils';
+import { Region } from '../types/species';
 
 // Lazy load SpeciesCard for initial paint performance
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
@@ -69,6 +70,9 @@ const HomePage = () => {
   ].filter(Boolean);
 
   const hasActiveFilters = activeFilters.length > 0 || searchTerm;
+
+  // Explicitly typed regions array to fix TS error
+  const regions: Region[] = ['South America', 'Asia', 'Africa', 'Central America'];
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-stone-950 font-sans pb-20 transition-colors duration-300">
@@ -152,7 +156,7 @@ const HomePage = () => {
                     <Globe2 className="w-3 h-3 mr-1.5" /> Region
                   </label>
                   <div className="flex flex-wrap gap-2">
-                    {['South America', 'Asia', 'Africa', 'Central America'].map(region => (
+                    {regions.map(region => (
                       <FilterChip 
                         key={region}
                         label={region} 
