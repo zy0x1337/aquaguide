@@ -6,6 +6,13 @@ export const pygmyCory: Species = {
   imageUrl: '/images/species/pygmy-cory.jpg',
   funFact: 'Unlike most Corydoras that stick to the bottom, Pygmy Corys frequently swim in mid-water, making them one of the most active and visible Corydoras species.',
   
+  imageCredit: {
+    photographer: 'Carnat Joel',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Corydoras_pygmaeus_carnat_joel_5.jpg',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/'
+  },
+
   taxonomy: {
     scientificName: 'Corydoras pygmaeus',
     commonName: 'Pygmy Corydoras',

@@ -5,6 +5,13 @@ export const sparklingGourami: Species = {
   slug: 'sparkling-gourami',
   imageUrl: '/images/species/sparkling-gourami.jpg',
   funFact: 'Sparkling Gouramis produce audible croaking sounds during courtship displays - you can actually hear them communicate!',
+
+  imageCredit: {
+    photographer: 'Dezinformator15',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Sparkling_gourami.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0'
+  },
   
   taxonomy: {
     scientificName: 'Trichopsis pumila',

@@ -6,6 +6,13 @@ export const emberTetra: Species = {
   imageUrl: '/images/species/ember-tetra.jpg',
   funFact: 'Ember Tetras glow like burning embers in low light, intensifying their fiery orange-red coloration when kept in dimly lit, blackwater aquariums.',
   
+imageCredit: {
+    photographer: 'Klaus Rudloff',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Hyphessobrycon_amandae_A.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/'
+  },
+
   taxonomy: {
     scientificName: 'Hyphessobrycon amandae',
     commonName: 'Ember Tetra',
