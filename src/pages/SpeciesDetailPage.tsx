@@ -6,7 +6,7 @@ import {
   Lightbulb, XCircle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { speciesRepository } from '../data/species';
+import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankSimulator } from '../components/species/TankSimulator';
@@ -15,7 +15,7 @@ import { DiseaseList } from '../components/species/DiseaseList';
 
 const SpeciesDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const data = speciesRepository.getBySlug(slug || '');
+  const data = allSpecies.find(s => s.slug === slug);
 
   if (!data) return <NotFound />;
 
@@ -43,7 +43,6 @@ const SpeciesDetailPage = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
         </div>
 
-        {/* Subtle decorative element */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
@@ -92,10 +91,10 @@ const SpeciesDetailPage = () => {
       <main className="relative max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pb-20">
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           
-          {/* LEFT COLUMN - More compact */}
+          {/* LEFT COLUMN */}
           <div className="xl:col-span-2 space-y-8">
             
-            {/* Quick Stats - More compact */}
+            {/* Quick Stats */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -115,7 +114,7 @@ const SpeciesDetailPage = () => {
               </div>
             </motion.div>
 
-            {/* Pro Tips & Mistakes - More compact side by side */}
+            {/* Pro Tips & Mistakes */}
             {(data.care.proTips || data.care.commonMistakes) && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {data.care.proTips && (
@@ -162,7 +161,7 @@ const SpeciesDetailPage = () => {
               </div>
             )}
 
-            {/* Fun Fact - More elegant */}
+            {/* Fun Fact */}
             {data.funFact && (
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -184,7 +183,7 @@ const SpeciesDetailPage = () => {
               </motion.div>
             )}
 
-            {/* Behavior - More compact */}
+            {/* Behavior */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -215,7 +214,7 @@ const SpeciesDetailPage = () => {
               </div>
             </motion.div>
 
-            {/* Habitat - More compact */}
+            {/* Habitat */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -302,7 +301,7 @@ const SpeciesDetailPage = () => {
               </div>
             </motion.div>
 
-            {/* Compatibility - More compact */}
+            {/* Compatibility */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -343,7 +342,7 @@ const SpeciesDetailPage = () => {
               )}
             </motion.div>
 
-            {/* Health & Cost - More compact side by side */}
+            {/* Health & Cost */}
             <div className="grid md:grid-cols-2 gap-6">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -416,7 +415,7 @@ const SpeciesDetailPage = () => {
               </motion.div>
             </div>
 
-            {/* Advanced Knowledge - More compact */}
+            {/* Advanced Knowledge */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -517,7 +516,7 @@ const SpeciesDetailPage = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT SIDEBAR - Cleaner */}
+          {/* RIGHT SIDEBAR */}
           <aside className="space-y-6">
             <div className="xl:sticky xl:top-20 space-y-6">
               <motion.div 

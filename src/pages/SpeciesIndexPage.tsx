@@ -1,34 +1,32 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
 import { Search, SlidersHorizontal, ArrowUpDown, AlertCircle } from 'lucide-react';
-import { speciesRepository } from '../data/species';
+import { allSpecies } from '../data/species';
 import { SEOHead } from '../components/seo/SEOHead';
 import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
 import { PageTransition } from '../components/layout/PageTransition';
-import type { Difficulty } from '../types/species';
+import type { Difficulty, Species } from '../types/species';
 
-// Lazy load SpeciesCard to fix static/dynamic import warning and improve perf
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
 
 const SpeciesIndexPage = () => {
-  const allSpecies = speciesRepository.getAll();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterDifficulty, setFilterDifficulty] = useState<Difficulty | 'all'>('all');
   const [sortOrder, setSortOrder] = useState<'name' | 'difficulty'>('name');
 
   const filteredSpecies = useMemo(() => {
     return allSpecies
-      .filter(s => {
+      .filter((s: Species) => {
         const matchesSearch = s.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) || 
                               s.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesDiff = filterDifficulty === 'all' || s.care.difficulty === filterDifficulty;
         return matchesSearch && matchesDiff;
       })
-      .sort((a, b) => {
+      .sort((a: Species, b: Species) => {
         if (sortOrder === 'name') return a.taxonomy.commonName.localeCompare(b.taxonomy.commonName);
-        const diffMap = { beginner: 0, medium: 1, expert: 2 };
+        const diffMap: Record<Difficulty, number> = { beginner: 0, medium: 1, intermediate: 1, expert: 2 };
         return diffMap[a.care.difficulty] - diffMap[b.care.difficulty];
       });
-  }, [allSpecies, searchTerm, filterDifficulty, sortOrder]);
+  }, [searchTerm, filterDifficulty, sortOrder]);
 
   return (
     <PageTransition>
@@ -38,7 +36,6 @@ const SpeciesIndexPage = () => {
           description="Browse our complete collection of aquarium fish and invertebrates."
         />
 
-        {/* Header */}
         <div className="bg-white dark:bg-stone-900 border-b border-slate-200 dark:border-stone-800 pt-24 pb-12 px-6 transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
@@ -51,10 +48,8 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 -mt-8">
-          {/* Controls */}
           <div className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-slate-100 dark:border-stone-800 p-4 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300">
             
-            {/* Search */}
             <div className="relative w-full md:max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input 
@@ -66,13 +61,12 @@ const SpeciesIndexPage = () => {
               />
             </div>
 
-            {/* Filters */}
             <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
               <div className="flex items-center gap-2">
                 <SlidersHorizontal className="w-4 h-4 text-slate-400 flex-shrink-0" />
                 <select 
                   value={filterDifficulty}
-                  onChange={(e) => setFilterDifficulty(e.target.value as any)}
+                  onChange={(e) => setFilterDifficulty(e.target.value as Difficulty | 'all')}
                   className="bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 dark:text-stone-300 outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition-colors"
                 >
                   <option value="all">All Levels</option>
@@ -92,11 +86,10 @@ const SpeciesIndexPage = () => {
             </div>
           </div>
 
-          {/* Results */}
           {filteredSpecies.length > 0 ? (
             <Suspense fallback={<SpeciesGridSkeleton />}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredSpecies.map(s => <SpeciesCard key={s.id} data={s} />)}
+                {filteredSpecies.map((s: Species) => <SpeciesCard key={s.id} data={s} />)}
               </div>
             </Suspense>
           ) : (
