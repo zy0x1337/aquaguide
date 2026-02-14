@@ -1,10 +1,9 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
-import { Search, SlidersHorizontal, ArrowUpDown, Fish, AlertCircle } from 'lucide-react';
+import { Search, SlidersHorizontal, ArrowUpDown, AlertCircle } from 'lucide-react';
 import { speciesRepository } from '../data/species';
 import { SEOHead } from '../components/seo/SEOHead';
 import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
-import { cn } from '../lib/utils';
-import type { Species, Difficulty } from '../types/species';
+import type { Difficulty } from '../types/species';
 
 // Lazy load SpeciesCard to fix static/dynamic import warning and improve perf
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
@@ -18,13 +17,13 @@ const SpeciesIndexPage = () => {
   const filteredSpecies = useMemo(() => {
     return allSpecies
       .filter(s => {
-        const matchesSearch = s.commonName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        const matchesSearch = s.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) || 
                               s.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesDiff = filterDifficulty === 'all' || s.care.difficulty === filterDifficulty;
         return matchesSearch && matchesDiff;
       })
       .sort((a, b) => {
-        if (sortOrder === 'name') return a.commonName.localeCompare(b.commonName);
+        if (sortOrder === 'name') return a.taxonomy.commonName.localeCompare(b.taxonomy.commonName);
         const diffMap = { beginner: 0, medium: 1, expert: 2 };
         return diffMap[a.care.difficulty] - diffMap[b.care.difficulty];
       });
