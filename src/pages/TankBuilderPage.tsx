@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Plus, Trash2, Layers, Ruler, Fish as FishIcon, Leaf, AlertTriangle, Download, Info, Lock, Unlock, Mountain, ChevronUp, ChevronDown, Droplets, Thermometer } from 'lucide-react';
+import { Plus, Trash2, Layers, Ruler, Fish as FishIcon, Leaf, AlertTriangle, Download, Info, Lock, Unlock, Mountain, ChevronUp, ChevronDown, Droplets, Thermometer, Wind } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
@@ -23,6 +23,12 @@ interface TankItem {
   position: { x: number; y: number; z: number };
   count?: number;
   locked?: boolean;
+  visuals?: {
+    rotation?: number; // degrees
+    flipX?: boolean;   // true = face left
+    swayDelay?: number; // seconds
+    floatSpeed?: number; // seconds
+  };
 }
 
 interface TankConfig {
@@ -123,12 +129,18 @@ export const TankBuilderPage = () => {
       type,
       data,
       position: { 
-        x: Math.random() * 70 + 15, 
+        x: Math.random() * 60 + 20, 
         y: type === 'plant' ? 80 : type === 'hardscape' ? 85 : Math.random() * 40 + 30, 
         z: Math.random() * 60 + 20 
       },
       count: type === 'fish' ? 1 : undefined,
-      locked: false
+      locked: false,
+      visuals: {
+        rotation: type === 'hardscape' ? Math.random() * 360 : 0,
+        flipX: type === 'fish' ? Math.random() > 0.5 : false,
+        swayDelay: Math.random() * 2,
+        floatSpeed: 3 + Math.random() * 2,
+      }
     };
     setItems([...items, newItem]);
   };
@@ -173,7 +185,7 @@ export const TankBuilderPage = () => {
     return acc + (species.visuals.adultSizeCM * (item.count || 1));
   }, 0);
   
-  // Enhanced compatibility warnings - FIXED: Group by species
+  // Enhanced compatibility warnings
   const warnings: string[] = [];
   const fishItems = items.filter(i => i.type === 'fish');
   
@@ -188,7 +200,6 @@ export const TankBuilderPage = () => {
     if (overallMin > overallMax) {
       warnings.push(`🌡️ Temperature conflict: No overlap between species`);
     } else {
-      // Show recommended range
       const rangeWarning = `Recommended: ${overallMin}°C - ${overallMax}°C`;
       if (overallMax - overallMin < 2) {
         warnings.push(`⚠️ ${rangeWarning} (narrow range!)`);
@@ -217,7 +228,7 @@ export const TankBuilderPage = () => {
     }
   });
 
-  // Group size check - FIXED: Aggregate by species ID
+  // Group size check (Aggregated)
   const speciesGroups = new Map<string, number>();
   fishItems.forEach(item => {
     const species = item.data as Species;
@@ -686,6 +697,16 @@ const Tank3DView = ({
           const zone = getSwimZone(item);
           const isSelected = selectedItem === item.id;
           
+          // Visual properties with defaults
+          const rotation = item.visuals?.rotation || 0;
+          const flipX = item.visuals?.flipX || false;
+          const swayDelay = item.visuals?.swayDelay || 0;
+          const floatSpeed = item.visuals?.floatSpeed || 4;
+
+          // Depth effect
+          const isFar = item.position.z < 40;
+          const depthFilter = isFar ? 'brightness(0.85) contrast(0.9) blur(0.5px)' : 'none';
+          
           return (
             <motion.div
               key={item.id}
@@ -714,67 +735,111 @@ const Tank3DView = ({
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     className="absolute inset-0 -m-2 border-4 border-indigo-400 rounded-full"
+                    style={{ zIndex: 50 }}
                   />
                 )}
 
-                {item.type === 'fish' ? (
-                  <div 
-                    className="rounded-full overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white"
-                    style={{ width: displaySize, height: displaySize }}
-                  >
-                    {(item.data as Species).imageUrl ? (
-                      <img 
-                        src={(item.data as Species).imageUrl} 
-                        alt={(item.data as Species).taxonomy.commonName}
-                        className="w-full h-full object-cover"
-                        draggable={false}
-                      />
-                    ) : (
-                      <div className={`w-full h-full flex items-center justify-center text-white ${
-                        zone === 'surface' ? 'bg-gradient-to-br from-blue-400 to-blue-600' :
-                        zone === 'bottom' ? 'bg-gradient-to-br from-amber-500 to-amber-700' :
-                        'bg-gradient-to-br from-indigo-400 to-indigo-600'
-                      }`}>
-                        <FishIcon style={{ width: displaySize * 0.5, height: displaySize * 0.5 }} />
+                {/* Content Container with Transforms */}
+                <div style={{ filter: depthFilter, transition: 'filter 0.3s ease' }}>
+                  
+                  {item.type === 'fish' ? (
+                    <motion.div
+                      animate={{ y: [-3, 3, -3] }}
+                      transition={{ 
+                        duration: floatSpeed, 
+                        repeat: Infinity, 
+                        ease: "easeInOut",
+                        delay: swayDelay 
+                      }}
+                      className="relative"
+                    >
+                      <div 
+                        className="rounded-full overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white transition-transform duration-500"
+                        style={{ 
+                          width: displaySize, 
+                          height: displaySize,
+                          transform: flipX ? 'scaleX(-1)' : 'none'
+                        }}
+                      >
+                        {(item.data as Species).imageUrl ? (
+                          <img 
+                            src={(item.data as Species).imageUrl} 
+                            alt={(item.data as Species).taxonomy.commonName}
+                            className="w-full h-full object-cover"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className={`w-full h-full flex items-center justify-center text-white ${
+                            zone === 'surface' ? 'bg-gradient-to-br from-blue-400 to-blue-600' :
+                            zone === 'bottom' ? 'bg-gradient-to-br from-amber-500 to-amber-700' :
+                            'bg-gradient-to-br from-indigo-400 to-indigo-600'
+                          }`}>
+                            <FishIcon style={{ width: displaySize * 0.5, height: displaySize * 0.5 }} />
+                          </div>
+                        )}
                       </div>
-                    )}
-                    {item.count && item.count > 1 && (
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-xl border-2 border-white z-10">
-                        {item.count}
+                      
+                      {/* Badge (Outside flip container to remain readable) */}
+                      {item.count && item.count > 1 && (
+                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-xl border-2 border-white z-20">
+                          {item.count}
+                        </div>
+                      )}
+                    </motion.div>
+                  ) : item.type === 'plant' ? (
+                    <motion.div
+                      animate={{ rotate: [-2, 2, -2] }}
+                      transition={{ 
+                        duration: floatSpeed * 1.5, 
+                        repeat: Infinity, 
+                        ease: "easeInOut",
+                        delay: swayDelay 
+                      }}
+                      style={{ transformOrigin: 'bottom center' }}
+                    >
+                      <div 
+                        className="rounded-t-3xl overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white"
+                        style={{ width: displaySize * 0.6, height: displaySize * 1.2 }}
+                      >
+                        {(item.data as Plant).imageUrl ? (
+                          <img 
+                            src={(item.data as Plant).imageUrl} 
+                            alt={(item.data as Plant).taxonomy.commonName}
+                            className="w-full h-full object-cover"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white">
+                            <Leaf style={{ width: displaySize * 0.3, height: displaySize * 0.3 }} />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ) : item.type === 'plant' ? (
+                    </motion.div>
+                  ) : (
+                    <div 
+                      className="rounded-lg flex items-center justify-center shadow-xl text-4xl backdrop-blur-sm transition-transform"
+                      style={{ 
+                        width: displaySize * 0.8, 
+                        height: displaySize * 0.8,
+                        backgroundColor: (item.data as HardscapeItem).color,
+                        border: '3px solid rgba(255,255,255,0.4)',
+                        transform: `rotate(${rotation}deg)`
+                      }}
+                    >
+                      {(item.data as HardscapeItem).icon}
+                    </div>
+                  )}
+                  
+                  {/* Floor Shadow */}
                   <div 
-                    className="rounded-t-3xl overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white"
-                    style={{ width: displaySize * 0.6, height: displaySize * 1.2 }}
-                  >
-                    {(item.data as Plant).imageUrl ? (
-                      <img 
-                        src={(item.data as Plant).imageUrl} 
-                        alt={(item.data as Plant).taxonomy.commonName}
-                        className="w-full h-full object-cover"
-                        draggable={false}
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white">
-                        <Leaf style={{ width: displaySize * 0.3, height: displaySize * 0.3 }} />
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div 
-                    className="rounded-lg flex items-center justify-center shadow-xl text-4xl backdrop-blur-sm"
+                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/20 blur-md pointer-events-none"
                     style={{ 
                       width: displaySize * 0.8, 
-                      height: displaySize * 0.8,
-                      backgroundColor: (item.data as HardscapeItem).color,
-                      border: '3px solid rgba(255,255,255,0.4)'
-                    }}
-                  >
-                    {(item.data as HardscapeItem).icon}
-                  </div>
-                )}
+                      height: displaySize * 0.2,
+                      opacity: Math.max(0.1, 1 - (item.position.y / 100))
+                    }} 
+                  />
+                </div>
                 
                 {/* Tooltip */}
                 <div className="absolute -top-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
@@ -797,8 +862,8 @@ const Tank3DView = ({
                   </div>
                 </div>
 
-                {/* Controls */}
-                <div className="absolute -top-3 -right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                {/* Controls - Always clear and on top */}
+                <div className="absolute -top-3 -right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
                   {item.type === 'fish' && (
                     <div className="flex flex-col gap-1">
                       <button
@@ -833,7 +898,7 @@ const Tank3DView = ({
 
                 {/* Lock indicator */}
                 {item.locked && (
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-slate-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-slate-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white z-40">
                     <Lock className="w-2.5 h-2.5 text-white" />
                   </div>
                 )}
