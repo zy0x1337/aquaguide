@@ -1,99 +1,125 @@
-import type { Species } from '../../types/species';
-
+// Auto-generated species index
+import { africanDwarfFrog } from './african-dwarf-frog';
+import { amanoShrimp } from './amano-shrimp';
+import { anomalochromisThomasi } from './anomalochromis-thomasi';
 import { bettaSplendens } from './betta-splendens';
 import { bettaSplendensFemale } from './betta-splendens-female';
-import { neonTetra } from './neon-tetra';
-import { kuhliLoach } from './kuhli-loach';
-import { otocinclusVittatus } from './otocinclus-vittatus';
-import { otocinclusMacrospilus } from './otocinclus-macrospilus';
-import { whiteCloudMinnow } from './white-cloud-minnow';
-import { endlerGuppy } from './endler-guppy';
-import { swordtail } from './swordtail';
+import { blackSkirtTetra } from './black-skirt-tetra';
 import { bristlenosePleco } from './bristlenose-pleco';
 import { bronzeCory } from './bronze-cory';
-import { pandaCory } from './panda-cory';
-import { africanDwarfFrog } from './african-dwarf-frog';
-import { neocaridinaDavidiRedCherry } from './neocaridina-davidi-red-cherry';
-import { harlequinRasbora } from './harlequin-rasbora';
-import { chiliRasbora } from './chili-rasbora';
-import { cherryBarb } from './cherry-barb';
-import { celestialPearlDanio } from './celestial-pearl-danio';
-import { platy } from './platy';
-import { cardinalTetra } from './cardinal-tetra';
-import { honeyGourami } from './honey-gourami';
-import { siameseAlgaeEater } from './siamese-algae-eater';
-import { rummynoseTetra } from './rummynose-tetra';
-import { ramCichlid } from './ram-cichlid';
-import { molly } from './molly';
-import { blackSkirtTetra } from './black-skirt-tetra';
-import { zebraDanio } from './danio-rerio';
-import { corydorasPaleatus } from './corydoras-paleatus';
-import { rosyBarb } from './rosy-barb';
-import { oscar } from './oscar';
-import { goldSpotPleco } from './gold-spot-pleco';
-import { electricYellowLab } from './electric-yellow-lab';
 import { bumblebeeGoby } from './bumblebee-goby';
-import { amanoShrimp } from './amano-shrimp';
-
-// ✨ NEW SPECIES
+import { cardinalTetra } from './cardinal-tetra';
+import { celestialPearlDanio } from './celestial-pearl-danio';
+import { cherryBarb } from './cherry-barb';
+import { chiliRasbora } from './chili-rasbora';
+import { corydorasPaleatus } from './corydoras-paleatus';
+import { danioRerio } from './danio-rerio';
+import { electricYellowLab } from './electric-yellow-lab';
 import { emberTetra } from './ember-tetra';
+import { endlerGuppy } from './endler-guppy';
+import { goldSpotPleco } from './gold-spot-pleco';
+import { harlequinRasbora } from './harlequin-rasbora';
+import { honeyGourami } from './honey-gourami';
+import { kuhliLoach } from './kuhli-loach';
+import { melanotaeniaLacustris } from './melanotaenia-lacustris';
+import { molly } from './molly';
+import { neocaridina } from './neocaridina-davidi-red-cherry';
+import { neonTetra } from './neon-tetra';
+import { oscar } from './oscar';
+import { otocinclus } from './otocinclus-macrospilus';
+import { otocinclus2 } from './otocinclus-vittatus';
+import { pandaCory } from './panda-cory';
+import { platy } from './platy';
 import { pygmyCory } from './pygmy-cory';
+import { ramCichlid } from './ram-cichlid';
+import { rosyBarb } from './rosy-barb';
+import { rummynoseTetra } from './rummynose-tetra';
+import { siameseAlgaeEater } from './siamese-algae-eater';
 import { sparklingGourami } from './sparkling-gourami';
+import { swordtail } from './swordtail';
+import { whiteCloudMinnow } from './white-cloud-minnow';
+import type { Species } from '../../types/species';
 
-const allSpecies: Species[] = [
+export const allSpecies: Species[] = [
+  africanDwarfFrog,
+  amanoShrimp,
+  anomalochromisThomasi,
   bettaSplendens,
   bettaSplendensFemale,
-  neonTetra,
-  kuhliLoach,
-  otocinclusVittatus,
-  otocinclusMacrospilus,
-  whiteCloudMinnow,
-  endlerGuppy,
-  swordtail,
+  blackSkirtTetra,
   bristlenosePleco,
   bronzeCory,
-  pandaCory,
-  africanDwarfFrog,
-  neocaridinaDavidiRedCherry,
-  harlequinRasbora,
-  chiliRasbora,
-  cherryBarb,
-  celestialPearlDanio,
-  platy,
-  cardinalTetra,
-  honeyGourami,
-  siameseAlgaeEater,
-  rummynoseTetra,
-  ramCichlid,
-  molly,
-  blackSkirtTetra,
-  zebraDanio,
-  corydorasPaleatus,
-  rosyBarb,
-  oscar,
-  goldSpotPleco,
-  electricYellowLab,
   bumblebeeGoby,
-  amanoShrimp,
-  // ✨ NEW
+  cardinalTetra,
+  celestialPearlDanio,
+  cherryBarb,
+  chiliRasbora,
+  corydorasPaleatus,
+  danioRerio,
+  electricYellowLab,
   emberTetra,
+  endlerGuppy,
+  goldSpotPleco,
+  harlequinRasbora,
+  honeyGourami,
+  kuhliLoach,
+  melanotaeniaLacustris,
+  molly,
+  neocaridina,
+  neonTetra,
+  oscar,
+  otocinclus,
+  otocinclus2,
+  pandaCory,
+  platy,
   pygmyCory,
-  sparklingGourami
+  ramCichlid,
+  rosyBarb,
+  rummynoseTetra,
+  siameseAlgaeEater,
+  sparklingGourami,
+  swordtail,
+  whiteCloudMinnow,
 ];
 
-export const speciesRepository = {
-  getAll: (): Species[] => allSpecies,
-  getBySlug: (slug: string): Species | undefined => {
-    return allSpecies.find(s => s.slug === slug);
-  },
-  // Filter Funktion
-  filterByTag: (tag: 'beginner' | 'nano' | 'community'): Species[] => {
-    return allSpecies.filter(s => {
-      if (tag === 'beginner') return s.care.difficulty === 'beginner';
-      if (tag === 'nano') return s.environment.minTankSizeLiters <= 40;
-      if (tag === 'community')
-        return s.behavior.tags.includes('peaceful') || s.behavior.tags.includes('shoaler'); // Simplifizierte Logik
-      return true;
-    });
-  }
+export {
+  africanDwarfFrog,
+  amanoShrimp,
+  anomalochromisThomasi,
+  bettaSplendens,
+  bettaSplendensFemale,
+  blackSkirtTetra,
+  bristlenosePleco,
+  bronzeCory,
+  bumblebeeGoby,
+  cardinalTetra,
+  celestialPearlDanio,
+  cherryBarb,
+  chiliRasbora,
+  corydorasPaleatus,
+  danioRerio,
+  electricYellowLab,
+  emberTetra,
+  endlerGuppy,
+  goldSpotPleco,
+  harlequinRasbora,
+  honeyGourami,
+  kuhliLoach,
+  melanotaeniaLacustris,
+  molly,
+  neocaridina,
+  neonTetra,
+  oscar,
+  otocinclus,
+  otocinclus2,
+  pandaCory,
+  platy,
+  pygmyCory,
+  ramCichlid,
+  rosyBarb,
+  rummynoseTetra,
+  siameseAlgaeEater,
+  sparklingGourami,
+  swordtail,
+  whiteCloudMinnow,
 };
