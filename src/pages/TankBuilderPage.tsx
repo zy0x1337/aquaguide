@@ -38,12 +38,12 @@ export const TankBuilderPage = () => {
   const [showCompatibility, setShowCompatibility] = useState(true);
 
   // Filter species/plants
-  const filteredSpecies = allSpecies.filter(s => 
+  const filteredSpecies = allSpecies.filter((s: Species) => 
     s.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase())
   ).slice(0, 20);
 
-  const filteredPlants = allPlants.filter(p => 
+  const filteredPlants = allPlants.filter((p: Plant) => 
     p.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase())
   ).slice(0, 20);
@@ -252,7 +252,7 @@ export const TankBuilderPage = () => {
               <div className="p-4 max-h-[400px] overflow-y-auto">
                 {selectedTab === 'fish' ? (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {filteredSpecies.map(species => (
+                    {filteredSpecies.map((species: Species) => (
                       <ItemCard
                         key={species.id}
                         name={species.taxonomy.commonName}
@@ -263,7 +263,7 @@ export const TankBuilderPage = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {filteredPlants.map(plant => (
+                    {filteredPlants.map((plant: Plant) => (
                       <ItemCard
                         key={plant.id}
                         name={plant.taxonomy.commonName}
@@ -288,7 +288,7 @@ const Tank3DView = ({ tankConfig, items, onRemoveItem }: {
   items: TankItem[];
   onRemoveItem: (id: string) => void;
 }) => {
-  const aspectRatio = tankConfig.length / tankConfig.height;
+  // aspectRatio was unused, removed it.
   
   return (
     <div className="relative bg-gradient-to-b from-cyan-100 via-blue-200 to-blue-400 aspect-[16/9] overflow-hidden">
@@ -397,10 +397,4 @@ const ItemCard = ({ name, image, onClick }: { name: string; image?: string; onCl
 const StatRow = ({ label, value, warning }: { label: string; value: string; warning?: boolean }) => (
   <div className="flex items-center justify-between">
     <span className="text-sm text-slate-600">{label}</span>
-    <span className={`font-bold text-sm ${
-      warning ? 'text-rose-600' : 'text-slate-900'
-    }`}>
-      {value}
-    </span>
-  </div>
-);
+    <span className={`font-bold text-sm ${\n      warning ? 'text-rose-600' : 'text-slate-900'\n    }`}>\n      {value}\n    </span>\n  </div>\n);\n
