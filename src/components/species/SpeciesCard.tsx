@@ -47,20 +47,42 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
           <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
             {data.taxonomy.commonName}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-stone-400 italic font-medium">
+          <p className="text-xs text-slate-500 dark:text-stone-400 italic font-medium mb-3">
             {data.taxonomy.scientificName}
           </p>
+          
+          {/* Behavior Tags (Chips) */}
+          {data.behavior.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {data.behavior.tags.slice(0, 3).map(tag => (
+                <span 
+                  key={tag}
+                  className="px-2 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold uppercase tracking-wide rounded-full border border-indigo-100 dark:border-indigo-500/20"
+                >
+                  {tag.replace('_', ' ')}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         
-        {/* Info Grid */}
-        <div className="grid grid-cols-2 gap-y-2 gap-x-4 mt-4 pt-4 border-t border-slate-100 dark:border-stone-800 text-xs text-slate-600 dark:text-stone-400">
+        {/* Info Grid - 4 Stats */}
+        <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-slate-100 dark:border-stone-800 text-xs text-slate-600 dark:text-stone-400">
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-            {data.environment.minTankSizeLiters}L Min
+            <span className="font-semibold">{data.environment.minTankSizeLiters}L</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            {data.taxonomy.region}
+            <span className="font-semibold">{data.taxonomy.region}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="font-semibold">pH {data.environment.ph.ideal}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+            <span className="font-semibold">{data.environment.tempC.ideal}°C</span>
           </div>
         </div>
 
