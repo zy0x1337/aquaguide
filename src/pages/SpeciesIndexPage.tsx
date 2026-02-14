@@ -23,7 +23,7 @@ const SpeciesIndexPage = () => {
       })
       .sort((a: Species, b: Species) => {
         if (sortOrder === 'name') return a.taxonomy.commonName.localeCompare(b.taxonomy.commonName);
-        const diffMap: Record<Difficulty, number> = { beginner: 0, medium: 1, intermediate: 1, expert: 2 };
+        const diffMap: Record<Difficulty, number> = { beginner: 0, medium: 1, expert: 2 };
         return diffMap[a.care.difficulty] - diffMap[b.care.difficulty];
       });
   }, [searchTerm, filterDifficulty, sortOrder]);

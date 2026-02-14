@@ -2,16 +2,23 @@ import type { Species } from '../../types/species';
 
 export const melanotaeniaLacustris: Species = {
   id: 'rainbowfish-001',
-  slug: 'melanotaenia-lacustris',
-  imageUrl: '/images/species/melanotaenia-lacustris.jpg',
+  slug: 'lake-kutubu-rainbowfish',
+  imageUrl: '/images/species/lake-kutubu-rainbowfish.jpg',
   funFact: "Lake Kutubu Rainbowfish are listed as Endangered (IUCN) in the wild due to invasive species in their only natural habitat - a single lake in Papua New Guinea.",
+
+imageCredit: {
+    photographer: 'Klaus Rudloff (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Melanotaenia_lacustris.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/'
+  },
 
   taxonomy: {
     scientificName: 'Melanotaenia lacustris',
     commonName: 'Lake Kutubu Rainbowfish',
     family: 'Melanotaeniidae',
     origin: 'Papua New Guinea (Lake Kutubu)',
-    region: 'Oceania',
+    region: 'Australia',
     biotope: 'Clear lake waters with heavy vegetation and submerged wood',
   },
 
@@ -37,7 +44,7 @@ export const melanotaeniaLacustris: Species = {
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaling', 'active_swimmer', 'jumper'],
+    tags: ['peaceful', 'shoaler', 'active', 'jumper'],
     minGroupSize: 6,
     description: 'Extremely active and athletic swimmers, especially at dawn. Males constantly display to each other in a beautiful, non-aggressive ritual. They are peaceful but boisterous - their energy can intimidate shy species.',
     compatibility: {
@@ -48,7 +55,7 @@ export const melanotaeniaLacustris: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'omnivore',
     effort: 'medium',
     cost: 'medium',

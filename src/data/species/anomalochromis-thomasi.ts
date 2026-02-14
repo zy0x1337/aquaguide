@@ -2,9 +2,16 @@ import type { Species } from '../../types/species';
 
 export const anomalochromisThomasi: Species = {
   id: 'cichlid-001',
-  slug: 'anomalochromis-thomasi',
-  imageUrl: '/images/species/anomalochromis-thomasi.jpg',
+  slug: 'african-butterfly-cichlid',
+  imageUrl: '/images/species/african-butterfly-cichlid.jpg',
   funFact: "Unlike most African Cichlids, the African Butterfly Cichlid is a devoted pair-forming species with exceptional parental care - both parents guard eggs and fry for weeks.",
+
+imageCredit: {
+    photographer: 'Klaus Rudloff (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Anomalochromis_thomasi_A.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/'
+  },
 
   taxonomy: {
     scientificName: 'Anomalochromis thomasi',
@@ -16,7 +23,7 @@ export const anomalochromisThomasi: Species = {
   },
 
   visuals: {
-    iconShape: 'laterally_compressed',
+    iconShape: 'compressed',
     adultSizeCM: 8,
   },
 
@@ -37,7 +44,7 @@ export const anomalochromisThomasi: Species = {
   },
 
   behavior: {
-    tags: ['peaceful', 'pair_bonding', 'substrate_sifter', 'parental_care'],
+    tags: ['peaceful', 'social'],
     minGroupSize: 2,
     description: 'Remarkably peaceful for a Cichlid. Forms monogamous pairs that cooperate intensely during breeding. Juveniles can be kept in groups, but pairs become territorial when spawning. They are gentle with tankmates but fiercely protective of their fry.',
     compatibility: {

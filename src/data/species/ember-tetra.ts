@@ -7,7 +7,7 @@ export const emberTetra: Species = {
   funFact: 'Ember Tetras glow like burning embers in low light, intensifying their fiery orange-red coloration when kept in dimly lit, blackwater aquariums.',
   
 imageCredit: {
-    photographer: 'Klaus Rudloff',
+    photographer: 'Klaus Rudloff (via Wikimedia Commons)',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Hyphessobrycon_amandae_A.jpg',
     license: 'CC BY-SA 4.0',
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/'
