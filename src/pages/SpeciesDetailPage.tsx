@@ -129,7 +129,7 @@ const SpeciesDetailPage = () => {
                       <Lightbulb className="w-5 h-5 mr-2" /> Pro Tips
                     </h3>
                     <ul className="space-y-2.5">
-                      {data.care.proTips.map((tip, i) => (
+                      {data.care.proTips.map((tip: string, i: number) => (
                         <li key={i} className="flex gap-2 text-sm text-amber-900 leading-snug">
                           <span className="w-1.5 h-1.5 mt-1.5 bg-amber-500 rounded-full flex-shrink-0" />
                           <span>{tip}</span>
@@ -150,7 +150,7 @@ const SpeciesDetailPage = () => {
                       <XCircle className="w-5 h-5 mr-2" /> Common Mistakes
                     </h3>
                     <ul className="space-y-2.5">
-                      {data.care.commonMistakes.map((mistake, i) => (
+                      {data.care.commonMistakes.map((mistake: string, i: number) => (
                         <li key={i} className="flex gap-2 text-sm text-rose-900 leading-snug">
                           <span className="w-1.5 h-1.5 mt-1.5 bg-rose-500 rounded-full flex-shrink-0" />
                           <span>{mistake}</span>
@@ -197,7 +197,7 @@ const SpeciesDetailPage = () => {
               <div>
                 <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Key Traits</h4>
                 <div className="flex flex-wrap gap-2">
-                  {data.behavior.tags.map(tag => (
+                  {data.behavior.tags.map((tag: string) => (
                     <div key={tag} className="group relative">
                       <span className="cursor-help inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-colors">
                         {tag === 'jumper' && <AlertTriangle className="w-3.5 h-3.5 mr-1.5 text-amber-500" />}
@@ -206,7 +206,7 @@ const SpeciesDetailPage = () => {
                       
                       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-slate-900 text-white text-xs p-3 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50">
                         <span className="font-semibold block mb-1 capitalize">{tag.replace(/_/g, ' ')}:</span>
-                        {tagDescriptions[tag] || "No description available."}
+                        {tagDescriptions[tag as keyof typeof tagDescriptions] || "No description available."}
                         <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
                       </div>
                     </div>
@@ -292,7 +292,7 @@ const SpeciesDetailPage = () => {
                     <Trees className="w-4 h-4 mr-2 text-amber-700" /> Hardscape
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {data.habitat.hardscape.map(item => (
+                    {data.habitat.hardscape.map((item: string) => (
                       <span key={item} className="px-3 py-1 rounded-lg text-xs bg-amber-50 text-amber-800 border border-amber-100 font-semibold">
                         {item}
                       </span>
@@ -316,7 +316,7 @@ const SpeciesDetailPage = () => {
                     <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Good Mates
                   </h4>
                   <ul className="space-y-2">
-                    {data.behavior.compatibility.goodMates.map(m => (
+                    {data.behavior.compatibility.goodMates.map((m: string) => (
                       <li key={m} className="text-sm bg-emerald-50 text-emerald-800 px-3 py-2 rounded-lg border border-emerald-100">
                         {m}
                       </li>
@@ -328,7 +328,7 @@ const SpeciesDetailPage = () => {
                     <span className="w-2 h-2 bg-rose-500 rounded-full mr-2"></span> Avoid (Risk)
                   </h4>
                   <ul className="space-y-2">
-                    {data.behavior.compatibility.badMates.map(m => (
+                    {data.behavior.compatibility.badMates.map((m: string) => (
                       <li key={m} className="text-sm bg-rose-50 text-rose-800 px-3 py-2 rounded-lg border border-rose-100">
                         {m}
                       </li>
@@ -369,7 +369,7 @@ const SpeciesDetailPage = () => {
                     <div>
                       <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Sensitivities</span>
                       <div className="flex flex-wrap gap-1.5">
-                        {data.health.sensitivities.map(s => (
+                        {data.health.sensitivities.map((s: string) => (
                           <span key={s} className="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 font-medium">{s}</span>
                         ))}
                       </div>
@@ -379,92 +379,41 @@ const SpeciesDetailPage = () => {
               </motion.div>
 
               <motion.div 
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-200 p-6"
->
-  <div className="flex items-start justify-between mb-5">
-    <h2 className="text-lg font-bold text-slate-900 flex items-center">
-      <div className="p-2 bg-emerald-500 rounded-lg mr-3">
-        <DollarSign className="w-5 h-5 text-white" />
-      </div>
-      Ownership Cost
-    </h2>
-  </div>
-
-  <div className="space-y-5">
-    {/* Maintenance Effort */}
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-emerald-100">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-sm font-bold text-slate-700">Maintenance Effort</span>
-        <span className="text-xs font-bold px-2 py-1 rounded-md bg-indigo-100 text-indigo-700 uppercase">
-          {data.care.effort}
-        </span>
-      </div>
-      <div className="relative">
-        <div className="flex gap-1.5">
-          {[1,2,3].map(i => (
-            <div 
-              key={i} 
-              className={`flex-1 h-3 rounded-full transition-all duration-300 ${
-                (data.care.effort === 'low' && i<=1) || 
-                (data.care.effort === 'medium' && i<=2) || 
-                (data.care.effort === 'high') 
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md' 
-                  : 'bg-slate-200'
-              }`}
-            />
-          ))}
-        </div>
-        <div className="flex justify-between mt-1.5 text-xs text-slate-500 font-medium">
-          <span>Low</span>
-          <span>Medium</span>
-          <span>High</span>
-        </div>
-      </div>
-    </div>
-
-    {/* Running Cost */}
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-emerald-100">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-sm font-bold text-slate-700">Running Cost</span>
-        <span className="text-xs font-bold px-2 py-1 rounded-md bg-emerald-100 text-emerald-700 uppercase">
-          {data.care.cost}
-        </span>
-      </div>
-      <div className="relative">
-        <div className="flex gap-1.5">
-          {[1,2,3].map(i => (
-            <div 
-              key={i} 
-              className={`flex-1 h-3 rounded-full transition-all duration-300 ${
-                (data.care.cost === 'low' && i<=1) || 
-                (data.care.cost === 'medium' && i<=2) || 
-                (data.care.cost === 'high') 
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 shadow-md' 
-                  : 'bg-slate-200'
-              }`}
-            />
-          ))}
-        </div>
-        <div className="flex justify-between mt-1.5 text-xs text-slate-500 font-medium">
-          <span>$</span>
-          <span>$$</span>
-          <span>$$$</span>
-        </div>
-      </div>
-    </div>
-
-    {/* Info Box */}
-    <div className="flex items-start gap-2 p-3 bg-emerald-100/50 rounded-lg border border-emerald-200">
-      <Info className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-      <p className="text-xs text-emerald-900 leading-relaxed">
-        Cost estimates include food, water changes, equipment maintenance, and electricity.
-      </p>
-    </div>
-  </div>
-</motion.div>
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
+              >
+                <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
+                  <DollarSign className="w-5 h-5 mr-2 text-emerald-500" /> Ownership Cost
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Maintenance Effort</span>
+                    <div className="flex items-center">
+                      {[1,2,3].map(i => (
+                        <div key={i} className={`h-2 w-8 mr-1.5 rounded-full ${
+                          (data.care.effort === 'low' && i<=1) || (data.care.effort === 'medium' && i<=2) || (data.care.effort === 'high') 
+                          ? 'bg-indigo-500' : 'bg-slate-200'
+                        }`}></div>
+                      ))}
+                      <span className="ml-2 text-xs font-bold uppercase text-indigo-600">{data.care.effort}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Running Cost</span>
+                    <div className="flex items-center">
+                      {[1,2,3].map(i => (
+                        <div key={i} className={`h-2 w-8 mr-1.5 rounded-full ${
+                          (data.care.cost === 'low' && i<=1) || (data.care.cost === 'medium' && i<=2) || (data.care.cost === 'high') 
+                          ? 'bg-emerald-500' : 'bg-slate-200'
+                        }`}></div>
+                      ))}
+                      <span className="ml-2 text-xs font-bold uppercase text-emerald-600">{data.care.cost}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
 
             {/* Advanced Knowledge - More compact */}
@@ -500,7 +449,7 @@ const SpeciesDetailPage = () => {
                           <div>
                             <span className="font-bold text-slate-900 block mb-2">Common Variants:</span>
                             <div className="flex flex-wrap gap-2">
-                              {data.scientificContext.variants.map(v => (
+                              {data.scientificContext.variants.map((v: string) => (
                                 <span key={v} className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs border border-indigo-100 font-semibold">
                                   {v}
                                 </span>
@@ -628,7 +577,7 @@ const Badge = ({ text, color }: { text: string, color: string }) => {
   );
 };
 
-const CompactStatCard = ({ icon, label, value }: any) => (
+const CompactStatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) => (
   <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
     <div className="flex items-center gap-2 mb-2">
       <div className="p-1.5 bg-white rounded-lg">
