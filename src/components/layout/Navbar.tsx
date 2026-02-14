@@ -1,13 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Droplets, BookOpen, Fish, Leaf, Stethoscope } from 'lucide-react';
+import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 
 export const Navbar = () => {
   const location = useLocation();
-  const [_isMobileMenuOpen, _setIsMobileMenuOpen] = useState(false); // ← FIX: _
+  const [_isMobileMenuOpen, _setIsMobileMenuOpen] = useState(false);
   
-  // Helper: Ist der Pfad aktiv? (Auch für Sub-Routen wie /plants/anubias)
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
@@ -16,6 +15,7 @@ export const Navbar = () => {
   const navLinks = [
     { path: '/', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
+    { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: BookOpen },
   ];
