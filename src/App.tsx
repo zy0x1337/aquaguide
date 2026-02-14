@@ -13,9 +13,12 @@ import SpeciesDetailPage from './pages/SpeciesDetailPage';
 import DiseaseIndexPage from './pages/DiseaseIndexPage';
 import DiseaseDetailPage from './pages/DiseaseDetailPage';
 
-// 🌱 PLANT PAGES (NEU)
+// 🌱 PLANT PAGES
 import { PlantsIndexPage } from './pages/PlantsIndexPage';
 import { PlantDetailPage } from './pages/PlantDetailPage';
+
+// 🎨 TANK BUILDER
+import { TankBuilderPage } from './pages/TankBuilderPage';
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
         {/* 🌱 Plant Routes */}
         <Route path="/plants" element={<PlantsIndexPage />} />
         <Route path="/plants/:slug" element={<PlantDetailPage />} />
+
+        {/* 🎨 Tank Builder */}
+        <Route path="/tank-builder" element={<TankBuilderPage />} />
 
         {/* About Page */}
         <Route path="/about" element={<AboutPage />} />
