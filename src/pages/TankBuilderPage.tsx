@@ -32,6 +32,7 @@ interface TankItem {
 }
 
 interface TankConfig {
+  name: string;
   length: number;
   width: number;
   height: number;
