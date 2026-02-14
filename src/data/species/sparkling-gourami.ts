@@ -37,7 +37,7 @@ export const sparklingGourami: Species = {
   },
   
   behavior: {
-    tags: ['peaceful', 'midwater', 'pair_bonding'],
+    tags: ['peaceful', 'midwater'],
     minGroupSize: 2,
     description: 'Tiny, jewel-like labyrinth fish with iridescent blue-green spots. Peaceful but males can be territorial. Produces audible croaking sounds during courtship. Very active and curious.',
     compatibility: {

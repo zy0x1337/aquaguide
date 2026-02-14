@@ -31,7 +31,7 @@ export const pygmyCory: Species = {
   },
   
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Appreciates planted areas with open sandy patches. Unlike larger corys, they spend significant time in mid-water.',
     hardscape: ['Fine sand', 'Smooth pebbles', 'Driftwood'],
   },
