@@ -8,7 +8,7 @@ import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
 import { FilterBadge } from '../components/ui/FilterBadge';
 import { useToast, Toast } from '../components/ui/Toast';
 import { cn } from '../lib/utils';
-import { Region } from '../types/species';
+import type { Region } from '../types/species';
 
 // Lazy load SpeciesCard for initial paint performance
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
