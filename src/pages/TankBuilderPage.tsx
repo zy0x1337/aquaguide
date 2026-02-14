@@ -682,7 +682,7 @@ const Tank3DView = ({
       <AnimatePresence>
         {items.map(item => {
           const realSize = getRealSize(item);
-          const displaySize = Math.max(24, Math.min(80, realSize * 2.5));
+          const displaySize = Math.max(40, Math.min(120, realSize * 3.5));
           const zone = getSwimZone(item);
           const isSelected = selectedItem === item.id;
           
@@ -719,35 +719,57 @@ const Tank3DView = ({
 
                 {item.type === 'fish' ? (
                   <div 
-                    className={`rounded-full flex items-center justify-center text-white shadow-xl transition-all ${
-                      zone === 'surface' ? 'bg-gradient-to-br from-blue-400 to-blue-600' :
-                      zone === 'bottom' ? 'bg-gradient-to-br from-amber-500 to-amber-700' :
-                      'bg-gradient-to-br from-indigo-400 to-indigo-600'
-                    }`}
+                    className="rounded-full overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white"
                     style={{ width: displaySize, height: displaySize }}
                   >
-                    <FishIcon style={{ width: displaySize * 0.5, height: displaySize * 0.5 }} />
+                    {(item.data as Species).imageUrl ? (
+                      <img 
+                        src={(item.data as Species).imageUrl} 
+                        alt={(item.data as Species).taxonomy.commonName}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className={`w-full h-full flex items-center justify-center text-white ${
+                        zone === 'surface' ? 'bg-gradient-to-br from-blue-400 to-blue-600' :
+                        zone === 'bottom' ? 'bg-gradient-to-br from-amber-500 to-amber-700' :
+                        'bg-gradient-to-br from-indigo-400 to-indigo-600'
+                      }`}>
+                        <FishIcon style={{ width: displaySize * 0.5, height: displaySize * 0.5 }} />
+                      </div>
+                    )}
                     {item.count && item.count > 1 && (
-                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg border-2 border-white">
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-xl border-2 border-white z-10">
                         {item.count}
                       </div>
                     )}
                   </div>
                 ) : item.type === 'plant' ? (
                   <div 
-                    className="bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-t-full flex items-center justify-center text-white shadow-xl"
-                    style={{ width: displaySize * 0.7, height: displaySize * 1.2 }}
+                    className="rounded-t-3xl overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white"
+                    style={{ width: displaySize * 0.6, height: displaySize * 1.2 }}
                   >
-                    <Leaf style={{ width: displaySize * 0.35, height: displaySize * 0.35 }} />
+                    {(item.data as Plant).imageUrl ? (
+                      <img 
+                        src={(item.data as Plant).imageUrl} 
+                        alt={(item.data as Plant).taxonomy.commonName}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white">
+                        <Leaf style={{ width: displaySize * 0.3, height: displaySize * 0.3 }} />
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div 
-                    className="rounded-lg flex items-center justify-center shadow-xl text-3xl backdrop-blur-sm"
+                    className="rounded-lg flex items-center justify-center shadow-xl text-4xl backdrop-blur-sm"
                     style={{ 
-                      width: displaySize, 
-                      height: displaySize,
+                      width: displaySize * 0.8, 
+                      height: displaySize * 0.8,
                       backgroundColor: (item.data as HardscapeItem).color,
-                      border: '2px solid rgba(255,255,255,0.3)'
+                      border: '3px solid rgba(255,255,255,0.4)'
                     }}
                   >
                     {(item.data as HardscapeItem).icon}
