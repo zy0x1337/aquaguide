@@ -35,6 +35,11 @@ import { electricYellowLab } from './electric-yellow-lab';
 import { bumblebeeGoby } from './bumblebee-goby';
 import { amanoShrimp } from './amano-shrimp';
 
+// ✨ NEW SPECIES
+import { emberTetra } from './ember-tetra';
+import { pygmyCory } from './pygmy-cory';
+import { sparklingGourami } from './sparkling-gourami';
+
 const allSpecies: Species[] = [
   bettaSplendens,
   bettaSplendensFemale,
@@ -69,7 +74,11 @@ const allSpecies: Species[] = [
   goldSpotPleco,
   electricYellowLab,
   bumblebeeGoby,
-  amanoShrimp
+  amanoShrimp,
+  // ✨ NEW
+  emberTetra,
+  pygmyCory,
+  sparklingGourami
 ];
 
 export const speciesRepository = {
