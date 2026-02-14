@@ -205,7 +205,6 @@ export const TankBuilderPage = () => {
               </div>
               
               <Tank3DView 
-                tankConfig={tankConfig} 
                 items={items}
                 onRemoveItem={removeItem}
               />
@@ -283,8 +282,7 @@ export const TankBuilderPage = () => {
 };
 
 // 3D Tank View Component
-const Tank3DView = ({ tankConfig, items, onRemoveItem }: { 
-  tankConfig: TankConfig; 
+const Tank3DView = ({ items, onRemoveItem }: { 
   items: TankItem[];
   onRemoveItem: (id: string) => void;
 }) => {
