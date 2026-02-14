@@ -6,7 +6,7 @@ import {
   Lightbulb, XCircle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { speciesRepository } from '../data/species';
+import { Species } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankSimulator } from '../components/species/TankSimulator';
@@ -15,7 +15,7 @@ import { DiseaseList } from '../components/species/DiseaseList';
 
 const SpeciesDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const data = speciesRepository.getBySlug(slug || '');
+  const data = Species.getBySlug(slug || '');
 
   if (!data) return <NotFound />;
 
@@ -404,19 +404,21 @@ const SpeciesDetailPage = () => {
       </div>
       <div className="relative">
         <div className="flex gap-1.5">
-          {[1,2,3].map(i => (
-            <div 
-              key={i} 
-              className={`flex-1 h-3 rounded-full transition-all duration-300 ${
-                (data.care.effort === 'low' && i<=1) || 
-                (data.care.effort === 'medium' && i<=2) || 
-                (data.care.effort === 'high') 
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md' 
-                  : 'bg-slate-200'
-              }`}
-            />
-          ))}
-        </div>
+  {['💧', '💧💧', '💧💧💧'].map((icon, i) => (
+    <div 
+      key={i} 
+      className={`flex-1 h-12 rounded-xl flex items-center justify-center text-lg transition-all ${
+        (data.care.effort === 'low' && i===0) || 
+        (data.care.effort === 'medium' && i===1) || 
+        (data.care.effort === 'high' && i===2)
+          ? 'bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg scale-105' 
+          : 'bg-slate-100 opacity-40'
+      }`}
+    >
+      {icon}
+    </div>
+  ))}
+</div>
         <div className="flex justify-between mt-1.5 text-xs text-slate-500 font-medium">
           <span>Low</span>
           <span>Medium</span>

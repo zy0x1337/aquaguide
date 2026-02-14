@@ -13,7 +13,7 @@ import { celestialPearlDanio } from './celestial-pearl-danio';
 import { cherryBarb } from './cherry-barb';
 import { chiliRasbora } from './chili-rasbora';
 import { corydorasPaleatus } from './corydoras-paleatus';
-import { danioRerio } from './danio-rerio';
+import { zebraDanio } from './danio-rerio';
 import { electricYellowLab } from './electric-yellow-lab';
 import { emberTetra } from './ember-tetra';
 import { endlerGuppy } from './endler-guppy';
@@ -23,11 +23,11 @@ import { honeyGourami } from './honey-gourami';
 import { kuhliLoach } from './kuhli-loach';
 import { melanotaeniaLacustris } from './melanotaenia-lacustris';
 import { molly } from './molly';
-import { neocaridina } from './neocaridina-davidi-red-cherry';
+import { neocaridinaDavidiRedCherry } from './neocaridina-davidi-red-cherry';
 import { neonTetra } from './neon-tetra';
 import { oscar } from './oscar';
-import { otocinclus } from './otocinclus-macrospilus';
-import { otocinclus2 } from './otocinclus-vittatus';
+import { otocinclusMacrospilus } from './otocinclus-macrospilus';
+import { otocinclusVittatus } from './otocinclus-vittatus';
 import { pandaCory } from './panda-cory';
 import { platy } from './platy';
 import { pygmyCory } from './pygmy-cory';
@@ -55,7 +55,7 @@ export const allSpecies: Species[] = [
   cherryBarb,
   chiliRasbora,
   corydorasPaleatus,
-  danioRerio,
+  zebraDanio,
   electricYellowLab,
   emberTetra,
   endlerGuppy,
@@ -65,11 +65,11 @@ export const allSpecies: Species[] = [
   kuhliLoach,
   melanotaeniaLacustris,
   molly,
-  neocaridina,
+  neocaridinaDavidiRedCherry,
   neonTetra,
   oscar,
-  otocinclus,
-  otocinclus2,
+  otocinclusMacrospilus,
+  otocinclusVittatus,
   pandaCory,
   platy,
   pygmyCory,
@@ -97,7 +97,7 @@ export {
   cherryBarb,
   chiliRasbora,
   corydorasPaleatus,
-  danioRerio,
+  zebraDanio,
   electricYellowLab,
   emberTetra,
   endlerGuppy,
@@ -107,11 +107,11 @@ export {
   kuhliLoach,
   melanotaeniaLacustris,
   molly,
-  neocaridina,
+  neocaridinaDavidiRedCherry,
   neonTetra,
   oscar,
-  otocinclus,
-  otocinclus2,
+  otocinclusMacrospilus,
+  otocinclusVittatus,
   pandaCory,
   platy,
   pygmyCory,
