@@ -379,41 +379,92 @@ const SpeciesDetailPage = () => {
               </motion.div>
 
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-              >
-                <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-                  <DollarSign className="w-5 h-5 mr-2 text-emerald-500" /> Ownership Cost
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Maintenance Effort</span>
-                    <div className="flex items-center">
-                      {[1,2,3].map(i => (
-                        <div key={i} className={`h-2 w-8 mr-1.5 rounded-full ${
-                          (data.care.effort === 'low' && i<=1) || (data.care.effort === 'medium' && i<=2) || (data.care.effort === 'high') 
-                          ? 'bg-indigo-500' : 'bg-slate-200'
-                        }`}></div>
-                      ))}
-                      <span className="ml-2 text-xs font-bold uppercase text-indigo-600">{data.care.effort}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Running Cost</span>
-                    <div className="flex items-center">
-                      {[1,2,3].map(i => (
-                        <div key={i} className={`h-2 w-8 mr-1.5 rounded-full ${
-                          (data.care.cost === 'low' && i<=1) || (data.care.cost === 'medium' && i<=2) || (data.care.cost === 'high') 
-                          ? 'bg-emerald-500' : 'bg-slate-200'
-                        }`}></div>
-                      ))}
-                      <span className="ml-2 text-xs font-bold uppercase text-emerald-600">{data.care.cost}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-200 p-6"
+>
+  <div className="flex items-start justify-between mb-5">
+    <h2 className="text-lg font-bold text-slate-900 flex items-center">
+      <div className="p-2 bg-emerald-500 rounded-lg mr-3">
+        <DollarSign className="w-5 h-5 text-white" />
+      </div>
+      Ownership Cost
+    </h2>
+  </div>
+
+  <div className="space-y-5">
+    {/* Maintenance Effort */}
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-emerald-100">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-sm font-bold text-slate-700">Maintenance Effort</span>
+        <span className="text-xs font-bold px-2 py-1 rounded-md bg-indigo-100 text-indigo-700 uppercase">
+          {data.care.effort}
+        </span>
+      </div>
+      <div className="relative">
+        <div className="flex gap-1.5">
+          {[1,2,3].map(i => (
+            <div 
+              key={i} 
+              className={`flex-1 h-3 rounded-full transition-all duration-300 ${
+                (data.care.effort === 'low' && i<=1) || 
+                (data.care.effort === 'medium' && i<=2) || 
+                (data.care.effort === 'high') 
+                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md' 
+                  : 'bg-slate-200'
+              }`}
+            />
+          ))}
+        </div>
+        <div className="flex justify-between mt-1.5 text-xs text-slate-500 font-medium">
+          <span>Low</span>
+          <span>Medium</span>
+          <span>High</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Running Cost */}
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-emerald-100">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-sm font-bold text-slate-700">Running Cost</span>
+        <span className="text-xs font-bold px-2 py-1 rounded-md bg-emerald-100 text-emerald-700 uppercase">
+          {data.care.cost}
+        </span>
+      </div>
+      <div className="relative">
+        <div className="flex gap-1.5">
+          {[1,2,3].map(i => (
+            <div 
+              key={i} 
+              className={`flex-1 h-3 rounded-full transition-all duration-300 ${
+                (data.care.cost === 'low' && i<=1) || 
+                (data.care.cost === 'medium' && i<=2) || 
+                (data.care.cost === 'high') 
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 shadow-md' 
+                  : 'bg-slate-200'
+              }`}
+            />
+          ))}
+        </div>
+        <div className="flex justify-between mt-1.5 text-xs text-slate-500 font-medium">
+          <span>$</span>
+          <span>$$</span>
+          <span>$$$</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Info Box */}
+    <div className="flex items-start gap-2 p-3 bg-emerald-100/50 rounded-lg border border-emerald-200">
+      <Info className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+      <p className="text-xs text-emerald-900 leading-relaxed">
+        Cost estimates include food, water changes, equipment maintenance, and electricity.
+      </p>
+    </div>
+  </div>
+</motion.div>
             </div>
 
             {/* Advanced Knowledge - More compact */}
