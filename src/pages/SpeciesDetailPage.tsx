@@ -12,6 +12,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 import { TankSimulator } from '../components/species/TankSimulator';
 import { ParameterScale } from '../components/ui/ParameterScale';
 import { DiseaseList } from '../components/species/DiseaseList';
+import { ImageAttribution } from '../components/ui/ImageAttribution';
 
 const SpeciesDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -42,6 +43,9 @@ const SpeciesDetailPage = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
         </div>
+
+        {/* Photo Attribution - bottom right */}
+        <ImageAttribution credit={data.imageCredit} />
 
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
