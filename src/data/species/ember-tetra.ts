@@ -1,68 +1,92 @@
-import { Species } from '../../types/species';
+import type { Species } from '../../types/species';
 
 export const emberTetra: Species = {
   id: 'ember-tetra',
   slug: 'ember-tetra',
   imageUrl: '/images/species/ember-tetra.jpg',
-  imageCredit: 'TODO',
+  funFact: 'Ember Tetras glow like burning embers in low light, intensifying their fiery orange-red coloration when kept in dimly lit, blackwater aquariums.',
   
   taxonomy: {
-    commonName: 'Ember Tetra',
     scientificName: 'Hyphessobrycon amandae',
+    commonName: 'Ember Tetra',
     family: 'Characidae',
-    order: 'Characiformes',
-    region: 'South America'
+    origin: 'Brazil (Araguaia River basin)',
+    region: 'South America',
+    biotope: 'Slow-moving blackwater streams with dense vegetation',
+  },
+  
+  visuals: {
+    iconShape: 'fusiform',
+    adultSizeCM: 2,
   },
   
   environment: {
+    type: 'freshwater',
     minTankSizeLiters: 40,
-    ph: { min: 5.5, max: 7.5, ideal: 6.5 },
     tempC: { min: 23, max: 28, ideal: 25 },
-    hardness: 'soft to medium',
-    biotope: ['Araguaia River', 'Blackwater streams', 'Slow flowing waters']
+    ph: { min: 5.5, max: 7.5, ideal: 6.5 },
+    gh: { min: 3, max: 12 },
+    flow: 'low',
+    substrate: 'dark sand or fine gravel',
+  },
+  
+  habitat: {
+    planting: 'dense',
+    plantingNotes: 'Prefers heavily planted tanks with floating plants to diffuse lighting. Dark substrate enhances their fiery coloration.',
+    hardscape: ['Driftwood', 'Leaf litter', 'Rocks'],
   },
   
   behavior: {
-    social: 'shoaling',
-    activity: 'mid-level swimmer',
-    temperament: 'peaceful',
-    tags: ['peaceful', 'shoaler', 'nano_suitable']
+    tags: ['shoaler', 'peaceful', 'midwater'],
+    minGroupSize: 10,
+    description: 'Peaceful nano schooling fish that display intense orange-red coloration. Very active mid-water swimmers that feel secure in large groups. Males show more vibrant colors, especially during breeding.',
+    compatibility: {
+      goodMates: ['Pygmy Corydoras', 'Otocinclus', 'Chili Rasbora', 'Neon Tetras', 'Dwarf Shrimp'],
+      badMates: ['Large Cichlids', 'Oscars', 'Bettas', 'Angelfish'],
+      notes: 'Perfect for nano community tanks. Peaceful with all small species. Avoid keeping with fin-nippers or large predators.',
+    },
   },
   
   care: {
     difficulty: 'beginner',
-    minGroupSize: 10,
-    diet: ['micropellets', 'flakes', 'micro worms', 'baby brine shrimp'],
+    diet: 'omnivore',
+    effort: 'low',
+    cost: 'low',
     specialRequirements: [
       'Keep in groups of 10+',
-      'Prefers dimmed lighting',
-      'Dark substrate shows best coloration',
+      'Prefers dimmed lighting or floating plants',
+      'Dark substrate enhances coloration',
       'Peaceful tankmates only'
-    ]
+    ],
+    proTips: [
+      'Add Indian Almond Leaves to create tannin-stained water for best coloration.',
+      'Feed micro pellets or crushed flakes - their mouths are tiny!',
+      'Males display brighter colors when competing for females.',
+    ],
+    commonMistakes: [
+      'Keeping in groups smaller than 10 - they become stressed and hide.',
+      'Bright lighting washes out their colors.',
+      'Housing with aggressive tankmates.',
+    ],
   },
   
-  appearance: {
-    size: { min: 1.5, max: 2.0 },
-    description: 'Tiny, vibrant orange-red fish that glow like embers in the right lighting. Males show more intense coloration. Translucent body with fiery red-orange hue intensifying during breeding.'
+  health: {
+    lifespanYears: 3,
+    commonDiseases: ['ich', 'fin-rot', 'fungal-infection'],
+    sensitivities: ['Sudden parameter changes', 'High nitrates'],
+  },
+  
+  scientificContext: {
+    wildHabitat: 'Inhabits slow-moving blackwater tributaries with dense aquatic vegetation and leaf litter. Water is typically soft, acidic, and stained with tannins.',
+    sexualDimorphism: 'Males are slimmer with more intense red-orange coloration. Females are rounder with slightly duller colors.',
+    variants: [],
   },
   
   breeding: {
+    method: 'egg_scatterer',
     difficulty: 'medium',
-    description: 'Egg scatterers. Condition with live foods. Separate breeding pair, use spawning mop or dense plants. Remove adults after spawning. Fry are tiny and require infusoria initially.'
+    trigger: 'Condition with live foods. Separate breeding pair in planted tank.',
+    fryCare: 'Fry are tiny and require infusoria initially, then baby brine shrimp.',
+    notes: 'Remove adults after spawning to prevent egg predation.',
   },
-  
-  compatibility: {
-    canLiveWith: [
-      'pygmy-cory',
-      'otocinclus-vittatus',
-      'neocaridina-davidi-red-cherry',
-      'chili-rasbora',
-      'celestial-pearl-danio'
-    ],
-    shouldAvoid: [
-      'oscar',
-      'electric-yellow-lab',
-      'betta-splendens'
-    ]
-  }
 };

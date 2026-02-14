@@ -1,69 +1,92 @@
-import { Species } from '../../types/species';
+import type { Species } from '../../types/species';
 
 export const pygmyCory: Species = {
   id: 'pygmy-cory',
   slug: 'pygmy-cory',
   imageUrl: '/images/species/pygmy-cory.jpg',
-  imageCredit: 'TODO',
+  funFact: 'Unlike most Corydoras that stick to the bottom, Pygmy Corys frequently swim in mid-water, making them one of the most active and visible Corydoras species.',
   
   taxonomy: {
-    commonName: 'Pygmy Corydoras',
     scientificName: 'Corydoras pygmaeus',
+    commonName: 'Pygmy Corydoras',
     family: 'Callichthyidae',
-    order: 'Siluriformes',
-    region: 'South America'
+    origin: 'Brazil (Rio Madeira basin)',
+    region: 'South America',
+    biotope: 'Shallow tributary streams with sandy substrate and vegetation',
+  },
+  
+  visuals: {
+    iconShape: 'fusiform',
+    adultSizeCM: 2.5,
   },
   
   environment: {
+    type: 'freshwater',
     minTankSizeLiters: 40,
-    ph: { min: 6.0, max: 7.5, ideal: 7.0 },
     tempC: { min: 22, max: 26, ideal: 24 },
-    hardness: 'soft to medium',
-    biotope: ['Rio Madeira tributaries', 'Shallow streams', 'Planted areas']
+    ph: { min: 6.0, max: 7.5, ideal: 7.0 },
+    gh: { min: 2, max: 12 },
+    flow: 'low',
+    substrate: 'fine sand (mandatory)',
+  },
+  
+  habitat: {
+    planting: 'moderate',
+    plantingNotes: 'Appreciates planted areas with open sandy patches. Unlike larger corys, they spend significant time in mid-water.',
+    hardscape: ['Fine sand', 'Smooth pebbles', 'Driftwood'],
   },
   
   behavior: {
-    social: 'shoaling',
-    activity: 'bottom dweller',
-    temperament: 'peaceful',
-    tags: ['peaceful', 'shoaler', 'bottom_dweller', 'nano_suitable']
+    tags: ['shoaler', 'peaceful', 'bottom_dweller'],
+    minGroupSize: 8,
+    description: 'Smallest Corydoras species. Highly social and active, frequently swimming in mid-water unlike other corys. Very peaceful and constantly foraging. Adorable "mini-cory" behavior.',
+    compatibility: {
+      goodMates: ['Ember Tetra', 'Chili Rasbora', 'Celestial Pearl Danio', 'Dwarf Shrimp', 'Otocinclus'],
+      badMates: ['Large Cichlids', 'Oscars', 'Large Plecos'],
+      notes: 'Perfect for nano community tanks. Require fine sand substrate to protect their delicate barbels.',
+    },
   },
   
   care: {
     difficulty: 'beginner',
-    minGroupSize: 8,
-    diet: ['sinking pellets', 'micro pellets', 'frozen daphnia', 'baby brine shrimp', 'micro worms'],
+    diet: 'omnivore',
+    effort: 'low',
+    cost: 'low',
     specialRequirements: [
       'Fine sand substrate mandatory',
       'Keep in groups of 8+',
-      'Unlike other corys, often swims in mid-water',
-      'Very sensitive to nitrates'
-    ]
+      'Very sensitive to nitrates',
+      'Clean water essential'
+    ],
+    proTips: [
+      'Feed sinking micro pellets or crushed wafers.',
+      'They spend more time in mid-water than other corys - totally normal!',
+      'Perform frequent small water changes to keep nitrates low.',
+    ],
+    commonMistakes: [
+      'Using gravel instead of sand - damages their barbels.',
+      'Keeping in groups smaller than 6 - they become shy.',
+      'Letting nitrates rise above 20ppm.',
+    ],
   },
   
-  appearance: {
-    size: { min: 2.0, max: 3.0 },
-    description: 'Smallest Corydoras species. Silver-grey body with bold black horizontal stripe from snout to tail. Translucent fins. Adorable "mini-cory" appearance.'
+  health: {
+    lifespanYears: 3,
+    commonDiseases: ['ich', 'barbel-erosion', 'fungal-infection'],
+    sensitivities: ['High nitrates', 'Sharp substrate', 'Poor water quality'],
+  },
+  
+  scientificContext: {
+    wildHabitat: 'Inhabits shallow, slow-moving tributaries with sandy substrate and leaf litter. Water is soft and slightly acidic.',
+    sexualDimorphism: 'Females are rounder and slightly larger. Males are slimmer with more pointed dorsal fins.',
+    variants: [],
   },
   
   breeding: {
+    method: 'egg_layer',
     difficulty: 'medium',
-    description: 'Egg layers. Condition with live/frozen foods. Females scatter eggs on plants and glass. Remove parents after spawning. Fry are very small, need fine powdered food initially.'
+    trigger: 'Condition with live/frozen foods. Cooler water change can trigger spawning.',
+    fryCare: 'Fry are very small and require fine powdered food or infusoria initially.',
+    notes: 'Females scatter eggs on plants and glass. Remove parents after spawning.',
   },
-  
-  compatibility: {
-    canLiveWith: [
-      'ember-tetra',
-      'chili-rasbora',
-      'celestial-pearl-danio',
-      'neocaridina-davidi-red-cherry',
-      'otocinclus-vittatus',
-      'honey-gourami'
-    ],
-    shouldAvoid: [
-      'oscar',
-      'electric-yellow-lab',
-      'gold-spot-pleco'
-    ]
-  }
 };
