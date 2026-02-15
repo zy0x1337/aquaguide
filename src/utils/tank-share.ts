@@ -1,7 +1,7 @@
-import { TankConfig, TankItem } from '../types/builder';
+import { TankConfig, TankItem, HardscapeItem } from '../types/builder';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
-import { HARDSCAPE_ITEMS } from '../data/builder';
+import { HARDSCAPE_LIBRARY } from '../data/builder';
 
 /**
  * Encode tank state to URL-safe base64 string
@@ -59,7 +59,7 @@ export const decodeTankFromURL = (encoded: string): { tankConfig: TankConfig, it
         data = allPlants.find(p => p.id === i.id);
         if (!data) return null;
       } else {
-        data = HARDSCAPE_ITEMS.find(h => h.name === i.id);
+        data = HARDSCAPE_LIBRARY.find((h: HardscapeItem) => h.name === i.id || h.id === i.id);
         if (!data) return null;
       }
 
@@ -91,9 +91,9 @@ export const decodeTankFromURL = (encoded: string): { tankConfig: TankConfig, it
  */
 const extractId = (item: TankItem): string => {
   if ('id' in item.data) {
-    return item.data.id;
+    return (item.data as any).id;
   } else if ('name' in item.data) {
-    return item.data.name;
+    return (item.data as HardscapeItem).name;
   }
   return 'unknown';
 };
