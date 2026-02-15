@@ -1,24 +1,62 @@
 {
-  "name": "AquaGuide",
+  "name": "AquaGuide - Complete Aquarium Care Database",
   "short_name": "AquaGuide",
-  "description": "Expert aquarium care sheets and tank simulator.",
+  "description": "Your ultimate guide to aquarium species, diseases, plants, and tank building.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0f172a",
-  "orientation": "portrait",
+  "theme_color": "#4F46E5",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/pwa-192x192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/pwa-512x512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "lifestyle", "reference"],
+  "shortcuts": [
+    {
+      "name": "Species Database",
+      "short_name": "Species",
+      "description": "Browse aquarium species",
+      "url": "/species",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Disease Guide",
+      "short_name": "Diseases",
+      "description": "Fish disease identification",
+      "url": "/diseases",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tank Builder",
+      "short_name": "Builder",
+      "description": "Plan your aquarium",
+      "url": "/tank-builder",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-2.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
