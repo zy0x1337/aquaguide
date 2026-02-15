@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/zy0x1337/aquaguide/compare/v0.0.5...v0.0.6) (2026-02-15)
+
+
+### Features
+
+* add mobile filter drawer and responsive improvements ([8962d96](https://github.com/zy0x1337/aquaguide/commit/8962d9622105dbd1add21f81fa6d77fbaad5d2a5))
+* add mobile filter drawer and responsive optimizations ([2c007fd](https://github.com/zy0x1337/aquaguide/commit/2c007fdef5ebcdf0b52a3ee4a26bed75b59bf2e9))
+* integrate advanced visualization components into species detail page ([3b9b5a8](https://github.com/zy0x1337/aquaguide/commit/3b9b5a80636f4dff83b3c8946a77efcad31afb66))
+* mobile responsive improvements for SpeciesDetailPage ([fb6c308](https://github.com/zy0x1337/aquaguide/commit/fb6c308100106dbc6fca06c68f0c4bb653dc46a5))
+
+
+### Bug Fixes
+
+* correct property paths and remove unused variable ([0ae13f7](https://github.com/zy0x1337/aquaguide/commit/0ae13f744679df733a5b24bf696c9cc7f599de0e))
+
 ### [0.0.5](https://github.com/zy0x1337/aquaguide/compare/v0.0.4...v0.0.5) (2026-02-15)
 
 
