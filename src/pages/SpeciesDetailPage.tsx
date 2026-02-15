@@ -3,7 +3,7 @@ import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
   MapPin, AlertTriangle, Activity, Heart, Sprout, 
   Mountain, Box, Sparkles, Microscope, Egg, Utensils,
-  Lightbulb, XCircle, CheckCircle
+  Lightbulb, XCircle, CheckCircle, Info
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -348,6 +348,14 @@ const SpeciesDetailPage = () => {
                     {/* Compatible Species */}
                     {compatibleSpecies.length > 0 && (
                       <Section title="Compatible Species" icon={<Fish className="w-4 h-4" />}>
+                        {/* Disclaimer */}
+                        <div className="mb-3 bg-blue-50 border border-blue-200 rounded-lg p-3 flex gap-2">
+                          <Info className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-blue-900 leading-relaxed">
+                            <strong>Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. However, compatibility depends on tank size, individual behavior, and setup. Always verify before mixing species.
+                          </p>
+                        </div>
+                        
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {compatibleSpecies.slice(0, 6).map((species) => (
                             <Link key={species.id} to={`/species/${species.slug}`} className="group p-2 bg-slate-50 hover:bg-indigo-50 rounded-lg border border-slate-200 hover:border-indigo-300 transition-all">
