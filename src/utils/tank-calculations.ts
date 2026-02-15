@@ -180,12 +180,11 @@ function detectTerritorialConflicts(
     warnings.push(`⚠️ Territorial Mix: ${names} - Provide caves/hiding spots and monitor closely`);
   }
 
-  // Rule 3: Aggressive + Peaceful Mix
+  // Rule 3: Semi-Aggressive + Peaceful Mix
   const aggressiveSpecies = Array.from(speciesCounts.values()).filter(
     ({ species }) => 
       species.behavior.tags.includes('semi-aggressive') || 
-      species.behavior.tags.includes('territorial') ||
-      species.behavior.tags.includes('aggressive')
+      species.behavior.tags.includes('territorial')
   );
   
   const peacefulSpecies = Array.from(speciesCounts.values()).filter(
