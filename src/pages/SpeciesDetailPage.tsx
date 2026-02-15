@@ -120,13 +120,15 @@ const SpeciesDetailPage = () => {
               </div>
             </div>
 
-            {/* Tank Simulator */}
-            <TankSimulator 
-              fishLengthCM={data.visuals.adultSizeCM} 
-              fishShape={data.visuals.iconShape} 
-              minGroupSize={data.behavior.minGroupSize}
-              minTankSizeLiters={data.environment.minTankSizeLiters}
-            />
+            {/* Tank Simulator - Hidden on mobile */}
+            <div className="hidden lg:block">
+              <TankSimulator 
+                fishLengthCM={data.visuals.adultSizeCM} 
+                fishShape={data.visuals.iconShape} 
+                minGroupSize={data.behavior.minGroupSize}
+                minTankSizeLiters={data.environment.minTankSizeLiters}
+              />
+            </div>
 
             {data.behavior.tags.includes('jumper') && (
               <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 p-4 rounded-xl">
@@ -419,6 +421,16 @@ const SpeciesDetailPage = () => {
                   </motion.div>
                 )}
               </div>
+            </div>
+
+            {/* Tank Simulator - Shown on mobile below tabs */}
+            <div className="lg:hidden">
+              <TankSimulator 
+                fishLengthCM={data.visuals.adultSizeCM} 
+                fishShape={data.visuals.iconShape} 
+                minGroupSize={data.behavior.minGroupSize}
+                minTankSizeLiters={data.environment.minTankSizeLiters}
+              />
             </div>
           </motion.div>
         </div>
