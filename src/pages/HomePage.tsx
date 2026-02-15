@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { 
-  Fish, Droplets, Zap, ArrowRight, ChevronRight, 
+  Zap, ChevronRight, 
   Search, Layers, Sparkles, Activity 
 } from 'lucide-react';
 import { motion } from 'framer-motion';
