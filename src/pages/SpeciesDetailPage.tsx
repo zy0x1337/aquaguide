@@ -27,12 +27,14 @@ const SpeciesDetailPage = () => {
   const seoTitle = `${data.taxonomy.commonName} Care Guide`;
   const seoDesc = `Complete care guide for ${data.taxonomy.commonName}. Habitat, tank mates, breeding, and scientific background.`;
   const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
-  const compatibleSpecies = findCompatibleSpecies(data);
   
   // Check if this is an enhanced species (has new intelligence data)
   const isEnhanced = !!(data.behavior.aggressionLevel || data.care.feeding || data.experienceData);
 
-  // Helper inside component (after null check)
+  // ==================== HELPERS INSIDE COMPONENT (AFTER NULL CHECK) ====================
+  
+  const capitalize = (s?: string) => s ? s[0].toUpperCase() + s.slice(1) : '';
+
   const getFeedingAdvice = (): string[] => {
     const advice: string[] = [];
     const { diet } = data.care;
@@ -52,6 +54,111 @@ const SpeciesDetailPage = () => {
 
     return advice;
   };
+
+  const getTankSetupRecommendations = () => {
+    const items = [];
+    items.push({ title: `${data.environment.minTankSizeLiters}L+ Tank`, description: `Minimum ${data.environment.minTankSizeLiters}L for ${data.behavior.minGroupSize} fish` });
+    if (data.habitat.planting === 'dense') items.push({ title: 'Dense Plants', description: 'Heavy planting provides security and reduces stress' });
+    else if (data.habitat.planting === 'medium') items.push({ title: 'Moderate Plants', description: 'Balance plants with open swimming space' });
+    if (data.environment.substrate) items.push({ title: `${capitalize(data.environment.substrate)} Substrate`, description: 'Recommended substrate type for this species' });
+    if (data.environment.flow === 'low') items.push({ title: 'Gentle Flow', description: 'Use low current filtration (sponge filter ideal)' });
+    if (data.behavior.tags.includes('jumper')) items.push({ title: 'Secure Lid', description: 'Tight-fitting lid mandatory to prevent jumping' });
+    if (data.habitat.hardscape.includes('Caves')) items.push({ title: 'Hiding Spots', description: 'Provide caves and shelters for security' });
+    return items;
+  };
+
+  const calculateCompatibilityScore = (current: Species, candidate: Species): number => {
+    let score = 0;
+    
+    if (current.environment.type !== candidate.environment.type) return 0;
+    
+    const tempOverlap = candidate.environment.tempC.min <= current.environment.tempC.max && 
+                        candidate.environment.tempC.max >= current.environment.tempC.min;
+    if (!tempOverlap) return 0;
+    
+    const phOverlap = candidate.environment.ph.min <= current.environment.ph.max && 
+                      candidate.environment.ph.max >= current.environment.ph.min;
+    if (!phOverlap) return 0;
+    
+    const sizeRatio = Math.max(current.visuals.adultSizeCM, candidate.visuals.adultSizeCM) / 
+                      Math.min(current.visuals.adultSizeCM, candidate.visuals.adultSizeCM);
+    if (sizeRatio > 3) return 0;
+    
+    const currentIsPredator = current.behavior.tags.includes('predator');
+    const candidateIsPredator = candidate.behavior.tags.includes('predator');
+    
+    if (currentIsPredator && candidate.visuals.adultSizeCM < 10) return 0;
+    if (candidateIsPredator && current.visuals.adultSizeCM < 10) return 0;
+    
+    const tankSizeRatio = candidate.environment.minTankSizeLiters / current.environment.minTankSizeLiters;
+    if (tankSizeRatio > 5) return 0;
+    
+    const currentIsAggressive = current.behavior.tags.includes('territorial') || current.behavior.tags.includes('semi-aggressive');
+    const candidateIsAggressive = candidate.behavior.tags.includes('territorial') || candidate.behavior.tags.includes('semi-aggressive');
+    const currentIsPeaceful = current.behavior.tags.includes('peaceful');
+    const candidateIsPeaceful = candidate.behavior.tags.includes('peaceful');
+    
+    if (currentIsAggressive && candidateIsPeaceful) return 0;
+    if (candidateIsAggressive && currentIsPeaceful) return 0;
+    
+    score = 50;
+    
+    if (currentIsPeaceful && candidateIsPeaceful) score += 30;
+    
+    const sizeDiff = Math.abs(current.visuals.adultSizeCM - candidate.visuals.adultSizeCM);
+    if (sizeDiff <= 2) score += 20;
+    else if (sizeDiff <= 4) score += 10;
+    
+    const tankDiff = Math.abs(current.environment.minTankSizeLiters - candidate.environment.minTankSizeLiters);
+    if (tankDiff <= 20) score += 15;
+    else if (tankDiff <= 50) score += 5;
+    
+    const currentIsBottom = current.behavior.tags.includes('bottom_dweller');
+    const candidateIsBottom = candidate.behavior.tags.includes('bottom_dweller');
+    const currentIsSurface = current.behavior.tags.includes('surface_dweller') || current.behavior.tags.includes('surface');
+    const candidateIsSurface = candidate.behavior.tags.includes('surface_dweller') || candidate.behavior.tags.includes('surface');
+    
+    if ((currentIsBottom && candidateIsSurface) || (currentIsSurface && candidateIsBottom)) {
+      score += 15;
+    } else if (currentIsBottom !== candidateIsBottom || currentIsSurface !== candidateIsSurface) {
+      score += 8;
+    }
+    
+    const tempMidCurrent = (current.environment.tempC.min + current.environment.tempC.max) / 2;
+    const tempMidCandidate = (candidate.environment.tempC.min + candidate.environment.tempC.max) / 2;
+    if (Math.abs(tempMidCurrent - tempMidCandidate) <= 2) score += 10;
+    
+    const phMidCurrent = (current.environment.ph.min + current.environment.ph.max) / 2;
+    const phMidCandidate = (candidate.environment.ph.min + candidate.environment.ph.max) / 2;
+    if (Math.abs(phMidCurrent - phMidCandidate) <= 0.5) score += 10;
+    
+    if (current.behavior.minGroupSize >= 6 && candidate.behavior.minGroupSize >= 6) score += 10;
+    
+    const currentIsActive = current.behavior.tags.includes('active');
+    const candidateIsActive = candidate.behavior.tags.includes('active');
+    if (currentIsActive === candidateIsActive) score += 5;
+    
+    const difficultyMap = { beginner: 1, medium: 2, intermediate: 2, expert: 3 };
+    const currentDiff = difficultyMap[current.care.difficulty as keyof typeof difficultyMap] || 2;
+    const candidateDiff = difficultyMap[candidate.care.difficulty as keyof typeof difficultyMap] || 2;
+    if (Math.abs(currentDiff - candidateDiff) >= 2) score -= 10;
+    
+    return score;
+  };
+
+  const findCompatibleSpecies = (): Species[] => {
+    type ScoredSpecies = { species: Species; score: number };
+    
+    const candidates: ScoredSpecies[] = allSpecies
+      .filter(s => s.id !== data.id)
+      .map(s => ({ species: s, score: calculateCompatibilityScore(data, s) }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score);
+    
+    return candidates.slice(0, 12).map(c => c.species);
+  };
+
+  const compatibleSpecies = findCompatibleSpecies();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
@@ -450,7 +557,7 @@ const SpeciesDetailPage = () => {
                   <div>
                     <SectionHeader title="Tank Setup Recommendations" icon={<Mountain className="w-5 h-5" />} />
                     <div className="grid sm:grid-cols-2 gap-4">
-                      {getTankSetupRecommendations(data).map((item, i) => (
+                      {getTankSetupRecommendations().map((item, i) => (
                         <SetupCard key={i} title={item.title} description={item.description} />
                       ))}
                     </div>
@@ -637,7 +744,7 @@ const SpeciesDetailPage = () => {
   );
 };
 
-// ==================== NEW COMPONENTS ====================
+// ==================== COMPONENTS ====================
 
 const QuickStat = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
   <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
@@ -811,8 +918,6 @@ const SpeciesCard = ({ species }: { species: Species }) => (
   </Link>
 );
 
-// ==================== EXISTING COMPONENTS ====================
-
 const AggressionBar = ({ label, level }: { label: string; level: number }) => (
   <div>
     <div className="flex items-center justify-between mb-2">
@@ -860,19 +965,22 @@ const BarIndicator = ({ level, color }: { level: string; color: 'indigo' | 'emer
   );
 };
 
-const TagBadge = ({ tag }: { tag: string }) => (
-  <div className="group relative">
-    <span className="cursor-help inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-colors">
-      {tag === 'jumper' && <AlertTriangle className="w-3.5 h-3.5 mr-1.5 text-amber-500" />}
-      {capitalize(tag.replace(/_/g, ' '))}
-    </span>
-    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-slate-900 text-white text-xs p-3 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-xl">
-      <span className="font-semibold block mb-1 capitalize">{tag.replace(/_/g, ' ')}:</span>
-      {tagDescriptions[tag as keyof typeof tagDescriptions] || "No description available."}
-      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
+const TagBadge = ({ tag }: { tag: string }) => {
+  const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
+  return (
+    <div className="group relative">
+      <span className="cursor-help inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-colors">
+        {tag === 'jumper' && <AlertTriangle className="w-3.5 h-3.5 mr-1.5 text-amber-500" />}
+        {capitalize(tag.replace(/_/g, ' '))}
+      </span>
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-slate-900 text-white text-xs p-3 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-xl">
+        <span className="font-semibold block mb-1 capitalize">{tag.replace(/_/g, ' ')}:</span>
+        {tagDescriptions[tag as keyof typeof tagDescriptions] || "No description available."}
+        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size?: 'sm' | 'md' }) => {
   const styles = {
@@ -889,112 +997,6 @@ const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size
   return <span className={`inline-flex items-center rounded-lg font-bold uppercase tracking-wide border ${styles} ${sizeClasses}`}>{text}</span>;
 };
 
-// ==================== HELPERS ====================
-// These are called with non-nullable data (after the null check)
-
-const getTankSetupRecommendations = (species: Species) => {
-  const items = [];
-  items.push({ title: `${species.environment.minTankSizeLiters}L+ Tank`, description: `Minimum ${species.environment.minTankSizeLiters}L for ${species.behavior.minGroupSize} fish` });
-  if (species.habitat.planting === 'dense') items.push({ title: 'Dense Plants', description: 'Heavy planting provides security and reduces stress' });
-  else if (species.habitat.planting === 'medium') items.push({ title: 'Moderate Plants', description: 'Balance plants with open swimming space' });
-  if (species.environment.substrate) items.push({ title: `${capitalize(species.environment.substrate)} Substrate`, description: 'Recommended substrate type for this species' });
-  if (species.environment.flow === 'low') items.push({ title: 'Gentle Flow', description: 'Use low current filtration (sponge filter ideal)' });
-  if (species.behavior.tags.includes('jumper')) items.push({ title: 'Secure Lid', description: 'Tight-fitting lid mandatory to prevent jumping' });
-  if (species.habitat.hardscape.includes('Caves')) items.push({ title: 'Hiding Spots', description: 'Provide caves and shelters for security' });
-  return items;
-};
-
-const findCompatibleSpecies = (currentSpecies: Species): Species[] => {
-  type ScoredSpecies = { species: Species; score: number };
-  
-  const candidates: ScoredSpecies[] = allSpecies
-    .filter(s => s.id !== currentSpecies.id)
-    .map(s => ({ species: s, score: calculateCompatibilityScore(currentSpecies, s) }))
-    .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score);
-  
-  return candidates.slice(0, 12).map(c => c.species);
-};
-
-const calculateCompatibilityScore = (current: Species, candidate: Species): number => {
-  let score = 0;
-  
-  if (current.environment.type !== candidate.environment.type) return 0;
-  
-  const tempOverlap = candidate.environment.tempC.min <= current.environment.tempC.max && 
-                      candidate.environment.tempC.max >= current.environment.tempC.min;
-  if (!tempOverlap) return 0;
-  
-  const phOverlap = candidate.environment.ph.min <= current.environment.ph.max && 
-                    candidate.environment.ph.max >= current.environment.ph.min;
-  if (!phOverlap) return 0;
-  
-  const sizeRatio = Math.max(current.visuals.adultSizeCM, candidate.visuals.adultSizeCM) / 
-                    Math.min(current.visuals.adultSizeCM, candidate.visuals.adultSizeCM);
-  if (sizeRatio > 3) return 0;
-  
-  const currentIsPredator = current.behavior.tags.includes('predator');
-  const candidateIsPredator = candidate.behavior.tags.includes('predator');
-  
-  if (currentIsPredator && candidate.visuals.adultSizeCM < 10) return 0;
-  if (candidateIsPredator && current.visuals.adultSizeCM < 10) return 0;
-  
-  const tankSizeRatio = candidate.environment.minTankSizeLiters / current.environment.minTankSizeLiters;
-  if (tankSizeRatio > 5) return 0;
-  
-  const currentIsAggressive = current.behavior.tags.includes('territorial') || current.behavior.tags.includes('semi-aggressive');
-  const candidateIsAggressive = candidate.behavior.tags.includes('territorial') || candidate.behavior.tags.includes('semi-aggressive');
-  const currentIsPeaceful = current.behavior.tags.includes('peaceful');
-  const candidateIsPeaceful = candidate.behavior.tags.includes('peaceful');
-  
-  if (currentIsAggressive && candidateIsPeaceful) return 0;
-  if (candidateIsAggressive && currentIsPeaceful) return 0;
-  
-  score = 50;
-  
-  if (currentIsPeaceful && candidateIsPeaceful) score += 30;
-  
-  const sizeDiff = Math.abs(current.visuals.adultSizeCM - candidate.visuals.adultSizeCM);
-  if (sizeDiff <= 2) score += 20;
-  else if (sizeDiff <= 4) score += 10;
-  
-  const tankDiff = Math.abs(current.environment.minTankSizeLiters - candidate.environment.minTankSizeLiters);
-  if (tankDiff <= 20) score += 15;
-  else if (tankDiff <= 50) score += 5;
-  
-  const currentIsBottom = current.behavior.tags.includes('bottom_dweller');
-  const candidateIsBottom = candidate.behavior.tags.includes('bottom_dweller');
-  const currentIsSurface = current.behavior.tags.includes('surface_dweller') || current.behavior.tags.includes('surface');
-  const candidateIsSurface = candidate.behavior.tags.includes('surface_dweller') || candidate.behavior.tags.includes('surface');
-  
-  if ((currentIsBottom && candidateIsSurface) || (currentIsSurface && candidateIsBottom)) {
-    score += 15;
-  } else if (currentIsBottom !== candidateIsBottom || currentIsSurface !== candidateIsSurface) {
-    score += 8;
-  }
-  
-  const tempMidCurrent = (current.environment.tempC.min + current.environment.tempC.max) / 2;
-  const tempMidCandidate = (candidate.environment.tempC.min + candidate.environment.tempC.max) / 2;
-  if (Math.abs(tempMidCurrent - tempMidCandidate) <= 2) score += 10;
-  
-  const phMidCurrent = (current.environment.ph.min + current.environment.ph.max) / 2;
-  const phMidCandidate = (candidate.environment.ph.min + candidate.environment.ph.max) / 2;
-  if (Math.abs(phMidCurrent - phMidCandidate) <= 0.5) score += 10;
-  
-  if (current.behavior.minGroupSize >= 6 && candidate.behavior.minGroupSize >= 6) score += 10;
-  
-  const currentIsActive = current.behavior.tags.includes('active');
-  const candidateIsActive = candidate.behavior.tags.includes('active');
-  if (currentIsActive === candidateIsActive) score += 5;
-  
-  const difficultyMap = { beginner: 1, medium: 2, intermediate: 2, expert: 3 };
-  const currentDiff = difficultyMap[current.care.difficulty as keyof typeof difficultyMap] || 2;
-  const candidateDiff = difficultyMap[candidate.care.difficulty as keyof typeof difficultyMap] || 2;
-  if (Math.abs(currentDiff - candidateDiff) >= 2) score -= 10;
-  
-  return score;
-};
-
 const NotFound = () => (
   <div className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
     <div className="text-center max-w-md mx-auto bg-white rounded-2xl p-12 shadow-lg border border-slate-200">
@@ -1008,8 +1010,6 @@ const NotFound = () => (
     </div>
   </div>
 );
-
-const capitalize = (s?: string) => s ? s[0].toUpperCase() + s.slice(1) : '';
 
 const resolveHeaderImageUrl = (imageUrl?: string, slug?: string) => {
   if (imageUrl) {
