@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles, Home } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 
@@ -19,7 +19,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
 
   const navItems = [
-    { path: '/', label: 'Fish', icon: Fish },
+    { path: '/', label: 'Home', icon: Home },
+    { path: '/species', label: 'Species', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
