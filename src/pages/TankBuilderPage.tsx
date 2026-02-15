@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Skull, Filter } from 'lucide-react';
+import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Skull } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { Tank3DView } from '../components/tank-builder/Tank3DView';
@@ -86,17 +86,17 @@ export const TankBuilderPage = () => {
     setTankConfig({ ...PRESET_TANKS[7], name: 'Custom Tank', ...customDimensions, volume: Math.round(volume), aspectRatio });
   };
 
-  const loadPreset = (presetId: string) => {
-    const preset = TANK_PRESETS.find(p => p.id === presetId);
-    if (!preset) return;
+  //  const loadPreset = (presetId: string) => {
+  //  const preset = TANK_PRESETS.find(p => p.id === presetId);
+  //  if (!preset) return;
 
-    setTankConfig(preset.tankConfig);
-    const loadedItems: TankItem[] = preset.items.map((item, idx) => ({
-      ...item,
-      id: `${item.type}-${Date.now()}-${idx}`
-    }));
-    setItems(loadedItems);
-  };
+  //    setTankConfig(preset.tankConfig);
+  //  const loadedItems: TankItem[] = preset.items.map((item, idx) => ({
+  //    ...item,
+  //    id: `${item.type}-${Date.now()}-${idx}`
+  //  }));
+  //  setItems(loadedItems);
+  // };
 
   const clearAll = () => {
     if (confirm('Clear entire tank?')) {
