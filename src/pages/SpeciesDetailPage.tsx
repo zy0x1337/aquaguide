@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
-  MapPin, AlertTriangle, Info, Activity, DollarSign, Heart, Sprout, 
+  MapPin, AlertTriangle, Activity, Heart, Sprout, 
   Mountain, Box, Sparkles, Microscope, Egg, Utensils,
-  Lightbulb, XCircle, CheckCircle, ChevronDown
+  Lightbulb, XCircle, CheckCircle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -465,7 +465,7 @@ const InfoCard = ({ label, value, icon }: { label: string; value: string; icon: 
   </div>
 );
 
-const BarIndicator = ({ level, color }: { level: string; color: string }) => {
+const BarIndicator = ({ level, color }: { level: string; color: 'indigo' | 'emerald' }) => {
   const steps = level === 'low' || level === 'sparse' ? 1 : level === 'medium' ? 2 : 3;
   const colorClasses = {
     indigo: { active: 'bg-indigo-500', inactive: 'bg-slate-200' },
