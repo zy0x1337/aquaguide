@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/zy0x1337/aquaguide/compare/v0.0.4...v0.0.5) (2026-02-15)
+
+
+### Features
+
+* add advanced visualization components for species detail page ([499fd34](https://github.com/zy0x1337/aquaguide/commit/499fd3468e21e3420c5387ba1fbbe292b2e78704))
+* add CheckboxGroup component ([16473ab](https://github.com/zy0x1337/aquaguide/commit/16473ab9d9b756f1fca17f646153bf0766d513de))
+* add FilterPanel component ([19216b9](https://github.com/zy0x1337/aquaguide/commit/19216b9b8135613b2988a28ebbfdee35eec53d53))
+* add search dependencies (fuse.js, radix-ui slider) ([131ac1d](https://github.com/zy0x1337/aquaguide/commit/131ac1db65fae022ae0429448c86888c25bf670e))
+* add SearchBar component ([9870ac4](https://github.com/zy0x1337/aquaguide/commit/9870ac4802006959f3c783792137bc20fee32e22))
+* add Slider component with Radix UI ([604d835](https://github.com/zy0x1337/aquaguide/commit/604d835c13d5a58dc18b391015644057756221b5))
+* add useSpeciesSearch hook with Fuse.js integration ([1a73825](https://github.com/zy0x1337/aquaguide/commit/1a738258e2afcd69b8608518a74af7c7aea3abc7))
+* integrate new filter components (Slider, enhanced filters) into SpeciesIndexPage ([9c5e7e9](https://github.com/zy0x1337/aquaguide/commit/9c5e7e9adb509f76aae0626e694ef0bbc334ef55))
+* upgrade SpeciesIndexPage with Fuse.js search and enhanced filters ([44c1c59](https://github.com/zy0x1337/aquaguide/commit/44c1c59a403dac2aa50439a4c2ae59d5ee59c1f8))
+
+
+### Bug Fixes
+
+* behavior tags filter logic causing duplicates and incorrect filtering ([3cd22a0](https://github.com/zy0x1337/aquaguide/commit/3cd22a0c3bbba1baf7467dff6084d6490f4ea019))
+* type error in FilterPanel - use EthologyTag type ([2568583](https://github.com/zy0x1337/aquaguide/commit/2568583bce98612db859b816a40e9d4bf23dbeb4))
+* type error in useSpeciesSearch - use EthologyTag instead of string ([a590519](https://github.com/zy0x1337/aquaguide/commit/a59051907000ab27c2da76d361829f4c3bc0e10c))
+
 ### [0.0.4](https://github.com/zy0x1337/aquaguide/compare/v0.0.3...v0.0.4) (2026-02-15)
 
 
