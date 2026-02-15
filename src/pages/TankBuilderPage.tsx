@@ -153,8 +153,19 @@ export const TankBuilderPage = () => {
     } else {
         // Fish
         widthPercent = (realSizeCM / tankL) * 100;
-        // Most fish are roughly 2:1 length:height ratio
-        aspectRatio = '2/1'; 
+        const species = item.data as Species;
+        
+        // Map iconShape to approximate aspect ratio (Width / Height)
+        switch(species.visuals.iconShape) {
+          case 'fusiform': aspectRatio = '3/1'; break;     // Torpedo shaped
+          case 'compressed': aspectRatio = '1/1.2'; break; // Tall/Thin (Angelfish)
+          case 'eel-like': aspectRatio = '8/1'; break;     // Long/Thin
+          case 'depressed': aspectRatio = '3/1'; break;    // Flat (Pleco side view)
+          case 'globiform': aspectRatio = '1.5/1'; break;  // Round (Puffer)
+          case 'shrimp': aspectRatio = '2/1'; break;
+          case 'frog': aspectRatio = '1.2/1'; break;
+          default: aspectRatio = '2/1';                    // Generic fallback
+        }
     }
 
     return {
@@ -282,7 +293,7 @@ export const TankBuilderPage = () => {
               <Tank3DView items={items} tankConfig={tankConfig} showGrid={showGrid} getItemStyle={getItemStyle} onRemoveItem={removeItem} onToggleLock={toggleLock} onUpdatePosition={updatePosition} onUpdateCount={updateCount} draggedItem={draggedItem} setDraggedItem={setDraggedItem} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl border border-slate-200"><div className="flex border-b border-slate-200"><TabButton active={selectedTab === 'fish'} onClick={() => setSelectedTab('fish')} icon={<FishIcon className="w-4 h-4" />} label="Fish" count={allSpecies.length} color="indigo" /><TabButton active={selectedTab === 'plant'} onClick={() => setSelectedTab('plant')} icon={<Leaf className="w-4 h-4" />} label="Plants" count={allPlants.length} color="emerald" /><TabButton active={selectedTab === 'hardscape'} onClick={() => setSelectedTab('hardscape')} icon={<Mountain className="w-4 h-4" />} label="Hardscape" count={HARDSCAPE_LIBRARY.length} color="amber" /></div>
+            <div className="bg-white rounded-2xl shadow-xl border border-slate-200"><div className="flex border-b border-slate-200"><TabButton active={selectedTab === 'fish'} onClick={() => setSelectedTab('fish')} icon={<FishIcon className="w-4 h-4" />} label="Fish" count={allSpecies.length} color=\"indigo\" /><TabButton active={selectedTab === 'plant'} onClick={() => setSelectedTab('plant')} icon={<Leaf className="w-4 h-4" />} label="Plants" count={allPlants.length} color="emerald" /><TabButton active={selectedTab === 'hardscape'} onClick={() => setSelectedTab('hardscape')} icon={<Mountain className="w-4 h-4" />} label="Hardscape" count={HARDSCAPE_LIBRARY.length} color="amber" /></div>
 
               <div className="p-4 border-b border-slate-200"><input type="text" placeholder={`Search ${selectedTab}...`} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" /></div>
 
