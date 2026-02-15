@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/zy0x1337/aquaguide/compare/v0.0.3...v0.0.4) (2026-02-15)
+
+
+### Features
+
+* add 404 page and integrate error boundary ([7fbc7ee](https://github.com/zy0x1337/aquaguide/commit/7fbc7ee2364daccfc6977471dd4978bac58ac4ee))
+* add advanced filtering to SpeciesIndexPage with temperature, pH, size, diet, and temperament ([5e64423](https://github.com/zy0x1337/aquaguide/commit/5e64423eda939b3b82b872b3949c82e59d363d8c))
+* add disclaimer to Compatible Species section ([b6810e5](https://github.com/zy0x1337/aquaguide/commit/b6810e5da8d896544d0a9d3e0c427afd23a2ad22))
+* add error boundary component ([c904fbf](https://github.com/zy0x1337/aquaguide/commit/c904fbfdd8f50487e38308c75715d83851c5d4e4))
+* add functional tank item card component ([79ffd5a](https://github.com/zy0x1337/aquaguide/commit/79ffd5adc702b4743859f6d286e7c2244afb33e0))
+* add loading skeleton components ([2ec8608](https://github.com/zy0x1337/aquaguide/commit/2ec8608a0651ca13bb35f68d4ffa68c6fbd12e02))
+* add PWA manifest ([ee1553b](https://github.com/zy0x1337/aquaguide/commit/ee1553bab5416eb148f24b90100162e6667e167c))
+* add smart suggestion engine for tank builder ([377dd7d](https://github.com/zy0x1337/aquaguide/commit/377dd7d2a5df659acd6a8fa6e0e8d95780dfdf77))
+* center header and search bar on SpeciesIndexPage ([d826e8f](https://github.com/zy0x1337/aquaguide/commit/d826e8f46f77e322464527809838bd2705a31afd))
+* combine all requested filters (Level, Region, Size, Biotope, Type) with advanced filters ([04a7ff3](https://github.com/zy0x1337/aquaguide/commit/04a7ff326371d1a6fce3c033a24ed80c9f9716a7))
+* complete redesign - functional list-based tank builder ([c018c8d](https://github.com/zy0x1337/aquaguide/commit/c018c8d63bc4883c205e61f82fdf7b7cadd6d08f))
+* create new landing page with hero and features ([973d5dc](https://github.com/zy0x1337/aquaguide/commit/973d5dcfe7582bc00589b637218fe9d6befecf07))
+* enhance betta with new intelligence data ([23def94](https://github.com/zy0x1337/aquaguide/commit/23def94daec162ad1387bb3b84e75e39f4bd7145))
+* enhance compatible species algorithm with scoring system ([2a1a6df](https://github.com/zy0x1337/aquaguide/commit/2a1a6df7b7dcede5e3a7bbf9c4bb3b816755f2bb))
+* enhance detail page with tank recommendations and compatible species grid ([89d0dd3](https://github.com/zy0x1337/aquaguide/commit/89d0dd3540256dfa18c4b52624a0146cd5aa9524))
+* expand fish disease database to 15 common diseases ([7fbd304](https://github.com/zy0x1337/aquaguide/commit/7fbd304e334d8c3783c5e6f225f3b7808cefef40))
+* extend builder types for functional planner ([913ab5a](https://github.com/zy0x1337/aquaguide/commit/913ab5a891e27f5f9e9f8ec2bcbde69f973af6f7))
+* extend species types with behavioral intelligence & care details ([c128a77](https://github.com/zy0x1337/aquaguide/commit/c128a77f01caf7c710630030c7b8b5e88af14cdf))
+* integrate species intelligence data into detail page ([b2faf64](https://github.com/zy0x1337/aquaguide/commit/b2faf648da4a293b49cb4480a1bb0a36efe820e1))
+* merge HomePage filter logic into SpeciesIndexPage with extended filters ([b9edcdf](https://github.com/zy0x1337/aquaguide/commit/b9edcdfbea8763b78c47f22fd2a3adfef38b3c37))
+* professional HomePage redesign with cleaner layout and serious tone ([124ee94](https://github.com/zy0x1337/aquaguide/commit/124ee949ab1b989acde8bc9e3cfd5ac30a724ea9))
+* redesign Homepage with modern hero and featured species ([6545a77](https://github.com/zy0x1337/aquaguide/commit/6545a77a7244025af1899f081edc08f3f6dcd5eb))
+* Release Tank Builder MVP ([99d2959](https://github.com/zy0x1337/aquaguide/commit/99d2959997318109d645f4e177ba54a1386e72de))
+* rename Species to Fish in nav, improve HomePage design, remove community feature ([341c10c](https://github.com/zy0x1337/aquaguide/commit/341c10c19ef4a40cefa9d2c993ce4c875e7b86c8))
+* use new species intelligence data in calculations ([e7e0d25](https://github.com/zy0x1337/aquaguide/commit/e7e0d25bd3050dbabfd59638acaf824094374b2a))
+
+
+### Bug Fixes
+
+* add optional chaining for aggressionLevel ([8289c19](https://github.com/zy0x1337/aquaguide/commit/8289c19757fb9790ccb546ed95f86dd2ba8b1e22))
+* add tempRange and phRange to TankStats ([f573445](https://github.com/zy0x1337/aquaguide/commit/f573445994c5153d73f4502ab4d6a5af18040de8))
+* correct all species, plant, and hardscape IDs in presets ([c1e74a6](https://github.com/zy0x1337/aquaguide/commit/c1e74a65d20e318076c99a2746bc09dd019b54db))
+* correct flow type from 'gentle' to 'low' ([811d066](https://github.com/zy0x1337/aquaguide/commit/811d0668e0b37a8a0be32c63f456397c64860bde))
+* correct plant.specs property names and tag handling ([d6e7aa2](https://github.com/zy0x1337/aquaguide/commit/d6e7aa2e1ff7ce5d59a7774dea9fac0dff76bfcc))
+* correct PWA manifest icon path to /pwa-512x512.png ([7e67045](https://github.com/zy0x1337/aquaguide/commit/7e67045e48bd41ab33249d4f51e44ea2c3082d53))
+* final ID corrections and PWA icon path ([bc601ef](https://github.com/zy0x1337/aquaguide/commit/bc601efed52e0d737f385946fd2facb02da5ecb2))
+* handle undefined data in SpeciesDetailPage ([f5daea1](https://github.com/zy0x1337/aquaguide/commit/f5daea1bd1154e3f61ff1d2e7f29aac3b28f9cc8))
+* move all helper functions inside component for TypeScript strict mode ([9333840](https://github.com/zy0x1337/aquaguide/commit/9333840c909656cd306b6e62da36b2f9a72b0ada))
+* move getFeedingAdvice inside component scope ([db0510b](https://github.com/zy0x1337/aquaguide/commit/db0510b67ec276a98f0456686ba3b0ad26d09215))
+* move Tank Simulator below tabs on mobile view ([a33463a](https://github.com/zy0x1337/aquaguide/commit/a33463a97b42c058cd566efd9e385b498ff4529b))
+* prevent size mismatch in compatibility (e.g. Betta + Oscar) ([9a24274](https://github.com/zy0x1337/aquaguide/commit/9a242740b182cdbeef85fecefd0d2c03ab3eee1b))
+* remove unused import ([6798644](https://github.com/zy0x1337/aquaguide/commit/67986442c18f95d2a896d058a450e8a8759eac8e))
+* remove unused import and fix tag checking ([901318d](https://github.com/zy0x1337/aquaguide/commit/901318da08ccdc9a0f911ba578addaba05b38d89))
+* remove unused imports and variables in TankBuilderPage ([2b40d62](https://github.com/zy0x1337/aquaguide/commit/2b40d626d9a2c462585a51b0377992c329c35a26))
+* remove unused imports in HomePage ([14ce723](https://github.com/zy0x1337/aquaguide/commit/14ce723a903dd8e5347bb5f13d76aeb04967e4ac))
+* remove unused SlidersHorizontal import ([c6d7543](https://github.com/zy0x1337/aquaguide/commit/c6d75436811d34602993d3ed22f3921ba06cda02))
+* rename limnoboium to limnobium and update index ([ff8cb55](https://github.com/zy0x1337/aquaguide/commit/ff8cb558382d5535d719e7c4d936c5e246a89b34))
+* typescript errors and remove community stats ([0dcee7a](https://github.com/zy0x1337/aquaguide/commit/0dcee7aea87c1bfe32ebc34c2dde4b8049852c1f))
+* TypeScript errors in SpeciesDetailPage ([037db5d](https://github.com/zy0x1337/aquaguide/commit/037db5da874fb8e039a3a1a18f02bf9016fdef23))
+* update Fish nav link to point to /species instead of / ([e296e71](https://github.com/zy0x1337/aquaguide/commit/e296e71c88456b96965433a14ecebdecd5904175))
+* update Layout navigation - add Home, change Fish to Species ([9b2d1c3](https://github.com/zy0x1337/aquaguide/commit/9b2d1c39163457717b93f2151df9ba82a99500a5))
+* update manifest to use pwa-512x512.png only ([79453ef](https://github.com/zy0x1337/aquaguide/commit/79453ef050e0add1ab1d0d1166f7ba4127bf7ac2))
+* update presets with correct plant IDs ([96cffbe](https://github.com/zy0x1337/aquaguide/commit/96cffbe8b08cfdaed8bce2624d67a0d8f0e0ebb8))
+* use correct EthologyTag types in compatibility algorithm ([9f1ea13](https://github.com/zy0x1337/aquaguide/commit/9f1ea13e41b7e054bd9104f869aa6fba33a68996))
+* use non-null assertion for helper functions ([2d2855a](https://github.com/zy0x1337/aquaguide/commit/2d2855ad3079be1bf7cbfe904b9b0385ef162140))
+
 ### [0.0.3](https://github.com/zy0x1337/aquaguide/compare/v0.0.2...v0.0.3) (2026-02-15)
 
 
