@@ -2,10 +2,11 @@ import { Link, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
   MapPin, AlertTriangle, Info, Activity, DollarSign, Heart, Sprout, 
-  Mountain, Trees, Box, Sparkles, Microscope, Egg, BookOpen, Utensils,
-  Lightbulb, XCircle, ChefHat, CheckCircle, Package
+  Mountain, Box, Sparkles, Microscope, Egg, Utensils,
+  Lightbulb, XCircle, CheckCircle, ChevronDown
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
 import { Species } from '../types/species';
@@ -18,773 +19,483 @@ import { ImageAttribution } from '../components/ui/ImageAttribution';
 const SpeciesDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const data = allSpecies.find(s => s.slug === slug);
+  const [activeTab, setActiveTab] = useState<'care' | 'habitat' | 'advanced'>('care');
 
   if (!data) return <NotFound />;
 
   const seoTitle = `${data.taxonomy.commonName} Care Guide`;
   const seoDesc = `Complete care guide for ${data.taxonomy.commonName}. Habitat, tank mates, breeding, and scientific background.`;
-
   const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
-  const feedingAdvice = getFeedingAdvice(data);
-  const tankSetupItems = getTankSetupRecommendations(data);
   const compatibleSpecies = findCompatibleSpecies(data);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
       <SEOHead title={seoTitle} description={seoDesc} />
 
-      {/* HERO HEADER */}
+      {/* COMPACT HERO */}
       <motion.header 
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden pt-16 pb-24"
+        className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden pt-12 pb-16"
       >
         <div className="absolute inset-0 z-0">
-          <img 
-            src={headerImageUrl} 
-            alt={data.taxonomy.commonName}
-            className="w-full h-full object-cover opacity-20"
-          />
+          <img src={headerImageUrl} alt={data.taxonomy.commonName} className="w-full h-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
         </div>
-
         <ImageAttribution credit={data.imageCredit} />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-            <Link to="/species" className="inline-flex items-center text-slate-300 hover:text-white mb-6 transition-colors text-sm font-semibold">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back to Database
-            </Link>
-          </motion.div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <Link to="/species" className="inline-flex items-center text-slate-300 hover:text-white mb-4 transition-colors text-sm font-semibold">
+            <ArrowLeft className="w-4 h-4 mr-1.5" /> Database
+          </Link>
           
-          <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex-1"
-            >
-              <div className="flex flex-wrap gap-2 mb-6">
-                <Badge text={data.environment.type} color="brand" />
-                <Badge text={data.care.difficulty} color={data.care.difficulty} />
+          <div className="flex items-start justify-between gap-6">
+            <div className="flex-1">
+              <div className="flex flex-wrap gap-2 mb-3">
+                <Badge text={data.environment.type} color="brand" size="sm" />
+                <Badge text={data.care.difficulty} color={data.care.difficulty} size="sm" />
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-3 leading-tight">
-                {data.taxonomy.commonName}
-              </h1>
-              <p className="text-xl md:text-2xl text-slate-300 font-light italic">
-                {data.taxonomy.scientificName} • {data.taxonomy.family}
-              </p>
-            </motion.div>
+              <h1 className="text-3xl md:text-5xl font-bold mb-2">{data.taxonomy.commonName}</h1>
+              <p className="text-lg text-slate-300 italic">{data.taxonomy.scientificName}</p>
+            </div>
             
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
-              className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <MapPin className="w-5 h-5 text-indigo-400" />
-                <span className="text-xs uppercase font-bold text-slate-400 tracking-wider">Origin</span>
+            <div className="hidden sm:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20">
+              <MapPin className="w-4 h-4 text-indigo-400" />
+              <div>
+                <div className="text-[10px] uppercase font-bold text-slate-400">Origin</div>
+                <div className="font-semibold text-sm">{data.taxonomy.origin}</div>
               </div>
-              <p className="font-semibold text-lg text-white">{data.taxonomy.origin}</p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </motion.header>
 
       {/* MAIN CONTENT */}
-      <main className="relative max-w-6xl mx-auto px-4 sm:px-6 -mt-16 pb-20">
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 -mt-8 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          {/* LEFT COLUMN */}
-          <div className="xl:col-span-2 space-y-8">
-            
-            {/* Quick Stats */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-            >
-              <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
-                <Info className="w-5 h-5 mr-2 text-indigo-600" /> Key Parameters
-              </h2>
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                <CompactStatCard icon={<Thermometer className="text-rose-500" />} label="Temperature" value={`${data.environment.tempC.min}-${data.environment.tempC.max}°C`} />
-                <CompactStatCard icon={<Droplets className="text-cyan-500" />} label="pH Level" value={`${data.environment.ph.min}-${data.environment.ph.max}`} />
-                <CompactStatCard icon={<Fish className="text-blue-500" />} label="Min Tank" value={`${data.environment.minTankSizeLiters}L`} />
-                <CompactStatCard icon={<Ruler className="text-indigo-500" />} label="Adult Size" value={`${data.visuals.adultSizeCM}cm`} />
-                <CompactStatCard icon={<Users className="text-slate-600" />} label="Group Size" value={`${data.behavior.minGroupSize}+`} />
-                <CompactStatCard icon={<Utensils className="text-amber-500" />} label="Diet" value={capitalize(data.care.diet)} />
+          {/* LEFT: Quick Stats */}
+          <motion.aside 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="lg:col-span-1 space-y-4"
+          >
+            {/* Quick Parameters Card */}
+            <div className="bg-white rounded-xl shadow-md border border-slate-200 p-5">
+              <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Key Parameters</h3>
+              <div className="space-y-3">
+                <StatRow icon={<Thermometer size={16} className="text-rose-500" />} label="Temperature" value={`${data.environment.tempC.min}-${data.environment.tempC.max}°C`} />
+                <StatRow icon={<Droplets size={16} className="text-cyan-500" />} label="pH" value={`${data.environment.ph.min}-${data.environment.ph.max}`} />
+                <StatRow icon={<Fish size={16} className="text-blue-500" />} label="Min Tank" value={`${data.environment.minTankSizeLiters}L`} />
+                <StatRow icon={<Ruler size={16} className="text-indigo-500" />} label="Size" value={`${data.visuals.adultSizeCM}cm`} />
+                <StatRow icon={<Users size={16} className="text-slate-600" />} label="Group" value={`${data.behavior.minGroupSize}+`} />
+                <StatRow icon={<Utensils size={16} className="text-amber-500" />} label="Diet" value={capitalize(data.care.diet)} />
               </div>
-            </motion.div>
-
-            {/* NEW: Tank Setup Recommendations */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl border-2 border-indigo-200 p-6"
-            >
-              <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
-                <Package className="w-5 h-5 mr-2 text-indigo-600" /> Recommended Tank Setup
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {tankSetupItems.map((item, i) => (
-                  <div key={i} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-indigo-100">
-                    <CheckCircle className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-slate-900 text-sm mb-1">{item.title}</div>
-                      <div className="text-xs text-slate-600">{item.description}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* FEEDING SECTION */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-            >
-               <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
-                <ChefHat className="w-5 h-5 mr-2 text-amber-600" /> Diet & Feeding Guide
-              </h2>
-              <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
-                <div className="flex items-start gap-4">
-                   <div className="p-3 bg-white rounded-lg shadow-sm border border-amber-100 hidden sm:block">
-                      {data.care.diet === 'herbivore' ? <Sprout className="w-6 h-6 text-emerald-500" /> : 
-                       data.care.diet === 'carnivore' ? <Fish className="w-6 h-6 text-rose-500" /> : 
-                       <Utensils className="w-6 h-6 text-amber-500" />}
-                   </div>
-                   <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                         <span className="font-bold text-lg text-slate-900 capitalize">{data.care.diet}</span>
-                         <span className="text-xs text-slate-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded border border-slate-200">
-                            Diet Type
-                         </span>
-                      </div>
-                      <ul className="space-y-2">
-                        {feedingAdvice.map((tip, i) => (
-                           <li key={i} className="flex gap-2 text-sm text-slate-700">
-                              <span className="text-amber-500 mt-0.5">•</span>
-                              {tip}
-                           </li>
-                        ))}
-                      </ul>
-                   </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Pro Tips & Mistakes */}
-            {(data.care.proTips || data.care.commonMistakes) && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {data.care.proTips && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 border border-amber-200"
-                  >
-                    <h3 className="text-lg font-bold text-amber-900 mb-4 flex items-center">
-                      <Lightbulb className="w-5 h-5 mr-2" /> Pro Tips
-                    </h3>
-                    <ul className="space-y-2.5">
-                      {data.care.proTips.map((tip: string, i: number) => (
-                        <li key={i} className="flex gap-2 text-sm text-amber-900 leading-snug">
-                          <span className="w-1.5 h-1.5 mt-1.5 bg-amber-500 rounded-full flex-shrink-0" />
-                          <span>{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                )}
-
-                {data.care.commonMistakes && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-rose-50 to-red-50 rounded-2xl p-5 border border-rose-200"
-                  >
-                    <h3 className="text-lg font-bold text-rose-900 mb-4 flex items-center">
-                      <XCircle className="w-5 h-5 mr-2" /> Common Mistakes
-                    </h3>
-                    <ul className="space-y-2.5">
-                      {data.care.commonMistakes.map((mistake: string, i: number) => (
-                        <li key={i} className="flex gap-2 text-sm text-rose-900 leading-snug">
-                          <span className="w-1.5 h-1.5 mt-1.5 bg-rose-500 rounded-full flex-shrink-0" />
-                          <span>{mistake}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                )}
-              </div>
-            )}
-
-            {/* Fun Fact */}
-            {data.funFact && (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="relative bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 opacity-10">
-                  <Sparkles className="w-32 h-32" />
-                </div>
-                <div className="relative">
-                  <div className="text-indigo-200 font-bold uppercase text-xs tracking-wider mb-2 flex items-center">
-                    <Sparkles className="w-4 h-4 mr-1.5" /> Did you know?
-                  </div>
-                  <p className="text-white text-lg leading-relaxed italic">
-                    "{data.funFact}"
-                  </p>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Behavior */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-            >
-              <h2 className="text-xl font-bold text-slate-900 mb-4">Behavior & Temperament</h2>
-              <p className="text-slate-700 leading-relaxed mb-5">{data.behavior.description}</p>
-              
-              <div>
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Key Traits</h4>
-                <div className="flex flex-wrap gap-2">
-                  {data.behavior.tags.map((tag: string) => (
-                    <div key={tag} className="group relative">
-                      <span className="cursor-help inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-colors">
-                        {tag === 'jumper' && <AlertTriangle className="w-3.5 h-3.5 mr-1.5 text-amber-500" />}
-                        {capitalize(tag.replace(/_/g, ' '))}
-                      </span>
-                      
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-slate-900 text-white text-xs p-3 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50">
-                        <span className="font-semibold block mb-1 capitalize">{tag.replace(/_/g, ' ')}:</span>
-                        {tagDescriptions[tag as keyof typeof tagDescriptions] || "No description available."}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Habitat */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-            >
-              <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
-                <Mountain className="w-5 h-5 mr-2 text-emerald-600" /> Habitat & Setup
-              </h2>
-              
-              <div className="bg-slate-50 p-5 rounded-xl mb-5">
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Target Parameters</h4>
-                <div className="space-y-4">
-                  <ParameterScale 
-                    label="Temperature" 
-                    unit="°C" 
-                    min={15} max={35} 
-                    valueMin={data.environment.tempC.min} 
-                    valueMax={data.environment.tempC.max} 
-                    color="rose" 
-                  />
-                  <ParameterScale 
-                    label="pH Value" 
-                    unit="" 
-                    min={4.0} max={9.0} 
-                    valueMin={data.environment.ph.min} 
-                    valueMax={data.environment.ph.max} 
-                    color="cyan" 
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 mb-5">
-                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                  <span className="text-xs font-bold text-slate-500 uppercase block mb-1">Flow</span>
-                  <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-blue-600" />
-                    <span className="font-semibold text-slate-900 capitalize">{data.environment.flow}</span>
-                  </div>
-                </div>
-                <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
-                  <span className="text-xs font-bold text-slate-500 uppercase block mb-1">Substrate</span>
-                  <div className="flex items-center gap-2">
-                    <Box className="w-4 h-4 text-amber-600" />
-                    <span className="font-semibold text-slate-900 capitalize">{data.environment.substrate || 'Any'}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h4 className="flex items-center text-sm font-bold text-slate-700 mb-2">
-                    <Sprout className="w-4 h-4 mr-2 text-emerald-500" /> Vegetation
-                  </h4>
-                  <div className="pl-4 border-l-2 border-emerald-200">
-                    <div className="flex items-center gap-2 mb-2">
-                      {[1,2,3].map(i => (
-                        <div key={i} className={`h-1.5 w-6 rounded-full ${
-                          (data.habitat.planting === 'sparse' && i === 1) || 
-                          (data.habitat.planting === 'medium' && i <= 2) || 
-                          (data.habitat.planting === 'dense' && i <= 3) 
-                          ? 'bg-emerald-500' : 'bg-slate-200'
-                        }`} />
-                      ))}
-                      <span className="text-xs font-bold text-emerald-700 uppercase ml-1">
-                        {data.habitat.planting}
-                      </span>
-                    </div>
-                    <p className="text-sm text-slate-600">{data.habitat.plantingNotes}</p>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="flex items-center text-sm font-bold text-slate-700 mb-2">
-                    <Trees className="w-4 h-4 mr-2 text-amber-700" /> Hardscape
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {data.habitat.hardscape.map((item: string) => (
-                      <span key={item} className="px-3 py-1 rounded-lg text-xs bg-amber-50 text-amber-800 border border-amber-100 font-semibold">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* NEW: Compatible Species Grid */}
-            {compatibleSpecies.length > 0 && (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-              >
-                <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
-                  <Fish className="w-5 h-5 mr-2 text-indigo-600" /> Compatible Tank Mates
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {compatibleSpecies.slice(0, 8).map((species) => (
-                    <Link 
-                      key={species.id}
-                      to={`/species/${species.slug}`}
-                      className="group p-3 bg-slate-50 hover:bg-indigo-50 rounded-lg border border-slate-200 hover:border-indigo-300 transition-all"
-                    >
-                      <div className="text-sm font-bold text-slate-900 group-hover:text-indigo-700 mb-0.5 truncate">
-                        {species.taxonomy.commonName}
-                      </div>
-                      <div className="text-xs text-slate-500 italic truncate">
-                        {species.taxonomy.scientificName}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-
-            {/* Compatibility */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-            >
-              <h2 className="text-xl font-bold text-slate-900 mb-5">Compatibility Guidelines</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="flex items-center text-emerald-700 font-bold mb-3">
-                    <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Good Mates
-                  </h4>
-                  <ul className="space-y-2">
-                    {data.behavior.compatibility.goodMates.map((m: string) => (
-                      <li key={m} className="text-sm bg-emerald-50 text-emerald-800 px-3 py-2 rounded-lg border border-emerald-100">
-                        {m}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="flex items-center text-rose-700 font-bold mb-3">
-                    <span className="w-2 h-2 bg-rose-500 rounded-full mr-2"></span> Avoid (Risk)
-                  </h4>
-                  <ul className="space-y-2">
-                    {data.behavior.compatibility.badMates.map((m: string) => (
-                      <li key={m} className="text-sm bg-rose-50 text-rose-800 px-3 py-2 rounded-lg border border-rose-100">
-                        {m}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              {data.behavior.compatibility.notes && (
-                <p className="mt-5 text-sm text-slate-700 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                  <strong>Note:</strong> {data.behavior.compatibility.notes}
-                </p>
-              )}
-            </motion.div>
-
-            {/* Health & Cost */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-              >
-                <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-                  <Heart className="w-5 h-5 mr-2 text-rose-500" /> Health Stats
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase font-bold block mb-1">Lifespan</span>
-                    <p className="font-semibold text-slate-900">{data.health.lifespanYears} Years</p>
-                  </div>
-                  
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Common Diseases</span>
-                    <DiseaseList diseases={data.health.commonDiseases} />
-                  </div>
-
-                  {data.health.sensitivities && data.health.sensitivities.length > 0 && (
-                    <div>
-                      <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Sensitivities</span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {data.health.sensitivities.map((s: string) => (
-                          <span key={s} className="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 font-medium">{s}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-              >
-                <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-                  <DollarSign className="w-5 h-5 mr-2 text-emerald-500" /> Ownership Cost
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Maintenance Effort</span>
-                    <div className="flex items-center">
-                      {[1,2,3].map(i => (
-                        <div key={i} className={`h-2 w-8 mr-1.5 rounded-full ${
-                          (data.care.effort === 'low' && i<=1) || (data.care.effort === 'medium' && i<=2) || (data.care.effort === 'high') 
-                          ? 'bg-indigo-500' : 'bg-slate-200'
-                        }`}></div>
-                      ))}
-                      <span className="ml-2 text-xs font-bold uppercase text-indigo-600">{data.care.effort}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase font-bold block mb-2">Running Cost</span>
-                    <div className="flex items-center">
-                      {[1,2,3].map(i => (
-                        <div key={i} className={`h-2 w-8 mr-1.5 rounded-full ${
-                          (data.care.cost === 'low' && i<=1) || (data.care.cost === 'medium' && i<=2) || (data.care.cost === 'high') 
-                          ? 'bg-emerald-500' : 'bg-slate-200'
-                        }`}></div>
-                      ))}
-                      <span className="ml-2 text-xs font-bold uppercase text-emerald-600">{data.care.cost}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
             </div>
 
-            {/* Advanced Knowledge */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-8 pt-8 border-t-2 border-slate-200"
-            >
-              <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
-                <BookOpen className="w-6 h-6 mr-3 text-indigo-600" />
-                Deep Dive: Science & Breeding
-              </h2>
+            {/* Cost/Effort Card */}
+            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl border border-indigo-200 p-5">
+              <h3 className="text-sm font-bold text-slate-700 uppercase mb-4">Ownership</h3>
+              <div className="space-y-3">
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-semibold text-slate-600">Maintenance</span>
+                    <span className="text-xs font-bold text-indigo-700 uppercase">{data.care.effort}</span>
+                  </div>
+                  <BarIndicator level={data.care.effort} color="indigo" />
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-semibold text-slate-600">Cost</span>
+                    <span className="text-xs font-bold text-emerald-700 uppercase">{data.care.cost}</span>
+                  </div>
+                  <BarIndicator level={data.care.cost} color="emerald" />
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-semibold text-slate-600">Lifespan</span>
+                    <span className="text-xs font-bold text-slate-700">{data.health.lifespanYears} years</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-              {data.scientificContext && (
-                <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-indigo-50 rounded-xl shrink-0">
-                      <Microscope className="w-6 h-6 text-indigo-600" />
+            {/* Tank Simulator */}
+            <TankSimulator 
+              fishLengthCM={data.visuals.adultSizeCM} 
+              fishShape={data.visuals.iconShape} 
+              minGroupSize={data.behavior.minGroupSize}
+              minTankSizeLiters={data.environment.minTankSizeLiters}
+            />
+
+            {data.behavior.tags.includes('jumper') && (
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 p-4 rounded-xl">
+                <div className="flex gap-2 items-start">
+                  <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0" />
+                  <div>
+                    <p className="font-bold text-amber-900 text-sm mb-0.5">Jump Risk</p>
+                    <p className="text-xs text-amber-800">Secure lid mandatory</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </motion.aside>
+
+          {/* RIGHT: Main Content */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="lg:col-span-2 space-y-6"
+          >
+            {/* Fun Fact */}
+            {data.funFact && (
+              <div className="relative bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-5 overflow-hidden">
+                <Sparkles className="absolute top-2 right-2 w-16 h-16 text-white/10" />
+                <div className="relative">
+                  <div className="text-indigo-200 font-bold uppercase text-[10px] tracking-wider mb-1 flex items-center">
+                    <Sparkles className="w-3 h-3 mr-1" /> Did you know?
+                  </div>
+                  <p className="text-white text-sm leading-relaxed italic">"{data.funFact}"</p>
+                </div>
+              </div>
+            )}
+
+            {/* Tab Navigation */}
+            <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+              <div className="flex border-b border-slate-200">
+                <TabButton active={activeTab === 'care'} onClick={() => setActiveTab('care')}>Care & Behavior</TabButton>
+                <TabButton active={activeTab === 'habitat'} onClick={() => setActiveTab('habitat')}>Habitat & Setup</TabButton>
+                <TabButton active={activeTab === 'advanced'} onClick={() => setActiveTab('advanced')}>Advanced</TabButton>
+              </div>
+
+              <div className="p-5">
+                {activeTab === 'care' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
+                    {/* Behavior */}
+                    <Section title="Behavior & Temperament" icon={<Activity className="w-4 h-4" />}>
+                      <p className="text-sm text-slate-700 mb-3">{data.behavior.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {data.behavior.tags.map((tag: string) => (
+                          <TagBadge key={tag} tag={tag} />
+                        ))}
+                      </div>
+                    </Section>
+
+                    {/* Diet */}
+                    <Section title="Diet & Feeding" icon={<Utensils className="w-4 h-4" />}>
+                      <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="font-bold text-sm capitalize">{data.care.diet}</span>
+                          <span className="text-[10px] uppercase bg-white px-2 py-0.5 rounded border text-amber-700 font-bold">Diet Type</span>
+                        </div>
+                        <ul className="space-y-1.5 text-xs text-slate-700">
+                          {getFeedingAdvice(data).map((tip, i) => (
+                            <li key={i} className="flex gap-1.5">
+                              <span className="text-amber-500">•</span>
+                              <span>{tip}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </Section>
+
+                    {/* Compatibility */}
+                    <Section title="Tank Mates" icon={<Fish className="w-4 h-4" />}>
+                      <div className="grid sm:grid-cols-2 gap-3 text-xs">
+                        <div>
+                          <div className="flex items-center gap-1.5 mb-2">
+                            <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="font-bold text-emerald-700">Compatible</span>
+                          </div>
+                          <div className="space-y-1.5">
+                            {data.behavior.compatibility.goodMates.map((m: string) => (
+                              <div key={m} className="bg-emerald-50 text-emerald-800 px-2 py-1.5 rounded border border-emerald-100">{m}</div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-1.5 mb-2">
+                            <XCircle className="w-3.5 h-3.5 text-rose-500" />
+                            <span className="font-bold text-rose-700">Avoid</span>
+                          </div>
+                          <div className="space-y-1.5">
+                            {data.behavior.compatibility.badMates.map((m: string) => (
+                              <div key={m} className="bg-rose-50 text-rose-800 px-2 py-1.5 rounded border border-rose-100">{m}</div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      {data.behavior.compatibility.notes && (
+                        <p className="mt-3 text-xs text-slate-600 bg-slate-50 p-3 rounded border border-slate-200">
+                          <strong>Note:</strong> {data.behavior.compatibility.notes}
+                        </p>
+                      )}
+                    </Section>
+
+                    {/* Pro Tips & Mistakes */}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {data.care.proTips && (
+                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-4 border border-amber-200">
+                          <h4 className="text-xs font-bold text-amber-900 mb-2 flex items-center">
+                            <Lightbulb className="w-3.5 h-3.5 mr-1" /> Pro Tips
+                          </h4>
+                          <ul className="space-y-1.5 text-xs text-amber-900">
+                            {data.care.proTips.map((tip: string, i: number) => (
+                              <li key={i} className="flex gap-1.5">
+                                <span className="w-1 h-1 mt-1.5 bg-amber-500 rounded-full flex-shrink-0" />
+                                <span>{tip}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {data.care.commonMistakes && (
+                        <div className="bg-gradient-to-br from-rose-50 to-red-50 rounded-lg p-4 border border-rose-200">
+                          <h4 className="text-xs font-bold text-rose-900 mb-2 flex items-center">
+                            <XCircle className="w-3.5 h-3.5 mr-1" /> Avoid
+                          </h4>
+                          <ul className="space-y-1.5 text-xs text-rose-900">
+                            {data.care.commonMistakes.map((mistake: string, i: number) => (
+                              <li key={i} className="flex gap-1.5">
+                                <span className="w-1 h-1 mt-1.5 bg-rose-500 rounded-full flex-shrink-0" />
+                                <span>{mistake}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg text-slate-900 mb-4">Biological Background</h3>
-                      <div className="space-y-4 text-slate-700 text-sm">
+
+                    {/* Health */}
+                    <Section title="Health & Diseases" icon={<Heart className="w-4 h-4" />}>
+                      <div className="space-y-3">
                         <div>
-                          <span className="font-bold text-slate-900 block mb-1">Wild Habitat:</span>
-                          {data.scientificContext.wildHabitat}
+                          <span className="text-xs font-bold text-slate-500 uppercase block mb-1.5">Common Diseases</span>
+                          <DiseaseList diseases={data.health.commonDiseases} />
                         </div>
-                        <div>
-                          <span className="font-bold text-slate-900 block mb-1">Sexual Dimorphism:</span>
-                          {data.scientificContext.sexualDimorphism}
-                        </div>
-                        {data.scientificContext.variants && data.scientificContext.variants.length > 0 && (
+                        {data.health.sensitivities && data.health.sensitivities.length > 0 && (
                           <div>
-                            <span className="font-bold text-slate-900 block mb-2">Common Variants:</span>
-                            <div className="flex flex-wrap gap-2">
-                              {data.scientificContext.variants.map((v: string) => (
-                                <span key={v} className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs border border-indigo-100 font-semibold">
-                                  {v}
-                                </span>
+                            <span className="text-xs font-bold text-slate-500 uppercase block mb-1.5">Sensitivities</span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {data.health.sensitivities.map((s: string) => (
+                                <span key={s} className="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100">{s}</span>
                               ))}
                             </div>
                           </div>
                         )}
                       </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+                    </Section>
+                  </motion.div>
+                )}
 
-              {data.breeding && (
-                <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-pink-50 rounded-xl shrink-0">
-                      <Egg className="w-6 h-6 text-pink-600" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-4">
-                        <h3 className="font-bold text-lg text-slate-900">Breeding Guide</h3>
-                        <span className={`text-xs font-bold uppercase px-2 py-1 rounded border ${
-                          data.breeding.difficulty === 'beginner' 
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                          data.breeding.difficulty === 'medium' 
-                            ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                            'bg-rose-50 text-rose-700 border-rose-200'
-                        }`}>
-                          {data.breeding.difficulty}
-                        </span>
+                {activeTab === 'habitat' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
+                    {/* Parameters */}
+                    <Section title="Water Parameters" icon={<Droplets className="w-4 h-4" />}>
+                      <div className="bg-slate-50 p-4 rounded-lg space-y-3">
+                        <ParameterScale label="Temperature" unit="°C" min={15} max={35} valueMin={data.environment.tempC.min} valueMax={data.environment.tempC.max} color="rose" />
+                        <ParameterScale label="pH" unit="" min={4.0} max={9.0} valueMin={data.environment.ph.min} valueMax={data.environment.ph.max} color="cyan" />
+                      </div>
+                    </Section>
+
+                    {/* Tank Setup */}
+                    <Section title="Tank Setup" icon={<Mountain className="w-4 h-4" />}>
+                      <div className="grid sm:grid-cols-2 gap-3 mb-4">
+                        <InfoCard label="Flow" value={capitalize(data.environment.flow)} icon={<Activity className="w-4 h-4 text-blue-600" />} />
+                        <InfoCard label="Substrate" value={capitalize(data.environment.substrate || 'Any')} icon={<Box className="w-4 h-4 text-amber-600" />} />
                       </div>
                       
-                      <div className="space-y-4 text-slate-700 text-sm">
-                        <div className="bg-slate-50 p-4 rounded-lg">
-                          <span className="text-xs font-bold text-slate-500 uppercase block mb-1">Method</span>
-                          <p className="font-semibold text-slate-800 capitalize">{data.breeding.method.replace(/_/g, ' ')}</p>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs font-bold text-slate-600 flex items-center gap-1.5">
+                              <Sprout className="w-3.5 h-3.5 text-emerald-500" /> Planting
+                            </span>
+                            <span className="text-xs font-bold uppercase text-emerald-700">{data.habitat.planting}</span>
+                          </div>
+                          <BarIndicator level={data.habitat.planting} color="emerald" />
+                          <p className="text-xs text-slate-600 mt-2">{data.habitat.plantingNotes}</p>
                         </div>
                         
-                        {data.breeding.trigger && (
-                          <div>
-                            <span className="font-bold text-slate-900 block mb-1">Breeding Triggers:</span>
-                            {data.breeding.trigger}
+                        <div>
+                          <span className="text-xs font-bold text-slate-600 block mb-2">Hardscape</span>
+                          <div className="flex flex-wrap gap-2">
+                            {data.habitat.hardscape.map((item: string) => (
+                              <span key={item} className="text-xs bg-amber-50 text-amber-800 px-2 py-1 rounded border border-amber-100 font-semibold">{item}</span>
+                            ))}
                           </div>
-                        )}
-                        
-                        {data.breeding.fryCare && (
-                          <div>
-                            <span className="font-bold text-slate-900 block mb-1">Fry Care:</span>
-                            {data.breeding.fryCare}
-                          </div>
-                        )}
-
-                        {data.breeding.notes && (
-                          <div>
-                            <span className="font-bold text-slate-900 block mb-1">Notes:</span>
-                            {data.breeding.notes}
-                          </div>
-                        )}
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </div>
+                    </Section>
 
-          {/* RIGHT SIDEBAR */}
-          <aside className="space-y-6">
-            <div className="xl:sticky xl:top-20 space-y-6">
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
-                <TankSimulator 
-                  fishLengthCM={data.visuals.adultSizeCM} 
-                  fishShape={data.visuals.iconShape} 
-                  minGroupSize={data.behavior.minGroupSize}
-                  minTankSizeLiters={data.environment.minTankSizeLiters}
-                />
-              </motion.div>
-              
-              {data.behavior.tags.includes('jumper') && (
-                <motion.div 
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 p-5 rounded-2xl"
-                >
-                  <div className="flex gap-3 items-start">
-                    <div className="p-2 bg-amber-500 rounded-lg shrink-0">
-                      <AlertTriangle className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-amber-900 mb-1">Jump Risk!</p>
-                      <p className="text-amber-800 text-sm">
-                        Tight-fitting lid is <strong>mandatory</strong>. This species is known to jump.
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
+                    {/* Recommended Setup */}
+                    <Section title="Recommended Setup" icon={<CheckCircle className="w-4 h-4" />}>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {getTankSetupRecommendations(data).map((item, i) => (
+                          <div key={i} className="flex gap-2 bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                            <CheckCircle className="w-4 h-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <div className="font-bold text-xs text-slate-900 mb-0.5">{item.title}</div>
+                              <div className="text-xs text-slate-600">{item.description}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </Section>
+
+                    {/* Compatible Species */}
+                    {compatibleSpecies.length > 0 && (
+                      <Section title="Compatible Species" icon={<Fish className="w-4 h-4" />}>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                          {compatibleSpecies.slice(0, 6).map((species) => (
+                            <Link key={species.id} to={`/species/${species.slug}`} className="group p-2 bg-slate-50 hover:bg-indigo-50 rounded-lg border border-slate-200 hover:border-indigo-300 transition-all">
+                              <div className="text-xs font-bold text-slate-900 group-hover:text-indigo-700 truncate">{species.taxonomy.commonName}</div>
+                              <div className="text-[10px] text-slate-500 italic truncate">{species.taxonomy.scientificName}</div>
+                            </Link>
+                          ))}
+                        </div>
+                      </Section>
+                    )}
+                  </motion.div>
+                )}
+
+                {activeTab === 'advanced' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
+                    {/* Scientific Context */}
+                    {data.scientificContext && (
+                      <Section title="Scientific Background" icon={<Microscope className="w-4 h-4" />}>
+                        <div className="space-y-3 text-sm text-slate-700">
+                          <div>
+                            <span className="font-bold text-slate-900 block mb-1">Wild Habitat</span>
+                            <p>{data.scientificContext.wildHabitat}</p>
+                          </div>
+                          <div>
+                            <span className="font-bold text-slate-900 block mb-1">Sexual Dimorphism</span>
+                            <p>{data.scientificContext.sexualDimorphism}</p>
+                          </div>
+                          {data.scientificContext.variants && data.scientificContext.variants.length > 0 && (
+                            <div>
+                              <span className="font-bold text-slate-900 block mb-2">Variants</span>
+                              <div className="flex flex-wrap gap-2">
+                                {data.scientificContext.variants.map((v: string) => (
+                                  <span key={v} className="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs border border-indigo-100 font-semibold">{v}</span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </Section>
+                    )}
+
+                    {/* Breeding */}
+                    {data.breeding && (
+                      <Section title="Breeding Guide" icon={<Egg className="w-4 h-4" />}>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <Badge text={data.breeding.difficulty} color={data.breeding.difficulty} size="sm" />
+                            <span className="text-xs text-slate-500 capitalize">{data.breeding.method.replace(/_/g, ' ')}</span>
+                          </div>
+                          
+                          <div className="space-y-2 text-sm text-slate-700">
+                            {data.breeding.trigger && (
+                              <div className="bg-slate-50 p-3 rounded-lg">
+                                <span className="font-bold text-slate-900 block mb-1 text-xs">Trigger</span>
+                                <p className="text-xs">{data.breeding.trigger}</p>
+                              </div>
+                            )}
+                            {data.breeding.fryCare && (
+                              <div className="bg-slate-50 p-3 rounded-lg">
+                                <span className="font-bold text-slate-900 block mb-1 text-xs">Fry Care</span>
+                                <p className="text-xs">{data.breeding.fryCare}</p>
+                              </div>
+                            )}
+                            {data.breeding.notes && (
+                              <p className="text-xs text-slate-600 italic">{data.breeding.notes}</p>
+                            )}
+                          </div>
+                        </div>
+                      </Section>
+                    )}
+                  </motion.div>
+                )}
+              </div>
             </div>
-          </aside>
+          </motion.div>
         </div>
       </main>
     </div>
   );
 };
 
-// --- HELPER: Tank Setup Recommendations ---
-const getTankSetupRecommendations = (species: Species) => {
-  const items = [];
+// --- COMPONENTS ---
+const TabButton = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
+  <button onClick={onClick} className={`flex-1 px-4 py-3 text-sm font-semibold transition-colors ${
+    active 
+      ? 'bg-white text-indigo-700 border-b-2 border-indigo-600' 
+      : 'bg-slate-50 text-slate-600 hover:text-slate-900 border-b-2 border-transparent'
+  }`}>
+    {children}
+  </button>
+);
+
+const Section = ({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) => (
+  <div>
+    <h3 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">{icon} {title}</h3>
+    <div>{children}</div>
+  </div>
+);
+
+const StatRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="flex items-center justify-between py-1">
+    <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+      {icon}
+      <span>{label}</span>
+    </div>
+    <span className="text-sm font-bold text-slate-900">{value}</span>
+  </div>
+);
+
+const InfoCard = ({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) => (
+  <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+    <div className="flex items-center gap-2 mb-1">
+      {icon}
+      <span className="text-xs font-bold text-slate-500 uppercase">{label}</span>
+    </div>
+    <p className="text-sm font-bold text-slate-900">{value}</p>
+  </div>
+);
+
+const BarIndicator = ({ level, color }: { level: string; color: string }) => {
+  const steps = level === 'low' || level === 'sparse' ? 1 : level === 'medium' ? 2 : 3;
+  const colorClasses = {
+    indigo: { active: 'bg-indigo-500', inactive: 'bg-slate-200' },
+    emerald: { active: 'bg-emerald-500', inactive: 'bg-slate-200' },
+  }[color];
   
-  items.push({
-    title: `${species.environment.minTankSizeLiters}L+ Tank`,
-    description: `Minimum ${species.environment.minTankSizeLiters} liters for ${species.behavior.minGroupSize} individuals`
-  });
-  
-  if (species.habitat.planting === 'dense') {
-    items.push({
-      title: 'Dense Planting',
-      description: 'Heavily planted with plenty of hiding spots and cover'
-    });
-  } else if (species.habitat.planting === 'medium') {
-    items.push({
-      title: 'Moderate Plants',
-      description: 'Balance of open swimming space and planted areas'
-    });
-  }
-  
-  if (species.environment.substrate) {
-    items.push({
-      title: `${capitalize(species.environment.substrate)} Substrate`,
-      description: `Recommended substrate type for natural behavior`
-    });
-  }
-  
-  if (species.environment.flow === 'low') {
-    items.push({
-      title: 'Gentle Flow',
-      description: 'Low current filter - avoid strong water movement'
-    });
-  } else if (species.environment.flow === 'moderate') {
-    items.push({
-      title: 'Moderate Flow',
-      description: 'Standard filtration with moderate water movement'
-    });
-  }
-  
-  if (species.habitat.hardscape.includes('driftwood') || species.habitat.hardscape.includes('leaf_litter')) {
-    items.push({
-      title: 'Natural Décor',
-      description: 'Driftwood and dried leaves for natural biotope'
-    });
-  }
-  
-  if (species.behavior.tags.includes('jumper')) {
-    items.push({
-      title: 'Secure Lid Required',
-      description: 'Tight-fitting cover to prevent jumping escapes'
-    });
-  }
-  
-  return items;
+  return (
+    <div className="flex gap-1.5">
+      {[1, 2, 3].map(i => (
+        <div key={i} className={`h-1.5 flex-1 rounded-full ${i <= steps ? colorClasses.active : colorClasses.inactive}`} />
+      ))}
+    </div>
+  );
 };
 
-// --- HELPER: Find Compatible Species ---
-const findCompatibleSpecies = (currentSpecies: Species): Species[] => {
-  return allSpecies.filter(s => {
-    if (s.id === currentSpecies.id) return false;
-    
-    // Check if parameters overlap
-    const tempOverlap = (
-      s.environment.tempC.min <= currentSpecies.environment.tempC.max &&
-      s.environment.tempC.max >= currentSpecies.environment.tempC.min
-    );
-    const phOverlap = (
-      s.environment.ph.min <= currentSpecies.environment.ph.max &&
-      s.environment.ph.max >= currentSpecies.environment.ph.min
-    );
-    
-    // Check if both peaceful
-    const bothPeaceful = 
-      currentSpecies.behavior.tags.includes('peaceful') &&
-      s.behavior.tags.includes('peaceful');
-    
-    return tempOverlap && phOverlap && bothPeaceful;
-  }).slice(0, 12);
-};
+const TagBadge = ({ tag }: { tag: string }) => (
+  <div className="group relative">
+    <span className="cursor-help inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-colors">
+      {tag === 'jumper' && <AlertTriangle className="w-3 h-3 mr-1 text-amber-500" />}
+      {capitalize(tag.replace(/_/g, ' '))}
+    </span>
+    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900 text-white text-xs p-2.5 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50">
+      <span className="font-semibold block mb-1 capitalize">{tag.replace(/_/g, ' ')}:</span>
+      {tagDescriptions[tag as keyof typeof tagDescriptions] || "No description available."}
+      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
+    </div>
+  </div>
+);
 
-// --- HELPER: Feeding Advice ---
-const getFeedingAdvice = (species: Species): string[] => {
-  const advice: string[] = [];
-  const { diet } = species.care;
-  const { tags } = species.behavior;
-  const size = species.visuals.adultSizeCM;
-  const shape = species.visuals.iconShape;
-
-  if (shape === 'shrimp') {
-    advice.push("Staple: Specialized shrimp pellets or biofilm.");
-  } else if (size < 5) {
-    advice.push("Staple: High-quality micro-pellets or crushed flakes.");
-  } else {
-    advice.push("Staple: High-quality granules or flakes.");
-  }
-
-  if (tags.includes('bottom_dweller') || shape === 'depressed') {
-    advice.push("Essential: Sinking wafers or pellets to ensure food reaches the bottom.");
-  }
-  
-  if (tags.includes('algae_eater') || diet === 'herbivore') {
-     advice.push("Supplements: Algae wafers, blanched zucchini, cucumber, or spinach (2-3x/week).");
-  }
-  
-  if (diet === 'carnivore' || diet === 'omnivore') {
-     advice.push("Treats: Frozen or live foods (Bloodworms, Brine Shrimp, Daphnia) 1-2x/week for color & health.");
-  }
-  
-  if (tags.includes('predator')) {
-     advice.push("Behavior: May require live food or movement to trigger feeding response. Monitor closely.");
-  }
-  
-  if (tags.includes('surface_dweller') || tags.includes('labyrinth_fish')) {
-     advice.push("Placement: Floating foods are preferred as they feed from the surface.");
-  }
-  
-  if (tags.includes('nocturnal')) {
-     advice.push("Timing: Feed nocturnal species (like some catfish) after lights out.");
-  }
-  
-  if (tags.includes('slow_eater')) {
-     advice.push("Attention: Ensure fast swimmers don't steal all food. Target feeding recommended.");
-  }
-
-  return advice;
-};
-
-const Badge = ({ text, color }: { text: string, color: string }) => {
+const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size?: 'sm' | 'md' }) => {
   const styles = {
     brand: 'bg-indigo-100 text-indigo-700 border-indigo-200',
     beginner: 'bg-emerald-100 text-emerald-700 border-emerald-200',
@@ -793,24 +504,52 @@ const Badge = ({ text, color }: { text: string, color: string }) => {
     expert: 'bg-rose-100 text-rose-700 border-rose-200',
   }[color === 'brand' ? 'brand' : text] || 'bg-slate-100 text-slate-700 border-slate-200';
   
-  return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide border ${styles}`}>
-      {text}
-    </span>
-  );
+  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-3 py-1 text-xs';
+  
+  return <span className={`inline-flex items-center rounded-lg font-bold uppercase tracking-wide border ${styles} ${sizeClasses}`}>{text}</span>;
 };
 
-const CompactStatCard = ({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) => (
-  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-    <div className="flex items-center gap-2 mb-2">
-      <div className="p-1.5 bg-white rounded-lg">
-        {icon}
-      </div>
-      <span className="text-xs font-bold text-slate-500 uppercase">{label}</span>
-    </div>
-    <p className="font-bold text-lg text-slate-900">{value}</p>
-  </div>
-);
+// --- HELPERS ---
+const getTankSetupRecommendations = (species: Species) => {
+  const items = [];
+  items.push({ title: `${species.environment.minTankSizeLiters}L+ Tank`, description: `Min ${species.environment.minTankSizeLiters}L for ${species.behavior.minGroupSize} fish` });
+  if (species.habitat.planting === 'dense') items.push({ title: 'Dense Plants', description: 'Heavy planting for security' });
+  else if (species.habitat.planting === 'medium') items.push({ title: 'Moderate Plants', description: 'Balance plants & open space' });
+  if (species.environment.substrate) items.push({ title: `${capitalize(species.environment.substrate)} Substrate`, description: 'Recommended substrate type' });
+  if (species.environment.flow === 'low') items.push({ title: 'Gentle Flow', description: 'Low current filtration' });
+  if (species.behavior.tags.includes('jumper')) items.push({ title: 'Secure Lid', description: 'Prevents jumping escapes' });
+  return items;
+};
+
+const findCompatibleSpecies = (currentSpecies: Species): Species[] => {
+  return allSpecies.filter(s => {
+    if (s.id === currentSpecies.id) return false;
+    const tempOverlap = s.environment.tempC.min <= currentSpecies.environment.tempC.max && s.environment.tempC.max >= currentSpecies.environment.tempC.min;
+    const phOverlap = s.environment.ph.min <= currentSpecies.environment.ph.max && s.environment.ph.max >= currentSpecies.environment.ph.min;
+    const bothPeaceful = currentSpecies.behavior.tags.includes('peaceful') && s.behavior.tags.includes('peaceful');
+    return tempOverlap && phOverlap && bothPeaceful;
+  }).slice(0, 12);
+};
+
+const getFeedingAdvice = (species: Species): string[] => {
+  const advice: string[] = [];
+  const { diet } = species.care;
+  const { tags } = species.behavior;
+  const size = species.visuals.adultSizeCM;
+  const shape = species.visuals.iconShape;
+
+  if (shape === 'shrimp') advice.push("Staple: Shrimp pellets or biofilm");
+  else if (size < 5) advice.push("Staple: Micro-pellets or crushed flakes");
+  else advice.push("Staple: Quality granules or flakes");
+
+  if (tags.includes('bottom_dweller') || shape === 'depressed') advice.push("Sinking wafers for bottom feeders");
+  if (tags.includes('algae_eater') || diet === 'herbivore') advice.push("Supplements: Algae wafers, blanched veggies (2-3x/week)");
+  if (diet === 'carnivore' || diet === 'omnivore') advice.push("Treats: Frozen/live foods (bloodworms, brine shrimp) 1-2x/week");
+  if (tags.includes('surface_dweller')) advice.push("Placement: Floating foods preferred");
+  if (tags.includes('nocturnal')) advice.push("Timing: Feed after lights out");
+
+  return advice;
+};
 
 const NotFound = () => (
   <div className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
