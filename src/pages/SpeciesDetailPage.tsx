@@ -370,7 +370,7 @@ const SpeciesDetailPage = () => {
 
                   {/* NEW: Swimming Zone & Activity Pattern */}
                   <div className="grid md:grid-cols-2 gap-6">
-                    {data.behavior.swimmingZone && <SwimmingZoneVisualizer swimmingZone={data.behavior.swimmingZone} />}
+                    {data.environment.swimmingZone && <SwimmingZoneVisualizer swimmingZone={data.environment.swimmingZone} />}
                     {data.behavior.activity && <ActivityPatternTimeline activity={data.behavior.activity} />}
                   </div>
 
@@ -382,9 +382,9 @@ const SpeciesDetailPage = () => {
                         minGroupSize={data.behavior.minGroupSize} 
                       />
                     )}
-                    {data.behavior.spaceNeeds && (
+                    {data.environment.spaceNeeds && (
                       <SpaceNeedsIndicator 
-                        spaceNeeds={data.behavior.spaceNeeds} 
+                        spaceNeeds={data.environment.spaceNeeds} 
                         tankSize={data.environment.minTankSizeLiters} 
                       />
                     )}

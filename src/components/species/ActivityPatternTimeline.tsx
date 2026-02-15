@@ -16,12 +16,6 @@ export const ActivityPatternTimeline = ({ activity }: Props) => {
     { id: 'night', label: 'Night', icon: Moon, color: 'from-indigo-500 to-purple-500' }
   ];
 
-  const activityLevelColors = {
-    low: 'from-emerald-400 to-teal-400',
-    moderate: 'from-amber-400 to-orange-400',
-    high: 'from-rose-400 to-red-400'
-  };
-
   return (
     <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-950/20 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
       <div className="flex items-center justify-between mb-4">
