@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+
 
 interface Props {
   children: React.ReactNode;
 }
 
+
 export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+
   const isActive = (path: string) => 
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
+
   const navItems = [
     { path: '/', label: 'Fish', icon: Fish },
-    { path: '/plants', label: 'Plants', icon: Leaf },      // <--- NEU
+    { path: '/plants', label: 'Plants', icon: Leaf },
+    { path: '/tank-builder', label: 'Tank Builder', icon: BoxSelect },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
   ];
+
 
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300">
@@ -43,6 +49,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </span>
               </div>
             </Link>
+
 
             {/* DESKTOP NAV */}
             <div className="hidden md:flex items-center gap-4">
@@ -73,12 +80,15 @@ export const Layout: React.FC<Props> = ({ children }) => {
               
               <div className="h-6 w-px bg-theme-nav border-l border-theme opacity-50"></div>
 
+
               <a href="https://github.com/yourusername/aquarium-guide" target="_blank" rel="noopener noreferrer" className="p-2 text-theme-muted hover:text-theme-main transition-colors">
                 <Github className="w-5 h-5" />
               </a>
 
+
               <ThemeToggle />
             </div>
+
 
             {/* MOBILE TOGGLE */}
             <div className="flex items-center gap-2 md:hidden">
@@ -95,6 +105,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
               </button>
             </div>
           </div>
+
 
           {/* MOBILE MENU */}
           {mobileMenuOpen && (
@@ -125,9 +136,11 @@ export const Layout: React.FC<Props> = ({ children }) => {
         </nav>
       </header>
 
+
       <main className="flex-1">
         {children}
       </main>
+
 
       <footer className="bg-theme-nav border-t border-theme mt-auto transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 py-8">
