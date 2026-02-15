@@ -1,5 +1,5 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
-import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Filter, ChevronDown } from 'lucide-react';
+import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Filter, ChevronDown, Thermometer, TestTube } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { allSpecies } from '../data/species';
@@ -8,8 +8,10 @@ import { SEOHead } from '../components/seo/SEOHead';
 import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
 import { FilterBadge } from '../components/ui/FilterBadge';
 import { PageTransition } from '../components/layout/PageTransition';
+import { Slider } from '../components/ui/Slider';
+import { CheckboxGroup } from '../components/ui/CheckboxGroup';
 import { cn } from '../lib/utils';
-import type { Difficulty, Species, Region } from '../types/species';
+import type { Difficulty, Species, Region, EthologyTag } from '../types/species';
 
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
 
@@ -29,6 +31,7 @@ interface Filters {
   maxBodySize: number;
   diet: 'all' | 'carnivore' | 'herbivore' | 'omnivore';
   temperament: 'all' | 'peaceful' | 'semi-aggressive';
+  behaviorTags: EthologyTag[];
 }
 
 const SpeciesIndexPage = () => {
@@ -49,7 +52,8 @@ const SpeciesIndexPage = () => {
     phMax: 9.0,
     maxBodySize: 30,
     diet: 'all',
-    temperament: 'all'
+    temperament: 'all',
+    behaviorTags: []
   });
 
   // Fuse.js configuration for fuzzy search
@@ -62,7 +66,7 @@ const SpeciesIndexPage = () => {
         { name: 'behavior.tags', weight: 1 },
         { name: 'taxonomy.origin', weight: 0.3 }
       ],
-      threshold: 0.3, // 0 = exact match, 1 = match anything
+      threshold: 0.3,
       ignoreLocation: true,
       useExtendedSearch: true
     });
@@ -98,6 +102,10 @@ const SpeciesIndexPage = () => {
         if (filters.temperament === 'peaceful' && !species.behavior.tags.includes('peaceful')) return false;
         if (filters.temperament === 'semi-aggressive' && !species.behavior.tags.includes('semi-aggressive')) return false;
       }
+      // Behavior tags filter
+      if (filters.behaviorTags.length > 0) {
+        if (!filters.behaviorTags.some(tag => species.behavior.tags.includes(tag))) return false;
+      }
     }
     
     return true;
@@ -116,6 +124,7 @@ const SpeciesIndexPage = () => {
       if (filters.maxBodySize !== 30) count++;
       if (filters.tempMin !== 15 || filters.tempMax !== 30) count++;
       if (filters.phMin !== 5.0 || filters.phMax !== 9.0) count++;
+      if (filters.behaviorTags.length > 0) count++;
     }
     return count;
   }, [filters, showAdvancedFilters]);
@@ -146,7 +155,8 @@ const SpeciesIndexPage = () => {
       phMax: 9.0,
       maxBodySize: 30,
       diet: 'all',
-      temperament: 'all'
+      temperament: 'all',
+      behaviorTags: []
     });
     setSearchTerm('');
     setShowAdvancedFilters(false);
@@ -381,37 +391,58 @@ const SpeciesIndexPage = () => {
                       className="overflow-hidden"
                     >
                       <div className="mt-4 pt-4 border-t border-slate-200 dark:border-stone-800">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           
-                          <div>
-                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
-                              🌡️ Temperature: {filters.tempMin}°C - {filters.tempMax}°C
+                          {/* Temperature Slider */}
+                          <div className="bg-gradient-to-br from-rose-50 to-orange-50 dark:from-rose-950/20 dark:to-orange-950/20 p-4 rounded-xl border border-rose-200 dark:border-rose-800">
+                            <label className="text-xs font-bold text-rose-900 dark:text-rose-300 mb-3 block flex items-center">
+                              <Thermometer className="w-4 h-4 mr-2" />
+                              Temperature Range
                             </label>
-                            <div className="space-y-2">
-                              <input type="range" min="15" max="30" value={filters.tempMin} onChange={(e) => setFilters({ ...filters, tempMin: Number(e.target.value) })} className="w-full accent-indigo-500" />
-                              <input type="range" min="15" max="30" value={filters.tempMax} onChange={(e) => setFilters({ ...filters, tempMax: Number(e.target.value) })} className="w-full accent-indigo-500" />
-                            </div>
+                            <Slider
+                              min={15}
+                              max={35}
+                              value={[filters.tempMin, filters.tempMax]}
+                              onChange={([tempMin, tempMax]) => setFilters({ ...filters, tempMin, tempMax })}
+                              formatLabel={(v) => `${v}°C`}
+                            />
                           </div>
 
-                          <div>
-                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
-                              💧 pH: {filters.phMin.toFixed(1)} - {filters.phMax.toFixed(1)}
+                          {/* pH Slider */}
+                          <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/20 dark:to-blue-950/20 p-4 rounded-xl border border-cyan-200 dark:border-cyan-800">
+                            <label className="text-xs font-bold text-cyan-900 dark:text-cyan-300 mb-3 block flex items-center">
+                              <TestTube className="w-4 h-4 mr-2" />
+                              pH Range
                             </label>
-                            <div className="space-y-2">
-                              <input type="range" min="5.0" max="9.0" step="0.1" value={filters.phMin} onChange={(e) => setFilters({ ...filters, phMin: Number(e.target.value) })} className="w-full accent-indigo-500" />
-                              <input type="range" min="5.0" max="9.0" step="0.1" value={filters.phMax} onChange={(e) => setFilters({ ...filters, phMax: Number(e.target.value) })} className="w-full accent-indigo-500" />
-                            </div>
+                            <Slider
+                              min={4.0}
+                              max={9.0}
+                              step={0.1}
+                              value={[filters.phMin, filters.phMax]}
+                              onChange={([phMin, phMax]) => setFilters({ ...filters, phMin, phMax })}
+                              formatLabel={(v) => v.toFixed(1)}
+                            />
                           </div>
 
-                          <div>
-                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
-                              📏 Max Body Size: {filters.maxBodySize}cm
+                          {/* Body Size Slider */}
+                          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 p-4 rounded-xl border border-amber-200 dark:border-amber-800">
+                            <label className="text-xs font-bold text-amber-900 dark:text-amber-300 mb-3 block flex items-center">
+                              <Box className="w-4 h-4 mr-2" />
+                              Max Body Size: {filters.maxBodySize}cm
                             </label>
-                            <input type="range" min="2" max="30" value={filters.maxBodySize} onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} className="w-full accent-indigo-500" />
+                            <input 
+                              type="range" 
+                              min="2" 
+                              max="30" 
+                              value={filters.maxBodySize} 
+                              onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} 
+                              className="w-full accent-amber-500" 
+                            />
                           </div>
 
+                          {/* Diet */}
                           <div>
-                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Diet</label>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">Diet</label>
                             <select value={filters.diet} onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })} className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500">
                               <option value="all">Any Diet</option>
                               <option value="omnivore">Omnivore</option>
@@ -420,13 +451,26 @@ const SpeciesIndexPage = () => {
                             </select>
                           </div>
 
+                          {/* Temperament */}
                           <div>
-                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Temperament</label>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">Temperament</label>
                             <select value={filters.temperament} onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })} className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500">
                               <option value="all">Any Temperament</option>
                               <option value="peaceful">Peaceful Only</option>
                               <option value="semi-aggressive">Semi-Aggressive</option>
                             </select>
+                          </div>
+
+                          {/* Behavior Tags - NEW WITH CHECKBOXES */}
+                          <div className="md:col-span-2">
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-3 block">Behavior Tags</label>
+                            <div className="bg-slate-50 dark:bg-stone-800 p-4 rounded-lg border border-slate-200 dark:border-stone-700">
+                              <CheckboxGroup
+                                options={['peaceful', 'schooling', 'bottom_dweller', 'surface_dweller', 'nocturnal', 'algae_eater', 'jumper', 'nano_safe']}
+                                selected={filters.behaviorTags}
+                                onChange={(behaviorTags) => setFilters({ ...filters, behaviorTags: behaviorTags as EthologyTag[] })}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
