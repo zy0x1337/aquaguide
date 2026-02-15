@@ -1,6 +1,7 @@
 import { Slider } from '../ui/Slider';
 import { CheckboxGroup } from '../ui/CheckboxGroup';
 import { SearchFilters } from '../../hooks/useSpeciesSearch';
+import { EthologyTag } from '../../types/species';
 
 interface FilterPanelProps {
   filters: SearchFilters;
@@ -73,7 +74,7 @@ export const FilterPanel = ({ filters, setFilters }: FilterPanelProps) => {
         />
       </FilterSection>
 
-      {/* Behavior Tags */}
+      {/* Behavior Tags - WITH PROPER TYPING */}
       <FilterSection title="Behavior">
         <CheckboxGroup
           options={[
@@ -86,7 +87,7 @@ export const FilterPanel = ({ filters, setFilters }: FilterPanelProps) => {
             'jumper'
           ]}
           selected={filters.tags}
-          onChange={(tags) => setFilters({ ...filters, tags })}
+          onChange={(tags) => setFilters({ ...filters, tags: tags as EthologyTag[] })}
         />
       </FilterSection>
     </div>
