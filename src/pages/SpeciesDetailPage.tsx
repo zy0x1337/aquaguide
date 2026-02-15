@@ -3,7 +3,8 @@ import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
   MapPin, AlertTriangle, Activity, Heart, Sprout, 
   Mountain, Box, Sparkles, Microscope, Egg, Utensils,
-  Lightbulb, XCircle, CheckCircle, Info
+  Lightbulb, XCircle, CheckCircle, Info, Clock, Zap,
+  Filter, Flame, Calendar, DollarSign, TrendingUp
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -27,6 +28,9 @@ const SpeciesDetailPage = () => {
   const seoDesc = `Complete care guide for ${data.taxonomy.commonName}. Habitat, tank mates, breeding, and scientific background.`;
   const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
   const compatibleSpecies = findCompatibleSpecies(data);
+  
+  // Check if this is an enhanced species (has new intelligence data)
+  const isEnhanced = !!(data.behavior.aggressionLevel || data.care.feeding || data.experienceData);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
@@ -54,6 +58,7 @@ const SpeciesDetailPage = () => {
               <div className="flex flex-wrap gap-2 mb-3">
                 <Badge text={data.environment.type} color="brand" size="sm" />
                 <Badge text={data.care.difficulty} color={data.care.difficulty} size="sm" />
+                {isEnhanced && <Badge text="Enhanced" color="enhanced" size="sm" />}
               </div>
               <h1 className="text-3xl md:text-5xl font-bold mb-2">{data.taxonomy.commonName}</h1>
               <p className="text-lg text-slate-300 italic">{data.taxonomy.scientificName}</p>
@@ -92,6 +97,64 @@ const SpeciesDetailPage = () => {
                 <StatRow icon={<Utensils size={16} className="text-amber-500" />} label="Diet" value={capitalize(data.care.diet)} />
               </div>
             </div>
+
+            {/* NEW: Estimated Costs (if available) */}
+            {data.experienceData?.estimatedCosts && (
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200 p-5">
+                <h3 className="text-sm font-bold text-emerald-900 uppercase mb-4 flex items-center gap-1.5">
+                  <DollarSign className="w-4 h-4" /> Estimated Costs
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold text-emerald-700">Initial Setup</span>
+                      <span className="text-sm font-bold text-emerald-900">
+                        {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max} {data.experienceData.estimatedCosts.initial.currency}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold text-emerald-700">Monthly</span>
+                      <span className="text-sm font-bold text-emerald-900">
+                        {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max} {data.experienceData.estimatedCosts.monthly.currency}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* NEW: Success Rates (if available) */}
+            {data.experienceData && (data.experienceData.successRate || data.experienceData.survivalRate) && (
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 p-5">
+                <h3 className="text-sm font-bold text-blue-900 uppercase mb-4 flex items-center gap-1.5">
+                  <TrendingUp className="w-4 h-4" /> Community Stats
+                </h3>
+                <div className="space-y-3">
+                  {data.experienceData.successRate && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-semibold text-blue-700">Success Rate</span>
+                        <span className="text-sm font-bold text-blue-900">{Math.round(data.experienceData.successRate * 100)}%</span>
+                      </div>
+                      <div className="w-full bg-blue-100 rounded-full h-2">
+                        <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${data.experienceData.successRate * 100}%` }} />
+                      </div>
+                    </div>
+                  )}
+                  {data.experienceData.survivalRate && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-semibold text-blue-700">1+ Year Survival</span>
+                        <span className="text-sm font-bold text-blue-900">{Math.round(data.experienceData.survivalRate * 100)}%</span>
+                      </div>
+                      <div className="w-full bg-blue-100 rounded-full h-2">
+                        <div className="bg-indigo-600 h-2 rounded-full" style={{ width: `${data.experienceData.survivalRate * 100}%` }} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Cost/Effort Card */}
             <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl border border-indigo-200 p-5">
@@ -176,6 +239,19 @@ const SpeciesDetailPage = () => {
                     {/* Behavior */}
                     <Section title="Behavior & Temperament" icon={<Activity className="w-4 h-4" />}>
                       <p className="text-sm text-slate-700 mb-3">{data.behavior.description}</p>
+                      
+                      {/* NEW: Aggression Levels */}
+                      {data.behavior.aggressionLevel && (
+                        <div className="bg-slate-50 rounded-lg p-4 mb-3">
+                          <h5 className="text-xs font-bold text-slate-700 uppercase mb-3">Aggression Profile</h5>
+                          <div className="space-y-2">
+                            <AggressionBar label="Intraspecific (Same Species)" level={data.behavior.aggressionLevel.intraspecific} />
+                            <AggressionBar label="Interspecific (Other Species)" level={data.behavior.aggressionLevel.interspecific} />
+                            <AggressionBar label="Territorial Behavior" level={data.behavior.aggressionLevel.territorial} />
+                          </div>
+                        </div>
+                      )}
+                      
                       <div className="flex flex-wrap gap-2">
                         {data.behavior.tags.map((tag: string) => (
                           <TagBadge key={tag} tag={tag} />
@@ -183,26 +259,136 @@ const SpeciesDetailPage = () => {
                       </div>
                     </Section>
 
-                    {/* Diet */}
+                    {/* NEW: Enhanced Feeding Schedule */}
                     <Section title="Diet & Feeding" icon={<Utensils className="w-4 h-4" />}>
-                      <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="font-bold text-sm capitalize">{data.care.diet}</span>
-                          <span className="text-[10px] uppercase bg-white px-2 py-0.5 rounded border text-amber-700 font-bold">Diet Type</span>
+                      {data.care.feeding ? (
+                        <div className="space-y-3">
+                          <div className="grid sm:grid-cols-2 gap-3">
+                            <div className="bg-amber-50 rounded-lg p-3 border border-amber-100">
+                              <div className="flex items-center gap-2 mb-1">
+                                <Clock className="w-3.5 h-3.5 text-amber-600" />
+                                <span className="text-xs font-bold text-amber-900 uppercase">Frequency</span>
+                              </div>
+                              <p className="text-sm text-amber-800 capitalize">{data.care.feeding.frequency.replace('-', ' ')}</p>
+                            </div>
+                            <div className="bg-amber-50 rounded-lg p-3 border border-amber-100">
+                              <div className="flex items-center gap-2 mb-1">
+                                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                                <span className="text-xs font-bold text-amber-900 uppercase">Fasting Day</span>
+                              </div>
+                              <p className="text-sm text-amber-800 capitalize">{data.care.feeding.fastingDay || 'Optional'}</p>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                            <span className="text-xs font-bold text-amber-900 uppercase block mb-2">Primary Foods</span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {data.care.feeding.primaryFoods.map(food => (
+                                <span key={food} className="text-xs bg-white text-amber-800 px-2 py-1 rounded border border-amber-200 font-semibold capitalize">
+                                  {food.replace('-', ' ')}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
+                            <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                              <span className="text-xs font-bold text-amber-900 uppercase block mb-2">Supplements & Treats</span>
+                              <div className="flex flex-wrap gap-1.5">
+                                {data.care.feeding.supplements.map(food => (
+                                  <span key={food} className="text-xs bg-white text-amber-700 px-2 py-1 rounded border border-amber-200 capitalize">
+                                    {food.replace('-', ' ')}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
-                        <ul className="space-y-1.5 text-xs text-slate-700">
-                          {getFeedingAdvice(data).map((tip, i) => (
-                            <li key={i} className="flex gap-1.5">
-                              <span className="text-amber-500">•</span>
-                              <span>{tip}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      ) : (
+                        <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="font-bold text-sm capitalize">{data.care.diet}</span>
+                            <span className="text-[10px] uppercase bg-white px-2 py-0.5 rounded border text-amber-700 font-bold">Diet Type</span>
+                          </div>
+                          <ul className="space-y-1.5 text-xs text-slate-700">
+                            {getFeedingAdvice(data).map((tip, i) => (
+                              <li key={i} className="flex gap-1.5">
+                                <span className="text-amber-500">•</span>
+                                <span>{tip}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </Section>
+
+                    {/* NEW: Equipment Requirements */}
+                    {data.care.equipment && (
+                      <Section title="Essential Equipment" icon={<Zap className="w-4 h-4" />}>
+                        <div className="grid sm:grid-cols-2 gap-3">
+                          {data.care.equipment.heater?.required && (
+                            <div className="bg-rose-50 rounded-lg p-3 border border-rose-200 flex gap-3">
+                              <Flame className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                              <div>
+                                <div className="font-bold text-sm text-rose-900">Heater Required</div>
+                                <div className="text-xs text-rose-700">{data.care.equipment.heater.watts}W recommended</div>
+                              </div>
+                            </div>
+                          )}
+                          {data.care.equipment.filter?.required && (
+                            <div className="bg-blue-50 rounded-lg p-3 border border-blue-200 flex gap-3">
+                              <Filter className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                              <div>
+                                <div className="font-bold text-sm text-blue-900">Filter Required</div>
+                                <div className="text-xs text-blue-700 capitalize">
+                                  {data.care.equipment.filter.type} • {data.care.equipment.filter.flowRate} flow
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </Section>
+                    )}
 
                     {/* Compatibility */}
                     <Section title="Tank Mates" icon={<Fish className="w-4 h-4" />}>
+                      {/* NEW: Compatibility Rules (if available) */}
+                      {data.behavior.compatibility.rules && data.behavior.compatibility.rules.length > 0 && (
+                        <div className="mb-4 space-y-2">
+                          {data.behavior.compatibility.rules.map((rule, idx) => (
+                            <div key={idx} className={`flex gap-2 p-3 rounded-lg border ${
+                              rule.severity === 'critical' ? 'bg-red-50 border-red-300' :
+                              rule.severity === 'high' ? 'bg-orange-50 border-orange-300' :
+                              rule.severity === 'medium' ? 'bg-amber-50 border-amber-300' :
+                              'bg-blue-50 border-blue-300'
+                            }`}>
+                              <AlertTriangle className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+                                rule.severity === 'critical' ? 'text-red-600' :
+                                rule.severity === 'high' ? 'text-orange-600' :
+                                rule.severity === 'medium' ? 'text-amber-600' :
+                                'text-blue-600'
+                              }`} />
+                              <div className="text-xs">
+                                <span className={`font-bold uppercase text-[10px] ${
+                                  rule.severity === 'critical' ? 'text-red-700' :
+                                  rule.severity === 'high' ? 'text-orange-700' :
+                                  rule.severity === 'medium' ? 'text-amber-700' :
+                                  'text-blue-700'
+                                }`}>{rule.type}</span>
+                                {rule.target && <span className="text-slate-700 ml-1">• {rule.target}</span>}
+                                {rule.condition && <span className="text-slate-700 ml-1">• {rule.condition}</span>}
+                                <p className={`mt-1 ${
+                                  rule.severity === 'critical' ? 'text-red-800' :
+                                  rule.severity === 'high' ? 'text-orange-800' :
+                                  rule.severity === 'medium' ? 'text-amber-800' :
+                                  'text-blue-800'
+                                }`}>{rule.reason}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
                       <div className="grid sm:grid-cols-2 gap-3 text-xs">
                         <div>
                           <div className="flex items-center gap-1.5 mb-2">
@@ -267,6 +453,27 @@ const SpeciesDetailPage = () => {
                         </div>
                       )}
                     </div>
+
+                    {/* NEW: Common Failures (if available) */}
+                    {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
+                      <Section title="Common Mistakes" icon={<AlertTriangle className="w-4 h-4" />}>
+                        <div className="space-y-2">
+                          {data.experienceData.commonFailures
+                            .sort((a, b) => b.frequency - a.frequency)
+                            .map((failure, idx) => (
+                            <div key={idx} className="bg-red-50 rounded-lg p-3 border border-red-200">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-sm font-bold text-red-900 capitalize">{failure.issue.replace('-', ' ')}</span>
+                                <span className="text-xs font-bold text-red-700">{Math.round(failure.frequency * 100)}% affected</span>
+                              </div>
+                              <p className="text-xs text-red-800">
+                                <strong>Cause:</strong> {failure.cause.replace('-', ' ')}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </Section>
+                    )}
 
                     {/* Health */}
                     <Section title="Health & Diseases" icon={<Heart className="w-4 h-4" />}>
@@ -447,6 +654,27 @@ const SpeciesDetailPage = () => {
   );
 };
 
+// --- NEW COMPONENT: Aggression Bar ---
+const AggressionBar = ({ label, level }: { label: string; level: number }) => (
+  <div>
+    <div className="flex items-center justify-between mb-1">
+      <span className="text-xs text-slate-600">{label}</span>
+      <span className="text-xs font-bold text-slate-900">{level}/10</span>
+    </div>
+    <div className="w-full bg-slate-200 rounded-full h-2">
+      <div 
+        className={`h-2 rounded-full ${
+          level >= 8 ? 'bg-red-600' :
+          level >= 6 ? 'bg-orange-500' :
+          level >= 4 ? 'bg-amber-500' :
+          'bg-emerald-500'
+        }`}
+        style={{ width: `${level * 10}%` }}
+      />
+    </div>
+  </div>
+);
+
 // --- COMPONENTS ---
 const TabButton = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
   <button onClick={onClick} className={`flex-1 px-4 py-3 text-sm font-semibold transition-colors ${
@@ -518,11 +746,12 @@ const TagBadge = ({ tag }: { tag: string }) => (
 const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size?: 'sm' | 'md' }) => {
   const styles = {
     brand: 'bg-indigo-100 text-indigo-700 border-indigo-200',
+    enhanced: 'bg-purple-100 text-purple-700 border-purple-200',
     beginner: 'bg-emerald-100 text-emerald-700 border-emerald-200',
     medium: 'bg-amber-100 text-amber-700 border-amber-200',
     intermediate: 'bg-amber-100 text-amber-700 border-amber-200',
     expert: 'bg-rose-100 text-rose-700 border-rose-200',
-  }[color === 'brand' ? 'brand' : text] || 'bg-slate-100 text-slate-700 border-slate-200';
+  }[color === 'brand' || color === 'enhanced' ? color : text] || 'bg-slate-100 text-slate-700 border-slate-200';
   
   const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-3 py-1 text-xs';
   
