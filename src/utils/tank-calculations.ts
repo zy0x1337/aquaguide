@@ -38,7 +38,7 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
     if (species.visuals.iconShape === 'globiform') wasteFactor *= 1.5; // Goldfish/Puffers are messy
     if (species.visuals.iconShape === 'depressed') wasteFactor *= 1.2; // Plecos are messy
     if (species.care.diet === 'carnivore') wasteFactor *= 1.2; // High protein waste
-    if (species.behavior.tags.includes('shrimp')) wasteFactor = 0.1; // Shrimp are negligible
+    if (species.visuals.iconShape === 'shrimp') wasteFactor = 0.1; // Shrimp are negligible (Check shape instead of tag)
 
     // Formula: (Total CM) * SizeMultiplier * WasteFactor
     // Result is "Liters of water recommended" for this group
@@ -53,9 +53,6 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
   requiredLiters = requiredLiters * (1 - plantReduction);
 
   // Surface Area Bonus: Wide tanks oxygenate better, allowing slightly more stock
-  const surfaceAreaRatio = (tankConfig.length * tankConfig.width) / tankConfig.volume;
-  // Standard ratio is roughly 4 (e.g. 80x40 / 128 = 25? No. 3200 / 128000 (ml) -> 0.025? wait.)
-  // Let's stick to standard logic: Length/Height ratio.
   // If tank is shallow (Length > 2.5x Height), allow 10% more stock
   if (tankConfig.length / tankConfig.height > 2.5) {
      requiredLiters *= 0.9;
