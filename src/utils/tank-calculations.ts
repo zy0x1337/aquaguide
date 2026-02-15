@@ -45,7 +45,7 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
     };
   }
 
-  // 1. Calculate Bioload (Realistic & Lenient Curve)
+  // 1. Calculate Bioload (NOW USES bioloadMultiplier if available)
   let requiredLiters = 0;
   
   fishItems.forEach(item => {
@@ -68,6 +68,10 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
     if (species.care.diet === 'carnivore') wasteFactor *= 1.2;
     if (species.visuals.iconShape === 'shrimp') wasteFactor = 0.1;
 
+    // NEW: Use species-specific bioload multiplier if available
+    const bioloadMultiplier = species.environment.bioloadMultiplier || 1.0;
+    wasteFactor *= bioloadMultiplier;
+
     const fishLoad = (length * count) * sizeMultiplier * wasteFactor;
     requiredLiters += fishLoad;
   });
@@ -84,9 +88,20 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
 
   const stockingPercentage = Math.round((requiredLiters / tankConfig.volume) * 100);
 
-  // 2. Hardware Recommendations
+  // 2. Hardware Recommendations (NOW CONSIDERS species.care.equipment)
   const turnoverMultiplier = stockingPercentage > 85 ? 7 : 4;
-  const filterRate = Math.round(tankConfig.volume * turnoverMultiplier);
+  let filterRate = Math.round(tankConfig.volume * turnoverMultiplier);
+  
+  // Adjust filter for species that need gentle flow
+  const needsGentleFlow = fishItems.some(item => {
+    const s = item.data as Species;
+    return s.care.equipment?.filter?.flowRate === 'gentle' || s.environment.flow === 'low';
+  });
+  
+  if (needsGentleFlow) {
+    filterRate = Math.round(tankConfig.volume * 3); // Lower turnover
+    warnings.push('⚠️ Use gentle filter flow (sponge filter recommended for Bettas/slow swimmers)');
+  }
   
   const rawWatts = tankConfig.volume;
   const standardWatts = [25, 50, 75, 100, 150, 200, 300, 400, 500];
@@ -100,36 +115,11 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
   if (stockingPercentage > 115) warnings.push('⚠️ Critically Overstocked: Upgrade filtration immediately!');
   else if (stockingPercentage > 95) warnings.push('⚠️ Heavy Bioload: Weekly water changes required.');
 
-  // 4. TERRITORIAL & AGGRESSION CONFLICT DETECTION
+  // 4. TERRITORIAL & AGGRESSION CONFLICT DETECTION (NOW USES aggressionLevel)
   detectTerritorialConflicts(fishItems, criticalWarnings, warnings, tankConfig);
 
-  // 5. Feeding Advice
-  const diets = new Set(fishItems.map(i => (i.data as Species).care.diet));
-  const tags = new Set(fishItems.flatMap(i => (i.data as Species).behavior.tags));
-  const advice: string[] = [];
-
-  if (fishItems.length > 0) {
-      const basicFoods = [];
-      if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM < 5)) basicFoods.push("Micro-pellets/Flakes");
-      if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM >= 5)) basicFoods.push("Granules");
-      advice.push(`Daily: ${basicFoods.join(' & ')} as staple.`);
-
-      if (tags.has('bottom_dweller')) {
-          advice.push("Daily: Sinking wafers/pellets for bottom feeders.");
-      }
-      if (tags.has('algae_eater') || diets.has('herbivore')) {
-          advice.push("2-3x/Week: Algae wafers or blanched veggies (zucchini/spinach).");
-      }
-      if (diets.has('carnivore') || diets.has('omnivore')) {
-          advice.push("1-2x/Week: Frozen/Live food (Bloodworms, Brine Shrimp) for health & color.");
-      }
-      if (tags.has('surface_dweller')) {
-          advice.push("Note: Ensure some floating food for surface dwellers.");
-      }
-      if (tags.has('nocturnal')) {
-          advice.push("Tip: Feed nocturnal species (like some catfish) after lights out.");
-      }
-  }
+  // 5. Feeding Advice (NOW USES species.care.feeding if available)
+  const advice = generateFeedingAdvice(fishItems);
 
   return {
     bioloadScore: requiredLiters,
@@ -144,6 +134,83 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
     phRange
   };
 };
+
+function generateFeedingAdvice(fishItems: TankItem[]): string[] {
+  if (fishItems.length === 0) return [];
+  
+  const advice: string[] = [];
+  const diets = new Set(fishItems.map(i => (i.data as Species).care.diet));
+  const tags = new Set(fishItems.flatMap(i => (i.data as Species).behavior.tags));
+  
+  // Check if any species have detailed feeding schedules
+  const detailedFeeders = fishItems.filter(item => {
+    const s = item.data as Species;
+    return s.care.feeding !== undefined;
+  });
+  
+  if (detailedFeeders.length > 0) {
+    // Use species-specific feeding data
+    const frequencies = new Set(detailedFeeders.map(item => {
+      const s = item.data as Species;
+      return s.care.feeding?.frequency;
+    }));
+    
+    if (frequencies.has('twice-daily')) {
+      advice.push('Feed twice daily: Morning and evening (some species require frequent feeding)');
+    } else {
+      advice.push('Feed once daily: Small portions to prevent waste');
+    }
+    
+    // Compile unique food types
+    const allFoods = new Set<string>();
+    detailedFeeders.forEach(item => {
+      const s = item.data as Species;
+      s.care.feeding?.primaryFoods.forEach(f => allFoods.add(f));
+      s.care.feeding?.supplements?.forEach(f => allFoods.add(f));
+    });
+    
+    if (allFoods.size > 0) {
+      advice.push(`Variety is key: ${Array.from(allFoods).slice(0, 4).join(', ')}`);
+    }
+    
+    // Check for fasting days
+    const hasFastingDay = detailedFeeders.some(item => {
+      const s = item.data as Species;
+      return s.care.feeding?.fastingDay !== undefined;
+    });
+    
+    if (hasFastingDay) {
+      advice.push('Consider a fasting day once per week to prevent bloating');
+    }
+  } else {
+    // Fallback to generic advice
+    const basicFoods = [];
+    if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM < 5)) basicFoods.push("Micro-pellets/Flakes");
+    if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM >= 5)) basicFoods.push("Granules");
+    if (basicFoods.length > 0) {
+      advice.push(`Daily: ${basicFoods.join(' & ')} as staple.`);
+    }
+
+    if (tags.has('bottom_dweller')) {
+      advice.push("Daily: Sinking wafers/pellets for bottom feeders.");
+    }
+    if (tags.has('algae_eater') || diets.has('herbivore')) {
+      advice.push("2-3x/Week: Algae wafers or blanched veggies (zucchini/spinach).");
+    }
+    if (diets.has('carnivore') || diets.has('omnivore')) {
+      advice.push("1-2x/Week: Frozen/Live food (Bloodworms, Brine Shrimp) for health & color.");
+    }
+  }
+  
+  if (tags.has('surface_dweller')) {
+    advice.push("Note: Ensure some floating food for surface dwellers.");
+  }
+  if (tags.has('nocturnal')) {
+    advice.push("Tip: Feed nocturnal species (like some catfish) after lights out.");
+  }
+  
+  return advice;
+}
 
 function detectTerritorialConflicts(
   fishItems: TankItem[], 
@@ -165,19 +232,32 @@ function detectTerritorialConflicts(
     entry.items.push(item);
   });
 
+  // NEW: Use aggressionLevel if available
   speciesCounts.forEach(({ species, totalCount }) => {
+    // Check for extreme intraspecific aggression
+    if (species.behavior.aggressionLevel?.intraspecific >= 9 && totalCount > 1) {
+      criticalWarnings.push(`🚫 CRITICAL: ${species.taxonomy.commonName} - ${totalCount} individuals will fight (intraspecific aggression = ${species.behavior.aggressionLevel.intraspecific}/10)`);
+    }
+    
+    // Betta-specific check (fallback)
     if (species.taxonomy.commonName.toLowerCase().includes('betta') && totalCount > 1) {
       criticalWarnings.push(`🚫 CRITICAL: ${totalCount}x ${species.taxonomy.commonName} - Males will fight to death!`);
     }
     
+    // Territory space check (NEW: uses spaceNeeds if available)
     if (species.behavior.tags.includes('territorial')) {
       const spacePerFish = tankConfig.volume / totalCount;
-      if (spacePerFish < species.environment.minTankSizeLiters) {
-        criticalWarnings.push(`⚠️ ${species.taxonomy.commonName}: ${totalCount} individuals need more territory (${Math.round(species.environment.minTankSizeLiters * totalCount)}L minimum)`);
+      const minSpace = species.environment.spaceNeeds?.horizontalCM 
+        ? (species.environment.spaceNeeds.horizontalCM * species.environment.spaceNeeds.horizontalCM * 0.3) / 1000 // rough conversion
+        : species.environment.minTankSizeLiters;
+      
+      if (spacePerFish < minSpace) {
+        criticalWarnings.push(`⚠️ ${species.taxonomy.commonName}: ${totalCount} individuals need more territory (${Math.round(minSpace * totalCount)}L minimum)`);
       }
     }
   });
 
+  // Multiple territorial species warning
   const territorialSpecies = Array.from(speciesCounts.values()).filter(
     ({ species }) => species.behavior.tags.includes('territorial') || species.behavior.tags.includes('semi-aggressive')
   );
@@ -194,14 +274,18 @@ function detectTerritorialConflicts(
     warnings.push(`⚠️ Territorial Mix: ${names} - Provide caves/hiding spots and monitor closely`);
   }
 
+  // Aggressive + Peaceful mix
   const aggressiveSpecies = Array.from(speciesCounts.values()).filter(
     ({ species }) => 
       species.behavior.tags.includes('semi-aggressive') || 
-      species.behavior.tags.includes('territorial')
+      species.behavior.tags.includes('territorial') ||
+      (species.behavior.aggressionLevel?.interspecific || 0) >= 6
   );
   
   const peacefulSpecies = Array.from(speciesCounts.values()).filter(
-    ({ species }) => species.behavior.tags.includes('peaceful')
+    ({ species }) => 
+      species.behavior.tags.includes('peaceful') &&
+      (species.behavior.aggressionLevel?.interspecific || 0) < 4
   );
 
   if (aggressiveSpecies.length > 0 && peacefulSpecies.length > 0) {
@@ -210,8 +294,12 @@ function detectTerritorialConflicts(
     });
   }
 
+  // Fin-nippers with long-finned fish (NEW: uses finNipping data)
   const finNippers = Array.from(speciesCounts.values()).filter(
-    ({ species }) => species.behavior.tags.includes('fin_nipper')
+    ({ species }) => 
+      species.behavior.tags.includes('fin_nipper') ||
+      species.behavior.finNipping?.risk === 'high' ||
+      species.behavior.finNipping?.risk === 'medium'
   );
   
   const longFinnedFish = fishItems.filter(item => {
@@ -225,6 +313,7 @@ function detectTerritorialConflicts(
     criticalWarnings.push(`🚫 Fin Nippers + Long-finned fish detected - Will cause severe stress!`);
   }
 
+  // Size mismatch
   const largePredators = Array.from(speciesCounts.values()).filter(
     ({ species }) => species.visuals.adultSizeCM > 10 && species.care.diet === 'carnivore'
   );
