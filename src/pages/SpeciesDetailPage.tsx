@@ -16,6 +16,13 @@ import { ParameterScale } from '../components/ui/ParameterScale';
 import { DiseaseList } from '../components/species/DiseaseList';
 import { ImageAttribution } from '../components/ui/ImageAttribution';
 
+// NEW: Import advanced visualization components
+import { SwimmingZoneVisualizer } from '../components/species/SwimmingZoneVisualizer';
+import { ActivityPatternTimeline } from '../components/species/ActivityPatternTimeline';
+import { SocialStructureCard } from '../components/species/SocialStructureCard';
+import { SpaceNeedsIndicator } from '../components/species/SpaceNeedsIndicator';
+import { FinNippingWarning } from '../components/species/FinNippingWarning';
+
 const SpeciesDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const data = allSpecies.find(s => s.slug === slug);
@@ -250,6 +257,17 @@ const SpeciesDetailPage = () => {
           </motion.div>
         )}
 
+        {/* NEW: Fin Nipping Warning (if exists) */}
+        {data.behavior.finNipping && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <FinNippingWarning finNipping={data.behavior.finNipping} />
+          </motion.div>
+        )}
+
         {/* Key Warnings (Jumper, etc.) */}
         {(data.behavior.tags.includes('jumper') || (data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0)) && (
           <motion.div 
@@ -348,6 +366,28 @@ const SpeciesDetailPage = () => {
                         gradient="from-amber-50 to-orange-50"
                       />
                     </div>
+                  </div>
+
+                  {/* NEW: Swimming Zone & Activity Pattern */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {data.environment.swimmingZone && <SwimmingZoneVisualizer swimmingZone={data.environment.swimmingZone} />}
+                    {data.behavior.activity && <ActivityPatternTimeline activity={data.behavior.activity} />}
+                  </div>
+
+                  {/* NEW: Social Structure & Space Needs */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {data.behavior.socialStructure && (
+                      <SocialStructureCard 
+                        socialStructure={data.behavior.socialStructure} 
+                        minGroupSize={data.behavior.minGroupSize} 
+                      />
+                    )}
+                    {data.environment.spaceNeeds && (
+                      <SpaceNeedsIndicator 
+                        spaceNeeds={data.environment.spaceNeeds} 
+                        tankSize={data.environment.minTankSizeLiters} 
+                      />
+                    )}
                   </div>
 
                   {/* Behavior Overview */}
