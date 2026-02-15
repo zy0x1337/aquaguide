@@ -1,5 +1,5 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
-import { Search, SlidersHorizontal, ArrowUpDown, AlertCircle, Filter, ChevronDown, X } from 'lucide-react';
+import { Search, ArrowUpDown, AlertCircle, Filter, ChevronDown, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allSpecies } from '../data/species';
 import { SEOHead } from '../components/seo/SEOHead';
