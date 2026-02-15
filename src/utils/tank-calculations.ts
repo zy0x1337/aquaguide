@@ -234,9 +234,10 @@ function detectTerritorialConflicts(
 
   // NEW: Use aggressionLevel if available
   speciesCounts.forEach(({ species, totalCount }) => {
-    // Check for extreme intraspecific aggression
-    if (species.behavior.aggressionLevel?.intraspecific >= 9 && totalCount > 1) {
-      criticalWarnings.push(`🚫 CRITICAL: ${species.taxonomy.commonName} - ${totalCount} individuals will fight (intraspecific aggression = ${species.behavior.aggressionLevel.intraspecific}/10)`);
+    // Check for extreme intraspecific aggression (with safe optional chaining)
+    const intraAggression = species.behavior.aggressionLevel?.intraspecific;
+    if (intraAggression && intraAggression >= 9 && totalCount > 1) {
+      criticalWarnings.push(`🚫 CRITICAL: ${species.taxonomy.commonName} - ${totalCount} individuals will fight (intraspecific aggression = ${intraAggression}/10)`);
     }
     
     // Betta-specific check (fallback)
