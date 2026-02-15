@@ -3,12 +3,12 @@ import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
   MapPin, AlertTriangle, Info, Activity, DollarSign, Heart, Sprout, 
   Mountain, Trees, Box, Sparkles, Microscope, Egg, BookOpen, Utensils,
-  Lightbulb, XCircle, ChefHat
+  Lightbulb, XCircle, ChefHat, CheckCircle, Package
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
-import { Species } from '../types/species'; // Added import
+import { Species } from '../types/species';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankSimulator } from '../components/species/TankSimulator';
 import { ParameterScale } from '../components/ui/ParameterScale';
@@ -26,12 +26,14 @@ const SpeciesDetailPage = () => {
 
   const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
   const feedingAdvice = getFeedingAdvice(data);
+  const tankSetupItems = getTankSetupRecommendations(data);
+  const compatibleSpecies = findCompatibleSpecies(data);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
       <SEOHead title={seoTitle} description={seoDesc} />
 
-      {/* REFINED HERO HEADER */}
+      {/* HERO HEADER */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -46,14 +48,12 @@ const SpeciesDetailPage = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
         </div>
 
-        {/* Photo Attribution - bottom right */}
         <ImageAttribution credit={data.imageCredit} />
-
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-            <Link to="/" className="inline-flex items-center text-slate-300 hover:text-white mb-6 transition-colors text-sm font-semibold">
+            <Link to="/species" className="inline-flex items-center text-slate-300 hover:text-white mb-6 transition-colors text-sm font-semibold">
               <ArrowLeft className="w-4 h-4 mr-2" /> Back to Database
             </Link>
           </motion.div>
@@ -120,7 +120,30 @@ const SpeciesDetailPage = () => {
               </div>
             </motion.div>
 
-            {/* NEW FEEDING SECTION */}
+            {/* NEW: Tank Setup Recommendations */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl border-2 border-indigo-200 p-6"
+            >
+              <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
+                <Package className="w-5 h-5 mr-2 text-indigo-600" /> Recommended Tank Setup
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {tankSetupItems.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-indigo-100">
+                    <CheckCircle className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-slate-900 text-sm mb-1">{item.title}</div>
+                      <div className="text-xs text-slate-600">{item.description}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* FEEDING SECTION */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -344,6 +367,36 @@ const SpeciesDetailPage = () => {
               </div>
             </motion.div>
 
+            {/* NEW: Compatible Species Grid */}
+            {compatibleSpecies.length > 0 && (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
+              >
+                <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
+                  <Fish className="w-5 h-5 mr-2 text-indigo-600" /> Compatible Tank Mates
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {compatibleSpecies.slice(0, 8).map((species) => (
+                    <Link 
+                      key={species.id}
+                      to={`/species/${species.slug}`}
+                      className="group p-3 bg-slate-50 hover:bg-indigo-50 rounded-lg border border-slate-200 hover:border-indigo-300 transition-all"
+                    >
+                      <div className="text-sm font-bold text-slate-900 group-hover:text-indigo-700 mb-0.5 truncate">
+                        {species.taxonomy.commonName}
+                      </div>
+                      <div className="text-xs text-slate-500 italic truncate">
+                        {species.taxonomy.scientificName}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
             {/* Compatibility */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -351,7 +404,7 @@ const SpeciesDetailPage = () => {
               viewport={{ once: true }}
               className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
             >
-              <h2 className="text-xl font-bold text-slate-900 mb-5">Compatibility & Tank Mates</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-5">Compatibility Guidelines</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="flex items-center text-emerald-700 font-bold mb-3">
@@ -603,7 +656,88 @@ const SpeciesDetailPage = () => {
   );
 };
 
-// --- HELPER FUNCTION FOR FEEDING ADVICE ---
+// --- HELPER: Tank Setup Recommendations ---
+const getTankSetupRecommendations = (species: Species) => {
+  const items = [];
+  
+  items.push({
+    title: `${species.environment.minTankSizeLiters}L+ Tank`,
+    description: `Minimum ${species.environment.minTankSizeLiters} liters for ${species.behavior.minGroupSize} individuals`
+  });
+  
+  if (species.habitat.planting === 'dense') {
+    items.push({
+      title: 'Dense Planting',
+      description: 'Heavily planted with plenty of hiding spots and cover'
+    });
+  } else if (species.habitat.planting === 'medium') {
+    items.push({
+      title: 'Moderate Plants',
+      description: 'Balance of open swimming space and planted areas'
+    });
+  }
+  
+  if (species.environment.substrate) {
+    items.push({
+      title: `${capitalize(species.environment.substrate)} Substrate`,
+      description: `Recommended substrate type for natural behavior`
+    });
+  }
+  
+  if (species.environment.flow === 'gentle') {
+    items.push({
+      title: 'Gentle Flow',
+      description: 'Low current filter - avoid strong water movement'
+    });
+  } else if (species.environment.flow === 'moderate') {
+    items.push({
+      title: 'Moderate Flow',
+      description: 'Standard filtration with moderate water movement'
+    });
+  }
+  
+  if (species.habitat.hardscape.includes('driftwood') || species.habitat.hardscape.includes('leaf_litter')) {
+    items.push({
+      title: 'Natural Décor',
+      description: 'Driftwood and dried leaves for natural biotope'
+    });
+  }
+  
+  if (species.behavior.tags.includes('jumper')) {
+    items.push({
+      title: 'Secure Lid Required',
+      description: 'Tight-fitting cover to prevent jumping escapes'
+    });
+  }
+  
+  return items;
+};
+
+// --- HELPER: Find Compatible Species ---
+const findCompatibleSpecies = (currentSpecies: Species): Species[] => {
+  return allSpecies.filter(s => {
+    if (s.id === currentSpecies.id) return false;
+    
+    // Check if parameters overlap
+    const tempOverlap = (
+      s.environment.tempC.min <= currentSpecies.environment.tempC.max &&
+      s.environment.tempC.max >= currentSpecies.environment.tempC.min
+    );
+    const phOverlap = (
+      s.environment.ph.min <= currentSpecies.environment.ph.max &&
+      s.environment.ph.max >= currentSpecies.environment.ph.min
+    );
+    
+    // Check if both peaceful
+    const bothPeaceful = 
+      currentSpecies.behavior.tags.includes('peaceful') &&
+      s.behavior.tags.includes('peaceful');
+    
+    return tempOverlap && phOverlap && bothPeaceful;
+  }).slice(0, 12);
+};
+
+// --- HELPER: Feeding Advice ---
 const getFeedingAdvice = (species: Species): string[] => {
   const advice: string[] = [];
   const { diet } = species.care;
@@ -611,7 +745,6 @@ const getFeedingAdvice = (species: Species): string[] => {
   const size = species.visuals.adultSizeCM;
   const shape = species.visuals.iconShape;
 
-  // 1. Basic Staples
   if (shape === 'shrimp') {
     advice.push("Staple: Specialized shrimp pellets or biofilm.");
   } else if (size < 5) {
@@ -620,7 +753,6 @@ const getFeedingAdvice = (species: Species): string[] => {
     advice.push("Staple: High-quality granules or flakes.");
   }
 
-  // 2. Specific Behavioral Advice
   if (tags.includes('bottom_dweller') || shape === 'depressed') {
     advice.push("Essential: Sinking wafers or pellets to ensure food reaches the bottom.");
   }
@@ -687,8 +819,8 @@ const NotFound = () => (
         <span className="text-4xl font-bold text-slate-400">404</span>
       </div>
       <h1 className="text-3xl font-bold text-slate-900 mb-4">Species Not Found</h1>
-      <Link to="/" className="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-semibold">
-        ← Return Home
+      <Link to="/species" className="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-semibold">
+        ← Return to Database
       </Link>
     </div>
   </div>
