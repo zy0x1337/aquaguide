@@ -1007,7 +1007,7 @@ const NotFound = () => (
   </div>
 );
 
-const capitalize = (s: string) => s ? s[0].toUpperCase() + s.slice(1) : s;
+const capitalize = (s?: string) => s ? s[0].toUpperCase() + s.slice(1) : (s || '');
 
 const resolveHeaderImageUrl = (imageUrl?: string, slug?: string) => {
   if (imageUrl) {
