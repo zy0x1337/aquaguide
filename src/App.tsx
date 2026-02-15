@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
+import { ComparisonBar } from './components/comparison/ComparisonBar';
 import ErrorBoundary from './components/error/ErrorBoundary';
 
 // Pages
@@ -21,6 +22,9 @@ import { PlantDetailPage } from './pages/PlantDetailPage';
 
 // 🎨 TANK BUILDER
 import { TankBuilderPage } from './pages/TankBuilderPage';
+
+// ⚖️ COMPARISON
+import ComparisonPage from './pages/ComparisonPage';
 
 function App() {
   return (
@@ -45,12 +49,18 @@ function App() {
           {/* 🎨 Tank Builder */}
           <Route path="/tank-builder" element={<TankBuilderPage />} />
 
+          {/* ⚖️ Comparison Tool */}
+          <Route path="/compare" element={<ComparisonPage />} />
+
           {/* About Page */}
           <Route path="/about" element={<AboutPage />} />
 
           {/* 404 Not Found */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        
+        {/* Global Comparison Bar */}
+        <ComparisonBar />
       </Layout>
     </ErrorBoundary>
   );
