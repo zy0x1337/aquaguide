@@ -1,7 +1,6 @@
 import { TankItem, TankConfig, SmartSuggestion } from '../types/builder';
 import { Species } from '../types/species';
 import { allSpecies } from '../data/species';
-import { allPlants } from '../data/plants';
 
 /**
  * Generate context-aware suggestions based on current tank setup
@@ -222,12 +221,12 @@ export const checkCompatibility = (
   // Aggression check
   const hasAggressive = fishItems.some(item => {
     const s = item.data as Species;
-    return s.behavior.tags?.includes('territorial') || s.behavior.tags?.includes('aggressive');
+    return s.behavior.tags?.includes('territorial') || s.behavior.tags?.includes('semi-aggressive');
   });
 
   const hasPeaceful = fishItems.some(item => {
     const s = item.data as Species;
-    return !s.behavior.tags?.includes('territorial') && !s.behavior.tags?.includes('aggressive');
+    return !s.behavior.tags?.includes('territorial') && !s.behavior.tags?.includes('semi-aggressive');
   });
 
   if (hasAggressive && hasPeaceful) {
