@@ -5,19 +5,26 @@ import { allSpecies } from '../data/species';
 import { SEOHead } from '../components/seo/SEOHead';
 import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
 import { PageTransition } from '../components/layout/PageTransition';
-import type { Difficulty, Species } from '../types/species';
+import type { Difficulty, Species, Region } from '../types/species';
 
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
 
 interface AdvancedFilters {
+  // Original User Filters
+  level: Difficulty | 'all';
+  region: Region | 'all';
+  tankSize: 'all' | '30' | '60' | '120' | '200';
+  biotope: 'all' | 'blackwater' | 'amazon' | 'rice_paddies';
+  type: 'all' | 'fish' | 'invertebrate';
+
+  // Advanced Tech Filters
   tempMin: number;
   tempMax: number;
   phMin: number;
   phMax: number;
-  maxSize: number;
+  maxBodySize: number; // renamed from maxSize to avoid confusion with tankSize
   diet: 'all' | 'carnivore' | 'herbivore' | 'omnivore';
   temperament: 'all' | 'peaceful' | 'semi-aggressive';
-  difficulty: Difficulty | 'all';
 }
 
 const SpeciesIndexPage = () => {
@@ -26,50 +33,65 @@ const SpeciesIndexPage = () => {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   
   const [filters, setFilters] = useState<AdvancedFilters>({
+    level: 'all',
+    region: 'all',
+    tankSize: 'all',
+    biotope: 'all',
+    type: 'all',
     tempMin: 15,
     tempMax: 30,
     phMin: 5.0,
     phMax: 9.0,
-    maxSize: 30,
+    maxBodySize: 30,
     diet: 'all',
-    temperament: 'all',
-    difficulty: 'all'
+    temperament: 'all'
   });
 
   const applyFilters = (species: Species): boolean => {
-    // Temperature check
-    if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) {
-      return false;
+    // 1. Level (Difficulty)
+    if (filters.level !== 'all' && species.care.difficulty !== filters.level) return false;
+
+    // 2. Region
+    if (filters.region !== 'all' && species.taxonomy.region !== filters.region) return false;
+
+    // 3. Tank Size (Max Liters Bucket)
+    // "Max 30 Liters" means species must fit in 30L (minTankSize <= 30)
+    if (filters.tankSize !== 'all') {
+      const limit = parseInt(filters.tankSize);
+      if (species.environment.minTankSizeLiters > limit) return false;
     }
-    
-    // pH check
-    if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) {
-      return false;
+
+    // 4. Biotope
+    if (filters.biotope !== 'all') {
+      const bio = (species.taxonomy.biotope || '').toLowerCase();
+      if (filters.biotope === 'blackwater' && !bio.includes('blackwater')) return false;
+      if (filters.biotope === 'amazon' && !bio.includes('amazon')) return false;
+      if (filters.biotope === 'rice_paddies' && !bio.includes('rice') && !bio.includes('paddy')) return false;
     }
-    
-    // Size check
-    if (species.visuals.adultSizeCM > filters.maxSize) {
-      return false;
+
+    // 5. Type (Fish vs Invertebrates)
+    if (filters.type !== 'all') {
+      const isShrimp = species.visuals.iconShape === 'shrimp';
+      if (filters.type === 'invertebrate' && !isShrimp) return false;
+      if (filters.type === 'fish' && isShrimp) return false;
     }
+
+    // 6. Temperature check
+    if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) return false;
     
-    // Diet check
-    if (filters.diet !== 'all' && species.care.diet !== filters.diet) {
-      return false;
-    }
+    // 7. pH check
+    if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) return false;
     
-    // Temperament check
+    // 8. Body Size check
+    if (species.visuals.adultSizeCM > filters.maxBodySize) return false;
+    
+    // 9. Diet check
+    if (filters.diet !== 'all' && species.care.diet !== filters.diet) return false;
+    
+    // 10. Temperament check
     if (filters.temperament !== 'all') {
-      if (filters.temperament === 'peaceful' && !species.behavior.tags.includes('peaceful')) {
-        return false;
-      }
-      if (filters.temperament === 'semi-aggressive' && !species.behavior.tags.includes('semi-aggressive')) {
-        return false;
-      }
-    }
-    
-    // Difficulty check
-    if (filters.difficulty !== 'all' && species.care.difficulty !== filters.difficulty) {
-      return false;
+      if (filters.temperament === 'peaceful' && !species.behavior.tags.includes('peaceful')) return false;
+      if (filters.temperament === 'semi-aggressive' && !species.behavior.tags.includes('semi-aggressive')) return false;
     }
     
     return true;
@@ -77,10 +99,14 @@ const SpeciesIndexPage = () => {
 
   const activeFilterCount = useMemo(() => {
     let count = 0;
+    if (filters.level !== 'all') count++;
+    if (filters.region !== 'all') count++;
+    if (filters.tankSize !== 'all') count++;
+    if (filters.biotope !== 'all') count++;
+    if (filters.type !== 'all') count++;
     if (filters.diet !== 'all') count++;
     if (filters.temperament !== 'all') count++;
-    if (filters.difficulty !== 'all') count++;
-    if (filters.maxSize !== 30) count++;
+    if (filters.maxBodySize !== 30) count++;
     if (filters.tempMin !== 15 || filters.tempMax !== 30) count++;
     if (filters.phMin !== 5.0 || filters.phMax !== 9.0) count++;
     return count;
@@ -104,14 +130,18 @@ const SpeciesIndexPage = () => {
 
   const resetFilters = () => {
     setFilters({
+      level: 'all',
+      region: 'all',
+      tankSize: 'all',
+      biotope: 'all',
+      type: 'all',
       tempMin: 15,
       tempMax: 30,
       phMin: 5.0,
       phMax: 9.0,
-      maxSize: 30,
+      maxBodySize: 30,
       diet: 'all',
-      temperament: 'all',
-      difficulty: 'all'
+      temperament: 'all'
     });
   };
 
@@ -159,7 +189,7 @@ const SpeciesIndexPage = () => {
               >
                 <span className="flex items-center gap-2">
                   <Filter className="w-4 h-4" />
-                  Advanced Filters
+                  Filters
                   {activeFilterCount > 0 && (
                     <span className="bg-indigo-500 text-white text-xs px-2 py-0.5 rounded-full">
                       {activeFilterCount}
@@ -169,7 +199,7 @@ const SpeciesIndexPage = () => {
                 <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* Quick Filters */}
+              {/* Quick Actions */}
               <div className="flex flex-wrap gap-3 w-full md:w-auto">
                 <button 
                   onClick={() => setSortOrder(prev => prev === 'name' ? 'difficulty' : prev === 'difficulty' ? 'size' : 'name')}
@@ -185,7 +215,7 @@ const SpeciesIndexPage = () => {
                     className="flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-950/50 border border-rose-200 dark:border-rose-800 rounded-lg text-sm font-bold text-rose-700 dark:text-rose-300 transition-colors"
                   >
                     <X className="w-4 h-4" />
-                    Clear Filters
+                    Clear
                   </button>
                 )}
               </div>
@@ -202,117 +232,191 @@ const SpeciesIndexPage = () => {
                   className="overflow-hidden"
                 >
                   <div className="mt-4 pt-4 border-t border-slate-200 dark:border-stone-800">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {/* Temperature Range */}
-                      <div className="bg-slate-50 dark:bg-stone-800 rounded-lg p-4 border border-slate-200 dark:border-stone-700">
-                        <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
-                          🌡️ Temperature: {filters.tempMin}°C - {filters.tempMax}°C
-                        </label>
-                        <div className="space-y-2">
-                          <input
-                            type="range"
-                            min="15"
-                            max="30"
-                            value={filters.tempMin}
-                            onChange={(e) => setFilters({ ...filters, tempMin: Number(e.target.value) })}
-                            className="w-full"
-                          />
-                          <input
-                            type="range"
-                            min="15"
-                            max="30"
-                            value={filters.tempMax}
-                            onChange={(e) => setFilters({ ...filters, tempMax: Number(e.target.value) })}
-                            className="w-full"
-                          />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      
+                      {/* Section 1: Basic Requirements */}
+                      <div className="space-y-4">
+                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Requirements</h3>
+                        
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Tank Size</label>
+                          <select
+                            value={filters.tankSize}
+                            onChange={(e) => setFilters({ ...filters, tankSize: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">Any Tank Size</option>
+                            <option value="30">Max 30 Liters (Nano)</option>
+                            <option value="60">Max 60 Liters (Standard)</option>
+                            <option value="120">Max 120 Liters</option>
+                            <option value="200">Max 200 Liters</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Care Level</label>
+                          <select
+                            value={filters.level}
+                            onChange={(e) => setFilters({ ...filters, level: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="medium">Medium</option>
+                            <option value="expert">Expert</option>
+                          </select>
                         </div>
                       </div>
 
-                      {/* pH Range */}
-                      <div className="bg-slate-50 dark:bg-stone-800 rounded-lg p-4 border border-slate-200 dark:border-stone-700">
-                        <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
-                          💧 pH: {filters.phMin.toFixed(1)} - {filters.phMax.toFixed(1)}
-                        </label>
-                        <div className="space-y-2">
-                          <input
-                            type="range"
-                            min="5.0"
-                            max="9.0"
-                            step="0.1"
-                            value={filters.phMin}
-                            onChange={(e) => setFilters({ ...filters, phMin: Number(e.target.value) })}
-                            className="w-full"
-                          />
-                          <input
-                            type="range"
-                            min="5.0"
-                            max="9.0"
-                            step="0.1"
-                            value={filters.phMax}
-                            onChange={(e) => setFilters({ ...filters, phMax: Number(e.target.value) })}
-                            className="w-full"
-                          />
+                      {/* Section 2: Biology & Type */}
+                      <div className="space-y-4">
+                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Biology</h3>
+                        
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Type</label>
+                          <select
+                            value={filters.type}
+                            onChange={(e) => setFilters({ ...filters, type: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">All Types</option>
+                            <option value="fish">Fish</option>
+                            <option value="invertebrate">Invertebrates</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Region</label>
+                          <select
+                            value={filters.region}
+                            onChange={(e) => setFilters({ ...filters, region: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">All Regions</option>
+                            <option value="South America">South America</option>
+                            <option value="Asia">Asia</option>
+                            <option value="Africa">Africa</option>
+                            <option value="Central America">Central America</option>
+                            <option value="Australia">Australia</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Biotope</label>
+                          <select
+                            value={filters.biotope}
+                            onChange={(e) => setFilters({ ...filters, biotope: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">Any Biotope</option>
+                            <option value="blackwater">Blackwater</option>
+                            <option value="amazon">Amazon River</option>
+                            <option value="rice_paddies">Rice Paddies</option>
+                          </select>
                         </div>
                       </div>
 
-                      {/* Max Size */}
-                      <div className="bg-slate-50 dark:bg-stone-800 rounded-lg p-4 border border-slate-200 dark:border-stone-700">
-                        <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
-                          📏 Max Size: {filters.maxSize}cm
-                        </label>
-                        <input
-                          type="range"
-                          min="2"
-                          max="30"
-                          value={filters.maxSize}
-                          onChange={(e) => setFilters({ ...filters, maxSize: Number(e.target.value) })}
-                          className="w-full"
-                        />
+                      {/* Section 3: Water Parameters */}
+                      <div className="space-y-4">
+                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Water Parameters</h3>
+                        
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">
+                            🌡️ Temperature: {filters.tempMin}°C - {filters.tempMax}°C
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="range"
+                              min="15"
+                              max="30"
+                              value={filters.tempMin}
+                              onChange={(e) => setFilters({ ...filters, tempMin: Number(e.target.value) })}
+                              className="flex-1 accent-indigo-500"
+                            />
+                            <input
+                              type="range"
+                              min="15"
+                              max="30"
+                              value={filters.tempMax}
+                              onChange={(e) => setFilters({ ...filters, tempMax: Number(e.target.value) })}
+                              className="flex-1 accent-indigo-500"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">
+                            💧 pH: {filters.phMin.toFixed(1)} - {filters.phMax.toFixed(1)}
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="range"
+                              min="5.0"
+                              max="9.0"
+                              step="0.1"
+                              value={filters.phMin}
+                              onChange={(e) => setFilters({ ...filters, phMin: Number(e.target.value) })}
+                              className="flex-1 accent-indigo-500"
+                            />
+                            <input
+                              type="range"
+                              min="5.0"
+                              max="9.0"
+                              step="0.1"
+                              value={filters.phMax}
+                              onChange={(e) => setFilters({ ...filters, phMax: Number(e.target.value) })}
+                              className="flex-1 accent-indigo-500"
+                            />
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Diet */}
-                      <div className="bg-slate-50 dark:bg-stone-800 rounded-lg p-4 border border-slate-200 dark:border-stone-700">
-                        <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">🍽️ Diet</label>
-                        <select
-                          value={filters.diet}
-                          onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })}
-                          className="w-full px-3 py-2 bg-white dark:bg-stone-900 border border-slate-300 dark:border-stone-600 rounded-lg text-sm dark:text-white"
-                        >
-                          <option value="all">All Diets</option>
-                          <option value="omnivore">Omnivore</option>
-                          <option value="carnivore">Carnivore</option>
-                          <option value="herbivore">Herbivore</option>
-                        </select>
+                      {/* Section 4: Details */}
+                      <div className="space-y-4">
+                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Traits</h3>
+                        
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">
+                            📏 Max Body Size: {filters.maxBodySize}cm
+                          </label>
+                          <input
+                            type="range"
+                            min="2"
+                            max="30"
+                            value={filters.maxBodySize}
+                            onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })}
+                            className="w-full accent-indigo-500"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Diet</label>
+                          <select
+                            value={filters.diet}
+                            onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">Any Diet</option>
+                            <option value="omnivore">Omnivore</option>
+                            <option value="carnivore">Carnivore</option>
+                            <option value="herbivore">Herbivore</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Temperament</label>
+                          <select
+                            value={filters.temperament}
+                            onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })}
+                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="all">Any Temperament</option>
+                            <option value="peaceful">Peaceful Only</option>
+                            <option value="semi-aggressive">Semi-Aggressive</option>
+                          </select>
+                        </div>
                       </div>
 
-                      {/* Temperament */}
-                      <div className="bg-slate-50 dark:bg-stone-800 rounded-lg p-4 border border-slate-200 dark:border-stone-700">
-                        <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">😊 Temperament</label>
-                        <select
-                          value={filters.temperament}
-                          onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })}
-                          className="w-full px-3 py-2 bg-white dark:bg-stone-900 border border-slate-300 dark:border-stone-600 rounded-lg text-sm dark:text-white"
-                        >
-                          <option value="all">All Temperaments</option>
-                          <option value="peaceful">Peaceful Only</option>
-                          <option value="semi-aggressive">Semi-Aggressive</option>
-                        </select>
-                      </div>
-
-                      {/* Difficulty */}
-                      <div className="bg-slate-50 dark:bg-stone-800 rounded-lg p-4 border border-slate-200 dark:border-stone-700">
-                        <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">⭐ Care Level</label>
-                        <select
-                          value={filters.difficulty}
-                          onChange={(e) => setFilters({ ...filters, difficulty: e.target.value as any })}
-                          className="w-full px-3 py-2 bg-white dark:bg-stone-900 border border-slate-300 dark:border-stone-600 rounded-lg text-sm dark:text-white"
-                        >
-                          <option value="all">All Levels</option>
-                          <option value="beginner">Beginner</option>
-                          <option value="medium">Medium</option>
-                          <option value="expert">Expert</option>
-                        </select>
-                      </div>
                     </div>
                   </div>
                 </motion.div>
