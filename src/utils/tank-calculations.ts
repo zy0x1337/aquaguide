@@ -36,7 +36,8 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
 
     // Waste Multiplier based on diet/behavior (Simplified assumption)
     // Predators/Messy eaters get a bump
-    if (species.behavior.diet === 'carnivore') massMultiplier *= 1.1;
+    // FIXED: accessing diet from 'care' property, not 'behavior'
+    if (species.care.diet === 'carnivore') massMultiplier *= 1.1;
     
     // The Formula: Length * Count * MassModifier
     // Base rule approximation: 1cm of slender fish needs ~1.5L of water
