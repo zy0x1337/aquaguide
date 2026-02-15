@@ -572,17 +572,24 @@ const calculateCompatibilityScore = (current: Species, candidate: Species): numb
                     candidate.environment.ph.max >= current.environment.ph.min;
   if (!phOverlap) return 0;
   
-  // 4. Predator checks
+  // 4. Size ratio check - prevent huge mismatches (e.g. 7cm Betta with 35cm Oscar)
+  const sizeRatio = Math.max(current.visuals.adultSizeCM, candidate.visuals.adultSizeCM) / 
+                    Math.min(current.visuals.adultSizeCM, candidate.visuals.adultSizeCM);
+  if (sizeRatio > 3) return 0; // One is 3x+ larger = bullying/predation risk
+  
+  // 5. Predator checks - stricter than before
   const currentIsPredator = current.behavior.tags.includes('predator');
   const candidateIsPredator = candidate.behavior.tags.includes('predator');
-  const currentIsSmall = current.visuals.adultSizeCM < 5;
-  const candidateIsSmall = candidate.visuals.adultSizeCM < 5;
   
-  // Don't put predators with small fish
-  if (currentIsPredator && candidateIsSmall) return 0;
-  if (candidateIsPredator && currentIsSmall) return 0;
+  // Don't put predators with ANY fish under 10cm (not just 5cm)
+  if (currentIsPredator && candidate.visuals.adultSizeCM < 10) return 0;
+  if (candidateIsPredator && current.visuals.adultSizeCM < 10) return 0;
   
-  // 5. Aggression checks (using 'territorial' and 'semi-aggressive' tags)
+  // 6. Tank size compatibility - exclude if candidate needs much larger tank
+  const tankSizeRatio = candidate.environment.minTankSizeLiters / current.environment.minTankSizeLiters;
+  if (tankSizeRatio > 5) return 0; // Candidate needs 5x+ larger tank = incompatible
+  
+  // 7. Aggression checks (using 'territorial' and 'semi-aggressive' tags)
   const currentIsAggressive = current.behavior.tags.includes('territorial') || current.behavior.tags.includes('semi-aggressive');
   const candidateIsAggressive = candidate.behavior.tags.includes('territorial') || candidate.behavior.tags.includes('semi-aggressive');
   const currentIsPeaceful = current.behavior.tags.includes('peaceful');
@@ -600,10 +607,10 @@ const calculateCompatibilityScore = (current: Species, candidate: Species): numb
   // Bonus: Both peaceful (+30 points)
   if (currentIsPeaceful && candidateIsPeaceful) score += 30;
   
-  // Bonus: Similar size range (+20 if within 3cm, +10 if within 6cm)
+  // Bonus: Similar size range (+20 if within 2cm, +10 if within 4cm)
   const sizeDiff = Math.abs(current.visuals.adultSizeCM - candidate.visuals.adultSizeCM);
-  if (sizeDiff <= 3) score += 20;
-  else if (sizeDiff <= 6) score += 10;
+  if (sizeDiff <= 2) score += 20;
+  else if (sizeDiff <= 4) score += 10;
   
   // Bonus: Compatible tank sizes (+15 if similar requirements)
   const tankDiff = Math.abs(current.environment.minTankSizeLiters - candidate.environment.minTankSizeLiters);
