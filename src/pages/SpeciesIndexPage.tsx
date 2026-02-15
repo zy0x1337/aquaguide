@@ -92,19 +92,30 @@ const SpeciesIndexPage = () => {
       if (filters.type === 'fish' && isShrimp) return false;
     }
 
-    // Advanced Filters
+    // Advanced Filters (only when panel is open)
     if (showAdvancedFilters) {
+      // Temperature range
       if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) return false;
+      
+      // pH range
       if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) return false;
+      
+      // Body size
       if (species.visuals.adultSizeCM > filters.maxBodySize) return false;
+      
+      // Diet
       if (filters.diet !== 'all' && species.care.diet !== filters.diet) return false;
+      
+      // Temperament
       if (filters.temperament !== 'all') {
         if (filters.temperament === 'peaceful' && !species.behavior.tags.includes('peaceful')) return false;
         if (filters.temperament === 'semi-aggressive' && !species.behavior.tags.includes('semi-aggressive')) return false;
       }
-      // Behavior tags filter
+      
+      // Behavior tags filter (FIX: Only filter if tags are selected)
       if (filters.behaviorTags.length > 0) {
-        if (!filters.behaviorTags.some(tag => species.behavior.tags.includes(tag))) return false;
+        const hasAllTags = filters.behaviorTags.every(tag => species.behavior.tags.includes(tag));
+        if (!hasAllTags) return false;
       }
     }
     
@@ -129,7 +140,7 @@ const SpeciesIndexPage = () => {
     return count;
   }, [filters, showAdvancedFilters]);
 
-  // Enhanced search with Fuse.js
+  // Enhanced search with Fuse.js (FIX: Prevent duplicates)
   const filteredSpecies = useMemo(() => {
     let results: Species[] = allSpecies;
 
@@ -138,8 +149,15 @@ const SpeciesIndexPage = () => {
       results = fuse.search(searchTerm).map(r => r.item);
     }
 
-    // Apply filters to search results
-    return results.filter(applyFilters);
+    // Apply filters to search results (creates new array, no duplicates)
+    const filtered = results.filter(applyFilters);
+    
+    // Deduplicate by ID (safety check)
+    const uniqueSpecies = Array.from(
+      new Map(filtered.map(s => [s.id, s])).values()
+    );
+    
+    return uniqueSpecies;
   }, [searchTerm, filters, showAdvancedFilters, fuse]);
 
   const resetFilters = () => {
@@ -461,12 +479,12 @@ const SpeciesIndexPage = () => {
                             </select>
                           </div>
 
-                          {/* Behavior Tags - NEW WITH CHECKBOXES */}
+                          {/* Behavior Tags - FIXED LOGIC */}
                           <div className="md:col-span-2">
-                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-3 block">Behavior Tags</label>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-3 block">Behavior Tags (must have ALL selected)</label>
                             <div className="bg-slate-50 dark:bg-stone-800 p-4 rounded-lg border border-slate-200 dark:border-stone-700">
                               <CheckboxGroup
-                                options={['peaceful', 'schooling', 'bottom_dweller', 'surface_dweller', 'nocturnal', 'algae_eater', 'jumper', 'nano_safe']}
+                                options={['peaceful', 'schooler', 'bottom_dweller', 'surface_dweller', 'nocturnal', 'algae_eater', 'jumper', 'nano_safe']}
                                 selected={filters.behaviorTags}
                                 onChange={(behaviorTags) => setFilters({ ...filters, behaviorTags: behaviorTags as EthologyTag[] })}
                               />
