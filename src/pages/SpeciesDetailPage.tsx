@@ -237,7 +237,7 @@ const SpeciesDetailPage = () => {
                   </div>
 
                   {/* Stats & Costs */}
-                  <div className="grid md:grid-cols-3 gap-6">
+                  <div className="grid md:grid-cols-2 gap-6">
                     {/* Ownership Stats */}
                     <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-6 border border-indigo-200">
                       <h4 className="text-sm font-bold text-slate-700 uppercase mb-4 flex items-center gap-2">
@@ -271,39 +271,6 @@ const SpeciesDetailPage = () => {
                               <span className="text-sm ml-1">{data.experienceData.estimatedCosts.monthly.currency}</span>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Success Rates */}
-                    {data.experienceData && (data.experienceData.successRate || data.experienceData.survivalRate) && (
-                      <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200">
-                        <h4 className="text-sm font-bold text-slate-700 uppercase mb-4 flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-purple-600" /> Success Rate
-                        </h4>
-                        <div className="space-y-4">
-                          {data.experienceData.successRate && (
-                            <div>
-                              <div className="flex justify-between mb-2">
-                                <span className="text-xs text-purple-700 font-semibold">Beginner Success</span>
-                                <span className="text-xs font-bold text-purple-900">{Math.round(data.experienceData.successRate * 100)}%</span>
-                              </div>
-                              <div className="w-full bg-purple-100 rounded-full h-3">
-                                <div className="bg-purple-600 h-3 rounded-full transition-all" style={{ width: `${data.experienceData.successRate * 100}%` }} />
-                              </div>
-                            </div>
-                          )}
-                          {data.experienceData.survivalRate && (
-                            <div>
-                              <div className="flex justify-between mb-2">
-                                <span className="text-xs text-purple-700 font-semibold">1+ Year Survival</span>
-                                <span className="text-xs font-bold text-purple-900">{Math.round(data.experienceData.survivalRate * 100)}%</span>
-                              </div>
-                              <div className="w-full bg-purple-100 rounded-full h-3">
-                                <div className="bg-pink-600 h-3 rounded-full transition-all" style={{ width: `${data.experienceData.survivalRate * 100}%` }} />
-                              </div>
-                            </div>
-                          )}
                         </div>
                       </div>
                     )}
