@@ -12,7 +12,6 @@ import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
 import { Species } from '../types/species';
 import { SEOHead } from '../components/seo/SEOHead';
-import { TankSimulator } from '../components/species/TankSimulator';
 import { ParameterScale } from '../components/ui/ParameterScale';
 import { DiseaseList } from '../components/species/DiseaseList';
 import { ImageAttribution } from '../components/ui/ImageAttribution';
@@ -728,18 +727,6 @@ const SpeciesDetailPage = () => {
           </div>
         </motion.div>
       </main>
-
-      {/* HIDDEN: Tank Simulator */}
-      {false && (
-        <div className="hidden">
-          <TankSimulator 
-            fishLengthCM={data.visuals.adultSizeCM} 
-            fishShape={data.visuals.iconShape} 
-            minGroupSize={data.behavior.minGroupSize}
-            minTankSizeLiters={data.environment.minTankSizeLiters}
-          />
-        </div>
-      )}
     </div>
   );
 };
