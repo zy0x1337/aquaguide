@@ -3,11 +3,12 @@ import {
   ArrowLeft, Thermometer, Droplets, Fish, Ruler, Users,
   MapPin, AlertTriangle, Info, Activity, DollarSign, Heart, Sprout, 
   Mountain, Trees, Box, Sparkles, Microscope, Egg, BookOpen, Utensils,
-  Lightbulb, XCircle
+  Lightbulb, XCircle, ChefHat
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
+import { Species } from '../types/species'; // Added import
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankSimulator } from '../components/species/TankSimulator';
 import { ParameterScale } from '../components/ui/ParameterScale';
@@ -24,6 +25,7 @@ const SpeciesDetailPage = () => {
   const seoDesc = `Complete care guide for ${data.taxonomy.commonName}. Habitat, tank mates, breeding, and scientific background.`;
 
   const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
+  const feedingAdvice = getFeedingAdvice(data);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
@@ -115,6 +117,43 @@ const SpeciesDetailPage = () => {
                 <CompactStatCard icon={<Ruler className="text-indigo-500" />} label="Adult Size" value={`${data.visuals.adultSizeCM}cm`} />
                 <CompactStatCard icon={<Users className="text-slate-600" />} label="Group Size" value={`${data.behavior.minGroupSize}+`} />
                 <CompactStatCard icon={<Utensils className="text-amber-500" />} label="Diet" value={capitalize(data.care.diet)} />
+              </div>
+            </motion.div>
+
+            {/* NEW FEEDING SECTION */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
+            >
+               <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
+                <ChefHat className="w-5 h-5 mr-2 text-amber-600" /> Diet & Feeding Guide
+              </h2>
+              <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                <div className="flex items-start gap-4">
+                   <div className="p-3 bg-white rounded-lg shadow-sm border border-amber-100 hidden sm:block">
+                      {data.care.diet === 'herbivore' ? <Sprout className="w-6 h-6 text-emerald-500" /> : 
+                       data.care.diet === 'carnivore' ? <Fish className="w-6 h-6 text-rose-500" /> : 
+                       <Utensils className="w-6 h-6 text-amber-500" />}
+                   </div>
+                   <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                         <span className="font-bold text-lg text-slate-900 capitalize">{data.care.diet}</span>
+                         <span className="text-xs text-slate-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded border border-slate-200">
+                            Diet Type
+                         </span>
+                      </div>
+                      <ul className="space-y-2">
+                        {feedingAdvice.map((tip, i) => (
+                           <li key={i} className="flex gap-2 text-sm text-slate-700">
+                              <span className="text-amber-500 mt-0.5">•</span>
+                              {tip}
+                           </li>
+                        ))}
+                      </ul>
+                   </div>
+                </div>
               </div>
             </motion.div>
 
@@ -562,6 +601,55 @@ const SpeciesDetailPage = () => {
       </main>
     </div>
   );
+};
+
+// --- HELPER FUNCTION FOR FEEDING ADVICE ---
+const getFeedingAdvice = (species: Species): string[] => {
+  const advice: string[] = [];
+  const { diet } = species.care;
+  const { tags } = species.behavior;
+  const size = species.visuals.adultSizeCM;
+  const shape = species.visuals.iconShape;
+
+  // 1. Basic Staples
+  if (shape === 'shrimp') {
+    advice.push("Staple: Specialized shrimp pellets or biofilm.");
+  } else if (size < 5) {
+    advice.push("Staple: High-quality micro-pellets or crushed flakes.");
+  } else {
+    advice.push("Staple: High-quality granules or flakes.");
+  }
+
+  // 2. Specific Behavioral Advice
+  if (tags.includes('bottom_dweller') || shape === 'depressed') {
+    advice.push("Essential: Sinking wafers or pellets to ensure food reaches the bottom.");
+  }
+  
+  if (tags.includes('algae_eater') || diet === 'herbivore') {
+     advice.push("Supplements: Algae wafers, blanched zucchini, cucumber, or spinach (2-3x/week).");
+  }
+  
+  if (diet === 'carnivore' || diet === 'omnivore') {
+     advice.push("Treats: Frozen or live foods (Bloodworms, Brine Shrimp, Daphnia) 1-2x/week for color & health.");
+  }
+  
+  if (tags.includes('predator')) {
+     advice.push("Behavior: May require live food or movement to trigger feeding response. Monitor closely.");
+  }
+  
+  if (tags.includes('surface_dweller') || tags.includes('labyrinth_fish')) {
+     advice.push("Placement: Floating foods are preferred as they feed from the surface.");
+  }
+  
+  if (tags.includes('nocturnal')) {
+     advice.push("Timing: Feed nocturnal species (like some catfish) after lights out.");
+  }
+  
+  if (tags.includes('slow_eater')) {
+     advice.push("Attention: Ensure fast swimmers don't steal all food. Target feeding recommended.");
+  }
+
+  return advice;
 };
 
 const Badge = ({ text, color }: { text: string, color: string }) => {
