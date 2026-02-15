@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Fish as FishIcon, Leaf, Lock, Unlock, Trash2, ChevronUp, ChevronDown, Info, LayoutTemplate, Box, ArrowUp, AlertCircle } from 'lucide-react';
+import { Fish as FishIcon, Leaf, Lock, Unlock, Trash2, Info, LayoutTemplate, Box, AlertCircle } from 'lucide-react';
 import { TankItem, TankConfig, HardscapeItem } from '../../types/builder';
 import { Species } from '../../types/species';
 import { Plant } from '../../types/plant';
