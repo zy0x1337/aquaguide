@@ -32,6 +32,27 @@ const SpeciesDetailPage = () => {
   // Check if this is an enhanced species (has new intelligence data)
   const isEnhanced = !!(data.behavior.aggressionLevel || data.care.feeding || data.experienceData);
 
+  // Helper inside component (after null check)
+  const getFeedingAdvice = (): string[] => {
+    const advice: string[] = [];
+    const { diet } = data.care;
+    const { tags } = data.behavior;
+    const size = data.visuals.adultSizeCM;
+    const shape = data.visuals.iconShape;
+
+    if (shape === 'shrimp') advice.push("Staple: Shrimp pellets or biofilm");
+    else if (size < 5) advice.push("Staple: Micro-pellets or crushed flakes");
+    else advice.push("Staple: Quality granules or flakes");
+
+    if (tags.includes('bottom_dweller') || shape === 'depressed') advice.push("Sinking wafers for bottom feeders");
+    if (tags.includes('algae_eater') || diet === 'herbivore') advice.push("Supplements: Algae wafers, blanched veggies (2-3x/week)");
+    if (diet === 'carnivore' || diet === 'omnivore') advice.push("Treats: Frozen/live foods (bloodworms, brine shrimp) 1-2x/week");
+    if (tags.includes('surface_dweller')) advice.push("Placement: Floating foods preferred");
+    if (tags.includes('nocturnal')) advice.push("Timing: Feed after lights out");
+
+    return advice;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
       <SEOHead title={seoTitle} description={seoDesc} />
@@ -326,7 +347,7 @@ const SpeciesDetailPage = () => {
                     ) : (
                       <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
                         <ul className="space-y-2">
-                          {getFeedingAdvice(data).map((tip, i) => (
+                          {getFeedingAdvice().map((tip, i) => (
                             <li key={i} className="flex gap-3 text-sm text-slate-700">
                               <span className="text-amber-500 font-bold">•</span>
                               <span>{tip}</span>
@@ -971,26 +992,6 @@ const calculateCompatibilityScore = (current: Species, candidate: Species): numb
   if (Math.abs(currentDiff - candidateDiff) >= 2) score -= 10;
   
   return score;
-};
-
-const getFeedingAdvice = (species: Species): string[] => {
-  const advice: string[] = [];
-  const { diet } = species.care;
-  const { tags } = species.behavior;
-  const size = species.visuals.adultSizeCM;
-  const shape = species.visuals.iconShape;
-
-  if (shape === 'shrimp') advice.push("Staple: Shrimp pellets or biofilm");
-  else if (size < 5) advice.push("Staple: Micro-pellets or crushed flakes");
-  else advice.push("Staple: Quality granules or flakes");
-
-  if (tags.includes('bottom_dweller') || shape === 'depressed') advice.push("Sinking wafers for bottom feeders");
-  if (tags.includes('algae_eater') || diet === 'herbivore') advice.push("Supplements: Algae wafers, blanched veggies (2-3x/week)");
-  if (diet === 'carnivore' || diet === 'omnivore') advice.push("Treats: Frozen/live foods (bloodworms, brine shrimp) 1-2x/week");
-  if (tags.includes('surface_dweller')) advice.push("Placement: Floating foods preferred");
-  if (tags.includes('nocturnal')) advice.push("Timing: Feed after lights out");
-
-  return advice;
 };
 
 const NotFound = () => (
