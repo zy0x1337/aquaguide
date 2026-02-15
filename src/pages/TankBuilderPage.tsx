@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Ruler, AlertTriangle, Download, Trash2, Grid3x3 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { Tank3DView } from '../components/tank-builder/Tank3DView';
 import { AssetBrowser } from '../components/tank-builder/AssetBrowser';
-import { TankStats } from '../components/tank-builder/TankStats'; // New component
-import { calculateTankStats } from '../utils/tank-calculations'; // New logic
+import { TankStats } from '../components/tank-builder/TankStats';
+import { calculateTankStats } from '../utils/tank-calculations';
+import { generateShareURL, copyToClipboard, decodeTankFromURL } from '../utils/tank-share';
 import { PRESET_TANKS } from '../data/builder';
 import { allSpecies } from '../data/species';
 import { TankConfig, TankItem, HardscapeItem } from '../types/builder';
@@ -21,8 +22,23 @@ export const TankBuilderPage = () => {
   const [showCompatibility, setShowCompatibility] = useState(true);
   const [showGrid, setShowGrid] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [copySuccess, setCopySuccess] = useState(false);
 
+  // Load from URL on mount
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tankParam = params.get('tank');
+    
+    if (tankParam) {
+      const decoded = decodeTankFromURL(tankParam);
+      if (decoded) {
+        setTankConfig(decoded.tankConfig);
+        setItems(decoded.items);
+        return; // Skip autosave loading
+      }
+    }
+
+    // Load from autosave if no URL param
     const saved = localStorage.getItem(AUTOSAVE_KEY);
     if (saved) {
       try {
@@ -91,6 +107,17 @@ export const TankBuilderPage = () => {
   const updatePosition = (id: string, x: number, y: number) => { setItems(items.map(item => item.id === id ? { ...item, position: { ...item.position, x, y } } : item)); };
   const updateCount = (id: string, delta: number) => { setItems(items.map(item => { if (item.id === id && item.type === 'fish') { const newCount = Math.max(1, (item.count || 1) + delta); return { ...item, count: newCount }; } return item; })); };
 
+  const handleShare = async () => {
+    const url = generateShareURL(tankConfig, items);
+    const success = await copyToClipboard(url);
+    if (success) {
+      setCopySuccess(true);
+      // Update URL without page reload
+      window.history.replaceState({}, '', url);
+      setTimeout(() => setCopySuccess(false), 2000);
+    }
+  };
+
   // Use the central utility for stats
   const stats = calculateTankStats(items, tankConfig);
   const warnings = stats.warnings; // Base bioload warnings
@@ -144,7 +171,41 @@ export const TankBuilderPage = () => {
 
             {showCompatibility && warnings.length > 0 && (<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-rose-50 to-red-50 border-2 border-rose-300 rounded-2xl p-5 shadow-lg"><h3 className="text-sm font-bold text-rose-900 mb-3 flex items-center"><AlertTriangle className="w-4 h-4 mr-2" /> Compatibility Issues ({warnings.length})</h3><ul className="space-y-2 max-h-48 overflow-y-auto">{warnings.map((warning, i) => (<motion.li key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} className="text-xs text-rose-800 flex items-start bg-white/50 rounded-lg p-2"><span className="mr-2 flex-shrink-0">•</span>{warning}</motion.li>))}</ul></motion.div>)}
 
-            <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-3"><button onClick={() => { const text = generateShoppingList(items, tankConfig, stats); const blob = new Blob([text], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'aquarium-setup.txt'; a.click(); }} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg"><Download className="w-4 h-4" /> Export Setup</button><button onClick={() => { if (confirm('Clear entire tank?')) { setItems([]); } }} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors"><Trash2 className="w-4 h-4" /> Clear All</button></div>
+            <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-3">
+              {/* SHARE BUTTON */}
+              <button 
+                onClick={handleShare} 
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg relative overflow-hidden group"
+              >
+                <AnimatePresence mode="wait">
+                  {copySuccess ? (
+                    <motion.div
+                      key="success"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="flex items-center gap-2"
+                    >
+                      <Check className="w-4 h-4" />
+                      Link Copied!
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="share"
+                      initial={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="flex items-center gap-2"
+                    >
+                      <Share2 className="w-4 h-4" />
+                      Share Tank
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+
+              <button onClick={() => { const text = generateShoppingList(items, tankConfig, stats); const blob = new Blob([text], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'aquarium-setup.txt'; a.click(); }} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg"><Download className="w-4 h-4" /> Export Setup</button>
+              <button onClick={() => { if (confirm('Clear entire tank?')) { setItems([]); } }} className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors"><Trash2 className="w-4 h-4" /> Clear All</button>
+            </div>
           </div>
 
           <div className="xl:col-span-2 space-y-6"><div className="bg-white rounded-2xl shadow-xl border border-slate-200"><div className="bg-gradient-to-br from-slate-50 to-slate-100 border-b border-slate-200 px-6 py-4 flex items-center justify-between"><div><h3 className="text-lg font-bold text-slate-900">3D Preview</h3><p className="text-xs text-slate-500 mt-1">Aspect Ratio: {tankConfig.aspectRatio?.toFixed(2) || 'N/A'} • Surface: {tankConfig.length * tankConfig.width}cm²</p></div><div className="flex items-center gap-4"><label className="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" checked={showGrid} onChange={(e) => setShowGrid(e.target.checked)} className="rounded" /><Grid3x3 className="w-3 h-3" /></label><label className="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" checked={showCompatibility} onChange={(e) => setShowCompatibility(e.target.checked)} className="rounded" /><span className="text-slate-600 font-medium">Warnings</span></label></div></div>
