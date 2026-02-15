@@ -533,14 +533,120 @@ const getTankSetupRecommendations = (species: Species) => {
   return items;
 };
 
+/**
+ * Enhanced compatibility algorithm with scoring system
+ * Returns species sorted by compatibility score (best matches first)
+ */
 const findCompatibleSpecies = (currentSpecies: Species): Species[] => {
-  return allSpecies.filter(s => {
-    if (s.id === currentSpecies.id) return false;
-    const tempOverlap = s.environment.tempC.min <= currentSpecies.environment.tempC.max && s.environment.tempC.max >= currentSpecies.environment.tempC.min;
-    const phOverlap = s.environment.ph.min <= currentSpecies.environment.ph.max && s.environment.ph.max >= currentSpecies.environment.ph.min;
-    const bothPeaceful = currentSpecies.behavior.tags.includes('peaceful') && s.behavior.tags.includes('peaceful');
-    return tempOverlap && phOverlap && bothPeaceful;
-  }).slice(0, 12);
+  type ScoredSpecies = { species: Species; score: number };
+  
+  const candidates: ScoredSpecies[] = allSpecies
+    .filter(s => s.id !== currentSpecies.id)
+    .map(s => ({ species: s, score: calculateCompatibilityScore(currentSpecies, s) }))
+    .filter(({ score }) => score > 0) // Only species with positive compatibility
+    .sort((a, b) => b.score - a.score); // Sort by score descending
+  
+  return candidates.slice(0, 12).map(c => c.species);
+};
+
+/**
+ * Calculate compatibility score between two species
+ * Higher score = better compatibility
+ * Score of 0 or less = incompatible
+ */
+const calculateCompatibilityScore = (current: Species, candidate: Species): number => {
+  let score = 0;
+  
+  // --- MANDATORY CHECKS (return 0 if failed) ---
+  
+  // 1. Must be same water type (freshwater/saltwater/brackish)
+  if (current.environment.type !== candidate.environment.type) return 0;
+  
+  // 2. Temperature overlap required
+  const tempOverlap = candidate.environment.tempC.min <= current.environment.tempC.max && 
+                      candidate.environment.tempC.max >= current.environment.tempC.min;
+  if (!tempOverlap) return 0;
+  
+  // 3. pH overlap required
+  const phOverlap = candidate.environment.ph.min <= current.environment.ph.max && 
+                    candidate.environment.ph.max >= current.environment.ph.min;
+  if (!phOverlap) return 0;
+  
+  // 4. Predator checks
+  const currentIsPredator = current.behavior.tags.includes('predator');
+  const candidateIsPredator = candidate.behavior.tags.includes('predator');
+  const currentIsSmall = current.visuals.adultSizeCM < 5;
+  const candidateIsSmall = candidate.visuals.adultSizeCM < 5;
+  
+  // Don't put predators with small fish
+  if (currentIsPredator && candidateIsSmall) return 0;
+  if (candidateIsPredator && currentIsSmall) return 0;
+  
+  // 5. Aggression checks
+  const currentIsAggressive = current.behavior.tags.includes('aggressive') || current.behavior.tags.includes('territorial');
+  const candidateIsAggressive = candidate.behavior.tags.includes('aggressive') || candidate.behavior.tags.includes('territorial');
+  const currentIsPeaceful = current.behavior.tags.includes('peaceful');
+  const candidateIsPeaceful = candidate.behavior.tags.includes('peaceful');
+  
+  // Don't mix aggressive with peaceful unless both are aggressive
+  if (currentIsAggressive && candidateIsPeaceful) return 0;
+  if (candidateIsAggressive && currentIsPeaceful) return 0;
+  
+  // --- SCORING (positive factors) ---
+  
+  // Base score for passing mandatory checks
+  score = 50;
+  
+  // Bonus: Both peaceful (+30 points)
+  if (currentIsPeaceful && candidateIsPeaceful) score += 30;
+  
+  // Bonus: Similar size range (+20 if within 3cm, +10 if within 6cm)
+  const sizeDiff = Math.abs(current.visuals.adultSizeCM - candidate.visuals.adultSizeCM);
+  if (sizeDiff <= 3) score += 20;
+  else if (sizeDiff <= 6) score += 10;
+  
+  // Bonus: Compatible tank sizes (+15 if similar requirements)
+  const tankDiff = Math.abs(current.environment.minTankSizeLiters - candidate.environment.minTankSizeLiters);
+  if (tankDiff <= 20) score += 15;
+  else if (tankDiff <= 50) score += 5;
+  
+  // Bonus: Different swimming zones to avoid competition (+15)
+  const currentIsBottom = current.behavior.tags.includes('bottom_dweller');
+  const candidateIsBottom = candidate.behavior.tags.includes('bottom_dweller');
+  const currentIsSurface = current.behavior.tags.includes('surface_dweller');
+  const candidateIsSurface = candidate.behavior.tags.includes('surface_dweller');
+  
+  if ((currentIsBottom && candidateIsSurface) || (currentIsSurface && candidateIsBottom)) {
+    score += 15; // Perfect zone separation
+  } else if (currentIsBottom !== candidateIsBottom || currentIsSurface !== candidateIsSurface) {
+    score += 8; // Some zone separation
+  }
+  
+  // Bonus: Similar temperature preference (+10 for close match)
+  const tempMidCurrent = (current.environment.tempC.min + current.environment.tempC.max) / 2;
+  const tempMidCandidate = (candidate.environment.tempC.min + candidate.environment.tempC.max) / 2;
+  if (Math.abs(tempMidCurrent - tempMidCandidate) <= 2) score += 10;
+  
+  // Bonus: Similar pH preference (+10 for close match)
+  const phMidCurrent = (current.environment.ph.min + current.environment.ph.max) / 2;
+  const phMidCandidate = (candidate.environment.ph.min + candidate.environment.ph.max) / 2;
+  if (Math.abs(phMidCurrent - phMidCandidate) <= 0.5) score += 10;
+  
+  // Bonus: Both schooling species (+10) - they create dynamic together
+  if (current.behavior.minGroupSize >= 6 && candidate.behavior.minGroupSize >= 6) score += 10;
+  
+  // Bonus: Similar activity level (+5)
+  const currentIsActive = current.behavior.tags.includes('active_swimmer');
+  const candidateIsActive = candidate.behavior.tags.includes('active_swimmer');
+  if (currentIsActive === candidateIsActive) score += 5;
+  
+  // Penalty: Very different care difficulty (-10)
+  const difficultyMap = { beginner: 1, medium: 2, intermediate: 2, expert: 3 };
+  const currentDiff = difficultyMap[current.care.difficulty as keyof typeof difficultyMap] || 2;
+  const candidateDiff = difficultyMap[candidate.care.difficulty as keyof typeof difficultyMap] || 2;
+  if (Math.abs(currentDiff - candidateDiff) >= 2) score -= 10;
+  
+  return score;
 };
 
 const getFeedingAdvice = (species: Species): string[] => {
