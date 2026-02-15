@@ -50,8 +50,7 @@ export const Tank3DView = ({
   showGrid, 
   onRemoveItem, 
   onToggleLock, 
-  onUpdatePosition, 
-  onUpdateCount,
+  onUpdatePosition,
   selectedItem,
   setSelectedItem
 }: Tank3DViewProps) => {
