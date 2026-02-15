@@ -48,7 +48,7 @@ export const TANK_PRESETS: TankPreset[] = [
     items: [
       // Fish
       {
-        type: 'fish',
+        type: 'fish' as const,
         data: findSpecies('neon-tetra')!,
         position: { x: 40, y: 40, z: 50 },
         count: 8,
@@ -56,7 +56,7 @@ export const TANK_PRESETS: TankPreset[] = [
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 4 }
       },
       {
-        type: 'fish',
+        type: 'fish' as const,
         data: findSpecies('bronze-cory')!,
         position: { x: 30, y: 75, z: 30 },
         count: 5,
@@ -65,21 +65,21 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       // Plants
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('java-fern')!,
         position: { x: 15, y: 80, z: 20 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 2 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('anubias-nana')!,
         position: { x: 70, y: 82, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.5, floatSpeed: 2 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('amazon-sword')!,
         position: { x: 50, y: 83, z: 80 },
         locked: false,
@@ -87,14 +87,14 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       // Hardscape
       {
-        type: 'hardscape',
+        type: 'hardscape' as const,
         data: findHardscape('wood-s')!,
         position: { x: 35, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 45, flipX: false, swayDelay: 0, floatSpeed: 0 }
       },
       {
-        type: 'hardscape',
+        type: 'hardscape' as const,
         data: findHardscape('rock-m')!,
         position: { x: 65, y: 85, z: 30 },
         locked: false,
@@ -119,7 +119,7 @@ export const TANK_PRESETS: TankPreset[] = [
     items: [
       // Shrimp
       {
-        type: 'fish',
+        type: 'fish' as const,
         data: findSpecies('neocaridina-davidi-red-cherry')!,
         position: { x: 45, y: 70, z: 50 },
         count: 10,
@@ -128,28 +128,28 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       // Dense Plants
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('java-moss')!,
         position: { x: 25, y: 82, z: 30 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 1 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('java-moss')!,
         position: { x: 70, y: 83, z: 65 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 1 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('bucephalandra')!,
         position: { x: 50, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 2 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('anubias-nana')!,
         position: { x: 35, y: 81, z: 70 },
         locked: false,
@@ -157,14 +157,14 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       // Hardscape
       {
-        type: 'hardscape',
+        type: 'hardscape' as const,
         data: findHardscape('dragon')!,
         position: { x: 40, y: 84, z: 45 },
         locked: false,
         visuals: { rotation: 90, flipX: false, swayDelay: 0, floatSpeed: 0 }
       },
       {
-        type: 'hardscape',
+        type: 'hardscape' as const,
         data: findHardscape('rock-s')!,
         position: { x: 60, y: 86, z: 55 },
         locked: false,
@@ -189,7 +189,7 @@ export const TANK_PRESETS: TankPreset[] = [
     items: [
       // Small schooling fish
       {
-        type: 'fish',
+        type: 'fish' as const,
         data: findSpecies('cardinal-tetra')!,
         position: { x: 50, y: 35, z: 50 },
         count: 20,
@@ -197,7 +197,7 @@ export const TANK_PRESETS: TankPreset[] = [
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 4 }
       },
       {
-        type: 'fish',
+        type: 'fish' as const,
         data: findSpecies('otocinclus-vittatus')!,
         position: { x: 30, y: 70, z: 30 },
         count: 6,
@@ -206,35 +206,35 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       // Heavy Planting
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('rotala-rotundifolia')!,
         position: { x: 20, y: 80, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 3 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('rotala-rotundifolia')!,
         position: { x: 25, y: 81, z: 30 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 3 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('ludwigia-repens')!,
         position: { x: 75, y: 82, z: 65 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 3 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('amazon-sword')!,
         position: { x: 50, y: 83, z: 75 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.2, floatSpeed: 2 }
       },
       {
-        type: 'plant',
+        type: 'plant' as const,
         data: findPlant('java-fern')!,
         position: { x: 65, y: 82, z: 25 },
         locked: false,
@@ -242,14 +242,14 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       // Hardscape
       {
-        type: 'hardscape',
+        type: 'hardscape' as const,
         data: findHardscape('wood-l')!,
         position: { x: 40, y: 83, z: 50 },
         locked: false,
         visuals: { rotation: 60, flipX: false, swayDelay: 0, floatSpeed: 0 }
       },
       {
-        type: 'hardscape',
+        type: 'hardscape' as const,
         data: findHardscape('seiryu')!,
         position: { x: 70, y: 85, z: 40 },
         locked: false,
