@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
-import { Fish, Droplets, BookOpen, Zap, Shield, ArrowRight, Database, ChevronRight, Check } from 'lucide-react';
+import { 
+  Fish, Droplets, Zap, ArrowRight, ChevronRight, 
+  Search, Layers, Sparkles, Activity 
+} from 'lucide-react';
+import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { allSpecies } from '../data/species';
+import { allSpecies, bettaSplendens, neonTetra, oscar, amanoShrimp } from '../data/species';
 
 const HomePage = () => {
+  // Select a few featured species for the visual showcase
+  const featuredSpecies = [bettaSplendens, neonTetra, oscar, amanoShrimp];
+
   return (
     <PageTransition>
       <SEOHead 
@@ -12,279 +19,186 @@ const HomePage = () => {
         description="Science-based aquarium planning with detailed species profiles, water parameter filtering, and compatibility analysis."
       />
       
-      <div className="min-h-screen bg-white dark:bg-stone-950 transition-colors duration-300">
+      <div className="min-h-screen bg-slate-50 dark:bg-stone-950 font-sans selection:bg-indigo-500/30">
         
-        {/* Hero Section */}
-        <section className="relative pt-32 pb-20 px-6 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-stone-900 dark:to-stone-950">
-          {/* Subtle Background Pattern */}
-          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0 0 0) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}></div>
+        {/* HERO SECTION */}
+        <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+          {/* Background Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-white to-slate-50 dark:from-slate-900 dark:via-stone-950 dark:to-stone-950 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
-          <div className="max-w-6xl mx-auto relative z-10">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900 text-indigo-700 dark:text-indigo-300 text-sm font-semibold mb-6">
-              Professional Aquarium Database
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+              
+              {/* Text Content */}
+              <div className="flex-1 text-center lg:text-left">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wide mb-6 border border-indigo-200 dark:border-indigo-800">
+                    <Sparkles className="w-3 h-3" />
+                    v2.0 Beta Live
+                  </span>
+                  
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                    Build Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">Dream Tank</span>
+                  </h1>
+                  
+                  <p className="text-xl text-slate-600 dark:text-stone-400 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                    The modern standard for aquarium planning. 
+                    Explore <span className="font-bold text-slate-900 dark:text-white">{allSpecies.length}+ documented species</span> with science-based compatibility checks and smart filtering.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <Link 
+                      to="/species" 
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                    >
+                      <Search className="w-5 h-5" />
+                      Browse Database
+                    </Link>
+                    <Link 
+                      to="/tank-builder" 
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 text-slate-900 dark:text-white font-bold rounded-xl transition-all border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md"
+                    >
+                      <Zap className="w-5 h-5 text-amber-500" />
+                      Tank Builder
+                    </Link>
+                  </div>
+                </motion.div>
+                
+                {/* Mini Stats */}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="mt-10 flex items-center justify-center lg:justify-start gap-8 text-sm font-medium text-slate-500 dark:text-slate-500"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span>Always Free</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-indigo-500" />
+                    <span>Scientific Data</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-rose-500" />
+                    <span>Mobile Ready</span>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Visual Content (Featured Species Grid) */}
+              <div className="flex-1 w-full max-w-lg lg:max-w-none">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="grid grid-cols-2 gap-4"
+                >
+                  {featuredSpecies.map((fish, idx) => (
+                    <Link 
+                      to={`/species/${fish.slug}`}
+                      key={fish.id}
+                      className={`group relative overflow-hidden rounded-2xl aspect-[4/3] shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 ${idx % 2 !== 0 ? 'lg:translate-y-12' : ''}`}
+                    >
+                      <img 
+                        src={fish.imageUrl} 
+                        alt={fish.taxonomy.commonName}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                      <div className="absolute bottom-0 left-0 p-4 w-full">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-300 mb-1">{fish.taxonomy.family}</p>
+                        <h3 className="text-white font-bold text-lg leading-tight group-hover:text-indigo-200 transition-colors">
+                          {fish.taxonomy.commonName}
+                        </h3>
+                      </div>
+                    </Link>
+                  ))}
+                </motion.div>
+              </div>
             </div>
-            
-            {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-slate-900 dark:text-white max-w-4xl">
-              Science-Based Aquarium Planning & Species Research
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="text-xl text-slate-600 dark:text-stone-400 max-w-3xl mb-12 leading-relaxed">
-              Make informed decisions with our comprehensive database of <span className="font-semibold text-slate-900 dark:text-white">{allSpecies.length}+ documented species</span>, advanced filtering tools, and scientifically accurate compatibility analysis.
-            </p>
+          </div>
+        </section>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-16">
+        {/* FEATURE CARDS */}
+        <section className="py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Everything you need to succeed</h2>
+              <p className="text-slate-600 dark:text-slate-400">Stop guessing. Use professional tools to plan a healthy, balanced aquarium ecosystem.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <FeatureCard 
+                icon={<Search className="w-6 h-6 text-indigo-500" />}
+                title="Smart Filtering"
+                desc="Find the perfect tank mates by filtering for temperature, pH, size, and temperament."
+                link="/species"
+                linkText="Search Species"
+              />
+              <FeatureCard 
+                icon={<Activity className="w-6 h-6 text-emerald-500" />}
+                title="Compatibility Engine"
+                desc="Our algorithm checks 10+ data points including behavior, parameters, and size ratios to prevent conflicts."
+                link="/tank-builder"
+                linkText="Check Compatibility"
+              />
+              <FeatureCard 
+                icon={<Layers className="w-6 h-6 text-rose-500" />}
+                title="Biotopes & Guides"
+                desc="Learn about natural habitats and replicate them with our detailed biotope guides and setups."
+                link="/biotopes"
+                linkText="Explore Biotopes"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay" />
+          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to start?</h2>
+            <p className="text-lg text-slate-300 mb-10">Join thousands of hobbyists using AquaGuide to build better tanks.</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link 
                 to="/species" 
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all shadow-sm hover:shadow-md"
+                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-indigo-500/25"
               >
-                Browse Species Database
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                Browse {allSpecies.length}+ Species
               </Link>
               <Link 
-                to="/tank-builder" 
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-stone-900 hover:bg-slate-50 dark:hover:bg-stone-800 text-slate-900 dark:text-white font-semibold rounded-lg transition-all border border-slate-200 dark:border-stone-800 shadow-sm"
+                to="/about" 
+                className="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold rounded-xl transition-all border border-slate-700"
               >
-                Tank Builder Tool
-                <ChevronRight className="w-5 h-5" />
+                Learn More
               </Link>
             </div>
-
-            {/* Stats Bar */}
-            <div className="grid grid-cols-3 gap-6 max-w-3xl bg-white dark:bg-stone-900 p-8 rounded-xl border border-slate-200 dark:border-stone-800 shadow-sm">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{allSpecies.length}+</div>
-                <div className="text-sm text-slate-600 dark:text-stone-400 font-medium">Species Documented</div>
-              </div>
-              <div className="text-center border-x border-slate-200 dark:border-stone-800">
-                <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">10+</div>
-                <div className="text-sm text-slate-600 dark:text-stone-400 font-medium">Filter Parameters</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">100%</div>
-                <div className="text-sm text-slate-600 dark:text-stone-400 font-medium">Research-Based</div>
-              </div>
-            </div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-24 px-6 bg-slate-50 dark:bg-stone-900">
-          <div className="max-w-7xl mx-auto">
-            {/* Section Header */}
-            <div className="max-w-3xl mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                Comprehensive Tools for Informed Aquarium Management
-              </h2>
-              <p className="text-lg text-slate-600 dark:text-stone-400">
-                Built for hobbyists and professionals who value accuracy and detailed information.
-              </p>
-            </div>
-
-            {/* Feature Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <FeatureCard 
-                icon={<Fish className="w-6 h-6" />}
-                title="Detailed Species Profiles"
-                description="Complete care requirements, behavioral characteristics, breeding information, and compatibility data."
-                features={[
-                  'Water parameter ranges',
-                  'Dietary requirements',
-                  'Behavioral patterns',
-                  'Compatibility analysis'
-                ]}
-              />
-              <FeatureCard 
-                icon={<Droplets className="w-6 h-6" />}
-                title="Advanced Filtering"
-                description="Precision search by temperature, pH, tank size, biotope, care level, and temperament."
-                features={[
-                  'Temperature ranges',
-                  'pH tolerance levels',
-                  'Tank size requirements',
-                  'Geographic origin'
-                ]}
-              />
-              <FeatureCard 
-                icon={<Zap className="w-6 h-6" />}
-                title="Tank Planning Tool"
-                description="Visual planning with real-time compatibility checks and stocking calculations."
-                features={[
-                  'Live compatibility checks',
-                  'Stocking level warnings',
-                  'Territory calculations',
-                  'Water parameter matching'
-                ]}
-              />
-              <FeatureCard 
-                icon={<Shield className="w-6 h-6" />}
-                title="Scientific Accuracy"
-                description="All data is research-verified and regularly updated with current aquarium science."
-                features={[
-                  'Peer-reviewed sources',
-                  'Expert consultation',
-                  'Regular updates',
-                  'Fact-checked data'
-                ]}
-              />
-              <FeatureCard 
-                icon={<BookOpen className="w-6 h-6" />}
-                title="Disease Reference"
-                description="Comprehensive disease identification with symptoms, causes, and treatment protocols."
-                features={[
-                  'Symptom identification',
-                  'Treatment protocols',
-                  'Prevention guidelines',
-                  'Medication reference'
-                ]}
-              />
-              <FeatureCard 
-                icon={<Database className="w-6 h-6" />}
-                title="Regular Updates"
-                description="Continuously expanded with new species profiles and enhanced search capabilities."
-                features={[
-                  'New species additions',
-                  'Enhanced filtering',
-                  'Bug fixes',
-                  'Feature improvements'
-                ]}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Trust Section */}
-        <section className="py-24 px-6 bg-white dark:bg-stone-950">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                  Built on Scientific Research, Not Guesswork
-                </h2>
-                <p className="text-lg text-slate-600 dark:text-stone-400 mb-8">
-                  Every species profile is compiled from reputable sources including scientific literature, expert aquarists, and field research. We prioritize accuracy over quantity.
-                </p>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center mt-0.5">
-                      <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 dark:text-white mb-1">Verified Information</div>
-                      <div className="text-slate-600 dark:text-stone-400">Cross-referenced with multiple authoritative sources</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center mt-0.5">
-                      <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 dark:text-white mb-1">Expert Consultation</div>
-                      <div className="text-slate-600 dark:text-stone-400">Reviewed by experienced aquarium professionals</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center mt-0.5">
-                      <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 dark:text-white mb-1">Regular Updates</div>
-                      <div className="text-slate-600 dark:text-stone-400">Continuously refined with new research and findings</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-slate-50 dark:bg-stone-900 p-8 rounded-xl border border-slate-200 dark:border-stone-800">
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-indigo-600 flex items-center justify-center flex-shrink-0">
-                      <Fish className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 dark:text-white mb-1">Species Database</div>
-                      <div className="text-sm text-slate-600 dark:text-stone-400">Detailed profiles with full care requirements and compatibility data</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
-                      <Droplets className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 dark:text-white mb-1">Parameter Filtering</div>
-                      <div className="text-sm text-slate-600 dark:text-stone-400">Find species that match your exact water conditions</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-emerald-600 flex items-center justify-center flex-shrink-0">
-                      <Zap className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 dark:text-white mb-1">Tank Builder</div>
-                      <div className="text-sm text-slate-600 dark:text-stone-400">Plan your setup with live compatibility analysis</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-20 px-6 bg-slate-900 dark:bg-stone-950 border-t border-slate-800">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              Start Planning Your Aquarium Today
-            </h2>
-            <p className="text-lg text-slate-300 mb-10 max-w-2xl mx-auto">
-              Access our complete species database and advanced planning tools to build a thriving aquarium ecosystem.
-            </p>
-            <Link 
-              to="/species" 
-              className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl"
-            >
-              Browse Species Database
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </section>
       </div>
     </PageTransition>
   );
 };
 
-const FeatureCard = ({ icon, title, description, features }: { 
-  icon: React.ReactNode; 
-  title: string; 
-  description: string;
-  features: string[];
-}) => {
-  return (
-    <div className="bg-white dark:bg-stone-950 p-6 rounded-lg border border-slate-200 dark:border-stone-800 hover:border-slate-300 dark:hover:border-stone-700 transition-all">
-      <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-stone-900 flex items-center justify-center text-slate-900 dark:text-white mb-4">
-        {icon}
-      </div>
-      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-        {title}
-      </h3>
-      <p className="text-slate-600 dark:text-stone-400 mb-4 text-sm">
-        {description}
-      </p>
-      <ul className="space-y-2">
-        {features.map((feature, i) => (
-          <li key={i} className="flex items-center gap-2 text-sm text-slate-600 dark:text-stone-400">
-            <div className="w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 flex-shrink-0"></div>
-            {feature}
-          </li>
-        ))}
-      </ul>
+const FeatureCard = ({ icon, title, desc, link, linkText }: { icon: any, title: string, desc: string, link: string, linkText: string }) => (
+  <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 group">
+    <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+      {icon}
     </div>
-  );
-};
+    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{title}</h3>
+    <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">{desc}</p>
+    <Link to={link} className="inline-flex items-center text-sm font-bold text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+      {linkText} <ChevronRight className="w-4 h-4 ml-1" />
+    </Link>
+  </div>
+);
 
 export default HomePage;
