@@ -890,6 +890,7 @@ const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size
 };
 
 // ==================== HELPERS ====================
+// These are called with non-nullable data (after the null check)
 
 const getTankSetupRecommendations = (species: Species) => {
   const items = [];
@@ -1008,7 +1009,7 @@ const NotFound = () => (
   </div>
 );
 
-const capitalize = (s?: string) => s ? s[0].toUpperCase() + s.slice(1) : (s || '');
+const capitalize = (s?: string) => s ? s[0].toUpperCase() + s.slice(1) : '';
 
 const resolveHeaderImageUrl = (imageUrl?: string, slug?: string) => {
   if (imageUrl) {
