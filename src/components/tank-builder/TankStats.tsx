@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Layers, Thermometer, Droplets, Gauge, Fan, Lightbulb } from 'lucide-react';
+import { Layers, Thermometer, Droplets, Gauge, Fan, Lightbulb, ChefHat, Info } from 'lucide-react';
 import { TankItem, TankConfig } from '../../types/builder';
 import { Species } from '../../types/species';
 import { calculateTankStats } from '../../utils/tank-calculations';
@@ -63,11 +63,14 @@ export const TankStats = ({ items, tankConfig }: TankStatsProps) => {
             className={`h-full ${progressColor}`} 
           />
         </div>
-        <p className="text-xs text-slate-500 mt-2">
-          {stats.stockingPercentage < 50 ? 'Lightly stocked. Good for beginners.' : 
-           stats.stockingPercentage < 85 ? 'Moderately stocked. Regular maintenance needed.' : 
-           'Heavily stocked! High filtration required.'}
-        </p>
+        <div className="flex items-start gap-2 mt-2">
+          <Info className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-slate-500 leading-tight">
+             {stats.stockingPercentage < 50 ? 'Lightly stocked. Ideal for beginners and stable parameters.' : 
+              stats.stockingPercentage < 85 ? 'Optimally stocked. Requires regular maintenance schedule.' : 
+              'Heavily stocked! Only recommended for experienced keepers with over-filtration.'}
+          </p>
+        </div>
       </div>
 
       {/* Parameters */}
@@ -89,7 +92,7 @@ export const TankStats = ({ items, tankConfig }: TankStatsProps) => {
       )}
 
       {/* Hardware Recommendations */}
-      <div className="border-t border-slate-200 pt-4">
+      <div className="border-t border-slate-200 pt-4 mb-6">
         <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Recommended Hardware</h4>
         <div className="space-y-3">
           <HardwareItem 
@@ -112,6 +115,22 @@ export const TankStats = ({ items, tankConfig }: TankStatsProps) => {
           />
         </div>
       </div>
+
+      {/* Feeding Advice */}
+      {stats.feedingAdvice.length > 0 && (
+         <div className="border-t border-slate-200 pt-4">
+            <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+               <ChefHat className="w-4 h-4" /> Feeding Schedule
+            </h4>
+            <ul className="space-y-2">
+               {stats.feedingAdvice.map((advice, idx) => (
+                  <li key={idx} className="text-xs text-slate-600 bg-slate-50 px-2 py-1.5 rounded-md border-l-2 border-indigo-400">
+                     {advice}
+                  </li>
+               ))}
+            </ul>
+         </div>
+      )}
     </div>
   );
 };
