@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles, Home } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles, Home, Scale } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { useComparison } from '../../contexts/ComparisonContext';
 
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { comparedSpecies } = useComparison();
 
 
   const isActive = (path: string) => 
@@ -27,6 +29,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
   ];
 
   const isTankBuilderActive = isActive('/tank-builder');
+  const isCompareActive = isActive('/compare');
 
 
   return (
@@ -78,6 +81,28 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 )}
               </Link>
 
+              {/* COMPARISON TOOL - With Badge */}
+              <Link
+                to="/compare"
+                className={`
+                  relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300
+                  ${isCompareActive || comparedSpecies.length > 0
+                    ? 'bg-emerald-500 dark:bg-emerald-600 text-white shadow-md hover:shadow-lg hover:scale-105' 
+                    : 'bg-slate-100 dark:bg-stone-800 text-slate-700 dark:text-stone-300 hover:bg-slate-200 dark:hover:bg-stone-700'
+                  }
+                  ${comparedSpecies.length > 0 ? 'animate-pulse' : ''}
+                `}
+              >
+                <Scale className="w-4 h-4" />
+                <span>Compare</span>
+                
+                {comparedSpecies.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-[10px] font-black rounded-full flex items-center justify-center shadow-lg">
+                    {comparedSpecies.length}
+                  </span>
+                )}
+              </Link>
+
               <div className="h-6 w-px bg-theme-nav border-l border-theme opacity-50"></div>
 
               {/* Regular Nav Pills */}
@@ -118,6 +143,19 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
             {/* MOBILE TOGGLE */}
             <div className="flex items-center gap-2 md:hidden">
+              {/* Compare Button - Mobile Header */}
+              {comparedSpecies.length > 0 && (
+                <Link
+                  to="/compare"
+                  className="relative p-2 bg-emerald-500 dark:bg-emerald-600 rounded-lg text-white shadow-md"
+                >
+                  <Scale className="w-5 h-5" />
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
+                    {comparedSpecies.length}
+                  </span>
+                </Link>
+              )}
+              
               <ThemeToggle />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -152,6 +190,27 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 <span className="relative z-10">Tank Builder</span>
                 {!isTankBuilderActive && (
                   <Sparkles className="w-4 h-4 ml-auto relative z-10 animate-pulse" />
+                )}
+              </Link>
+
+              {/* Comparison Tool - Mobile */}
+              <Link
+                to="/compare"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`
+                  relative flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-3 transition-all
+                  ${isCompareActive || comparedSpecies.length > 0
+                    ? 'bg-emerald-500 dark:bg-emerald-600 text-white shadow-md'
+                    : 'bg-slate-100 dark:bg-stone-800 text-slate-700 dark:text-stone-300'
+                  }
+                `}
+              >
+                <Scale className="w-5 h-5" />
+                <span>Compare Species</span>
+                {comparedSpecies.length > 0 && (
+                  <span className="ml-auto px-2 py-0.5 bg-rose-500 text-white text-xs font-black rounded-full">
+                    {comparedSpecies.length}
+                  </span>
                 )}
               </Link>
 
