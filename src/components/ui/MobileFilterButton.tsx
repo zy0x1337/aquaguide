@@ -1,4 +1,4 @@
-import { SlidersHorizontal, Badge } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface Props {
