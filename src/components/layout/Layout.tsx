@@ -20,7 +20,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/species', label: 'Species', icon: Fish },
+    { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },

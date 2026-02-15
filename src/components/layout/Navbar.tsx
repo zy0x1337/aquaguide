@@ -14,7 +14,7 @@ export const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/species', label: 'Species', icon: Fish },
+    { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
