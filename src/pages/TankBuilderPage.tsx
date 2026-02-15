@@ -127,7 +127,6 @@ export const TankBuilderPage = () => {
 
   const filteredHardscape = HARDSCAPE_LIBRARY.filter(h => h.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  // New accurate scaling calculation
   const getItemStyle = (realSizeCM: number, item: TankItem) => {
     const tankL = tankConfig.length;
     let widthPercent = 0;
@@ -138,11 +137,9 @@ export const TankBuilderPage = () => {
         const isFloating = plant.specs.placement?.includes('floating') || plant.specs.type === 'float';
         
         if (isFloating) {
-             // Floating plants are wide (clusters)
-             widthPercent = (realSizeCM / tankL) * 100 * 2; // Make clusters visible
+             widthPercent = (realSizeCM / tankL) * 100 * 2;
              aspectRatio = '2/1'; 
         } else {
-             // Stem plants are tall
              const visualWidthCM = realSizeCM * 0.4; 
              widthPercent = (visualWidthCM / tankL) * 100;
              aspectRatio = '1/2.5'; 
@@ -151,25 +148,22 @@ export const TankBuilderPage = () => {
         widthPercent = (realSizeCM / tankL) * 100;
         aspectRatio = '1/1';
     } else {
-        // Fish
         widthPercent = (realSizeCM / tankL) * 100;
         const species = item.data as Species;
-        
-        // Map iconShape to approximate aspect ratio (Width / Height)
         switch(species.visuals.iconShape) {
-          case 'fusiform': aspectRatio = '3/1'; break;     // Torpedo shaped
-          case 'compressed': aspectRatio = '1/1.2'; break; // Tall/Thin (Angelfish)
-          case 'eel-like': aspectRatio = '8/1'; break;     // Long/Thin
-          case 'depressed': aspectRatio = '3/1'; break;    // Flat (Pleco side view)
-          case 'globiform': aspectRatio = '1.5/1'; break;  // Round (Puffer)
+          case 'fusiform': aspectRatio = '3/1'; break;
+          case 'compressed': aspectRatio = '1/1.2'; break;
+          case 'eel-like': aspectRatio = '8/1'; break;
+          case 'depressed': aspectRatio = '3/1'; break;
+          case 'globiform': aspectRatio = '1.5/1'; break;
           case 'shrimp': aspectRatio = '2/1'; break;
           case 'frog': aspectRatio = '1.2/1'; break;
-          default: aspectRatio = '2/1';                    // Generic fallback
+          default: aspectRatio = '2/1';
         }
     }
 
     return {
-        width: `${Math.max(2, widthPercent)}%`, // Min 2% visibility
+        width: `${Math.max(2, widthPercent)}%`,
         aspectRatio
     };
   };
@@ -178,16 +172,14 @@ export const TankBuilderPage = () => {
     let itemId: string;
     if ('id' in data) { itemId = data.id; } else { itemId = (data as HardscapeItem).name; }
     
-    // Determine default Y position based on type
     let defaultY = 50;
     if (type === 'plant') {
         const plant = data as Plant;
         const isFloating = plant.specs?.placement?.includes('floating') || plant.specs?.type === 'float';
-        defaultY = isFloating ? 5 : 82; // 5% (Top) for floating, 82% (Bottom) for planted
+        defaultY = isFloating ? 5 : 82;
     } else if (type === 'hardscape') {
         defaultY = 85;
     } else {
-        // Fish
         defaultY = Math.random() * 50 + 25;
     }
 
@@ -223,13 +215,13 @@ export const TankBuilderPage = () => {
   if (fishItems.length > 1) {
     const temps = fishItems.map(item => { const species = item.data as Species; return { min: species.environment.tempC.min, max: species.environment.tempC.max, name: species.taxonomy.commonName }; });
     const overallMin = Math.max(...temps.map(t => t.min)); const overallMax = Math.min(...temps.map(t => t.max));
-    if (overallMin > overallMax) { warnings.push(`🌡️ Temperature conflict: No overlap between species`); } else { const rangeWarning = `Recommended: ${overallMin}°C - ${overallMax}°C`; if (overallMax - overallMin < 2) { warnings.push(`⚠️ ${rangeWarning} (narrow range!)`); } }
+    if (overallMin > overallMax) { warnings.push('🌡️ Temperature conflict: No overlap between species'); } else { const rangeWarning = `Recommended: ${overallMin}°C - ${overallMax}°C`; if (overallMax - overallMin < 2) { warnings.push(`⚠️ ${rangeWarning} (narrow range!)`); } }
   }
 
   if (fishItems.length > 1) {
     const phs = fishItems.map(item => { const species = item.data as Species; return { min: species.environment.ph.min, max: species.environment.ph.max, name: species.taxonomy.commonName }; });
     const overallMin = Math.max(...phs.map(p => p.min)); const overallMax = Math.min(...phs.map(p => p.max));
-    if (overallMin > overallMax) { warnings.push(`💧 pH conflict: No compatible range`); }
+    if (overallMin > overallMax) { warnings.push('💧 pH conflict: No compatible range'); }
   }
 
   fishItems.forEach(item => {
@@ -249,7 +241,7 @@ export const TankBuilderPage = () => {
   if (aggressiveFish.length > 0 && fishItems.length > aggressiveFish.length) { const uniqueAggressive = new Set(aggressiveFish.map(item => (item.data as Species).taxonomy.commonName)); uniqueAggressive.forEach(name => { warnings.push(`⚠️ ${name} may be aggressive - monitor closely`); }); }
 
   const bottomDwellers = fishItems.filter(item => { const species = item.data as Species; return species.behavior.tags.includes('bottom_dweller'); });
-  if (bottomDwellers.length > 1) { const uniqueBottom = new Set(bottomDwellers.map(item => (item.data as Species).taxonomy.commonName)); if (uniqueBottom.size > 1) { warnings.push(`🏠 Multiple bottom dwellers - ensure enough hiding spots`); } }
+  if (bottomDwellers.length > 1) { const uniqueBottom = new Set(bottomDwellers.map(item => (item.data as Species).taxonomy.commonName)); if (uniqueBottom.size > 1) { warnings.push('🏠 Multiple bottom dwellers - ensure enough hiding spots'); } }
 
   const plantDensityPerLiter = totalPlants / tankConfig.volume;
   if (totalPlants > 0 && plantDensityPerLiter < 0.1) { warnings.push(`🌿 Consider adding more plants (${totalPlants} plants for ${tankConfig.volume}L)`); }
@@ -270,16 +262,12 @@ export const TankBuilderPage = () => {
       <div className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white pt-24 pb-12 px-6"><div className="max-w-7xl mx-auto"><h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">🐠 Tank Builder</h1><p className="text-lg text-blue-100 max-w-2xl">Design your dream aquarium with realistic dimensions and stocking calculations.</p></div></div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-8"><div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          
           <div className="xl:col-span-1 space-y-6">
             <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6"><h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center"><Ruler className="w-5 h-5 mr-2 text-indigo-600" /> Tank Dimensions</h3><div className="space-y-3 max-h-80 overflow-y-auto">{PRESET_TANKS.slice(0, -1).map((preset, idx) => (<button key={idx} onClick={() => setTankConfig(preset)} className={`w-full text-left p-4 rounded-xl border-2 transition-all ${tankConfig.volume === preset.volume && tankConfig.length === preset.length ? 'border-indigo-500 bg-gradient-to-br from-indigo-50 to-blue-50 shadow-md' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}`}><div className="flex items-center justify-between"><div><div className="font-bold text-slate-900">{preset.name}</div><div className="text-xs text-slate-500">{preset.length}×{preset.width}×{preset.height}cm</div></div>{tankConfig.volume === preset.volume && tankConfig.length === preset.length && (<div className="w-3 h-3 bg-indigo-500 rounded-full" />)}</div></button>))}
-                
                 <div className="border-t-2 border-slate-200 pt-3 mt-3"><div className="font-bold text-slate-900 mb-3 flex items-center justify-between"><span>Custom Dimensions</span><button onClick={updateCustomTank} className="text-xs px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">Apply</button></div><div className="space-y-2"><div><label className="text-xs text-slate-600">Length (cm)</label><input type="number" value={customDimensions.length} onChange={(e) => setCustomDimensions({ ...customDimensions, length: Number(e.target.value) })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" min="20" max="300" /></div><div><label className="text-xs text-slate-600">Width (cm)</label><input type="number" value={customDimensions.width} onChange={(e) => setCustomDimensions({ ...customDimensions, width: Number(e.target.value) })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" min="20" max="100" /></div><div><label className="text-xs text-slate-600">Height (cm)</label><input type="number" value={customDimensions.height} onChange={(e) => setCustomDimensions({ ...customDimensions, height: Number(e.target.value) })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" min="20" max="100" /></div></div></div></div></div>
 
             <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6"><h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center"><Layers className="w-5 h-5 mr-2 text-emerald-600" /> Tank Stats</h3><div className="space-y-4"><StatRow label="💧 Volume" value={`${tankConfig.volume}L`} /><StatRow label="📐 Dimensions" value={`${tankConfig.length}×${tankConfig.width}×${tankConfig.height}cm`} /><StatRow label="🐟 Total Fish" value={totalFish.toString()} /><StatRow label="🌿 Plants" value={totalPlants.toString()} /><StatRow label="🪨 Hardscape" value={totalHardscape.toString()} />
-                
                 <div className="pt-2"><div className="flex items-center justify-between mb-2"><span className="text-sm text-slate-600">⚖️ Stocking Level</span><span className={`font-bold text-sm ${stockingPercent > 100 ? 'text-rose-600' : stockingPercent > 80 ? 'text-amber-600' : 'text-emerald-600'}`}>{stockingPercent}%</span></div><div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(100, stockingPercent)}%` }} className={`h-full ${stockingPercent > 100 ? 'bg-rose-500' : stockingPercent > 80 ? 'bg-amber-500' : 'bg-emerald-500'}`} /></div><div className="text-xs text-slate-500 mt-1">{totalBioload.toFixed(0)}cm / {stockingByInchRule.toFixed(0)}cm recommended</div></div>
-
                 {tempRange && (<div className="flex items-center justify-between pt-2 border-t border-slate-200"><div className="flex items-center gap-2 text-sm text-slate-600"><Thermometer className="w-4 h-4" /><span>Temperature</span></div><span className="font-bold text-sm text-slate-900">{tempRange}</span></div>)}
                 {phRange && (<div className="flex items-center justify-between"><div className="flex items-center gap-2 text-sm text-slate-600"><Droplets className="w-4 h-4" /><span>pH Range</span></div><span className="font-bold text-sm text-slate-900">{phRange}</span></div>)}</div></div>
 
@@ -289,14 +277,11 @@ export const TankBuilderPage = () => {
           </div>
 
           <div className="xl:col-span-2 space-y-6"><div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"><div className="bg-gradient-to-br from-slate-50 to-slate-100 border-b border-slate-200 px-6 py-4 flex items-center justify-between"><div><h3 className="text-lg font-bold text-slate-900">3D Preview</h3><p className="text-xs text-slate-500 mt-1">Aspect Ratio: {tankConfig.aspectRatio?.toFixed(2) || 'N/A'} • Surface: {surfaceAreaCM2}cm²</p></div><div className="flex items-center gap-4"><label className="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" checked={showGrid} onChange={(e) => setShowGrid(e.target.checked)} className="rounded" /><Grid3x3 className="w-3 h-3" /></label><label className="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" checked={showCompatibility} onChange={(e) => setShowCompatibility(e.target.checked)} className="rounded" /><span className="text-slate-600 font-medium">Warnings</span></label></div></div>
-              
               <Tank3DView items={items} tankConfig={tankConfig} showGrid={showGrid} getItemStyle={getItemStyle} onRemoveItem={removeItem} onToggleLock={toggleLock} onUpdatePosition={updatePosition} onUpdateCount={updateCount} draggedItem={draggedItem} setDraggedItem={setDraggedItem} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl border border-slate-200"><div className="flex border-b border-slate-200"><TabButton active={selectedTab === 'fish'} onClick={() => setSelectedTab('fish')} icon={<FishIcon className="w-4 h-4" />} label="Fish" count={allSpecies.length} color=\"indigo\" /><TabButton active={selectedTab === 'plant'} onClick={() => setSelectedTab('plant')} icon={<Leaf className="w-4 h-4" />} label="Plants" count={allPlants.length} color="emerald" /><TabButton active={selectedTab === 'hardscape'} onClick={() => setSelectedTab('hardscape')} icon={<Mountain className="w-4 h-4" />} label="Hardscape" count={HARDSCAPE_LIBRARY.length} color="amber" /></div>
-
+            <div className="bg-white rounded-2xl shadow-xl border border-slate-200"><div className="flex border-b border-slate-200"><TabButton active={selectedTab === 'fish'} onClick={() => setSelectedTab('fish')} icon={<FishIcon className="w-4 h-4" />} label="Fish" count={allSpecies.length} color="indigo" /><TabButton active={selectedTab === 'plant'} onClick={() => setSelectedTab('plant')} icon={<Leaf className="w-4 h-4" />} label="Plants" count={allPlants.length} color="emerald" /><TabButton active={selectedTab === 'hardscape'} onClick={() => setSelectedTab('hardscape')} icon={<Mountain className="w-4 h-4" />} label="Hardscape" count={HARDSCAPE_LIBRARY.length} color="amber" /></div>
               <div className="p-4 border-b border-slate-200"><input type="text" placeholder={`Search ${selectedTab}...`} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" /></div>
-
               <div className="p-4 max-h-[400px] overflow-y-auto">{selectedTab === 'fish' && (<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">{filteredSpecies.map((species: Species) => (<ItemCard key={species.id} name={species.taxonomy.commonName} image={species.imageUrl} subtitle={`${species.visuals.adultSizeCM}cm • Min: ${species.environment.minTankSizeLiters}L`} onClick={() => addItem(species, 'fish')} warning={species.environment.minTankSizeLiters > tankConfig.volume} />))}</div>)}
                 {selectedTab === 'plant' && (<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">{filteredPlants.map((plant: Plant) => (<ItemCard key={plant.id} name={plant.taxonomy.commonName} image={plant.imageUrl} subtitle={`${plant.specs.heightCM.max}cm • ${plant.specs.growthRate}`} onClick={() => addItem(plant, 'plant')} />))}</div>)}
                 {selectedTab === 'hardscape' && (<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">{filteredHardscape.map((item: HardscapeItem) => (<HardscapeCard key={item.id} item={item} onClick={() => addItem(item, 'hardscape')} />))}</div>)}
@@ -319,18 +304,12 @@ const getSwimZone = (item: TankItem): 'surface' | 'mid' | 'bottom' | null => { i
 
 const Tank3DView = ({ items, tankConfig, showGrid, getItemStyle, onRemoveItem, onToggleLock, onUpdatePosition, onUpdateCount, draggedItem, setDraggedItem, selectedItem, setSelectedItem }: { items: TankItem[]; tankConfig: TankConfig; showGrid: boolean; getItemStyle: (size: number, item: TankItem) => { width: string; aspectRatio: string; }; onRemoveItem: (id: string) => void; onToggleLock: (id: string) => void; onUpdatePosition: (id: string, x: number, y: number) => void; onUpdateCount: (id: string, delta: number) => void; draggedItem: string | null; setDraggedItem: (id: string | null) => void; selectedItem: string | null; setSelectedItem: (id: string | null) => void; }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const handleMouseDown = (id: string, item: TankItem) => { if (!item.locked) { setDraggedItem(id); setSelectedItem(id); } };
   const handleMouseMove = (e: React.MouseEvent) => { if (!draggedItem || !containerRef.current) return; const rect = containerRef.current.getBoundingClientRect(); const x = ((e.clientX - rect.left) / rect.width) * 100; const y = ((e.clientY - rect.top) / rect.height) * 100; const clampedX = Math.max(5, Math.min(95, x)); const clampedY = Math.max(5, Math.min(95, y)); onUpdatePosition(draggedItem, clampedX, clampedY); };
   const handleMouseUp = () => { setDraggedItem(null); };
   const containerAspectRatio = Math.max(1.5, Math.min(3.5, tankConfig.aspectRatio || (tankConfig.length / tankConfig.height) || 2.0));
 
-  return (<div ref={containerRef} className="relative bg-gradient-to-b from-cyan-50 via-blue-100 to-blue-300 overflow-hidden cursor-crosshair" style={{ aspectRatio: `${containerAspectRatio} / 1` }} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onClick={() => setSelectedItem(null)}><div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-pulse" />{showGrid && (<div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '10% 10%' }} />)}<div className="absolute inset-0 pointer-events-none"><div className="absolute top-0 left-0 right-0 h-[20%] border-b border-dashed border-blue-400/30" /><div className="absolute bottom-[20%] left-0 right-0 h-[60%] border-b border-dashed border-blue-400/30" /></div><div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-b from-amber-700 to-amber-900 opacity-90" /><AnimatePresence>{items.map(item => { const realSize = getRealSize(item); const style = getItemStyle(realSize, item); const zone = getSwimZone(item); const isSelected = selectedItem === item.id; const rotation = item.visuals?.rotation || 0; const flipX = item.visuals?.flipX || false; const swayDelay = item.visuals?.swayDelay || 0; const floatSpeed = item.visuals?.floatSpeed || 4; const isFar = item.position.z < 40; const depthFilter = isFar ? 'brightness(0.85) contrast(0.9) blur(0.5px)' : 'none'; 
-  
-  // Pivot scaling around z=50 (middle of tank)
-  const zScale = 1 + (item.position.z - 50) / 200;
-
-  return (<motion.div key={item.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: isSelected ? zScale * 1.1 : zScale }} exit={{ opacity: 0, scale: 0 }} whileHover={{ scale: zScale * 1.05 }} className={`absolute group ${item.locked ? 'cursor-not-allowed' : 'cursor-move'}`} style={{ left: `${item.position.x}%`, top: `${item.position.y}%`, transform: `translate(-50%, -50%)`, zIndex: Math.round(item.position.z) + (isSelected ? 100 : 0) }} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(item.id, item); }}><div className="relative">{isSelected && (<motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="absolute inset-0 -m-2 border-4 border-indigo-400 rounded-full" style={{ zIndex: 50 }} />)}<div style={{ filter: depthFilter, transition: 'filter 0.3s ease' }}>{item.type === 'fish' ? (<motion.div animate={{ y: [-3, 3, -3] }} transition={{ duration: floatSpeed, repeat: Infinity, ease: "easeInOut", delay: swayDelay }} className="relative"><div className="rounded-full overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white transition-transform duration-500" style={{ width: style.width, aspectRatio: style.aspectRatio, transform: flipX ? 'scaleX(-1)' : 'none' }}>{(item.data as Species).imageUrl ? (<img src={(item.data as Species).imageUrl} alt={(item.data as Species).taxonomy.commonName} className="w-full h-full object-contain" draggable={false} />) : (<div className={`w-full h-full flex items-center justify-center text-white ${zone === 'surface' ? 'bg-gradient-to-br from-blue-400 to-blue-600' : zone === 'bottom' ? 'bg-gradient-to-br from-amber-500 to-amber-700' : 'bg-gradient-to-br from-indigo-400 to-indigo-600'}`}><FishIcon className="w-1/2 h-1/2" /></div>)}</div>{item.count && item.count > 1 && (<div className="absolute -top-2 -right-2 w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-xl border-2 border-white z-20">{item.count}</div>)}</motion.div>) : item.type === 'plant' ? (<motion.div animate={{ rotate: [-2, 2, -2] }} transition={{ duration: floatSpeed * 1.5, repeat: Infinity, ease: "easeInOut", delay: swayDelay }} style={{ transformOrigin: 'bottom center' }}><div className="rounded-t-3xl overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white" style={{ width: style.width, aspectRatio: style.aspectRatio }}>{(item.data as Plant).imageUrl ? (<img src={(item.data as Plant).imageUrl} alt={(item.data as Plant).taxonomy.commonName} className="w-full h-full object-cover" draggable={false} />) : (<div className="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white"><Leaf className="w-1/2 h-1/2" /></div>)}</div></motion.div>) : (<div className="rounded-lg flex items-center justify-center shadow-xl text-4xl backdrop-blur-sm transition-transform" style={{ width: style.width, aspectRatio: style.aspectRatio, backgroundColor: (item.data as HardscapeItem).color, border: '3px solid rgba(255,255,255,0.4)', transform: `rotate(${rotation}deg)` }}>{(item.data as HardscapeItem).icon}</div>)}<div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/20 blur-md pointer-events-none" style={{ width: '100%', height: '20%', opacity: Math.max(0.1, 1 - (item.position.y / 100)) }} /></div><div className="absolute -top-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50"><div className="bg-slate-900 text-white text-xs px-4 py-3 rounded-xl whitespace-nowrap shadow-2xl border border-slate-700">{'taxonomy' in item.data && (<div><div className="font-bold text-sm">{item.data.taxonomy.commonName}</div><div className="text-slate-300 text-xs">{realSize}cm • Adult size</div>{item.count && item.count > 1 && (<div className="text-indigo-300 text-xs mt-1">Quantity: {item.count}</div>)}</div>)}{'name' in item.data && (<div><div className="font-bold">{item.data.name}</div><div className="text-slate-300">{realSize}cm</div></div>)}</div></div><div className="absolute -top-3 -right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">{item.type === 'fish' && (<div className="flex flex-col gap-1"><button onClick={(e) => { e.stopPropagation(); onUpdateCount(item.id, 1); }} className="w-7 h-7 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors"><ChevronUp className="w-4 h-4" /></button><button onClick={(e) => { e.stopPropagation(); onUpdateCount(item.id, -1); }} className="w-7 h-7 bg-rose-500 hover:bg-rose-600 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors"><ChevronDown className="w-4 h-4" /></button></div>)}<div className="flex flex-col gap-1"><button onClick={(e) => { e.stopPropagation(); onToggleLock(item.id); }} className="w-7 h-7 bg-slate-700 hover:bg-slate-800 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors">{item.locked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3" />}</button><button onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }} className="w-7 h-7 bg-rose-500 hover:bg-rose-600 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors"><Trash2 className="w-3 h-3" /></button></div></div>{item.locked && (<div className="absolute -bottom-1 -right-1 w-5 h-5 bg-slate-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white z-40"><Lock className="w-2.5 h-2.5 text-white" /></div>)}</div></motion.div>); })}</AnimatePresence>{items.length === 0 && (<motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="absolute inset-0 flex items-center justify-center pointer-events-none"><div className="text-center text-slate-600 bg-white/90 backdrop-blur-sm px-10 py-8 rounded-2xl shadow-2xl border-2 border-slate-200"><Info className="w-14 h-14 mx-auto mb-4 text-indigo-500" /><p className="font-bold text-xl mb-2">Empty Tank</p><p className="text-sm text-slate-500">Add fish, plants, and hardscape from below</p><p className="text-xs text-slate-400 mt-2">💡 Drag items to position them</p></div></motion.div>)}</div>);
+  return (<div ref={containerRef} className="relative bg-gradient-to-b from-cyan-50 via-blue-100 to-blue-300 overflow-hidden cursor-crosshair" style={{ aspectRatio: `${containerAspectRatio} / 1` }} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onClick={() => setSelectedItem(null)}><div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-pulse" />{showGrid && (<div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '10% 10%' }} />)}<div className="absolute inset-0 pointer-events-none"><div className="absolute top-0 left-0 right-0 h-[20%] border-b border-dashed border-blue-400/30" /><div className="absolute bottom-[20%] left-0 right-0 h-[60%] border-b border-dashed border-blue-400/30" /></div><div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-b from-amber-700 to-amber-900 opacity-90" /><AnimatePresence>{items.map(item => { const realSize = getRealSize(item); const style = getItemStyle(realSize, item); const zone = getSwimZone(item); const isSelected = selectedItem === item.id; const rotation = item.visuals?.rotation || 0; const flipX = item.visuals?.flipX || false; const swayDelay = item.visuals?.swayDelay || 0; const floatSpeed = item.visuals?.floatSpeed || 4; const isFar = item.position.z < 40; const depthFilter = isFar ? 'brightness(0.85) contrast(0.9) blur(0.5px)' : 'none'; const zScale = 1 + (item.position.z - 50) / 200; return (<motion.div key={item.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: isSelected ? zScale * 1.1 : zScale }} exit={{ opacity: 0, scale: 0 }} whileHover={{ scale: zScale * 1.05 }} className={`absolute group ${item.locked ? 'cursor-not-allowed' : 'cursor-move'}`} style={{ left: `${item.position.x}%`, top: `${item.position.y}%`, transform: 'translate(-50%, -50%)', zIndex: Math.round(item.position.z) + (isSelected ? 100 : 0) }} onMouseDown={(e) => { e.stopPropagation(); handleMouseDown(item.id, item); }}><div className="relative">{isSelected && (<motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="absolute inset-0 -m-2 border-4 border-indigo-400 rounded-full" style={{ zIndex: 50 }} />)}<div style={{ filter: depthFilter, transition: 'filter 0.3s ease' }}>{item.type === 'fish' ? (<motion.div animate={{ y: [-3, 3, -3] }} transition={{ duration: floatSpeed, repeat: Infinity, ease: 'easeInOut', delay: swayDelay }} className="relative"><div className="rounded-full overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white transition-transform duration-500" style={{ width: style.width, aspectRatio: style.aspectRatio, transform: flipX ? 'scaleX(-1)' : 'none' }}>{(item.data as Species).imageUrl ? (<img src={(item.data as Species).imageUrl} alt={(item.data as Species).taxonomy.commonName} className="w-full h-full object-contain" draggable={false} />) : (<div className={`w-full h-full flex items-center justify-center text-white ${zone === 'surface' ? 'bg-gradient-to-br from-blue-400 to-blue-600' : zone === 'bottom' ? 'bg-gradient-to-br from-amber-500 to-amber-700' : 'bg-gradient-to-br from-indigo-400 to-indigo-600'}`}><FishIcon className="w-1/2 h-1/2" /></div>)}</div>{item.count && item.count > 1 && (<div className="absolute -top-2 -right-2 w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-xl border-2 border-white z-20">{item.count}</div>)}</motion.div>) : item.type === 'plant' ? (<motion.div animate={{ rotate: [-2, 2, -2] }} transition={{ duration: floatSpeed * 1.5, repeat: Infinity, ease: 'easeInOut', delay: swayDelay }} style={{ transformOrigin: 'bottom center' }}><div className="rounded-t-3xl overflow-hidden shadow-2xl border-4 border-white/90 relative bg-white" style={{ width: style.width, aspectRatio: style.aspectRatio }}>{(item.data as Plant).imageUrl ? (<img src={(item.data as Plant).imageUrl} alt={(item.data as Plant).taxonomy.commonName} className="w-full h-full object-cover" draggable={false} />) : (<div className="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white"><Leaf className="w-1/2 h-1/2" /></div>)}</div></motion.div>) : (<div className=\"rounded-lg flex items-center justify-center shadow-xl text-4xl backdrop-blur-sm transition-transform\" style={{ width: style.width, aspectRatio: style.aspectRatio, backgroundColor: (item.data as HardscapeItem).color, border: '3px solid rgba(255,255,255,0.4)', transform: `rotate(${rotation}deg)` }}>{(item.data as HardscapeItem).icon}</div>)}<div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/20 blur-md pointer-events-none" style={{ width: '100%', height: '20%', opacity: Math.max(0.1, 1 - (item.position.y / 100)) }} /></div><div className="absolute -top-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50"><div className="bg-slate-900 text-white text-xs px-4 py-3 rounded-xl whitespace-nowrap shadow-2xl border border-slate-700">{'taxonomy' in item.data && (<div><div className="font-bold text-sm">{item.data.taxonomy.commonName}</div><div className="text-slate-300 text-xs">{realSize}cm • Adult size</div>{item.count && item.count > 1 && (<div className="text-indigo-300 text-xs mt-1">Quantity: {item.count}</div>)}</div>)}{'name' in item.data && (<div><div className="font-bold">{item.data.name}</div><div className="text-slate-300">{realSize}cm</div></div>)}</div></div><div className="absolute -top-3 -right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">{item.type === 'fish' && (<div className="flex flex-col gap-1"><button onClick={(e) => { e.stopPropagation(); onUpdateCount(item.id, 1); }} className="w-7 h-7 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors"><ChevronUp className="w-4 h-4" /></button><button onClick={(e) => { e.stopPropagation(); onUpdateCount(item.id, -1); }} className="w-7 h-7 bg-rose-500 hover:bg-rose-600 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors"><ChevronDown className="w-4 h-4" /></button></div>)}<div className="flex flex-col gap-1"><button onClick={(e) => { e.stopPropagation(); onToggleLock(item.id); }} className="w-7 h-7 bg-slate-700 hover:bg-slate-800 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors">{item.locked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3" />}</button><button onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }} className="w-7 h-7 bg-rose-500 hover:bg-rose-600 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors"><Trash2 className="w-3 h-3" /></button></div></div>{item.locked && (<div className="absolute -bottom-1 -right-1 w-5 h-5 bg-slate-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white z-40"><Lock className="w-2.5 h-2.5 text-white" /></div>)}</div></motion.div>); })}</AnimatePresence>{items.length === 0 && (<motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="absolute inset-0 flex items-center justify-center pointer-events-none"><div className="text-center text-slate-600 bg-white/90 backdrop-blur-sm px-10 py-8 rounded-2xl shadow-2xl border-2 border-slate-200"><Info className="w-14 h-14 mx-auto mb-4 text-indigo-500" /><p className="font-bold text-xl mb-2">Empty Tank</p><p className="text-sm text-slate-500">Add fish, plants, and hardscape from below</p><p className="text-xs text-slate-400 mt-2">💡 Drag items to position them</p></div></motion.div>)}</div>);
 };
 
 const ItemCard = ({ name, image, subtitle, onClick, warning }: { name: string; image?: string; subtitle?: string; onClick: () => void; warning?: boolean; }) => (<motion.button whileHover={{ scale: 1.05, y: -4 }} whileTap={{ scale: 0.95 }} onClick={onClick} className={`group relative bg-gradient-to-br from-slate-50 to-white hover:from-white hover:to-slate-50 border-2 rounded-xl overflow-hidden transition-all shadow-md hover:shadow-xl ${warning ? 'border-rose-300' : 'border-slate-200 hover:border-indigo-400'}`}>{warning && (<div className="absolute top-2 left-2 z-10 bg-rose-500 text-white px-2 py-1 rounded-md text-[10px] font-bold">Too big!</div>)}<div className="aspect-square bg-slate-200 overflow-hidden">{image ? (<img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />) : (<div className="w-full h-full flex items-center justify-center text-slate-400"><FishIcon className="w-10 h-10" /></div>)}</div><div className="p-3"><p className="text-xs font-bold text-slate-900 truncate">{name}</p>{subtitle && <p className="text-[10px] text-slate-500 font-medium">{subtitle}</p>}</div><div className="absolute top-2 right-2 w-7 h-7 bg-indigo-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg"><Plus className="w-4 h-4" /></div></motion.button>);
@@ -340,13 +319,48 @@ const HardscapeCard = ({ item, onClick }: { item: HardscapeItem; onClick: () => 
 const StatRow = ({ label, value, warning }: { label: string; value: string; warning?: boolean }) => (<div className="flex items-center justify-between"><span className="text-sm text-slate-600 font-medium">{label}</span><span className={`font-bold text-sm ${warning ? 'text-rose-600' : 'text-slate-900'}`}>{value}</span></div>);
 
 const generateShoppingList = (items: TankItem[], config: TankConfig): string => {
-  const fish = items.filter(i => i.type === 'fish'); const plants = items.filter(i => i.type === 'plant'); const hardscape = items.filter(i => i.type === 'hardscape');
-  let text = `🐠 AQUARIUM SETUP PLAN\n═══════════════════════════════════\n\n📐 TANK SPECIFICATIONS:\nVolume: ${config.volume}L\nDimensions: ${config.length}×${config.width}×${config.height}cm (L×W×H)\nSurface Area: ${(config.length * config.width).toFixed(0)}cm²\nAspect Ratio: ${config.aspectRatio ? config.aspectRatio.toFixed(2) : (config.length / config.height).toFixed(2)}\n\n`;
-  if (fish.length > 0) { text += `🐟 FISH STOCKING:\n`; const fishGroups = new Map<string, number>(); fish.forEach(item => { const species = item.data as Species; const current = fishGroups.get(species.taxonomy.commonName) || 0; fishGroups.set(species.taxonomy.commonName, current + (item.count || 1)); }); fishGroups.forEach((count, name) => { const species = fish.find(f => (f.data as Species).taxonomy.commonName === name)?.data as Species; text += `  ${count}x ${name}\n     Scientific: ${species.taxonomy.scientificName}\n     Adult Size: ${species.visuals.adultSizeCM}cm\n     Min Tank: ${species.environment.minTankSizeLiters}L\n`; if (species.behavior.minGroupSize > 1) { text += `     Group Size: ${species.behavior.minGroupSize}+ recommended\n`; } text += `\n`; }); }
-  if (plants.length > 0) { text += `🌿 PLANTS:\n`; plants.forEach(item => { const plant = item.data as Plant; text += `  • ${plant.taxonomy.commonName}\n     Scientific: ${plant.taxonomy.scientificName}\n     Height: ${plant.specs.heightCM.min}-${plant.specs.heightCM.max}cm\n     Growth: ${plant.specs.growthRate}\n\n`; }); }
-  if (hardscape.length > 0) { text += `🪨 HARDSCAPE:\n`; hardscape.forEach(item => { const hs = item.data as HardscapeItem; text += `  • ${hs.name} (~${hs.size}cm)\n`; }); text += `\\n`; }
-  const bioload = fish.reduce((acc, item) => { const species = item.data as Species; return acc + (species.visuals.adultSizeCM * (item.count || 1)); }, 0);
-  const surfaceAreaInches = (config.length * config.width) / 6.45; const stockingPercent = Math.round((bioload / surfaceAreaInches) * 100);
-  text += `📊 STOCKING ANALYSIS:\nTotal Bioload: ${bioload.toFixed(0)}cm of fish\nRecommended Max: ${surfaceAreaInches.toFixed(0)}cm (1 inch per sq inch rule)\nStocking Level: ${stockingPercent}%\n\n💡 EQUIPMENT RECOMMENDATIONS:\n  • Filter: ${(config.volume * 5).toFixed(0)} L/h minimum (5x turnover)\n  • Heater: ${Math.ceil(config.volume / 4) * 25}W\n  • Light: Based on plant requirements\n  • Substrate: ${Math.ceil(config.length * config.width / 100)}kg for 5cm depth\n\n⚠️ IMPORTANT NOTES:\n  • Always cycle your tank for 4-6 weeks before adding fish\n  • Research fish compatibility thoroughly\n  • Gradually add fish over several weeks\n  • Monitor water parameters regularly\n\nGenerated by AquaGuide Tank Builder\n${new Date().toLocaleDateString()}\n`;
+  const fish = items.filter(i => i.type === 'fish');
+  const plants = items.filter(i => i.type === 'plant');
+  const hardscape = items.filter(i => i.type === 'hardscape');
+  let text = '🐠 AQUARIUM SETUP PLAN\n═══════════════════════════════════\n\n📐 TANK SPECIFICATIONS:\nVolume: ' + config.volume + 'L\nDimensions: ' + config.length + '×' + config.width + '×' + config.height + 'cm (L×W×H)\nSurface Area: ' + (config.length * config.width).toFixed(0) + 'cm²\n\n';
+  
+  if (fish.length > 0) {
+    text += '🐟 FISH STOCKING:\n';
+    const fishGroups = new Map<string, number>();
+    fish.forEach(item => {
+      const species = item.data as Species;
+      const current = fishGroups.get(species.taxonomy.commonName) || 0;
+      fishGroups.set(species.taxonomy.commonName, current + (item.count || 1));
+    });
+    fishGroups.forEach((count, name) => {
+      const fItem = fish.find(f => (f.data as Species).taxonomy.commonName === name);
+      const s = fItem?.data as Species;
+      text += '  ' + count + 'x ' + name + '\n     Scientific: ' + s.taxonomy.scientificName + '\n     Adult Size: ' + s.visuals.adultSizeCM + 'cm\n\n';
+    });
+  }
+  
+  if (plants.length > 0) {
+    text += '🌿 PLANTS:\n';
+    plants.forEach(item => {
+      const p = item.data as Plant;
+      text += '  • ' + p.taxonomy.commonName + ' (' + p.taxonomy.scientificName + ')\n';
+    });
+    text += '\n';
+  }
+  
+  if (hardscape.length > 0) {
+    text += '🪨 HARDSCAPE:\n';
+    hardscape.forEach(item => {
+      const hs = item.data as HardscapeItem;
+      text += '  • ' + hs.name + ' (~' + hs.size + 'cm)\n';
+    });
+    text += '\n';
+  }
+  
+  const bioload = fish.reduce((acc, item) => acc + ((item.data as Species).visuals.adultSizeCM * (item.count || 1)), 0);
+  const surfaceAreaInches = (config.length * config.width) / 6.45;
+  const stockingPercent = Math.round((bioload / surfaceAreaInches) * 100);
+  
+  text += '📊 STOCKING ANALYSIS:\nTotal Bioload: ' + bioload.toFixed(0) + 'cm of fish\nStocking Level: ' + stockingPercent + '%\n\nGenerated by AquaGuide Tank Builder\n' + new Date().toLocaleDateString() + '\n';
   return text;
 };
