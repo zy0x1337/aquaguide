@@ -52,7 +52,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // FISH - Mid-water schoolers
       {
         type: 'fish' as const,
-        data: findSpecies('neon-tetra')!,
+        data: findSpecies('tetra-001')!, // neon-tetra
         position: { x: 45, y: 35, z: 50 },
         count: 10,
         locked: false,
@@ -60,7 +60,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'fish' as const,
-        data: findSpecies('harlequin-rasbora')!,
+        data: findSpecies('rasbora-001')!, // harlequin-rasbora
         position: { x: 55, y: 40, z: 60 },
         count: 8,
         locked: false,
@@ -70,7 +70,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Bottom dwellers
       {
         type: 'fish' as const,
-        data: findSpecies('bronze-cory')!,
+        data: findSpecies('cory-002')!, // bronze-cory
         position: { x: 30, y: 80, z: 30 },
         count: 6,
         locked: false,
@@ -81,14 +81,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // Background left
       {
         type: 'plant' as const,
-        data: findPlant('hornwort')!,
+        data: findPlant('plant-hornwort')!,
         position: { x: 15, y: 70, z: 20 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 2 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('hornwort')!,
+        data: findPlant('plant-hornwort')!,
         position: { x: 20, y: 68, z: 75 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.2, floatSpeed: 2.5 }
@@ -97,14 +97,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // Midground - Anubias on wood
       {
         type: 'plant' as const,
-        data: findPlant('anubias-barteri-nana')!,
+        data: findPlant('plant-003')!, // anubias-barteri-nana
         position: { x: 40, y: 82, z: 35 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.5, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('microsorum-pteropus')!,
+        data: findPlant('plant-javafarn')!, // microsorum-pteropus
         position: { x: 65, y: 80, z: 65 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.8, floatSpeed: 1.8 }
@@ -113,7 +113,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Floating
       {
         type: 'plant' as const,
-        data: findPlant('limnobium-laevigatum')!,
+        data: findPlant('plant-froschbiss')!, // limnobium-laevigatum
         position: { x: 70, y: 5, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 0.5 }
@@ -122,7 +122,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // HARDSCAPE
       {
         type: 'hardscape' as const,
-        data: findHardscape('wood-m')!,
+        data: findHardscape('wood-l')!,
         position: { x: 38, y: 83, z: 38 },
         locked: false,
         visuals: { rotation: 45, flipX: false, swayDelay: 0, floatSpeed: 0 }
@@ -164,7 +164,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // SHRIMP
       {
         type: 'fish' as const,
-        data: findSpecies('neocaridina-davidi-red-cherry')!,
+        data: findSpecies('shrimp-001')!, // neocaridina-davidi-red-cherry
         position: { x: 40, y: 75, z: 50 },
         count: 15,
         locked: false,
@@ -175,14 +175,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // Background
       {
         type: 'plant' as const,
-        data: findPlant('hornwort')!,
+        data: findPlant('plant-hornwort')!,
         position: { x: 20, y: 70, z: 25 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 2 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('bacopa-monnieri')!,
+        data: findPlant('plant-bacopa')!, // bacopa-monnieri
         position: { x: 75, y: 72, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 2.5 }
@@ -191,21 +191,21 @@ export const TANK_PRESETS: TankPreset[] = [
       // Midground - Anubias forest
       {
         type: 'plant' as const,
-        data: findPlant('anubias-nana-petite')!,
+        data: findPlant('plant-anubias-nana-petite')!, // anubias-nana-petite
         position: { x: 35, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('anubias-nana-petite')!,
+        data: findPlant('plant-anubias-nana-petite')!,
         position: { x: 55, y: 83, z: 60 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.3, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('microsorum-pteropus')!,
+        data: findPlant('plant-javafarn')!, // microsorum-pteropus
         position: { x: 65, y: 81, z: 35 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.6, floatSpeed: 1.8 }
@@ -214,7 +214,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Floating cover
       {
         type: 'plant' as const,
-        data: findPlant('limnobium-laevigatum')!,
+        data: findPlant('plant-froschbiss')!, // limnobium-laevigatum
         position: { x: 50, y: 5, z: 50 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 0.5 }
@@ -266,7 +266,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Top swimmers
       {
         type: 'fish' as const,
-        data: findSpecies('harlequin-rasbora')!,
+        data: findSpecies('rasbora-001')!, // harlequin-rasbora
         position: { x: 50, y: 25, z: 50 },
         count: 12,
         locked: false,
@@ -276,7 +276,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Mid-level
       {
         type: 'fish' as const,
-        data: findSpecies('ember-tetra')!,
+        data: findSpecies('tetra-002')!, // ember-tetra
         position: { x: 35, y: 40, z: 60 },
         count: 15,
         locked: false,
@@ -284,7 +284,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'fish' as const,
-        data: findSpecies('chili-rasbora')!,
+        data: findSpecies('rasbora-003')!, // chili-rasbora
         position: { x: 65, y: 35, z: 40 },
         count: 20,
         locked: false,
@@ -294,7 +294,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Bottom cleaners
       {
         type: 'fish' as const,
-        data: findSpecies('pygmy-cory')!,
+        data: findSpecies('cory-001')!, // pygmy-cory
         position: { x: 25, y: 80, z: 30 },
         count: 8,
         locked: false,
@@ -302,7 +302,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'fish' as const,
-        data: findSpecies('otocinclus-vittatus')!,
+        data: findSpecies('oto-002')!, // otocinclus-vittatus
         position: { x: 70, y: 78, z: 70 },
         count: 6,
         locked: false,
@@ -312,7 +312,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Centerpiece
       {
         type: 'fish' as const,
-        data: findSpecies('honey-gourami')!,
+        data: findSpecies('gourami-001')!, // honey-gourami
         position: { x: 50, y: 45, z: 45 },
         count: 2,
         locked: false,
@@ -323,21 +323,21 @@ export const TANK_PRESETS: TankPreset[] = [
       // Background tall stems - left side
       {
         type: 'plant' as const,
-        data: findPlant('bacopa-monnieri')!,
+        data: findPlant('plant-bacopa')!, // bacopa-monnieri
         position: { x: 15, y: 70, z: 25 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 3 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('bacopa-monnieri')!,
+        data: findPlant('plant-bacopa')!,
         position: { x: 20, y: 68, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 3 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('myriophyllum-mattogrossense')!,
+        data: findPlant('plant-myrio')!, // myriophyllum-mattogrossense
         position: { x: 25, y: 72, z: 50 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 3.5 }
@@ -346,14 +346,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // Background right
       {
         type: 'plant' as const,
-        data: findPlant('hornwort')!,
+        data: findPlant('plant-hornwort')!,
         position: { x: 80, y: 70, z: 30 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.2, floatSpeed: 2.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('hornwort')!,
+        data: findPlant('plant-hornwort')!,
         position: { x: 85, y: 68, z: 65 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.5, floatSpeed: 2.5 }
@@ -362,21 +362,21 @@ export const TANK_PRESETS: TankPreset[] = [
       // Midground - Anubias & Ferns
       {
         type: 'plant' as const,
-        data: findPlant('anubias-barteri-nana')!,
+        data: findPlant('plant-003')!, // anubias-barteri-nana
         position: { x: 40, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.8, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('microsorum-pteropus')!,
+        data: findPlant('plant-javafarn')!, // microsorum-pteropus
         position: { x: 60, y: 80, z: 55 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 2, floatSpeed: 1.8 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('anubias-nana-petite')!,
+        data: findPlant('plant-anubias-nana-petite')!,
         position: { x: 50, y: 83, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 2.2, floatSpeed: 1.5 }
@@ -385,7 +385,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Feature plant
       {
         type: 'plant' as const,
-        data: findPlant('aponogeton-madagascariensis')!,
+        data: findPlant('plant-aponogeton-madagascariensis')!, // aponogeton
         position: { x: 70, y: 78, z: 45 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 2.5, floatSpeed: 2 }
@@ -394,7 +394,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Floating
       {
         type: 'plant' as const,
-        data: findPlant('limnobium-laevigatum')!,
+        data: findPlant('plant-froschbiss')!,
         position: { x: 30, y: 5, z: 50 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 0.5 }
@@ -410,7 +410,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'hardscape' as const,
-        data: findHardscape('wood-m')!,
+        data: findHardscape('wood-l')!,
         position: { x: 65, y: 83, z: 60 },
         locked: false,
         visuals: { rotation: 120, flipX: false, swayDelay: 0, floatSpeed: 0 }
@@ -452,7 +452,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // FISH - Single Betta
       {
         type: 'fish' as const,
-        data: findSpecies('betta-splendens')!,
+        data: findSpecies('betta-001')!, // betta-splendens
         position: { x: 50, y: 40, z: 50 },
         count: 1,
         locked: false,
@@ -462,21 +462,21 @@ export const TANK_PRESETS: TankPreset[] = [
       // PLANTS - Soft, broad leaves
       {
         type: 'plant' as const,
-        data: findPlant('anubias-barteri-nana')!,
+        data: findPlant('plant-003')!, // anubias-barteri-nana
         position: { x: 30, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('anubias-barteri-nana')!,
+        data: findPlant('plant-003')!,
         position: { x: 70, y: 81, z: 60 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('microsorum-pteropus')!,
+        data: findPlant('plant-javafarn')!, // microsorum-pteropus
         position: { x: 50, y: 80, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 1.8 }
@@ -485,7 +485,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Background
       {
         type: 'plant' as const,
-        data: findPlant('hornwort')!,
+        data: findPlant('plant-hornwort')!,
         position: { x: 25, y: 70, z: 25 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.2, floatSpeed: 2 }
@@ -494,7 +494,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Floating (Betta love resting spots)
       {
         type: 'plant' as const,
-        data: findPlant('limnobium-laevigatum')!,
+        data: findPlant('plant-froschbiss')!,
         position: { x: 60, y: 5, z: 50 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 0.5 }
@@ -539,7 +539,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Using peaceful community fish as placeholder since we don't have goldfish
       {
         type: 'fish' as const,
-        data: findSpecies('white-cloud-minnow')!,
+        data: findSpecies('cyprinidae-002')!, // white-cloud-minnow
         position: { x: 40, y: 40, z: 50 },
         count: 10,
         locked: false,
@@ -547,7 +547,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'fish' as const,
-        data: findSpecies('danio-rerio')!,
+        data: findSpecies('danio-001')!, // danio-rerio
         position: { x: 60, y: 35, z: 60 },
         count: 8,
         locked: false,
@@ -557,14 +557,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // PLANTS - Minimal, hardy only
       {
         type: 'plant' as const,
-        data: findPlant('anubias-barteri-nana')!,
+        data: findPlant('plant-003')!, // anubias-barteri-nana
         position: { x: 20, y: 82, z: 30 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('anubias-barteri-nana')!,
+        data: findPlant('plant-003')!,
         position: { x: 80, y: 81, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 1.5 }
