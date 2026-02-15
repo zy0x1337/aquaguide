@@ -97,7 +97,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Midground - Anubias on wood
       {
         type: 'plant' as const,
-        data: findPlant('plant-003')!, // anubias-barteri-nana
+        data: findPlant('plant-anubias-barteri-nana')!, // anubias-barteri-nana
         position: { x: 40, y: 82, z: 35 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.5, floatSpeed: 1.5 }
@@ -182,7 +182,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-bacopa')!, // bacopa-monnieri
+        data: findPlant('plant-bacopa-monnieri')!, // bacopa-monnieri
         position: { x: 75, y: 72, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 2.5 }
@@ -323,21 +323,21 @@ export const TANK_PRESETS: TankPreset[] = [
       // Background tall stems - left side
       {
         type: 'plant' as const,
-        data: findPlant('plant-bacopa')!, // bacopa-monnieri
+        data: findPlant('plant-bacopa-monnieri')!, // bacopa-monnieri
         position: { x: 15, y: 70, z: 25 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 3 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-bacopa')!,
+        data: findPlant('plant-bacopa-monnieri')!,
         position: { x: 20, y: 68, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 3 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-myrio')!, // myriophyllum-mattogrossense
+        data: findPlant('plant-myrio-mattogrossense')!, // myriophyllum-mattogrossense
         position: { x: 25, y: 72, z: 50 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 3.5 }
@@ -362,7 +362,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Midground - Anubias & Ferns
       {
         type: 'plant' as const,
-        data: findPlant('plant-003')!, // anubias-barteri-nana
+        data: findPlant('plant-anubias-barteri-nana')!, // anubias-barteri-nana
         position: { x: 40, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.8, floatSpeed: 1.5 }
@@ -385,7 +385,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Feature plant
       {
         type: 'plant' as const,
-        data: findPlant('plant-aponogeton-madagascariensis')!, // aponogeton
+        data: findPlant('plant-madagaskar-lace')!, // aponogeton
         position: { x: 70, y: 78, z: 45 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 2.5, floatSpeed: 2 }
@@ -462,14 +462,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // PLANTS - Soft, broad leaves
       {
         type: 'plant' as const,
-        data: findPlant('plant-003')!, // anubias-barteri-nana
+        data: findPlant('plant-anubias-barteri-nana')!, // anubias-barteri-nana
         position: { x: 30, y: 82, z: 40 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-003')!,
+        data: findPlant('plant-anubias-barteri-nana')!,
         position: { x: 70, y: 81, z: 60 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 1.5 }
@@ -557,14 +557,14 @@ export const TANK_PRESETS: TankPreset[] = [
       // PLANTS - Minimal, hardy only
       {
         type: 'plant' as const,
-        data: findPlant('plant-003')!, // anubias-barteri-nana
+        data: findPlant('plant-anubias-barteri-nana')!, // anubias-barteri-nana
         position: { x: 20, y: 82, z: 30 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.5, floatSpeed: 1.5 }
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-003')!,
+        data: findPlant('plant-anubias-barteri-nana')!,
         position: { x: 80, y: 81, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 0.8, floatSpeed: 1.5 }
