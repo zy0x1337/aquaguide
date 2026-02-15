@@ -1,6 +1,7 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
 import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Filter, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Fuse from 'fuse.js';
 import { allSpecies } from '../data/species';
 import { searchBiotopes } from '../data/biotopes';
 import { SEOHead } from '../components/seo/SEOHead';
@@ -13,14 +14,14 @@ import type { Difficulty, Species, Region } from '../types/species';
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
 
 interface Filters {
-  // Basic Filters (always visible in sidebar)
+  // Basic Filters
   level: Difficulty | null;
   region: Region | null;
   tankSize: number | null;
   biotope: string;
   type: 'fish' | 'invertebrate' | null;
 
-  // Advanced Filters (in collapsible panel)
+  // Advanced Filters
   tempMin: number;
   tempMax: number;
   phMin: number;
@@ -51,6 +52,22 @@ const SpeciesIndexPage = () => {
     temperament: 'all'
   });
 
+  // Fuse.js configuration for fuzzy search
+  const fuse = useMemo(() => {
+    return new Fuse(allSpecies, {
+      keys: [
+        { name: 'taxonomy.commonName', weight: 2 },
+        { name: 'taxonomy.scientificName', weight: 1.5 },
+        { name: 'behavior.description', weight: 0.5 },
+        { name: 'behavior.tags', weight: 1 },
+        { name: 'taxonomy.origin', weight: 0.3 }
+      ],
+      threshold: 0.3, // 0 = exact match, 1 = match anything
+      ignoreLocation: true,
+      useExtendedSearch: true
+    });
+  }, []);
+
   const applyFilters = (species: Species): boolean => {
     // Basic Filters
     if (filters.level && species.care.difficulty !== filters.level) return false;
@@ -71,7 +88,7 @@ const SpeciesIndexPage = () => {
       if (filters.type === 'fish' && isShrimp) return false;
     }
 
-    // Advanced Filters (only when panel is open)
+    // Advanced Filters
     if (showAdvancedFilters) {
       if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) return false;
       if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) return false;
@@ -103,13 +120,18 @@ const SpeciesIndexPage = () => {
     return count;
   }, [filters, showAdvancedFilters]);
 
+  // Enhanced search with Fuse.js
   const filteredSpecies = useMemo(() => {
-    return allSpecies.filter((s: Species) => {
-      const matchesSearch = s.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            s.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesSearch && applyFilters(s);
-    });
-  }, [searchTerm, filters, showAdvancedFilters]);
+    let results: Species[] = allSpecies;
+
+    // Apply fuzzy search if search term exists
+    if (searchTerm.trim()) {
+      results = fuse.search(searchTerm).map(r => r.item);
+    }
+
+    // Apply filters to search results
+    return results.filter(applyFilters);
+  }, [searchTerm, filters, showAdvancedFilters, fuse]);
 
   const resetFilters = () => {
     setFilters({
@@ -162,7 +184,7 @@ const SpeciesIndexPage = () => {
       <div className="min-h-screen bg-slate-50 dark:bg-stone-950 pb-20 transition-colors duration-300">
         <SEOHead 
           title="Species Database - AquaGuide" 
-          description="Browse our complete collection of aquarium fish and invertebrates."
+          description="Browse our complete collection of aquarium fish and invertebrates. Fuzzy search with typo tolerance."
         />
 
         {/* Centered Header */}
@@ -175,7 +197,7 @@ const SpeciesIndexPage = () => {
               Explore our complete database of {allSpecies.length} documented species.
             </p>
 
-            {/* Centered Search Bar */}
+            {/* Enhanced Search Bar with Fuzzy Search */}
             <div className="max-w-2xl mx-auto">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
@@ -185,13 +207,27 @@ const SpeciesIndexPage = () => {
                   </div>
                   <input 
                     type="text" 
-                    placeholder="Search for fish, shrimp, or snails..." 
+                    placeholder="Search species... (typo-tolerant!)" 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full p-3 text-slate-900 dark:text-white placeholder:text-slate-400 bg-transparent border-none focus:ring-0 outline-none"
                   />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="mr-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                      aria-label="Clear search"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  )}
                 </div>
               </div>
+              {searchTerm && (
+                <p className="text-xs text-slate-500 dark:text-stone-400 mt-2 italic">
+                  💡 Fuzzy search active - finds results even with typos
+                </p>
+              )}
             </div>
           </div>
         </div>
