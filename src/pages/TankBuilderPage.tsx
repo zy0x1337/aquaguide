@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Ruler, Download, Share2, Check, Settings, Lightbulb, TrendingUp } from 'lucide-react';
+import { Download, Share2, Check, Settings, Lightbulb, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankItemCard } from '../components/tank-builder/TankItemCard';
@@ -237,18 +237,18 @@ export const TankBuilderPage = () => {
                </div>
 
                {/* Parameters */}
-               {fishItems.length > 0 && (
+               {fishItems.length > 0 && stats.tempRange && stats.phRange && (
                  <>
                    <div className="flex justify-between items-center py-2 border-t border-slate-100 dark:border-stone-800">
                      <span className="text-xs text-slate-600 dark:text-slate-400">Temperature Range</span>
                      <span className="text-xs font-mono font-bold text-slate-900 dark:text-white">
-                       {stats.tempRange?.min}-{stats.tempRange?.max}°C
+                       {stats.tempRange.min}-{stats.tempRange.max}°C
                      </span>
                    </div>
                    <div className="flex justify-between items-center py-2 border-t border-slate-100 dark:border-stone-800">
                      <span className="text-xs text-slate-600 dark:text-slate-400">pH Range</span>
                      <span className="text-xs font-mono font-bold text-slate-900 dark:text-white">
-                       {stats.phRange?.min}-{stats.phRange?.max}
+                       {stats.phRange.min}-{stats.phRange.max}
                      </span>
                    </div>
                  </>
