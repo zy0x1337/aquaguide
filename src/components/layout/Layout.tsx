@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 
@@ -21,10 +21,11 @@ export const Layout: React.FC<Props> = ({ children }) => {
   const navItems = [
     { path: '/', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
-    { path: '/tank-builder', label: 'Tank Builder', icon: BoxSelect },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
   ];
+
+  const isTankBuilderActive = isActive('/tank-builder');
 
 
   return (
@@ -53,9 +54,34 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
             {/* DESKTOP NAV */}
             <div className="hidden md:flex items-center gap-4">
-              {/* Pill Container nutzt Variable --nav-pill-bg */}
+              
+              {/* TANK BUILDER - PROMINENT BUTTON */}
+              <Link
+                to="/tank-builder"
+                className={`
+                  relative flex items-center gap-2 px-5 py-2 rounded-xl font-bold text-sm transition-all duration-300 overflow-hidden group
+                  ${isTankBuilderActive 
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30' 
+                    : 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md shadow-indigo-400/20 hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-105'
+                  }
+                `}
+              >
+                {/* Animated background shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                
+                <BoxSelect className="w-4 h-4 relative z-10" />
+                <span className="relative z-10">Tank Builder</span>
+                
+                {!isTankBuilderActive && (
+                  <Sparkles className="w-3.5 h-3.5 relative z-10 animate-pulse" />
+                )}
+              </Link>
+
+              <div className="h-6 w-px bg-theme-nav border-l border-theme opacity-50"></div>
+
+              {/* Regular Nav Pills */}
               <div 
-                className="flex items-center gap-1 p-1 rounded-xl border border-theme mr-4"
+                className="flex items-center gap-1 p-1 rounded-xl border border-theme"
                 style={{ backgroundColor: 'var(--nav-pill-bg)' }} 
               >
                 {navItems.map(item => {
@@ -65,7 +91,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
                     <Link
                       key={item.path}
                       to={item.path}
-                      /* Hier nutzen wir die CSS-Klassen aus index.css */
                       className={`
                         flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm transition-all duration-200
                         ${active ? 'nav-item-active' : 'nav-item-inactive font-bold'}
@@ -110,6 +135,27 @@ export const Layout: React.FC<Props> = ({ children }) => {
           {/* MOBILE MENU */}
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-theme animate-fade-in bg-theme-nav">
+              {/* Tank Builder - Prominent on Mobile */}
+              <Link
+                to="/tank-builder"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`
+                  flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-3 transition-all relative overflow-hidden group
+                  ${isTankBuilderActive
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
+                    : 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md hover:shadow-lg'
+                  }
+                `}
+              >
+                <BoxSelect className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Tank Builder</span>
+                {!isTankBuilderActive && (
+                  <Sparkles className="w-4 h-4 ml-auto relative z-10 animate-pulse" />
+                )}
+              </Link>
+
+              <div className="h-px bg-theme my-2"></div>
+
               {navItems.map(item => {
                 const Icon = item.icon;
                 const active = isActive(item.path);
