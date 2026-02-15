@@ -2,12 +2,13 @@ import { TankItem, TankConfig } from '../types/builder';
 import { Species } from '../types/species';
 
 export interface TankStats {
-  bioloadScore: number; // Raw abstract score
+  bioloadScore: number;
   stockingPercentage: number;
   filterRate: number; // L/h
-  heaterWattage: number; // Watts
-  lightingLumens: number; // Total Lumens
+  heaterWattage: number;
+  lightingLumens: number;
   warnings: string[];
+  feedingAdvice: string[];
 }
 
 export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): TankStats => {
@@ -15,82 +16,105 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
   const fishItems = items.filter(i => i.type === 'fish');
   const plantItems = items.filter(i => i.type === 'plant');
 
-  // 1. Calculate Bioload (Weighted)
-  let totalBioload = 0;
+  // 1. Calculate Bioload (Realistic & Lenient Curve)
+  let requiredLiters = 0;
   
   fishItems.forEach(item => {
     const species = item.data as Species;
     const count = item.count || 1;
     const length = species.visuals.adultSizeCM;
     
-    // Mass Multiplier based on body shape
-    let massMultiplier = 1.0;
-    switch (species.visuals.iconShape) {
-      case 'fusiform': massMultiplier = 1.0; break; // Streamlined (Tetras, Danios)
-      case 'compressed': massMultiplier = 1.2; break; // Tall/Thin (Angelfish, Gourami)
-      case 'depressed': massMultiplier = 1.1; break; // Flat (Plecos, Rays)
-      case 'globiform': massMultiplier = 1.6; break; // Round (Puffers, Goldfish types)
-      case 'eel-like': massMultiplier = 1.2; break; // Long (Loaches)
-      default: massMultiplier = 1.0;
-    }
+    // Size-based multiplier (Cube law approximation but flattened for leniency)
+    // Small fish have very low impact. Large fish have exponential impact.
+    let sizeMultiplier = 1.0;
+    if (length <= 3) sizeMultiplier = 0.5;      // Nano fish (very low load)
+    else if (length <= 6) sizeMultiplier = 0.8; // Small community fish
+    else if (length <= 12) sizeMultiplier = 1.5; // Medium (Angelfish, Gourami)
+    else if (length <= 20) sizeMultiplier = 2.5; // Large
+    else sizeMultiplier = 4.0;                  // Monster fish
 
-    // Waste Multiplier based on diet/behavior (Simplified assumption)
-    // Predators/Messy eaters get a bump
-    // FIXED: accessing diet from 'care' property, not 'behavior'
-    if (species.care.diet === 'carnivore') massMultiplier *= 1.1;
-    
-    // The Formula: Length * Count * MassModifier
-    // Base rule approximation: 1cm of slender fish needs ~1.5L of water
-    totalBioload += (length * count * massMultiplier);
+    // Waste Multiplier based on diet/shape
+    let wasteFactor = 1.0;
+    if (species.visuals.iconShape === 'globiform') wasteFactor *= 1.5; // Goldfish/Puffers are messy
+    if (species.visuals.iconShape === 'depressed') wasteFactor *= 1.2; // Plecos are messy
+    if (species.care.diet === 'carnivore') wasteFactor *= 1.2; // High protein waste
+    if (species.behavior.tags.includes('shrimp')) wasteFactor = 0.1; // Shrimp are negligible
+
+    // Formula: (Total CM) * SizeMultiplier * WasteFactor
+    // Result is "Liters of water recommended" for this group
+    const fishLoad = (length * count) * sizeMultiplier * wasteFactor;
+    requiredLiters += fishLoad;
   });
 
-  // Calculate Capacity
-  // Standard rule: 1cm fish per 1.5L is "100%" for a standard filter
-  // We make it slightly exponential for larger volumes to be safer
-  const capacityPoints = tankConfig.volume / 1.5;
-  
-  const stockingPercentage = Math.round((totalBioload / capacityPoints) * 100);
+  // Plant Bonus: Plants absorb nitrates, effectively increasing capacity
+  const plantCount = plantItems.length;
+  // Reduce required liters by 1% per plant, up to max 25% reduction
+  const plantReduction = Math.min(0.25, plantCount * 0.01); 
+  requiredLiters = requiredLiters * (1 - plantReduction);
 
-  // 2. Hardware Recommendations
-  
-  // Filter: Aim for 4x-6x turnover per hour
-  // If stocking is high (>80%), suggest higher turnover
-  const turnoverMultiplier = stockingPercentage > 80 ? 7 : 5;
+  // Surface Area Bonus: Wide tanks oxygenate better, allowing slightly more stock
+  const surfaceAreaRatio = (tankConfig.length * tankConfig.width) / tankConfig.volume;
+  // Standard ratio is roughly 4 (e.g. 80x40 / 128 = 25? No. 3200 / 128000 (ml) -> 0.025? wait.)
+  // Let's stick to standard logic: Length/Height ratio.
+  // If tank is shallow (Length > 2.5x Height), allow 10% more stock
+  if (tankConfig.length / tankConfig.height > 2.5) {
+     requiredLiters *= 0.9;
+  }
+
+  // Stocking Percentage
+  const stockingPercentage = Math.round((requiredLiters / tankConfig.volume) * 100);
+
+  // 2. Hardware Recommendations (Unchanged logic, just ensuring consistency)
+  const turnoverMultiplier = stockingPercentage > 85 ? 7 : 4; // 4x is enough for light stock
   const filterRate = Math.round(tankConfig.volume * turnoverMultiplier);
-
-  // Heater: Approx 1 Watt per Liter for standard room temp delta
-  // Round to nearest standard sizes: 25, 50, 75, 100, 150, 200, 300
-  const rawWatts = tankConfig.volume;
+  
+  const rawWatts = tankConfig.volume; // 1 Watt per Liter baseline
   const standardWatts = [25, 50, 75, 100, 150, 200, 300, 400, 500];
   const heaterWattage = standardWatts.find(w => w >= rawWatts) || 500;
 
-  // Lighting: Based on tank volume and plant load
-  // Low tech: 15-20 lumens/L
-  // High tech: 30-50 lumens/L
   const hasPlants = plantItems.length > 0;
-  const lumenMultiplier = hasPlants ? 30 : 15;
+  const lumenMultiplier = hasPlants ? 35 : 15;
   const lightingLumens = Math.round(tankConfig.volume * lumenMultiplier);
 
   // 3. Logic Warnings
-  if (stockingPercentage > 110) warnings.push('⚠️ Critically Overstocked: Upgrade filtration immediately!');
-  else if (stockingPercentage > 90) warnings.push('⚠️ Heavy Bioload: Weekly water changes required.');
-  
-  // Schooling checks
-  const speciesGroups = new Map<string, number>();
-  fishItems.forEach(item => { 
-    const id = (item.data as Species).id;
-    speciesGroups.set(id, (speciesGroups.get(id) || 0) + (item.count || 1));
-  });
+  if (stockingPercentage > 115) warnings.push('⚠️ Critically Overstocked: Upgrade filtration immediately!');
+  else if (stockingPercentage > 95) warnings.push('⚠️ Heavy Bioload: Weekly water changes required.');
 
-  // Check unique species count for compatibility warnings (simplified)
-  // (Full compatibility logic remains in the main component for now, but could move here)
+  // 4. Feeding Advice
+  const diets = new Set(fishItems.map(i => (i.data as Species).care.diet));
+  const tags = new Set(fishItems.flatMap(i => (i.data as Species).behavior.tags));
+  const advice: string[] = [];
+
+  if (fishItems.length > 0) {
+      const basicFoods = [];
+      if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM < 5)) basicFoods.push("Micro-pellets/Flakes");
+      if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM >= 5)) basicFoods.push("Granules");
+      advice.push(`Daily: ${basicFoods.join(' & ')} as staple.`);
+
+      if (tags.has('bottom_dweller')) {
+          advice.push("Daily: Sinking wafers/pellets for bottom feeders.");
+      }
+      if (tags.has('algae_eater') || diets.has('herbivore')) {
+          advice.push("2-3x/Week: Algae wafers or blanched veggies (zucchini/spinach).");
+      }
+      if (diets.has('carnivore') || diets.has('omnivore')) {
+          advice.push("1-2x/Week: Frozen/Live food (Bloodworms, Brine Shrimp) for health & color.");
+      }
+      if (tags.has('surface_dweller')) {
+          advice.push("Note: Ensure some floating food for surface dwellers.");
+      }
+      if (tags.has('nocturnal')) {
+          advice.push("Tip: Feed nocturnal species (like some catfish) after lights out.");
+      }
+  }
 
   return {
-    bioloadScore: totalBioload,
+    bioloadScore: requiredLiters,
     stockingPercentage,
     filterRate,
     heaterWattage,
     lightingLumens,
-    warnings
+    warnings,
+    feedingAdvice: advice
   };
 };
