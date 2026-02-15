@@ -46,8 +46,8 @@ export const TankItemCard = ({
         name: plant.taxonomy.commonName,
         scientificName: plant.taxonomy.scientificName,
         image: plant.imageUrl,
-        params: plant.specs?.lighting ? `Light: ${plant.specs.lighting}` : 'Low-tech',
-        tags: plant.specs?.placement ? [plant.specs.placement] : []
+        params: plant.specs?.light ? `Light: ${plant.specs.light}` : 'Low-tech',
+        tags: plant.specs?.placement || []
       };
     }
     return null;
@@ -130,9 +130,9 @@ export const TankItemCard = ({
                 Min. {details.minTank}L
               </span>
             )}
-            {details.tags.slice(0, 2).map(tag => (
-              <span key={tag} className="text-xs bg-slate-100 dark:bg-stone-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full capitalize">
-                {tag.replace('_', ' ')}
+            {Array.isArray(details.tags) && details.tags.slice(0, 2).map((tag, idx) => (
+              <span key={idx} className="text-xs bg-slate-100 dark:bg-stone-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full capitalize">
+                {typeof tag === 'string' ? tag.replace('_', ' ') : tag}
               </span>
             ))}
           </div>
