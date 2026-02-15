@@ -582,9 +582,9 @@ const calculateCompatibilityScore = (current: Species, candidate: Species): numb
   if (currentIsPredator && candidateIsSmall) return 0;
   if (candidateIsPredator && currentIsSmall) return 0;
   
-  // 5. Aggression checks
-  const currentIsAggressive = current.behavior.tags.includes('aggressive') || current.behavior.tags.includes('territorial');
-  const candidateIsAggressive = candidate.behavior.tags.includes('aggressive') || candidate.behavior.tags.includes('territorial');
+  // 5. Aggression checks (using 'territorial' and 'semi-aggressive' tags)
+  const currentIsAggressive = current.behavior.tags.includes('territorial') || current.behavior.tags.includes('semi-aggressive');
+  const candidateIsAggressive = candidate.behavior.tags.includes('territorial') || candidate.behavior.tags.includes('semi-aggressive');
   const currentIsPeaceful = current.behavior.tags.includes('peaceful');
   const candidateIsPeaceful = candidate.behavior.tags.includes('peaceful');
   
@@ -613,8 +613,8 @@ const calculateCompatibilityScore = (current: Species, candidate: Species): numb
   // Bonus: Different swimming zones to avoid competition (+15)
   const currentIsBottom = current.behavior.tags.includes('bottom_dweller');
   const candidateIsBottom = candidate.behavior.tags.includes('bottom_dweller');
-  const currentIsSurface = current.behavior.tags.includes('surface_dweller');
-  const candidateIsSurface = candidate.behavior.tags.includes('surface_dweller');
+  const currentIsSurface = current.behavior.tags.includes('surface_dweller') || current.behavior.tags.includes('surface');
+  const candidateIsSurface = candidate.behavior.tags.includes('surface_dweller') || candidate.behavior.tags.includes('surface');
   
   if ((currentIsBottom && candidateIsSurface) || (currentIsSurface && candidateIsBottom)) {
     score += 15; // Perfect zone separation
@@ -635,9 +635,9 @@ const calculateCompatibilityScore = (current: Species, candidate: Species): numb
   // Bonus: Both schooling species (+10) - they create dynamic together
   if (current.behavior.minGroupSize >= 6 && candidate.behavior.minGroupSize >= 6) score += 10;
   
-  // Bonus: Similar activity level (+5)
-  const currentIsActive = current.behavior.tags.includes('active_swimmer');
-  const candidateIsActive = candidate.behavior.tags.includes('active_swimmer');
+  // Bonus: Similar activity level (+5) - using 'active' tag
+  const currentIsActive = current.behavior.tags.includes('active');
+  const candidateIsActive = candidate.behavior.tags.includes('active');
   if (currentIsActive === candidateIsActive) score += 5;
   
   // Penalty: Very different care difficulty (-10)
