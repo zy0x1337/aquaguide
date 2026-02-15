@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/zy0x1337/aquaguide/compare/v0.0.6...v0.0.7) (2026-02-15)
+
+
+### Features
+
+* add compare button to species cards ([2686d80](https://github.com/zy0x1337/aquaguide/commit/2686d80223dffb882abaccfdb51d2ec1d2680622))
+* add comparison page with side-by-side species comparison ([79d7a0c](https://github.com/zy0x1337/aquaguide/commit/79d7a0c54911691877b3f3611b73729d12b2a591))
+* add comparison tool to navbar with badge counter ([c76223c](https://github.com/zy0x1337/aquaguide/commit/c76223c72d66066d6b1b72b10789a95d94cac3bf))
+* add species comparison tool with context and UI components ([6a0d1aa](https://github.com/zy0x1337/aquaguide/commit/6a0d1aa1d98fece38154c6ff79ce679a900441ee))
+* integrate comparison tool into app with provider and routes ([d2f27fc](https://github.com/zy0x1337/aquaguide/commit/d2f27fc547ebbd78943ebd243373044933e08567))
+
 ### [0.0.6](https://github.com/zy0x1337/aquaguide/compare/v0.0.5...v0.0.6) (2026-02-15)
 
 
