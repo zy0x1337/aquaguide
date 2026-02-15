@@ -1,43 +1,47 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
-import { Search, ArrowUpDown, AlertCircle, Filter, ChevronDown, X } from 'lucide-react';
+import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Filter, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allSpecies } from '../data/species';
+import { searchBiotopes } from '../data/biotopes';
 import { SEOHead } from '../components/seo/SEOHead';
 import { SpeciesGridSkeleton } from '../components/ui/Skeleton';
+import { FilterBadge } from '../components/ui/FilterBadge';
 import { PageTransition } from '../components/layout/PageTransition';
+import { cn } from '../lib/utils';
 import type { Difficulty, Species, Region } from '../types/species';
 
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
 
-interface AdvancedFilters {
-  // Original User Filters
-  level: Difficulty | 'all';
-  region: Region | 'all';
-  tankSize: 'all' | '30' | '60' | '120' | '200';
-  biotope: 'all' | 'blackwater' | 'amazon' | 'rice_paddies';
-  type: 'all' | 'fish' | 'invertebrate';
+interface Filters {
+  // Basic Filters (always visible in sidebar)
+  level: Difficulty | null;
+  region: Region | null;
+  tankSize: number | null;
+  biotope: string;
+  type: 'fish' | 'invertebrate' | null;
 
-  // Advanced Tech Filters
+  // Advanced Filters (in collapsible panel)
   tempMin: number;
   tempMax: number;
   phMin: number;
   phMax: number;
-  maxBodySize: number; // renamed from maxSize to avoid confusion with tankSize
+  maxBodySize: number;
   diet: 'all' | 'carnivore' | 'herbivore' | 'omnivore';
   temperament: 'all' | 'peaceful' | 'semi-aggressive';
 }
 
 const SpeciesIndexPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState<'name' | 'difficulty' | 'size'>('name');
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [biotopeSuggestions, setBiotopeSuggestions] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   
-  const [filters, setFilters] = useState<AdvancedFilters>({
-    level: 'all',
-    region: 'all',
-    tankSize: 'all',
-    biotope: 'all',
-    type: 'all',
+  const [filters, setFilters] = useState<Filters>({
+    level: null,
+    region: null,
+    tankSize: null,
+    biotope: '',
+    type: null,
     tempMin: 15,
     tempMax: 30,
     phMin: 5.0,
@@ -48,50 +52,35 @@ const SpeciesIndexPage = () => {
   });
 
   const applyFilters = (species: Species): boolean => {
-    // 1. Level (Difficulty)
-    if (filters.level !== 'all' && species.care.difficulty !== filters.level) return false;
-
-    // 2. Region
-    if (filters.region !== 'all' && species.taxonomy.region !== filters.region) return false;
-
-    // 3. Tank Size (Max Liters Bucket)
-    // "Max 30 Liters" means species must fit in 30L (minTankSize <= 30)
-    if (filters.tankSize !== 'all') {
-      const limit = parseInt(filters.tankSize);
-      if (species.environment.minTankSizeLiters > limit) return false;
-    }
-
-    // 4. Biotope
-    if (filters.biotope !== 'all') {
+    // Basic Filters
+    if (filters.level && species.care.difficulty !== filters.level) return false;
+    if (filters.region && species.taxonomy.region !== filters.region) return false;
+    if (filters.tankSize && species.environment.minTankSizeLiters > filters.tankSize) return false;
+    
+    // Biotope filter
+    if (filters.biotope) {
       const bio = (species.taxonomy.biotope || '').toLowerCase();
-      if (filters.biotope === 'blackwater' && !bio.includes('blackwater')) return false;
-      if (filters.biotope === 'amazon' && !bio.includes('amazon')) return false;
-      if (filters.biotope === 'rice_paddies' && !bio.includes('rice') && !bio.includes('paddy')) return false;
+      const term = filters.biotope.toLowerCase();
+      if (!bio.includes(term)) return false;
     }
 
-    // 5. Type (Fish vs Invertebrates)
-    if (filters.type !== 'all') {
+    // Type filter
+    if (filters.type) {
       const isShrimp = species.visuals.iconShape === 'shrimp';
       if (filters.type === 'invertebrate' && !isShrimp) return false;
       if (filters.type === 'fish' && isShrimp) return false;
     }
 
-    // 6. Temperature check
-    if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) return false;
-    
-    // 7. pH check
-    if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) return false;
-    
-    // 8. Body Size check
-    if (species.visuals.adultSizeCM > filters.maxBodySize) return false;
-    
-    // 9. Diet check
-    if (filters.diet !== 'all' && species.care.diet !== filters.diet) return false;
-    
-    // 10. Temperament check
-    if (filters.temperament !== 'all') {
-      if (filters.temperament === 'peaceful' && !species.behavior.tags.includes('peaceful')) return false;
-      if (filters.temperament === 'semi-aggressive' && !species.behavior.tags.includes('semi-aggressive')) return false;
+    // Advanced Filters (only when panel is open)
+    if (showAdvancedFilters) {
+      if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) return false;
+      if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) return false;
+      if (species.visuals.adultSizeCM > filters.maxBodySize) return false;
+      if (filters.diet !== 'all' && species.care.diet !== filters.diet) return false;
+      if (filters.temperament !== 'all') {
+        if (filters.temperament === 'peaceful' && !species.behavior.tags.includes('peaceful')) return false;
+        if (filters.temperament === 'semi-aggressive' && !species.behavior.tags.includes('semi-aggressive')) return false;
+      }
     }
     
     return true;
@@ -99,42 +88,36 @@ const SpeciesIndexPage = () => {
 
   const activeFilterCount = useMemo(() => {
     let count = 0;
-    if (filters.level !== 'all') count++;
-    if (filters.region !== 'all') count++;
-    if (filters.tankSize !== 'all') count++;
-    if (filters.biotope !== 'all') count++;
-    if (filters.type !== 'all') count++;
-    if (filters.diet !== 'all') count++;
-    if (filters.temperament !== 'all') count++;
-    if (filters.maxBodySize !== 30) count++;
-    if (filters.tempMin !== 15 || filters.tempMax !== 30) count++;
-    if (filters.phMin !== 5.0 || filters.phMax !== 9.0) count++;
+    if (filters.level) count++;
+    if (filters.region) count++;
+    if (filters.tankSize) count++;
+    if (filters.biotope) count++;
+    if (filters.type) count++;
+    if (showAdvancedFilters) {
+      if (filters.diet !== 'all') count++;
+      if (filters.temperament !== 'all') count++;
+      if (filters.maxBodySize !== 30) count++;
+      if (filters.tempMin !== 15 || filters.tempMax !== 30) count++;
+      if (filters.phMin !== 5.0 || filters.phMax !== 9.0) count++;
+    }
     return count;
-  }, [filters]);
+  }, [filters, showAdvancedFilters]);
 
   const filteredSpecies = useMemo(() => {
-    return allSpecies
-      .filter((s: Species) => {
-        const matchesSearch = s.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                              s.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesFilters = !showAdvancedFilters || applyFilters(s);
-        return matchesSearch && matchesFilters;
-      })
-      .sort((a: Species, b: Species) => {
-        if (sortOrder === 'name') return a.taxonomy.commonName.localeCompare(b.taxonomy.commonName);
-        if (sortOrder === 'size') return a.visuals.adultSizeCM - b.visuals.adultSizeCM;
-        const diffMap: Record<Difficulty, number> = { beginner: 0, medium: 1, expert: 2 };
-        return diffMap[a.care.difficulty] - diffMap[b.care.difficulty];
-      });
-  }, [searchTerm, filters, sortOrder, showAdvancedFilters]);
+    return allSpecies.filter((s: Species) => {
+      const matchesSearch = s.taxonomy.commonName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                            s.taxonomy.scientificName.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesSearch && applyFilters(s);
+    });
+  }, [searchTerm, filters, showAdvancedFilters]);
 
   const resetFilters = () => {
     setFilters({
-      level: 'all',
-      region: 'all',
-      tankSize: 'all',
-      biotope: 'all',
-      type: 'all',
+      level: null,
+      region: null,
+      tankSize: null,
+      biotope: '',
+      type: null,
       tempMin: 15,
       tempMax: 30,
       phMin: 5.0,
@@ -143,7 +126,36 @@ const SpeciesIndexPage = () => {
       diet: 'all',
       temperament: 'all'
     });
+    setSearchTerm('');
+    setShowAdvancedFilters(false);
   };
+
+  const handleBiotopeInput = (value: string) => {
+    setFilters({ ...filters, biotope: value });
+    if (value.length >= 2) {
+      const matches = searchBiotopes(value, 6);
+      setBiotopeSuggestions(matches);
+      setShowSuggestions(matches.length > 0);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const selectBiotope = (biotope: any) => {
+    setFilters({ ...filters, biotope: biotope.label });
+    setShowSuggestions(false);
+  };
+
+  const activeFilters = [
+    filters.level && { key: 'difficulty', label: 'Level', value: filters.level, clear: () => setFilters({ ...filters, level: null }) },
+    filters.region && { key: 'region', label: 'Region', value: filters.region, clear: () => setFilters({ ...filters, region: null }) },
+    filters.tankSize && { key: 'tank', label: 'Tank', value: `≤${filters.tankSize}L`, clear: () => setFilters({ ...filters, tankSize: null }) },
+    filters.biotope && { key: 'biotope', label: 'Biotope', value: filters.biotope, clear: () => setFilters({ ...filters, biotope: '' }) },
+    filters.type && { key: 'category', label: 'Type', value: filters.type, clear: () => setFilters({ ...filters, type: null }) },
+  ].filter(Boolean);
+
+  const hasActiveFilters = activeFilters.length > 0 || searchTerm;
+  const regions: Region[] = ['South America', 'Asia', 'Africa', 'Central America'];
 
   return (
     <PageTransition>
@@ -156,307 +168,304 @@ const SpeciesIndexPage = () => {
         <div className="bg-white dark:bg-stone-900 border-b border-slate-200 dark:border-stone-800 pt-24 pb-12 px-6 transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
-              Species <span className="text-indigo-600 dark:text-indigo-400">Index</span>
+              Species <span className="text-indigo-600 dark:text-indigo-400">Database</span>
             </h1>
-            <p className="text-slate-500 dark:text-stone-400 text-lg max-w-2xl">
+            <p className="text-slate-500 dark:text-stone-400 text-lg max-w-2xl mb-8">
               Explore our complete database of {allSpecies.length} documented species.
             </p>
+
+            {/* Search Bar */}
+            <div className="max-w-2xl">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                <div className="relative flex items-center bg-slate-50 dark:bg-stone-800 rounded-2xl p-2 shadow-lg border border-slate-200 dark:border-stone-700">
+                  <div className="pl-3 text-slate-400">
+                    <Search className="w-5 h-5" />
+                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="Search for fish, shrimp, or snails..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full p-3 text-slate-900 dark:text-white placeholder:text-slate-400 bg-transparent border-none focus:ring-0 outline-none"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 -mt-8">
-          {/* Search Bar */}
-          <div className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-slate-100 dark:border-stone-800 p-4 mb-4 transition-colors duration-300">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input 
-                type="text" 
-                placeholder="Search by name or scientific name..." 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-colors dark:text-white"
-              />
-            </div>
-          </div>
-
-          {/* Filter Controls */}
-          <div className="bg-white dark:bg-stone-900 rounded-xl shadow-lg border border-slate-100 dark:border-stone-800 p-4 mb-6 transition-colors duration-300">
-            <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-              {/* Advanced Filters Toggle */}
-              <button
-                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                className="w-full md:w-auto flex items-center justify-between md:justify-start gap-2 px-4 py-3 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 hover:from-indigo-100 hover:to-blue-100 dark:hover:from-indigo-950/50 dark:hover:to-blue-950/50 border-2 border-indigo-200 dark:border-indigo-800 rounded-xl transition-all font-semibold text-sm text-indigo-900 dark:text-indigo-300"
-              >
-                <span className="flex items-center gap-2">
-                  <Filter className="w-4 h-4" />
-                  Filters
-                  {activeFilterCount > 0 && (
-                    <span className="bg-indigo-500 text-white text-xs px-2 py-0.5 rounded-full">
-                      {activeFilterCount}
-                    </span>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            {/* Sidebar Filters */}
+            <aside className="lg:col-span-1 space-y-6">
+              <div className="bg-white dark:bg-stone-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-stone-800 sticky top-24 transition-colors duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-bold text-slate-900 dark:text-white flex items-center">
+                    <SlidersHorizontal className="w-5 h-5 mr-2 text-indigo-500" /> Filters
+                  </h3>
+                  {hasActiveFilters && (
+                    <button onClick={resetFilters} className="text-xs text-rose-500 font-bold hover:underline">
+                      Reset
+                    </button>
                   )}
-                </span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
-              </button>
-
-              {/* Quick Actions */}
-              <div className="flex flex-wrap gap-3 w-full md:w-auto">
-                <button 
-                  onClick={() => setSortOrder(prev => prev === 'name' ? 'difficulty' : prev === 'difficulty' ? 'size' : 'name')}
-                  className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-stone-800 hover:bg-slate-100 dark:hover:bg-stone-700 border border-slate-200 dark:border-stone-700 rounded-lg text-sm font-bold text-slate-700 dark:text-stone-300 transition-colors whitespace-nowrap"
-                >
-                  <ArrowUpDown className="w-4 h-4" />
-                  {sortOrder === 'name' ? 'Name' : sortOrder === 'difficulty' ? 'Difficulty' : 'Size'}
-                </button>
-
-                {activeFilterCount > 0 && (
-                  <button
-                    onClick={resetFilters}
-                    className="flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-950/50 border border-rose-200 dark:border-rose-800 rounded-lg text-sm font-bold text-rose-700 dark:text-rose-300 transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                    Clear
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Advanced Filters Panel */}
-            <AnimatePresence>
-              {showAdvancedFilters && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-hidden"
-                >
-                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-stone-800">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                      
-                      {/* Section 1: Basic Requirements */}
-                      <div className="space-y-4">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Requirements</h3>
-                        
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Tank Size</label>
-                          <select
-                            value={filters.tankSize}
-                            onChange={(e) => setFilters({ ...filters, tankSize: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">Any Tank Size</option>
-                            <option value="30">Max 30 Liters (Nano)</option>
-                            <option value="60">Max 60 Liters (Standard)</option>
-                            <option value="120">Max 120 Liters</option>
-                            <option value="200">Max 200 Liters</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Care Level</label>
-                          <select
-                            value={filters.level}
-                            onChange={(e) => setFilters({ ...filters, level: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">All Levels</option>
-                            <option value="beginner">Beginner</option>
-                            <option value="medium">Medium</option>
-                            <option value="expert">Expert</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      {/* Section 2: Biology & Type */}
-                      <div className="space-y-4">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Biology</h3>
-                        
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Type</label>
-                          <select
-                            value={filters.type}
-                            onChange={(e) => setFilters({ ...filters, type: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">All Types</option>
-                            <option value="fish">Fish</option>
-                            <option value="invertebrate">Invertebrates</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Region</label>
-                          <select
-                            value={filters.region}
-                            onChange={(e) => setFilters({ ...filters, region: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">All Regions</option>
-                            <option value="South America">South America</option>
-                            <option value="Asia">Asia</option>
-                            <option value="Africa">Africa</option>
-                            <option value="Central America">Central America</option>
-                            <option value="Australia">Australia</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Biotope</label>
-                          <select
-                            value={filters.biotope}
-                            onChange={(e) => setFilters({ ...filters, biotope: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">Any Biotope</option>
-                            <option value="blackwater">Blackwater</option>
-                            <option value="amazon">Amazon River</option>
-                            <option value="rice_paddies">Rice Paddies</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      {/* Section 3: Water Parameters */}
-                      <div className="space-y-4">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Water Parameters</h3>
-                        
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">
-                            🌡️ Temperature: {filters.tempMin}°C - {filters.tempMax}°C
-                          </label>
-                          <div className="flex gap-2">
-                            <input
-                              type="range"
-                              min="15"
-                              max="30"
-                              value={filters.tempMin}
-                              onChange={(e) => setFilters({ ...filters, tempMin: Number(e.target.value) })}
-                              className="flex-1 accent-indigo-500"
-                            />
-                            <input
-                              type="range"
-                              min="15"
-                              max="30"
-                              value={filters.tempMax}
-                              onChange={(e) => setFilters({ ...filters, tempMax: Number(e.target.value) })}
-                              className="flex-1 accent-indigo-500"
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">
-                            💧 pH: {filters.phMin.toFixed(1)} - {filters.phMax.toFixed(1)}
-                          </label>
-                          <div className="flex gap-2">
-                            <input
-                              type="range"
-                              min="5.0"
-                              max="9.0"
-                              step="0.1"
-                              value={filters.phMin}
-                              onChange={(e) => setFilters({ ...filters, phMin: Number(e.target.value) })}
-                              className="flex-1 accent-indigo-500"
-                            />
-                            <input
-                              type="range"
-                              min="5.0"
-                              max="9.0"
-                              step="0.1"
-                              value={filters.phMax}
-                              onChange={(e) => setFilters({ ...filters, phMax: Number(e.target.value) })}
-                              className="flex-1 accent-indigo-500"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Section 4: Details */}
-                      <div className="space-y-4">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">Traits</h3>
-                        
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">
-                            📏 Max Body Size: {filters.maxBodySize}cm
-                          </label>
-                          <input
-                            type="range"
-                            min="2"
-                            max="30"
-                            value={filters.maxBodySize}
-                            onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })}
-                            className="w-full accent-indigo-500"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Diet</label>
-                          <select
-                            value={filters.diet}
-                            onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">Any Diet</option>
-                            <option value="omnivore">Omnivore</option>
-                            <option value="carnivore">Carnivore</option>
-                            <option value="herbivore">Herbivore</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Temperament</label>
-                          <select
-                            value={filters.temperament}
-                            onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500"
-                          >
-                            <option value="all">Any Temperament</option>
-                            <option value="peaceful">Peaceful Only</option>
-                            <option value="semi-aggressive">Semi-Aggressive</option>
-                          </select>
-                        </div>
-                      </div>
-
+                </div>
+                
+                <div className="space-y-8">
+                  <div className="space-y-3">
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                      <Activity className="w-3 h-3 mr-1.5" /> Level
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      <FilterChip label="Beginner" isActive={filters.level === 'beginner'} onClick={() => setFilters({ ...filters, level: filters.level === 'beginner' ? null : 'beginner' })} colorClass="text-emerald-700 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400 border-emerald-100 dark:border-emerald-500/20" activeClass="bg-emerald-500 text-white border-emerald-600" />
+                      <FilterChip label="Medium" isActive={filters.level === 'medium'} onClick={() => setFilters({ ...filters, level: filters.level === 'medium' ? null : 'medium' })} colorClass="text-amber-700 bg-amber-50 dark:bg-amber-500/10 dark:text-amber-400 border-amber-100 dark:border-amber-500/20" activeClass="bg-amber-500 text-white border-amber-600" />
+                      <FilterChip label="Expert" isActive={filters.level === 'expert'} onClick={() => setFilters({ ...filters, level: filters.level === 'expert' ? null : 'expert' })} colorClass="text-rose-700 bg-rose-50 dark:bg-rose-500/10 dark:text-rose-400 border-rose-100 dark:border-rose-500/20" activeClass="bg-rose-500 text-white border-rose-600" />
                     </div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
 
-          {/* Results Count */}
-          <div className="mb-4 text-sm text-slate-600 dark:text-stone-400">
-            Showing <span className="font-bold text-indigo-600 dark:text-indigo-400">{filteredSpecies.length}</span> of {allSpecies.length} species
-          </div>
+                  <div className="space-y-3">
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                      <Globe2 className="w-3 h-3 mr-1.5" /> Region
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {regions.map(region => (
+                        <FilterChip 
+                          key={region}
+                          label={region} 
+                          isActive={filters.region === region} 
+                          onClick={() => setFilters({ ...filters, region: filters.region === region ? null : region })} 
+                        />
+                      ))}
+                    </div>
+                  </div>
 
-          {/* Species Grid */}
-          {filteredSpecies.length > 0 ? (
-            <Suspense fallback={<SpeciesGridSkeleton />}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredSpecies.map((s: Species) => <SpeciesCard key={s.id} data={s} />)}
+                  <div className="pt-6 border-t border-slate-100 dark:border-stone-800 space-y-6">
+                      <div className="space-y-3">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                          <Box className="w-3 h-3 mr-1.5" /> Size
+                        </label>
+                        <select 
+                          className="w-full bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 text-slate-700 dark:text-stone-300 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors"
+                          value={filters.tankSize || ''}
+                          onChange={(e) => setFilters({ ...filters, tankSize: e.target.value === '' ? null : Number(e.target.value) })}
+                        >
+                          <option value="">Any Tank Size</option>
+                          <option value="30">Max 30 Liters (Nano)</option>
+                          <option value="60">Max 60 Liters (Standard)</option>
+                          <option value="120">Max 120 Liters</option>
+                          <option value="200">Max 200 Liters</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-3 relative">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                          <Droplets className="w-3 h-3 mr-1.5" /> Biotope
+                        </label>
+                        <input 
+                          type="text" 
+                          value={filters.biotope}
+                          onChange={(e) => handleBiotopeInput(e.target.value)}
+                          onFocus={() => filters.biotope.length >= 2 && setShowSuggestions(true)}
+                          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                          placeholder="e.g. 'Mekong'..."
+                          className="w-full bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 text-slate-700 dark:text-stone-300 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors"
+                        />
+                        
+                        {showSuggestions && biotopeSuggestions.length > 0 && (
+                          <div className="absolute z-50 w-full bg-white dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto">
+                            {biotopeSuggestions.map((b) => (
+                              <button
+                                key={b.id}
+                                onClick={() => selectBiotope(b)}
+                                className="w-full text-left px-4 py-3 hover:bg-indigo-50 dark:hover:bg-stone-700 transition-colors border-b border-slate-100 dark:border-stone-700 last:border-0 group"
+                              >
+                                <div className="font-bold text-slate-800 dark:text-stone-200 text-sm group-hover:text-indigo-700 dark:group-hover:text-indigo-400">{b.label}</div>
+                                <div className="text-xs text-slate-500 dark:text-stone-400 truncate">{b.description}</div>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {['Blackwater', 'Amazon', 'Rice Paddies'].map(tag => (
+                            <button 
+                              key={tag}
+                              onClick={() => setFilters({ ...filters, biotope: tag })}
+                              className="px-2.5 py-1 bg-slate-100 dark:bg-stone-800 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 text-slate-600 dark:text-stone-400 hover:text-indigo-700 dark:hover:text-indigo-300 text-[10px] font-bold uppercase rounded-lg border border-slate-200 dark:border-stone-700 transition-all whitespace-nowrap"
+                            >
+                              {tag}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                          <PawPrint className="w-3 h-3 mr-1.5" /> Type
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          <FilterChip label="Fish" isActive={filters.type === 'fish'} onClick={() => setFilters({ ...filters, type: filters.type === 'fish' ? null : 'fish' })} />
+                          <FilterChip label="Invertebrates" isActive={filters.type === 'invertebrate'} onClick={() => setFilters({ ...filters, type: filters.type === 'invertebrate' ? null : 'invertebrate' })} />
+                        </div>
+                      </div>
+                  </div>
+                </div>
               </div>
-            </Suspense>
-          ) : (
-            <div className="text-center py-24">
-              <div className="inline-block p-4 rounded-full bg-slate-100 dark:bg-stone-800 mb-4">
-                <AlertCircle className="w-8 h-8 text-slate-400" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No species found</h3>
-              <p className="text-slate-500 dark:text-stone-400">Try adjusting your filters or search term.</p>
-              {activeFilterCount > 0 && (
+            </aside>
+
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {/* Advanced Filters Toggle */}
+              <div className="bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-slate-200 dark:border-stone-800 p-4 mb-6 transition-colors duration-300">
                 <button
-                  onClick={resetFilters}
-                  className="mt-4 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-colors"
+                  onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                  className="w-full flex items-center justify-between px-4 py-3 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 hover:from-indigo-100 hover:to-blue-100 dark:hover:from-indigo-950/50 dark:hover:to-blue-950/50 border-2 border-indigo-200 dark:border-indigo-800 rounded-xl transition-all font-semibold text-sm text-indigo-900 dark:text-indigo-300"
                 >
-                  Reset All Filters
+                  <span className="flex items-center gap-2">
+                    <Filter className="w-4 h-4" />
+                    Advanced Filters
+                    {showAdvancedFilters && activeFilterCount > 5 && (
+                      <span className="bg-indigo-500 text-white text-xs px-2 py-0.5 rounded-full">
+                        {activeFilterCount - 5}
+                      </span>
+                    )}
+                  </span>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
                 </button>
+
+                <AnimatePresence>
+                  {showAdvancedFilters && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-stone-800">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          
+                          <div>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
+                              🌡️ Temperature: {filters.tempMin}°C - {filters.tempMax}°C
+                            </label>
+                            <div className="space-y-2">
+                              <input type="range" min="15" max="30" value={filters.tempMin} onChange={(e) => setFilters({ ...filters, tempMin: Number(e.target.value) })} className="w-full accent-indigo-500" />
+                              <input type="range" min="15" max="30" value={filters.tempMax} onChange={(e) => setFilters({ ...filters, tempMax: Number(e.target.value) })} className="w-full accent-indigo-500" />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
+                              💧 pH: {filters.phMin.toFixed(1)} - {filters.phMax.toFixed(1)}
+                            </label>
+                            <div className="space-y-2">
+                              <input type="range" min="5.0" max="9.0" step="0.1" value={filters.phMin} onChange={(e) => setFilters({ ...filters, phMin: Number(e.target.value) })} className="w-full accent-indigo-500" />
+                              <input type="range" min="5.0" max="9.0" step="0.1" value={filters.phMax} onChange={(e) => setFilters({ ...filters, phMax: Number(e.target.value) })} className="w-full accent-indigo-500" />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-2 block">
+                              📏 Max Body Size: {filters.maxBodySize}cm
+                            </label>
+                            <input type="range" min="2" max="30" value={filters.maxBodySize} onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} className="w-full accent-indigo-500" />
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Diet</label>
+                            <select value={filters.diet} onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })} className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500">
+                              <option value="all">Any Diet</option>
+                              <option value="omnivore">Omnivore</option>
+                              <option value="carnivore">Carnivore</option>
+                              <option value="herbivore">Herbivore</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className="text-xs font-bold text-slate-700 dark:text-stone-300 mb-1 block">Temperament</label>
+                            <select value={filters.temperament} onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })} className="w-full px-3 py-2 bg-slate-50 dark:bg-stone-800 border border-slate-200 dark:border-stone-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-indigo-500">
+                              <option value="all">Any Temperament</option>
+                              <option value="peaceful">Peaceful Only</option>
+                              <option value="semi-aggressive">Semi-Aggressive</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Active Filter Badges & Results */}
+              <div className="bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-slate-200 dark:border-stone-800 p-4 mb-6 transition-colors duration-300">
+                {activeFilters.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-slate-100 dark:border-stone-800">
+                    {activeFilters.map((filter: any) => (
+                      <FilterBadge key={filter.key} label={filter.label} value={filter.value} onRemove={filter.clear} />
+                    ))}
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-bold text-slate-800 dark:text-stone-100 flex items-center">
+                    Found 
+                    <span className="mx-2 px-3 py-1 bg-indigo-600 text-white rounded-lg font-black text-sm shadow-md">
+                      {filteredSpecies.length}
+                    </span> 
+                    Species
+                  </h2>
+                  
+                  {hasActiveFilters && (
+                    <button onClick={resetFilters} className="text-xs font-bold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:hover:bg-rose-500/20 px-3 py-2 rounded-lg transition-colors flex items-center border border-rose-100 dark:border-rose-500/20">
+                      <X className="w-3.5 h-3.5 mr-1.5" /> Reset Filters
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Species Grid */}
+              {filteredSpecies.length > 0 ? (
+                <Suspense fallback={<SpeciesGridSkeleton />}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredSpecies.map((s: Species) => <SpeciesCard key={s.id} data={s} />)}
+                  </div>
+                </Suspense>
+              ) : (
+                <div className="text-center py-20 bg-white dark:bg-stone-900 rounded-3xl border border-dashed border-slate-300 dark:border-stone-800">
+                  <div className="animate-bounce-slow mb-4">
+                    <div className="w-16 h-16 bg-slate-50 dark:bg-stone-800 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                      <Fish className="w-8 h-8 text-slate-300 dark:text-stone-600" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">No swimmers found</h3>
+                  <p className="text-slate-500 dark:text-stone-400 max-w-xs mx-auto mb-6">
+                    No species match your criteria. Try adjusting your filters.
+                  </p>
+                  <button onClick={resetFilters} className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-colors shadow-lg">
+                    Clear All Filters
+                  </button>
+                </div>
               )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </PageTransition>
   );
 };
+
+const FilterChip = ({ label, isActive, onClick, colorClass = "text-slate-600 bg-slate-50 dark:text-stone-400 dark:bg-stone-800 border-slate-200 dark:border-stone-700 hover:bg-slate-100 dark:hover:bg-stone-700", activeClass = "bg-slate-800 text-white border-slate-900 dark:bg-stone-700 dark:text-white dark:border-stone-600 shadow-md" }: any) => (
+  <button
+    onClick={onClick}
+    className={cn(
+      "px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide border transition-all duration-200",
+      isActive ? activeClass : colorClass
+    )}
+  >
+    {label}
+  </button>
+);
 
 export default SpeciesIndexPage;
