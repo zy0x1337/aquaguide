@@ -8,8 +8,10 @@ export interface TankStats {
   heaterWattage: number;
   lightingLumens: number;
   warnings: string[];
-  criticalWarnings: string[]; // New: Critical territorial conflicts
+  criticalWarnings: string[];
   feedingAdvice: string[];
+  tempRange?: { min: number; max: number };
+  phRange?: { min: number; max: number };
 }
 
 export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): TankStats => {
@@ -18,7 +20,32 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
   const fishItems = items.filter(i => i.type === 'fish');
   const plantItems = items.filter(i => i.type === 'plant');
 
-  // 1. Calculate Bioload (Realistic & Lenient Curve)
+  // Calculate water parameter ranges
+  let tempRange: { min: number; max: number } | undefined;
+  let phRange: { min: number; max: number } | undefined;
+
+  if (fishItems.length > 0) {
+    const temps = fishItems.map(item => {
+      const s = item.data as Species;
+      return { min: s.environment.tempC.min, max: s.environment.tempC.max };
+    });
+    const phs = fishItems.map(item => {
+      const s = item.data as Species;
+      return { min: s.environment.ph.min, max: s.environment.ph.max };
+    });
+    
+    tempRange = {
+      min: Math.max(...temps.map(t => t.min)),
+      max: Math.min(...temps.map(t => t.max))
+    };
+    
+    phRange = {
+      min: Math.max(...phs.map(p => p.min)),
+      max: Math.min(...phs.map(p => p.max))
+    };
+  }
+
+  // 1. Calculate Bioload (NOW USES bioloadMultiplier if available)
   let requiredLiters = 0;
   
   fishItems.forEach(item => {
@@ -26,48 +53,57 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
     const count = item.count || 1;
     const length = species.visuals.adultSizeCM;
     
-    // Size-based multiplier (Cube law approximation but flattened for leniency)
-    // Small fish have very low impact. Large fish have exponential impact.
+    // Size-based multiplier
     let sizeMultiplier = 1.0;
-    if (length <= 3) sizeMultiplier = 0.5;      // Nano fish (very low load)
-    else if (length <= 6) sizeMultiplier = 0.8; // Small community fish
-    else if (length <= 12) sizeMultiplier = 1.5; // Medium (Angelfish, Gourami)
-    else if (length <= 20) sizeMultiplier = 2.5; // Large
-    else sizeMultiplier = 4.0;                  // Monster fish
+    if (length <= 3) sizeMultiplier = 0.5;
+    else if (length <= 6) sizeMultiplier = 0.8;
+    else if (length <= 12) sizeMultiplier = 1.5;
+    else if (length <= 20) sizeMultiplier = 2.5;
+    else sizeMultiplier = 4.0;
 
     // Waste Multiplier based on diet/shape
     let wasteFactor = 1.0;
-    if (species.visuals.iconShape === 'globiform') wasteFactor *= 1.5; // Goldfish/Puffers are messy
-    if (species.visuals.iconShape === 'depressed') wasteFactor *= 1.2; // Plecos are messy
-    if (species.care.diet === 'carnivore') wasteFactor *= 1.2; // High protein waste
-    if (species.visuals.iconShape === 'shrimp') wasteFactor = 0.1; // Shrimp are negligible (Check shape instead of tag)
+    if (species.visuals.iconShape === 'globiform') wasteFactor *= 1.5;
+    if (species.visuals.iconShape === 'depressed') wasteFactor *= 1.2;
+    if (species.care.diet === 'carnivore') wasteFactor *= 1.2;
+    if (species.visuals.iconShape === 'shrimp') wasteFactor = 0.1;
 
-    // Formula: (Total CM) * SizeMultiplier * WasteFactor
-    // Result is "Liters of water recommended" for this group
+    // NEW: Use species-specific bioload multiplier if available
+    const bioloadMultiplier = species.environment.bioloadMultiplier || 1.0;
+    wasteFactor *= bioloadMultiplier;
+
     const fishLoad = (length * count) * sizeMultiplier * wasteFactor;
     requiredLiters += fishLoad;
   });
 
-  // Plant Bonus: Plants absorb nitrates, effectively increasing capacity
+  // Plant Bonus
   const plantCount = plantItems.length;
-  // Reduce required liters by 1% per plant, up to max 25% reduction
   const plantReduction = Math.min(0.25, plantCount * 0.01); 
   requiredLiters = requiredLiters * (1 - plantReduction);
 
-  // Surface Area Bonus: Wide tanks oxygenate better, allowing slightly more stock
-  // If tank is shallow (Length > 2.5x Height), allow 10% more stock
+  // Surface Area Bonus
   if (tankConfig.length / tankConfig.height > 2.5) {
      requiredLiters *= 0.9;
   }
 
-  // Stocking Percentage
   const stockingPercentage = Math.round((requiredLiters / tankConfig.volume) * 100);
 
-  // 2. Hardware Recommendations (Unchanged logic, just ensuring consistency)
-  const turnoverMultiplier = stockingPercentage > 85 ? 7 : 4; // 4x is enough for light stock
-  const filterRate = Math.round(tankConfig.volume * turnoverMultiplier);
+  // 2. Hardware Recommendations (NOW CONSIDERS species.care.equipment)
+  const turnoverMultiplier = stockingPercentage > 85 ? 7 : 4;
+  let filterRate = Math.round(tankConfig.volume * turnoverMultiplier);
   
-  const rawWatts = tankConfig.volume; // 1 Watt per Liter baseline
+  // Adjust filter for species that need gentle flow
+  const needsGentleFlow = fishItems.some(item => {
+    const s = item.data as Species;
+    return s.care.equipment?.filter?.flowRate === 'gentle' || s.environment.flow === 'low';
+  });
+  
+  if (needsGentleFlow) {
+    filterRate = Math.round(tankConfig.volume * 3); // Lower turnover
+    warnings.push('⚠️ Use gentle filter flow (sponge filter recommended for Bettas/slow swimmers)');
+  }
+  
+  const rawWatts = tankConfig.volume;
   const standardWatts = [25, 50, 75, 100, 150, 200, 300, 400, 500];
   const heaterWattage = standardWatts.find(w => w >= rawWatts) || 500;
 
@@ -79,36 +115,11 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
   if (stockingPercentage > 115) warnings.push('⚠️ Critically Overstocked: Upgrade filtration immediately!');
   else if (stockingPercentage > 95) warnings.push('⚠️ Heavy Bioload: Weekly water changes required.');
 
-  // 4. TERRITORIAL & AGGRESSION CONFLICT DETECTION
+  // 4. TERRITORIAL & AGGRESSION CONFLICT DETECTION (NOW USES aggressionLevel)
   detectTerritorialConflicts(fishItems, criticalWarnings, warnings, tankConfig);
 
-  // 5. Feeding Advice
-  const diets = new Set(fishItems.map(i => (i.data as Species).care.diet));
-  const tags = new Set(fishItems.flatMap(i => (i.data as Species).behavior.tags));
-  const advice: string[] = [];
-
-  if (fishItems.length > 0) {
-      const basicFoods = [];
-      if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM < 5)) basicFoods.push("Micro-pellets/Flakes");
-      if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM >= 5)) basicFoods.push("Granules");
-      advice.push(`Daily: ${basicFoods.join(' & ')} as staple.`);
-
-      if (tags.has('bottom_dweller')) {
-          advice.push("Daily: Sinking wafers/pellets for bottom feeders.");
-      }
-      if (tags.has('algae_eater') || diets.has('herbivore')) {
-          advice.push("2-3x/Week: Algae wafers or blanched veggies (zucchini/spinach).");
-      }
-      if (diets.has('carnivore') || diets.has('omnivore')) {
-          advice.push("1-2x/Week: Frozen/Live food (Bloodworms, Brine Shrimp) for health & color.");
-      }
-      if (tags.has('surface_dweller')) {
-          advice.push("Note: Ensure some floating food for surface dwellers.");
-      }
-      if (tags.has('nocturnal')) {
-          advice.push("Tip: Feed nocturnal species (like some catfish) after lights out.");
-      }
-  }
+  // 5. Feeding Advice (NOW USES species.care.feeding if available)
+  const advice = generateFeedingAdvice(fishItems);
 
   return {
     bioloadScore: requiredLiters,
@@ -118,20 +129,95 @@ export const calculateTankStats = (items: TankItem[], tankConfig: TankConfig): T
     lightingLumens,
     warnings,
     criticalWarnings,
-    feedingAdvice: advice
+    feedingAdvice: advice,
+    tempRange,
+    phRange
   };
 };
 
-/**
- * Detect territorial conflicts and aggressive combinations
- */
+function generateFeedingAdvice(fishItems: TankItem[]): string[] {
+  if (fishItems.length === 0) return [];
+  
+  const advice: string[] = [];
+  const diets = new Set(fishItems.map(i => (i.data as Species).care.diet));
+  const tags = new Set(fishItems.flatMap(i => (i.data as Species).behavior.tags));
+  
+  // Check if any species have detailed feeding schedules
+  const detailedFeeders = fishItems.filter(item => {
+    const s = item.data as Species;
+    return s.care.feeding !== undefined;
+  });
+  
+  if (detailedFeeders.length > 0) {
+    // Use species-specific feeding data
+    const frequencies = new Set(detailedFeeders.map(item => {
+      const s = item.data as Species;
+      return s.care.feeding?.frequency;
+    }));
+    
+    if (frequencies.has('twice-daily')) {
+      advice.push('Feed twice daily: Morning and evening (some species require frequent feeding)');
+    } else {
+      advice.push('Feed once daily: Small portions to prevent waste');
+    }
+    
+    // Compile unique food types
+    const allFoods = new Set<string>();
+    detailedFeeders.forEach(item => {
+      const s = item.data as Species;
+      s.care.feeding?.primaryFoods.forEach(f => allFoods.add(f));
+      s.care.feeding?.supplements?.forEach(f => allFoods.add(f));
+    });
+    
+    if (allFoods.size > 0) {
+      advice.push(`Variety is key: ${Array.from(allFoods).slice(0, 4).join(', ')}`);
+    }
+    
+    // Check for fasting days
+    const hasFastingDay = detailedFeeders.some(item => {
+      const s = item.data as Species;
+      return s.care.feeding?.fastingDay !== undefined;
+    });
+    
+    if (hasFastingDay) {
+      advice.push('Consider a fasting day once per week to prevent bloating');
+    }
+  } else {
+    // Fallback to generic advice
+    const basicFoods = [];
+    if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM < 5)) basicFoods.push("Micro-pellets/Flakes");
+    if (fishItems.some(i => (i.data as Species).visuals.adultSizeCM >= 5)) basicFoods.push("Granules");
+    if (basicFoods.length > 0) {
+      advice.push(`Daily: ${basicFoods.join(' & ')} as staple.`);
+    }
+
+    if (tags.has('bottom_dweller')) {
+      advice.push("Daily: Sinking wafers/pellets for bottom feeders.");
+    }
+    if (tags.has('algae_eater') || diets.has('herbivore')) {
+      advice.push("2-3x/Week: Algae wafers or blanched veggies (zucchini/spinach).");
+    }
+    if (diets.has('carnivore') || diets.has('omnivore')) {
+      advice.push("1-2x/Week: Frozen/Live food (Bloodworms, Brine Shrimp) for health & color.");
+    }
+  }
+  
+  if (tags.has('surface_dweller')) {
+    advice.push("Note: Ensure some floating food for surface dwellers.");
+  }
+  if (tags.has('nocturnal')) {
+    advice.push("Tip: Feed nocturnal species (like some catfish) after lights out.");
+  }
+  
+  return advice;
+}
+
 function detectTerritorialConflicts(
   fishItems: TankItem[], 
   criticalWarnings: string[], 
   warnings: string[],
   tankConfig: TankConfig
 ) {
-  // Group fish by species for easier analysis
   const speciesCounts = new Map<string, { species: Species; totalCount: number; items: TankItem[] }>();
   
   fishItems.forEach(item => {
@@ -146,49 +232,61 @@ function detectTerritorialConflicts(
     entry.items.push(item);
   });
 
-  // Critical Rule 1: Multiple Male Bettas (or any territorial fish with same-species aggression)
+  // NEW: Use aggressionLevel if available
   speciesCounts.forEach(({ species, totalCount }) => {
+    // Check for extreme intraspecific aggression (with safe optional chaining)
+    const intraAggression = species.behavior.aggressionLevel?.intraspecific;
+    if (intraAggression && intraAggression >= 9 && totalCount > 1) {
+      criticalWarnings.push(`🚫 CRITICAL: ${species.taxonomy.commonName} - ${totalCount} individuals will fight (intraspecific aggression = ${intraAggression}/10)`);
+    }
+    
+    // Betta-specific check (fallback)
     if (species.taxonomy.commonName.toLowerCase().includes('betta') && totalCount > 1) {
       criticalWarnings.push(`🚫 CRITICAL: ${totalCount}x ${species.taxonomy.commonName} - Males will fight to death!`);
     }
     
-    // Check for too many territorial fish of same species in small space
+    // Territory space check (NEW: uses spaceNeeds if available)
     if (species.behavior.tags.includes('territorial')) {
       const spacePerFish = tankConfig.volume / totalCount;
-      if (spacePerFish < species.environment.minTankSizeLiters) {
-        criticalWarnings.push(`⚠️ ${species.taxonomy.commonName}: ${totalCount} individuals need more territory (${Math.round(species.environment.minTankSizeLiters * totalCount)}L minimum)`);
+      const minSpace = species.environment.spaceNeeds?.horizontalCM 
+        ? (species.environment.spaceNeeds.horizontalCM * species.environment.spaceNeeds.horizontalCM * 0.3) / 1000 // rough conversion
+        : species.environment.minTankSizeLiters;
+      
+      if (spacePerFish < minSpace) {
+        criticalWarnings.push(`⚠️ ${species.taxonomy.commonName}: ${totalCount} individuals need more territory (${Math.round(minSpace * totalCount)}L minimum)`);
       }
     }
   });
 
-  // Critical Rule 2: Multiple Territorial Species in Small Tanks
+  // Multiple territorial species warning
   const territorialSpecies = Array.from(speciesCounts.values()).filter(
     ({ species }) => species.behavior.tags.includes('territorial') || species.behavior.tags.includes('semi-aggressive')
   );
 
   if (territorialSpecies.length >= 2) {
-    // Check if tank is large enough for multiple territories
     const totalTerritorialFish = territorialSpecies.reduce((sum, { totalCount }) => sum + totalCount, 0);
     const avgTerritorySize = tankConfig.volume / totalTerritorialFish;
     
-    if (avgTerritorySize < 30) { // Less than 30L per territorial fish
+    if (avgTerritorySize < 30) {
       criticalWarnings.push(`⚠️ ${territorialSpecies.length} territorial species in ${tankConfig.volume}L - High risk of aggression!`);
     }
 
-    // List the specific conflicts
     const names = territorialSpecies.map(({ species }) => species.taxonomy.commonName).join(', ');
     warnings.push(`⚠️ Territorial Mix: ${names} - Provide caves/hiding spots and monitor closely`);
   }
 
-  // Rule 3: Semi-Aggressive + Peaceful Mix
+  // Aggressive + Peaceful mix
   const aggressiveSpecies = Array.from(speciesCounts.values()).filter(
     ({ species }) => 
       species.behavior.tags.includes('semi-aggressive') || 
-      species.behavior.tags.includes('territorial')
+      species.behavior.tags.includes('territorial') ||
+      (species.behavior.aggressionLevel?.interspecific || 0) >= 6
   );
   
   const peacefulSpecies = Array.from(speciesCounts.values()).filter(
-    ({ species }) => species.behavior.tags.includes('peaceful')
+    ({ species }) => 
+      species.behavior.tags.includes('peaceful') &&
+      (species.behavior.aggressionLevel?.interspecific || 0) < 4
   );
 
   if (aggressiveSpecies.length > 0 && peacefulSpecies.length > 0) {
@@ -197,9 +295,12 @@ function detectTerritorialConflicts(
     });
   }
 
-  // Rule 4: Fin-nippers with Long-finned Fish
+  // Fin-nippers with long-finned fish (NEW: uses finNipping data)
   const finNippers = Array.from(speciesCounts.values()).filter(
-    ({ species }) => species.behavior.tags.includes('fin_nipper')
+    ({ species }) => 
+      species.behavior.tags.includes('fin_nipper') ||
+      species.behavior.finNipping?.risk === 'high' ||
+      species.behavior.finNipping?.risk === 'medium'
   );
   
   const longFinnedFish = fishItems.filter(item => {
@@ -213,7 +314,7 @@ function detectTerritorialConflicts(
     criticalWarnings.push(`🚫 Fin Nippers + Long-finned fish detected - Will cause severe stress!`);
   }
 
-  // Rule 5: Size Mismatch (Large predators with tiny fish)
+  // Size mismatch
   const largePredators = Array.from(speciesCounts.values()).filter(
     ({ species }) => species.visuals.adultSizeCM > 10 && species.care.diet === 'carnivore'
   );

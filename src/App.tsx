@@ -1,9 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
+import ErrorBoundary from './components/error/ErrorBoundary';
 
 // Pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Species Pages
 import SpeciesIndexPage from './pages/SpeciesIndexPage';
@@ -22,46 +24,35 @@ import { TankBuilderPage } from './pages/TankBuilderPage';
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        {/* Home (Haupt-Datenbank mit Suche) */}
-        <Route path="/" element={<HomePage />} />
+    <ErrorBoundary>
+      <Layout>
+        <Routes>
+          {/* Home (Haupt-Datenbank mit Suche) */}
+          <Route path="/" element={<HomePage />} />
 
-        {/* Species Routes */}
-        <Route path="/species" element={<SpeciesIndexPage />} />
-        <Route path="/species/:slug" element={<SpeciesDetailPage />} />
+          {/* Species Routes */}
+          <Route path="/species" element={<SpeciesIndexPage />} />
+          <Route path="/species/:slug" element={<SpeciesDetailPage />} />
 
-        {/* Disease Routes */}
-        <Route path="/diseases" element={<DiseaseIndexPage />} />
-        <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
+          {/* Disease Routes */}
+          <Route path="/diseases" element={<DiseaseIndexPage />} />
+          <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
 
-        {/* 🌱 Plant Routes */}
-        <Route path="/plants" element={<PlantsIndexPage />} />
-        <Route path="/plants/:slug" element={<PlantDetailPage />} />
+          {/* 🌱 Plant Routes */}
+          <Route path="/plants" element={<PlantsIndexPage />} />
+          <Route path="/plants/:slug" element={<PlantDetailPage />} />
 
-        {/* 🎨 Tank Builder */}
-        <Route path="/tank-builder" element={<TankBuilderPage />} />
+          {/* 🎨 Tank Builder */}
+          <Route path="/tank-builder" element={<TankBuilderPage />} />
 
-        {/* About Page */}
-        <Route path="/about" element={<AboutPage />} />
+          {/* About Page */}
+          <Route path="/about" element={<AboutPage />} />
 
-        {/* 404 Not Found */}
-        <Route
-          path="*"
-          element={
-            <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0c0a09]">
-              <div className="text-center">
-                <h1 className="text-4xl font-black text-slate-300 mb-4">404</h1>
-                <p className="text-slate-500 mb-6">Page not found</p>
-                <a href="/" className="text-indigo-600 font-bold hover:underline">
-                  Go Home
-                </a>
-              </div>
-            </div>
-          }
-        />
-      </Routes>
-    </Layout>
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </ErrorBoundary>
   );
 }
 

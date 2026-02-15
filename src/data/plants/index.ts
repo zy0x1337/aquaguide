@@ -6,7 +6,7 @@ import {microsorumPteropus} from './microsorum-pteropus';
 import {myriophyllumMattogrossense} from './myriophyllum-mattogrossense'
 import { hornwort } from './hornwort';
 import { aponogetonMadagascariensis } from './aponogeton-madagascariensis';
-import { limnobiumLaevigatum } from './limnoboium-laevigatum';
+import { limnobiumLaevigatum } from './limnobium-laevigatum';
 
 // 1. Array aller Pflanzen sammeln
 export const allPlants: Plant[] = [

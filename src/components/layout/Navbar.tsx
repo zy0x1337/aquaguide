@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect } from 'lucide-react';
+import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect, Home } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 
@@ -13,7 +13,8 @@ export const Navbar = () => {
   };
 
   const navLinks = [
-    { path: '/', label: 'Fish', icon: Fish },
+    { path: '/', label: 'Home', icon: Home },
+    { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
