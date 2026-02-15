@@ -684,7 +684,7 @@ const getTankSetupRecommendations = (species: Species) => {
     });
   }
   
-  if (species.environment.flow === 'gentle') {
+  if (species.environment.flow === 'low') {
     items.push({
       title: 'Gentle Flow',
       description: 'Low current filter - avoid strong water movement'
