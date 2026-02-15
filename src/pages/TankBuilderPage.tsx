@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Sparkles, Skull } from 'lucide-react';
+import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Skull, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { Tank3DView } from '../components/tank-builder/Tank3DView';
@@ -24,6 +24,19 @@ export const TankBuilderPage = () => {
   const [showGrid, setShowGrid] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+
+  // Advanced Filter State
+  const [filters, setFilters] = useState({
+    tempMin: 20,
+    tempMax: 28,
+    phMin: 6.0,
+    phMax: 8.0,
+    maxSize: 15,
+    diet: 'all' as 'all' | 'carnivore' | 'herbivore' | 'omnivore',
+    temperament: 'all' as 'all' | 'peaceful' | 'semi-aggressive',
+    difficulty: 'all' as 'all' | 'beginner' | 'medium' | 'expert'
+  });
 
   // Load from URL on mount
   useEffect(() => {
@@ -35,11 +48,10 @@ export const TankBuilderPage = () => {
       if (decoded) {
         setTankConfig(decoded.tankConfig);
         setItems(decoded.items);
-        return; // Skip autosave loading
+        return;
       }
     }
 
-    // Load from autosave if no URL param
     const saved = localStorage.getItem(AUTOSAVE_KEY);
     if (saved) {
       try {
@@ -89,7 +101,6 @@ export const TankBuilderPage = () => {
   const clearAll = () => {
     if (confirm('Clear entire tank?')) {
       setItems([]);
-      // Reset URL to base path
       window.history.replaceState({}, '', window.location.pathname);
     }
   };
@@ -133,18 +144,15 @@ export const TankBuilderPage = () => {
     const success = await copyToClipboard(url);
     if (success) {
       setCopySuccess(true);
-      // Update URL without page reload
       window.history.replaceState({}, '', url);
       setTimeout(() => setCopySuccess(false), 2000);
     }
   };
 
-  // Use the central utility for stats
   const stats = calculateTankStats(items, tankConfig);
-  const warnings = [...stats.criticalWarnings, ...stats.warnings]; // Merge critical first
+  const warnings = [...stats.criticalWarnings, ...stats.warnings];
   const hasCritical = stats.criticalWarnings.length > 0;
 
-  // Add specific compatibility warnings (Logic kept here for now as it's UI-heavy list building)
   const fishItems = items.filter(i => i.type === 'fish');
   
   if (fishItems.length > 1) {
@@ -181,55 +189,18 @@ export const TankBuilderPage = () => {
       <div className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white pt-24 pb-12 px-6"><div className="max-w-7xl mx-auto"><h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">🐠 Tank Builder</h1><p className="text-lg text-blue-100 max-w-2xl">Design your dream aquarium with realistic dimensions and stocking calculations.</p></div></div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-8">
-        {/* PRESET TANKS BANNER */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-xl p-6 mb-6 overflow-hidden relative"
-        >
-          <div className="absolute top-0 right-0 opacity-10">
-            <Sparkles className="w-32 h-32" />
+        {/* PRESETS HIDDEN - Will be enabled later */}
+        {false && TANK_PRESETS.length > 0 && (
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-xl p-6 mb-6">
+            {/* Preset UI here */}
           </div>
-          <div className="relative z-10">
-            <h3 className="text-xl font-bold text-white mb-3 flex items-center">
-              <Sparkles className="w-5 h-5 mr-2" />
-              Quick Start: Load a Preset Tank
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {TANK_PRESETS.map(preset => (
-                <button
-                  key={preset.id}
-                  onClick={() => loadPreset(preset.id)}
-                  className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl p-4 text-left transition-all hover:scale-105 group"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="font-bold text-white group-hover:text-yellow-200 transition-colors">
-                      {preset.name}
-                    </div>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      preset.difficulty === 'beginner' ? 'bg-emerald-500/30 text-emerald-100' :
-                      preset.difficulty === 'intermediate' ? 'bg-amber-500/30 text-amber-100' :
-                      'bg-rose-500/30 text-rose-100'
-                    }`}>
-                      {preset.difficulty}
-                    </span>
-                  </div>
-                  <p className="text-sm text-white/80 leading-snug">{preset.description}</p>
-                  <div className="text-xs text-white/60 mt-2">
-                    {preset.tankConfig.volume}L • {preset.items.filter(i => i.type === 'fish').length} species
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        )}
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           <div className="xl:col-span-1 space-y-6">
             <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6"><h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center"><Ruler className="w-5 h-5 mr-2 text-indigo-600" /> Tank Dimensions</h3><div className="space-y-3 max-h-80 overflow-y-auto">{PRESET_TANKS.slice(0, -1).map((preset, idx) => (<button key={idx} onClick={() => setTankConfig(preset)} className={`w-full text-left p-4 rounded-xl border-2 transition-all ${tankConfig.volume === preset.volume && tankConfig.length === preset.length ? 'border-indigo-500 bg-gradient-to-br from-indigo-50 to-blue-50 shadow-md' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}`}><div className="flex items-center justify-between"><div><div className="font-bold text-slate-900">{preset.name}</div><div className="text-xs text-slate-500">{preset.length}×{preset.width}×{preset.height}cm</div></div>{tankConfig.volume === preset.volume && tankConfig.length === preset.length && (<div className="w-3 h-3 bg-indigo-500 rounded-full" />)}</div></button>))}
                 <div className="border-t-2 border-slate-200 pt-3 mt-3"><div className="font-bold text-slate-900 mb-3 flex items-center justify-between"><span>Custom Dimensions</span><button onClick={updateCustomTank} className="text-xs px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">Apply</button></div><div className="space-y-2"><div><label className="text-xs text-slate-600">Length (cm)</label><input type="number" value={customDimensions.length} onChange={(e) => setCustomDimensions({ ...customDimensions, length: Number(e.target.value) })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" min="20" max="300" /></div><div><label className="text-xs text-slate-600">Width (cm)</label><input type="number" value={customDimensions.width} onChange={(e) => setCustomDimensions({ ...customDimensions, width: Number(e.target.value) })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" min="20" max="100" /></div><div><label className="text-xs text-slate-600">Height (cm)</label><input type="number" value={customDimensions.height} onChange={(e) => setCustomDimensions({ ...customDimensions, height: Number(e.target.value) })} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" min="20" max="100" /></div></div></div></div></div>
 
-            {/* NEW STATS COMPONENT */}
             <TankStats items={items} tankConfig={tankConfig} />
 
             {showCompatibility && warnings.length > 0 && (
@@ -273,7 +244,6 @@ export const TankBuilderPage = () => {
             )}
 
             <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-3">
-              {/* SHARE BUTTON */}
               <button 
                 onClick={handleShare} 
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg relative overflow-hidden group"
@@ -323,7 +293,14 @@ export const TankBuilderPage = () => {
               />
             </div>
             
-            <AssetBrowser onAddItem={addItem} tankVolume={tankConfig.volume} />
+            <AssetBrowser 
+              onAddItem={addItem} 
+              tankVolume={tankConfig.volume}
+              filters={filters}
+              onFiltersChange={setFilters}
+              showAdvancedFilters={showAdvancedFilters}
+              onToggleAdvancedFilters={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            />
           </div>
         </div>
       </div>
@@ -335,7 +312,7 @@ const generateShoppingList = (items: TankItem[], config: TankConfig, stats: any)
   const fish = items.filter(i => i.type === 'fish');
   const plants = items.filter(i => i.type === 'plant');
   const hardscape = items.filter(i => i.type === 'hardscape');
-  let text = '🐠 AQUARIUM SETUP PLAN\n═══════════════════════════════════\n\n📐 TANK SPECIFICATIONS:\nVolume: ' + config.volume + 'L\nDimensions: ' + config.length + '×' + config.width + '×' + config.height + 'cm (L×W×H)\nSurface Area: ' + (config.length * config.width).toFixed(0) + 'cm²\n\n';
+  let text = '🐠 AQUARIUM SETUP PLAN\n══════════════════════════════════\n\n📐 TANK SPECIFICATIONS:\nVolume: ' + config.volume + 'L\nDimensions: ' + config.length + '×' + config.width + '×' + config.height + 'cm (L×W×H)\nSurface Area: ' + (config.length * config.width).toFixed(0) + 'cm²\n\n';
   
   if (fish.length > 0) {
     text += '🐟 FISH STOCKING:\n';
