@@ -104,7 +104,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-javafarn')!, // microsorum-pteropus
+        data: findPlant('plant-java-fern')!, // microsorum-pteropus
         position: { x: 65, y: 80, z: 65 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.8, floatSpeed: 1.8 }
@@ -164,7 +164,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // SHRIMP
       {
         type: 'fish' as const,
-        data: findSpecies('shrimp-001')!, // neocaridina-davidi-red-cherry
+        data: findSpecies('neocaridina-davidi-red')!, // red cherry shrimp
         position: { x: 40, y: 75, z: 50 },
         count: 15,
         locked: false,
@@ -205,7 +205,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-javafarn')!, // microsorum-pteropus
+        data: findPlant('plant-java-fern')!, // microsorum-pteropus
         position: { x: 65, y: 81, z: 35 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1.6, floatSpeed: 1.8 }
@@ -284,7 +284,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'fish' as const,
-        data: findSpecies('rasbora-003')!, // chili-rasbora
+        data: findSpecies('rasbora-002')!, // chili-rasbora
         position: { x: 65, y: 35, z: 40 },
         count: 20,
         locked: false,
@@ -337,7 +337,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-myrio-mattogrossense')!, // myriophyllum-mattogrossense
+        data: findPlant('plant-mato-grosso')!, // myriophyllum-mattogrossense
         position: { x: 25, y: 72, z: 50 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 3.5 }
@@ -369,7 +369,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-javafarn')!, // microsorum-pteropus
+        data: findPlant('plant-java-fern')!, // microsorum-pteropus
         position: { x: 60, y: 80, z: 55 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 2, floatSpeed: 1.8 }
@@ -385,7 +385,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Feature plant
       {
         type: 'plant' as const,
-        data: findPlant('plant-madagaskar-lace')!, // aponogeton
+        data: findPlant('plant-aponogeton-madagascariensis')!, // aponogeton
         position: { x: 70, y: 78, z: 45 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 2.5, floatSpeed: 2 }
@@ -476,7 +476,7 @@ export const TANK_PRESETS: TankPreset[] = [
       },
       {
         type: 'plant' as const,
-        data: findPlant('plant-javafarn')!, // microsorum-pteropus
+        data: findPlant('plant-java-fern')!, // microsorum-pteropus
         position: { x: 50, y: 80, z: 70 },
         locked: false,
         visuals: { rotation: 0, flipX: false, swayDelay: 1, floatSpeed: 1.8 }
@@ -539,7 +539,7 @@ export const TANK_PRESETS: TankPreset[] = [
       // Using peaceful community fish as placeholder since we don't have goldfish
       {
         type: 'fish' as const,
-        data: findSpecies('cyprinidae-002')!, // white-cloud-minnow
+        data: findSpecies('minnow-001')!, // white-cloud-minnow
         position: { x: 40, y: 40, z: 50 },
         count: 10,
         locked: false,
