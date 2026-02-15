@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Skull, Info, Plus } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Skull } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { Tank3DView } from '../components/tank-builder/Tank3DView';
 import { AssetBrowser } from '../components/tank-builder/AssetBrowser';
@@ -9,7 +9,6 @@ import { calculateTankStats } from '../utils/tank-calculations';
 import { generateShareURL, copyToClipboard, decodeTankFromURL } from '../utils/tank-share';
 import { PRESET_TANKS } from '../data/builder';
 import { TANK_PRESETS } from '../data/presets';
-import { allSpecies } from '../data/species';
 import { TankConfig, TankItem, HardscapeItem } from '../types/builder';
 import { Species } from '../types/species';
 import { Plant } from '../types/plant';
@@ -20,7 +19,6 @@ export const TankBuilderPage = () => {
   const [tankConfig, setTankConfig] = useState<TankConfig>(PRESET_TANKS[2]); // Default to 54L
   const [customDimensions, setCustomDimensions] = useState({ length: 60, width: 30, height: 30 });
   const [items, setItems] = useState<TankItem[]>([]);
-  const [showCompatibility, setShowCompatibility] = useState(true);
   const [showGrid, setShowGrid] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -292,7 +290,7 @@ export const TankBuilderPage = () => {
           </div>
 
           {/* Warnings Card */}
-          {showCompatibility && warnings.length > 0 && (
+          {warnings.length > 0 && (
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
