@@ -165,17 +165,18 @@ const SpeciesIndexPage = () => {
           description="Browse our complete collection of aquarium fish and invertebrates."
         />
 
+        {/* Centered Header */}
         <div className="bg-white dark:bg-stone-900 border-b border-slate-200 dark:border-stone-800 pt-24 pb-12 px-6 transition-colors duration-300">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
               Species <span className="text-indigo-600 dark:text-indigo-400">Database</span>
             </h1>
-            <p className="text-slate-500 dark:text-stone-400 text-lg max-w-2xl mb-8">
+            <p className="text-slate-500 dark:text-stone-400 text-lg mb-8">
               Explore our complete database of {allSpecies.length} documented species.
             </p>
 
-            {/* Search Bar */}
-            <div className="max-w-2xl">
+            {/* Centered Search Bar */}
+            <div className="max-w-2xl mx-auto">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
                 <div className="relative flex items-center bg-slate-50 dark:bg-stone-800 rounded-2xl p-2 shadow-lg border border-slate-200 dark:border-stone-700">
