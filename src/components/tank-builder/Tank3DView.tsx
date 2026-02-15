@@ -102,8 +102,8 @@ export const Tank3DView = ({
     const rect = containerRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const clampedX = Math.max(5, Math.min(95, x));
-    const clampedY = Math.max(5, Math.min(95, y));
+    const clampedX = Math.max(0, Math.min(100, x));
+    const clampedY = Math.max(0, Math.min(100, y));
     onUpdatePosition(draggedItem, clampedX, clampedY);
   };
 
@@ -116,14 +116,14 @@ export const Tank3DView = ({
   return (
     <div 
       ref={containerRef} 
-      className="relative bg-gradient-to-b from-cyan-50 via-blue-100 to-blue-300 overflow-hidden cursor-crosshair" 
+      className="relative bg-gradient-to-b from-cyan-50 via-blue-100 to-blue-300 cursor-crosshair" 
       style={{ aspectRatio: `${containerAspectRatio} / 1` }} 
       onMouseMove={handleMouseMove} 
       onMouseUp={handleMouseUp} 
       onMouseLeave={handleMouseUp} 
       onClick={() => setSelectedItem(null)}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-pulse" />
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-pulse pointer-events-none" />
       {showGrid && (
         <div 
           className="absolute inset-0 pointer-events-none" 
@@ -134,12 +134,12 @@ export const Tank3DView = ({
         />
       )}
       
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[20%] border-b border-dashed border-blue-400/30" />
         <div className="absolute bottom-[20%] left-0 right-0 h-[60%] border-b border-dashed border-blue-400/30" />
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-b from-amber-700 to-amber-900 opacity-90" />
+      <div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-b from-amber-700 to-amber-900 opacity-90 pointer-events-none" />
 
       <AnimatePresence>
         {items.map(item => {
