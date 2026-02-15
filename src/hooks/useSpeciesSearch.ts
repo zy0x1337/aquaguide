@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import Fuse from 'fuse.js';
 import { allSpecies } from '../data/species';
-import { Species } from '../types/species';
+import { Species, EthologyTag } from '../types/species';
 
 export interface SearchFilters {
   query: string;
@@ -12,7 +12,7 @@ export interface SearchFilters {
   tempRange: [number, number];
   phRange: [number, number];
   diet: string[];
-  tags: string[];
+  tags: EthologyTag[];
   sortBy: 'name' | 'size' | 'difficulty' | 'tankSize';
   sortOrder: 'asc' | 'desc';
 }
@@ -92,7 +92,7 @@ export const useSpeciesSearch = () => {
       results = results.filter(s => filters.diet.includes(s.care.diet));
     }
 
-    // Filter by tags
+    // Filter by tags (NOW WITH CORRECT TYPE)
     if (filters.tags.length > 0) {
       results = results.filter(s => 
         filters.tags.some(tag => s.behavior.tags.includes(tag))
