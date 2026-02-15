@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Sparkles } from 'lucide-react';
+import { Ruler, AlertTriangle, Download, Trash2, Grid3x3, Share2, Check, Sparkles, Skull } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { Tank3DView } from '../components/tank-builder/Tank3DView';
@@ -141,7 +141,8 @@ export const TankBuilderPage = () => {
 
   // Use the central utility for stats
   const stats = calculateTankStats(items, tankConfig);
-  const warnings = stats.warnings; // Base bioload warnings
+  const warnings = [...stats.criticalWarnings, ...stats.warnings]; // Merge critical first
+  const hasCritical = stats.criticalWarnings.length > 0;
 
   // Add specific compatibility warnings (Logic kept here for now as it's UI-heavy list building)
   const fishItems = items.filter(i => i.type === 'fish');
@@ -168,9 +169,6 @@ export const TankBuilderPage = () => {
   const speciesGroups = new Map<string, number>();
   fishItems.forEach(item => { const species = item.data as Species; const current = speciesGroups.get(species.id) || 0; speciesGroups.set(species.id, current + (item.count || 1)); });
   speciesGroups.forEach((totalCount, speciesId) => { const speciesData = allSpecies.find(s => s.id === speciesId); if (speciesData && speciesData.behavior.minGroupSize > 1 && totalCount < speciesData.behavior.minGroupSize) { warnings.push(`👥 ${speciesData.taxonomy.commonName}: Keep at least ${speciesData.behavior.minGroupSize} (you have ${totalCount})`); } });
-
-  const aggressiveFish = fishItems.filter(item => { const species = item.data as Species; return species.behavior.tags.includes('semi-aggressive') || species.behavior.tags.includes('territorial'); });
-  if (aggressiveFish.length > 0 && fishItems.length > aggressiveFish.length) { const uniqueAggressive = new Set(aggressiveFish.map(item => (item.data as Species).taxonomy.commonName)); uniqueAggressive.forEach(name => { warnings.push(`⚠️ ${name} may be aggressive - monitor closely`); }); }
 
   const totalPlants = items.filter(i => i.type === 'plant').length;
   const plantDensityPerLiter = totalPlants / tankConfig.volume;
@@ -234,7 +232,45 @@ export const TankBuilderPage = () => {
             {/* NEW STATS COMPONENT */}
             <TankStats items={items} tankConfig={tankConfig} />
 
-            {showCompatibility && warnings.length > 0 && (<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-rose-50 to-red-50 border-2 border-rose-300 rounded-2xl p-5 shadow-lg"><h3 className="text-sm font-bold text-rose-900 mb-3 flex items-center"><AlertTriangle className="w-4 h-4 mr-2" /> Compatibility Issues ({warnings.length})</h3><ul className="space-y-2 max-h-48 overflow-y-auto">{warnings.map((warning, i) => (<motion.li key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} className="text-xs text-rose-800 flex items-start bg-white/50 rounded-lg p-2"><span className="mr-2 flex-shrink-0">•</span>{warning}</motion.li>))}</ul></motion.div>)}
+            {showCompatibility && warnings.length > 0 && (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                className={`rounded-2xl p-5 shadow-lg border-2 ${
+                  hasCritical 
+                    ? 'bg-gradient-to-br from-red-100 to-rose-100 border-red-400' 
+                    : 'bg-gradient-to-br from-rose-50 to-red-50 border-rose-300'
+                }`}
+              >
+                <h3 className={`text-sm font-bold mb-3 flex items-center ${
+                  hasCritical ? 'text-red-900' : 'text-rose-900'
+                }`}>
+                  {hasCritical ? <Skull className="w-4 h-4 mr-2" /> : <AlertTriangle className="w-4 h-4 mr-2" />}
+                  {hasCritical ? 'CRITICAL CONFLICTS' : 'Compatibility Issues'} ({warnings.length})
+                </h3>
+                <ul className="space-y-2 max-h-48 overflow-y-auto">
+                  {warnings.map((warning, i) => {
+                    const isCritical = warning.includes('CRITICAL') || warning.includes('🚫');
+                    return (
+                      <motion.li 
+                        key={i} 
+                        initial={{ opacity: 0, x: -10 }} 
+                        animate={{ opacity: 1, x: 0 }} 
+                        transition={{ delay: i * 0.05 }} 
+                        className={`text-xs flex items-start rounded-lg p-2 ${
+                          isCritical 
+                            ? 'bg-red-200/70 text-red-900 font-bold border border-red-400' 
+                            : 'bg-white/50 text-rose-800'
+                        }`}
+                      >
+                        <span className="mr-2 flex-shrink-0">•</span>
+                        {warning}
+                      </motion.li>
+                    );
+                  })}
+                </ul>
+              </motion.div>
+            )}
 
             <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-3">
               {/* SHARE BUTTON */}
