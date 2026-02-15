@@ -128,22 +128,33 @@ export const TankBuilderPage = () => {
   const filteredHardscape = HARDSCAPE_LIBRARY.filter(h => h.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   // New accurate scaling calculation
-  const getItemStyle = (realSizeCM: number, itemType: 'fish' | 'plant' | 'hardscape') => {
+  const getItemStyle = (realSizeCM: number, item: TankItem) => {
     const tankL = tankConfig.length;
     let widthPercent = 0;
     let aspectRatio = '1/1';
     
-    if (itemType === 'plant') {
-        const visualWidthCM = realSizeCM * 0.4; 
-        widthPercent = (visualWidthCM / tankL) * 100;
-        aspectRatio = '1/2.5'; 
-    } else if (itemType === 'hardscape') {
+    if (item.type === 'plant') {
+        const plant = item.data as Plant;
+        const isFloating = plant.specs.placement?.includes('floating') || plant.specs.type === 'float';
+        
+        if (isFloating) {
+             // Floating plants are wide (clusters)
+             widthPercent = (realSizeCM / tankL) * 100 * 2; // Make clusters visible
+             aspectRatio = '2/1'; 
+        } else {
+             // Stem plants are tall
+             const visualWidthCM = realSizeCM * 0.4; 
+             widthPercent = (visualWidthCM / tankL) * 100;
+             aspectRatio = '1/2.5'; 
+        }
+    } else if (item.type === 'hardscape') {
         widthPercent = (realSizeCM / tankL) * 100;
         aspectRatio = '1/1';
     } else {
         // Fish
         widthPercent = (realSizeCM / tankL) * 100;
-        aspectRatio = '1/1'; 
+        // Most fish are roughly 2:1 length:height ratio
+        aspectRatio = '2/1'; 
     }
 
     return {
@@ -156,10 +167,23 @@ export const TankBuilderPage = () => {
     let itemId: string;
     if ('id' in data) { itemId = data.id; } else { itemId = (data as HardscapeItem).name; }
     
+    // Determine default Y position based on type
+    let defaultY = 50;
+    if (type === 'plant') {
+        const plant = data as Plant;
+        const isFloating = plant.specs?.placement?.includes('floating') || plant.specs?.type === 'float';
+        defaultY = isFloating ? 5 : 82; // 5% (Top) for floating, 82% (Bottom) for planted
+    } else if (type === 'hardscape') {
+        defaultY = 85;
+    } else {
+        // Fish
+        defaultY = Math.random() * 50 + 25;
+    }
+
     const newItem: TankItem = {
       id: `${type}-${itemId}-${Date.now()}`,
       type, data,
-      position: { x: Math.random() * 60 + 20, y: type === 'plant' ? 82 : type === 'hardscape' ? 85 : Math.random() * 50 + 25, z: Math.random() * 60 + 20 },
+      position: { x: Math.random() * 60 + 20, y: defaultY, z: Math.random() * 60 + 20 },
       count: type === 'fish' ? 1 : undefined,
       locked: false,
       visuals: { rotation: type === 'hardscape' ? Math.random() * 360 : 0, flipX: type === 'fish' ? Math.random() > 0.5 : false, swayDelay: Math.random() * 2, floatSpeed: 3 + Math.random() * 2 }
@@ -282,7 +306,7 @@ const TabButton = ({ active, onClick, icon, label, count, color }: { active: boo
 const getRealSize = (item: TankItem): number => { if (item.type === 'fish') { return (item.data as Species).visuals.adultSizeCM; } else if (item.type === 'plant') { return (item.data as Plant).specs.heightCM.max; } else { return (item.data as HardscapeItem).size; } };
 const getSwimZone = (item: TankItem): 'surface' | 'mid' | 'bottom' | null => { if (item.type !== 'fish') return null; const species = item.data as Species; if (species.behavior.tags.includes('surface') || species.behavior.tags.includes('surface_dweller')) return 'surface'; if (species.behavior.tags.includes('bottom_dweller')) return 'bottom'; return 'mid'; };
 
-const Tank3DView = ({ items, tankConfig, showGrid, getItemStyle, onRemoveItem, onToggleLock, onUpdatePosition, onUpdateCount, draggedItem, setDraggedItem, selectedItem, setSelectedItem }: { items: TankItem[]; tankConfig: TankConfig; showGrid: boolean; getItemStyle: (size: number, type: 'fish' | 'plant' | 'hardscape') => { width: string; aspectRatio: string; }; onRemoveItem: (id: string) => void; onToggleLock: (id: string) => void; onUpdatePosition: (id: string, x: number, y: number) => void; onUpdateCount: (id: string, delta: number) => void; draggedItem: string | null; setDraggedItem: (id: string | null) => void; selectedItem: string | null; setSelectedItem: (id: string | null) => void; }) => {
+const Tank3DView = ({ items, tankConfig, showGrid, getItemStyle, onRemoveItem, onToggleLock, onUpdatePosition, onUpdateCount, draggedItem, setDraggedItem, selectedItem, setSelectedItem }: { items: TankItem[]; tankConfig: TankConfig; showGrid: boolean; getItemStyle: (size: number, item: TankItem) => { width: string; aspectRatio: string; }; onRemoveItem: (id: string) => void; onToggleLock: (id: string) => void; onUpdatePosition: (id: string, x: number, y: number) => void; onUpdateCount: (id: string, delta: number) => void; draggedItem: string | null; setDraggedItem: (id: string | null) => void; selectedItem: string | null; setSelectedItem: (id: string | null) => void; }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = (id: string, item: TankItem) => { if (!item.locked) { setDraggedItem(id); setSelectedItem(id); } };
@@ -290,7 +314,7 @@ const Tank3DView = ({ items, tankConfig, showGrid, getItemStyle, onRemoveItem, o
   const handleMouseUp = () => { setDraggedItem(null); };
   const containerAspectRatio = Math.max(1.5, Math.min(3.5, tankConfig.aspectRatio || (tankConfig.length / tankConfig.height) || 2.0));
 
-  return (<div ref={containerRef} className="relative bg-gradient-to-b from-cyan-50 via-blue-100 to-blue-300 overflow-hidden cursor-crosshair" style={{ aspectRatio: `${containerAspectRatio} / 1` }} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onClick={() => setSelectedItem(null)}><div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-pulse" />{showGrid && (<div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '10% 10%' }} />)}<div className="absolute inset-0 pointer-events-none"><div className="absolute top-0 left-0 right-0 h-[20%] border-b border-dashed border-blue-400/30" /><div className="absolute bottom-[20%] left-0 right-0 h-[60%] border-b border-dashed border-blue-400/30" /></div><div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-b from-amber-700 to-amber-900 opacity-90" /><AnimatePresence>{items.map(item => { const realSize = getRealSize(item); const style = getItemStyle(realSize, item.type); const zone = getSwimZone(item); const isSelected = selectedItem === item.id; const rotation = item.visuals?.rotation || 0; const flipX = item.visuals?.flipX || false; const swayDelay = item.visuals?.swayDelay || 0; const floatSpeed = item.visuals?.floatSpeed || 4; const isFar = item.position.z < 40; const depthFilter = isFar ? 'brightness(0.85) contrast(0.9) blur(0.5px)' : 'none'; 
+  return (<div ref={containerRef} className="relative bg-gradient-to-b from-cyan-50 via-blue-100 to-blue-300 overflow-hidden cursor-crosshair" style={{ aspectRatio: `${containerAspectRatio} / 1` }} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onClick={() => setSelectedItem(null)}><div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-pulse" />{showGrid && (<div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '10% 10%' }} />)}<div className="absolute inset-0 pointer-events-none"><div className="absolute top-0 left-0 right-0 h-[20%] border-b border-dashed border-blue-400/30" /><div className="absolute bottom-[20%] left-0 right-0 h-[60%] border-b border-dashed border-blue-400/30" /></div><div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-b from-amber-700 to-amber-900 opacity-90" /><AnimatePresence>{items.map(item => { const realSize = getRealSize(item); const style = getItemStyle(realSize, item); const zone = getSwimZone(item); const isSelected = selectedItem === item.id; const rotation = item.visuals?.rotation || 0; const flipX = item.visuals?.flipX || false; const swayDelay = item.visuals?.swayDelay || 0; const floatSpeed = item.visuals?.floatSpeed || 4; const isFar = item.position.z < 40; const depthFilter = isFar ? 'brightness(0.85) contrast(0.9) blur(0.5px)' : 'none'; 
   
   // Pivot scaling around z=50 (middle of tank)
   const zScale = 1 + (item.position.z - 50) / 200;
