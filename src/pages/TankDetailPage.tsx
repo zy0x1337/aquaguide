@@ -5,13 +5,15 @@ import { motion } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
 import AddInhabitantModal from '../components/tanks/AddInhabitantModal';
+import EditTankModal from '../components/tanks/EditTankModal';
 import { allSpecies } from '../data/species';
 
 const TankDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [tank, setTank] = useState<Tank | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInhabitantModalOpen, setIsInhabitantModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'fish' | 'plant'>('fish');
 
   // Load tank from localStorage (temporary until we have backend)
@@ -29,6 +31,18 @@ const TankDetailPage = () => {
       navigate('/my-tanks');
     }
   }, [id, navigate]);
+
+  const handleEditTank = (updatedTank: Tank) => {
+    // Update localStorage
+    const storedTanks = localStorage.getItem('aquaguide_tanks');
+    if (storedTanks) {
+      const tanks: Tank[] = JSON.parse(storedTanks);
+      const updatedTanks = tanks.map(t => t.id === updatedTank.id ? updatedTank : t);
+      localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
+      setTank(updatedTank);
+    }
+    setIsEditModalOpen(false);
+  };
 
   const handleAddInhabitant = (speciesId: string, quantity: number, type: 'fish' | 'plant') => {
     if (!tank) return;
@@ -57,7 +71,7 @@ const TankDetailPage = () => {
       setTank(updatedTank);
     }
 
-    setIsModalOpen(false);
+    setIsInhabitantModalOpen(false);
   };
 
   const handleRemoveInhabitant = (speciesId: string, type: 'fish' | 'plant') => {
@@ -149,6 +163,7 @@ const TankDetailPage = () => {
               </p>
             </div>
             <button
+              onClick={() => setIsEditModalOpen(true)}
               className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors"
             >
               <Edit className="w-4 h-4" />
@@ -219,6 +234,10 @@ const TankDetailPage = () => {
             <ParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'warning' : 'good'} />
             <ParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'warning' : 'good'} />
             <ParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
+            {tank.parameters.gh && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
+            {tank.parameters.kh && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
+            {tank.parameters.tds && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
+            {tank.parameters.salinity && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
           </div>
         </motion.div>
 
@@ -237,7 +256,7 @@ const TankDetailPage = () => {
             <button
               onClick={() => {
                 setModalType('fish');
-                setIsModalOpen(true);
+                setIsInhabitantModalOpen(true);
               }}
               className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
             >
@@ -285,7 +304,7 @@ const TankDetailPage = () => {
             <button
               onClick={() => {
                 setModalType('plant');
-                setIsModalOpen(true);
+                setIsInhabitantModalOpen(true);
               }}
               className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
             >
@@ -319,13 +338,20 @@ const TankDetailPage = () => {
         </motion.div>
       </main>
 
-      {/* Add Inhabitant Modal */}
+      {/* Modals */}
       <AddInhabitantModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isInhabitantModalOpen}
+        onClose={() => setIsInhabitantModalOpen(false)}
         onSubmit={handleAddInhabitant}
         type={modalType}
         tankType={tank.type}
+      />
+
+      <EditTankModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSubmit={handleEditTank}
+        tank={tank}
       />
     </div>
   );
@@ -342,7 +368,7 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode; label: string
   </div>
 );
 
-const ParamCard = ({ label, value, status }: { label: string; value: string; status: 'good' | 'warning' | 'danger' }) => {
+const ParamCard = ({ label, value, status }: { label: string; value: string | number; status: 'good' | 'warning' | 'danger' }) => {
   const statusColors = {
     good: 'from-emerald-50 to-green-50 border-emerald-200',
     warning: 'from-amber-50 to-orange-50 border-amber-300',
