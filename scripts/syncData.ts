@@ -56,6 +56,24 @@ function formatImageCredit(imageCredit: any): string | null {
   return null;
 }
 
+function normalizeDifficulty(difficulty: string): string {
+  const normalized = difficulty.toLowerCase();
+  
+  // Map common variations to database values
+  const mapping: Record<string, string> = {
+    'easy': 'beginner',
+    'beginner': 'beginner',
+    'moderate': 'intermediate',
+    'intermediate': 'intermediate',
+    'hard': 'advanced',
+    'advanced': 'advanced',
+    'expert': 'expert',
+    'very hard': 'expert'
+  };
+  
+  return mapping[normalized] || 'beginner';
+}
+
 function convertToDBFormat(item: any, type: 'fish' | 'invertebrate' | 'plant') {
   const behaviorTags: string[] = [];
   
@@ -81,7 +99,7 @@ function convertToDBFormat(item: any, type: 'fish' | 'invertebrate' | 'plant') {
     common_name: item.commonName || item.taxonomy?.commonName,
     scientific_name: item.scientificName || item.taxonomy?.scientificName,
     type,
-    difficulty: item.difficulty?.toLowerCase() || 'beginner',
+    difficulty: normalizeDifficulty(item.difficulty || 'beginner'),
     min_tank_size_liters: item.minTankSize || 0,
     min_group_size: item.minGroupSize || 1,
     ph_range: item.environment?.ph || item.parameters?.ph ? 

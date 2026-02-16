@@ -71,6 +71,24 @@ function formatImageCredit(imageCredit: any): string | null {
   return null;
 }
 
+function normalizeDifficulty(difficulty: string): string {
+  const normalized = difficulty.toLowerCase();
+  
+  // Map common variations to database values
+  const mapping: Record<string, string> = {
+    'easy': 'beginner',
+    'beginner': 'beginner',
+    'moderate': 'intermediate',
+    'intermediate': 'intermediate',
+    'hard': 'advanced',
+    'advanced': 'advanced',
+    'expert': 'expert',
+    'very hard': 'expert'
+  };
+  
+  return mapping[normalized] || 'beginner';
+}
+
 function convertSpeciesToDB(species: any): SpeciesData {
   // Determine type
   let type: 'fish' | 'invertebrate' | 'plant' = 'fish';
@@ -90,7 +108,7 @@ function convertSpeciesToDB(species: any): SpeciesData {
     common_name: species.commonName || species.taxonomy?.commonName,
     scientific_name: species.scientificName || species.taxonomy?.scientificName,
     type,
-    difficulty: species.difficulty?.toLowerCase() || 'beginner',
+    difficulty: normalizeDifficulty(species.difficulty || 'beginner'),
     min_tank_size_liters: species.minTankSize || 0,
     min_group_size: species.minGroupSize || 1,
     ph_range: species.environment?.ph || species.parameters?.ph ? 
@@ -131,7 +149,7 @@ function convertPlantToDB(plant: any): SpeciesData {
     common_name: plant.taxonomy?.commonName || plant.commonName,
     scientific_name: plant.taxonomy?.scientificName || plant.scientificName,
     type: 'plant',
-    difficulty: plant.difficulty?.toLowerCase() || 'beginner',
+    difficulty: normalizeDifficulty(plant.difficulty || 'beginner'),
     min_tank_size_liters: 0,
     min_group_size: 1,
     ph_range: plant.parameters?.ph ? { min: plant.parameters.ph.min, max: plant.parameters.ph.max } : null,
