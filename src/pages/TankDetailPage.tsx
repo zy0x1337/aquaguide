@@ -8,7 +8,7 @@ import AddInhabitantModal from '../components/tanks/AddInhabitantModal';
 import EditTankModal from '../components/tanks/EditTankModal';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
-import { getTankById, updateTank } from '../lib/supabase/tanks';
+import { getTankById, updateTank, addInhabitant, removeInhabitant } from '../lib/supabase/tanks';
 
 const TankDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -69,20 +69,10 @@ const TankDetailPage = () => {
     const species = allSpecies.find(s => s.id === speciesId) || allPlants.find(p => p.id === speciesId);
     if (!species) return;
 
-    const updatedInhabitants = {
-      fish: type === 'fish' 
-        ? [...(tank.inhabitants?.fish || []), { speciesId, speciesName: species.taxonomy.commonName, quantity, addedAt: new Date().toISOString() }]
-        : tank.inhabitants?.fish || [],
-      plants: type === 'plant'
-        ? [...(tank.inhabitants?.plants || []), { speciesId, speciesName: species.taxonomy.commonName, quantity, addedAt: new Date().toISOString() }]
-        : tank.inhabitants?.plants || [],
-    };
-
     try {
-      const updated = await updateTank(id, {
-        inhabitants: updatedInhabitants,
-      });
-      setTank(updated);
+      await addInhabitant(id, speciesId, species.taxonomy.commonName, type, quantity);
+      // Reload tank to get updated inhabitants
+      await loadTank();
       setIsInhabitantModalOpen(false);
     } catch (err) {
       console.error('Error adding inhabitant:', err);
@@ -93,20 +83,10 @@ const TankDetailPage = () => {
   const handleRemoveInhabitant = async (speciesId: string, type: 'fish' | 'plant') => {
     if (!tank || !id) return;
 
-    const updatedInhabitants = {
-      fish: type === 'fish' 
-        ? (tank.inhabitants?.fish || []).filter(f => f.speciesId !== speciesId)
-        : tank.inhabitants?.fish || [],
-      plants: type === 'plant'
-        ? (tank.inhabitants?.plants || []).filter(p => p.speciesId !== speciesId)
-        : tank.inhabitants?.plants || [],
-    };
-
     try {
-      const updated = await updateTank(id, {
-        inhabitants: updatedInhabitants,
-      });
-      setTank(updated);
+      await removeInhabitant(id, speciesId, type);
+      // Reload tank to get updated inhabitants
+      await loadTank();
     } catch (err) {
       console.error('Error removing inhabitant:', err);
       alert('Failed to remove inhabitant. Please try again.');
