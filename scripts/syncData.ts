@@ -1,6 +1,10 @@
 /**
  * Watch script that automatically syncs new data from JSON files to Supabase
  * Run with: npm run sync-data
+ * 
+ * IMPORTANT: This script requires the SUPABASE_SERVICE_ROLE_KEY to bypass RLS policies.
+ * Add it to your .env file (never commit this key to git!):
+ * SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -17,15 +21,23 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
+if (!supabaseUrl || !supabaseServiceKey) {
   console.error('❌ Missing Supabase credentials!');
-  console.error('Make sure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in your .env file');
+  console.error('Make sure these are set in your .env file:');
+  console.error('  - VITE_SUPABASE_URL');
+  console.error('  - SUPABASE_SERVICE_ROLE_KEY (get from Supabase Dashboard > Settings > API)');
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Use service role key to bypass RLS
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
 
 const SPECIES_DIR = path.join(process.cwd(), 'src/data/species');
 const PLANTS_DIR = path.join(process.cwd(), 'src/data/plants');
