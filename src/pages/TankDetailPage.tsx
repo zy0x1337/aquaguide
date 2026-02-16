@@ -8,102 +8,114 @@ import AddInhabitantModal from '../components/tanks/AddInhabitantModal';
 import EditTankModal from '../components/tanks/EditTankModal';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
+import { getTankById, updateTank } from '../lib/supabase/tanks';
 
 const TankDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [tank, setTank] = useState<Tank | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isInhabitantModalOpen, setIsInhabitantModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'fish' | 'plant'>('fish');
 
-  // Load tank from localStorage (temporary until we have backend)
+  // Load tank from Supabase
   useEffect(() => {
-    const storedTanks = localStorage.getItem('aquaguide_tanks');
-    if (storedTanks) {
-      const tanks: Tank[] = JSON.parse(storedTanks);
-      const foundTank = tanks.find(t => t.id === id);
-      if (foundTank) {
-        setTank(foundTank);
+    if (!id) return;
+    loadTank();
+  }, [id]);
+
+  const loadTank = async () => {
+    if (!id) return;
+    
+    try {
+      setIsLoading(true);
+      const data = await getTankById(id);
+      if (data) {
+        setTank(data);
       } else {
         navigate('/my-tanks');
       }
-    } else {
+    } catch (err) {
+      console.error('Error loading tank:', err);
       navigate('/my-tanks');
+    } finally {
+      setIsLoading(false);
     }
-  }, [id, navigate]);
-
-  const handleEditTank = (updatedTank: Tank) => {
-    // Update localStorage
-    const storedTanks = localStorage.getItem('aquaguide_tanks');
-    if (storedTanks) {
-      const tanks: Tank[] = JSON.parse(storedTanks);
-      const updatedTanks = tanks.map(t => t.id === updatedTank.id ? updatedTank : t);
-      localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
-      setTank(updatedTank);
-    }
-    setIsEditModalOpen(false);
   };
 
-  const handleAddInhabitant = (speciesId: string, quantity: number, type: 'fish' | 'plant') => {
-    if (!tank) return;
+  const handleEditTank = async (updatedTank: Tank) => {
+    if (!id) return;
+    
+    try {
+      const updated = await updateTank(id, {
+        name: updatedTank.name,
+        type: updatedTank.type,
+        volumeLiters: updatedTank.volumeLiters,
+        parameters: updatedTank.parameters,
+      });
+      setTank(updated);
+      setIsEditModalOpen(false);
+    } catch (err) {
+      console.error('Error updating tank:', err);
+      alert('Failed to update tank. Please try again.');
+    }
+  };
+
+  const handleAddInhabitant = async (speciesId: string, quantity: number, type: 'fish' | 'plant') => {
+    if (!tank || !id) return;
 
     // Try finding in both species and plants
     const species = allSpecies.find(s => s.id === speciesId) || allPlants.find(p => p.id === speciesId);
     if (!species) return;
 
-    const updatedTank = {
-      ...tank,
-      inhabitants: {
-        fish: type === 'fish' 
-          ? [...(tank.inhabitants?.fish || []), { speciesId, speciesName: species.taxonomy.commonName, quantity, addedAt: new Date().toISOString() }]
-          : tank.inhabitants?.fish || [],
-        plants: type === 'plant'
-          ? [...(tank.inhabitants?.plants || []), { speciesId, speciesName: species.taxonomy.commonName, quantity, addedAt: new Date().toISOString() }]
-          : tank.inhabitants?.plants || [],
-      },
+    const updatedInhabitants = {
+      fish: type === 'fish' 
+        ? [...(tank.inhabitants?.fish || []), { speciesId, speciesName: species.taxonomy.commonName, quantity, addedAt: new Date().toISOString() }]
+        : tank.inhabitants?.fish || [],
+      plants: type === 'plant'
+        ? [...(tank.inhabitants?.plants || []), { speciesId, speciesName: species.taxonomy.commonName, quantity, addedAt: new Date().toISOString() }]
+        : tank.inhabitants?.plants || [],
     };
 
-    // Update localStorage
-    const storedTanks = localStorage.getItem('aquaguide_tanks');
-    if (storedTanks) {
-      const tanks: Tank[] = JSON.parse(storedTanks);
-      const updatedTanks = tanks.map(t => t.id === tank.id ? updatedTank : t);
-      localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
-      setTank(updatedTank);
-    }
-
-    setIsInhabitantModalOpen(false);
-  };
-
-  const handleRemoveInhabitant = (speciesId: string, type: 'fish' | 'plant') => {
-    if (!tank) return;
-
-    const updatedTank = {
-      ...tank,
-      inhabitants: {
-        fish: type === 'fish' 
-          ? (tank.inhabitants?.fish || []).filter(f => f.speciesId !== speciesId)
-          : tank.inhabitants?.fish || [],
-        plants: type === 'plant'
-          ? (tank.inhabitants?.plants || []).filter(p => p.speciesId !== speciesId)
-          : tank.inhabitants?.plants || [],
-      },
-    };
-
-    // Update localStorage
-    const storedTanks = localStorage.getItem('aquaguide_tanks');
-    if (storedTanks) {
-      const tanks: Tank[] = JSON.parse(storedTanks);
-      const updatedTanks = tanks.map(t => t.id === tank.id ? updatedTank : t);
-      localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
-      setTank(updatedTank);
+    try {
+      const updated = await updateTank(id, {
+        inhabitants: updatedInhabitants,
+      });
+      setTank(updated);
+      setIsInhabitantModalOpen(false);
+    } catch (err) {
+      console.error('Error adding inhabitant:', err);
+      alert('Failed to add inhabitant. Please try again.');
     }
   };
 
-  if (!tank) {
+  const handleRemoveInhabitant = async (speciesId: string, type: 'fish' | 'plant') => {
+    if (!tank || !id) return;
+
+    const updatedInhabitants = {
+      fish: type === 'fish' 
+        ? (tank.inhabitants?.fish || []).filter(f => f.speciesId !== speciesId)
+        : tank.inhabitants?.fish || [],
+      plants: type === 'plant'
+        ? (tank.inhabitants?.plants || []).filter(p => p.speciesId !== speciesId)
+        : tank.inhabitants?.plants || [],
+    };
+
+    try {
+      const updated = await updateTank(id, {
+        inhabitants: updatedInhabitants,
+      });
+      setTank(updated);
+    } catch (err) {
+      console.error('Error removing inhabitant:', err);
+      alert('Failed to remove inhabitant. Please try again.');
+    }
+  };
+
+  if (isLoading || !tank) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
           <p className="text-slate-600">Loading tank...</p>
