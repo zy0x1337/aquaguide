@@ -1,0 +1,130 @@
+import { useState, useEffect } from 'react';
+import { Plus, Edit, Trash2, Search, Filter } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+import { SEOHead } from '../../components/seo/SEOHead';
+
+const SpeciesManager = () => {
+  const [species, setSpecies] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [typeFilter, setTypeFilter] = useState('all');
+
+  useEffect(() => {
+    loadSpecies();
+  }, []);
+
+  const loadSpecies = async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from('species')
+      .select('*')
+      .order('created_at', { ascending: false });
+    setSpecies(data || []);
+    setLoading(false);
+  };
+
+  const deleteSpecies = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this species?')) return;
+    await supabase.from('species').delete().eq('id', id);
+    loadSpecies();
+  };
+
+  const filteredSpecies = species.filter(s => {
+    const matchesSearch = s.common_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          s.scientific_name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = typeFilter === 'all' || s.type === typeFilter;
+    return matchesSearch && matchesType;
+  });
+
+  return (
+    <div className="min-h-screen bg-slate-50 py-12">
+      <SEOHead title="Species Manager - Admin" description="Manage fish and plant species." />
+      
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-black text-slate-900 mb-2">Species Manager</h1>
+            <p className="text-slate-600">{filteredSpecies.length} species in database</p>
+          </div>
+          <button className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition-all">
+            <Plus className="w-5 h-5" />
+            Add Species
+          </button>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search species..."
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <select
+              className="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+            >
+              <option value="all">All Types</option>
+              <option value="fish">Fish</option>
+              <option value="plant">Plants</option>
+              <option value="invertebrate">Invertebrates</option>
+              <option value="coral">Corals</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Species List */}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full mx-auto"></div>
+          </div>
+        ) : filteredSpecies.length === 0 ? (
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-12 text-center">
+            <p className="text-slate-600">No species found. Add your first one!</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredSpecies.map(s => (
+              <div key={s.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all">
+                {s.image_url && (
+                  <img src={s.image_url} alt={s.common_name} className="w-full h-48 object-cover" />
+                )}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h3 className="font-bold text-slate-900">{s.common_name}</h3>
+                      <p className="text-sm text-slate-600 italic">{s.scientific_name}</p>
+                    </div>
+                    <span className="text-xs font-bold px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full">
+                      {s.type}
+                    </span>
+                  </div>
+                  <div className="flex gap-2 mt-4">
+                    <button className="flex-1 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-1">
+                      <Edit className="w-4 h-4" />
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => deleteSpecies(s.id)}
+                      className="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-semibold text-sm transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SpeciesManager;
