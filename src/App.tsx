@@ -4,6 +4,7 @@ import { ComparisonBar } from './components/comparison/ComparisonBar';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/error/ErrorBoundary';
 import { ToastProvider } from './contexts/ToastContext';
+import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -91,6 +92,9 @@ function App() {
           {/* Global Comparison Bar */}
           <ComparisonBar />
         </Layout>
+
+        {/* PWA Update Prompt */}
+        <PWAUpdatePrompt />
       </ToastProvider>
     </ErrorBoundary>
   );
