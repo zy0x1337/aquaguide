@@ -1,0 +1,27 @@
+# PWA Icons Required
+
+The PWA needs these icons in the `public/` folder:
+- icon-192.png (192x192px)
+- icon-512.png (512x512px)
+
+## Quick Fix Options:
+
+### Option 1: Use existing logo
+If you have a logo.png or similar:
+```bash
+cp public/logo.png public/icon-192.png
+cp public/logo.png public/icon-512.png
+```
+
+### Option 2: Generate from existing image
+Use an image resizer or:
+- Visit https://realfavicongenerator.net/
+- Upload your logo
+- Generate PWA icons
+
+### Option 3: Simple colored square (temporary)
+Create simple colored squares as placeholders until you have proper icons.
+
+## Without Icons:
+PWA will show console errors but app will still work.
+Just won't be installable until icons are added.
