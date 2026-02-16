@@ -285,7 +285,7 @@ const TankDetailPage = () => {
                     scientificName={species.taxonomy.scientificName}
                     quantity={fish.quantity}
                     slug={species.slug}
-                    imageUrl={species.visuals.imageUrl}
+                    imageUrl={species.imageUrl}
                     linkPrefix="/species"
                     onRemove={() => handleRemoveInhabitant(fish.speciesId, 'fish')}
                   />
