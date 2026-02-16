@@ -8,7 +8,7 @@ import { allSpecies } from '../src/data/species/index';
 import { allPlants } from '../src/data/plants/index';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://plyiyuctfphxtvzyqttz.supabase.co';
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_TBiJDamJ_bJY8Y-KzX4gGg_UFxqMCFv';
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBseWl5dWN0ZnBoeHR2enlxdHR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NjYyNzIsImV4cCI6MjA1MjM0MjI3Mn0.Rr9N7vCePiFQmCGFiN79VFLsvdPz2__o_dxwIyY0RZw';
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -31,6 +31,20 @@ interface SpeciesData {
   image_credit: string | null;
 }
 
+function formatImageCredit(imageCredit: any): string | null {
+  if (!imageCredit) return null;
+  if (typeof imageCredit === 'string') return imageCredit;
+  
+  // Convert object to string
+  if (imageCredit.photographer) {
+    const parts = [`Photo by ${imageCredit.photographer}`];
+    if (imageCredit.license) parts.push(`(${imageCredit.license})`);
+    return parts.join(' ');
+  }
+  
+  return null;
+}
+
 function convertSpeciesToDB(species: any): SpeciesData {
   // Determine type
   let type: 'fish' | 'invertebrate' | 'plant' = 'fish';
@@ -47,46 +61,62 @@ function convertSpeciesToDB(species: any): SpeciesData {
 
   return {
     slug: species.slug,
-    common_name: species.commonName,
-    scientific_name: species.scientificName,
+    common_name: species.commonName || species.taxonomy?.commonName,
+    scientific_name: species.scientificName || species.taxonomy?.scientificName,
     type,
     difficulty: species.difficulty?.toLowerCase() || 'beginner',
     min_tank_size_liters: species.minTankSize || 0,
     min_group_size: species.minGroupSize || 1,
-    ph_range: species.environment?.ph ? { min: species.environment.ph.min, max: species.environment.ph.max } : null,
-    temp_range_c: species.environment?.tempC ? { min: species.environment.tempC.min, max: species.environment.tempC.max } : null,
-    hardness_range_dgh: species.environment?.hardnessDGH ? { min: species.environment.hardnessDGH.min, max: species.environment.hardnessDGH.max } : null,
+    ph_range: species.environment?.ph || species.parameters?.ph ? 
+      { 
+        min: species.environment?.ph?.min || species.parameters?.ph?.min, 
+        max: species.environment?.ph?.max || species.parameters?.ph?.max 
+      } : null,
+    temp_range_c: species.environment?.tempC || species.parameters?.tempC ? 
+      { 
+        min: species.environment?.tempC?.min || species.parameters?.tempC?.min, 
+        max: species.environment?.tempC?.max || species.parameters?.tempC?.max 
+      } : null,
+    hardness_range_dgh: species.environment?.hardnessDGH ? 
+      { min: species.environment.hardnessDGH.min, max: species.environment.hardnessDGH.max } : null,
     description: species.description || '',
     care_guide: species.care?.description || species.careLevel?.description || '',
     diet: species.diet?.primary?.join(', ') || species.feeding?.diet || '',
     behavior_tags: behaviorTags.filter(Boolean),
     image_url: species.imageUrl || null,
-    image_credit: species.imageCredit || null,
+    image_credit: formatImageCredit(species.imageCredit),
   };
 }
 
 function convertPlantToDB(plant: any): SpeciesData {
   const behaviorTags: string[] = [];
-  if (plant.placement) behaviorTags.push(plant.placement);
-  if (plant.growthRate) behaviorTags.push(`growth-${plant.growthRate}`);
+  if (plant.specs?.placement) {
+    if (Array.isArray(plant.specs.placement)) {
+      behaviorTags.push(...plant.specs.placement);
+    } else {
+      behaviorTags.push(plant.specs.placement);
+    }
+  }
+  if (plant.specs?.growthRate) behaviorTags.push(`growth-${plant.specs.growthRate}`);
+  if (plant.specs?.light) behaviorTags.push(`light-${plant.specs.light}`);
 
   return {
     slug: plant.slug,
-    common_name: plant.commonName,
-    scientific_name: plant.scientificName,
+    common_name: plant.taxonomy?.commonName || plant.commonName,
+    scientific_name: plant.taxonomy?.scientificName || plant.scientificName,
     type: 'plant',
     difficulty: plant.difficulty?.toLowerCase() || 'beginner',
     min_tank_size_liters: 0, // Not applicable for plants
     min_group_size: 1,
-    ph_range: plant.environment?.ph ? { min: plant.environment.ph.min, max: plant.environment.ph.max } : null,
-    temp_range_c: plant.environment?.tempC ? { min: plant.environment.tempC.min, max: plant.environment.tempC.max } : null,
-    hardness_range_dgh: plant.environment?.hardnessDGH ? { min: plant.environment.hardnessDGH.min, max: plant.environment.hardnessDGH.max } : null,
+    ph_range: plant.parameters?.ph ? { min: plant.parameters.ph.min, max: plant.parameters.ph.max } : null,
+    temp_range_c: plant.parameters?.tempC ? { min: plant.parameters.tempC.min, max: plant.parameters.tempC.max } : null,
+    hardness_range_dgh: null,
     description: plant.description || '',
-    care_guide: plant.care?.description || '',
+    care_guide: plant.planting?.notes || plant.care?.description || '',
     diet: '', // Not applicable for plants
     behavior_tags: behaviorTags.filter(Boolean),
     image_url: plant.imageUrl || null,
-    image_credit: plant.imageCredit || null,
+    image_credit: formatImageCredit(plant.imageCredit),
   };
 }
 

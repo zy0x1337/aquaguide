@@ -10,19 +10,40 @@ import fs from 'fs';
 import path from 'path';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://plyiyuctfphxtvzyqttz.supabase.co';
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_TBiJDamJ_bJY8Y-KzX4gGg_UFxqMCFv';
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBseWl5dWN0ZnBoeHR2enlxdHR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NjYyNzIsImV4cCI6MjA1MjM0MjI3Mn0.Rr9N7vCePiFQmCGFiN79VFLsvdPz2__o_dxwIyY0RZw';
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const SPECIES_DIR = path.join(process.cwd(), 'src/data/species');
 const PLANTS_DIR = path.join(process.cwd(), 'src/data/plants');
 
+function formatImageCredit(imageCredit: any): string | null {
+  if (!imageCredit) return null;
+  if (typeof imageCredit === 'string') return imageCredit;
+  
+  // Convert object to string
+  if (imageCredit.photographer) {
+    const parts = [`Photo by ${imageCredit.photographer}`];
+    if (imageCredit.license) parts.push(`(${imageCredit.license})`);
+    return parts.join(' ');
+  }
+  
+  return null;
+}
+
 function convertToDBFormat(item: any, type: 'fish' | 'invertebrate' | 'plant') {
   const behaviorTags: string[] = [];
   
   if (type === 'plant') {
-    if (item.placement) behaviorTags.push(item.placement);
-    if (item.growthRate) behaviorTags.push(`growth-${item.growthRate}`);
+    if (item.specs?.placement) {
+      if (Array.isArray(item.specs.placement)) {
+        behaviorTags.push(...item.specs.placement);
+      } else {
+        behaviorTags.push(item.specs.placement);
+      }
+    }
+    if (item.specs?.growthRate) behaviorTags.push(`growth-${item.specs.growthRate}`);
+    if (item.specs?.light) behaviorTags.push(`light-${item.specs.light}`);
   } else {
     if (item.behavior?.temperament) behaviorTags.push(item.behavior.temperament);
     if (item.behavior?.schooling) behaviorTags.push('schooling');
@@ -32,21 +53,30 @@ function convertToDBFormat(item: any, type: 'fish' | 'invertebrate' | 'plant') {
 
   return {
     slug: item.slug,
-    common_name: item.commonName,
-    scientific_name: item.scientificName,
+    common_name: item.commonName || item.taxonomy?.commonName,
+    scientific_name: item.scientificName || item.taxonomy?.scientificName,
     type,
     difficulty: item.difficulty?.toLowerCase() || 'beginner',
     min_tank_size_liters: item.minTankSize || 0,
     min_group_size: item.minGroupSize || 1,
-    ph_range: item.environment?.ph ? { min: item.environment.ph.min, max: item.environment.ph.max } : null,
-    temp_range_c: item.environment?.tempC ? { min: item.environment.tempC.min, max: item.environment.tempC.max } : null,
-    hardness_range_dgh: item.environment?.hardnessDGH ? { min: item.environment.hardnessDGH.min, max: item.environment.hardnessDGH.max } : null,
+    ph_range: item.environment?.ph || item.parameters?.ph ? 
+      { 
+        min: item.environment?.ph?.min || item.parameters?.ph?.min, 
+        max: item.environment?.ph?.max || item.parameters?.ph?.max 
+      } : null,
+    temp_range_c: item.environment?.tempC || item.parameters?.tempC ? 
+      { 
+        min: item.environment?.tempC?.min || item.parameters?.tempC?.min, 
+        max: item.environment?.tempC?.max || item.parameters?.tempC?.max 
+      } : null,
+    hardness_range_dgh: item.environment?.hardnessDGH ? 
+      { min: item.environment.hardnessDGH.min, max: item.environment.hardnessDGH.max } : null,
     description: item.description || '',
-    care_guide: item.care?.description || item.careLevel?.description || '',
+    care_guide: item.care?.description || item.careLevel?.description || item.planting?.notes || '',
     diet: type === 'plant' ? '' : (item.diet?.primary?.join(', ') || item.feeding?.diet || ''),
     behavior_tags: behaviorTags.filter(Boolean),
     image_url: item.imageUrl || null,
-    image_credit: item.imageCredit || null,
+    image_credit: formatImageCredit(item.imageCredit),
   };
 }
 
