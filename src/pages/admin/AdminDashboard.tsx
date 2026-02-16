@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Fish, Droplets, Activity, Plus, Settings } from 'lucide-react';
+import { Users, Fish, Droplets, Settings } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { SEOHead } from '../../components/seo/SEOHead';
 
@@ -86,8 +86,15 @@ const AdminDashboard = () => {
   );
 };
 
-const StatCard = ({ icon, label, value, color }: any) => {
-  const colors = {
+interface StatCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  color: 'indigo' | 'emerald' | 'cyan';
+}
+
+const StatCard = ({ icon, label, value, color }: StatCardProps) => {
+  const colors: Record<string, string> = {
     indigo: 'from-indigo-500 to-indigo-600',
     emerald: 'from-emerald-500 to-emerald-600',
     cyan: 'from-cyan-500 to-cyan-600',
