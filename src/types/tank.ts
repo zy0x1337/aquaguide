@@ -4,6 +4,7 @@ export interface Tank {
   type: string; // 'freshwater' | 'saltwater' | 'brackish'
   volumeLiters: number;
   createdAt: string;
+  updatedAt: string;
   substrate?: string; // 'sand' | 'gravel' | 'soil' | 'bare'
   lighting?: string; // 'low' | 'medium' | 'high'
   parameters: WaterParameters;
