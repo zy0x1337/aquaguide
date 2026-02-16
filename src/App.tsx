@@ -26,6 +26,7 @@ import { PlantDetailPage } from './pages/PlantDetailPage';
 
 // 🐠 MY TANKS
 import MyTanksPage from './pages/MyTanksPage';
+import TankDetailPage from './pages/TankDetailPage';
 
 // 🎨 TANK BUILDER
 import { TankBuilderPage } from './pages/TankBuilderPage';
@@ -63,6 +64,7 @@ function App() {
 
           {/* 🐠 My Tanks (Protected) */}
           <Route path="/my-tanks" element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
+          <Route path="/my-tanks/:id" element={<ProtectedRoute><TankDetailPage /></ProtectedRoute>} />
 
           {/* 🎨 Tank Builder */}
           <Route path="/tank-builder" element={<TankBuilderPage />} />

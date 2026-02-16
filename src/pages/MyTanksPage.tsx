@@ -1,14 +1,29 @@
-import { useState } from 'react';
-import { Plus, Fish, Droplets, Thermometer, Calendar } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, Fish, Droplets, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import TankCard from '../components/tanks/TankCard';
 import AddTankModal from '../components/tanks/AddTankModal';
 import { Tank } from '../types/tank';
-import SEOHead from '../components/seo/SEOHead';
+import { SEOHead } from '../components/seo/SEOHead';
 
 const MyTanksPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Load tanks from localStorage on mount
+  useEffect(() => {
+    const storedTanks = localStorage.getItem('aquaguide_tanks');
+    if (storedTanks) {
+      setTanks(JSON.parse(storedTanks));
+    }
+  }, []);
+
+  // Save tanks to localStorage whenever they change
+  useEffect(() => {
+    if (tanks.length > 0) {
+      localStorage.setItem('aquaguide_tanks', JSON.stringify(tanks));
+    }
+  }, [tanks]);
 
   const handleAddTank = (newTank: Omit<Tank, 'id' | 'createdAt'>) => {
     const tank: Tank = {
@@ -16,18 +31,22 @@ const MyTanksPage = () => {
       id: Date.now().toString(),
       createdAt: new Date().toISOString(),
     };
-    setTanks([...tanks, tank]);
+    const updatedTanks = [...tanks, tank];
+    setTanks(updatedTanks);
+    localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
     setIsModalOpen(false);
   };
 
   const handleDeleteTank = (id: string) => {
-    setTanks(tanks.filter(t => t.id !== id));
+    const updatedTanks = tanks.filter(t => t.id !== id);
+    setTanks(updatedTanks);
+    localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
       <SEOHead
-        title="My Tanks - AquaGuide"
+        title="My Tanks"
         description="Manage your aquarium collection and track your fish, plants, and water parameters."
       />
 
@@ -84,7 +103,7 @@ const MyTanksPage = () => {
                       (Date.now() - new Date(t.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 30)
                     );
                     return sum + months;
-                  }, 0) / tanks.length
+                  }, 0) / (tanks.length || 1)
                 )}mo`}
               />
             </motion.div>
