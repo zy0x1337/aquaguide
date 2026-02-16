@@ -1,38 +1,26 @@
 import { supabase } from '../supabase';
 import type { Tank } from '../../types/tank';
 
-export interface SupabaseTank {
+interface SupabaseTank {
   id: string;
   user_id: string;
   name: string;
   type: 'freshwater' | 'saltwater' | 'brackish';
   volume_liters: number;
   parameters: Tank['parameters'];
-  inhabitants: Tank['inhabitants'];
   created_at: string;
   updated_at: string;
 }
 
-// Convert Supabase format to app format
-const toTank = (data: SupabaseTank): Tank => ({
-  id: data.id,
-  name: data.name,
-  type: data.type,
-  volumeLiters: data.volume_liters,
-  parameters: data.parameters,
-  inhabitants: data.inhabitants || { fish: [], plants: [] },
-  createdAt: data.created_at,
-  updatedAt: data.updated_at,
-});
-
-// Convert app format to Supabase format
-const toSupabaseTank = (tank: Omit<Tank, 'id' | 'createdAt' | 'updatedAt'>) => ({
-  name: tank.name,
-  type: tank.type,
-  volume_liters: tank.volumeLiters,
-  parameters: tank.parameters,
-  inhabitants: tank.inhabitants || { fish: [], plants: [] },
-});
+interface SupabaseTankInhabitant {
+  id: string;
+  tank_id: string;
+  species_id: string;
+  species_name: string;
+  species_type: 'fish' | 'plant';
+  quantity: number;
+  added_at: string;
+}
 
 // Helper to validate UUID format
 const isValidUUID = (id: string): boolean => {
@@ -40,8 +28,40 @@ const isValidUUID = (id: string): boolean => {
   return uuidRegex.test(id);
 };
 
+// Convert Supabase format to app format
+const toTank = (data: SupabaseTank, inhabitants: SupabaseTankInhabitant[] = []): Tank => {
+  const fish = inhabitants
+    .filter(i => i.species_type === 'fish')
+    .map(i => ({
+      speciesId: i.species_id,
+      speciesName: i.species_name,
+      quantity: i.quantity,
+      addedAt: i.added_at,
+    }));
+
+  const plants = inhabitants
+    .filter(i => i.species_type === 'plant')
+    .map(i => ({
+      speciesId: i.species_id,
+      speciesName: i.species_name,
+      quantity: i.quantity,
+      addedAt: i.added_at,
+    }));
+
+  return {
+    id: data.id,
+    name: data.name,
+    type: data.type,
+    volumeLiters: data.volume_liters,
+    parameters: data.parameters,
+    inhabitants: { fish, plants },
+    createdAt: data.created_at,
+    updatedAt: data.updated_at,
+  };
+};
+
 /**
- * Get all tanks for the current user
+ * Get all tanks for the current user with their inhabitants
  */
 export const getUserTanks = async (): Promise<Tank[]> => {
   const { data: { user } } = await supabase.auth.getUser();
@@ -50,25 +70,49 @@ export const getUserTanks = async (): Promise<Tank[]> => {
     throw new Error('Not authenticated');
   }
 
-  const { data, error } = await supabase
+  // Fetch tanks
+  const { data: tanksData, error: tanksError } = await supabase
     .from('tanks')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('Error fetching tanks:', error);
+  if (tanksError) {
+    console.error('Error fetching tanks:', tanksError);
     throw new Error('Failed to fetch tanks');
   }
 
-  return (data || []).map(toTank);
+  if (!tanksData || tanksData.length === 0) {
+    return [];
+  }
+
+  // Fetch all inhabitants for these tanks
+  const tankIds = tanksData.map(t => t.id);
+  const { data: inhabitantsData, error: inhabitantsError } = await supabase
+    .from('tank_inhabitants')
+    .select('*')
+    .in('tank_id', tankIds);
+
+  if (inhabitantsError) {
+    console.error('Error fetching inhabitants:', inhabitantsError);
+    // Continue without inhabitants rather than failing
+  }
+
+  // Group inhabitants by tank_id
+  const inhabitantsByTank = new Map<string, SupabaseTankInhabitant[]>();
+  (inhabitantsData || []).forEach(inhabitant => {
+    const existing = inhabitantsByTank.get(inhabitant.tank_id) || [];
+    inhabitantsByTank.set(inhabitant.tank_id, [...existing, inhabitant]);
+  });
+
+  // Combine tanks with their inhabitants
+  return tanksData.map(tank => toTank(tank, inhabitantsByTank.get(tank.id) || []));
 };
 
 /**
- * Get a single tank by ID
+ * Get a single tank by ID with inhabitants
  */
 export const getTankById = async (id: string): Promise<Tank | null> => {
-  // Validate UUID format
   if (!isValidUUID(id)) {
     console.warn(`Invalid tank ID format: ${id}. Expected UUID.`);
     return null;
@@ -80,22 +124,34 @@ export const getTankById = async (id: string): Promise<Tank | null> => {
     throw new Error('Not authenticated');
   }
 
-  const { data, error } = await supabase
+  // Fetch tank
+  const { data: tankData, error: tankError } = await supabase
     .from('tanks')
     .select('*')
     .eq('id', id)
     .eq('user_id', user.id)
     .single();
 
-  if (error) {
-    if (error.code === 'PGRST116') {
-      return null; // Tank not found
+  if (tankError) {
+    if (tankError.code === 'PGRST116') {
+      return null;
     }
-    console.error('Error fetching tank:', error);
+    console.error('Error fetching tank:', tankError);
     throw new Error('Failed to fetch tank');
   }
 
-  return toTank(data);
+  // Fetch inhabitants
+  const { data: inhabitantsData, error: inhabitantsError } = await supabase
+    .from('tank_inhabitants')
+    .select('*')
+    .eq('tank_id', id);
+
+  if (inhabitantsError) {
+    console.error('Error fetching inhabitants:', inhabitantsError);
+    // Continue without inhabitants
+  }
+
+  return toTank(tankData, inhabitantsData || []);
 };
 
 /**
@@ -113,8 +169,11 @@ export const createTank = async (
   const { data, error } = await supabase
     .from('tanks')
     .insert({
-      ...toSupabaseTank(tank),
       user_id: user.id,
+      name: tank.name,
+      type: tank.type,
+      volume_liters: tank.volumeLiters,
+      parameters: tank.parameters,
     })
     .select()
     .single();
@@ -124,15 +183,15 @@ export const createTank = async (
     throw new Error(`Failed to create tank: ${error.message}`);
   }
 
-  return toTank(data);
+  return toTank(data, []);
 };
 
 /**
- * Update an existing tank
+ * Update an existing tank (parameters only, not inhabitants)
  */
 export const updateTank = async (
   id: string,
-  updates: Partial<Omit<Tank, 'id' | 'createdAt' | 'updatedAt'>>
+  updates: Partial<Omit<Tank, 'id' | 'createdAt' | 'updatedAt' | 'inhabitants'>>
 ): Promise<Tank> => {
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -145,7 +204,6 @@ export const updateTank = async (
   if (updates.type) supabaseUpdates.type = updates.type;
   if (updates.volumeLiters) supabaseUpdates.volume_liters = updates.volumeLiters;
   if (updates.parameters) supabaseUpdates.parameters = updates.parameters;
-  if (updates.inhabitants) supabaseUpdates.inhabitants = updates.inhabitants;
 
   const { data, error } = await supabase
     .from('tanks')
@@ -160,11 +218,17 @@ export const updateTank = async (
     throw new Error('Failed to update tank');
   }
 
-  return toTank(data);
+  // Fetch inhabitants after update
+  const { data: inhabitantsData } = await supabase
+    .from('tank_inhabitants')
+    .select('*')
+    .eq('tank_id', id);
+
+  return toTank(data, inhabitantsData || []);
 };
 
 /**
- * Delete a tank
+ * Delete a tank (CASCADE will delete inhabitants automatically)
  */
 export const deleteTank = async (id: string): Promise<void> => {
   const { data: { user } } = await supabase.auth.getUser();
@@ -182,5 +246,88 @@ export const deleteTank = async (id: string): Promise<void> => {
   if (error) {
     console.error('Error deleting tank:', error);
     throw new Error('Failed to delete tank');
+  }
+};
+
+/**
+ * Add an inhabitant to a tank
+ */
+export const addInhabitant = async (
+  tankId: string,
+  speciesId: string,
+  speciesName: string,
+  speciesType: 'fish' | 'plant',
+  quantity: number
+): Promise<void> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('Not authenticated');
+  }
+
+  // Verify tank ownership
+  const { data: tank } = await supabase
+    .from('tanks')
+    .select('id')
+    .eq('id', tankId)
+    .eq('user_id', user.id)
+    .single();
+
+  if (!tank) {
+    throw new Error('Tank not found or access denied');
+  }
+
+  const { error } = await supabase
+    .from('tank_inhabitants')
+    .insert({
+      tank_id: tankId,
+      species_id: speciesId,
+      species_name: speciesName,
+      species_type: speciesType,
+      quantity,
+    });
+
+  if (error) {
+    console.error('Error adding inhabitant:', error);
+    throw new Error('Failed to add inhabitant');
+  }
+};
+
+/**
+ * Remove an inhabitant from a tank
+ */
+export const removeInhabitant = async (
+  tankId: string,
+  speciesId: string,
+  speciesType: 'fish' | 'plant'
+): Promise<void> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('Not authenticated');
+  }
+
+  // Verify tank ownership
+  const { data: tank } = await supabase
+    .from('tanks')
+    .select('id')
+    .eq('id', tankId)
+    .eq('user_id', user.id)
+    .single();
+
+  if (!tank) {
+    throw new Error('Tank not found or access denied');
+  }
+
+  const { error } = await supabase
+    .from('tank_inhabitants')
+    .delete()
+    .eq('tank_id', tankId)
+    .eq('species_id', speciesId)
+    .eq('species_type', speciesType);
+
+  if (error) {
+    console.error('Error removing inhabitant:', error);
+    throw new Error('Failed to remove inhabitant');
   }
 };
