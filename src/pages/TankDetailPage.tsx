@@ -56,6 +56,9 @@ const TankDetailPage = () => {
       setIsLoading(true);
       const data = await getTankById(id);
       if (data) {
+        console.log('🐟 TANK DATA LOADED:', data);
+        console.log('📦 Substrate:', data.substrate);
+        console.log('💡 Lighting:', data.lighting);
         setTank(data);
       } else {
         navigate('/my-tanks');
@@ -87,6 +90,10 @@ const TankDetailPage = () => {
     if (!id) return;
     
     try {
+      console.log('💾 SAVING TANK WITH:', {
+        substrate: updatedTank.substrate,
+        lighting: updatedTank.lighting,
+      });
       const updated = await updateTank(id, {
         name: updatedTank.name,
         type: updatedTank.type,
@@ -94,6 +101,7 @@ const TankDetailPage = () => {
         substrate: updatedTank.substrate,
         lighting: updatedTank.lighting,
       });
+      console.log('✅ TANK UPDATED:', updated);
       setTank(updated);
       setIsEditModalOpen(false);
     } catch (err) {
