@@ -7,8 +7,11 @@ import TankHealthList from '../components/dashboard/TankHealthList';
 import RecentActivityFeed from '../components/dashboard/RecentActivityFeed';
 import QuickActions from '../components/dashboard/QuickActions';
 import AlertsPanel from '../components/dashboard/AlertsPanel';
+import TankSelectionModal from '../components/dashboard/TankSelectionModal';
+import AddParameterModal from '../components/tanks/AddParameterModal';
+import AddMaintenanceModal from '../components/tanks/AddMaintenanceModal';
 import { SEOHead } from '../components/seo/SEOHead';
-import { getUserTanks } from '../lib/supabase/tanks';
+import { getUserTanks, updateTank, getTankById } from '../lib/supabase/tanks';
 import { Tank } from '../types/tank';
 import { 
   getDashboardStats, 
@@ -19,6 +22,7 @@ import {
   RecentActivity 
 } from '../lib/supabase/dashboard';
 import { getAllAlerts, ParameterAlert } from '../lib/supabase/alerts';
+import { addParameterReading, addMaintenanceLog } from '../lib/supabase/tankHistory';
 
 const DashboardPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
@@ -28,6 +32,14 @@ const DashboardPage = () => {
   const [alerts, setAlerts] = useState<ParameterAlert[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Modal states
+  const [isTankSelectionOpen, setIsTankSelectionOpen] = useState(false);
+  const [selectionType, setSelectionType] = useState<'parameters' | 'maintenance'>('parameters');
+  const [selectedTankId, setSelectedTankId] = useState<string | null>(null);
+  const [selectedTank, setSelectedTank] = useState<Tank | null>(null);
+  const [isParameterModalOpen, setIsParameterModalOpen] = useState(false);
+  const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
@@ -58,6 +70,87 @@ const DashboardPage = () => {
       setError('Failed to load dashboard. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Handle Quick Action clicks
+  const handleLogParameters = () => {
+    setSelectionType('parameters');
+    setIsTankSelectionOpen(true);
+  };
+
+  const handleLogMaintenance = () => {
+    setSelectionType('maintenance');
+    setIsTankSelectionOpen(true);
+  };
+
+  // Handle tank selection
+  const handleTankSelected = async (tankId: string) => {
+    setSelectedTankId(tankId);
+    const tank = await getTankById(tankId);
+    setSelectedTank(tank);
+    
+    // Open appropriate modal based on selection type
+    if (selectionType === 'parameters') {
+      setIsParameterModalOpen(true);
+    } else {
+      setIsMaintenanceModalOpen(true);
+    }
+  };
+
+  // Handle parameter submission
+  const handleAddParameterReading = async (reading: any) => {
+    if (!selectedTankId || !selectedTank) return;
+
+    try {
+      // Save the parameter reading to history
+      await addParameterReading(selectedTankId, reading);
+      
+      // Update tank's current parameters with the new reading
+      const updatedParameters = {
+        ph: reading.ph ?? selectedTank.parameters.ph,
+        tempC: reading.tempC ?? selectedTank.parameters.tempC,
+        ammonia: reading.ammonia ?? selectedTank.parameters.ammonia,
+        nitrite: reading.nitrite ?? selectedTank.parameters.nitrite,
+        nitrate: reading.nitrate ?? selectedTank.parameters.nitrate,
+        gh: reading.gh ?? selectedTank.parameters.gh,
+        kh: reading.kh ?? selectedTank.parameters.kh,
+        tds: reading.tds ?? selectedTank.parameters.tds,
+        salinity: reading.salinity ?? selectedTank.parameters.salinity,
+      };
+
+      await updateTank(selectedTankId, { parameters: updatedParameters });
+      
+      // Reload dashboard data
+      await loadDashboardData();
+      
+      // Close modals
+      setIsParameterModalOpen(false);
+      setSelectedTankId(null);
+      setSelectedTank(null);
+    } catch (err) {
+      console.error('Error adding reading:', err);
+      alert('Failed to add reading. Please try again.');
+    }
+  };
+
+  // Handle maintenance submission
+  const handleAddMaintenanceLog = async (log: any) => {
+    if (!selectedTankId) return;
+
+    try {
+      await addMaintenanceLog(selectedTankId, log);
+      
+      // Reload dashboard data
+      await loadDashboardData();
+      
+      // Close modals
+      setIsMaintenanceModalOpen(false);
+      setSelectedTankId(null);
+      setSelectedTank(null);
+    } catch (err) {
+      console.error('Error adding log:', err);
+      alert('Failed to add maintenance log. Please try again.');
     }
   };
 
@@ -178,7 +271,11 @@ const DashboardPage = () => {
         {stats && <DashboardStats stats={stats} />}
 
         {/* Quick Actions */}
-        <QuickActions onAddTank={() => window.location.href = '/my-tanks'} />
+        <QuickActions 
+          onAddTank={() => window.location.href = '/my-tanks'}
+          onAddReading={handleLogParameters}
+          onLogMaintenance={handleLogMaintenance}
+        />
 
         {/* Alerts Panel */}
         {alerts.length > 0 && <AlertsPanel alerts={alerts} />}
@@ -206,6 +303,41 @@ const DashboardPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Modals */}
+      <TankSelectionModal
+        isOpen={isTankSelectionOpen}
+        onClose={() => setIsTankSelectionOpen(false)}
+        onSelectTank={handleTankSelected}
+        tanks={tanks}
+        title={selectionType === 'parameters' ? 'Log Water Parameters' : 'Log Maintenance'}
+        description={selectionType === 'parameters' ? 'Select a tank to record water readings' : 'Select a tank to log maintenance'}
+      />
+
+      {selectedTank && (
+        <>
+          <AddParameterModal
+            isOpen={isParameterModalOpen}
+            onClose={() => {
+              setIsParameterModalOpen(false);
+              setSelectedTankId(null);
+              setSelectedTank(null);
+            }}
+            onSubmit={handleAddParameterReading}
+            tankType={selectedTank.type}
+          />
+
+          <AddMaintenanceModal
+            isOpen={isMaintenanceModalOpen}
+            onClose={() => {
+              setIsMaintenanceModalOpen(false);
+              setSelectedTankId(null);
+              setSelectedTank(null);
+            }}
+            onSubmit={handleAddMaintenanceLog}
+          />
+        </>
+      )}
     </div>
   );
 };
