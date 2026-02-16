@@ -7,12 +7,14 @@ import AddTankModal from '../components/tanks/AddTankModal';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
 import { getUserTanks, createTank, deleteTank } from '../lib/supabase/tanks';
+import { useToast } from '../contexts/ToastContext';
 
 const MyTanksPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const toast = useToast();
 
   useEffect(() => {
     localStorage.removeItem('aquaguide_tanks'); // Migration cleanup
@@ -28,6 +30,7 @@ const MyTanksPage = () => {
     } catch (err) {
       console.error('Error loading tanks:', err);
       setError('Failed to load tanks. Please try again.');
+      toast.error('Failed to load tanks', 'Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -38,21 +41,26 @@ const MyTanksPage = () => {
       await createTank(newTank);
       setIsModalOpen(false);
       await loadTanks();
+      toast.success('Tank created!', `${newTank.name} has been added to your collection.`);
     } catch (err) {
       console.error('Error creating tank:', err);
-      alert('Failed to create tank. Please try again.');
+      toast.error('Failed to create tank', 'Please try again or check your connection.');
     }
   };
 
   const handleDeleteTank = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this tank?')) return;
+    const tank = tanks.find(t => t.id === id);
+    if (!tank) return;
+    
+    if (!confirm(`Are you sure you want to delete ${tank.name}?`)) return;
     
     try {
       await deleteTank(id);
       await loadTanks();
+      toast.success('Tank deleted', `${tank.name} has been removed from your collection.`);
     } catch (err) {
       console.error('Error deleting tank:', err);
-      alert('Failed to delete tank. Please try again.');
+      toast.error('Failed to delete tank', 'Please try again.');
     }
   };
 
