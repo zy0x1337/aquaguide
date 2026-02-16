@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon-192.png', 'icon-512.png', 'vite.svg'],
+      includeAssets: ['pwa-192x192.png.png', 'pwa-512x512.png.png', 'vite.svg'],
       manifest: {
         name: 'AquaGuide - Aquarium Management',
         short_name: 'AquaGuide',
@@ -20,13 +20,13 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: '/icon-192.png',
+            src: '/pwa-192x192.png.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable'
           },
           {
-            src: '/icon-512.png',
+            src: '/pwa-512x512.png.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
@@ -38,14 +38,14 @@ export default defineConfig({
             short_name: 'Dashboard',
             description: 'View your aquarium dashboard',
             url: '/dashboard',
-            icons: [{ src: '/icon-192.png', sizes: '192x192' }]
+            icons: [{ src: '/pwa-192x192.png.png', sizes: '192x192' }]
           },
           {
             name: 'My Tanks',
             short_name: 'Tanks',
             description: 'Manage your tanks',
             url: '/my-tanks',
-            icons: [{ src: '/icon-192.png', sizes: '192x192' }]
+            icons: [{ src: '/pwa-192x192.png.png', sizes: '192x192' }]
           }
         ]
       },
