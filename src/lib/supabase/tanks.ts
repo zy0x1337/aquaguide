@@ -20,7 +20,7 @@ const toTank = (data: SupabaseTank): Tank => ({
   type: data.type,
   volumeLiters: data.volume_liters,
   parameters: data.parameters,
-  inhabitants: data.inhabitants,
+  inhabitants: data.inhabitants || { fish: [], plants: [] },
   createdAt: data.created_at,
   updatedAt: data.updated_at,
 });
@@ -31,8 +31,14 @@ const toSupabaseTank = (tank: Omit<Tank, 'id' | 'createdAt' | 'updatedAt'>) => (
   type: tank.type,
   volume_liters: tank.volumeLiters,
   parameters: tank.parameters,
-  inhabitants: tank.inhabitants,
+  inhabitants: tank.inhabitants || { fish: [], plants: [] },
 });
+
+// Helper to validate UUID format
+const isValidUUID = (id: string): boolean => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(id);
+};
 
 /**
  * Get all tanks for the current user
@@ -62,6 +68,12 @@ export const getUserTanks = async (): Promise<Tank[]> => {
  * Get a single tank by ID
  */
 export const getTankById = async (id: string): Promise<Tank | null> => {
+  // Validate UUID format
+  if (!isValidUUID(id)) {
+    console.warn(`Invalid tank ID format: ${id}. Expected UUID.`);
+    return null;
+  }
+
   const { data: { user } } = await supabase.auth.getUser();
   
   if (!user) {
@@ -109,7 +121,7 @@ export const createTank = async (
 
   if (error) {
     console.error('Error creating tank:', error);
-    throw new Error('Failed to create tank');
+    throw new Error(`Failed to create tank: ${error.message}`);
   }
 
   return toTank(data);
