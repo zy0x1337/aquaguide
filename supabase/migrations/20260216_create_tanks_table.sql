@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS public.tanks (
   name TEXT NOT NULL,
   type TEXT NOT NULL CHECK (type IN ('freshwater', 'saltwater', 'brackish')),
   volume_liters INTEGER NOT NULL CHECK (volume_liters > 0),
-  parameters JSONB NOT NULL DEFAULT '{}'::jsonb,
+  parameters JSONB NOT NULL DEFAULT '{"tempC": 24, "ph": 7.0, "ammonia": 0, "nitrite": 0, "nitrate": 0}'::jsonb,
   inhabitants JSONB NOT NULL DEFAULT '{"fish": [], "plants": []}'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -13,6 +13,12 @@ CREATE TABLE IF NOT EXISTS public.tanks (
 
 -- Enable Row Level Security
 ALTER TABLE public.tanks ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist (for re-running migration)
+DROP POLICY IF EXISTS "Users can view own tanks" ON public.tanks;
+DROP POLICY IF EXISTS "Users can create own tanks" ON public.tanks;
+DROP POLICY IF EXISTS "Users can update own tanks" ON public.tanks;
+DROP POLICY IF EXISTS "Users can delete own tanks" ON public.tanks;
 
 -- RLS Policies
 -- Users can view their own tanks
@@ -41,11 +47,16 @@ CREATE POLICY "Users can delete own tanks"
   USING (auth.uid() = user_id);
 
 -- Create indexes for better performance
-CREATE INDEX idx_tanks_user_id ON public.tanks(user_id);
-CREATE INDEX idx_tanks_created_at ON public.tanks(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_tanks_user_id ON public.tanks(user_id);
+CREATE INDEX IF NOT EXISTS idx_tanks_created_at ON public.tanks(created_at DESC);
 
--- Enable realtime for tanks table
-ALTER PUBLICATION supabase_realtime ADD TABLE public.tanks;
+-- Enable realtime for tanks table (only if publication exists)
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.tanks;
+  END IF;
+END $$;
 
 -- Function to automatically update updated_at timestamp
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
@@ -55,6 +66,9 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Drop existing trigger if exists
+DROP TRIGGER IF EXISTS set_updated_at ON public.tanks;
 
 -- Trigger to update updated_at on tank changes
 CREATE TRIGGER set_updated_at
