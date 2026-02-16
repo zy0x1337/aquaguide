@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench } from 'lucide-react';
+import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
@@ -91,7 +91,8 @@ const TankDetailPage = () => {
         name: updatedTank.name,
         type: updatedTank.type,
         volumeLiters: updatedTank.volumeLiters,
-        parameters: updatedTank.parameters,
+        substrate: updatedTank.substrate,
+        lighting: updatedTank.lighting,
       });
       setTank(updated);
       setIsEditModalOpen(false);
@@ -381,79 +382,127 @@ const TankDetailPage = () => {
 };
 
 // Tab Components
-const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => (
-  <div className="space-y-8">
-    {/* Compatibility Warnings */}
-    {compatibilityWarnings.length > 0 && (
+const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
+  // Format substrate and lighting for display
+  const getSubstrateLabel = (substrate?: string) => {
+    if (!substrate) return 'Not specified';
+    const labels: Record<string, string> = {
+      sand: 'Sand',
+      gravel: 'Gravel',
+      soil: 'Aqua Soil',
+      bare: 'Bare Bottom',
+    };
+    return labels[substrate] || substrate;
+  };
+
+  const getLightingLabel = (lighting?: string) => {
+    if (!lighting) return 'Not specified';
+    const labels: Record<string, string> = {
+      low: 'Low (10-30 PAR)',
+      medium: 'Medium (30-50 PAR)',
+      high: 'High (50+ PAR)',
+    };
+    return labels[lighting] || lighting;
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Compatibility Warnings */}
+      {compatibilityWarnings.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6"
+        >
+          <div className="flex gap-3">
+            <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0" />
+            <div>
+              <h3 className="font-bold text-amber-900 mb-2">Compatibility Warnings</h3>
+              <ul className="space-y-1">
+                {compatibilityWarnings.map((warning: string, i: number) => (
+                  <li key={i} className="text-sm text-amber-800">• {warning}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Tank Setup */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6"
+        transition={{ delay: 0.05 }}
+        className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
       >
-        <div className="flex gap-3">
-          <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0" />
-          <div>
-            <h3 className="font-bold text-amber-900 mb-2">Compatibility Warnings</h3>
-            <ul className="space-y-1">
-              {compatibilityWarnings.map((warning: string, i: number) => (
-                <li key={i} className="text-sm text-amber-800">• {warning}</li>
-              ))}
-            </ul>
-          </div>
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">Tank Setup</h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <SetupCard
+            icon={<Mountain className="w-6 h-6 text-amber-600" />}
+            label="Substrate"
+            value={getSubstrateLabel(tank.substrate)}
+            isEmpty={!tank.substrate}
+          />
+          <SetupCard
+            icon={<Lightbulb className="w-6 h-6 text-yellow-600" />}
+            label="Lighting"
+            value={getLightingLabel(tank.lighting)}
+            isEmpty={!tank.lighting}
+          />
         </div>
       </motion.div>
-    )}
 
-    {/* Water Parameters */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 }}
-      className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
-    >
-      <h2 className="text-2xl font-bold text-slate-900 mb-6">Current Water Parameters</h2>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <ParamCard label="pH" value={tank.parameters.ph} status="good" />
-        <ParamCard label="Temperature" value={`${tank.parameters.tempC}°C`} status="good" />
-        <ParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'warning' : 'good'} />
-        <ParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'warning' : 'good'} />
-        <ParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
-        {(tank.parameters.gh != null && tank.parameters.gh > 0) && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
-        {(tank.parameters.kh != null && tank.parameters.kh > 0) && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
-        {(tank.parameters.tds != null && tank.parameters.tds > 0) && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
-        {(tank.parameters.salinity != null && tank.parameters.salinity > 0) && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
-      </div>
-    </motion.div>
+      {/* Water Parameters */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
+      >
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">Current Water Parameters</h2>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <ParamCard label="pH" value={tank.parameters.ph} status="good" />
+          <ParamCard label="Temperature" value={`${tank.parameters.tempC}°C`} status="good" />
+          <ParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'warning' : 'good'} />
+          <ParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'warning' : 'good'} />
+          <ParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
+          {(tank.parameters.gh != null && tank.parameters.gh > 0) && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
+          {(tank.parameters.kh != null && tank.parameters.kh > 0) && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
+          {(tank.parameters.tds != null && tank.parameters.tds > 0) && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
+          {(tank.parameters.salinity != null && tank.parameters.salinity > 0) && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
+        </div>
+      </motion.div>
 
-    {/* Fish Section */}
-    <InhabitantsSection
-      title="Fish"
-      icon={<FishIcon className="w-6 h-6 text-indigo-600" />}
-      inhabitants={tank.inhabitants?.fish || []}
-      speciesData={allSpecies}
-      linkPrefix="/species"
-      onAdd={onAddFish}
-      onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'fish')}
-      emptyMessage="No fish added yet"
-      addButtonLabel="Add Fish"
-      addButtonColor="bg-indigo-600 hover:bg-indigo-700"
-    />
+      {/* Fish Section */}
+      <InhabitantsSection
+        title="Fish"
+        icon={<FishIcon className="w-6 h-6 text-indigo-600" />}
+        inhabitants={tank.inhabitants?.fish || []}
+        speciesData={allSpecies}
+        linkPrefix="/species"
+        onAdd={onAddFish}
+        onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'fish')}
+        emptyMessage="No fish added yet"
+        addButtonLabel="Add Fish"
+        addButtonColor="bg-indigo-600 hover:bg-indigo-700"
+      />
 
-    {/* Plants Section */}
-    <InhabitantsSection
-      title="Plants"
-      icon={<Leaf className="w-6 h-6 text-emerald-600" />}
-      inhabitants={tank.inhabitants?.plants || []}
-      speciesData={allPlants}
-      linkPrefix="/plants"
-      onAdd={onAddPlant}
-      onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'plant')}
-      emptyMessage="No plants added yet"
-      addButtonLabel="Add Plant"
-      addButtonColor="bg-emerald-600 hover:bg-emerald-700"
-    />
-  </div>
-);
+      {/* Plants Section */}
+      <InhabitantsSection
+        title="Plants"
+        icon={<Leaf className="w-6 h-6 text-emerald-600" />}
+        inhabitants={tank.inhabitants?.plants || []}
+        speciesData={allPlants}
+        linkPrefix="/plants"
+        onAdd={onAddPlant}
+        onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'plant')}
+        emptyMessage="No plants added yet"
+        addButtonLabel="Add Plant"
+        addButtonColor="bg-emerald-600 hover:bg-emerald-700"
+      />
+    </div>
+  );
+};
 
 const ParametersTab = ({ readings, onAddReading, onDeleteReading }: any) => (
   <div className="space-y-6">
@@ -501,6 +550,28 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode; label: string
       <span className="text-xs font-semibold uppercase">{label}</span>
     </div>
     <div className="text-2xl font-bold">{value}</div>
+  </div>
+);
+
+const SetupCard = ({ icon, label, value, isEmpty }: { icon: React.ReactNode; label: string; value: string; isEmpty: boolean }) => (
+  <div className={`bg-gradient-to-br ${
+    isEmpty 
+      ? 'from-slate-50 to-slate-100 border-slate-200' 
+      : 'from-indigo-50 to-purple-50 border-indigo-200'
+  } border-2 rounded-xl p-4`}>
+    <div className="flex items-center gap-3 mb-2">
+      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+        isEmpty ? 'bg-slate-200' : 'bg-white'
+      }`}>
+        {icon}
+      </div>
+      <span className="text-sm font-semibold text-slate-700">{label}</span>
+    </div>
+    <div className={`text-lg font-bold ${
+      isEmpty ? 'text-slate-500 italic' : 'text-slate-900'
+    }`}>
+      {value}
+    </div>
   </div>
 );
 
