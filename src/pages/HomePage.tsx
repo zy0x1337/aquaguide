@@ -46,7 +46,7 @@ const HomePage = () => {
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                     Learn all about your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">favorite Fish</span>
                   </h1>
-                  
+                  :
                   <p className="text-xl text-slate-600 dark:text-stone-400 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
                     The modern standard for aquarium planning. 
                     Explore <span className="font-bold text-slate-900 dark:text-white">{allSpecies.length}+ documented species</span> with science-based compatibility checks and smart filtering.
