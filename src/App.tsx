@@ -3,6 +3,9 @@ import { Layout } from './components/layout/Layout';
 import { ComparisonBar } from './components/comparison/ComparisonBar';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/error/ErrorBoundary';
+import { ToastProvider } from './contexts/ToastContext';
+import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
+import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -24,6 +27,11 @@ import DiseaseDetailPage from './pages/DiseaseDetailPage';
 import { PlantsIndexPage } from './pages/PlantsIndexPage';
 import { PlantDetailPage } from './pages/PlantDetailPage';
 
+// 🐠 MY TANKS & DASHBOARD
+import DashboardPage from './pages/DashboardPage';
+import MyTanksPage from './pages/MyTanksPage';
+import TankDetailPage from './pages/TankDetailPage';
+
 // 🎨 TANK BUILDER
 import { TankBuilderPage } from './pages/TankBuilderPage';
 
@@ -38,47 +46,60 @@ import UserManager from './pages/admin/UserManager';
 function App() {
   return (
     <ErrorBoundary>
-      <Layout>
-        <Routes>
-          {/* Home (Haupt-Datenbank mit Suche) */}
-          <Route path="/" element={<HomePage />} />
+      <ToastProvider>
+        {/* Notification Permission Banner */}
+        <NotificationPermissionBanner />
 
-          {/* Auth */}
-          <Route path="/login" element={<AuthPage />} />
+        <Layout>
+          <Routes>
+            {/* Home (Haupt-Datenbank mit Suche) */}
+            <Route path="/" element={<HomePage />} />
 
-          {/* Species Routes */}
-          <Route path="/species" element={<SpeciesIndexPage />} />
-          <Route path="/species/:slug" element={<SpeciesDetailPage />} />
+            {/* Auth */}
+            <Route path="/login" element={<AuthPage />} />
 
-          {/* Disease Routes */}
-          <Route path="/diseases" element={<DiseaseIndexPage />} />
-          <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
+            {/* Species Routes */}
+            <Route path="/species" element={<SpeciesIndexPage />} />
+            <Route path="/species/:slug" element={<SpeciesDetailPage />} />
 
-          {/* 🌱 Plant Routes */}
-          <Route path="/plants" element={<PlantsIndexPage />} />
-          <Route path="/plants/:slug" element={<PlantDetailPage />} />
+            {/* Disease Routes */}
+            <Route path="/diseases" element={<DiseaseIndexPage />} />
+            <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
 
-          {/* 🎨 Tank Builder */}
-          <Route path="/tank-builder" element={<TankBuilderPage />} />
+            {/* 🌱 Plant Routes */}
+            <Route path="/plants" element={<PlantsIndexPage />} />
+            <Route path="/plants/:slug" element={<PlantDetailPage />} />
 
-          {/* ⚖️ Comparison Tool */}
-          <Route path="/compare" element={<ComparisonPage />} />
+            {/* 🐠 Dashboard & My Tanks (Protected) */}
+            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+            <Route path="/my-tanks" element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
+            <Route path="/my-tanks/:id" element={<ProtectedRoute><TankDetailPage /></ProtectedRoute>} />
 
-          {/* 👑 Admin Routes (Protected) */}
-          <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/species" element={<ProtectedRoute requireAdmin><SpeciesManager /></ProtectedRoute>} />
-          <Route path="/admin/users" element={<ProtectedRoute requireAdmin><UserManager /></ProtectedRoute>} />
+            {/* 🎨 Tank Builder */}
+            <Route path="/tank-builder" element={<TankBuilderPage />} />
 
-          {/* About Page */}
-          <Route path="/about" element={<AboutPage />} />
+            {/* ⚖️ Comparison Tool */}
+            <Route path="/compare" element={<ComparisonPage />} />
 
-          {/* 404 Not Found */}
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        
-        {/* Global Comparison Bar */}
-        <ComparisonBar />
-      </Layout>
+            {/* 👑 Admin Routes (Protected) */}
+            <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/species" element={<ProtectedRoute requireAdmin><SpeciesManager /></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute requireAdmin><UserManager /></ProtectedRoute>} />
+
+            {/* About Page */}
+            <Route path="/about" element={<AboutPage />} />
+
+            {/* 404 Not Found */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          
+          {/* Global Comparison Bar */}
+          <ComparisonBar />
+        </Layout>
+
+        {/* PWA Update Prompt */}
+        <PWAUpdatePrompt />
+      </ToastProvider>
     </ErrorBoundary>
   );
 }
