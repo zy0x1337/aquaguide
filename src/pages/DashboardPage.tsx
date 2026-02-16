@@ -6,7 +6,10 @@ import DashboardStats from '../components/dashboard/DashboardStats';
 import TankHealthList from '../components/dashboard/TankHealthList';
 import RecentActivityFeed from '../components/dashboard/RecentActivityFeed';
 import QuickActions from '../components/dashboard/QuickActions';
+import AlertsPanel from '../components/dashboard/AlertsPanel';
 import { SEOHead } from '../components/seo/SEOHead';
+import { getUserTanks } from '../lib/supabase/tanks';
+import { Tank } from '../types/tank';
 import { 
   getDashboardStats, 
   getAllTankHealthScores, 
@@ -15,11 +18,14 @@ import {
   TankHealthScore, 
   RecentActivity 
 } from '../lib/supabase/dashboard';
+import { getAllAlerts, ParameterAlert } from '../lib/supabase/alerts';
 
 const DashboardPage = () => {
+  const [tanks, setTanks] = useState<Tank[]>([]);
   const [stats, setStats] = useState<StatsType | null>(null);
   const [healthScores, setHealthScores] = useState<TankHealthScore[]>([]);
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
+  const [alerts, setAlerts] = useState<ParameterAlert[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,15 +38,21 @@ const DashboardPage = () => {
       setIsLoading(true);
       setError(null);
       
-      const [statsData, healthData, activityData] = await Promise.all([
+      const [tanksData, statsData, healthData, activityData] = await Promise.all([
+        getUserTanks(),
         getDashboardStats(),
         getAllTankHealthScores(),
         getRecentActivity(10),
       ]);
 
+      setTanks(tanksData);
       setStats(statsData);
       setHealthScores(healthData);
       setRecentActivity(activityData);
+      
+      // Generate alerts from tanks
+      const generatedAlerts = getAllAlerts(tanksData);
+      setAlerts(generatedAlerts);
     } catch (err) {
       console.error('Error loading dashboard:', err);
       setError('Failed to load dashboard. Please try again.');
@@ -167,6 +179,9 @@ const DashboardPage = () => {
 
         {/* Quick Actions */}
         <QuickActions onAddTank={() => window.location.href = '/my-tanks'} />
+
+        {/* Alerts Panel */}
+        {alerts.length > 0 && <AlertsPanel alerts={alerts} />}
 
         {/* Two Column Layout */}
         <div className="grid lg:grid-cols-3 gap-8">
