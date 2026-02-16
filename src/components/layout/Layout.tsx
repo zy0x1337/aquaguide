@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogIn, LogOut, User, Crown } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogIn, LogOut, User, Crown, Boxes } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -39,6 +39,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
     { path: '/', label: 'Home', icon: Home },
     { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
+    { path: '/my-tanks', label: 'My Tanks', icon: Boxes, requireAuth: true },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
   ];
@@ -68,6 +69,9 @@ export const Layout: React.FC<Props> = ({ children }) => {
             {/* CENTER: MAIN NAVIGATION (Desktop) */}
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map(item => {
+                // Skip auth-required items if user not logged in
+                if (item.requireAuth && !user) return null;
+                
                 const Icon = item.icon;
                 const active = isActive(item.path);
                 return (
@@ -260,6 +264,9 @@ export const Layout: React.FC<Props> = ({ children }) => {
               {/* Main Nav (Mobile) */}
               <div className="space-y-1">
                 {navItems.map(item => {
+                  // Skip auth-required items if user not logged in
+                  if (item.requireAuth && !user) return null;
+                  
                   const Icon = item.icon;
                   const active = isActive(item.path);
                   return (
