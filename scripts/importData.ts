@@ -6,9 +6,23 @@
 import { createClient } from '@supabase/supabase-js';
 import { allSpecies } from '../src/data/species/index';
 import { allPlants } from '../src/data/plants/index';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://plyiyuctfphxtvzyqttz.supabase.co';
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBseWl5dWN0ZnBoeHR2enlxdHR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NjYyNzIsImV4cCI6MjA1MjM0MjI3Mn0.Rr9N7vCePiFQmCGFiN79VFLsvdPz2__o_dxwIyY0RZw';
+// Load .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ Missing Supabase credentials!');
+  console.error('Make sure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in your .env file');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -106,14 +120,14 @@ function convertPlantToDB(plant: any): SpeciesData {
     scientific_name: plant.taxonomy?.scientificName || plant.scientificName,
     type: 'plant',
     difficulty: plant.difficulty?.toLowerCase() || 'beginner',
-    min_tank_size_liters: 0, // Not applicable for plants
+    min_tank_size_liters: 0,
     min_group_size: 1,
     ph_range: plant.parameters?.ph ? { min: plant.parameters.ph.min, max: plant.parameters.ph.max } : null,
     temp_range_c: plant.parameters?.tempC ? { min: plant.parameters.tempC.min, max: plant.parameters.tempC.max } : null,
     hardness_range_dgh: null,
     description: plant.description || '',
     care_guide: plant.planting?.notes || plant.care?.description || '',
-    diet: '', // Not applicable for plants
+    diet: '',
     behavior_tags: behaviorTags.filter(Boolean),
     image_url: plant.imageUrl || null,
     image_credit: formatImageCredit(plant.imageCredit),
@@ -122,6 +136,7 @@ function convertPlantToDB(plant: any): SpeciesData {
 
 async function importData() {
   console.log('🚀 Starting data import...');
+  console.log(`📡 Connecting to: ${supabaseUrl}`);
 
   // Convert species
   const speciesData = allSpecies.map(convertSpeciesToDB);

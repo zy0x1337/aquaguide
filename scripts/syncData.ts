@@ -8,9 +8,22 @@ import { allSpecies } from '../src/data/species/index';
 import { allPlants } from '../src/data/plants/index';
 import fs from 'fs';
 import path from 'path';
+import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://plyiyuctfphxtvzyqttz.supabase.co';
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBseWl5dWN0ZnBoeHR2enlxdHR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NjYyNzIsImV4cCI6MjA1MjM0MjI3Mn0.Rr9N7vCePiFQmCGFiN79VFLsvdPz2__o_dxwIyY0RZw';
+// Load .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ Missing Supabase credentials!');
+  console.error('Make sure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in your .env file');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
