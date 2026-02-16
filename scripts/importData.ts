@@ -38,25 +38,6 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   }
 });
 
-interface SpeciesData {
-  slug: string;
-  common_name: string;
-  scientific_name: string;
-  type: 'fish' | 'invertebrate' | 'plant';
-  difficulty: string;
-  min_tank_size_liters: number;
-  min_group_size: number;
-  ph_range: { min: number; max: number } | null;
-  temp_range_c: { min: number; max: number } | null;
-  hardness_range_dgh: { min: number; max: number } | null;
-  description: string;
-  care_guide: string;
-  diet: string;
-  behavior_tags: string[];
-  image_url: string | null;
-  image_credit: string | null;
-}
-
 function formatImageCredit(imageCredit: any): string | null {
   if (!imageCredit) return null;
   if (typeof imageCredit === 'string') return imageCredit;
@@ -89,28 +70,40 @@ function normalizeDifficulty(difficulty: string): string {
   return mapping[normalized] || 'beginner';
 }
 
-function convertSpeciesToDB(species: any): SpeciesData {
+function convertSpeciesToDB(species: any) {
   // Determine type
   let type: 'fish' | 'invertebrate' | 'plant' = 'fish';
   if (species.category === 'Invertebrate' || species.tags?.includes('invertebrate')) {
     type = 'invertebrate';
   }
 
-  // Extract behavior tags from various sources
+  // Extract behavior tags
   const behaviorTags: string[] = [];
   if (species.behavior?.temperament) behaviorTags.push(species.behavior.temperament);
   if (species.behavior?.schooling) behaviorTags.push('schooling');
   if (species.behavior?.swimming) behaviorTags.push(species.behavior.swimming);
   if (species.tags) behaviorTags.push(...species.tags);
 
+  // Common problems
+  const commonProblems = species.commonProblems?.map((p: any) => ({
+    title: p.title,
+    description: p.desc || p.description,
+    solution: p.solution
+  })) || null;
+
   return {
+    // Basic info
     slug: species.slug,
     common_name: species.commonName || species.taxonomy?.commonName,
     scientific_name: species.scientificName || species.taxonomy?.scientificName,
     type,
     difficulty: normalizeDifficulty(species.difficulty || 'beginner'),
+    
+    // Tank requirements
     min_tank_size_liters: species.minTankSize || 0,
     min_group_size: species.minGroupSize || 1,
+    
+    // Water parameters
     ph_range: species.environment?.ph || species.parameters?.ph ? 
       { 
         min: species.environment?.ph?.min || species.parameters?.ph?.min, 
@@ -123,16 +116,48 @@ function convertSpeciesToDB(species: any): SpeciesData {
       } : null,
     hardness_range_dgh: species.environment?.hardnessDGH ? 
       { min: species.environment.hardnessDGH.min, max: species.environment.hardnessDGH.max } : null,
+    
+    // Size and lifespan
+    adult_size_cm: species.adultSize ? { min: species.adultSize.min, max: species.adultSize.max } : null,
+    lifespan_years: species.lifespan ? { min: species.lifespan.min, max: species.lifespan.max } : null,
+    
+    // Content
     description: species.description || '',
     care_guide: species.care?.description || species.careLevel?.description || '',
     diet: species.diet?.primary?.join(', ') || species.feeding?.diet || '',
     behavior_tags: behaviorTags.filter(Boolean),
+    
+    // Image
     image_url: species.imageUrl || null,
     image_credit: formatImageCredit(species.imageCredit),
+    
+    // Taxonomy
+    family: species.taxonomy?.family || species.family || null,
+    origin: species.taxonomy?.origin || species.origin || null,
+    category: species.category || null,
+    
+    // Behavior
+    temperament: species.behavior?.temperament || null,
+    swimming_level: species.behavior?.swimming || null,
+    is_schooling: species.behavior?.schooling === true || species.behavior?.schooling === 'yes',
+    
+    // Breeding
+    breeding_info: species.breeding ? {
+      difficulty: species.breeding.difficulty,
+      notes: species.breeding.notes || species.breeding.description
+    } : null,
+    
+    // Compatibility
+    compatible_with: species.compatibility?.good || [],
+    incompatible_with: species.compatibility?.avoid || [],
+    
+    // Problems and related
+    common_problems: commonProblems,
+    related_species: species.relatedSpecies || [],
   };
 }
 
-function convertPlantToDB(plant: any): SpeciesData {
+function convertPlantToDB(plant: any) {
   const behaviorTags: string[] = [];
   if (plant.specs?.placement) {
     if (Array.isArray(plant.specs.placement)) {
@@ -144,38 +169,92 @@ function convertPlantToDB(plant: any): SpeciesData {
   if (plant.specs?.growthRate) behaviorTags.push(`growth-${plant.specs.growthRate}`);
   if (plant.specs?.light) behaviorTags.push(`light-${plant.specs.light}`);
 
+  // Common problems
+  const commonProblems = plant.commonProblems?.map((p: any) => ({
+    title: p.title,
+    description: p.desc || p.description,
+    solution: p.solution
+  })) || null;
+
   return {
+    // Basic info
     slug: plant.slug,
     common_name: plant.taxonomy?.commonName || plant.commonName,
     scientific_name: plant.taxonomy?.scientificName || plant.scientificName,
-    type: 'plant',
+    type: 'plant' as const,
     difficulty: normalizeDifficulty(plant.difficulty || 'beginner'),
+    
+    // Not applicable for plants
     min_tank_size_liters: 0,
     min_group_size: 1,
+    
+    // Water parameters
     ph_range: plant.parameters?.ph ? { min: plant.parameters.ph.min, max: plant.parameters.ph.max } : null,
     temp_range_c: plant.parameters?.tempC ? { min: plant.parameters.tempC.min, max: plant.parameters.tempC.max } : null,
     hardness_range_dgh: null,
+    
+    // Size
+    adult_size_cm: plant.specs?.heightCM ? { min: plant.specs.heightCM.min, max: plant.specs.heightCM.max } : null,
+    lifespan_years: null,
+    
+    // Content
     description: plant.description || '',
     care_guide: plant.planting?.notes || plant.care?.description || '',
     diet: '',
     behavior_tags: behaviorTags.filter(Boolean),
+    
+    // Image
     image_url: plant.imageUrl || null,
     image_credit: formatImageCredit(plant.imageCredit),
+    
+    // Taxonomy
+    family: plant.taxonomy?.family || null,
+    origin: plant.taxonomy?.origin || null,
+    category: null,
+    
+    // Plant-specific
+    light_requirement: plant.specs?.light || null,
+    co2_requirement: plant.specs?.co2 || null,
+    growth_rate: plant.specs?.growthRate || null,
+    placement: Array.isArray(plant.specs?.placement) ? plant.specs.placement : 
+               plant.specs?.placement ? [plant.specs.placement] : null,
+    
+    // Substrate
+    substrate_required: plant.planting?.substrate !== false,
+    root_tabs_required: plant.planting?.soilTabs === true,
+    
+    // Propagation
+    propagation: plant.planting?.propagation || null,
+    
+    // Nutrients
+    nutrient_requirements: plant.nutrients || null,
+    
+    // Problems and related
+    common_problems: commonProblems,
+    related_species: plant.relatedPlants || [],
+    
+    // Not applicable
+    temperament: null,
+    swimming_level: null,
+    is_schooling: false,
+    breeding_info: null,
+    compatible_with: [],
+    incompatible_with: [],
   };
 }
 
 async function importData() {
-  console.log('🚀 Starting data import...');
+  console.log('🚀 Starting comprehensive data import...');
   console.log(`📡 Connecting to: ${supabaseUrl}`);
   console.log('🔐 Using service role key (admin access)');
 
   // Convert species
   const speciesData = allSpecies.map(convertSpeciesToDB);
-  console.log(`📦 Prepared ${speciesData.length} species`);
+  console.log(`📦 Prepared ${speciesData.length} species with full data`);
 
   // Convert plants
   const plantsData = allPlants.map(convertPlantToDB);
-  console.log(`🌿 Prepared ${plantsData.length} plants`);
+  console.log(`🌿 Prepared ${plantsData.length} plants with full data`);
 
   // Combine all
   const allData = [...speciesData, ...plantsData];
@@ -192,7 +271,13 @@ async function importData() {
   }
 
   console.log('✅ Data import complete!');
-  console.log(`🎉 Successfully imported ${allData.length} entries`);
+  console.log(`🎉 Successfully imported ${allData.length} entries with comprehensive data`);
+  console.log('📊 Imported fields:');
+  console.log('   - Basic info, taxonomy, size, lifespan');
+  console.log('   - Water parameters, requirements');
+  console.log('   - Compatibility, breeding, behavior');
+  console.log('   - Common problems, related species');
+  console.log('   - Images with credits');
 }
 
 importData();
