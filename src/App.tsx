@@ -24,7 +24,8 @@ import DiseaseDetailPage from './pages/DiseaseDetailPage';
 import { PlantsIndexPage } from './pages/PlantsIndexPage';
 import { PlantDetailPage } from './pages/PlantDetailPage';
 
-// 🐠 MY TANKS
+// 🐠 MY TANKS & DASHBOARD
+import DashboardPage from './pages/DashboardPage';
 import MyTanksPage from './pages/MyTanksPage';
 import TankDetailPage from './pages/TankDetailPage';
 
@@ -62,7 +63,8 @@ function App() {
           <Route path="/plants" element={<PlantsIndexPage />} />
           <Route path="/plants/:slug" element={<PlantDetailPage />} />
 
-          {/* 🐠 My Tanks (Protected) */}
+          {/* 🐠 Dashboard & My Tanks (Protected) */}
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/my-tanks" element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
           <Route path="/my-tanks/:id" element={<ProtectedRoute><TankDetailPage /></ProtectedRoute>} />
 
