@@ -5,43 +5,88 @@ import TankCard from '../components/tanks/TankCard';
 import AddTankModal from '../components/tanks/AddTankModal';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
+import { getUserTanks, createTank, deleteTank } from '../lib/supabase/tanks';
 
 const MyTanksPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Load tanks from localStorage on mount
+  // Load tanks from Supabase on mount
   useEffect(() => {
-    const storedTanks = localStorage.getItem('aquaguide_tanks');
-    if (storedTanks) {
-      setTanks(JSON.parse(storedTanks));
-    }
+    loadTanks();
   }, []);
 
-  // Save tanks to localStorage whenever they change
-  useEffect(() => {
-    if (tanks.length > 0) {
-      localStorage.setItem('aquaguide_tanks', JSON.stringify(tanks));
+  const loadTanks = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await getUserTanks();
+      setTanks(data);
+    } catch (err) {
+      console.error('Error loading tanks:', err);
+      setError('Failed to load tanks. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-  }, [tanks]);
-
-  const handleAddTank = (newTank: Omit<Tank, 'id' | 'createdAt'>) => {
-    const tank: Tank = {
-      ...newTank,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-    };
-    const updatedTanks = [...tanks, tank];
-    setTanks(updatedTanks);
-    localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
-    setIsModalOpen(false);
   };
 
-  const handleDeleteTank = (id: string) => {
-    const updatedTanks = tanks.filter(t => t.id !== id);
-    setTanks(updatedTanks);
-    localStorage.setItem('aquaguide_tanks', JSON.stringify(updatedTanks));
+  const handleAddTank = async (newTank: Omit<Tank, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      const createdTank = await createTank(newTank);
+      setTanks([...tanks, createdTank]);
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error('Error creating tank:', err);
+      alert('Failed to create tank. Please try again.');
+    }
   };
+
+  const handleDeleteTank = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this tank?')) return;
+    
+    try {
+      await deleteTank(id);
+      setTanks(tanks.filter(t => t.id !== id));
+    } catch (err) {
+      console.error('Error deleting tank:', err);
+      alert('Failed to delete tank. Please try again.');
+    }
+  };
+
+  // Loading State
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mx-auto mb-4"></div>
+          <p className="text-slate-600 font-semibold">Loading your tanks...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <Fish className="w-8 h-8 text-red-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Oops!</h2>
+          <p className="text-slate-600 mb-6">{error}</p>
+          <button
+            onClick={loadTanks}
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
@@ -100,7 +145,7 @@ const MyTanksPage = () => {
                 value={`${Math.round(
                   tanks.reduce((sum, t) => {
                     const months = Math.floor(
-                      (Date.now() - new Date(t.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 30)
+                      (Date.now() - new Date(t.createdAt || Date.now()).getTime()) / (1000 * 60 * 60 * 24 * 30)
                     );
                     return sum + months;
                   }, 0) / (tanks.length || 1)
