@@ -40,7 +40,7 @@ const HomePage = () => {
                 >
                   <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wide mb-6 border border-indigo-200 dark:border-indigo-800">
                     <Sparkles className="w-3 h-3" />
-                    v2.0 Beta Live
+                    v0.0.7 Beta Live
                   </span>
                   
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.1]">
