@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Sparkles, Home, Scale, LogIn, LogOut, User, Crown } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogIn, LogOut, User, Crown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 
-
 interface Props {
   children: React.ReactNode;
 }
-
 
 export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,10 +32,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
     }
   }, [user]);
 
-
   const isActive = (path: string) => 
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
-
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
@@ -47,286 +43,30 @@ export const Layout: React.FC<Props> = ({ children }) => {
     { path: '/about', label: 'About', icon: Info },
   ];
 
-  const isTankBuilderActive = isActive('/tank-builder');
-  const isCompareActive = isActive('/compare');
-  const isAdminActive = isActive('/admin');
-
-
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300">
-      
-      {/* HEADER: Nutzt CSS-Variablen für Hintergrund und Border */}
-      <header className="sticky top-0 z-50 bg-theme-nav border-b border-theme shadow-sm transition-colors duration-300">
+    <div className="min-h-screen flex flex-col">
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 bg-white dark:bg-stone-950 border-b border-slate-200 dark:border-stone-800 backdrop-blur-sm bg-white/95 dark:bg-stone-950/95 transition-colors duration-200">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             
-            {/* LOGO */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-gradient-to-tr from-indigo-500 to-cyan-400 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
-                <Droplets className="w-6 h-6 fill-white/20" />
+            {/* LEFT: LOGO */}
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+                <Droplets className="w-5 h-5 text-white fill-white/20" />
               </div>
-              <div className="flex flex-col justify-center -space-y-0.5">
-                <span className="text-xl font-black tracking-tight text-theme-main leading-none">
+              <div className="flex flex-col justify-center -space-y-1">
+                <span className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                   Aqua<span className="text-indigo-600 dark:text-indigo-400">Guide</span>
                 </span>
-                <span className="text-[10px] font-bold text-theme-muted tracking-widest uppercase ml-0.5">
+                <span className="text-[9px] font-semibold text-slate-400 dark:text-stone-500 tracking-wider uppercase">
                   Database
                 </span>
               </div>
             </Link>
 
-
-            {/* DESKTOP NAV */}
-            <div className="hidden md:flex items-center gap-4">
-              
-              {/* ADMIN LINK (only if admin) */}
-              {isAdmin && (
-                <Link
-                  to="/admin"
-                  className={`
-                    relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300
-                    ${isAdminActive
-                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30' 
-                      : 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md shadow-amber-400/20 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105'
-                    }
-                  `}
-                >
-                  <Crown className="w-4 h-4" />
-                  <span>Admin</span>
-                </Link>
-              )}
-
-              {/* TANK BUILDER - PROMINENT BUTTON */}
-              <Link
-                to="/tank-builder"
-                className={`
-                  relative flex items-center gap-2 px-5 py-2 rounded-xl font-bold text-sm transition-all duration-300 overflow-hidden group
-                  ${isTankBuilderActive 
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30' 
-                    : 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md shadow-indigo-400/20 hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-105'
-                  }
-                `}
-              >
-                {/* Animated background shimmer */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                
-                <BoxSelect className="w-4 h-4 relative z-10" />
-                <span className="relative z-10">Tank Builder</span>
-                
-                {!isTankBuilderActive && (
-                  <Sparkles className="w-3.5 h-3.5 relative z-10 animate-pulse" />
-                )}
-              </Link>
-
-              {/* COMPARISON TOOL - With Badge */}
-              <Link
-                to="/compare"
-                className={`
-                  relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300
-                  ${isCompareActive || comparedSpecies.length > 0
-                    ? 'bg-emerald-500 dark:bg-emerald-600 text-white shadow-md hover:shadow-lg hover:scale-105' 
-                    : 'bg-slate-100 dark:bg-stone-800 text-slate-700 dark:text-stone-300 hover:bg-slate-200 dark:hover:bg-stone-700'
-                  }
-                  ${comparedSpecies.length > 0 ? 'animate-pulse' : ''}
-                `}
-              >
-                <Scale className="w-4 h-4" />
-                <span>Compare</span>
-                
-                {comparedSpecies.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-[10px] font-black rounded-full flex items-center justify-center shadow-lg">
-                    {comparedSpecies.length}
-                  </span>
-                )}
-              </Link>
-
-              <div className="h-6 w-px bg-theme-nav border-l border-theme opacity-50"></div>
-
-              {/* Regular Nav Pills */}
-              <div 
-                className="flex items-center gap-1 p-1 rounded-xl border border-theme"
-                style={{ backgroundColor: 'var(--nav-pill-bg)' }} 
-              >
-                {navItems.map(item => {
-                  const Icon = item.icon;
-                  const active = isActive(item.path);
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`
-                        flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm transition-all duration-200
-                        ${active ? 'nav-item-active' : 'nav-item-inactive font-bold'}
-                      `}
-                    >
-                      {active && <Icon className="w-3.5 h-3.5" />}
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
-              
-              <div className="h-6 w-px bg-theme-nav border-l border-theme opacity-50"></div>
-
-              {/* AUTH BUTTONS */}
-              {user ? (
-                <div className="flex items-center gap-3">
-                  <div className="text-xs text-right hidden lg:block">
-                    <div className="font-bold text-theme-main">Logged In</div>
-                    <div className="text-theme-muted truncate max-w-[100px]">{user.email?.split('@')[0]}</div>
-                  </div>
-                  <button
-                    onClick={() => signOut()}
-                    className="p-2 text-theme-muted hover:text-red-500 transition-colors"
-                    title="Sign Out"
-                  >
-                    <LogOut className="w-5 h-5" />
-                  </button>
-                </div>
-              ) : (
-                <Link
-                  to="/login"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-theme-muted/10 hover:bg-theme-muted/20 text-theme-main transition-colors border border-theme"
-                >
-                  <LogIn className="w-4 h-4" />
-                  Login
-                </Link>
-              )}
-
-
-              <ThemeToggle />
-            </div>
-
-
-            {/* MOBILE TOGGLE */}
-            <div className="flex items-center gap-2 md:hidden">
-              {/* Compare Button - Mobile Header */}
-              {comparedSpecies.length > 0 && (
-                <Link
-                  to="/compare"
-                  className="relative p-2 bg-emerald-500 dark:bg-emerald-600 rounded-lg text-white shadow-md"
-                >
-                  <Scale className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
-                    {comparedSpecies.length}
-                  </span>
-                </Link>
-              )}
-              
-              <ThemeToggle />
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6 text-theme-main" />
-                ) : (
-                  <Menu className="w-6 h-6 text-theme-main" />
-                )}
-              </button>
-            </div>
-          </div>
-
-
-          {/* MOBILE MENU */}
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-theme animate-fade-in bg-theme-nav">
-              
-              {/* Auth Mobile */}
-              {user ? (
-                <div className="px-4 mb-4 pb-4 border-b border-theme flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-300">
-                      <User className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-theme-main">{user.email?.split('@')[0]}</div>
-                      <div className="text-xs text-theme-muted">Member</div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => {
-                      signOut();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg"
-                  >
-                    <LogOut className="w-5 h-5" />
-                  </button>
-                </div>
-              ) : (
-                <div className="px-4 mb-4 pb-4 border-b border-theme">
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-md"
-                  >
-                    <LogIn className="w-5 h-5" />
-                    Login / Sign Up
-                  </Link>
-                </div>
-              )}
-
-              {/* Admin Link - Mobile */}
-              {isAdmin && (
-                <Link
-                  to="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`
-                    flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-3 transition-all
-                    ${isAdminActive
-                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg'
-                      : 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md hover:shadow-lg'
-                    }
-                  `}
-                >
-                  <Crown className="w-5 h-5" />
-                  <span>Admin Panel</span>
-                </Link>
-              )}
-
-              {/* Tank Builder - Prominent on Mobile */}
-              <Link
-                to="/tank-builder"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`
-                  flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-3 transition-all relative overflow-hidden group
-                  ${isTankBuilderActive
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                    : 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md hover:shadow-lg'
-                  }
-                `}
-              >
-                <BoxSelect className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">Tank Builder</span>
-                {!isTankBuilderActive && (
-                  <Sparkles className="w-4 h-4 ml-auto relative z-10 animate-pulse" />
-                )}
-              </Link>
-
-              {/* Comparison Tool - Mobile */}
-              <Link
-                to="/compare"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`
-                  relative flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-3 transition-all
-                  ${isCompareActive || comparedSpecies.length > 0
-                    ? 'bg-emerald-500 dark:bg-emerald-600 text-white shadow-md'
-                    : 'bg-slate-100 dark:bg-stone-800 text-slate-700 dark:text-stone-300'
-                  }
-                `}
-              >
-                <Scale className="w-5 h-5" />
-                <span>Compare Species</span>
-                {comparedSpecies.length > 0 && (
-                  <span className="ml-auto px-2 py-0.5 bg-rose-500 text-white text-xs font-black rounded-full">
-                    {comparedSpecies.length}
-                  </span>
-                )}
-              </Link>
-
-              <div className="h-px bg-theme my-2"></div>
-
+            {/* CENTER: MAIN NAVIGATION (Desktop) */}
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map(item => {
                 const Icon = item.icon;
                 const active = isActive(item.path);
@@ -334,37 +74,230 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   <Link
                     key={item.path}
                     to={item.path}
-                    onClick={() => setMobileMenuOpen(false)}
                     className={`
-                      flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-1 transition-colors
+                      flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200
                       ${active 
-                        ? 'bg-indigo-50 dark:bg-stone-800 text-indigo-700 dark:text-white' 
-                        : 'text-theme-muted hover:bg-black/5 dark:hover:bg-white/5'
+                        ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400' 
+                        : 'text-slate-600 dark:text-stone-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-stone-900'
                       }
                     `}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-4 h-4" />
                     {item.label}
                   </Link>
                 );
               })}
             </div>
+
+            {/* RIGHT: ACTIONS */}
+            <div className="flex items-center gap-2">
+              {/* Compare Button (Desktop & Mobile) */}
+              {comparedSpecies.length > 0 && (
+                <Link
+                  to="/compare"
+                  className="relative p-2 rounded-lg bg-emerald-500 dark:bg-emerald-600 text-white hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-colors"
+                  title="Compare Species"
+                >
+                  <Scale className="w-5 h-5" />
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-md">
+                    {comparedSpecies.length}
+                  </span>
+                </Link>
+              )}
+
+              {/* Tank Builder (Desktop) */}
+              <Link
+                to="/tank-builder"
+                className={`
+                  hidden lg:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200
+                  ${
+                    isActive('/tank-builder')
+                      ? 'bg-indigo-600 text-white shadow-md'
+                      : 'bg-indigo-500 text-white hover:bg-indigo-600 shadow-sm hover:shadow-md'
+                  }
+                `}
+              >
+                <BoxSelect className="w-4 h-4" />
+                Tank Builder
+              </Link>
+
+              {/* Admin Link (Desktop) */}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className={`
+                    hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200
+                    ${
+                      isActive('/admin')
+                        ? 'bg-amber-500 text-white'
+                        : 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900'
+                    }
+                  `}
+                  title="Admin Panel"
+                >
+                  <Crown className="w-4 h-4" />
+                </Link>
+              )}
+
+              {/* Auth (Desktop) */}
+              <div className="hidden md:flex items-center gap-2">
+                {user ? (
+                  <>
+                    <div className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-stone-900 text-xs font-medium text-slate-700 dark:text-stone-300 hidden xl:block">
+                      {user.email?.split('@')[0]}
+                    </div>
+                    <button
+                      onClick={() => signOut()}
+                      className="p-2 rounded-lg text-slate-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                      title="Sign Out"
+                    >
+                      <LogOut className="w-5 h-5" />
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-slate-100 dark:bg-stone-900 text-slate-700 dark:text-stone-300 hover:bg-slate-200 dark:hover:bg-stone-800 transition-colors"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Login
+                  </Link>
+                )}
+              </div>
+
+              {/* Theme Toggle */}
+              <ThemeToggle />
+
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-stone-900 transition-colors"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-6 h-6 text-slate-700 dark:text-stone-300" />
+                ) : (
+                  <Menu className="w-6 h-6 text-slate-700 dark:text-stone-300" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* MOBILE MENU */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden py-4 border-t border-slate-200 dark:border-stone-800 animate-in slide-in-from-top-2 duration-200">
+              {/* Auth (Mobile) */}
+              <div className="mb-4 pb-4 border-b border-slate-200 dark:border-stone-800">
+                {user ? (
+                  <div className="flex items-center justify-between px-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-950 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <User className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-slate-900 dark:text-white">{user.email?.split('@')[0]}</div>
+                        <div className="text-xs text-slate-500 dark:text-stone-500">Member</div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="p-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                    >
+                      <LogOut className="w-5 h-5" />
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+                  >
+                    <LogIn className="w-5 h-5" />
+                    Login / Sign Up
+                  </Link>
+                )}
+              </div>
+
+              {/* Special Actions (Mobile) */}
+              <div className="space-y-2 mb-4">
+                <Link
+                  to="/tank-builder"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`
+                    flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors
+                    ${
+                      isActive('/tank-builder')
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950/50'
+                    }
+                  `}
+                >
+                  <BoxSelect className="w-5 h-5" />
+                  Tank Builder
+                </Link>
+
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`
+                      flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors
+                      ${
+                        isActive('/admin')
+                          ? 'bg-amber-500 text-white'
+                          : 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-950/50'
+                      }
+                    `}
+                  >
+                    <Crown className="w-5 h-5" />
+                    Admin Panel
+                  </Link>
+                )}
+              </div>
+
+              {/* Main Nav (Mobile) */}
+              <div className="space-y-1">
+                {navItems.map(item => {
+                  const Icon = item.icon;
+                  const active = isActive(item.path);
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`
+                        flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors
+                        ${
+                          active
+                            ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
+                            : 'text-slate-600 dark:text-stone-400 hover:bg-slate-50 dark:hover:bg-stone-900'
+                        }
+                      `}
+                    >
+                      <Icon className="w-5 h-5" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           )}
         </nav>
       </header>
-
 
       <main className="flex-1">
         {children}
       </main>
 
-
-      <footer className="bg-theme-nav border-t border-theme mt-auto transition-colors duration-300">
+      {/* FOOTER */}
+      <footer className="bg-white dark:bg-stone-950 border-t border-slate-200 dark:border-stone-800 mt-auto transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-theme-muted">© 2026 AquaGuide. Not advice. Consult a vet for sick fish.</p>
+            <p className="text-sm text-slate-500 dark:text-stone-500">© 2026 AquaGuide. Not advice. Consult a vet for sick fish.</p>
             <div className="flex gap-6">
-              <Link to="/about" className="text-sm text-theme-muted hover:text-indigo-600 transition-colors">About</Link>
+              <Link to="/about" className="text-sm text-slate-500 dark:text-stone-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About</Link>
             </div>
           </div>
         </div>
