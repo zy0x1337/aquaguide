@@ -274,16 +274,18 @@ const TankDetailPage = () => {
             </div>
           ) : (
             <div className="space-y-3">
-              {tank.inhabitants?.fish.map((fish) => {
+              {tank.inhabitants?.fish.map((fish, index) => {
                 const species = allSpecies.find(s => s.id === fish.speciesId);
+                if (!species) return null; // Skip if species not found
+                
                 return (
                   <InhabitantCard
-                    key={fish.speciesId}
+                    key={`${fish.speciesId}-${index}`}
                     name={fish.speciesName}
-                    scientificName={species?.taxonomy.scientificName || ''}
+                    scientificName={species.taxonomy.scientificName}
                     quantity={fish.quantity}
-                    slug={species?.slug || ''}
-                    imageUrl={species?.visuals.imageUrl}
+                    slug={species.slug}
+                    imageUrl={species.visuals?.imageUrl}
                     linkPrefix="/species"
                     onRemove={() => handleRemoveInhabitant(fish.speciesId, 'fish')}
                   />
@@ -324,16 +326,18 @@ const TankDetailPage = () => {
             </div>
           ) : (
             <div className="space-y-3">
-              {tank.inhabitants?.plants.map((plant) => {
+              {tank.inhabitants?.plants.map((plant, index) => {
                 const species = allPlants.find(p => p.id === plant.speciesId);
+                if (!species) return null; // Skip if species not found
+                
                 return (
                   <InhabitantCard
-                    key={plant.speciesId}
+                    key={`${plant.speciesId}-${index}`}
                     name={plant.speciesName}
-                    scientificName={species?.taxonomy.scientificName || ''}
+                    scientificName={species.taxonomy.scientificName}
                     quantity={plant.quantity}
-                    slug={species?.slug || ''}
-                    imageUrl={species?.visuals.imageUrl}
+                    slug={species.slug}
+                    imageUrl={species.visuals?.imageUrl}
                     linkPrefix="/plants"
                     onRemove={() => handleRemoveInhabitant(plant.speciesId, 'plant')}
                   />
