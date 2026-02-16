@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react';
 import { X, Search, AlertTriangle, CheckCircle } from 'lucide-react';
 import { allSpecies } from '../../data/species';
 import { allPlants } from '../../data/plants';
+import type { Species } from '../../types/species';
+import type { Plant } from '../../types/plant';
 
 interface AddInhabitantModalProps {
   isOpen: boolean;
@@ -19,17 +21,18 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
   // Combine species and plants
   const allItems = useMemo(() => {
     if (type === 'plant') {
-      return allPlants;
+      return allPlants as (Species | Plant)[];
     }
-    return allSpecies;
+    return allSpecies as (Species | Plant)[];
   }, [type]);
 
   // Filter items by search query and tank type
   const filteredItems = useMemo(() => {
     return allItems
       .filter(item => {
-        // Filter by tank type
-        const matchesTankType = item.environment.type === tankType;
+        // Plants work in both freshwater and saltwater (most of them)
+        // For now, show all plants regardless of tank type
+        const matchesTankType = type === 'plant' ? true : ('environment' in item && item.environment.type === tankType);
         
         // Filter by search query
         const matchesSearch = searchQuery === '' ||
@@ -39,7 +42,7 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
         return matchesTankType && matchesSearch;
       })
       .slice(0, 50); // Limit results
-  }, [searchQuery, allItems, tankType]);
+  }, [searchQuery, allItems, tankType, type]);
 
   const selectedItem = selectedSpecies ? allItems.find(s => s.id === selectedSpecies) : null;
 
@@ -93,13 +96,17 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
         <div className="flex-1 overflow-y-auto p-6">
           {filteredItems.length === 0 ? (
             <div className="text-center py-12 text-slate-500">
-              <p>No {type === 'fish' ? 'fish' : 'plants'} found for {tankType} tanks</p>
+              <p>No {type === 'fish' ? 'fish' : 'plants'} found</p>
               <p className="text-sm mt-2">Try adjusting your search</p>
             </div>
           ) : (
             <div className="space-y-2">
               {filteredItems.map((item) => {
                 const isFish = 'behavior' in item;
+                const imageUrl = 'visuals' in item ? item.visuals.imageUrl : item.imageUrl;
+                const sizeCM = 'visuals' in item ? item.visuals.adultSizeCM : `${item.specs.heightCM.min}-${item.specs.heightCM.max}`;
+                const difficulty = 'care' in item ? item.care.difficulty : item.difficulty;
+                
                 return (
                   <button
                     key={item.id}
@@ -115,9 +122,9 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
                   >
                     <div className="flex items-start justify-between gap-4">
                       {/* Image */}
-                      {item.visuals.imageUrl && (
+                      {imageUrl && (
                         <img
-                          src={item.visuals.imageUrl}
+                          src={imageUrl}
                           alt={item.taxonomy.commonName}
                           className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
                         />
@@ -128,12 +135,12 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
                         <p className="text-sm text-slate-500 italic">{item.taxonomy.scientificName}</p>
                         <div className="flex gap-2 mt-2 flex-wrap">
                           <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
-                            {item.visuals.adultSizeCM}cm
+                            {sizeCM}{typeof sizeCM === 'number' ? 'cm' : ''}
                           </span>
                           <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
-                            {item.care.difficulty}
+                            {difficulty}
                           </span>
-                          {isFish && (
+                          {isFish && 'environment' in item && (
                             <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
                               Min {item.environment.minTankSizeLiters}L
                             </span>
@@ -166,7 +173,7 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
               </div>
 
               {/* Warnings for fish only */}
-              {'behavior' in selectedItem && (
+              {'behavior' in selectedItem && 'environment' in selectedItem && (
                 <>
                   {selectedItem.environment.minTankSizeLiters > 100 && (
                     <div className="flex gap-2 items-start bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
