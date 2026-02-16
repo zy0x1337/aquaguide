@@ -276,7 +276,7 @@ const TankDetailPage = () => {
             <div className="space-y-3">
               {tank.inhabitants?.fish.map((fish, index) => {
                 const species = allSpecies.find(s => s.id === fish.speciesId);
-                if (!species) return null; // Skip if species not found
+                if (!species) return null;
                 
                 return (
                   <InhabitantCard
@@ -285,7 +285,7 @@ const TankDetailPage = () => {
                     scientificName={species.taxonomy.scientificName}
                     quantity={fish.quantity}
                     slug={species.slug}
-                    imageUrl={species.visuals?.imageUrl}
+                    imageUrl={species.visuals.imageUrl}
                     linkPrefix="/species"
                     onRemove={() => handleRemoveInhabitant(fish.speciesId, 'fish')}
                   />
@@ -328,7 +328,7 @@ const TankDetailPage = () => {
             <div className="space-y-3">
               {tank.inhabitants?.plants.map((plant, index) => {
                 const species = allPlants.find(p => p.id === plant.speciesId);
-                if (!species) return null; // Skip if species not found
+                if (!species) return null;
                 
                 return (
                   <InhabitantCard
@@ -337,7 +337,7 @@ const TankDetailPage = () => {
                     scientificName={species.taxonomy.scientificName}
                     quantity={plant.quantity}
                     slug={species.slug}
-                    imageUrl={species.visuals?.imageUrl}
+                    imageUrl={species.imageUrl}
                     linkPrefix="/plants"
                     onRemove={() => handleRemoveInhabitant(plant.speciesId, 'plant')}
                   />
