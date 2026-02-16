@@ -7,6 +7,8 @@ interface SupabaseTank {
   name: string;
   type: 'freshwater' | 'saltwater' | 'brackish';
   volume_liters: number;
+  substrate?: string;
+  lighting?: string;
   parameters: Tank['parameters'];
   created_at: string;
   updated_at: string;
@@ -53,6 +55,8 @@ const toTank = (data: SupabaseTank, inhabitants: SupabaseTankInhabitant[] = []):
     name: data.name,
     type: data.type,
     volumeLiters: data.volume_liters,
+    substrate: data.substrate,
+    lighting: data.lighting,
     parameters: data.parameters,
     inhabitants: { fish, plants },
     createdAt: data.created_at,
@@ -173,6 +177,8 @@ export const createTank = async (
       name: tank.name,
       type: tank.type,
       volume_liters: tank.volumeLiters,
+      substrate: tank.substrate || null,
+      lighting: tank.lighting || null,
       parameters: tank.parameters,
     })
     .select()
@@ -200,10 +206,12 @@ export const updateTank = async (
   }
 
   const supabaseUpdates: any = {};
-  if (updates.name) supabaseUpdates.name = updates.name;
-  if (updates.type) supabaseUpdates.type = updates.type;
-  if (updates.volumeLiters) supabaseUpdates.volume_liters = updates.volumeLiters;
-  if (updates.parameters) supabaseUpdates.parameters = updates.parameters;
+  if (updates.name !== undefined) supabaseUpdates.name = updates.name;
+  if (updates.type !== undefined) supabaseUpdates.type = updates.type;
+  if (updates.volumeLiters !== undefined) supabaseUpdates.volume_liters = updates.volumeLiters;
+  if (updates.substrate !== undefined) supabaseUpdates.substrate = updates.substrate || null;
+  if (updates.lighting !== undefined) supabaseUpdates.lighting = updates.lighting || null;
+  if (updates.parameters !== undefined) supabaseUpdates.parameters = updates.parameters;
 
   const { data, error } = await supabase
     .from('tanks')
