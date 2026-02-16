@@ -15,6 +15,8 @@ const MyTanksPage = () => {
 
   // Load tanks from Supabase on mount
   useEffect(() => {
+    // Clear old localStorage tanks (migration cleanup)
+    localStorage.removeItem('aquaguide_tanks');
     loadTanks();
   }, []);
 
