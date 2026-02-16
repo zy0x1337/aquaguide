@@ -130,11 +130,31 @@ const TankDetailPage = () => {
   };
 
   const handleAddParameterReading = async (reading: any) => {
-    if (!id) return;
+    if (!id || !tank) return;
 
     try {
+      // Save the parameter reading to history
       await addParameterReading(id, reading);
+      
+      // Update tank's current parameters with the new reading
+      const updatedParameters = {
+        ph: reading.ph ?? tank.parameters.ph,
+        tempC: reading.tempC ?? tank.parameters.tempC,
+        ammonia: reading.ammonia ?? tank.parameters.ammonia,
+        nitrite: reading.nitrite ?? tank.parameters.nitrite,
+        nitrate: reading.nitrate ?? tank.parameters.nitrate,
+        gh: reading.gh ?? tank.parameters.gh,
+        kh: reading.kh ?? tank.parameters.kh,
+        tds: reading.tds ?? tank.parameters.tds,
+        salinity: reading.salinity ?? tank.parameters.salinity,
+      };
+
+      await updateTank(id, { parameters: updatedParameters });
+      
+      // Reload tank and history to reflect changes
+      await loadTank();
       await loadHistory();
+      
       setIsParameterModalOpen(false);
     } catch (err) {
       console.error('Error adding reading:', err);
@@ -444,7 +464,7 @@ const ParametersTab = ({ readings, onAddReading, onDeleteReading }: any) => (
         className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
       >
         <Plus className="w-5 h-5" />
-        Add Reading
+        Log Parameters
       </button>
     </div>
 
