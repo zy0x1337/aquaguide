@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles, Home, Scale } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Github, Fish, Leaf, BoxSelect, Sparkles, Home, Scale, LogIn, LogOut, User } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 interface Props {
@@ -14,6 +15,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { comparedSpecies } = useComparison();
+  const { user, signOut } = useAuth();
 
 
   const isActive = (path: string) => 
@@ -131,10 +133,30 @@ export const Layout: React.FC<Props> = ({ children }) => {
               
               <div className="h-6 w-px bg-theme-nav border-l border-theme opacity-50"></div>
 
-
-              <a href="https://github.com/yourusername/aquarium-guide" target="_blank" rel="noopener noreferrer" className="p-2 text-theme-muted hover:text-theme-main transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
+              {/* AUTH BUTTONS */}
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <div className="text-xs text-right hidden lg:block">
+                    <div className="font-bold text-theme-main">Logged In</div>
+                    <div className="text-theme-muted truncate max-w-[100px]">{user.email?.split('@')[0]}</div>
+                  </div>
+                  <button
+                    onClick={() => signOut()}
+                    className="p-2 text-theme-muted hover:text-red-500 transition-colors"
+                    title="Sign Out"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-theme-muted/10 hover:bg-theme-muted/20 text-theme-main transition-colors border border-theme"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Login
+                </Link>
+              )}
 
 
               <ThemeToggle />
@@ -174,6 +196,42 @@ export const Layout: React.FC<Props> = ({ children }) => {
           {/* MOBILE MENU */}
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-theme animate-fade-in bg-theme-nav">
+              
+              {/* Auth Mobile */}
+              {user ? (
+                <div className="px-4 mb-4 pb-4 border-b border-theme flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-300">
+                      <User className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-theme-main">{user.email?.split('@')[0]}</div>
+                      <div className="text-xs text-theme-muted">Member</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </button>
+                </div>
+              ) : (
+                <div className="px-4 mb-4 pb-4 border-b border-theme">
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-md"
+                  >
+                    <LogIn className="w-5 h-5" />
+                    Login / Sign Up
+                  </Link>
+                </div>
+              )}
+
               {/* Tank Builder - Prominent on Mobile */}
               <Link
                 to="/tank-builder"

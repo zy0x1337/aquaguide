@@ -8,6 +8,9 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+// Auth
+import AuthPage from './pages/AuthPage';
+
 // Species Pages
 import SpeciesIndexPage from './pages/SpeciesIndexPage';
 import SpeciesDetailPage from './pages/SpeciesDetailPage';
@@ -33,6 +36,9 @@ function App() {
         <Routes>
           {/* Home (Haupt-Datenbank mit Suche) */}
           <Route path="/" element={<HomePage />} />
+
+          {/* Auth */}
+          <Route path="/login" element={<AuthPage />} />
 
           {/* Species Routes */}
           <Route path="/species" element={<SpeciesIndexPage />} />
