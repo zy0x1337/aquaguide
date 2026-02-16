@@ -4,6 +4,8 @@ export interface Tank {
   type: string; // 'freshwater' | 'saltwater' | 'brackish'
   volumeLiters: number;
   createdAt: string;
+  substrate?: string; // 'sand' | 'gravel' | 'soil' | 'bare'
+  lighting?: string; // 'low' | 'medium' | 'high'
   parameters: WaterParameters;
   inhabitants?: {
     fish: TankInhabitant[];
@@ -17,6 +19,10 @@ export interface WaterParameters {
   ammonia: number;
   nitrite: number;
   nitrate: number;
+  gh?: number; // General Hardness (°dGH)
+  kh?: number; // Carbonate Hardness (°dKH)
+  tds?: number; // Total Dissolved Solids (ppm)
+  salinity?: number; // For saltwater tanks (ppt)
 }
 
 export interface TankInhabitant {

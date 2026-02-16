@@ -1,32 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Tank } from '../../types/tank';
 
-interface AddTankModalProps {
+interface EditTankModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (tank: Omit<Tank, 'id' | 'createdAt'>) => void;
+  onSubmit: (tank: Tank) => void;
+  tank: Tank;
 }
 
-const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
+const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) => {
   const [formData, setFormData] = useState({
-    name: '',
-    type: 'freshwater',
-    volumeLiters: 0,
-    substrate: '',
-    lighting: '',
-    parameters: {
-      tempC: 25,
-      ph: 7.0,
-      ammonia: 0,
-      nitrite: 0,
-      nitrate: 0,
-      gh: 8,
-      kh: 4,
-      tds: 200,
-      salinity: 35,
-    },
+    name: tank.name,
+    type: tank.type,
+    volumeLiters: tank.volumeLiters,
+    parameters: { ...tank.parameters },
+    substrate: tank.substrate || '',
+    lighting: tank.lighting || '',
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: tank.name,
+        type: tank.type,
+        volumeLiters: tank.volumeLiters,
+        parameters: { ...tank.parameters },
+        substrate: tank.substrate || '',
+        lighting: tank.lighting || '',
+      });
+    }
+  }, [isOpen, tank]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,27 +39,8 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
       return;
     }
     onSubmit({
+      ...tank,
       ...formData,
-      inhabitants: { fish: [], plants: [] },
-    });
-    // Reset form
-    setFormData({
-      name: '',
-      type: 'freshwater',
-      volumeLiters: 0,
-      substrate: '',
-      lighting: '',
-      parameters: {
-        tempC: 25,
-        ph: 7.0,
-        ammonia: 0,
-        nitrite: 0,
-        nitrate: 0,
-        gh: 8,
-        kh: 4,
-        tds: 200,
-        salinity: 35,
-      },
     });
   };
 
@@ -66,7 +51,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Add New Tank</h2>
+          <h2 className="text-2xl font-bold">Edit Tank</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
@@ -84,7 +69,6 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="e.g., Community Tank, Shrimp Paradise"
               className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
               required
             />
@@ -110,7 +94,6 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
                 type="number"
                 value={formData.volumeLiters || ''}
                 onChange={(e) => setFormData({ ...formData, volumeLiters: parseFloat(e.target.value) || 0 })}
-                placeholder="e.g., 100"
                 className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                 required
                 min="1"
@@ -207,7 +190,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
               <InputField
                 label="GH (°dGH)"
                 type="number"
-                value={formData.parameters.gh}
+                value={formData.parameters.gh || 0}
                 onChange={(val) => setFormData({
                   ...formData,
                   parameters: { ...formData.parameters, gh: val }
@@ -217,7 +200,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
               <InputField
                 label="KH (°dKH)"
                 type="number"
-                value={formData.parameters.kh}
+                value={formData.parameters.kh || 0}
                 onChange={(val) => setFormData({
                   ...formData,
                   parameters: { ...formData.parameters, kh: val }
@@ -227,7 +210,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
               <InputField
                 label="TDS (ppm)"
                 type="number"
-                value={formData.parameters.tds}
+                value={formData.parameters.tds || 0}
                 onChange={(val) => setFormData({
                   ...formData,
                   parameters: { ...formData.parameters, tds: val }
@@ -238,7 +221,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
                 <InputField
                   label="Salinity (ppt)"
                   type="number"
-                  value={formData.parameters.salinity}
+                  value={formData.parameters.salinity || 35}
                   onChange={(val) => setFormData({
                     ...formData,
                     parameters: { ...formData.parameters, salinity: val }
@@ -262,7 +245,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
               type="submit"
               className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
             >
-              Add Tank
+              Save Changes
             </button>
           </div>
         </form>
@@ -297,4 +280,4 @@ const InputField = ({
   </div>
 );
 
-export default AddTankModal;
+export default EditTankModal;
