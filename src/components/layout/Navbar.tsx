@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect, Home } from 'lucide-react';
+import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect, Home, LayoutDashboard } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
+import { useAuth } from '../../lib/supabase/auth';
 
 export const Navbar = () => {
   const location = useLocation();
+  const { user } = useAuth();
   const [_isMobileMenuOpen, _setIsMobileMenuOpen] = useState(false);
   
   const isActive = (path: string) => {
@@ -17,6 +19,7 @@ export const Navbar = () => {
     { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
+    ...(user ? [{ path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }] : []),
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: BookOpen },
   ];
@@ -65,6 +68,22 @@ export const Navbar = () => {
 
         {/* RIGHT ACTIONS */}
         <div className="flex items-center gap-4">
+          {user && (
+            <Link
+              to="/my-tanks"
+              className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all text-sm"
+            >
+              My Tanks
+            </Link>
+          )}
+          {!user && (
+            <Link
+              to="/login"
+              className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all text-sm"
+            >
+              Sign In
+            </Link>
+          )}
           <div className="h-8 w-px bg-stone-200 dark:bg-stone-800"></div>
           <ThemeToggle />
         </div>
@@ -91,7 +110,7 @@ export const Navbar = () => {
 
       {/* 📱 MOBILE BOTTOM NAV */}
       <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white dark:bg-[#1c1917] border-t border-stone-200 dark:border-stone-800 pb-safe pt-1 px-1 flex justify-around items-center shadow-[0_-5px_30px_rgba(0,0,0,0.04)] dark:shadow-none transition-colors duration-300">
-        {navLinks.map(link => (
+        {navLinks.slice(0, 6).map(link => (
           <Link 
             key={link.path}
             to={link.path} 
