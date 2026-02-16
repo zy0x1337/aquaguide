@@ -70,10 +70,10 @@ export const Navbar = () => {
         <div className="flex items-center gap-4">
           {user && (
             <Link
-              to="/my-tanks"
+              to="/dashboard"
               className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all text-sm"
             >
-              My Tanks
+              Dashboard
             </Link>
           )}
           {!user && (
