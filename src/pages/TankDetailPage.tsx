@@ -23,10 +23,12 @@ import {
   ParameterReading,
   MaintenanceLog,
 } from '../lib/supabase/tankHistory';
+import { useToast } from '../contexts/ToastContext';
 
 const TankDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const toast = useToast();
   const [tank, setTank] = useState<Tank | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'parameters' | 'maintenance'>('overview');
@@ -61,10 +63,12 @@ const TankDetailPage = () => {
         console.log('💡 Lighting:', data.lighting);
         setTank(data);
       } else {
+        toast.error('Tank not found', 'Redirecting to My Tanks...');
         navigate('/my-tanks');
       }
     } catch (err) {
       console.error('Error loading tank:', err);
+      toast.error('Failed to load tank', 'Please try again.');
       navigate('/my-tanks');
     } finally {
       setIsLoading(false);
@@ -83,6 +87,7 @@ const TankDetailPage = () => {
       setMaintenanceLogs(logs);
     } catch (err) {
       console.error('Error loading history:', err);
+      toast.error('Failed to load history', 'Some data may be incomplete.');
     }
   };
 
@@ -104,9 +109,10 @@ const TankDetailPage = () => {
       console.log('✅ TANK UPDATED:', updated);
       setTank(updated);
       setIsEditModalOpen(false);
+      toast.success('Tank updated!', `${updatedTank.name} has been updated successfully.`);
     } catch (err) {
       console.error('Error updating tank:', err);
-      alert('Failed to update tank. Please try again.');
+      toast.error('Failed to update tank', 'Please try again.');
     }
   };
 
@@ -120,9 +126,13 @@ const TankDetailPage = () => {
       await addInhabitant(id, speciesId, species.taxonomy.commonName, type, quantity);
       await loadTank();
       setIsInhabitantModalOpen(false);
+      toast.success(
+        `${type === 'fish' ? 'Fish' : 'Plant'} added!`,
+        `${quantity}x ${species.taxonomy.commonName} added to ${tank.name}.`
+      );
     } catch (err) {
       console.error('Error adding inhabitant:', err);
-      alert('Failed to add inhabitant. Please try again.');
+      toast.error('Failed to add inhabitant', 'Please try again.');
     }
   };
 
@@ -132,9 +142,10 @@ const TankDetailPage = () => {
     try {
       await removeInhabitant(id, speciesId, type);
       await loadTank();
+      toast.success('Inhabitant removed', 'Successfully removed from tank.');
     } catch (err) {
       console.error('Error removing inhabitant:', err);
-      alert('Failed to remove inhabitant. Please try again.');
+      toast.error('Failed to remove inhabitant', 'Please try again.');
     }
   };
 
@@ -165,9 +176,10 @@ const TankDetailPage = () => {
       await loadHistory();
       
       setIsParameterModalOpen(false);
+      toast.success('Parameters logged!', 'Water parameters have been updated.');
     } catch (err) {
       console.error('Error adding reading:', err);
-      alert('Failed to add reading. Please try again.');
+      toast.error('Failed to log parameters', 'Please try again.');
     }
   };
 
@@ -175,9 +187,10 @@ const TankDetailPage = () => {
     try {
       await deleteParameterReading(readingId);
       await loadHistory();
+      toast.success('Reading deleted', 'Parameter reading removed from history.');
     } catch (err) {
       console.error('Error deleting reading:', err);
-      alert('Failed to delete reading. Please try again.');
+      toast.error('Failed to delete reading', 'Please try again.');
     }
   };
 
@@ -188,9 +201,10 @@ const TankDetailPage = () => {
       await addMaintenanceLog(id, log);
       await loadHistory();
       setIsMaintenanceModalOpen(false);
+      toast.success('Maintenance logged!', `${log.taskType} has been recorded.`);
     } catch (err) {
       console.error('Error adding log:', err);
-      alert('Failed to add maintenance log. Please try again.');
+      toast.error('Failed to log maintenance', 'Please try again.');
     }
   };
 
@@ -198,9 +212,10 @@ const TankDetailPage = () => {
     try {
       await deleteMaintenanceLog(logId);
       await loadHistory();
+      toast.success('Log deleted', 'Maintenance log removed from history.');
     } catch (err) {
       console.error('Error deleting log:', err);
-      alert('Failed to delete log. Please try again.');
+      toast.error('Failed to delete log', 'Please try again.');
     }
   };
 
