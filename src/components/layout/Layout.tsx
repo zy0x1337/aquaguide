@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Sparkles, Home, Scale, LogIn, LogOut, User } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Sparkles, Home, Scale, LogIn, LogOut, User, Crown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../lib/supabase';
 
 
 interface Props {
@@ -16,6 +17,22 @@ export const Layout: React.FC<Props> = ({ children }) => {
   const location = useLocation();
   const { comparedSpecies } = useComparison();
   const { user, signOut } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+        .then(({ data }) => {
+          setIsAdmin(data?.role === 'admin');
+        });
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
 
 
   const isActive = (path: string) => 
@@ -32,6 +49,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
   const isTankBuilderActive = isActive('/tank-builder');
   const isCompareActive = isActive('/compare');
+  const isAdminActive = isActive('/admin');
 
 
   return (
@@ -61,6 +79,23 @@ export const Layout: React.FC<Props> = ({ children }) => {
             {/* DESKTOP NAV */}
             <div className="hidden md:flex items-center gap-4">
               
+              {/* ADMIN LINK (only if admin) */}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className={`
+                    relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300
+                    ${isAdminActive
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30' 
+                      : 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md shadow-amber-400/20 hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105'
+                    }
+                  `}
+                >
+                  <Crown className="w-4 h-4" />
+                  <span>Admin</span>
+                </Link>
+              )}
+
               {/* TANK BUILDER - PROMINENT BUTTON */}
               <Link
                 to="/tank-builder"
@@ -230,6 +265,24 @@ export const Layout: React.FC<Props> = ({ children }) => {
                     Login / Sign Up
                   </Link>
                 </div>
+              )}
+
+              {/* Admin Link - Mobile */}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`
+                    flex items-center gap-3 px-4 py-3 text-base font-bold rounded-lg mb-3 transition-all
+                    ${isAdminActive
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg'
+                      : 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md hover:shadow-lg'
+                    }
+                  `}
+                >
+                  <Crown className="w-5 h-5" />
+                  <span>Admin Panel</span>
+                </Link>
               )}
 
               {/* Tank Builder - Prominent on Mobile */}

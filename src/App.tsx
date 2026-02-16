@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { ComparisonBar } from './components/comparison/ComparisonBar';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/error/ErrorBoundary';
 
 // Pages
@@ -28,6 +29,11 @@ import { TankBuilderPage } from './pages/TankBuilderPage';
 
 // ⚖️ COMPARISON
 import ComparisonPage from './pages/ComparisonPage';
+
+// 👑 ADMIN PAGES
+import AdminDashboard from './pages/admin/AdminDashboard';
+import SpeciesManager from './pages/admin/SpeciesManager';
+import UserManager from './pages/admin/UserManager';
 
 function App() {
   return (
@@ -57,6 +63,11 @@ function App() {
 
           {/* ⚖️ Comparison Tool */}
           <Route path="/compare" element={<ComparisonPage />} />
+
+          {/* 👑 Admin Routes (Protected) */}
+          <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/species" element={<ProtectedRoute requireAdmin><SpeciesManager /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute requireAdmin><UserManager /></ProtectedRoute>} />
 
           {/* About Page */}
           <Route path="/about" element={<AboutPage />} />
