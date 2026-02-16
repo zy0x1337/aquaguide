@@ -1,64 +1,33 @@
 import { useState, useEffect } from 'react';
-import { Plus, Fish, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Fish, Loader2, LayoutGrid, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import TankCard from '../components/tanks/TankCard';
 import AddTankModal from '../components/tanks/AddTankModal';
-import DashboardStats from '../components/dashboard/DashboardStats';
-import TankHealthList from '../components/dashboard/TankHealthList';
-import RecentActivityFeed from '../components/dashboard/RecentActivityFeed';
-import QuickActions from '../components/dashboard/QuickActions';
-import AggregatedParameterChart from '../components/dashboard/AggregatedParameterChart';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
 import { getUserTanks, createTank, deleteTank } from '../lib/supabase/tanks';
-import { 
-  getDashboardStats, 
-  getAllTankHealthScores, 
-  getRecentActivity, 
-  getAggregatedParameterTrends,
-  DashboardStats as StatsType, 
-  TankHealthScore, 
-  RecentActivity 
-} from '../lib/supabase/dashboard';
 
 const MyTanksPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
-  const [stats, setStats] = useState<StatsType | null>(null);
-  const [healthScores, setHealthScores] = useState<TankHealthScore[]>([]);
-  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
-  const [parameterTrends, setParameterTrends] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load all data on mount
   useEffect(() => {
     localStorage.removeItem('aquaguide_tanks'); // Migration cleanup
-    loadAllData();
+    loadTanks();
   }, []);
 
-  const loadAllData = async () => {
+  const loadTanks = async () => {
     try {
       setIsLoading(true);
       setError(null);
-      
-      // Load all data in parallel
-      const [tanksData, statsData, healthData, activityData, trendsData] = await Promise.all([
-        getUserTanks(),
-        getDashboardStats(),
-        getAllTankHealthScores(),
-        getRecentActivity(10),
-        getAggregatedParameterTrends(30),
-      ]);
-
-      setTanks(tanksData);
-      setStats(statsData);
-      setHealthScores(healthData);
-      setRecentActivity(activityData);
-      setParameterTrends(trendsData);
+      const data = await getUserTanks();
+      setTanks(data);
     } catch (err) {
-      console.error('Error loading dashboard data:', err);
-      setError('Failed to load dashboard. Please try again.');
+      console.error('Error loading tanks:', err);
+      setError('Failed to load tanks. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -66,10 +35,9 @@ const MyTanksPage = () => {
 
   const handleAddTank = async (newTank: Omit<Tank, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const createdTank = await createTank(newTank);
+      await createTank(newTank);
       setIsModalOpen(false);
-      // Reload all data to update stats
-      await loadAllData();
+      await loadTanks();
     } catch (err) {
       console.error('Error creating tank:', err);
       alert('Failed to create tank. Please try again.');
@@ -81,8 +49,7 @@ const MyTanksPage = () => {
     
     try {
       await deleteTank(id);
-      // Reload all data to update stats
-      await loadAllData();
+      await loadTanks();
     } catch (err) {
       console.error('Error deleting tank:', err);
       alert('Failed to delete tank. Please try again.');
@@ -95,7 +62,7 @@ const MyTanksPage = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
         <div className="text-center">
           <Loader2 className="w-16 h-16 text-indigo-600 animate-spin mx-auto mb-4" />
-          <p className="text-slate-600 font-semibold">Loading your dashboard...</p>
+          <p className="text-slate-600 font-semibold">Loading your tanks...</p>
         </div>
       </div>
     );
@@ -112,7 +79,7 @@ const MyTanksPage = () => {
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Oops!</h2>
           <p className="text-slate-600 mb-6">{error}</p>
           <button
-            onClick={loadAllData}
+            onClick={loadTanks}
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
           >
             Try Again
@@ -125,8 +92,8 @@ const MyTanksPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
       <SEOHead
-        title="My Tanks Dashboard"
-        description="Manage your aquarium collection, monitor tank health, and track water parameters."
+        title="My Tanks"
+        description="Manage your aquarium collection - add, edit, and monitor your tanks."
       />
 
       {/* Header */}
@@ -136,19 +103,61 @@ const MyTanksPage = () => {
         className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-4xl font-bold mb-2">My Tanks Dashboard</h1>
-              <p className="text-indigo-200">Monitor and manage your aquarium collection</p>
+              <h1 className="text-4xl font-bold mb-2">My Tanks</h1>
+              <p className="text-indigo-200">Manage your aquarium collection</p>
             </div>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold hover:bg-indigo-50 transition-all shadow-lg hover:shadow-xl"
-            >
-              <Plus className="w-5 h-5" />
-              Add Tank
-            </button>
+            <div className="flex items-center gap-3">
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-semibold transition-all"
+              >
+                <BarChart3 className="w-5 h-5" />
+                Dashboard
+              </Link>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="flex items-center gap-2 bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold hover:bg-indigo-50 transition-all shadow-lg hover:shadow-xl"
+              >
+                <Plus className="w-5 h-5" />
+                Add Tank
+              </button>
+            </div>
           </div>
+
+          {/* Quick Stats */}
+          {tanks.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-4"
+            >
+              <StatCard
+                icon={<LayoutGrid className="w-5 h-5" />}
+                label="Total Tanks"
+                value={tanks.length}
+              />
+              <StatCard
+                icon={<Fish className="w-5 h-5" />}
+                label="Fish Species"
+                value={tanks.reduce((sum, t) => sum + (t.inhabitants?.fish.length || 0), 0)}
+              />
+              <StatCard
+                icon={<Fish className="w-5 h-5" />}
+                label="Total Fish"
+                value={tanks.reduce((sum, t) => {
+                  return sum + (t.inhabitants?.fish.reduce((s, f) => s + f.quantity, 0) || 0);
+                }, 0)}
+              />
+              <StatCard
+                icon={<Fish className="w-5 h-5" />}
+                label="Total Volume"
+                value={`${tanks.reduce((sum, t) => sum + t.volumeLiters, 0)}L`}
+              />
+            </motion.div>
+          )}
         </div>
       </motion.header>
 
@@ -180,56 +189,23 @@ const MyTanksPage = () => {
             </div>
           </motion.div>
         ) : (
-          // Dashboard Content
-          <div className="space-y-8">
-            {/* Stats Overview */}
-            {stats && <DashboardStats stats={stats} />}
-
-            {/* Quick Actions */}
-            <QuickActions onAddTank={() => setIsModalOpen(true)} />
-
-            {/* Parameter Trends Chart */}
-            {parameterTrends.length > 0 && (
-              <AggregatedParameterChart trends={parameterTrends} />
-            )}
-
-            {/* Two Column Layout */}
-            <div className="grid lg:grid-cols-3 gap-8">
-              {/* Left Column - Tank Health */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-slate-900">Tank Health Overview</h2>
-                </div>
-                <TankHealthList healthScores={healthScores} />
-              </div>
-
-              {/* Right Column - Recent Activity */}
-              <div>
-                <RecentActivityFeed activities={recentActivity} />
-              </div>
-            </div>
-
-            {/* All Tanks Grid */}
-            <div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">All Tanks</h2>
+          // Tank Grid
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {tanks.map((tank, index) => (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                key={tank.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
               >
-                {tanks.map((tank, index) => (
-                  <motion.div
-                    key={tank.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <TankCard tank={tank} onDelete={handleDeleteTank} />
-                  </motion.div>
-                ))}
+                <TankCard tank={tank} onDelete={handleDeleteTank} />
               </motion.div>
-            </div>
-          </div>
+            ))}
+          </motion.div>
         )}
       </main>
 
@@ -242,5 +218,16 @@ const MyTanksPage = () => {
     </div>
   );
 };
+
+// Stat Card Component
+const StatCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) => (
+  <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 border border-white/30">
+    <div className="flex items-center gap-2 mb-2 text-indigo-200">
+      {icon}
+      <span className="text-xs font-semibold uppercase tracking-wide">{label}</span>
+    </div>
+    <div className="text-2xl font-bold">{value}</div>
+  </div>
+);
 
 export default MyTanksPage;
