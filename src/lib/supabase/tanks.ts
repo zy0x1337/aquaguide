@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import { supabase } from '../supabase';
 import type { Tank } from '../../types/tank';
 
 export interface SupabaseTank {
