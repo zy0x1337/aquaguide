@@ -5,7 +5,7 @@
 create table public.profiles (
   id uuid references auth.users not null primary key,
   username text unique,
-  email text, -- Added email column
+  email text,
   full_name text,
   avatar_url text,
   role text default 'user' check (role in ('user', 'admin', 'moderator')),
@@ -87,6 +87,7 @@ create table public.species (
   diet text,
   behavior_tags text[], -- Array of strings e.g. ['schooling', 'peaceful']
   image_url text,
+  image_credit text, -- Photo attribution
   
   -- Metadata
   created_by uuid references public.profiles(id),
