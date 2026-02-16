@@ -5,6 +5,7 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/error/ErrorBoundary';
 import { ToastProvider } from './contexts/ToastContext';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
+import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -46,6 +47,9 @@ function App() {
   return (
     <ErrorBoundary>
       <ToastProvider>
+        {/* Notification Permission Banner */}
+        <NotificationPermissionBanner />
+
         <Layout>
           <Routes>
             {/* Home (Haupt-Datenbank mit Suche) */}
