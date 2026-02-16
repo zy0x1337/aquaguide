@@ -398,10 +398,10 @@ const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRem
         <ParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'warning' : 'good'} />
         <ParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'warning' : 'good'} />
         <ParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
-        {tank.parameters.gh && tank.parameters.gh > 0 && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
-        {tank.parameters.kh && tank.parameters.kh > 0 && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
-        {tank.parameters.tds && tank.parameters.tds > 0 && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
-        {tank.parameters.salinity && tank.parameters.salinity > 0 && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
+        {(tank.parameters.gh != null && tank.parameters.gh > 0) && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
+        {(tank.parameters.kh != null && tank.parameters.kh > 0) && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
+        {(tank.parameters.tds != null && tank.parameters.tds > 0) && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
+        {(tank.parameters.salinity != null && tank.parameters.salinity > 0) && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
       </div>
     </motion.div>
 
