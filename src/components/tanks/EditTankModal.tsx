@@ -14,7 +14,6 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
     name: tank.name,
     type: tank.type,
     volumeLiters: tank.volumeLiters,
-    parameters: { ...tank.parameters },
     substrate: tank.substrate || '',
     lighting: tank.lighting || '',
   });
@@ -25,7 +24,6 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
         name: tank.name,
         type: tank.type,
         volumeLiters: tank.volumeLiters,
-        parameters: { ...tank.parameters },
         substrate: tank.substrate || '',
         lighting: tank.lighting || '',
       });
@@ -41,6 +39,8 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
     onSubmit({
       ...tank,
       ...formData,
+      // Keep existing parameters unchanged
+      parameters: tank.parameters,
     });
   };
 
@@ -51,7 +51,10 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Edit Tank</h2>
+          <div>
+            <h2 className="text-2xl font-bold">Edit Tank</h2>
+            <p className="text-indigo-200 text-sm mt-1">Update tank information and setup</p>
+          </div>
           <button
             onClick={onClose}
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
@@ -64,171 +67,110 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Info */}
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2">Tank Name *</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-              required
-            />
-          </div>
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Basic Information</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Tank Name *
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                  placeholder="e.g., Community Tank, Betta Paradise"
+                  required
+                />
+              </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Type *</label>
-              <select
-                value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-              >
-                <option value="freshwater">Freshwater</option>
-                <option value="saltwater">Saltwater</option>
-                <option value="brackish">Brackish</option>
-              </select>
-            </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    Tank Type *
+                  </label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                  >
+                    <option value="freshwater">Freshwater</option>
+                    <option value="saltwater">Saltwater</option>
+                    <option value="brackish">Brackish</option>
+                  </select>
+                </div>
 
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Volume (Liters) *</label>
-              <input
-                type="number"
-                value={formData.volumeLiters || ''}
-                onChange={(e) => setFormData({ ...formData, volumeLiters: parseFloat(e.target.value) || 0 })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                required
-                min="1"
-              />
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    Volume (Liters) *
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.volumeLiters || ''}
+                    onChange={(e) => setFormData({ ...formData, volumeLiters: parseFloat(e.target.value) || 0 })}
+                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                    placeholder="e.g., 60"
+                    required
+                    min="1"
+                    step="0.1"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Tank Setup */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Substrate</label>
-              <select
-                value={formData.substrate}
-                onChange={(e) => setFormData({ ...formData, substrate: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-              >
-                <option value="">Select substrate...</option>
-                <option value="sand">Sand</option>
-                <option value="gravel">Gravel</option>
-                <option value="soil">Aqua Soil</option>
-                <option value="bare">Bare Bottom</option>
-              </select>
-            </div>
+          <div>
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Tank Setup</h3>
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Substrate
+                </label>
+                <select
+                  value={formData.substrate}
+                  onChange={(e) => setFormData({ ...formData, substrate: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                >
+                  <option value="">Select substrate...</option>
+                  <option value="sand">Sand</option>
+                  <option value="gravel">Gravel</option>
+                  <option value="soil">Aqua Soil</option>
+                  <option value="bare">Bare Bottom</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Lighting</label>
-              <select
-                value={formData.lighting}
-                onChange={(e) => setFormData({ ...formData, lighting: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-              >
-                <option value="">Select lighting...</option>
-                <option value="low">Low (10-30 PAR)</option>
-                <option value="medium">Medium (30-50 PAR)</option>
-                <option value="high">High (50+ PAR)</option>
-              </select>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Lighting
+                </label>
+                <select
+                  value={formData.lighting}
+                  onChange={(e) => setFormData({ ...formData, lighting: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                >
+                  <option value="">Select lighting...</option>
+                  <option value="low">Low (10-30 PAR)</option>
+                  <option value="medium">Medium (30-50 PAR)</option>
+                  <option value="high">High (50+ PAR)</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Water Parameters */}
-          <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Water Parameters</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <InputField
-                label="Temperature (°C)"
-                type="number"
-                value={formData.parameters.tempC}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, tempC: val }
-                })}
-                step="0.1"
-              />
-              <InputField
-                label="pH"
-                type="number"
-                value={formData.parameters.ph}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, ph: val }
-                })}
-                step="0.1"
-              />
-              <InputField
-                label="Ammonia (ppm)"
-                type="number"
-                value={formData.parameters.ammonia}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, ammonia: val }
-                })}
-                step="0.01"
-              />
-              <InputField
-                label="Nitrite (ppm)"
-                type="number"
-                value={formData.parameters.nitrite}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, nitrite: val }
-                })}
-                step="0.01"
-              />
-              <InputField
-                label="Nitrate (ppm)"
-                type="number"
-                value={formData.parameters.nitrate}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, nitrate: val }
-                })}
-                step="0.1"
-              />
-              <InputField
-                label="GH (°dGH)"
-                type="number"
-                value={formData.parameters.gh || 0}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, gh: val }
-                })}
-                step="0.1"
-              />
-              <InputField
-                label="KH (°dKH)"
-                type="number"
-                value={formData.parameters.kh || 0}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, kh: val }
-                })}
-                step="0.1"
-              />
-              <InputField
-                label="TDS (ppm)"
-                type="number"
-                value={formData.parameters.tds || 0}
-                onChange={(val) => setFormData({
-                  ...formData,
-                  parameters: { ...formData.parameters, tds: val }
-                })}
-                step="1"
-              />
-              {formData.type === 'saltwater' && (
-                <InputField
-                  label="Salinity (ppt)"
-                  type="number"
-                  value={formData.parameters.salinity || 35}
-                  onChange={(val) => setFormData({
-                    ...formData,
-                    parameters: { ...formData.parameters, salinity: val }
-                  })}
-                  step="0.1"
-                />
-              )}
+          {/* Info Box */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div className="flex gap-3">
+              <div className="text-blue-600 flex-shrink-0">
+                💧
+              </div>
+              <div>
+                <h4 className="font-semibold text-blue-900 mb-1">Water Parameters</h4>
+                <p className="text-sm text-blue-800">
+                  To update water parameters, use the <strong>Log Parameters</strong> button in the Dashboard or Parameters tab.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -237,7 +179,7 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors"
+              className="flex-1 px-6 py-3 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors"
             >
               Cancel
             </button>
@@ -253,31 +195,5 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
     </div>
   );
 };
-
-// Helper Component
-const InputField = ({
-  label,
-  type,
-  value,
-  onChange,
-  step,
-}: {
-  label: string;
-  type: string;
-  value: number;
-  onChange: (val: number) => void;
-  step?: string;
-}) => (
-  <div>
-    <label className="block text-sm font-semibold text-slate-700 mb-2">{label}</label>
-    <input
-      type={type}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-      step={step}
-      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-    />
-  </div>
-);
 
 export default EditTankModal;
