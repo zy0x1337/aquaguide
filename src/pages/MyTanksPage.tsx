@@ -6,16 +6,27 @@ import AddTankModal from '../components/tanks/AddTankModal';
 import DashboardStats from '../components/dashboard/DashboardStats';
 import TankHealthList from '../components/dashboard/TankHealthList';
 import RecentActivityFeed from '../components/dashboard/RecentActivityFeed';
+import QuickActions from '../components/dashboard/QuickActions';
+import AggregatedParameterChart from '../components/dashboard/AggregatedParameterChart';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
 import { getUserTanks, createTank, deleteTank } from '../lib/supabase/tanks';
-import { getDashboardStats, getAllTankHealthScores, getRecentActivity, DashboardStats as StatsType, TankHealthScore, RecentActivity } from '../lib/supabase/dashboard';
+import { 
+  getDashboardStats, 
+  getAllTankHealthScores, 
+  getRecentActivity, 
+  getAggregatedParameterTrends,
+  DashboardStats as StatsType, 
+  TankHealthScore, 
+  RecentActivity 
+} from '../lib/supabase/dashboard';
 
 const MyTanksPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
   const [stats, setStats] = useState<StatsType | null>(null);
   const [healthScores, setHealthScores] = useState<TankHealthScore[]>([]);
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
+  const [parameterTrends, setParameterTrends] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,17 +43,19 @@ const MyTanksPage = () => {
       setError(null);
       
       // Load all data in parallel
-      const [tanksData, statsData, healthData, activityData] = await Promise.all([
+      const [tanksData, statsData, healthData, activityData, trendsData] = await Promise.all([
         getUserTanks(),
         getDashboardStats(),
         getAllTankHealthScores(),
         getRecentActivity(10),
+        getAggregatedParameterTrends(30),
       ]);
 
       setTanks(tanksData);
       setStats(statsData);
       setHealthScores(healthData);
       setRecentActivity(activityData);
+      setParameterTrends(trendsData);
     } catch (err) {
       console.error('Error loading dashboard data:', err);
       setError('Failed to load dashboard. Please try again.');
@@ -171,6 +184,14 @@ const MyTanksPage = () => {
           <div className="space-y-8">
             {/* Stats Overview */}
             {stats && <DashboardStats stats={stats} />}
+
+            {/* Quick Actions */}
+            <QuickActions onAddTank={() => setIsModalOpen(true)} />
+
+            {/* Parameter Trends Chart */}
+            {parameterTrends.length > 0 && (
+              <AggregatedParameterChart trends={parameterTrends} />
+            )}
 
             {/* Two Column Layout */}
             <div className="grid lg:grid-cols-3 gap-8">
