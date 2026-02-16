@@ -5,6 +5,7 @@
 create table public.profiles (
   id uuid references auth.users not null primary key,
   username text unique,
+  email text, -- Added email column
   full_name text,
   avatar_url text,
   role text default 'user' check (role in ('user', 'admin', 'moderator')),
