@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, Search } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { SEOHead } from '../../components/seo/SEOHead';
+import { SpeciesModal } from '../../components/admin/SpeciesModal';
 
 const SpeciesManager = () => {
   const [species, setSpecies] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingSpecies, setEditingSpecies] = useState<any>(null);
 
   useEffect(() => {
     loadSpecies();
@@ -29,6 +32,25 @@ const SpeciesManager = () => {
     loadSpecies();
   };
 
+  const openAddModal = () => {
+    setEditingSpecies(null);
+    setModalOpen(true);
+  };
+
+  const openEditModal = (species: any) => {
+    setEditingSpecies(species);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setEditingSpecies(null);
+  };
+
+  const handleModalSuccess = () => {
+    loadSpecies();
+  };
+
   const filteredSpecies = species.filter(s => {
     const matchesSearch = s.common_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           s.scientific_name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -46,7 +68,10 @@ const SpeciesManager = () => {
             <h1 className="text-4xl font-black text-slate-900 mb-2">Species Manager</h1>
             <p className="text-slate-600">{filteredSpecies.length} species in database</p>
           </div>
-          <button className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition-all">
+          <button 
+            onClick={openAddModal}
+            className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition-all"
+          >
             <Plus className="w-5 h-5" />
             Add Species
           </button>
@@ -93,7 +118,14 @@ const SpeciesManager = () => {
             {filteredSpecies.map(s => (
               <div key={s.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all">
                 {s.image_url && (
-                  <img src={s.image_url} alt={s.common_name} className="w-full h-48 object-cover" />
+                  <div className="relative">
+                    <img src={s.image_url} alt={s.common_name} className="w-full h-48 object-cover" />
+                    {s.image_credit && (
+                      <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm">
+                        {s.image_credit}
+                      </div>
+                    )}
+                  </div>
                 )}
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-2">
@@ -106,7 +138,10 @@ const SpeciesManager = () => {
                     </span>
                   </div>
                   <div className="flex gap-2 mt-4">
-                    <button className="flex-1 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-1">
+                    <button 
+                      onClick={() => openEditModal(s)}
+                      className="flex-1 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-1"
+                    >
                       <Edit className="w-4 h-4" />
                       Edit
                     </button>
@@ -123,6 +158,14 @@ const SpeciesManager = () => {
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      <SpeciesModal
+        isOpen={modalOpen}
+        onClose={handleModalClose}
+        onSuccess={handleModalSuccess}
+        editingSpecies={editingSpecies}
+      />
     </div>
   );
 };
