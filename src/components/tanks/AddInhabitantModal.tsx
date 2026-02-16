@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { X, Search, AlertTriangle, CheckCircle } from 'lucide-react';
 import { allSpecies } from '../../data/species';
+import { allPlants } from '../../data/plants';
 
 interface AddInhabitantModalProps {
   isOpen: boolean;
@@ -15,29 +16,32 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
   const [selectedSpecies, setSelectedSpecies] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
 
-  // Filter species by type and search query
-  const filteredSpecies = useMemo(() => {
-    return allSpecies
-      .filter(s => {
-        // Filter by type (fish vs plant based on tags or other criteria)
-        // For now, we'll assume all are fish unless tagged as plant
-        const isPlant = s.behavior?.tags?.includes('plant') || false;
-        const matchesType = type === 'plant' ? isPlant : !isPlant;
-        
+  // Combine species and plants
+  const allItems = useMemo(() => {
+    if (type === 'plant') {
+      return allPlants;
+    }
+    return allSpecies;
+  }, [type]);
+
+  // Filter items by search query and tank type
+  const filteredItems = useMemo(() => {
+    return allItems
+      .filter(item => {
         // Filter by tank type
-        const matchesTankType = s.environment.type === tankType;
+        const matchesTankType = item.environment.type === tankType;
         
         // Filter by search query
         const matchesSearch = searchQuery === '' ||
-          s.taxonomy.commonName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          s.taxonomy.scientificName.toLowerCase().includes(searchQuery.toLowerCase());
+          item.taxonomy.commonName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.taxonomy.scientificName.toLowerCase().includes(searchQuery.toLowerCase());
         
-        return matchesType && matchesTankType && matchesSearch;
+        return matchesTankType && matchesSearch;
       })
       .slice(0, 50); // Limit results
-  }, [searchQuery, type, tankType]);
+  }, [searchQuery, allItems, tankType]);
 
-  const selectedSpeciesData = selectedSpecies ? allSpecies.find(s => s.id === selectedSpecies) : null;
+  const selectedItem = selectedSpecies ? allItems.find(s => s.id === selectedSpecies) : null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,56 +89,70 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
           </div>
         </div>
 
-        {/* Species List */}
+        {/* Items List */}
         <div className="flex-1 overflow-y-auto p-6">
-          {filteredSpecies.length === 0 ? (
+          {filteredItems.length === 0 ? (
             <div className="text-center py-12 text-slate-500">
               <p>No {type === 'fish' ? 'fish' : 'plants'} found for {tankType} tanks</p>
               <p className="text-sm mt-2">Try adjusting your search</p>
             </div>
           ) : (
             <div className="space-y-2">
-              {filteredSpecies.map((species) => (
-                <button
-                  key={species.id}
-                  onClick={() => setSelectedSpecies(species.id)}
-                  className={`
-                    w-full text-left p-4 rounded-xl border-2 transition-all
-                    ${
-                      selectedSpecies === species.id
-                        ? 'border-indigo-600 bg-indigo-50'
-                        : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'
-                    }
-                  `}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-bold text-slate-900">{species.taxonomy.commonName}</h3>
-                      <p className="text-sm text-slate-500 italic">{species.taxonomy.scientificName}</p>
-                      <div className="flex gap-2 mt-2">
-                        <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
-                          {species.visuals.adultSizeCM}cm
-                        </span>
-                        <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
-                          {species.care.difficulty}
-                        </span>
-                        <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
-                          Min {species.environment.minTankSizeLiters}L
-                        </span>
+              {filteredItems.map((item) => {
+                const isFish = 'behavior' in item;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedSpecies(item.id)}
+                    className={`
+                      w-full text-left p-4 rounded-xl border-2 transition-all
+                      ${
+                        selectedSpecies === item.id
+                          ? 'border-indigo-600 bg-indigo-50'
+                          : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'
+                      }
+                    `}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      {/* Image */}
+                      {item.visuals.imageUrl && (
+                        <img
+                          src={item.visuals.imageUrl}
+                          alt={item.taxonomy.commonName}
+                          className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
+                        />
+                      )}
+                      
+                      <div className="flex-1">
+                        <h3 className="font-bold text-slate-900">{item.taxonomy.commonName}</h3>
+                        <p className="text-sm text-slate-500 italic">{item.taxonomy.scientificName}</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
+                            {item.visuals.adultSizeCM}cm
+                          </span>
+                          <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
+                            {item.care.difficulty}
+                          </span>
+                          {isFish && (
+                            <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">
+                              Min {item.environment.minTankSizeLiters}L
+                            </span>
+                          )}
+                        </div>
                       </div>
+                      {selectedSpecies === item.id && (
+                        <CheckCircle className="w-6 h-6 text-indigo-600 flex-shrink-0" />
+                      )}
                     </div>
-                    {selectedSpecies === species.id && (
-                      <CheckCircle className="w-6 h-6 text-indigo-600 flex-shrink-0" />
-                    )}
-                  </div>
-                </button>
-              ))}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
 
-        {/* Selected Species Info & Quantity */}
-        {selectedSpeciesData && (
+        {/* Selected Item Info & Quantity */}
+        {selectedItem && (
           <form onSubmit={handleSubmit} className="border-t border-slate-200 p-6 bg-slate-50">
             <div className="mb-4">
               <div className="flex items-start gap-3 mb-3">
@@ -142,28 +160,32 @@ const AddInhabitantModal = ({ isOpen, onClose, onSubmit, type, tankType }: AddIn
                   <CheckCircle className="w-6 h-6 text-indigo-600" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900">{selectedSpeciesData.taxonomy.commonName}</h4>
-                  <p className="text-sm text-slate-600">Selected species</p>
+                  <h4 className="font-bold text-slate-900">{selectedItem.taxonomy.commonName}</h4>
+                  <p className="text-sm text-slate-600">Selected {type}</p>
                 </div>
               </div>
 
-              {/* Warnings */}
-              {selectedSpeciesData.environment.minTankSizeLiters > 100 && (
-                <div className="flex gap-2 items-start bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-amber-800">
-                    This species requires at least {selectedSpeciesData.environment.minTankSizeLiters}L
-                  </p>
-                </div>
-              )}
+              {/* Warnings for fish only */}
+              {'behavior' in selectedItem && (
+                <>
+                  {selectedItem.environment.minTankSizeLiters > 100 && (
+                    <div className="flex gap-2 items-start bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                      <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-amber-800">
+                        This species requires at least {selectedItem.environment.minTankSizeLiters}L
+                      </p>
+                    </div>
+                  )}
 
-              {selectedSpeciesData.behavior.minGroupSize > 1 && (
-                <div className="flex gap-2 items-start bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <AlertTriangle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-blue-800">
-                    Recommended group size: {selectedSpeciesData.behavior.minGroupSize}+
-                  </p>
-                </div>
+                  {selectedItem.behavior.minGroupSize > 1 && (
+                    <div className="flex gap-2 items-start bg-blue-50 border border-blue-200 rounded-lg p-3">
+                      <AlertTriangle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-blue-800">
+                        Recommended group size: {selectedItem.behavior.minGroupSize}+
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 

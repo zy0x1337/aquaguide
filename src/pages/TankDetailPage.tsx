@@ -7,6 +7,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 import AddInhabitantModal from '../components/tanks/AddInhabitantModal';
 import EditTankModal from '../components/tanks/EditTankModal';
 import { allSpecies } from '../data/species';
+import { allPlants } from '../data/plants';
 
 const TankDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -47,7 +48,8 @@ const TankDetailPage = () => {
   const handleAddInhabitant = (speciesId: string, quantity: number, type: 'fish' | 'plant') => {
     if (!tank) return;
 
-    const species = allSpecies.find(s => s.id === speciesId);
+    // Try finding in both species and plants
+    const species = allSpecies.find(s => s.id === speciesId) || allPlants.find(p => p.id === speciesId);
     if (!species) return;
 
     const updatedTank = {
@@ -234,10 +236,10 @@ const TankDetailPage = () => {
             <ParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'warning' : 'good'} />
             <ParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'warning' : 'good'} />
             <ParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
-            {tank.parameters.gh && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
-            {tank.parameters.kh && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
-            {tank.parameters.tds && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
-            {tank.parameters.salinity && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
+            {tank.parameters.gh && tank.parameters.gh > 0 && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
+            {tank.parameters.kh && tank.parameters.kh > 0 && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
+            {tank.parameters.tds && tank.parameters.tds > 0 && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
+            {tank.parameters.salinity && tank.parameters.salinity > 0 && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
           </div>
         </motion.div>
 
@@ -281,6 +283,8 @@ const TankDetailPage = () => {
                     scientificName={species?.taxonomy.scientificName || ''}
                     quantity={fish.quantity}
                     slug={species?.slug || ''}
+                    imageUrl={species?.visuals.imageUrl}
+                    linkPrefix="/species"
                     onRemove={() => handleRemoveInhabitant(fish.speciesId, 'fish')}
                   />
                 );
@@ -321,7 +325,7 @@ const TankDetailPage = () => {
           ) : (
             <div className="space-y-3">
               {tank.inhabitants?.plants.map((plant) => {
-                const species = allSpecies.find(s => s.id === plant.speciesId);
+                const species = allPlants.find(p => p.id === plant.speciesId);
                 return (
                   <InhabitantCard
                     key={plant.speciesId}
@@ -329,6 +333,8 @@ const TankDetailPage = () => {
                     scientificName={species?.taxonomy.scientificName || ''}
                     quantity={plant.quantity}
                     slug={species?.slug || ''}
+                    imageUrl={species?.visuals.imageUrl}
+                    linkPrefix="/plants"
                     onRemove={() => handleRemoveInhabitant(plant.speciesId, 'plant')}
                   />
                 );
@@ -401,20 +407,40 @@ const InhabitantCard = ({
   scientificName,
   quantity,
   slug,
+  imageUrl,
+  linkPrefix,
   onRemove,
 }: {
   name: string;
   scientificName: string;
   quantity: number;
   slug: string;
+  imageUrl?: string;
+  linkPrefix: string;
   onRemove: () => void;
 }) => (
-  <div className="flex items-center justify-between bg-slate-50 hover:bg-slate-100 rounded-xl p-4 border border-slate-200 transition-colors group">
-    <Link to={`/species/${slug}`} className="flex-1">
+  <div className="flex items-center gap-4 bg-slate-50 hover:bg-slate-100 rounded-xl p-4 border border-slate-200 transition-colors group">
+    {/* Image */}
+    {imageUrl ? (
+      <img
+        src={imageUrl}
+        alt={name}
+        className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
+      />
+    ) : (
+      <div className="w-20 h-20 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
+        <span className="text-slate-500 text-xs font-bold">No Image</span>
+      </div>
+    )}
+    
+    {/* Info */}
+    <Link to={`${linkPrefix}/${slug}`} className="flex-1">
       <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{name}</h3>
       <p className="text-sm text-slate-500 italic">{scientificName}</p>
       <p className="text-xs text-slate-600 mt-1">Quantity: {quantity}</p>
     </Link>
+    
+    {/* Remove Button */}
     <button
       onClick={(e) => {
         e.preventDefault();
@@ -422,7 +448,7 @@ const InhabitantCard = ({
           onRemove();
         }
       }}
-      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
       title="Remove"
     >
       <Trash2 className="w-5 h-5" />
