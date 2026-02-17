@@ -404,8 +404,6 @@ const TankDetailPage = () => {
         isOpen={isMaintenanceModalOpen}
         onClose={() => setIsMaintenanceModalOpen(false)}
         onSubmit={handleAddMaintenanceLog}
-        tankId={id!}
-        tankName={tank.name}
       />
     </div>
   );
