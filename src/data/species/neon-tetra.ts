@@ -6,6 +6,13 @@ export const neonTetra: Species = {
   imageUrl: '/images/species/neon-tetra.jpg',
   funFact: "In the wild, Neon Tetras live in blackwater streams so dark that their iridescent stripe is the only way they can locate each other in the gloom.",
 
+  imageCredit: {
+    photographer: 'JH Tan (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Neon_Tetra.jpg',
+    license: 'CC BY-SA 2.5',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/'
+  },
+
   taxonomy: {
     scientificName: 'Paracheirodon innesi',
     commonName: 'Neon Tetra',
@@ -27,12 +34,13 @@ export const neonTetra: Species = {
     tempC: { min: 20, max: 26, ideal: 23 },
     ph: { min: 5.0, max: 7.0, ideal: 6.0 },
     gh: { min: 2, max: 10 },
+    kh: { min: 1, max: 5 },
     flow: 'low',
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'midwater',
-      secondary: 'surface',
+      primary: 'middle',
+      secondary: 'top',
       preference: 0.75,
     },
     
@@ -46,13 +54,13 @@ export const neonTetra: Species = {
   },
 
   habitat: {
-    planting: 'dense',
+    planting: 'very-heavy',
     plantingNotes: 'Dense background planting (Cryptocoryne, Anubias, Java Fern) provides security, but leave the center and front open for schooling. Floating plants (Frogbit, Water Lettuce) dim the lighting and recreate their dark blackwater habitat. Leaf litter on the substrate releases beneficial tannins.',
     hardscape: ['Branchy Driftwood', 'Indian Almond Leaves', 'River Stones', 'Bogwood'],
   },
 
   behavior: {
-    tags: ['shoaler', 'shy', 'midwater', 'peaceful', 'diurnal'],
+    tags: ['shoaling', 'peaceful', 'shy', 'colorful', 'active'],
     minGroupSize: 10,
     description: 'A peaceful shoaling fish famous for its neon-like blue and red coloration. While often called "schooling," Neon Tetras in home aquariums display loose shoaling behavior—they swim near each other for security but forage independently. When startled, they tighten into a cohesive group. Their iridescent stripe evolved to help them stay visible to each other in pitch-black jungle streams. Colors fade dramatically under stress or when kept in groups smaller than 10.',
     
@@ -95,7 +103,7 @@ export const neonTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: 0,
+        surface: '0',
         midwater: '10-20',
         bottom: '6-12',
       },
@@ -108,13 +116,13 @@ export const neonTetra: Species = {
     },
     
     activity: {
-      level: 'moderate',
-      peakTimes: ['morning', 'evening'],
+      level: 'high',
+      peakTimes: ['all-day'],
       nocturnal: false,
     },
     
     socialStructure: {
-      type: 'shoal',
+      type: 'group',
       maxMalesPerTank: 999,
     },
     
@@ -153,14 +161,14 @@ export const neonTetra: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'flakes', 'daphnia'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'daphnia'],
       supplements: ['spirulina', 'bloodworms', 'brine-shrimp'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'sunday',
+      fastingDay: 'weekly',
     },
     
     maintenance: {
@@ -178,10 +186,10 @@ export const neonTetra: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'gentle',
+        flowRate: 'low',
       },
       airstone: false,
-      lighting: 'moderate',
+      lighting: 'low',
       co2: false,
     },
   },
@@ -211,11 +219,11 @@ export const neonTetra: Species = {
     survivalRate: 0.65,
     
     commonFailures: [
-      { issue: 'neon-tetra-disease', cause: 'weak-genetics', frequency: 0.30 },
-      { issue: 'new-tank-syndrome', cause: 'added-too-early', frequency: 0.25 },
-      { issue: 'predation', cause: 'incompatible-tankmates', frequency: 0.15 },
-      { issue: 'stress-death', cause: 'group-too-small', frequency: 0.10 },
-      { issue: 'ich', cause: 'temperature-shock', frequency: 0.10 },
+      { issue: 'neon-tetra-disease', cause: 'weak-genetics-from-mass-breeding', frequency: 0.30 },
+      { issue: 'new-tank-syndrome', cause: 'added-to-uncycled-tank-under-8-weeks', frequency: 0.25 },
+      { issue: 'predation-by-angelfish', cause: 'incompatible-tankmates', frequency: 0.15 },
+      { issue: 'stress-faded-colors', cause: 'group-too-small-under-10', frequency: 0.10 },
+      { issue: 'ich-outbreak', cause: 'temperature-shock-from-shipment', frequency: 0.10 },
     ],
     
     estimatedCosts: {
