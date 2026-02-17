@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { X, Wrench, Bell } from 'lucide-react';
+import { X, Wrench, Bell, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getTankReminders, toggleReminder, updateReminderDate, Reminder } from '../../lib/notifications';
+import { getTankReminders, toggleReminder, updateReminderDate, Reminder, isNotificationSupported, requestNotificationPermission, sendNotification } from '../../lib/notifications';
 
 interface AddMaintenanceModalProps {
   isOpen: boolean;
@@ -36,6 +36,39 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit, tankId, tankName }: Ad
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [enableReminder, setEnableReminder] = useState(false);
   const [reminderFrequency, setReminderFrequency] = useState<Reminder['frequency']>('weekly');
+  const [permissionStatus, setPermissionStatus] = useState<'granted' | 'denied' | 'default'>(
+    isNotificationSupported() ? Notification.permission : 'denied'
+  );
+
+  const handleReminderToggle = async (checked: boolean) => {
+    if (checked) {
+      // Check if notifications are supported
+      if (!isNotificationSupported()) {
+        alert('Notifications are not supported in your browser.');
+        return;
+      }
+
+      // Request permission if needed
+      const currentPermission = Notification.permission;
+      if (currentPermission === 'default') {
+        const permission = await requestNotificationPermission();
+        setPermissionStatus(permission);
+        
+        if (permission === 'granted') {
+          setEnableReminder(true);
+        } else {
+          alert('Please enable notifications in your browser settings to use reminders.');
+        }
+      } else if (currentPermission === 'denied') {
+        alert('Notifications are blocked. Please enable them in your browser settings.');
+        setPermissionStatus('denied');
+      } else {
+        setEnableReminder(true);
+      }
+    } else {
+      setEnableReminder(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +89,7 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit, tankId, tankName }: Ad
       await onSubmit(log);
 
       // Handle reminder if enabled
-      if (enableReminder) {
+      if (enableReminder && permissionStatus === 'granted') {
         const reminderType = formData.type === 'water_change' ? 'water_change' : 'filter_clean';
         const reminders = getTankReminders(tankId);
         const reminder = reminders.find(r => r.type === reminderType);
@@ -77,6 +110,14 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit, tankId, tankName }: Ad
           // Update reminder
           updateReminderDate(reminder.id, nextDate.toISOString());
           toggleReminder(reminder.id, true);
+
+          // Send test notification
+          setTimeout(() => {
+            sendNotification(
+              `✅ Reminder Set - ${tankName}`,
+              `You'll be reminded about ${currentType?.label.toLowerCase()} in ${daysToAdd} day${daysToAdd > 1 ? 's' : ''}`
+            );
+          }, 500);
         }
       }
       
@@ -241,7 +282,7 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit, tankId, tankName }: Ad
                         type="checkbox"
                         id="enableReminder"
                         checked={enableReminder}
-                        onChange={(e) => setEnableReminder(e.target.checked)}
+                        onChange={(e) => handleReminderToggle(e.target.checked)}
                         className="mt-1 w-4 h-4 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
                       />
                       <label htmlFor="enableReminder" className="flex-1 cursor-pointer">
@@ -257,7 +298,17 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit, tankId, tankName }: Ad
                       </label>
                     </div>
 
-                    {enableReminder && (
+                    {/* Permission Warning */}
+                    {permissionStatus === 'denied' && (
+                      <div className="mb-3 bg-amber-50 border-2 border-amber-300 rounded-lg p-3 flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                        <p className="text-xs text-amber-800">
+                          Notifications are blocked. Please enable them in your browser settings to use reminders.
+                        </p>
+                      </div>
+                    )}
+
+                    {enableReminder && permissionStatus === 'granted' && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
