@@ -153,7 +153,7 @@ export const neonTetra: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'daphnia', 'cyclops'],
+      primaryFoods: ['micro-pellets', 'flakes', 'daphnia'],
       supplements: ['spirulina', 'bloodworms', 'brine-shrimp'],
       vegetarian: false,
       liveFood: {
@@ -181,7 +181,7 @@ export const neonTetra: Species = {
         flowRate: 'gentle',
       },
       airstone: false,
-      lighting: 'low-moderate',
+      lighting: 'moderate',
       co2: false,
     },
   },
@@ -201,7 +201,7 @@ export const neonTetra: Species = {
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
-    trigger: 'Breeding requires near-total darkness (eggs are photosensitive and will die if exposed to light). Use RO water or collected rainwater to achieve extremely soft water (GH < 1, KH 0) and acidify to pH 5.5 using peat moss or commercial pH-down. Condition breeding pairs separately with live foods (daphnia, cyclops) for 2 weeks. Introduce pair into breeding tank at night.',
+    trigger: 'Breeding requires near-total darkness (eggs are photosensitive and will die if exposed to light). Use RO water or collected rainwater to achieve extremely soft water (GH < 1, KH 0) and acidify to pH 5.5 using peat moss or commercial pH-down. Condition breeding pairs separately with live foods (daphnia, brine shrimp) for 2 weeks. Introduce pair into breeding tank at night.',
     fryCare: 'Eggs hatch in 24 hours but remain light-sensitive for the first 5 days. Keep breeding tank in complete darkness or cover with black fabric. Fry are microscopic and require infusoria (green water) or liquid fry food for the first week. After 7 days, introduce newly-hatched brine shrimp. Gradually increase lighting over 2 weeks. Mortality is very high (50-70%) even with perfect care.',
     notes: 'Neon Tetra breeding is considered one of the hardest among common aquarium fish. The combination of extreme water softness, total darkness, and photosensitive eggs makes it a challenge even for experienced breeders. Most commercial Neons are now bred in massive farms in Asia using specialized RO systems.',
   },
