@@ -33,16 +33,16 @@ export const neonTetra: Species = {
     swimmingZone: {
       primary: 'midwater',
       secondary: 'surface',
-      preference: 0.75, // Spend 75% of time in midwater column
+      preference: 0.75,
     },
     
     spaceNeeds: {
-      horizontalCM: 50, // Schools need swimming length
-      verticalCM: 25, // Moderate vertical space
-      territories: 0, // Non-territorial
+      horizontalCM: 50,
+      verticalCM: 25,
+      territories: 0,
     },
     
-    bioloadMultiplier: 0.3, // Very low waste producers
+    bioloadMultiplier: 0.3,
   },
 
   habitat: {
@@ -95,16 +95,16 @@ export const neonTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: '0',        // Avoid surface competitors
-        midwater: '10-20',   // Other peaceful tetras, rasboras
-        bottom: '6-12',      // Corydoras, Otocinclus, Kuhli Loaches
+        surface: 0,
+        midwater: '10-20',
+        bottom: '6-12',
       },
     },
     
     aggressionLevel: {
-      intraspecific: 2,  // Minimal aggression within species (slight chasing during spawning)
-      interspecific: 1,   // Nearly zero aggression toward other species
-      territorial: 0,     // Not territorial at all
+      intraspecific: 2,
+      interspecific: 1,
+      territorial: 0,
     },
     
     activity: {
@@ -114,8 +114,8 @@ export const neonTetra: Species = {
     },
     
     socialStructure: {
-      type: 'shoaler',
-      maxMalesPerTank: 999, // No limit (non-territorial)
+      type: 'shoal',
+      maxMalesPerTank: 999,
     },
     
     finNipping: {
@@ -158,9 +158,9 @@ export const neonTetra: Species = {
       vegetarian: false,
       liveFood: {
         required: false,
-        recommended: true, // Live foods bring out best colors
+        recommended: true,
       },
-      fastingDay: 'sunday', // Prevents bloating and constipation
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -173,16 +173,16 @@ export const neonTetra: Species = {
     equipment: {
       heater: {
         required: true,
-        watts: 50, // 50W for typical 60L tank
+        watts: 50,
       },
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'gentle', // Strong flow exhausts them
+        flowRate: 'gentle',
       },
-      airstone: false, // Not needed
+      airstone: false,
       lighting: 'low-moderate',
-      co2: false, // Not required but plants benefit
+      co2: false,
     },
   },
 
@@ -207,11 +207,11 @@ export const neonTetra: Species = {
   },
   
   experienceData: {
-    successRate: 0.70, // 70% of beginners successfully keep them past 6 months
-    survivalRate: 0.65, // 65% survive 1+ year (lower than expected due to NTD and new tank additions)
+    successRate: 0.70,
+    survivalRate: 0.65,
     
     commonFailures: [
-      { issue: 'neon-tetra-disease', cause: 'weak-genetics', frequency: 0.30 }, // 30% of deaths
+      { issue: 'neon-tetra-disease', cause: 'weak-genetics', frequency: 0.30 },
       { issue: 'new-tank-syndrome', cause: 'added-too-early', frequency: 0.25 },
       { issue: 'predation', cause: 'incompatible-tankmates', frequency: 0.15 },
       { issue: 'stress-death', cause: 'group-too-small', frequency: 0.10 },
@@ -219,8 +219,8 @@ export const neonTetra: Species = {
     ],
     
     estimatedCosts: {
-      initial: { min: 50, max: 150, currency: 'EUR' }, // Tank, filter, heater, 10 fish
-      monthly: { min: 5, max: 15, currency: 'EUR' },   // Food, water conditioner, electricity
+      initial: { min: 50, max: 150, currency: 'EUR' },
+      monthly: { min: 5, max: 15, currency: 'EUR' },
     },
   },
 };
