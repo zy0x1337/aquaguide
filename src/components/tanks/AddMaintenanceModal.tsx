@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { X, Wrench } from 'lucide-react';
+import { X, Wrench, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getTankReminders, toggleReminder, updateReminderDate, Reminder } from '../../lib/notifications';
 
 interface AddMaintenanceModalProps {
   isOpen: boolean;
@@ -12,17 +13,19 @@ interface AddMaintenanceModalProps {
     waterChangePercent?: number;
     performedAt?: string;
   }) => Promise<void>;
+  tankId: string;
+  tankName: string;
 }
 
 const maintenanceTypes = [
-  { value: 'water_change', label: 'Water Change', icon: '💧' },
-  { value: 'filter_cleaning', label: 'Filter Cleaning', icon: '🔧' },
-  { value: 'equipment_maintenance', label: 'Equipment Maintenance', icon: '⚙️' },
-  { value: 'medication', label: 'Medication', icon: '💊' },
-  { value: 'other', label: 'Other', icon: '📝' },
+  { value: 'water_change', label: 'Water Change', icon: '💧', hasReminder: true },
+  { value: 'filter_cleaning', label: 'Filter Cleaning', icon: '🔧', hasReminder: true },
+  { value: 'equipment_maintenance', label: 'Equipment Maintenance', icon: '⚙️', hasReminder: false },
+  { value: 'medication', label: 'Medication', icon: '💊', hasReminder: false },
+  { value: 'other', label: 'Other', icon: '📝', hasReminder: false },
 ];
 
-const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalProps) => {
+const AddMaintenanceModal = ({ isOpen, onClose, onSubmit, tankId, tankName }: AddMaintenanceModalProps) => {
   const [formData, setFormData] = useState({
     type: 'water_change' as const,
     title: '',
@@ -31,6 +34,8 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalP
     performedAt: new Date().toISOString().slice(0, 16),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [enableReminder, setEnableReminder] = useState(false);
+  const [reminderFrequency, setReminderFrequency] = useState<Reminder['frequency']>('weekly');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +54,31 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalP
       }
 
       await onSubmit(log);
+
+      // Handle reminder if enabled
+      if (enableReminder) {
+        const reminderType = formData.type === 'water_change' ? 'water_change' : 'filter_clean';
+        const reminders = getTankReminders(tankId);
+        const reminder = reminders.find(r => r.type === reminderType);
+
+        if (reminder) {
+          // Calculate next date based on frequency
+          const now = new Date();
+          const daysToAdd = {
+            daily: 1,
+            weekly: 7,
+            biweekly: 14,
+            monthly: 30,
+          }[reminderFrequency];
+
+          const nextDate = new Date(now.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+          nextDate.setHours(10, 0, 0, 0); // Set to 10 AM
+
+          // Update reminder
+          updateReminderDate(reminder.id, nextDate.toISOString());
+          toggleReminder(reminder.id, true);
+        }
+      }
       
       // Reset form
       setFormData({
@@ -58,6 +88,8 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalP
         waterChangePercent: '',
         performedAt: new Date().toISOString().slice(0, 16),
       });
+      setEnableReminder(false);
+      setReminderFrequency('weekly');
     } catch (err) {
       console.error('Error submitting maintenance log:', err);
     } finally {
@@ -68,6 +100,9 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalP
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
+
+  const currentType = maintenanceTypes.find(t => t.value === formData.type);
+  const showReminderOption = currentType?.hasReminder;
 
   return (
     <AnimatePresence>
@@ -88,10 +123,10 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalP
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-2xl shadow-2xl w-full max-w-lg"
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
             >
               {/* Header */}
-              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-4 flex items-center justify-between rounded-t-2xl">
+              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-4 flex items-center justify-between rounded-t-2xl sticky top-0 z-10">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Wrench className="w-6 h-6" />
@@ -197,6 +232,66 @@ const AddMaintenanceModal = ({ isOpen, onClose, onSubmit }: AddMaintenanceModalP
                     className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all resize-none"
                   />
                 </div>
+
+                {/* Reminder Section */}
+                {showReminderOption && (
+                  <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-4">
+                    <div className="flex items-start gap-3 mb-3">
+                      <input
+                        type="checkbox"
+                        id="enableReminder"
+                        checked={enableReminder}
+                        onChange={(e) => setEnableReminder(e.target.checked)}
+                        className="mt-1 w-4 h-4 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
+                      />
+                      <label htmlFor="enableReminder" className="flex-1 cursor-pointer">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Bell className="w-4 h-4 text-purple-600" />
+                          <span className="font-semibold text-slate-900 text-sm">
+                            Set up recurring reminder
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-600">
+                          Get notified when it's time for the next {currentType?.label.toLowerCase()}
+                        </p>
+                      </label>
+                    </div>
+
+                    {enableReminder && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="space-y-2"
+                      >
+                        <label className="block text-xs font-semibold text-slate-700 mb-2">
+                          Reminder Frequency
+                        </label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {[
+                            { value: 'daily', label: 'Daily' },
+                            { value: 'weekly', label: 'Weekly' },
+                            { value: 'biweekly', label: 'Every 2 Weeks' },
+                            { value: 'monthly', label: 'Monthly' },
+                          ].map((freq) => (
+                            <button
+                              key={freq.value}
+                              type="button"
+                              onClick={() => setReminderFrequency(freq.value as Reminder['frequency'])}
+                              className={`px-3 py-2 rounded-lg border-2 text-xs font-medium transition-all ${
+                                reminderFrequency === freq.value
+                                  ? 'border-purple-500 bg-purple-100 text-purple-900'
+                                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                              }`}
+                            >
+                              {freq.label}
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                )}
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-slate-200">
