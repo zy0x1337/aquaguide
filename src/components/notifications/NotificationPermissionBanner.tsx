@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, X, Calendar, Droplets, AlertCircle } from 'lucide-react';
-import { notificationManager } from '../../lib/notifications/NotificationManager';
+import { isNotificationSupported, requestNotificationPermission, sendNotification } from '../../lib/notifications';
 import { useToast } from '../../contexts/ToastContext';
 
 const NotificationPermissionBanner = () => {
@@ -12,11 +12,11 @@ const NotificationPermissionBanner = () => {
   useEffect(() => {
     // Check if we should show the banner
     const checkPermission = () => {
-      if (!notificationManager.isSupported()) {
+      if (!isNotificationSupported()) {
         return false;
       }
 
-      const permission = notificationManager.getPermission();
+      const permission = Notification.permission;
       const dismissed = localStorage.getItem('notification-banner-dismissed');
       
       // Show banner if permission is default (not asked yet) and not dismissed
@@ -30,7 +30,7 @@ const NotificationPermissionBanner = () => {
     setIsRequesting(true);
     
     try {
-      const permission = await notificationManager.requestPermission();
+      const permission = await requestNotificationPermission();
       
       if (permission === 'granted') {
         toast.success(
@@ -41,11 +41,10 @@ const NotificationPermissionBanner = () => {
         
         // Show a test notification
         setTimeout(() => {
-          notificationManager.showNotification({
-            title: '🐠 AquaGuide Notifications Active',
-            body: 'You\'ll receive helpful reminders for your aquarium care!',
-            tag: 'welcome',
-          });
+          sendNotification(
+            '🐠 AquaGuide Notifications Active',
+            'You\'ll receive helpful reminders for your aquarium care!'
+          );
         }, 1000);
       } else if (permission === 'denied') {
         toast.error(
