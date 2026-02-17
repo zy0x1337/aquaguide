@@ -4,7 +4,7 @@ export const bronzeCory: Species = {
   id: 'cory-002',
   slug: 'bronze-cory',
   imageUrl: '/images/species/bronze-cory.jpg',
-  funFact: "Bronze Corydoras are one of the few fish that can 'breathe' air! They dart to the surface, gulp atmospheric oxygen, and process it through their intestines. This adaptation allows them to survive in oxygen-poor waters where other fish would suffocate. You'll see them do this 'Cory zoom' multiple times per hour—it's completely normal and adorable.",
+  funFact: "Bronze Corydoras are one of the few fish that can 'breathe' air! They dart to the surface, gulp atmospheric oxygen, and process it through their intestines. This adaptation allows them to survive in oxygen-poor waters where other fish would suffocate. You'll see them do this 'Cory zoom' multiple times per hour—it's completely normal and adorable. Watch for groups of 6+ doing synchronized zooms together like tiny synchronized swimmers!",
 
   taxonomy: {
     scientificName: 'Corydoras aeneus',
@@ -55,7 +55,7 @@ export const bronzeCory: Species = {
   behavior: {
     tags: ['shoaler', 'bottom_dweller', 'peaceful', 'robust', 'active', 'scaleless'],
     minGroupSize: 6,
-    description: 'Bronze Corydoras are the "tanks" of the Corydoras world—larger, bolder, and significantly hardier than smaller species like Pandas or Pygmies. They are constantly active, bouncing around the bottom like miniature bulldozers, sifting through substrate for food. Their barbels (whisker-like sensory organs) detect buried food particles. Unlike shy species, Bronzes are confident and often ignore humans entirely. They exhibit fascinating social behavior: synchronized swimming, group "dances," and occasional mass dashes to the surface for air gulps. They communicate through body language and subtle chemical signals.',
+    description: 'Bronze Corydoras are the "tanks" of the Corydoras world—larger, bolder, and significantly hardier than smaller species like Pandas or Pygmies. They are constantly active, bouncing around the bottom like miniature bulldozers, sifting through substrate for food with unstoppable enthusiasm. Their barbels (whisker-like sensory organs) detect buried food particles with impressive precision. Unlike shy species, Bronzes are confident and often ignore humans entirely—they\'re too busy being aquarium workhorses. They exhibit fascinating social behavior: synchronized swimming, group "dances," adorable "Cory trains" where 3-5 fish line up single-file and march across the tank, and occasional mass dashes to the surface for air gulps. They communicate through body language and subtle chemical signals.',
     
     compatibility: {
       goodMates: ['Tetras (Neon, Cardinal, Rummynose)', 'Rasboras', 'Peaceful Cichlids (Angelfish, Rams, Apistogramma)', 'Livebearers (Guppies, Platies)', 'Peaceful Barbs', 'Gouramis', 'Danios', 'Shrimp (Cherry, Amano)', 'Snails'],
@@ -132,19 +132,20 @@ export const bronzeCory: Species = {
     ],
 
     proTips: [
-      "Albino Corys are just Bronze Corys with albinism (leucistic mutation). Same species, same care. They're NOT a separate species despite being labeled differently in stores.",
+      "Bronze Corys are a LONG-TERM commitment. With proper care, they typically live 8-10 years, and exceptional individuals reach 15+ years. That's longer than many dogs! You're not buying a disposable fish—you're adopting a decade-long companion.",
+      "Albino Corys are just Bronze Corys with albinism (leucistic mutation). Same species, same care, same hardy nature. They're NOT a separate species despite being labeled differently in stores.",
       "Feed sinking foods AFTER lights dim. Corys are crepuscular (most active at dawn/dusk). Feeding at night ensures they get food before midwater fish steal it.",
-      "The 'Cory shuffle' (wiggling into substrate) is normal foraging behavior. They use barbels to detect food buried 1-2cm deep. This is why sand is critical—gravel prevents this.",
-      "Temperature tolerance: Bronzes handle WARMER water (up to 27°C) better than Pandas or Pygmies. Great for tropical community tanks with higher temps.",
-      "Air gulping ('Cory zoom') is NORMAL. They dash to the surface, gulp air, and process oxygen through intestinal respiration. Frequency increases in low-oxygen water.",
-      "Barbel health = overall health. Long, intact barbels indicate pristine conditions. Short, eroded barbels signal poor substrate or dirty water. Check barbels weekly.",
+      "The 'Cory shuffle' (wiggling into substrate) is normal foraging behavior. They use barbels to detect food buried 1-2cm deep. This is why sand is critical—gravel prevents this natural behavior entirely.",
+      "Temperature tolerance: Bronzes handle WARMER water (up to 27°C) better than Pandas (22-24°C) or Pygmies (22-25°C). Great for tropical community tanks with higher temps.",
+      "Air gulping ('Cory zoom') is NORMAL, not distress. They dash to the surface, gulp air, and process oxygen through intestinal respiration. Frequency increases in low-oxygen water but even well-oxygenated tanks see zooms.",
+      "Barbel health = overall health. Long, intact barbels indicate pristine conditions. Short, eroded barbels signal poor substrate or dirty water. Check barbels weekly as your water quality canary.",
     ],
 
     commonMistakes: [
       "Using gravel substrate. This is the #1 killer of Corydoras. Gravel erodes barbels, causing infection (barbel erosion), inability to find food, and eventual starvation. ONLY use sand.",
       "Thinking they 'eat poop' or 'clean the tank.' Corys are scavengers that eat LEFTOVER FOOD, not waste. They produce waste like any fish. You still need to vacuum substrate weekly.",
       "Underfeeding. Many assume Corys survive on scraps. They need dedicated sinking foods (Hikari Sinking Wafers, Fluval Bug Bites, bloodworms) or they'll starve while midwater fish thrive.",
-      "Keeping alone or in pairs. Corys are social shoalers that become stressed and inactive without groups. 6 is minimum; 10+ displays natural behaviors like synchronized swimming.",
+      "Keeping alone or in pairs. Corys are social shoalers that become stressed and inactive without groups. 6 is minimum; 10+ displays natural behaviors like synchronized swimming and Cory trains.",
       "Ignoring barbel erosion. Short or missing barbels indicate bacterial infection from dirty substrate or sharp gravel. Once barbels are gone, Corys struggle to find food and often die.",
     ],
     
@@ -184,7 +185,7 @@ export const bronzeCory: Species = {
   },
 
   health: {
-    lifespanYears: 8,
+    lifespanYears: 10,
     commonDiseases: ['barbel-erosion', 'red-blotch-disease', 'ich', 'columnaris', 'nitrite-poisoning'],
     sensitivities: ['Sharp substrate (causes barbel erosion)', 'Salt (scaleless fish - avoid salt treatments)', 'Copper-based medications', 'High nitrites (more sensitive than other fish)', 'Dirty substrate (bacterial infections)'],
   },
