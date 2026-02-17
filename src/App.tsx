@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { ComparisonBar } from './components/comparison/ComparisonBar';
@@ -6,6 +7,7 @@ import ErrorBoundary from './components/error/ErrorBoundary';
 import { ToastProvider } from './contexts/ToastContext';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
+import { startReminderSystem } from './lib/notifications';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -44,6 +46,11 @@ import SpeciesManager from './pages/admin/SpeciesManager';
 import UserManager from './pages/admin/UserManager';
 
 function App() {
+  // Start reminder system on app load
+  useEffect(() => {
+    startReminderSystem();
+  }, []);
+
   return (
     <ErrorBoundary>
       <ToastProvider>
