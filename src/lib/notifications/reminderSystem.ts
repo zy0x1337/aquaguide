@@ -119,6 +119,35 @@ export class ReminderSystem {
   }
 
   /**
+   * Complete a reminder (mark as done and reschedule)
+   */
+  completeReminder(tankId: string, type: Reminder['type']): void {
+    const reminder = this.reminders.find(
+      r => r.tankId === tankId && r.type === type && r.enabled
+    );
+
+    if (!reminder) {
+      console.log(`No active reminder found for ${type} on tank ${tankId}`);
+      return;
+    }
+
+    const now = new Date();
+    const newNextDate = this.calculateNextDate(reminder);
+
+    console.log('✅ Completing reminder:', {
+      reminder: reminder.title,
+      oldNextDate: reminder.nextDate,
+      newNextDate,
+      completed: now,
+    });
+
+    this.updateReminder(reminder.id, {
+      lastNotified: now,
+      nextDate: newNextDate,
+    });
+  }
+
+  /**
    * Calculate next reminder date based on frequency
    */
   private calculateNextDate(reminder: Reminder): Date {
@@ -161,9 +190,12 @@ export class ReminderSystem {
    */
   private async checkDueReminders(): Promise<void> {
     const now = new Date();
+    console.log('🔍 Checking reminders at', now.toLocaleString());
 
     for (const reminder of this.reminders) {
       if (!reminder.enabled) continue;
+
+      console.log(`  - ${reminder.title}: due ${reminder.nextDate.toLocaleString()} (in ${Math.round((reminder.nextDate.getTime() - now.getTime()) / 60000)}min)`);
 
       // Check if reminder is due (compare timestamps)
       if (reminder.nextDate.getTime() <= now.getTime()) {
@@ -179,10 +211,13 @@ export class ReminderSystem {
           
           // Don't notify more than once per day
           if (lastNotifiedDate.getTime() === todayDate.getTime()) {
+            console.log(`    ⏭️ Already notified today, skipping`);
             continue;
           }
         }
 
+        console.log(`    🔔 SENDING NOTIFICATION for ${reminder.title}`);
+        
         // Send notification
         await this.sendReminderNotification(reminder);
 
@@ -221,8 +256,10 @@ export class ReminderSystem {
           },
         ],
       });
+      
+      console.log('✅ Notification sent successfully');
     } catch (error) {
-      console.error('Error sending reminder notification:', error);
+      console.error('❌ Error sending reminder notification:', error);
     }
   }
 
