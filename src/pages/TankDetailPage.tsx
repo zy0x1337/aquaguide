@@ -24,6 +24,7 @@ import {
   ParameterReading,
   MaintenanceLog,
 } from '../lib/supabase/tankHistory';
+import { reminderSystem, Reminder } from '../lib/notifications/reminderSystem';
 import { useToast } from '../contexts/ToastContext';
 
 const TankDetailPage = () => {
@@ -165,6 +166,10 @@ const TankDetailPage = () => {
       await loadHistory();
       
       setIsParameterModalOpen(false);
+      
+      // Complete parameter_check reminder if exists
+      reminderSystem.completeReminder(id, 'parameter_check');
+      
       toast.success('Parameters logged!', 'Water parameters have been updated.');
     } catch (err) {
       console.error('Error adding reading:', err);
@@ -190,6 +195,22 @@ const TankDetailPage = () => {
       await addMaintenanceLog(id, log);
       await loadHistory();
       setIsMaintenanceModalOpen(false);
+      
+      // Map maintenance type to reminder type
+      const reminderTypeMap: Record<string, Reminder['type'] | null> = {
+        'water_change': 'water_change',
+        'filter_cleaning': 'filter_clean',
+        'equipment_maintenance': null,
+        'medication': null,
+        'other': null,
+      };
+
+      const reminderType = reminderTypeMap[log.type];
+      if (reminderType) {
+        reminderSystem.completeReminder(id, reminderType);
+        console.log(`✅ Completed reminder: ${reminderType}`);
+      }
+      
       toast.success('Maintenance logged!', `${log.title} has been recorded.`);
     } catch (err) {
       console.error('Error adding log:', err);
