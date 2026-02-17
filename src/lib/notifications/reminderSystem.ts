@@ -165,16 +165,20 @@ export class ReminderSystem {
     for (const reminder of this.reminders) {
       if (!reminder.enabled) continue;
 
-      // Check if reminder is due
-      if (reminder.nextDate <= now) {
+      // Check if reminder is due (compare timestamps)
+      if (reminder.nextDate.getTime() <= now.getTime()) {
         // Check if we already notified today
         const lastNotified = reminder.lastNotified;
         if (lastNotified) {
-          const hoursSinceLastNotification = 
-            (now.getTime() - lastNotified.getTime()) / (1000 * 60 * 60);
+          // Compare dates without time (same calendar day check)
+          const lastNotifiedDate = new Date(lastNotified);
+          lastNotifiedDate.setHours(0, 0, 0, 0);
+          
+          const todayDate = new Date(now);
+          todayDate.setHours(0, 0, 0, 0);
           
           // Don't notify more than once per day
-          if (hoursSinceLastNotification < 24) {
+          if (lastNotifiedDate.getTime() === todayDate.getTime()) {
             continue;
           }
         }
@@ -226,6 +230,13 @@ export class ReminderSystem {
    * Create default reminders for a new tank
    */
   createDefaultReminders(tankId: string, tankName: string): void {
+    const now = new Date();
+    
+    // Set to tomorrow at 10:00 AM local time
+    const tomorrow10AM = new Date(now);
+    tomorrow10AM.setDate(tomorrow10AM.getDate() + 1);
+    tomorrow10AM.setHours(10, 0, 0, 0);
+
     const defaults: Array<Omit<Reminder, 'id'>> = [
       {
         tankId,
@@ -234,7 +245,7 @@ export class ReminderSystem {
         title: `Water Change - ${tankName}`,
         message: `Time for a water change in ${tankName}. Replace 25-30% of the water.`,
         frequency: 'weekly',
-        nextDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        nextDate: new Date(tomorrow10AM.getTime() + 7 * 24 * 60 * 60 * 1000), // +7 days
         enabled: false, // Let user enable
       },
       {
@@ -244,7 +255,7 @@ export class ReminderSystem {
         title: `Check Parameters - ${tankName}`,
         message: `Test water parameters in ${tankName}. Check pH, ammonia, nitrite, and nitrate.`,
         frequency: 'weekly',
-        nextDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        nextDate: new Date(tomorrow10AM.getTime() + 7 * 24 * 60 * 60 * 1000), // +7 days
         enabled: false,
       },
       {
@@ -254,7 +265,7 @@ export class ReminderSystem {
         title: `Clean Filter - ${tankName}`,
         message: `Clean the filter in ${tankName}. Rinse media in tank water.`,
         frequency: 'monthly',
-        nextDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        nextDate: new Date(tomorrow10AM.getTime() + 30 * 24 * 60 * 60 * 1000), // +30 days
         enabled: false,
       },
     ];
