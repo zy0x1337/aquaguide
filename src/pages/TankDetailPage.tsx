@@ -190,7 +190,7 @@ const TankDetailPage = () => {
       await addMaintenanceLog(id, log);
       await loadHistory();
       setIsMaintenanceModalOpen(false);
-      toast.success('Maintenance logged!', `${log.taskType} has been recorded.`);
+      toast.success('Maintenance logged!', `${log.title} has been recorded.`);
     } catch (err) {
       console.error('Error adding log:', err);
       toast.error('Failed to log maintenance', 'Please try again.');
