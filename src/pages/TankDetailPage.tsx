@@ -10,7 +10,7 @@ import AddParameterModal from '../components/tanks/AddParameterModal';
 import AddMaintenanceModal from '../components/tanks/AddMaintenanceModal';
 import ParameterChart from '../components/tanks/ParameterChart';
 import MaintenanceTimeline from '../components/tanks/MaintenanceTimeline';
-import ReminderSettingsPanel from '../components/notifications/ReminderSettingsPanel';
+import ReminderPanel from '../components/notifications/ReminderPanel';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
 import { getTankById, updateTank, addInhabitant, removeInhabitant } from '../lib/supabase/tanks';
@@ -24,7 +24,7 @@ import {
   ParameterReading,
   MaintenanceLog,
 } from '../lib/supabase/tankHistory';
-import { reminderSystem, Reminder } from '../lib/notifications/reminderSystem';
+import { completeReminder } from '../lib/notifications';
 import { useToast } from '../contexts/ToastContext';
 
 const TankDetailPage = () => {
@@ -46,7 +46,6 @@ const TankDetailPage = () => {
   const [parameterReadings, setParameterReadings] = useState<ParameterReading[]>([]);
   const [maintenanceLogs, setMaintenanceLogs] = useState<MaintenanceLog[]>([]);
 
-  // Load tank and history
   useEffect(() => {
     if (!id) return;
     loadTank();
@@ -167,8 +166,8 @@ const TankDetailPage = () => {
       
       setIsParameterModalOpen(false);
       
-      // Complete parameter_check reminder if exists
-      reminderSystem.completeReminder(id, 'parameter_check');
+      // Auto-complete parameter check reminder
+      completeReminder(id, 'parameter_check');
       
       toast.success('Parameters logged!', 'Water parameters have been updated.');
     } catch (err) {
@@ -196,19 +195,11 @@ const TankDetailPage = () => {
       await loadHistory();
       setIsMaintenanceModalOpen(false);
       
-      // Map maintenance type to reminder type
-      const reminderTypeMap: Record<string, Reminder['type'] | null> = {
-        'water_change': 'water_change',
-        'filter_cleaning': 'filter_clean',
-        'equipment_maintenance': null,
-        'medication': null,
-        'other': null,
-      };
-
-      const reminderType = reminderTypeMap[log.type];
-      if (reminderType) {
-        reminderSystem.completeReminder(id, reminderType);
-        console.log(`✅ Completed reminder: ${reminderType}`);
+      // Auto-complete matching reminder
+      if (log.type === 'water_change') {
+        completeReminder(id, 'water_change');
+      } else if (log.type === 'filter_cleaning') {
+        completeReminder(id, 'filter_clean');
       }
       
       toast.success('Maintenance logged!', `${log.title} has been recorded.`);
@@ -243,7 +234,6 @@ const TankDetailPage = () => {
   const totalFish = tank.inhabitants?.fish.reduce((sum, f) => sum + f.quantity, 0) || 0;
   const totalPlants = tank.inhabitants?.plants.reduce((sum, p) => sum + p.quantity, 0) || 0;
 
-  // Check compatibility warnings
   const fishSpecies = (tank.inhabitants?.fish || []).map(f => allSpecies.find(s => s.id === f.speciesId)).filter(Boolean);
   const compatibilityWarnings: string[] = [];
 
@@ -268,7 +258,6 @@ const TankDetailPage = () => {
         description={`Manage ${tank.name}, a ${tank.volumeLiters}L ${tank.type} aquarium.`}
       />
 
-      {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -299,7 +288,6 @@ const TankDetailPage = () => {
             </button>
           </div>
 
-          {/* Quick Stats */}
           <div className="mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             <StatCard
               icon={<Thermometer className="w-4 h-4 sm:w-5 sm:h-5" />}
@@ -325,7 +313,6 @@ const TankDetailPage = () => {
         </div>
       </motion.header>
 
-      {/* Tabs */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex gap-4 sm:gap-8 overflow-x-auto">
@@ -359,7 +346,6 @@ const TankDetailPage = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {activeTab === 'overview' && (
           <OverviewTab
@@ -388,11 +374,10 @@ const TankDetailPage = () => {
         )}
 
         {activeTab === 'reminders' && (
-          <ReminderSettingsPanel tankId={id!} tankName={tank.name} />
+          <ReminderPanel tankId={id!} tankName={tank.name} />
         )}
       </main>
 
-      {/* Modals */}
       <AddInhabitantModal
         isOpen={isInhabitantModalOpen}
         onClose={() => setIsInhabitantModalOpen(false)}
@@ -424,37 +409,24 @@ const TankDetailPage = () => {
   );
 };
 
-// Tab Components
+// Tab Components (keeping existing ones - not shown for brevity)
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const getSubstrateLabel = (substrate?: string) => {
     if (!substrate) return 'Not specified';
-    const labels: Record<string, string> = {
-      sand: 'Sand',
-      gravel: 'Gravel',
-      soil: 'Aqua Soil',
-      bare: 'Bare Bottom',
-    };
+    const labels: Record<string, string> = { sand: 'Sand', gravel: 'Gravel', soil: 'Aqua Soil', bare: 'Bare Bottom' };
     return labels[substrate] || substrate;
   };
 
   const getLightingLabel = (lighting?: string) => {
     if (!lighting) return 'Not specified';
-    const labels: Record<string, string> = {
-      low: 'Low (10-30 PAR)',
-      medium: 'Medium (30-50 PAR)',
-      high: 'High (50+ PAR)',
-    };
+    const labels: Record<string, string> = { low: 'Low (10-30 PAR)', medium: 'Medium (30-50 PAR)', high: 'High (50+ PAR)' };
     return labels[lighting] || lighting;
   };
 
   return (
     <div className="space-y-6 sm:space-y-8">
       {compatibilityWarnings.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 sm:p-6"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 sm:p-6">
           <div className="flex gap-3">
             <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0" />
             <div>
@@ -469,35 +441,15 @@ const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRem
         </motion.div>
       )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.05 }}
-        className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6">Tank Setup</h2>
         <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-          <SetupCard
-            icon={<Mountain className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />}
-            label="Substrate"
-            value={getSubstrateLabel(tank.substrate)}
-            isEmpty={!tank.substrate}
-          />
-          <SetupCard
-            icon={<Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" />}
-            label="Lighting"
-            value={getLightingLabel(tank.lighting)}
-            isEmpty={!tank.lighting}
-          />
+          <SetupCard icon={<Mountain className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />} label="Substrate" value={getSubstrateLabel(tank.substrate)} isEmpty={!tank.substrate} />
+          <SetupCard icon={<Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" />} label="Lighting" value={getLightingLabel(tank.lighting)} isEmpty={!tank.lighting} />
         </div>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6">Current Water Parameters</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <ParamCard label="pH" value={tank.parameters.ph} status="good" />
@@ -512,31 +464,8 @@ const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRem
         </div>
       </motion.div>
 
-      <InhabitantsSection
-        title="Fish"
-        icon={<FishIcon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />}
-        inhabitants={tank.inhabitants?.fish || []}
-        speciesData={allSpecies}
-        linkPrefix="/species"
-        onAdd={onAddFish}
-        onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'fish')}
-        emptyMessage="No fish added yet"
-        addButtonLabel="Add Fish"
-        addButtonColor="bg-indigo-600 hover:bg-indigo-700"
-      />
-
-      <InhabitantsSection
-        title="Plants"
-        icon={<Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />}
-        inhabitants={tank.inhabitants?.plants || []}
-        speciesData={allPlants}
-        linkPrefix="/plants"
-        onAdd={onAddPlant}
-        onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'plant')}
-        emptyMessage="No plants added yet"
-        addButtonLabel="Add Plant"
-        addButtonColor="bg-emerald-600 hover:bg-emerald-700"
-      />
+      <InhabitantsSection title="Fish" icon={<FishIcon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />} inhabitants={tank.inhabitants?.fish || []} speciesData={allSpecies} linkPrefix="/species" onAdd={onAddFish} onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'fish')} emptyMessage="No fish added yet" addButtonLabel="Add Fish" addButtonColor="bg-indigo-600 hover:bg-indigo-700" />
+      <InhabitantsSection title="Plants" icon={<Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />} inhabitants={tank.inhabitants?.plants || []} speciesData={allPlants} linkPrefix="/plants" onAdd={onAddPlant} onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'plant')} emptyMessage="No plants added yet" addButtonLabel="Add Plant" addButtonColor="bg-emerald-600 hover:bg-emerald-700" />
     </div>
   );
 };
@@ -545,18 +474,10 @@ const ParametersTab = ({ readings, onAddReading }: any) => (
   <div className="space-y-6">
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Parameter History</h2>
-      <button
-        onClick={onAddReading}
-        className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base"
-      >
-        <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-        Log Parameters
-      </button>
+      <button onClick={onAddReading} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base">
+        <Plus className="w-4 h-4 sm:w-5 sm:h-5" />Log Parameters</button>
     </div>
-
-    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6">
-      <ParameterChart readings={readings} />
-    </div>
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><ParameterChart readings={readings} /></div>
   </div>
 );
 
@@ -564,95 +485,41 @@ const MaintenanceTab = ({ logs, onAddLog, onDeleteLog }: any) => (
   <div className="space-y-6">
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Maintenance History</h2>
-      <button
-        onClick={onAddLog}
-        className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base"
-      >
-        <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-        Log Maintenance
-      </button>
+      <button onClick={onAddLog} className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base">
+        <Plus className="w-4 h-4 sm:w-5 sm:h-5" />Log Maintenance</button>
     </div>
-
-    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6">
-      <MaintenanceTimeline logs={logs} onDelete={onDeleteLog} />
-    </div>
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><MaintenanceTimeline logs={logs} onDelete={onDeleteLog} /></div>
   </div>
 );
 
 const StatCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) => (
   <div className="bg-white/20 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/30">
-    <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2 text-indigo-200">
-      {icon}
-      <span className="text-[10px] sm:text-xs font-semibold uppercase">{label}</span>
-    </div>
+    <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2 text-indigo-200">{icon}<span className="text-[10px] sm:text-xs font-semibold uppercase">{label}</span></div>
     <div className="text-lg sm:text-2xl font-bold">{value}</div>
   </div>
 );
 
-const SetupCard = ({ icon, label, value, isEmpty }: { icon: React.ReactNode; label: string; value: string; isEmpty: boolean }) => (
-  <div className={`bg-gradient-to-br ${
-    isEmpty 
-      ? 'from-slate-50 to-slate-100 border-slate-200' 
-      : 'from-indigo-50 to-purple-50 border-indigo-200'
-  } border-2 rounded-xl p-3 sm:p-4`}>
-    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-      <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center ${
-        isEmpty ? 'bg-slate-200' : 'bg-white'
-      }`}>
-        {icon}
-      </div>
-      <span className="text-xs sm:text-sm font-semibold text-slate-700">{label}</span>
-    </div>
-    <div className={`text-base sm:text-lg font-bold ${
-      isEmpty ? 'text-slate-500 italic' : 'text-slate-900'
-    }`}>
-      {value}
-    </div>
+const SetupCard = ({ icon, label, value, isEmpty }: any) => (
+  <div className={`bg-gradient-to-br ${isEmpty ? 'from-slate-50 to-slate-100 border-slate-200' : 'from-indigo-50 to-purple-50 border-indigo-200'} border-2 rounded-xl p-3 sm:p-4`}>
+    <div className="flex items-center gap-2 sm:gap-3 mb-2"><div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center ${isEmpty ? 'bg-slate-200' : 'bg-white'}`}>{icon}</div><span className="text-xs sm:text-sm font-semibold text-slate-700">{label}</span></div>
+    <div className={`text-base sm:text-lg font-bold ${isEmpty ? 'text-slate-500 italic' : 'text-slate-900'}`}>{value}</div>
   </div>
 );
 
 const TabButton = ({ active, onClick, icon, label, badge }: any) => (
-  <button
-    onClick={onClick}
-    className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3 sm:py-4 font-semibold border-b-2 transition-colors whitespace-nowrap text-sm sm:text-base ${
-      active
-        ? 'border-indigo-600 text-indigo-600'
-        : 'border-transparent text-slate-600 hover:text-slate-900'
-    }`}
-  >
-    {icon}
-    <span className="hidden sm:inline">{label}</span>
-    <span className="sm:hidden">{label.split(' ')[0]}</span>
-    {badge !== undefined && badge > 0 && (
-      <span className="ml-1 px-1.5 sm:px-2 py-0.5 bg-indigo-100 text-indigo-600 text-[10px] sm:text-xs font-bold rounded-full">
-        {badge}
-      </span>
-    )}
+  <button onClick={onClick} className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3 sm:py-4 font-semibold border-b-2 transition-colors whitespace-nowrap text-sm sm:text-base ${active ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-600 hover:text-slate-900'}`}>
+    {icon}<span className="hidden sm:inline">{label}</span><span className="sm:hidden">{label.split(' ')[0]}</span>
+    {badge !== undefined && badge > 0 && <span className="ml-1 px-1.5 sm:px-2 py-0.5 bg-indigo-100 text-indigo-600 text-[10px] sm:text-xs font-bold rounded-full">{badge}</span>}
   </button>
 );
 
-const ParamCard = ({ label, value, status }: { label: string; value: string | number; status: 'good' | 'warning' | 'danger' }) => {
-  const statusColors = {
-    good: 'from-emerald-50 to-green-50 border-emerald-200',
-    warning: 'from-amber-50 to-orange-50 border-amber-300',
-    danger: 'from-red-50 to-rose-50 border-red-300',
-  };
-
-  const iconColors = {
-    good: 'text-emerald-600',
-    warning: 'text-amber-600',
-    danger: 'text-red-600',
-  };
-
+const ParamCard = ({ label, value, status }: any) => {
+  const statusColors = { good: 'from-emerald-50 to-green-50 border-emerald-200', warning: 'from-amber-50 to-orange-50 border-amber-300', danger: 'from-red-50 to-rose-50 border-red-300' };
+  const iconColors = { good: 'text-emerald-600', warning: 'text-amber-600', danger: 'text-red-600' };
   return (
     <div className={`bg-gradient-to-br ${statusColors[status]} border-2 rounded-xl p-3 sm:p-4`}>
-      <div className="flex items-center justify-between mb-1 sm:mb-2">
-        <span className="text-xs sm:text-sm font-semibold text-slate-700">{label}</span>
-        {status === 'good' ? (
-          <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColors[status]}`} />
-        ) : (
-          <AlertTriangle className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColors[status]}`} />
-        )}
+      <div className="flex items-center justify-between mb-1 sm:mb-2"><span className="text-xs sm:text-sm font-semibold text-slate-700">{label}</span>
+        {status === 'good' ? <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColors[status]}`} /> : <AlertTriangle className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColors[status]}`} />}
       </div>
       <div className="text-lg sm:text-2xl font-bold text-slate-900">{value}</div>
     </div>
@@ -660,47 +527,17 @@ const ParamCard = ({ label, value, status }: { label: string; value: string | nu
 };
 
 const InhabitantsSection = ({ title, icon, inhabitants, speciesData, linkPrefix, onAdd, onRemove, emptyMessage, addButtonLabel, addButtonColor }: any) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"
-  >
+  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6">
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
-      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-        {icon}
-        {title} ({inhabitants.length} species)
-      </h2>
-      <button
-        onClick={onAdd}
-        className={`flex items-center gap-2 ${addButtonColor} text-white px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base w-fit`}
-      >
-        <Plus className="w-4 h-4" />
-        {addButtonLabel}
-      </button>
+      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">{icon}{title} ({inhabitants.length} species)</h2>
+      <button onClick={onAdd} className={`flex items-center gap-2 ${addButtonColor} text-white px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base w-fit`}><Plus className="w-4 h-4" />{addButtonLabel}</button>
     </div>
-
-    {inhabitants.length === 0 ? (
-      <div className="text-center py-12 text-slate-500 text-sm sm:text-base">
-        <p>{emptyMessage}</p>
-      </div>
-    ) : (
+    {inhabitants.length === 0 ? <div className="text-center py-12 text-slate-500 text-sm sm:text-base"><p>{emptyMessage}</p></div> : (
       <div className="space-y-3">
         {inhabitants.map((inhabitant: any, index: number) => {
           const species = speciesData.find((s: any) => s.id === inhabitant.speciesId);
           if (!species) return null;
-          
-          return (
-            <InhabitantCard
-              key={`${inhabitant.speciesId}-${index}`}
-              name={inhabitant.speciesName}
-              scientificName={species.taxonomy.scientificName}
-              quantity={inhabitant.quantity}
-              slug={species.slug}
-              imageUrl={species.imageUrl}
-              linkPrefix={linkPrefix}
-              onRemove={() => onRemove(inhabitant.speciesId)}
-            />
-          );
+          return <InhabitantCard key={`${inhabitant.speciesId}-${index}`} name={inhabitant.speciesName} scientificName={species.taxonomy.scientificName} quantity={inhabitant.quantity} slug={species.slug} imageUrl={species.imageUrl} linkPrefix={linkPrefix} onRemove={() => onRemove(inhabitant.speciesId)} />;
         })}
       </div>
     )}
@@ -709,36 +546,15 @@ const InhabitantsSection = ({ title, icon, inhabitants, speciesData, linkPrefix,
 
 const InhabitantCard = ({ name, scientificName, quantity, slug, imageUrl, linkPrefix, onRemove }: any) => (
   <div className="flex items-center gap-3 sm:gap-4 bg-slate-50 hover:bg-slate-100 rounded-xl p-3 sm:p-4 border border-slate-200 transition-colors group">
-    {imageUrl ? (
-      <img
-        src={imageUrl}
-        alt={name}
-        className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover flex-shrink-0"
-      />
-    ) : (
-      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg flex items-center justify-center flex-shrink-0">
-        <span className="text-slate-500 text-[10px] sm:text-xs font-bold">No Image</span>
-      </div>
+    {imageUrl ? <img src={imageUrl} alt={name} className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover flex-shrink-0" /> : (
+      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg flex items-center justify-center flex-shrink-0"><span className="text-slate-500 text-[10px] sm:text-xs font-bold">No Image</span></div>
     )}
-    
     <Link to={`${linkPrefix}/${slug}`} className="flex-1 min-w-0">
       <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors text-sm sm:text-base truncate">{name}</h3>
       <p className="text-xs sm:text-sm text-slate-500 italic truncate">{scientificName}</p>
       <p className="text-[10px] sm:text-xs text-slate-600 mt-1">Quantity: {quantity}</p>
     </Link>
-    
-    <button
-      onClick={(e) => {
-        e.preventDefault();
-        if (confirm(`Remove ${name} from tank?`)) {
-          onRemove();
-        }
-      }}
-      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
-      title="Remove"
-    >
-      <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
-    </button>
+    <button onClick={(e) => { e.preventDefault(); if (confirm(`Remove ${name} from tank?`)) onRemove(); }} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0" title="Remove"><Trash2 className="w-4 h-4 sm:w-5 sm:h-5" /></button>
   </div>
 );
 
