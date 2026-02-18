@@ -9,7 +9,7 @@ export const harlequinRasbora: Species = {
   imageCredit: {
     photographer: 'Christa Rohrbach (via Wikimedia Commons)',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Trigonostigma_heteromorpha_-_Karlsruhe_Zoo_01.jpg',
-    license: 'CC BY-SA 2.0 DE',
+    license: 'CC BY 2.0',
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/de/deed.en'
   },
 
@@ -39,8 +39,8 @@ export const harlequinRasbora: Species = {
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.8,
     },
     
@@ -54,14 +54,14 @@ export const harlequinRasbora: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Harlequin Rasboras are PLANT-LOVERS and thrive in DENSELY PLANTED tanks mimicking Southeast Asian peat swamps! They prefer MID-WATER zones, swimming through stem plants and around broad leaves. Best plants: broad-leaved (Java Fern, Amazon Sword, Anubias—needed for spawning!), stem plants (Rotala, Ludwigia, Bacopa), fine-leaved (Java Moss, Christmas Moss), floating plants (Salvinia, Frogbit—diffuses lighting). DARK substrate (black sand, dark gravel) creates dramatic contrast—metallic orange POPS against darkness. Blackwater setup with Indian Almond leaves intensifies copper-orange colors dramatically. Soft/dim lighting preferred.',
     hardscape: ['Driftwood (creates tannins - ideal)', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth river stones', 'Minimal—plants are primary focus'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaling', 'active', 'community', 'plant_dependent'],
+    tags: ['peaceful', 'shoaler', 'active'],
     minGroupSize: 8,
     description:
       'Harlequin Rasboras are CLASSIC SCHOOLING FISH creating MESMERIZING synchronized swimming displays! Groups of 8-15+ move as SINGLE ORGANISMS, swimming in perfect formation through planted tanks. They\'re ACTIVE and constantly exploring mid-water zones, weaving through plants gracefully. They\'re 100% PEACEFUL—among the gentlest community fish, never harassing tankmates. Watch their TIGHT SCHOOLING when slightly stressed (new tank, water changes) vs LOOSE SHOALING when confident (spread out exploring). Their black wedge is a MOOD INDICATOR: intense black = confident/healthy, faded pale = stressed. Males perform subtle COURTSHIP displays: chasing females through plants, circling around broad leaves. They\'re SHY in sparse tanks but CONFIDENT in densely planted setups.',
@@ -86,7 +86,7 @@ export const harlequinRasbora: Species = {
           severity: 'high',
         },
         {
-          type: 'suggestion',
+          type: 'warning',
           condition: 'soft acidic water (pH 6.0-7.0) with tannins',
           reason: 'Harlequins are blackwater species from peat swamps. Soft acidic water with tannins (Indian Almond leaves) intensifies orange colors to copper glow. They tolerate harder water but colors fade',
           severity: 'medium',
@@ -94,7 +94,7 @@ export const harlequinRasbora: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-12',
+        surface: 6-12,
         midwater: '8-15',
         bottom: '8-12',
       },
@@ -113,7 +113,7 @@ export const harlequinRasbora: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 8,
     },
     
@@ -156,14 +156,14 @@ export const harlequinRasbora: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'baby-brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'mosquito-larvae', 'spirulina'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'brine-shrimp', 'daphnia'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -181,7 +181,7 @@ export const harlequinRasbora: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -205,7 +205,7 @@ export const harlequinRasbora: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger:
       'Harlequin Rasboras breed READILY in proper conditions with unique LEAF-SPAWNING behavior! Trigger breeding: 1) Mature group (6+ months old, 8+ fish) with plump females, 2) BROAD-LEAVED PLANTS (Java Fern, Amazon Sword, Anubias—mandatory!), 3) Excellent conditioning with LIVE/FROZEN FOODS (baby brine shrimp, daphnia, bloodworms, mosquito larvae) for 2 weeks until females noticeably plump, 4) SOFT ACIDIC water (GH 2-6, pH 6.0-6.5, temp 26-28°C), 5) Tannin-stained blackwater (Indian Almond leaves). Males chase females through plants, leading them to broad leaves. Pairs FLIP UPSIDE DOWN under leaf undersides, vibrating bodies together.',
     fryCare:

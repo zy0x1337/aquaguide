@@ -23,7 +23,7 @@ export const otocinclusVittatus: Species = {
   },
 
   visuals: {
-    iconShape: 'pleco',
+    iconShape: 'depressed',
     adultSizeCM: 4.5,
     color: 'SUBTLE! Small torpedo-shaped body (dwarf pleco). Mottled brown-tan to olive-green back with DISTINCTIVE dark HORIZONTAL STRIPE running from snout through eye to tail base (like racing stripe). Silver-white belly. Transparent/translucent fins. Suckermouth underneath for clinging to surfaces. Females rounder when gravid',
   },
@@ -54,14 +54,14 @@ export const otocinclusVittatus: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
-      'Otocinclus are PLANT-DEPENDENT and REQUIRE densely planted tanks with BROAD-LEAVED PLANTS! They graze biofilm and algae from EVERY surface—glass, plants, driftwood, decor. Best plants: BROAD-LEAVED (Amazon Sword, Anubias, Java Fern—large grazing surfaces essential!), stem plants (Rotala, Ludwigia, Bacopa), floating plants (Salvinia, Frogbit). CRITICAL: Mature planted tanks (6+ months old) with established BIOFILM are MANDATORY—new sterile tanks = starvation death. They need CONSTANT food supply (algae/biofilm). Watch them graze broad leaves for hours—adorable!',
+      'Otocinclus are plant-dependend and REQUIRE densely planted tanks with board-leaved plants! They graze biofilm and algae from EVERY surface—glass, plants, driftwood, decor. Best plants: BROAD-LEAVED (Amazon Sword, Anubias, Java Fern—large grazing surfaces essential!), stem plants (Rotala, Ludwigia, Bacopa), floating plants (Salvinia, Frogbit). CRITICAL: Mature planted tanks (6+ months old) with established BIOFILM are MANDATORY—new sterile tanks = starvation death. They need CONSTANT food supply (algae/biofilm). Watch them graze broad leaves for hours—adorable!',
     hardscape: ['CRITICAL: Multiple driftwood pieces (biofilm grows on wood—essential food source!)', 'Smooth river stones (algae grazing)', 'Minimal sharp decorations'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shy', 'social', 'algae_eater', 'bottom_dweller', 'glass_cleaner'],
+    tags: ['peaceful', 'shy', 'social', 'algae_eater', 'bottom_dweller'],
     minGroupSize: 6,
     description:
       'Otocinclus are SHY, PEACEFUL ALGAE-EATING MACHINES creating adorable grazing behaviors! They\'re HIGHLY SOCIAL and form grazing groups—watch 6-10 work glass/plants in synchronized ROWS like tiny lawnmowers (adorable!). They\'re CONSTANTLY GRAZING (18+ hours daily) rasping algae and biofilm from every surface using suckermouth. Watch them cling to glass upside-down, race across leaves, and rest on broad-leaved plants. They\'re TIMID: sudden movements = hiding. Males perform GLASS DANCES during spawning: racing vertically up/down glass chasing gravid females. They\'re 100% PEACEFUL toward all tankmates and completely harmless. CRITICAL: They\'re OBLIGATE AUFWUCHS EATERS (specialized biofilm/algae grazers) requiring CONSTANT food—they can\'t survive on leftovers alone.',
@@ -100,7 +100,7 @@ export const otocinclusVittatus: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-12',
+        surface: 6-12,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -119,7 +119,7 @@ export const otocinclusVittatus: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 10,
     },
     
@@ -130,7 +130,7 @@ export const otocinclusVittatus: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'herbivore',
     effort: 'medium',
     cost: 'medium',
@@ -163,9 +163,9 @@ export const otocinclusVittatus: Species = {
     ],
     
     feeding: {
-      frequency: 'continuous',
-      primaryFoods: ['biofilm', 'soft-algae', 'aufwuchs', 'diatoms'],
-      supplements: ['algae-wafers', 'zucchini', 'cucumber', 'spirulina'],
+      frequency: 'once-daily',
+      primaryFoods: ['biofilm', 'aufwuchs'],
+      supplements: ['algae-wafers', 'blanched-zucchini', 'spirulina'],
       vegetarian: true,
       liveFood: {
         required: false,

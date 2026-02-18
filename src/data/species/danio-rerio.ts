@@ -39,8 +39,8 @@ export const zebraDanio: Species = {
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'top',
-      secondary: 'middle',
+      primary: 'surface',
+      secondary: 'midwater',
       preference: 0.8,
     },
     
@@ -54,14 +54,14 @@ export const zebraDanio: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes:
       'Zebra Danios are SURFACE to MID-WATER swimmers that need OPEN SWIMMING SPACE! They zoom back and forth constantly and feel cramped in heavily planted tanks. Best setup: plants along BACK and SIDES (Vallisneria, Java Fern, Anubias) with OPEN FRONT SPACE for racing. Floating plants (Salvinia, Frogbit) provide shade and reduce stress but don\'t cover entire surface—danios need space! They appreciate moderate current from filters. Dark substrate (black sand, dark gravel) makes zebra stripes POP dramatically.',
     hardscape: ['Smooth river stones', 'Driftwood (provides current breaks)', 'Pebble areas', 'Minimal—focus on open swimming space'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaling', 'active', 'surface_dweller', 'hardy', 'fast_swimmer'],
+    tags: ['peaceful', 'shoaler', 'active', 'surface_dweller'],
     minGroupSize: 8,
     description:
       'Zebra Danios are PERPETUAL MOTION MACHINES—the most ACTIVE aquarium fish! They form loose schools and ZOOM through tanks in synchronized swimming displays, racing back and forth endlessly like tiny torpedoes. Watch them patrol surface zones, darting, chasing, and playing in current from filters. They\'re highly SOCIAL and need groups of 8-10+ to thrive—larger groups = better schooling behavior and reduced aggression. Small groups (under 6) become AGGRESSIVE toward each other, with dominant males harassing subordinates constantly. They\'re PEACEFUL toward other species but their CONSTANT ACTIVITY intimidates shy fish. Males establish temporary dominance hierarchies through chasing displays but rarely cause injuries. They\'re BOLD and fearless, always first to investigate new objects or food. Their energy is CONTAGIOUS—watching them makes tanks feel alive!',
@@ -100,7 +100,7 @@ export const zebraDanio: Species = {
       ],
       
       idealTankmates: {
-        surface: '8-15',
+        surface: 8-15,
         midwater: '15-25',
         bottom: '8-15',
       },
@@ -113,13 +113,13 @@ export const zebraDanio: Species = {
     },
     
     activity: {
-      level: 'very-high',
+      level: 'high',
       peakTimes: ['all-day'],
       nocturnal: false,
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 10,
     },
     
@@ -163,13 +163,13 @@ export const zebraDanio: Species = {
     feeding: {
       frequency: 'twice-daily',
       primaryFoods: ['flakes', 'micro-pellets', 'brine-shrimp', 'bloodworms'],
-      supplements: ['daphnia', 'mosquito-larvae', 'spirulina'],
+      supplements: ['daphnia', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {

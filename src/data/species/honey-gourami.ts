@@ -18,7 +18,7 @@ export const honeyGourami: Species = {
     commonName: 'Honey Gourami',
     family: 'Osphronemidae',
     origin: 'India and Bangladesh (rice paddies, slow-moving streams, ponds with dense vegetation)',
-    region: 'South Asia',
+    region: 'Asia',
     biotope: 'Slow-moving or stagnant water with dense surface vegetation, floating plants, low oxygen levels, soft acidic water',
   },
 
@@ -39,8 +39,8 @@ export const honeyGourami: Species = {
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'top',
-      secondary: 'middle',
+      primary: 'surface',
+      secondary: 'midwater',
       preference: 0.7,
     },
     
@@ -54,14 +54,14 @@ export const honeyGourami: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Honey Gouramis are PLANT-DEPENDENT and thrive in DENSELY PLANTED tanks! They prefer SURFACE areas with FLOATING PLANTS (MANDATORY for bubble nests and security). Best plants: floating plants (Salvinia, Frogbit, Water Lettuce—essential for bubble nests!), tall stem plants (Vallisneria, Hygrophila, Bacopa—reaching surface), broad-leaved plants (Anubias, Java Fern, Amazon Sword), fine plants (Java Moss, Christmas Moss). Dense planting provides security—they hide when stressed. CRITICAL: LOW FLOW setup (gentle filtration)—strong current destroys bubble nests and stresses fish.',
     hardscape: ['Driftwood (provides hiding spots)', 'Smooth caves', 'Leaf litter (Indian Almond leaves)', 'Minimal—plants are primary focus'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shy', 'bubble_nester', 'labyrinth_fish', 'air_breather', 'centerpiece'],
+    tags: ['peaceful', 'shy', 'bubble_nester', 'labyrinth_fish', 'centerpiece'],
     minGroupSize: 1,
     description:
       'Honey Gouramis are SHY, PEACEFUL CENTERPIECE fish perfect for planted community tanks! They\'re TIMID and slow-moving, preferring to drift through plants gracefully. Watch them explore SURFACE areas constantly, patrolling floating plants and breathing air at the surface (labyrinth organ). Males are BUBBLE NEST BUILDERS: they construct intricate floating foam nests among plants using saliva bubbles—building for hours, arranging bubbles into perfect domes. Males also perform COURTSHIP DISPLAYS: circling females, flaring fins, displaying BLACK breeding colors, vibrating bodies. CRITICAL: Males can be MILDLY TERRITORIAL when breeding (chasing females aggressively)—keep 1 MALE : 2 FEMALES ratio to spread harassment. They\'re PEACEFUL toward other species but slow-moving—easily intimidated by fast/boisterous fish.',
@@ -92,7 +92,7 @@ export const honeyGourami: Species = {
           severity: 'high',
         },
         {
-          type: 'suggestion',
+          type: 'warning',
           condition: 'densely planted tank with hiding spots',
           reason: 'Honey Gouramis are SHY. Without dense plants, they hide constantly behind equipment. Dense planting = confident, visible fish with natural behavior',
           severity: 'medium',
@@ -100,7 +100,7 @@ export const honeyGourami: Species = {
       ],
       
       idealTankmates: {
-        surface: '1-3',
+        surface: 1-3,
         midwater: '10-20',
         bottom: '6-12',
       },
@@ -163,14 +163,14 @@ export const honeyGourami: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'baby-brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'mosquito-larvae', 'spirulina'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'brine-shrimp', 'daphnia'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -188,7 +188,7 @@ export const honeyGourami: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -212,7 +212,7 @@ export const honeyGourami: Species = {
 
   breeding: {
     method: 'bubble_nester',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger:
       'Honey Gouramis breed READILY in proper conditions! Trigger breeding: 1) Mature pair (6+ months old) with 1 MALE : 2 FEMALES, 2) FLOATING PLANTS (Salvinia, Frogbit—mandatory for bubble nest!), 3) Excellent conditioning with LIVE/FROZEN FOODS (baby brine shrimp, daphnia, bloodworms, mosquito larvae) for 2 weeks until females plump, 4) SOFT ACIDIC water (GH 4-10, pH 6.0-6.8, temp 26-28°C), 5) LOW FLOW (sponge filter only), 6) SHALLOW water (20-25cm—easier for fry to reach surface). Males build intricate foam nests among floating plants. Males turn INTENSE BLACK with yellow stripes (breeding colors).',
     fryCare:

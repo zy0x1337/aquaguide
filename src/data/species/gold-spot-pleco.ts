@@ -23,7 +23,7 @@ export const goldSpotPleco: Species = {
   },
 
   visuals: {
-    iconShape: 'pleco',
+    iconShape: 'compressed',
     adultSizeCM: 35,
     color: 'STUNNING! Dark brown to black body covered in bright GOLD or yellow spots creating starry night sky pattern. Adults develop impressive dorsal and caudal fins with spotted patterns. Males develop prominent bristled ODONTODES (spines) on cheeks and pectoral fins. Juveniles show more contrast; adults darken with age',
   },
@@ -61,7 +61,7 @@ export const goldSpotPleco: Species = {
   },
 
   behavior: {
-    tags: ['peaceful', 'nocturnal', 'territorial_toward_plecos', 'algae_eater', 'bottom_dweller'],
+    tags: ['peaceful', 'nocturnal', 'territorial', 'algae_eater', 'bottom_dweller'],
     minGroupSize: 1,
     description:
       'Gold Spot Plecos are GENTLE GIANTS—peaceful toward all fish despite massive size! They\'re SHY and NOCTURNAL: during day, they hide in caves or under driftwood. At NIGHT, they emerge and become ACTIVE grazers, rasping algae from every surface (glass, rocks, driftwood, equipment). Watch them work: powerful sucker mouths create audible scraping sounds! They\'re WOOD-EATING MACHINES, rasping driftwood for HOURS creating trails of fine sawdust waste. Males are HIGHLY TERRITORIAL toward other plecos—they FIGHT brutally for caves and territory (locked jaws, pushing). Keep ONLY ONE per tank unless tank is 800L+ with SEPARATED cave systems. They\'re peaceful toward all other fish and ignore tankmates completely.',
@@ -100,7 +100,7 @@ export const goldSpotPleco: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-6',
+        surface: 0-6,
         midwater: '8-15',
         bottom: '1',
       },
@@ -130,7 +130,7 @@ export const goldSpotPleco: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'herbivore',
     effort: 'high',
     cost: 'high',
@@ -163,9 +163,9 @@ export const goldSpotPleco: Species = {
     ],
     
     feeding: {
-      frequency: 'thrice-weekly',
-      primaryFoods: ['driftwood', 'algae', 'algae-wafers', 'vegetables'],
-      supplements: ['zucchini', 'cucumber', 'spirulina', 'sinking-pellets'],
+      frequency: 'every-other-day',
+      primaryFoods: [ 'algae-wafers', 'vegetables'],
+      supplements: ['zucchini', 'spirulina', 'pellets'],
       vegetarian: true,
       liveFood: {
         required: false,
@@ -189,7 +189,7 @@ export const goldSpotPleco: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'high',
+        flowRate: 'strong',
       },
       airstone: false,
       lighting: 'low',

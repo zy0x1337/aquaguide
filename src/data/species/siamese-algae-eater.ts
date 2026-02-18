@@ -23,7 +23,7 @@ export const siameseAlgaeEater: Species = {
   },
 
   visuals: {
-    iconShape: 'torpedo',
+    iconShape: 'fusiform',
     adultSizeCM: 14,
     color: 'CRITICAL IDENTIFICATION FEATURES (90% store fish are WRONG SPECIES!): TRUE SAE: Dark olive-brown to golden-tan body. SHARP JET-BLACK horizontal stripe runs from SNOUT through EYE extending INTO TAIL FIN (zigzag pattern in tail - CRITICAL ID!). Gold/bronze shoulder blaze above black stripe (distinctive!). Two small BARBELS (whisker-like projections) near mouth. CLEAR or slightly yellowish fins. NO sucker mouth (normal mouth). Belly silver-white. IMPOSTERS TO AVOID: CHINESE ALGAE EATER (Gyrinocheilus): Black stripe ENDS at tail base (doesn\'t enter fin!), LARGE SUCKER MOUTH, NO barbels, red stripe edges, grows 30cm, aggressive! FLYING FOX (Epalzeorhynchos): Black stripe bordered by GOLD BANDS above/below, fins with black/red tint, more aggressive. Always verify TRUE SAE before buying!',
   },
@@ -35,12 +35,12 @@ export const siameseAlgaeEater: Species = {
     ph: { min: 6.5, max: 8.0, ideal: 7.2 },
     gh: { min: 5, max: 15 },
     kh: { min: 3, max: 10 },
-    flow: 'very-high',
+    flow: 'high',
     substrate: 'smooth-pebbles',
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'middle',
+      secondary: 'midwater',
       preference: 0.9,
     },
     
@@ -54,14 +54,14 @@ export const siameseAlgaeEater: Species = {
   },
 
   habitat: {
-    planting: 'minimal',
+    planting: 'sparse',
     plantingNotes:
       'TRUE Siamese Algae Eaters are HILLSTREAM AUFWUCHS GRAZERS preferring MINIMAL PLANTING with exposed rock/driftwood surfaces for biofilm grazing! They\'re from fast-flowing rapids and need: 1) SMOOTH RIVER PEBBLES (main grazing surfaces - they scrape biofilm 24/7!), 2) DRIFTWOOD BRANCHES (covered in aufwuchs/algae), 3) LIMESTONE ROCKS (calcium-rich for biofilm growth), 4) OPEN SWIMMING AREAS (they\'re active swimmers!). Best plants: HARDY ATTACHED SPECIES (Anubias, Java Fern, Bolbitis - tied to rocks/wood, tolerate high flow). They will NOT harm healthy plants (herbivores eating only algae/biofilm - safe for planted tanks!). Avoid delicate stem plants (high flow damages them).',
     hardscape: ['CRITICAL: SMOOTH RIVER PEBBLES (3-8cm - main food source for biofilm grazing!)', 'Driftwood branches (aufwuchs-covered surfaces)', 'Limestone slabs/rocks (promote biofilm/algae growth)', 'High-flow rock arrangements (create current zones)', 'NO SHARP EDGES (constant contact during grazing)'],
   },
 
   behavior: {
-    tags: ['algae_eater', 'active', 'aufwuchs_grazer', 'hillstream', 'peaceful', 'bottom_dweller'],
+    tags: ['algae_eater', 'active', 'peaceful', 'bottom_dweller', 'hillstream'],
     minGroupSize: 1,
     description:
       'TRUE Siamese Algae Eaters are HYPERACTIVE AUFWUCHS GRAZERS displaying unique hillstream behaviors! Watch them constantly SCRAPING SURFACES with specialized mouthparts (razor-sharp plates shaving biofilm/algae from rocks like living sanders!). They spend 80% of time HEAD-DOWN against current grazing rock surfaces. They\'re TIRELESS WORKERS: 8-12 hours daily grazing, swimming against flow, resting briefly. They\'re PEACEFUL toward most tankmates but TERRITORIAL toward similar-looking species (Flying Foxes, other SAEs - attacks on sight!). Singles are fine (solo grazers naturally) but can keep groups 3+ in large tanks (200L+) with multiple territories. They\'re JUMPERS when startled - secure lid mandatory!',
@@ -100,7 +100,7 @@ export const siameseAlgaeEater: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-12',
+        surface: 6-12,
         midwater: '10-15',
         bottom: '3-6',
       },
@@ -113,7 +113,7 @@ export const siameseAlgaeEater: Species = {
     },
     
     activity: {
-      level: 'very-high',
+      level: 'high',
       peakTimes: ['all-day'],
       nocturnal: false,
     },
@@ -130,7 +130,7 @@ export const siameseAlgaeEater: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'herbivore',
     effort: 'medium',
     cost: 'medium',
@@ -164,8 +164,8 @@ export const siameseAlgaeEater: Species = {
     
     feeding: {
       frequency: 'once-daily',
-      primaryFoods: ['spirulina-wafers', 'algae-pellets', 'blanched-zucchini', 'nori-sheets'],
-      supplements: ['blanched-cucumber', 'blanched-spinach', 'aufwuchs-biofilm'],
+      primaryFoods: ['spirulina', 'pellets', 'blanched-zucchini'],
+      supplements: ['aufwuchs'],
       vegetarian: true,
       liveFood: {
         required: false,
@@ -189,7 +189,7 @@ export const siameseAlgaeEater: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'very-high',
+        flowRate: 'strong',
       },
       airstone: true,
       lighting: 'moderate',

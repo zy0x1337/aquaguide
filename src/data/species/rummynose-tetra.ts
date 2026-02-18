@@ -23,7 +23,7 @@ export const rummynoseTetra: Species = {
   },
 
   visuals: {
-    iconShape: 'torpedo',
+    iconShape: 'fusiform',
     adultSizeCM: 5,
     color: 'STUNNING TRICOLOR PATTERN with health-indicating features! FLAMING RED HEAD (from snout covering entire face/gill plates - the WATER QUALITY INDICATOR changing color with stress!). IRIDESCENT SILVER BODY with subtle blue-green sheen. DISTINCTIVE CAUDAL PEDUNCLE with THREE BOLD HORIZONTAL BLACK-AND-WHITE STRIPES on tail (zebra-striped tail - species signature!). Clear dorsal/anal fins. CRITICAL: Red nose intensity = HEALTH BAROMETER: Brilliant flaming red = perfect conditions/health. 50% faded red = stress/water issues (nitrates over 20ppm). Pale/no red = EMERGENCY (ammonia/nitrite/severe stress). This color change happens WITHIN MINUTES making them instant indicators',
   },
@@ -39,8 +39,8 @@ export const rummynoseTetra: Species = {
     substrate: 'fine-sand',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.8,
     },
     
@@ -54,14 +54,14 @@ export const rummynoseTetra: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Rummynose Tetras require VERY HEAVY PLANTING replicating Amazonian blackwater streams! They\'re from shaded flooded forests (igapós) with dense marginal vegetation. Best setup: BACKGROUND/SIDE THICKETS (Amazon Swords, Cryptocoryne wendtii, Vallisneria - creates security zones and sightline breaks), FLOATING PLANTS (Water Sprite, Frogbit, Amazon Frogbit - diffuses lighting, creates "blackwater" shading, reduces jumping), OPEN MIDWATER SWIMMING SPACE (critical for schooling displays!). They need BLACKWATER CONDITIONS: Indian almond leaves (Catappa), oak leaf litter, alder cones, or peat filtration creating tannin-stained tea-colored water (mimics wild habitat, lowers pH, releases beneficial compounds). Dimmed lighting essential (they\'re from shaded streams).',
     hardscape: ['Driftwood branches (tannin release - blackwater replication)', 'Fine sand substrate (natural foraging substrate)', 'LEAF LITTER layer (Indian almond/Catappa leaves, oak leaves - blackwater biotope)', 'Marginal plant roots (mimics igapó flooded forest)', 'NO sharp edges'],
   },
 
   behavior: {
-    tags: ['schooling', 'peaceful', 'shy', 'active', 'midwater', 'indicator_species'],
+    tags: ['schooler', 'peaceful', 'shy', 'active', 'midwater'],
     minGroupSize: 12,
     description:
       'Rummynose Tetras display MESMERIZING TIGHT SYNCHRONIZED SCHOOLING - they swim in PERFECT FORMATION like one organism moving in balletic unison (most stunning schooling behavior of all tetras!). Watch them create "living clouds" moving together through midwater with coordinated turns/movements. They\'re NERVOUS SHY FISH: easily spooked by sudden movements, quick to scatter then reform school. They\'re LIVING WATER QUALITY INDICATORS: red nose color fades WITHIN MINUTES of stress/parameter issues giving instant visual warnings! They\'re DIURNAL ACTIVE during day, resting at night. Groups under 12 = stressed, constant hiding, faded noses. Groups 12-20+ = confident, tight schooling, brilliant red noses, natural behaviors.',
@@ -100,7 +100,7 @@ export const rummynoseTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-15',
+        surface: 10-15,
         midwater: '20-30',
         bottom: '8-12',
       },
@@ -119,7 +119,7 @@ export const rummynoseTetra: Species = {
     },
     
     socialStructure: {
-      type: 'schooling',
+      type: 'school',
       maxMalesPerTank: 20,
     },
     
@@ -166,8 +166,8 @@ export const rummynoseTetra: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'tropical-flakes', 'baby-brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'micro-worms', 'spirulina-flakes'],
+      primaryFoods: ['micro-pellets', 'flakes', 'brine-shrimp', 'daphnia'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -191,7 +191,7 @@ export const rummynoseTetra: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -215,7 +215,7 @@ export const rummynoseTetra: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger:
       'Rummynose Tetra breeding is ACHIEVABLE in home aquaria with proper blackwater conditions! Wild spawning triggers: 1) RAINY SEASON simulation (pH drop to 5.5-6.0, cooler water 24°C), 2) HEAVY CONDITIONING with LIVE FOODS (baby brine shrimp, micro-worms, daphnia - feed 3x daily for 2 weeks fattening females), 3) Very soft water (GH under 4), 4) PEAT FILTRATION or heavy tannins (blackwater replication), 5) Spawning mop or fine-leaved plants (spawning substrate). Select plump gravid females + brightest males, place group 6-8 fish in 40L+ breeding tank.',
     fryCare:

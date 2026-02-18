@@ -60,7 +60,13 @@ export type EthologyTag =
   | 'coldwater'
   | 'amphibian'
   | 'slow_eater'
-  | 'robust';
+  | 'robust'
+  | 'parental-care'
+  | 'pair-bonding'
+  | 'hierarchy'
+  | 'substrate-sifter'
+  | 'intelligent'
+  | 'hillstream';
 
 // --- NEW: ADVANCED BEHAVIOR TYPES ---
 export type SwimmingZone = 'surface' | 'midwater' | 'bottom' | 'all';
@@ -76,7 +82,7 @@ export interface AggressionLevel {
 
 export interface ActivityProfile {
   level: ActivityLevel;
-  peakTimes: Array<'morning' | 'afternoon' | 'evening' | 'night'>;
+  peakTimes: Array<'morning' | 'afternoon' | 'evening' | 'night' | 'all-day' | 'feeding'>;
   nocturnal: boolean;
 }
 
@@ -109,7 +115,9 @@ export type FoodType =
   | 'micro-pellets' | 'pellets' | 'flakes' | 'granules' | 'wafers'
   | 'bloodworms' | 'brine-shrimp' | 'daphnia' | 'tubifex'
   | 'algae-wafers' | 'vegetables' | 'spirulina'
-  | 'live-food' | 'frozen-food';
+  | 'live-food' | 'frozen-food' | 'biofilm' | 'blanched-zucchini' | 'cyclops' 
+  | 'crushed-flakes' | 'cichlid-pellets-large' | 'frozen-tilapia' | 'frozen-krill' 
+  | 'GlasGarten BacterAE' | 'aufwuchs';
 
 export interface Feeding {
   frequency: FeedingFrequency;
@@ -120,10 +128,10 @@ export interface Feeding {
     required: boolean;
     recommended: boolean;
   };
-  fastingDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+  fastingDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday' | 'none';
 }
 
-// --- NEW: MAINTENANCE TYPES ---
+// --- MAINTENANCE TYPES ---
 export type MaintenanceFrequency = 'daily' | 'twice-weekly' | 'weekly' | 'biweekly' | 'monthly';
 
 export interface Maintenance {
@@ -133,8 +141,8 @@ export interface Maintenance {
   notes?: string;
 }
 
-// --- NEW: EQUIPMENT TYPES ---
-export type FilterType = 'sponge' | 'hang-on-back' | 'canister' | 'internal' | 'undergravel';
+// --- EQUIPMENT TYPES ---
+export type FilterType = 'sponge' | 'hang-on-back' | 'canister' | 'canister-plus-sump' | 'internal' | 'undergravel';
 export type FlowRate = 'gentle' | 'moderate' | 'strong';
 export type LightingLevel = 'low' | 'moderate' | 'high';
 
@@ -153,7 +161,7 @@ export interface EquipmentRequirements {
   co2?: boolean; // For plant-eaters that need planted tanks
 }
 
-// --- NEW: EXPERIENCE DATA ---
+// --- EXPERIENCE DATA ---
 export interface CommonFailure {
   issue: string;      // e.g., "fin-rot", "death"
   cause: string;      // e.g., "plastic-plants", "no-heater"
@@ -172,7 +180,7 @@ export interface ExperienceData {
   estimatedCosts?: EstimatedCosts;
 }
 
-// --- NEW: COMPATIBILITY RULE ---
+// --- COMPATIBILITY RULE ---
 export type CompatibilityRuleType = 'avoid' | 'requires' | 'warning';
 export type CompatibilitySeverity = 'low' | 'medium' | 'high' | 'critical';
 
@@ -224,14 +232,14 @@ export interface Species {
     flow: 'low' | 'moderate' | 'high';
     substrate?: string;
     
-    // NEW: Advanced environment data
+    // Advanced environment data
     swimmingZone?: SwimmingZonePreference;
     spaceNeeds?: SpaceNeeds;
     bioloadMultiplier?: number; // Override default calculation (1.0 = average)
   };
 
   habitat: {
-    planting: 'sparse' | 'medium' | 'dense';
+    planting: 'none' | 'sparse' | 'medium' | 'dense';
     plantingNotes: string;
     hardscape: string[];
   };
@@ -245,12 +253,12 @@ export interface Species {
       badMates: string[];
       notes?: string;
       
-      // NEW: Advanced compatibility
+      // Advanced compatibility
       rules?: CompatibilityRule[];
       idealTankmates?: IdealTankmates;
     };
     
-    // NEW: Quantified behavior
+    // Quantified behavior
     aggressionLevel?: AggressionLevel;
     activity?: ActivityProfile;
     socialStructure?: SocialStructure;
@@ -266,7 +274,7 @@ export interface Species {
     proTips?: string[];
     commonMistakes?: string[];
     
-    // NEW: Detailed care instructions
+    // Detailed care instructions
     feeding?: Feeding;
     maintenance?: Maintenance;
     equipment?: EquipmentRequirements;

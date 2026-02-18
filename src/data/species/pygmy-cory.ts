@@ -103,7 +103,7 @@ export const pygmyCory: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-15',
+        surface: 10-15,
         midwater: '10-15',
         bottom: '10-15',
       },

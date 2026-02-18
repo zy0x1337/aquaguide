@@ -18,12 +18,12 @@ export const melanotaeniaLacustris: Species = {
     commonName: 'Lake Kutubu Rainbowfish / Turquoise Rainbowfish / Blue Rainbowfish',
     family: 'Melanotaeniidae',
     origin: 'Papua New Guinea (ENDEMIC to Lake Kutubu + outlet Soro River only - nowhere else!)',
-    region: 'Oceania',
+    region: 'Australia',
     biotope: 'Clear still to slow-moving lake waters with heavy aquatic vegetation, submerged roots/logs, EXTREME ALKALINE water (pH 8.5-9.0 from limestone!)',
   },
 
   visuals: {
-    iconShape: 'torpedo',
+    iconShape: 'fusiform',
     adultSizeCM: 12,
     color: 'STUNNING ELECTRIC TURQUOISE-BLUE BRILLIANCE! Adults display IRIDESCENT TURQUOISE-BLUE bodies (metallic sheen like neon!), darker blue horizontal stripe along midline, silvery-blue flanks with intricate scale patterns creating shimmering effect. Fins have BLUE-TURQUOISE TINGE with BLACK EDGES (especially visible during spawning!). Males MORE VIBRANT: Deeper bodies, ORANGE BREEDING STRIPE on forehead (distinctive marking during displays!), more intense turquoise, pointed dorsal/anal fins. Females DULLER: Less blue intensity, rounder fuller bodies. UNIQUE: Unlike other rainbowfish, M. lacustris can RAPIDLY CHANGE COLORS in SECONDS displaying many different patterns throughout day (stress/excitement/display related!). WARNING: Juveniles are BLAND silver-grey - brilliant blue emerges ONLY with maturity (8-12 months) and proper conditions! Don\'t judge in stores',
   },
@@ -39,8 +39,8 @@ export const melanotaeniaLacustris: Species = {
     substrate: 'sand',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.8,
     },
     
@@ -54,14 +54,14 @@ export const melanotaeniaLacustris: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes:
       'Lake Kutubu Rainbowfish need HEAVY SIDE/BACKGROUND PLANTING with OPEN SWIMMING CORRIDORS - they\'re EXTREMELY ACTIVE SWIMMERS needing horizontal space! Best setup: DENSE PLANTING on sides/back (Vallisneria, Amazon Swords, Anubias - creates security and retreats), WIDE OPEN CENTER (150cm+ horizontal swimming runs - critical!), floating plants optional. They need HARD ALKALINE WATER - choose plants tolerating high pH/GH (Vallisneria, Anubias, Java Fern, Crinum). CRITICAL: Females in breeding condition COMPULSIVELY NIBBLE ALGAE - leave back glass uncleaned for natural grazing or provide algae wafers! They\'re from CLEAR WATER and appreciate pristine conditions with strong lighting showing their colors.',
     hardscape: ['Smooth driftwood branches (submerged logs - wild habitat replication)', 'Smooth river stones', 'OPEN SWIMMING SPACE center (MANDATORY - 150cm+ runs!)', 'NO sharp edges (active swimmers)', 'Clear water essential (Lake Kutubu is crystal clear!)'],
   },
 
   behavior: {
-    tags: ['active', 'peaceful', 'schooling', 'jumper', 'endangered', 'diurnal'],
+    tags: ['active', 'peaceful', 'schooler', 'jumper', 'diurnal'],
     minGroupSize: 6,
     description:
       'Lake Kutubu Rainbowfish are EXTREMELY ACTIVE ATHLETIC SWIMMERS with endless energy! They\'re CREPUSCULAR - most active at DAWN/DUSK (feed during these times!). Watch males constantly perform NON-AGGRESSIVE DISPLAY RITUALS: flaring fins, intensifying colors (brilliant turquoise + orange forehead stripe!), circling each other, body shimmering. They\'re PEACEFUL but BOISTEROUS - their constant activity/energy can intimidate shy species! They\'re SCHOOLING FISH swimming in loose coordinated groups across midwater. They\'re EXCELLENT JUMPERS - secure lid mandatory! Watch their UNIQUE COLOR-CHANGING ability - patterns shift in seconds during excitement/displays. They occupy middle to upper water column retreating to plants when startled.',

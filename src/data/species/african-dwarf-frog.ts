@@ -96,7 +96,7 @@ export const africanDwarfFrog: Species = {
       ],
       
       idealTankmates: {
-        surface: '0',
+        surface: 0,
         midwater: '0-10',
         bottom: '2-6',
       },
@@ -110,12 +110,12 @@ export const africanDwarfFrog: Species = {
     
     activity: {
       level: 'low',
-      peakTimes: ['dawn', 'dusk', 'night'],
+      peakTimes: ['morning', 'night'],
       nocturnal: true,
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 999,
     },
     
@@ -159,7 +159,7 @@ export const africanDwarfFrog: Species = {
     
     feeding: {
       frequency: 'every-other-day',
-      primaryFoods: ['bloodworms', 'brine-shrimp', 'mysis-shrimp'],
+      primaryFoods: ['bloodworms', 'brine-shrimp', 'tubifex'],
       supplements: ['daphnia', 'pellets'],
       vegetarian: false,
       liveFood: {
@@ -184,7 +184,7 @@ export const africanDwarfFrog: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -206,7 +206,7 @@ export const africanDwarfFrog: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'hard',
+    difficulty: 'expert',
     trigger: 'Breeding requires PERFECT conditions: lower water level by 30%, increase feeding (live blackworms ideal), raise temperature to 27-28°C, and perform large water changes to simulate rainy season. Males sing intensely at night. After 1-2 weeks of conditioning, males clasp females in amplexus (underwater "hug") and swim to surface together repeatedly, releasing eggs/sperm at surface. Spawning lasts 6-24 hours.',
     fryCare: 'Females lay 500-2000 tiny eggs (1mm) that float or stick to plants. Remove adults immediately (they eat eggs). Eggs hatch in 48-72 hours into tiny tadpoles (5mm). CRITICAL: Tadpoles are FILTER FEEDERS that need liquid fry food (infusoria, commercial liquid fry food) multiple times daily. They cannot eat normal foods. Metamorphosis takes 6-12 weeks. Tadpoles develop back legs first, then front legs, then absorb tail. Survival rate is LOW (<10%) without specialized care. Raising froglets requires dedication and experience.',
     notes: 'Breeding is challenging and usually accidental in home aquariums. Most breeders are commercial farms using hormone injections. Natural breeding requires large groups (6+ frogs), perfect conditions, and expert-level tadpole care. Amplexus behavior (males hugging females for hours) is fascinating to observe even without successful spawning.',

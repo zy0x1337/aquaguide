@@ -96,7 +96,7 @@ export const pandaCory: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-15',
+        surface: 10-15,
         midwater: '15-25',
         bottom: '6-10',
       },

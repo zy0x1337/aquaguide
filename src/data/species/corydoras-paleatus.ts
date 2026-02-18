@@ -95,7 +95,7 @@ export const corydorasPaleatus: Species = {
           severity: 'high',
         },
         {
-          type: 'compatible',
+          type: 'requires',
           target: 'goldfish (fancy varieties)',
           reason: 'Temperature match! Both prefer 20-22°C. Peppered Corys clean up goldfish mess (leftover food, not waste). Avoid pairing with large goldfish that might outcompete for food',
           severity: 'low',
@@ -103,7 +103,7 @@ export const corydorasPaleatus: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '15-30',
         bottom: '6-12',
       },
@@ -164,7 +164,7 @@ export const corydorasPaleatus: Species = {
     feeding: {
       frequency: 'once-daily',
       primaryFoods: ['wafers', 'pellets', 'bloodworms', 'brine-shrimp'],
-      supplements: ['daphnia', 'vegetables', 'earthworms'],
+      supplements: ['daphnia', 'vegetables'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -191,7 +191,7 @@ export const corydorasPaleatus: Species = {
         flowRate: 'moderate',
       },
       airstone: false,
-      lighting: 'medium',
+      lighting: 'moderate',
       co2: false,
     },
   },

@@ -23,7 +23,7 @@ export const ramCichlid: Species = {
   },
 
   visuals: {
-    iconShape: 'oval',
+    iconShape: 'fusiform',
     adultSizeCM: 6,
     color: 'ABSOLUTELY STUNNING! Base color: ELECTRIC IRIDESCENT BLUE body covered in neon blue METALLIC SPOTS creating shimmering effect! Black vertical bar through EYE (distinctive), black spot on dorsal fin. YELLOW/GOLD HEAD and chest. Fins: Orange-red edging on dorsal/anal/tail fins. SEXUAL COLORS: Males more intense blues/reds, longer dorsal spines. Females rounder bellies with BRIGHT PINK/MAGENTA belly (especially when breeding - glowing!). Breeding colors INTENSIFY dramatically - males become ELECTRIC. Variants: Gold Ram (yellow body), Black Ram (melanistic), Electric Blue Ram (enhanced blue)',
   },
@@ -40,7 +40,7 @@ export const ramCichlid: Species = {
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'middle',
+      secondary: 'midwater',
       preference: 0.8,
     },
     
@@ -54,14 +54,14 @@ export const ramCichlid: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'German Blue Rams are HEAVILY PLANTED TANK species! They need DENSE VEGETATION for security, territorial markers, spawning sites, and stress reduction. Best plants: BROAD-LEAVED (Amazon Sword, Anubias - spawning sites!), stem plants (Rotala, Ludwigia - territorial markers), FLOATING PLANTS (Salvinia, Frogbit - dim lighting + security), carpet plants (Java Moss - infusoria growth for fry). CRITICAL: Leave OPEN SANDY AREAS center/front for displaying, foraging, and SAND VOLCANO BUILDING (excavated mounds marking territory - adorable behavior!). Rams constantly dig creating caves/pits. Dense planting reduces stress and provides breeding territories. They thrive in planted tanks with subdued lighting.',
     hardscape: ['CRITICAL: FLAT SMOOTH STONES (10-15cm slate rocks - essential spawning surfaces!)', 'Small caves (terracotta pots, driftwood caves - hiding spots)', 'Driftwood branches (territorial markers)', 'NO SHARP EDGES (they constantly dig!)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'colorful', 'bottom_dweller', 'territorial', 'pair_bonding', 'intelligent'],
+    tags: ['peaceful', 'colorful', 'bottom_dweller', 'territorial', 'pair-bonding', 'intelligent'],
     minGroupSize: 2,
     description:
       'German Blue Rams are PEACEFUL DWARF CICHLIDS displaying SPECTACULAR BEHAVIORS! They\'re one of the FEW CICHLIDS safe for COMMUNITY TANKS. Watch them constantly foraging substrate picking at algae/detritus, creating SAND VOLCANOES (excavated mounds marking territory - adorable!), and displaying to each other with fin flaring/body quivering. They\'re INTELLIGENT: learning feeding times, recognizing owners, establishing hierarchies. Pairs MATE FOR LIFE forming MONOGAMOUS BONDS performing elaborate COURTSHIP DANCES (synchronized swimming, circling, body quivering, fin displays). They\'re MILDLY TERRITORIAL during breeding defending small area (30cm radius) around spawning site but peaceful otherwise. Both parents exhibit FIERCE PARENTAL CARE guarding eggs/fry for weeks attacking intruders! Watch them fan eggs constantly (oxygenation) and move fry to pre-dug pits.',
@@ -100,7 +100,7 @@ export const ramCichlid: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-6',
+        surface: 0-6,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -130,7 +130,7 @@ export const ramCichlid: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'omnivore',
     effort: 'high',
     cost: 'medium',
@@ -166,14 +166,14 @@ export const ramCichlid: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['frozen-bloodworms', 'frozen-brine-shrimp', 'micro-pellets', 'daphnia'],
-      supplements: ['spirulina-flakes', 'frozen-mysis-shrimp', 'live-blackworms'],
+      primaryFoods: ['bloodworms', 'brine-shrimp', 'micro-pellets', 'daphnia'],
+      supplements: ['spirulina', 'flakes'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -191,7 +191,7 @@ export const ramCichlid: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -215,7 +215,7 @@ export const ramCichlid: Species = {
 
   breeding: {
     method: 'substrate_spawner',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger:
       'German Blue Ram breeding requires STABLE BONDED PAIR (raised from juveniles ideal), pristine conditions, and spawning sites. Triggers: 1) Increase temp to 28-29°C (spawning temp), 2) Massive water changes (50%) with SOFT ACIDIC WATER (pH 5.5-6.5, GH 4-6 - use RO water), 3) Heavy conditioning with HIGH-PROTEIN FOODS (frozen bloodworms, brine shrimp) 2-3 weeks, 4) Provide FLAT SMOOTH SURFACES (10-15cm slate rocks - essential spawning sites!). Watch courtship: pair meticulously CLEANS slate for hours, synchronized swimming displays, body quivering, fin flaring, color intensification (males electric blue, females glowing pink!).',
     fryCare:

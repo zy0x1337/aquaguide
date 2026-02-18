@@ -47,13 +47,13 @@ export const bolivianRam: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Bolivian Rams appreciate planted tanks but don\'t need jungle density. Plant moderately with hardy species (Anubias, Amazon Swords, Cryptocoryne, Vallisneria) that can handle occasional sand disturbance from their digging. They\'re NOT plant destroyers but will uproot delicate carpets during sand-sifting. Leave LARGE OPEN SANDY AREAS (50%+ of substrate) for foraging behavior—this is CRITICAL for their natural behavior. They spend hours sifting through sand, and without adequate space they become stressed. Smooth river stones create territories and spawning sites. Driftwood adds tannins and visual barriers.',
     hardscape: ['Smooth flat stones (spawning sites - CRITICAL)', 'Driftwood (territories + tannins)', 'Caves (rarely used but appreciated)', 'River stones scattered on sand'],
   },
 
   behavior: {
-    tags: ['peaceful', 'pair_bonding', 'substrate_sifter', 'cichlid', 'slow_eater'],
+    tags: ['peaceful', 'pair-bonding', 'substrate-sifter', 'cichlid', 'slow_eater'],
     minGroupSize: 2,
     description: 'Bolivian Rams are REMARKABLY peaceful for cichlids—they\'re the diplomats of the dwarf cichlid family. Unlike aggressive cichlids, Bolivians are SHY, GENTLE, and CO-OPERATIVE. They spend their days methodically sifting through sand like underwater archaeologists, taking mouthfuls, filtering it through gills, and spitting out clean sand in beautiful clouds. This "eartheater" behavior is MESMERIZING to watch and happens ALL DAY LONG. They\'re SLOW, DELIBERATE feeders—no frantic rushing or food aggression. They pick at food carefully, chew thoughtfully, and often spit it out multiple times before swallowing tiny particles. This makes them VULNERABLE to fast competitive feeders. Bolivians form STRONG pair bonds with elaborate courtship: side-by-side swimming, fin displays, and synchronized movements. Pairs stay together for life and cooperate during breeding. They\'re gregarious and appreciate company of their own kind (4-6 fish create natural groupings without aggression). Non-breeding Bolivians are PEACEFUL toward all tankmates, only showing mild territoriality during spawning.',
     
@@ -90,7 +90,7 @@ export const bolivianRam: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '15-30',
         bottom: '6-12',
       },
@@ -176,7 +176,7 @@ export const bolivianRam: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -198,7 +198,7 @@ export const bolivianRam: Species = {
 
   breeding: {
     method: 'substrate_spawner',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger: 'Bolivian Rams breed readily in home aquariums with proper conditions: 1) BONDED PAIR (let them choose partners naturally from group of 6+), 2) Soft, slightly acidic water (pH 6.5-7.0, GH 6-10), 3) Large water change (40-50%) with slightly COOLER water (23-24°C) to simulate rainy season, 4) Conditioning with high-protein live/frozen foods (bloodworms, brine shrimp) for 2-3 weeks until female plump, 5) Flat stone (10-15cm) for spawning site. Pair cleans stone obsessively for DAYS before spawning.',
     fryCare: 'Female lays 100-300 eggs on pre-cleaned flat stone. Both parents guard and fan eggs. Eggs hatch in 48-72 hours at 26°C into wriggling larvae. Parents DIG PITS in sand and MOVE larvae multiple times over 5-7 days (pit rotation). Fry become free-swimming at 7-9 days. BOTH parents herd fry like border collies—keeping school together, retrieving stragglers in mouths. Parental care is EXCELLENT. Feed fry baby brine shrimp and finely crushed flakes. Parents guard fry for 4-6 weeks. In community tanks, fry disappear quickly (eaten). For successful rearing, use species-only breeding tank. Growth moderate: 1cm at 4 weeks, 2cm at 8 weeks.',
     notes: 'Bolivian Rams are GOOD parents with strong biparental care. Unlike German Rams (which often eat eggs), Bolivians have HIGH success rates. Watching them herd fry clouds is ADORABLE. They\'re less prone to eating eggs/fry than German Rams. Pairs may spawn every 4-6 weeks if conditions maintained. Breeding is EASIER than German Rams due to hardier fry and better parental instincts.',

@@ -40,7 +40,7 @@ export const anomalochromisThomasi: Species = {
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'middle',
+      secondary: 'midwater',
       preference: 0.75,
     },
     
@@ -60,7 +60,7 @@ export const anomalochromisThomasi: Species = {
   },
 
   behavior: {
-    tags: ['peaceful', 'social', 'pair-bonding', 'substrate-spawner', 'parental-care'],
+    tags: ['peaceful', 'social', 'pair-bonding', 'parental-care'],
     minGroupSize: 8,
     description: 'African Butterfly Cichlids are REMARKABLY peaceful for cichlids—they\'re the gentle souls of the family. Juveniles are shy, gregarious schooling fish that feel secure in groups of 8+. As they mature (6-12 months), they form LIFELONG monogamous pairs with intense courtship displays: side-by-side swimming, color flashing, and elaborate fin spreading. Once paired, they become inseparable—constantly swimming together, foraging together, and "chatting" with subtle body language. During breeding, pairs claim a small territory (~30cm radius around spawning site) and become mildly territorial—chasing other fish away but NEVER causing serious harm. Non-breeding pairs remain peaceful. Their parenting is ADORABLE: both parents guard eggs 24/7 in shifts, fan them with pectoral fins, remove dead eggs with surgical precision, and later herd clouds of fry like aquatic sheepdogs. They\'re active during the day, constantly exploring substrate for food.',
     
@@ -97,7 +97,7 @@ export const anomalochromisThomasi: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '15-30',
         bottom: '6-12',
       },
@@ -110,7 +110,7 @@ export const anomalochromisThomasi: Species = {
     },
     
     activity: {
-      level: 'medium',
+      level: 'moderate',
       peakTimes: ['morning', 'afternoon'],
       nocturnal: false,
     },
@@ -183,7 +183,7 @@ export const anomalochromisThomasi: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',

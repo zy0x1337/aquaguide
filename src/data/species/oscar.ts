@@ -23,7 +23,7 @@ export const oscar: Species = {
   },
 
   visuals: {
-    iconShape: 'oval',
+    iconShape: 'fusiform',
     adultSizeCM: 35,
     color: 'WILD TYPE: Spectacular dark olive-green to black base with BRIGHT ORANGE-RED tiger stripes creating marbled patterns across entire body! DISTINCTIVE FALSE EYE SPOT (ocellus) on tail base surrounded by orange ring (confuses predators - looks like eye). Velvety texture to scales. Juveniles (under 5cm) gray-brown with white/orange bands. Adults massively thick-bodied, powerful jaws. Variants: ALBINO (white/yellow with red eyes), RED OSCAR (solid deep red), TIGER (classic orange/black), LEOPARD (spotted patterns)',
   },
@@ -39,7 +39,7 @@ export const oscar: Species = {
     substrate: 'fine-sand',
     
     swimmingZone: {
-      primary: 'middle',
+      primary: 'midwater',
       secondary: 'bottom',
       preference: 0.8,
     },
@@ -54,14 +54,14 @@ export const oscar: Species = {
   },
 
   habitat: {
-    planting: 'minimal',
+    planting: 'sparse',
     plantingNotes:
       'Oscars are AGGRESSIVE EXCAVATORS constantly uprooting plants! They DIG to substrate, move decorations, and destroy fragile plants. Best approach: 1) POTTED PLANTS secured with large rocks (Amazon Sword, Vallisneria in terracotta pots buried in sand), 2) HARD-LEAVED attached plants (Anubias, Java Fern tied to driftwood - harder to destroy), 3) MINIMAL planting (they need open swimming space). Avoid delicate stem plants (destroyed within hours!). Watch them bulldoze entire tank weekly - redecorating behavior is NORMAL. Provide muddy beach zones for natural digging.',
     hardscape: ['MASSIVE driftwood branches (60cm+ secured with silicone - creates territories/caves)', 'Large flat slate rocks (10kg+ smooth edges - spawning surfaces)', 'PVC pipes/caves (15cm+ diameter - hiding spots)', 'Smooth river rocks (tennis-ball size - they WILL move these!)'],
   },
 
   behavior: {
-    tags: ['intelligent', 'interactive', 'predator', 'territorial', 'aggressive', 'messy'],
+    tags: ['intelligent', 'predator', 'territorial'],
     minGroupSize: 1,
     description:
       'Oscars are PERSONALITY-PACKED AQUARIUM GENIES displaying DOG-LEVEL INTELLIGENCE and interactive behaviors! They RECOGNIZE INDIVIDUAL OWNERS (swim excitedly to glass when you approach, ignore strangers), learn FEEDING ROUTINES (react to door opening, footsteps, specific times), and accept HAND-FEEDING with long tongs after 1-2 weeks bonding. Watch them PLAY with ping-pong balls or floating toys, pushing them around tank! They\'re AGGRESSIVE EXCAVATORS constantly REARRANGING TANK: moving rocks, uprooting plants, digging caves, creating new layouts weekly. They display MOODS: excitement (wiggling/dancing), sulking (hiding when hungry), curiosity (investigating new objects). Oscars are MESSY EATERS scattering food everywhere, aggressive toward smaller fish (anything mouth-sized = food!), and TERRITORIAL defending caves/zones. They\'re PREDATORS with powerful jaws eating whole fish, crustaceans, insects. CRITICAL: Despite intelligence, they\'re AGGRESSIVE and incompatible with most community fish.',
@@ -100,7 +100,7 @@ export const oscar: Species = {
       ],
       
       idealTankmates: {
-        surface: '0',
+        surface: 0,
         midwater: '0-6',
         bottom: '1',
       },
@@ -124,15 +124,15 @@ export const oscar: Species = {
     },
     
     finNipping: {
-      risk: 'critical',
+      risk: 'high',
       targets: ['all smaller fish - predatory behavior not fin nipping'],
     },
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'carnivore',
-    effort: 'very-high',
+    effort: 'high',
     cost: 'high',
     specialRequirements: [
       '450L MINIMUM tank (single adult)', 
@@ -165,14 +165,14 @@ export const oscar: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['cichlid-pellets-large', 'frozen-silversides', 'frozen-tilapia', 'earthworms'],
-      supplements: ['frozen-krill', 'frozen-shrimp', 'live-crickets'],
+      primaryFoods: ['cichlid-pellets-large', 'frozen-tilapia'],
+      supplements: ['frozen-krill'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -190,7 +190,7 @@ export const oscar: Species = {
       filter: {
         required: true,
         type: 'canister-plus-sump',
-        flowRate: 'very-high',
+        flowRate: 'strong',
       },
       airstone: true,
       lighting: 'low',

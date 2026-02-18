@@ -32,7 +32,7 @@ export const celestialPearlDanio: Species = {
     substrate: 'dark-sand',
     
     swimmingZone: {
-      primary: 'middle',
+      primary: 'midwater',
       secondary: 'bottom',
       preference: 0.7,
     },
@@ -47,14 +47,14 @@ export const celestialPearlDanio: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes:
       'Celestial Pearl Danios THRIVE in DENSELY PLANTED tanks—the more plants, the more confident and colorful they become! They prefer LOWER to MID-WATER zones, weaving through stems, roots, and crypts. FLOATING PLANTS are ESSENTIAL for security and grazing microfauna. Dark substrate (black sand, dark gravel) makes their GALAXY colors POP dramatically. Create sight-line breaks with plants so males can establish mini-territories without constant confrontation. Best plants: Java Moss (spawning mops), Java Fern, Anubias, Cryptocoryne, Vallisneria, floating plants (Salvinia, Frogbit, Red Root Floaters). Soft lighting preferred.',
     hardscape: ['Smooth river stones', 'Driftwood (creates shaded zones)', 'Leaf litter (Indian Almond leaves)', 'Caves/overhangs (line-of-sight breaks)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaling', 'nano', 'colorful', 'active', 'plant_dependent'],
+    tags: ['peaceful', 'shoaler', 'nano', 'colorful', 'active'],
     minGroupSize: 10,
     description:
       'Celestial Pearl Danios are TINY JEWELS with BIG PERSONALITIES! They\'re highly SOCIAL and thrive in groups of 10-20+—larger groups = bolder, more confident fish with INTENSE colors. Watch males perform HARMLESS SPARRING: they circle each other with fins FULLY SPREAD, flaring like tiny peacocks in dazzling displays of dominance. No actual fighting—just beautiful choreography! They\'re ACTIVE swimmers, constantly exploring mid-water zones, weaving through plants, and grazing biofilm. Unlike typical danios, CPDs are TIMID without dense plants—in sparse tanks they hide constantly. With proper planting, they become CONFIDENT and endlessly entertaining. Female-heavy ratios (2-3 females per male) reduce male aggression and create peaceful groups.',
@@ -93,7 +93,7 @@ export const celestialPearlDanio: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-6',
+        surface: 0-6,
         midwater: '10-20',
         bottom: '6-12',
       },

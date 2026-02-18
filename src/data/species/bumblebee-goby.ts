@@ -55,14 +55,14 @@ export const bumblebeeGoby: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes:
       'Bumblebee Gobies appreciate planted tanks but need BRACKISH-TOLERANT species if keeping in low-salinity water. Java Fern, Anubias, Vallisneria, and hardy Cryptocoryne tolerate brackish conditions. In pure freshwater setups, more plant options work. Provide DENSE COVER and shaded zones (mangrove-style roots, leaf litter). Gobies perch on surfaces and appreciate multiple line-of-sight breaks for confidence.',
     hardscape: ['Smooth river stones (perching spots)', 'Driftwood tangles (mangrove-style roots)', 'CAVES (snail shells, stacked rocks, short PVC pipes, coconut shells)', 'Leaf litter (Indian Almond, oak leaves for microfauna and cover)'],
   },
 
   behavior: {
-    tags: ['bottom_dweller', 'territorial', 'shy', 'social', 'diurnal', 'colorful', 'nano', 'slow_eater', 'carnivore'],
+    tags: ['bottom_dweller', 'territorial', 'shy', 'social', 'diurnal', 'colorful', 'nano', 'slow_eater'],
     minGroupSize: 6,
     description:
       'Bumblebee Gobies are TINY MICRO-PREDATORS with MASSIVE personality! They\'re perch-and-pounce hunters that spend time on bottom surfaces, hopping between caves and ambush points like miniature ninjas. Watch them PERCH on rocks, driftwood, and leaves like tiny gargoyles, then LAUNCH at passing prey with lightning speed! They\'re SHY when alone but become CONFIDENT and VISIBLE in groups of 6-8. Males are MILDLY TERRITORIAL, defending small caves but not causing serious harm. They\'re SLOW, DELIBERATE feeders—fast tankmates will outcompete them for food. Groups create adorable "goby gangs" that perch together watching the tank like tiny security guards.',
@@ -101,7 +101,7 @@ export const bumblebeeGoby: Species = {
       ],
       
       idealTankmates: {
-        surface: '0',
+        surface: 0,
         midwater: '0-6',
         bottom: '6-10',
       },
@@ -120,7 +120,7 @@ export const bumblebeeGoby: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 4,
     },
     
@@ -131,7 +131,7 @@ export const bumblebeeGoby: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'carnivore',
     effort: 'medium',
     cost: 'medium',
@@ -163,7 +163,7 @@ export const bumblebeeGoby: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['bloodworms', 'brine-shrimp', 'daphnia', 'microworms'],
+      primaryFoods: ['bloodworms', 'brine-shrimp', 'daphnia', 'micro-pellets'],
       supplements: ['tubifex', 'cyclops', 'live-food'],
       vegetarian: false,
       liveFood: {
@@ -188,7 +188,7 @@ export const bumblebeeGoby: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',

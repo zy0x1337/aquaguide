@@ -16,7 +16,7 @@ export const bristlenosePleco: Species = {
   },
 
   visuals: {
-    iconShape: 'pleco',
+    iconShape: 'compressed',
     adultSizeCM: 13,
     color: 'Variable depending on species: Standard Bristlenose = mottled dark brown/black with lighter spots. Albino = yellow/orange with red eyes. Super Red = bright orange-red. Longfin = extended flowing fins. Males develop BUSHY TENTACLE-LIKE BRISTLES on nose (females have few/none)',
   },
@@ -47,13 +47,13 @@ export const bristlenosePleco: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Bristlenose Plecos appreciate planted tanks but prefer HARDY plants (Anubias, Java Fern, Amazon Swords, Vallisneria). Avoid delicate carpets or stem plants—plecos THRASH around driftwood and can accidentally uproot fragile plants. They spend days hiding under/inside driftwood and emerge at night to graze. Moderate planting with OPEN BOTTOM SPACE for movement is ideal.',
     hardscape: ['DRIFTWOOD (CRITICAL - mandatory for digestion!)', 'Caves (terracotta pots, slate, PVC pipes, coconut shells)', 'Smooth river stones', 'Malaysian/Mopani wood (dense, long-lasting)', 'Spiderwood (softer, eaten faster)', 'Multiple caves if breeding (one per male minimum)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'nocturnal', 'territorial_toward_plecos', 'algae_eater', 'cave_spawner', 'bottom_dweller'],
+    tags: ['peaceful', 'nocturnal', 'territorial', 'algae_eater', 'bottom_dweller'],
     minGroupSize: 1,
     description: 'Bristlenose Plecos are the PERFECT PLECO for community tanks—peaceful toward ALL fish but TERRITORIAL toward other plecos (especially males). They\'re SHY and NOCTURNAL: during the day, they\'re INVISIBLE—wedged inside caves, under driftwood, or behind equipment. At NIGHT, they emerge like tiny armored tanks to RASP algae from every surface (glass, plants, driftwood, decorations). Listen at night: you can HEAR them scraping with specialized teeth—sounds like gentle sandpaper! Males are HIGHLY TERRITORIAL toward other male Bristlenoses—they FIGHT for caves and breeding rights (locked jaws, pushing contests). Multiple males need 150L+ tanks with SEPARATED cave systems. Females tolerate each other better. During breeding, males become CAVE HERMITS—guarding eggs 24/7 for 7-10 days without eating, constantly fanning them with fins to prevent fungus.',
     
@@ -90,7 +90,7 @@ export const bristlenosePleco: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '15-30',
         bottom: '6-12',
       },
@@ -152,9 +152,9 @@ export const bristlenosePleco: Species = {
     ],
     
     feeding: {
-      frequency: 'nightly',
-      primaryFoods: ['driftwood', 'algae', 'algae-wafers', 'vegetables'],
-      supplements: ['zucchini', 'cucumber', 'spirulina', 'sinking-pellets'],
+      frequency: 'once-daily',
+      primaryFoods: ['algae-wafers', 'vegetables'],
+      supplements: ['zucchini', 'spirulina', 'pellets'],
       vegetarian: true,
       liveFood: {
         required: false,

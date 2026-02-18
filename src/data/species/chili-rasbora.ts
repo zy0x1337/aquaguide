@@ -28,12 +28,12 @@ export const chiliRasbora: Species = {
     ph: { min: 4.0, max: 7.0, ideal: 6.0 },
     gh: { min: 1, max: 6 },
     kh: { min: 0, max: 4 },
-    flow: 'very-low',
+    flow: 'low',
     substrate: 'dark-sand',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.8,
     },
     
@@ -47,14 +47,14 @@ export const chiliRasbora: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Chili Rasboras are PLANT-DEPENDENT and DISAPPEAR in sparse tanks! They NEED DENSE planting to feel secure—without it, they hide constantly behind equipment and filters. The more plants, the MORE VISIBLE and confident they become (counterintuitive!). They prefer MID-WATER zones, weaving through stems and floating plant roots. FLOATING PLANTS are ESSENTIAL for security. Dark substrate (black sand) creates DRAMATIC CONTRAST—their red bodies GLOW like embers against darkness. Best plants: fine-leaved species for spawning (Java Moss, Christmas Moss, Najas grass), broader leaves for shelter (Anubias, Java Fern, Cryptocoryne), stem plants (Rotala, Ludwigia), floating plants (Salvinia, Frogbit, Red Root Floaters). Soft/dim lighting preferred.',
     hardscape: ['Driftwood (creates tannins and shaded zones)', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth stones', 'Minimal—plants are primary hardscape'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaling', 'nano', 'shy', 'colorful', 'active', 'plant_dependent'],
+    tags: ['peaceful', 'shoaler', 'nano', 'shy', 'colorful', 'active'],
     minGroupSize: 12,
     description:
       'Chili Rasboras are TINY LIVING EMBERS that create MESMERIZING schooling displays! They\'re highly SOCIAL and thrive in groups of 12-20+—larger groups = bolder, more confident fish with INTENSE colors. Watch them form loose aggregations, darting through plants in synchronized movements like miniature red comets! Males perform ELABORATE courtship: chasing females through vegetation, vibrating bodies, circling displays, and showing NEON RED coloration. They\'re SHY without dense plants—in sparse tanks, they hide constantly. With proper planting, they become ACTIVE and endlessly entertaining. Despite tiny size (0.8 inches), they\'re ACTIVE swimmers constantly exploring mid-water. They\'re PEACEFUL toward all tankmates and focus on grazing microorganisms and hunting tiny live foods.',
@@ -93,7 +93,7 @@ export const chiliRasbora: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-8',
+        surface: 0-8,
         midwater: '12-20',
         bottom: '6-12',
       },
@@ -112,7 +112,7 @@ export const chiliRasbora: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 10,
     },
     
@@ -123,7 +123,7 @@ export const chiliRasbora: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'omnivore',
     effort: 'medium',
     cost: 'medium',
@@ -156,9 +156,9 @@ export const chiliRasbora: Species = {
     ],
     
     feeding: {
-      frequency: 'thrice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'baby-brine-shrimp', 'daphnia'],
-      supplements: ['microworms', 'moina', 'spirulina', 'frozen-cyclops'],
+      frequency: 'three-times-daily',
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'brine-shrimp', 'daphnia'],
+      supplements: ['spirulina', 'cyclops'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -182,7 +182,7 @@ export const chiliRasbora: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'very-low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -205,8 +205,8 @@ export const chiliRasbora: Species = {
   },
 
   breeding: {
-    method: 'continuous_spawner',
-    difficulty: 'intermediate',
+    method: 'egg_scatterer',
+    difficulty: 'medium',
     trigger:
       'Chili Rasboras are CONTINUOUS SPAWNERS—they scatter small batches DAILY for weeks when properly conditioned! Trigger breeding: 1) Mature group (6+ months old) with 12+ fish, 2) DENSE fine-leaved plants (Java Moss, Christmas Moss, Najas grass), 3) Excellent conditioning with LIVE/FROZEN FOODS (baby brine shrimp, daphnia, microworms, moina) for 2-3 weeks until females plump, 4) SOFT ACIDIC water (GH 1-3, pH 5.0-6.5, temp 26-28°C), 5) Tannin-stained water (Indian Almond leaves). Males establish temporary territories and intensify to NEON RED, chasing females into plants with vibrating body displays.',
     fryCare:

@@ -6,13 +6,6 @@ export const otocinclusMacrospilus: Species = {
   imageUrl: '/images/species/otocinclus-macrospilus.jpg',
   funFact: "Otocinclus macrospilus is the MARBLED MIMIC constantly confused with O. vittatus! The CRITICAL IDENTIFICATION DIFFERENCE: O. macrospilus has INTERRUPTED LATERAL STRIPE stopping before tail base with SEPARATE DISTINCT TAIL SPOT (heart-shaped blotch disconnected from body stripe!), while O. vittatus has CONTINUOUS UNINTERRUPTED STRIPE running through to tail tip. Plus O. macrospilus has MARBLED/MOTTLED BROWN PATTERN on back (like camouflage!) vs vittatus' cleaner appearance. They're often mislabeled in stores as 'Oto vittatus' (90% of sold 'vittatus' are actually macrospilus!). Both are IDENTICAL in care needs and behavior - they're interchangeable algae-eating machines! Can school together mixed. From Peruvian Amazon!",
 
-  imageCredit: {
-    photographer: 'AquaInfo (via aquainfo.org)',
-    sourceUrl: 'https://aquainfo.org/article/otocinclus-macrospilus-tailspotted-oto/',
-    license: 'Educational Use',
-    licenseUrl: 'https://aquainfo.org/article/otocinclus-macrospilus-tailspotted-oto/'
-  },
-
   taxonomy: {
     scientificName: 'Otocinclus macrospilus',
     commonName: 'Marbled Otocinclus / Tailspot Oto / Macrospilus Oto',
@@ -40,7 +33,7 @@ export const otocinclusMacrospilus: Species = {
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'middle',
+      secondary: 'midwater',
       preference: 0.95,
     },
     
@@ -54,14 +47,14 @@ export const otocinclusMacrospilus: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
-      'Otocinclus macrospilus requires VERY HEAVY PLANTING with BROAD-LEAVED PLANTS for grazing! They\'re algae/biofilm specialists needing constant food surfaces. Best setup: BROAD-LEAVED PLANTS (Amazon Swords, Anubias, Java Fern - large leaf surfaces accumulate algae/biofilm for grazing!), FLOATING PLANTS (Water Sprite, Frogbit - creates aufwuchs underneath, provides security), fine-leaved plants (Cabomba, hornwort). They spend 90% of time GRAZING SURFACES constantly! Dense planting creates biofilm-rich microhabitats mimicking Amazonian vegetation margins. CRITICAL: Mature tank (6+ months old) with established algae/biofilm is MANDATORY before adding Otos (new/clean tanks = starvation!).',
+      'Otocinclus macrospilus requires very heavy planting with broad-leaved plants for grazing! They\'re algae/biofilm specialists needing constant food surfaces. Best setup: BROAD-LEAVED PLANTS (Amazon Swords, Anubias, Java Fern - large leaf surfaces accumulate algae/biofilm for grazing!), FLOATING PLANTS (Water Sprite, Frogbit - creates aufwuchs underneath, provides security), fine-leaved plants (Cabomba, hornwort). They spend 90% of time GRAZING SURFACES constantly! Dense planting creates biofilm-rich microhabitats mimicking Amazonian vegetation margins. CRITICAL: Mature tank (6+ months old) with established algae/biofilm is MANDATORY before adding Otos (new/clean tanks = starvation!).',
     hardscape: ['DRIFTWOOD BRANCHES (mandatory - main grazing surfaces!)', 'Smooth river stones (biofilm growth)', 'NO SHARP EDGES (soft-bodied fish!)', 'Lots of surface area for algae growth'],
   },
 
   behavior: {
-    tags: ['algae_eater', 'peaceful', 'shy', 'schooling', 'diurnal', 'bottom_dweller'],
+    tags: ['algae_eater', 'peaceful', 'shy', 'shoaler', 'diurnal', 'bottom_dweller'],
     minGroupSize: 6,
     description:
       'Otocinclus macrospilus are EXTREMELY SHY PEACEFUL ALGAE-EATING SPECIALISTS displaying constant grazing behaviors! Watch them sucker-mouth attached to surfaces (glass, leaves, driftwood) scraping biofilm/algae 8-12 hours daily in slow methodical movements. They\'re NERVOUS FISH: easily spooked by sudden movements, hiding when stressed. They need GROUPS 6+ for security (single/small groups = constant hiding, stress, early death). They\'re DIURNAL GRAZERS most active during day. Watch them perform "glass dancing" up/down aquarium walls grazing algae. They\'re COMPLETELY PEACEFUL never aggressive. CRITICAL: They\'re SLOW EATERS easily outcompeted for food - need peaceful tankmates only!',
@@ -94,7 +87,7 @@ export const otocinclusMacrospilus: Species = {
       ],
       
       idealTankmates: {
-        surface: '8-12',
+        surface: 8-12,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -113,7 +106,7 @@ export const otocinclusMacrospilus: Species = {
     },
     
     socialStructure: {
-      type: 'schooling',
+      type: 'shoal',
       maxMalesPerTank: 10,
     },
     
@@ -158,9 +151,9 @@ export const otocinclusMacrospilus: Species = {
     ],
     
     feeding: {
-      frequency: 'constant-grazing',
-      primaryFoods: ['algae', 'biofilm', 'aufwuchs', 'spirulina-wafers', 'blanched-zucchini'],
-      supplements: ['blanched-cucumber', 'blanched-spinach', 'repashy-soilent-green', 'nori-sheets'],
+      frequency: 'once-daily',
+      primaryFoods: ['algae-wafers', 'biofilm', 'spirulina', 'blanched-zucchini'],
+      supplements: ['GlasGarten BacterAE'],
       vegetarian: true,
       liveFood: {
         required: false,

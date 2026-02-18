@@ -6,13 +6,6 @@ export const whiteCloudMinnow: Species = {
   imageUrl: '/images/species/white-cloud-mountain-minnow.jpg',
   funFact: "White Cloud Mountain Minnows are EXTINCT IN THEIR ORIGINAL WILD HABITAT (White Cloud Mountain near Guangzhou, China - polluted by tourism!) but are CONSERVATION SUCCESS STORY now thriving in aquariums worldwide! They're called the 'POOR MAN'S NEON TETRA' displaying similar iridescent neon-blue stripes at 1/3rd the price and 10X the hardiness! They're TRUE COLDWATER FISH needing NO HEATER (14-22°C room temperature!) - save money on electricity while keeping gorgeous fish! They survived in wild from 5°C to 30°C making them EXTREMELY TEMPERATURE TOLERANT! They're the EASIEST EGG SCATTERERS to breed - spawning DAILY in planted tanks without special triggers and parents RARELY EAT FRY (can raise babies in main tank!). Males perform constant 'SPARRING' displays (fin-flaring contests - beautiful ritualized combat that never causes harm!). Rediscovered after 20 years presumed extinct! From Chinese mountain streams!",
 
-  imageCredit: {
-    photographer: 'White Cloud Mountain Minnow (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:White_Cloud_Mountain_Minnow.jpg',
-    license: 'Public Domain',
-    licenseUrl: 'https://en.wikipedia.org/wiki/Public_domain'
-  },
-
   taxonomy: {
     scientificName: 'Tanichthys albonubes',
     commonName: 'White Cloud Mountain Minnow / Canton Danio / Poor Man\'s Neon',
@@ -23,7 +16,7 @@ export const whiteCloudMinnow: Species = {
   },
 
   visuals: {
-    iconShape: 'torpedo',
+    iconShape: 'fusiform',
     adultSizeCM: 4,
     color: 'STUNNING NEON IRIDESCENCE - "Poor Man\'s Neon Tetra"! Olive-brown to bronze body with BRILLIANT IRIDESCENT NEON-BLUE STRIPE running from eye to tail base (like neon tetras but cheaper!). Pink/red flush behind gill plates. Fins with BRIGHT RED EDGES especially visible in males (red-tipped dorsal, caudal, anal fins!). Tail has distinctive RED-AND-BLACK PATTERN. Overall shimmering metallic appearance. Males MORE COLORFUL: Brighter red fin edges, more intense neon stripe, slimmer torpedo bodies. Females DULLER: Pale red, rounder fuller abdomens. Under proper lighting they sparkle like tiny jewels! GOLDEN VARIETY: Bright yellow-gold body with same neon stripe pattern',
   },
@@ -39,8 +32,8 @@ export const whiteCloudMinnow: Species = {
     substrate: 'sand',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.7,
     },
     
@@ -54,14 +47,14 @@ export const whiteCloudMinnow: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes:
       'White Cloud Mountain Minnows need HEAVY PLANTING for security and breeding! They\'re from densely vegetated mountain streams. Best setup: BACKGROUND/SIDE PLANTING (Vallisneria, Java Fern, Anubias - creates security zones), FLOATING PLANTS (Water Sprite, Frogbit - encourages breeding, diffuses light), fine-leaved plants (Cabomba, hornwort - spawning sites). They appreciate MODERATE FLOW from filter output (replicating mountain stream currents). COLDWATER PLANTS best: Vallisneria, Anubias, Java Fern, Java Moss tolerate cooler temps (18°C). Dark substrate enhances their colors making neon stripe more visible.',
     hardscape: ['River stones (smooth pebbles - rocky substrate replication)', 'Driftwood branches', 'Moderate flow areas (stream current simulation)', 'Open swimming space midwater', 'Dark sand or fine gravel substrate'],
   },
 
   behavior: {
-    tags: ['schooling', 'peaceful', 'active', 'coldwater', 'jumper', 'hardy'],
+    tags: ['schooler', 'peaceful', 'active', 'coldwater', 'jumper'],
     minGroupSize: 8,
     description:
       'White Cloud Mountain Minnows are EXTREMELY PEACEFUL ACTIVE SCHOOLERS displaying fascinating social behaviors! Watch males constantly perform "SPARRING" displays - beautiful ritualized combat where males face each other, FLARE FINS to maximum extension, intensify colors (brilliant red fin edges!), circle each other in slow-motion dance. This looks aggressive but is COMPLETELY HARMLESS ritualized behavior (establishing hierarchy without injuries!). They\'re very ACTIVE swimming in loose schools across midwater. They\'re EXTREMELY HARDY - literally BULLETPROOF surviving beginner mistakes! They\'re TEMPERATURE TOLERANT (5-30°C range!) - no other common aquarium fish has this range! They\'re EXCELLENT JUMPERS when excited - secure lid needed. Very PEACEFUL never aggressive toward tankmates.',
@@ -100,7 +93,7 @@ export const whiteCloudMinnow: Species = {
       ],
       
       idealTankmates: {
-        surface: '8-12',
+        surface: 8-12,
         midwater: '15-20',
         bottom: '8-12',
       },
@@ -119,7 +112,7 @@ export const whiteCloudMinnow: Species = {
     },
     
     socialStructure: {
-      type: 'schooling',
+      type: 'school',
       maxMalesPerTank: 15,
     },
     
@@ -165,14 +158,14 @@ export const whiteCloudMinnow: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'tropical-flakes', 'crushed-flakes', 'color-enhancing-pellets'],
-      supplements: ['frozen-bloodworms', 'brine-shrimp', 'daphnia', 'mosquito-larvae', 'micro-worms'],
+      primaryFoods: ['micro-pellets', 'flakes', 'crushed-flakes', 'pellets'],
+      supplements: ['bloodworms', 'brine-shrimp', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {

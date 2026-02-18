@@ -40,7 +40,7 @@ export const amanoShrimp: Species = {
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'middle',
+      secondary: 'midwater',
       preference: 0.85,
     },
     
@@ -60,7 +60,7 @@ export const amanoShrimp: Species = {
   },
 
   behavior: {
-    tags: ['algae-eater', 'peaceful', 'active', 'social'],
+    tags: ['algae_eater', 'peaceful', 'active', 'social'],
     minGroupSize: 5,
     description: 'Amano Shrimp are the aquarium\'s tireless janitors—constantly moving, climbing, and eating. They\'re HYPERACTIVE compared to Cherry Shrimp, always on the go like caffeinated cleaners. Watch them "sweep" with their tiny fan-like hands (maxillipeds), shoveling detritus and algae into their mouths at incredible speed. They\'re bold and curious, often ignoring fish entirely while exploring every surface. Unlike shy Cherry Shrimp, Amanos work in broad daylight, climbing glass, marching across plants, and even riding the filter current like a water slide. They\'re peaceful but assertive—they\'ll steal food from slower shrimp without aggression. Social in groups of 5+, they often graze together in algae "parties." Females carrying eggs (green saddle visible through shell) are even bolder, constantly foraging for protein.',
     
@@ -97,7 +97,7 @@ export const amanoShrimp: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-10',
+        surface: 0-10,
         midwater: '10-30',
         bottom: '5-20',
       },
@@ -116,7 +116,7 @@ export const amanoShrimp: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 999,
     },
     
@@ -158,7 +158,7 @@ export const amanoShrimp: Species = {
     
     feeding: {
       frequency: 'every-other-day',
-      primaryFoods: ['algae', 'biofilm', 'wafers', 'vegetables'],
+      primaryFoods: ['algae-wafers', 'biofilm', 'spirulina', 'vegetables'],
       supplements: ['pellets', 'vegetables'],
       vegetarian: false,
       liveFood: {
@@ -183,10 +183,10 @@ export const amanoShrimp: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'medium',
+        flowRate: 'moderate',
       },
       airstone: false,
-      lighting: 'medium',
+      lighting: 'moderate',
       co2: false,
     },
   },
@@ -204,8 +204,8 @@ export const amanoShrimp: Species = {
   },
 
   breeding: {
-    method: 'amphidromous',
-    difficulty: 'hard',
+    method: 'other',
+    difficulty: 'expert',
     trigger: 'Amano Shrimp breeding is EXTREMELY DIFFICULT and nearly impossible for hobbyists. Females frequently carry eggs in freshwater tanks (you\'ll see green saddle), but larvae REQUIRE BRACKISH WATER (specific gravity 1.024, full marine salinity) to survive. Breeding requires: 1) Females with eggs, 2) Separate brackish water tank (35 ppt salinity), 3) Algae-covered surfaces for larvae to graze, 4) 6-8 WEEKS of larval care in saltwater, 5) Gradual transition back to freshwater after metamorphosis. Larvae are microscopic filter-feeders that eat diatoms/phytoplankton. Most hobbyists fail due to larval death.',
     fryCare: 'Females release 1,000-3,000 microscopic larvae (zoea stage) that MUST be transferred to brackish water within hours. Larvae are free-swimming and feed on algae growing on tank walls—they cannot eat normal foods. After 4-6 weeks, larvae metamorphose into tiny shrimp (2mm) and must be SLOWLY acclimated back to freshwater over 1-2 weeks. Survival rate is <5% even for experts. Commercial breeders use hormone injections to synchronize spawning. Home breeding is possible but requires marine aquarium experience.',
     notes: 'Almost all Amano Shrimp sold in stores are wild-caught from Japan/Taiwan or farmed commercially. Home breeding is so difficult that it\'s not economically viable. If your female drops eggs in freshwater, the larvae will die within 24 hours—they cannot survive without saltwater. Enjoy watching females carry eggs (fascinating to see green saddle through shell), but don\'t expect babies. This is why Amanos are more expensive than Cherry Shrimp (which breed easily in freshwater).',

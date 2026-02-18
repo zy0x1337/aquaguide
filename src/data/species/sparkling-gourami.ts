@@ -35,12 +35,12 @@ export const sparklingGourami: Species = {
     ph: { min: 6.0, max: 7.5, ideal: 6.5 },
     gh: { min: 2, max: 10 },
     kh: { min: 1, max: 8 },
-    flow: 'very-low',
+    flow: 'low',
     substrate: 'dark-sand',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.7,
     },
     
@@ -54,14 +54,14 @@ export const sparklingGourami: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Sparkling Gouramis require VERY HEAVY PLANTING replicating Southeast Asian rice paddies and ponds! They need: FLOATING PLANTS (essential - Water Sprite, Amazon Frogbit, Red Root Floaters providing surface cover, bubble nest anchoring sites, security), TALL PLANTS reaching surface (Vallisneria, Ludwigia - they use these as territories), dense midwater planting (Java Fern, Anubias, Cryptocoryne - hiding spots). CRITICAL: Maintain AIR GAP at water surface (2-3cm) - they BREATHE ATMOSPHERIC AIR with labyrinth organs and need surface access! Dark substrate enhances their iridescent colors. They prefer SHALLOW TANKS (horizontal space over depth - 30-40cm height ideal). Dim to moderate lighting (bright light stresses them).',
     hardscape: ['Driftwood branches (territorial markers)', 'LEAF LITTER (Indian almond/Catappa leaves - blackwater replication)', 'Fine dark sand substrate (enhances colors)', 'Floating plant roots (bubble nest sites)', 'SURFACE ACCESS mandatory (labyrinth breathers!)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'territorial', 'bubble_nester', 'nano', 'labyrinth_fish', 'vocal'],
+    tags: ['peaceful', 'territorial', 'bubble_nester', 'nano', 'labyrinth_fish'],
     minGroupSize: 2,
     description:
       'Sparkling Gouramis are TINY JEWELS with BIG PERSONALITIES! Watch them constantly HOVER IN MIDWATER using pectoral fins for precise positioning. Males perform TERRITORIAL DISPLAYS: flaring fins, spreading gill covers, circling rivals, and producing AUDIBLE CROAKING SOUNDS (clicking/croaking you can hear across room!). They\'re LABYRINTH FISH regularly swimming to SURFACE TO BREATHE AIR (distinctive gulping behavior - this is normal!). Males build BUBBLE NESTS under floating plants for breeding. They\'re MICROPREDATORS constantly hunting tiny organisms. CRITICAL: Males are TERRITORIAL toward other males but peaceful toward tankmates. Croaking indicates they feel SECURE - stressed fish go silent. Very CURIOUS exploring all tank areas.',
@@ -100,7 +100,7 @@ export const sparklingGourami: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '10-15',
         bottom: '6-10',
       },
@@ -166,14 +166,14 @@ export const sparklingGourami: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['baby-brine-shrimp', 'daphnia', 'micro-worms', 'frozen-bloodworms', 'micro-pellets'],
-      supplements: ['grindal-worms', 'cyclops', 'moina'],
+      primaryFoods: ['brine-shrimp', 'daphnia', 'bloodworms', 'micro-pellets'],
+      supplements: ['cyclops'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -191,7 +191,7 @@ export const sparklingGourami: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'very-low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -209,7 +209,7 @@ export const sparklingGourami: Species = {
     wildHabitat:
       'Trichopsis pumila inhabits SHALLOW SLOW-MOVING water bodies in Southeast Asia (Thailand, Cambodia, Vietnam, Laos). Wild habitat: RICE PADDIES (main habitat!), shallow ponds, ditches, swamps, slow-moving streams - water depth typically 10-50cm! DENSE VEGETATION (floating and submerged plants), thick LEAF LITTER substrate, SOFT ACIDIC WATER (pH 6.0-7.0, GH 2-8), TANNIN-STAINED from decomposing organic matter, temps 25-28°C, STILL or very slow-moving water (nearly motionless!). CRITICAL: These habitats have LOW DISSOLVED OXYGEN (hot, stagnant, shallow water) - their LABYRINTH ORGANS evolved as adaptation allowing atmospheric air breathing for survival! They feed on micro-organisms, insect larvae, small crustaceans. Males establish small territories under floating vegetation for bubble nest building.',
     sexualDimorphism:
-      'EASY TO SEX when mature! MALES: More vibrant electric blue-green iridescence, POINTED DORSAL FINS (elongated tips), brighter red/blue fin edges, more elongated streamlined bodies, PRODUCE CROAKING SOUNDS (females mostly silent), more aggressive territorial displays. FEMALES: Duller coloration (brownish with less sparkle), ROUNDED FINS (especially dorsal), rounder fuller abdomens especially when gravid (egg-filled), larger overall size, mostly silent (produce soft 'purring' only during spawning). Juveniles difficult to sex until 4-6 months when coloration/fins develop.',
+      'EASY TO SEX when mature! MALES: More vibrant electric blue-green iridescence, POINTED DORSAL FINS (elongated tips), brighter red/blue fin edges, more elongated streamlined bodies, PRODUCE CROAKING SOUNDS (females mostly silent), more aggressive territorial displays. FEMALES: Duller coloration (brownish with less sparkle), ROUNDED FINS (especially dorsal), rounder fuller abdomens especially when gravid (egg-filled), larger overall size, mostly silent (produce soft "purring" only during spawning). Juveniles difficult to sex until 4-6 months when coloration/fins develop.',
     variants: ['Trichopsis pumila (Sparkling Gourami - this species)', 'Trichopsis vittata (Croaking Gourami - larger, similar but distinct species)', 'Trichopsis schalleri (Three-Stripe Gourami - rare)'],
   },
 
@@ -219,9 +219,9 @@ export const sparklingGourami: Species = {
     trigger:
       'Sparkling Gourami breeding is VERY EASY - one of easiest bubble-nesting fish! Natural triggers: 1) Presence of FLOATING PLANTS (nest building sites), 2) Well-conditioned fish with LIVE FOODS (baby brine shrimp, daphnia - feed heavily 2 weeks), 3) Slightly warmer water (27-28°C), 4) Soft acidic water (pH 6.0-6.5), 5) Calm peaceful environment. Males constantly ready to breed - they build bubble nests spontaneously under floating leaves!',
     fryCare:
-      'Breeding behavior: MALE builds BUBBLE NEST under floating plant leaves (creates foam nest with saliva + air bubbles 5-10cm diameter). Male performs COURTSHIP DISPLAYS: brilliant colors, LOUD CROAKING sounds, circling female, flaring fins. Female inspects nest. Spawning occurs UNDER BUBBLE NEST: male embraces female in typical gourami 'hug' (wraps body around her), female releases 5-20 eggs, male fertilizes and catches sinking eggs in mouth placing them in bubble nest. Spawning repeats 10-20+ times over hours producing 100-200 total eggs. MALE guards nest aggressively! Remove female after spawning (male may attack her). Eggs hatch 24-36 hours (tiny transparent fry!). Fry FREE-SWIMMING 3-4 days after hatch hanging near surface. CRITICAL: Remove male when fry free-swimming (may eat fry). First foods: INFUSORIA (paramecium, green water - days 1-7 critical!), liquid fry food, then BABY BRINE SHRIMP (day 7+ - growth accelerates!), micro-pellets (3 weeks+). Feed fry 3-4x daily. Growth: 1cm at 6 weeks, 2cm at 3 months, sexually mature 5-6 months. Very easy breeding!',
+      'Breeding behavior: MALE builds BUBBLE NEST under floating plant leaves (creates foam nest with saliva + air bubbles 5-10cm diameter). Male performs COURTSHIP DISPLAYS: brilliant colors, LOUD CROAKING sounds, circling female, flaring fins. Female inspects nest. Spawning occurs UNDER BUBBLE NEST: male embraces female in typical gourami "hug" (wraps body around her), female releases 5-20 eggs, male fertilizes and catches sinking eggs in mouth placing them in bubble nest. Spawning repeats 10-20+ times over hours producing 100-200 total eggs. MALE guards nest aggressively! Remove female after spawning (male may attack her). Eggs hatch 24-36 hours (tiny transparent fry!). Fry FREE-SWIMMING 3-4 days after hatch hanging near surface. CRITICAL: Remove male when fry free-swimming (may eat fry). First foods: INFUSORIA (paramecium, green water - days 1-7 critical!), liquid fry food, then BABY BRINE SHRIMP (day 7+ - growth accelerates!), micro-pellets (3 weeks+). Feed fry 3-4x daily. Growth: 1cm at 6 weeks, 2cm at 3 months, sexually mature 5-6 months. Very easy breeding!',
     notes:
-      'Sparkling Gouramis are EXTREMELY EASY TO BREED - perfect beginner bubble-nester! They breed CONTINUOUSLY in planted tanks with floating plants. Challenge isn\'t breeding (happens spontaneously!), it\'s managing FRY CARE (need infusoria first week). Males build nests every few days. Many hobbyists have 'surprise fry' appearing in community tanks! Key success: 1) Floating plants (mandatory nest sites), 2) Male guards nest (natural parenting), 3) Heavy feeding conditioning (plump healthy females), 4) Infusoria culture ready for fry. Very rewarding species!',
+      'Sparkling Gouramis are EXTREMELY EASY TO BREED - perfect beginner bubble-nester! They breed CONTINUOUSLY in planted tanks with floating plants. Challenge isn\'t breeding (happens spontaneously!), it\'s managing FRY CARE (need infusoria first week). Males build nests every few days. Many hobbyists have "surprise fry" appearing in community tanks! Key success: 1) Floating plants (mandatory nest sites), 2) Male guards nest (natural parenting), 3) Heavy feeding conditioning (plump healthy females), 4) Infusoria culture ready for fry. Very rewarding species!',
   },
   
   experienceData: {

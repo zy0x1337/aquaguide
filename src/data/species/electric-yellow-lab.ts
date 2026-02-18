@@ -39,7 +39,7 @@ export const electricYellowLab: Species = {
     substrate: 'sand',
     
     swimmingZone: {
-      primary: 'middle',
+      primary: 'midwater',
       secondary: 'bottom',
       preference: 0.7,
     },
@@ -61,7 +61,7 @@ export const electricYellowLab: Species = {
   },
 
   behavior: {
-    tags: ['semi-aggressive', 'cichlid', 'colorful', 'active', 'digger', 'territorial'],
+    tags: ['semi-aggressive', 'cichlid', 'colorful', 'active', 'territorial', 'architect'],
     minGroupSize: 6,
     description:
       'Electric Yellow Labs are the FRIENDLIEST Mbuna cichlids—surprisingly PEACEFUL compared to aggressive cousins! They\'re ACTIVE, constantly swimming through rockwork and excavating sand with their mouths. Males establish TERRITORIES around preferred caves, defending them with displays (fin flaring, jaw locking, body vibrations) but RARELY causing serious harm. Females roam freely through territories. They\'re SOCIAL and thrive in groups using "overstocking strategy"—12-15 fish in 200L spreads aggression so no single fish is targeted. Watch the COURTSHIP DANCES: males vibrate bodies intensely, circle females, and lure them into caves for spawning. After spawning, females become MOUTH-BROODERS, holding eggs in mouths for 3-4 WEEKS. They\'re enthusiastic DIGGERS, excavating massive pits overnight, moving pounds of sand.',
@@ -106,7 +106,7 @@ export const electricYellowLab: Species = {
       ],
       
       idealTankmates: {
-        surface: '0',
+        surface: 0,
         midwater: '12-15',
         bottom: '3-6',
       },
@@ -171,14 +171,14 @@ export const electricYellowLab: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['spirulina-flakes', 'algae-wafers', 'vegetable-pellets', 'blanched-vegetables'],
-      supplements: ['peas', 'zucchini', 'spinach', 'nori'],
+      primaryFoods: ['spirulina', 'algae-wafers', 'vegetables'],
+      supplements: ['zucchini', 'pellets'],
       vegetarian: true,
       liveFood: {
         required: false,
         recommended: false,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -196,7 +196,7 @@ export const electricYellowLab: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'high',
+        flowRate: 'strong',
       },
       airstone: false,
       lighting: 'moderate',

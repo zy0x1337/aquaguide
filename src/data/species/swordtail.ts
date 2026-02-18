@@ -6,13 +6,6 @@ export const swordtail: Species = {
   imageUrl: '/images/species/swordtail.jpg',
   funFact: "Swordtails are OLYMPIC JUMPERS capable of clearing 30cm+ from water surface - they're the MOST ATHLETIC livebearers! ANY GAP in lid = certain escape and death from dehydration within hours. They're named for males' spectacular SWORD-SHAPED TAIL EXTENSION (up to 5cm long!) used to impress females, but longer swords actually make them SLOWER SWIMMERS (hydrodynamic drag - fashion over function!). Here's the catch: males are RELENTLESS HARASSERS chasing females 24/7 for breeding - single female = stressed to death within weeks! They need 1 MALE : 3+ FEMALES ratio spreading harassment. Watch males display CURVED BODY SHAKING charging at females in courtship. They're FAST SWIMMERS (can swim backward faster than mollies forward!) from fast-flowing Mexican rivers. Can HYBRIDIZE with Platies (same genus!) producing infertile offspring. From Central America!",
 
-  imageCredit: {
-    photographer: 'Marrabbio2 (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Xiphophorus_hellerii_-_side_%28aka%29.jpg',
-    license: 'CC BY-SA 2.5',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/'
-  },
-
   taxonomy: {
     scientificName: 'Xiphophorus hellerii',
     commonName: 'Swordtail / Green Swordtail',
@@ -23,7 +16,7 @@ export const swordtail: Species = {
   },
 
   visuals: {
-    iconShape: 'torpedo',
+    iconShape: 'fusiform',
     adultSizeCM: 14,
     color: 'SEXUALLY DIMORPHIC with stunning varieties! WILD TYPE MALES: Olive-green body with red/orange horizontal stripe from eye to tail, SPECTACULAR SWORD-SHAPED TAIL EXTENSION (3-5cm long yellow/orange/black edges - only males!). Streamlined torpedo body. FEMALES: Olive-green/silver body, NO SWORD, rounder/fuller profile especially when gravid (belly hugely swollen with developing fry). BRED VARIETIES (hundreds!): RED VELVET (solid deep red), PINEAPPLE (yellow body with black trim), NEON (electric blue/green metallic), KOHAKU (white with red patches like koi), LYRETAIL (double-sword lyre-shaped tail), WAGTAIL (black fins with colored body), MARIGOLD (solid orange-gold). Males always have GONOPODIUM (modified anal fin) and sword',
   },
@@ -39,8 +32,8 @@ export const swordtail: Species = {
     substrate: 'gravel',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.7,
     },
     
@@ -54,14 +47,14 @@ export const swordtail: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes:
       'Swordtails appreciate HEAVY PLANTING with OPEN SWIMMING SPACE - they\'re FAST ATHLETIC SWIMMERS needing horizontal swimming runs! Best setup: DENSE background/side planting (Vallisneria, Amazon Sword - tall robust plants tolerating hard water) creating territories and fry hiding spots, with OPEN CENTER/FRONT (80-100cm clear runs for sprinting!). They\'re from fast-flowing vegetated rivers and love: FLOATING PLANTS (Water Sprite, Frogbit - creates security, fry survival zones), stem plants (Ludwigia, Rotala - they graze algae from leaves), Java Fern/Anubias (hard leaves). They will NOT harm plants (may nibble algae but safe for planted tanks). Dense planting essential for FRY SURVIVAL (adults eat their own babies!).',
     hardscape: ['Smooth river stones (creates natural stream look)', 'Driftwood branches (territorial markers)', 'Open swimming space center (CRITICAL for athletic fish!)', 'NO SHARP EDGES (fast swimmers + jumping risk)'],
   },
 
   behavior: {
-    tags: ['active', 'athletic', 'jumper', 'livebearer', 'semi-aggressive', 'fast_swimmer'],
+    tags: ['active','jumper', 'livebearer', 'semi-aggressive'],
     minGroupSize: 6,
     description:
       'Swordtails are EXTREMELY ACTIVE ATHLETIC LIVEBEARERS displaying dynamic behaviors! They\'re FAST SWIMMERS constantly cruising all tank levels (middle/top preference) exploring, displaying, chasing. Watch them SPRINT in straight lines (can swim backward faster than mollies forward!) and perform SPECTACULAR JUMPS (30cm+ from surface - Olympic athletes!). Males are RELENTLESS HARASSERS: constantly chasing females with COURTSHIP DISPLAYS (curved body shaking, sword flashing, charging behavior). Males establish DOMINANCE HIERARCHIES fighting for mating rights. They\'re AGGRESSIVE toward other males: dominant male bullies subordinates constantly unless large groups (3+ males) or proper female ratios. Watch them graze algae from surfaces constantly. CRITICAL: They\'re PROLIFIC BREEDERS producing 20-100 fry every 4-6 weeks!',
@@ -100,7 +93,7 @@ export const swordtail: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -113,7 +106,7 @@ export const swordtail: Species = {
     },
     
     activity: {
-      level: 'very-high',
+      level: 'high',
       peakTimes: ['all-day'],
       nocturnal: false,
     },
@@ -124,7 +117,7 @@ export const swordtail: Species = {
     },
     
     finNipping: {
-      risk: 'moderate',
+      risk: 'medium',
       targets: ['slow-moving fish', 'long-finned fish (Bettas, fancy Guppies)', 'other male Swordtails (dominance behavior)'],
     },
   },
@@ -165,14 +158,14 @@ export const swordtail: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['tropical-flakes', 'spirulina-flakes', 'algae-wafers', 'vegetable-matter'],
-      supplements: ['bloodworms', 'brine-shrimp', 'daphnia', 'blanched-vegetables'],
+      primaryFoods: ['flakes', 'spirulina', 'algae-wafers', 'vegetables'],
+      supplements: ['bloodworms', 'brine-shrimp', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -189,7 +182,7 @@ export const swordtail: Species = {
       },
       filter: {
         required: true,
-        type: 'HOB',
+        type: 'hang-on-back',
         flowRate: 'moderate',
       },
       airstone: false,

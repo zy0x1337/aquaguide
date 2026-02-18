@@ -16,7 +16,7 @@ export const clownPleco: Species = {
   },
 
   visuals: {
-    iconShape: 'pleco',
+    iconShape: 'compressed',
     adultSizeCM: 10,
     color: 'Dark brown to black body with striking orange/yellow bands (stripes) running vertically across body and fins. Bands create bold tiger-stripe pattern. Belly is lighter tan/cream. Males develop more pronounced odontodes (bristles) on pectoral fins and head',
   },
@@ -47,13 +47,13 @@ export const clownPleco: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Clown Plecos appreciate planted tanks but don\'t require heavy planting. Hardy plants (Anubias, Java Fern, Amazon Swords) work best—avoid delicate carpets they might uproot while foraging. Moderate planting with OPEN BOTTOM SPACE for grazing is ideal. Floating plants (Water Sprite) diffuse bright light—they prefer dim conditions.',
     hardscape: ['DRIFTWOOD (CRITICAL - primary food source!)', 'Caves (terracotta pots, coconut shells)', 'Smooth river stones', 'Malaysian driftwood (lasts longer)', 'Mopani wood (dense, long-lasting)', 'Spiderwood (soft, eaten quickly)', 'Cholla wood (favorite for rasping)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'nocturnal', 'algae_eater', 'wood_eater', 'shy', 'bottom_dweller'],
+    tags: ['peaceful', 'nocturnal', 'algae_eater', 'shy', 'bottom_dweller'],
     minGroupSize: 1,
     description: 'Clown Plecos are SHY, PEACEFUL, NOCTURNAL wood-eaters that spend their lives hiding in caves and grazing on driftwood. During the day, they\'re INVISIBLE—tucked into caves, under driftwood, or wedged in tight spaces. At NIGHT, they emerge like tiny armored tanks to RASP driftwood and graze algae. Listen closely at night: you can HEAR them scraping wood with specialized teeth—it sounds like tiny sandpaper! They\'re SOLITARY and territorial toward other Clown Plecos (multiple males = fighting for caves). However, they\'re COMPLETELY PEACEFUL toward all other fish—no aggression, no fin-nipping. They\'re the aquarium\'s shy introverts who prefer solitude and wood-munching.',
     
@@ -84,7 +84,7 @@ export const clownPleco: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '15-30',
         bottom: '6-12',
       },
@@ -144,9 +144,9 @@ export const clownPleco: Species = {
     ],
     
     feeding: {
-      frequency: 'nightly',
-      primaryFoods: ['driftwood', 'algae-wafers', 'vegetables', 'spirulina'],
-      supplements: ['zucchini', 'cucumber', 'repashy', 'wood-specific-pellets'],
+      frequency: 'once-daily',
+      primaryFoods: ['algae-wafers', 'vegetables', 'spirulina'],
+      supplements: ['zucchini'],
       vegetarian: true,
       liveFood: {
         required: false,
@@ -192,7 +192,7 @@ export const clownPleco: Species = {
 
   breeding: {
     method: 'cave_spawner',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger: 'Clown Plecos are CAVE SPAWNERS that breed in home aquariums with proper setup. Trigger spawning: 1) Mature pair (2+ years old, proper sexing), 2) Caves (narrow tubes—males prefer tight spaces they can defend), 3) High-protein diet (algae wafers, vegetables, protein-rich foods), 4) Large water change (40-50%) with slightly COOLER water (23-24°C) to simulate rainy season, 5) Excellent water quality (nitrates <10ppm). Males claim caves and defend aggressively. Females enter cave to spawn.',
     fryCare: 'Females lay 50-100 orange eggs inside cave. MALE GUARDS EGGS and fans them constantly for oxygenation (3-5 days). Female is EXPELLED from cave—males are sole parents. Eggs hatch in 4-7 days at 26°C into larvae with yolk sacs. Fry absorb yolk for 5-7 days, then become free-swimming. MALE continues guarding fry for 7-10 days. Feed fry crushed algae wafers, spirulina powder, and vegetable-based foods. Provide tiny pieces of soft wood (Spiderwood) for grazing. Growth is SLOW: 1cm at 3 months, 2cm at 6 months. Maturity at 18-24 months.',
     notes: 'Clown Pleco breeding is CHALLENGING but achievable. Main difficulty: distinguishing males (need odontodes to confirm). Males are AGGRESSIVE cave defenders—only ONE male per tank. Breeding caves should be NARROW tubes (bamboo, ceramic tubes, PVC pipes 2-3cm diameter)—males prefer tight spaces. Fry survival is moderate (50-70%)—some get eaten, some starve. Remove fry to grow-out tank after male stops guarding for best results.',

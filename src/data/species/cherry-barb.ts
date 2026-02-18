@@ -47,7 +47,7 @@ export const cherryBarb: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'Cherry Barbs THRIVE in heavily planted tanks that mimic their shaded Sri Lankan forest streams. Dense background and side planting (Vallisneria, Cryptocoryne, Rotala, Ludwigia) provides security and creates visual barriers—CRITICAL for reducing male aggression toward females. They love to DART through vegetation in playful chases. Floating plants (Water Sprite, Frogbit) diffuse light and create dim conditions they prefer (wild habitat is heavily shaded by forest canopy). Dark substrate (black sand/gravel) makes male red coloration POP dramatically. Open swimming areas in center allow for schooling displays and courtship behavior.',
     hardscape: ['Driftwood (creates tannins + territories)', 'Smooth River Stones', 'Leaf litter (Indian Almond, Oak leaves)', 'Caves (rarely used but appreciated)'],
   },
@@ -90,7 +90,7 @@ export const cherryBarb: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '10-20',
         bottom: '6-12',
       },
@@ -175,7 +175,7 @@ export const cherryBarb: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',

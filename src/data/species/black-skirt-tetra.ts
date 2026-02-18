@@ -47,7 +47,7 @@ export const blackSkirtTetra: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'Black Skirt Tetras THRIVE in densely planted tanks that mimic their wild shaded forest streams. They appreciate tall background plants (Vallisneria, Ludwigia, Rotala), mid-ground bushy plants (Cryptocoryne, Hygrophila), and DARK SUBSTRATES (black sand/gravel) that intensify their black coloration. Floating plants (Water Sprite, Frogbit) create shaded areas they love. Dense planting reduces fin-nipping by breaking lines of sight and providing security. Open swimming space in center is important for schooling displays. Leaf litter (Indian Almond, Oak leaves) adds tannins and mimics natural habitat.',
     hardscape: ['Driftwood (creates tannins + shade)', 'Smooth river stones', 'Caves (rarely used)', 'Leaf litter'],
   },
@@ -90,7 +90,7 @@ export const blackSkirtTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '10-15',
         bottom: '6-12',
       },
@@ -114,7 +114,7 @@ export const blackSkirtTetra: Species = {
     },
     
     finNipping: {
-      risk: 'moderate',
+      risk: 'medium',
       targets: ['long-finned fish', 'slow-moving fish', 'shy timid fish'],
     },
   },
@@ -179,7 +179,7 @@ export const blackSkirtTetra: Species = {
         flowRate: 'moderate',
       },
       airstone: false,
-      lighting: 'medium',
+      lighting: 'moderate',
       co2: false,
     },
   },

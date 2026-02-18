@@ -53,7 +53,7 @@ export const sterbaiCory: Species = {
   },
 
   behavior: {
-    tags: ['shoaler', 'bottom_dweller', 'peaceful', 'robust', 'scaleless', 'warm_water'],
+    tags: ['shoaler', 'bottom_dweller', 'peaceful', 'robust', 'scaleless'],
     minGroupSize: 6,
     description: 'Sterbai Corys have a gentle, slightly shy personality—less boisterous than Bronze Corys but more confident than Pandas. They\'re the "Goldilocks" of Corydoras temperament: not too bold, not too timid, just right. You\'ll watch them methodically work the substrate, whiskers twitching as they hunt for food particles. Their signature move: sudden fin-flaring to show off those spectacular orange pectorals when excited (during feeding or courtship). They travel in loose groups, occasionally forming adorable "Cory piles" where 3-4 fish stack on top of each other on driftwood or broad leaves. Unlike hyperactive species, Sterbais have a calm, deliberate foraging style—thorough but unhurried. Their air-breathing behavior (zooming to surface for gulps) is frequent, especially in warmer water where oxygen is lower.',
     
@@ -64,7 +64,7 @@ export const sterbaiCory: Species = {
       
       rules: [
         {
-          type: 'compatible',
+          type: 'requires',
           target: 'discus and warm-water cichlids',
           reason: 'Sterbais THRIVE in warm water (26-28°C) where most Corys suffer. They\'re the ONLY Corydoras recommended for Discus tanks (though 27°C is better than 30°C long-term)',
           severity: 'low',
@@ -96,7 +96,7 @@ export const sterbaiCory: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '15-30',
         bottom: '6-12',
       },
@@ -184,7 +184,7 @@ export const sterbaiCory: Species = {
         flowRate: 'moderate',
       },
       airstone: true,
-      lighting: 'medium',
+      lighting: 'moderate',
       co2: false,
     },
   },

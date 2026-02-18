@@ -9,7 +9,7 @@ export const neonTetra: Species = {
   imageCredit: {
     photographer: 'JH Tan (via Wikimedia Commons)',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Neon_Tetra.jpg',
-    license: 'CC BY-SA 2.5',
+    license: 'CC BY 2.0',
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/'
   },
 
@@ -39,8 +39,8 @@ export const neonTetra: Species = {
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.75,
     },
     
@@ -54,13 +54,13 @@ export const neonTetra: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes: 'Dense background planting (Cryptocoryne, Anubias, Java Fern) provides security, but leave the center and front open for schooling. Floating plants (Frogbit, Water Lettuce) dim the lighting and recreate their dark blackwater habitat. Leaf litter on the substrate releases beneficial tannins.',
     hardscape: ['Branchy Driftwood', 'Indian Almond Leaves', 'River Stones', 'Bogwood'],
   },
 
   behavior: {
-    tags: ['shoaling', 'peaceful', 'shy', 'colorful', 'active'],
+    tags: ['shoaler', 'peaceful', 'shy', 'colorful', 'active'],
     minGroupSize: 10,
     description: 'A peaceful shoaling fish famous for its neon-like blue and red coloration. While often called "schooling," Neon Tetras in home aquariums display loose shoaling behavior—they swim near each other for security but forage independently. When startled, they tighten into a cohesive group. Their iridescent stripe evolved to help them stay visible to each other in pitch-black jungle streams. Colors fade dramatically under stress or when kept in groups smaller than 10.',
     
@@ -103,7 +103,7 @@ export const neonTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: '0',
+        surface: 0,
         midwater: '10-20',
         bottom: '6-12',
       },
@@ -122,7 +122,7 @@ export const neonTetra: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 999,
     },
     
@@ -168,7 +168,7 @@ export const neonTetra: Species = {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -186,7 +186,7 @@ export const neonTetra: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',

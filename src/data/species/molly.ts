@@ -23,7 +23,7 @@ export const molly: Species = {
   },
 
   visuals: {
-    iconShape: 'plump',
+    iconShape: 'globiform',
     adultSizeCM: 9,
     color: 'HIGHLY VARIABLE depending on morph! Wild type: Silver-gray body with orange/yellow on dorsal fin, horizontal dark spots/stripes. Bred morphs: BLACK MOLLY (solid jet black - most popular but weakest genetics), DALMATIAN (white with black spots like dalmatian dog), GOLD/CREAMSICLE (yellow-orange), MARBLE (black/white patterns), BALLOON (deformed shortened spine - ethical concerns). Males slimmer, females rounder/deeper-bodied (especially when gravid). Males have GONOPODIUM (modified anal fin for internal fertilization)',
   },
@@ -39,8 +39,8 @@ export const molly: Species = {
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'top',
-      secondary: 'middle',
+      primary: 'surface',
+      secondary: 'midwater',
       preference: 0.7,
     },
     
@@ -54,14 +54,14 @@ export const molly: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes:
       'Mollies LOVE plants but also EAT THEM when hungry (especially soft-leaved plants)! They\'re omnivores needing ALGAE in diet. Best setup: Dense background/sides (Java Fern, Anubias - hard leaves they can\'t eat), open swimming space center/front (active swimmers!), FLOATING PLANTS (Water Sprite, Hornwort - provides algae grazing, security for fry, dim lighting). WARNING: Mollies will NIBBLE soft plants (Cabomba, fine-leaved stems). Provide JAVA MOSS and broad-leaved plants for grazing. Thick planting provides FRY HIDING SPOTS (adults eat babies!). Salt-tolerant plants best (Java Fern, Anubias, Hornwort). Heavy planting reduces male aggression.',
     hardscape: ['Driftwood (provides aufwuchs/biofilm for grazing)', 'Smooth rocks (no sharp edges)', 'Minimal decor (open swimming space important)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'active', 'livebearer', 'prolific_breeder', 'surface_dweller', 'algae_grazer'],
+    tags: ['peaceful', 'active', 'livebearer', 'surface_dweller'],
     minGroupSize: 3,
     description:
       'Mollies are PEACEFUL, ACTIVE SURFACE SWIMMERS with CONSTANT BREEDING BEHAVIOR! They\'re friendly community fish but males are RELENTLESS BREEDERS constantly chasing/harassing females with gonopodium (modified anal fin for internal fertilization). 1 male : 2-3 females ratio MANDATORY to spread harassment! Males display to each other (flaring dorsals, circling) but rarely fight seriously. They\'re PROLIFIC LIVEBEARERS: females can store sperm for 6+ months producing 5-10 CONSECUTIVE BROODS from single mating (20-100 fry every 4-6 weeks)! Adults EAT THEIR OWN FRY if not separated. Watch them constantly GRAZING algae from glass/plants/decor like guppies. They\'re ACTIVE SWIMMERS cruising all levels but prefer TOP. Peaceful toward other species but boisterous/nippy when hungry. Very social fish displaying best behavior in groups.',
@@ -100,7 +100,7 @@ export const molly: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '10-15',
         bottom: '6-10',
       },
@@ -163,14 +163,14 @@ export const molly: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['spirulina-flakes', 'algae-wafers', 'vegetable-flakes', 'blanched-vegetables'],
+      primaryFoods: ['spirulina', 'algae-wafers', 'vegetables', 'flakes'],
       supplements: ['brine-shrimp', 'bloodworms', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -187,7 +187,7 @@ export const molly: Species = {
       },
       filter: {
         required: true,
-        type: 'HOB',
+        type: 'hang-on-back',
         flowRate: 'moderate',
       },
       airstone: false,

@@ -39,8 +39,8 @@ export const emberTetra: Species = {
     substrate: 'dark-sand',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.75,
     },
     
@@ -54,14 +54,14 @@ export const emberTetra: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Ember Tetras are PLANT-DEPENDENT and thrive in DENSELY PLANTED tanks! They prefer MID-WATER zones, weaving through stem plants and floating plant roots. FLOATING PLANTS are ESSENTIAL for security and diffusing lighting (they prefer dim conditions). Dark substrate (black sand, dark gravel) creates DRAMATIC CONTRAST—orange bodies GLOW like burning embers against darkness. Best plants: stem plants (Rotala, Ludwigia, Bacopa), fine-leaved plants (Java Moss, Christmas Moss), broader leaves (Anubias, Java Fern, Cryptocoryne), floating plants (Salvinia, Frogbit, Red Root Floaters). Blackwater setup with Indian Almond leaves intensifies colors dramatically. Soft/dim lighting preferred.',
     hardscape: ['Driftwood (creates tannins - ideal)', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth stones', 'Minimal—plants are primary focus'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaling', 'nano', 'colorful', 'active', 'plant_dependent'],
+    tags: ['peaceful', 'shoaler', 'nano', 'colorful', 'active'],
     minGroupSize: 10,
     description:
       'Ember Tetras are TINY ORANGE FIREFLIES creating MESMERIZING displays! They form loose schools (shoals, not tight schools) that drift through plants like glowing orange clouds. They\'re highly SOCIAL and thrive in groups of 10-20+—larger groups = bolder fish with INTENSE colors. Watch them explore mid-water zones constantly, weaving through plants in synchronized movements. Males perform COURTSHIP displays: chasing females through vegetation, vibrating bodies, circling displays, showing NEON ORANGE coloration. They\'re PEACEFUL toward all tankmates and focus on grazing microorganisms and hunting tiny foods. They\'re SHY in sparse tanks but CONFIDENT in heavily planted setups with floating cover. Despite tiny size (0.8 inches), they\'re ACTIVE swimmers constantly in motion.',
@@ -92,7 +92,7 @@ export const emberTetra: Species = {
           severity: 'medium',
         },
         {
-          type: 'suggestion',
+          type: 'warning',
           condition: 'dim lighting or floating plants',
           reason: 'Bright lighting washes out orange colors to pale. Dim lighting or floating plants (diffused light) intensifies ember glow to NEON ORANGE',
           severity: 'medium',
@@ -100,7 +100,7 @@ export const emberTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-8',
+        surface: 0-8,
         midwater: '10-20',
         bottom: '6-12',
       },
@@ -119,7 +119,7 @@ export const emberTetra: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 10,
     },
     
@@ -163,8 +163,8 @@ export const emberTetra: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'baby-brine-shrimp', 'daphnia'],
-      supplements: ['microworms', 'moina', 'spirulina', 'frozen-cyclops'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'brine-shrimp', 'daphnia'],
+      supplements: [ 'spirulina', 'cyclops'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -188,7 +188,7 @@ export const emberTetra: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -211,8 +211,8 @@ export const emberTetra: Species = {
   },
 
   breeding: {
-    method: 'continuous_spawner',
-    difficulty: 'intermediate',
+    method: 'egg_scatterer',
+    difficulty: 'medium',
     trigger:
       'Ember Tetras are CONTINUOUS SPAWNERS—they scatter small batches EVERY 2 WEEKS when properly conditioned! Trigger breeding: 1) Mature group (6+ months old) with 10+ fish, 2) DENSE fine-leaved plants (Java Moss, Christmas Moss, spawning mops), 3) Excellent conditioning with LIVE/FROZEN FOODS (baby brine shrimp, daphnia, microworms, moina) for 2 weeks until females plump, 4) SOFT ACIDIC water (GH 2-6, pH 6.0-6.5, temp 26-28°C), 5) Tannin-stained blackwater (Indian Almond leaves). Males chase females intensely through plants with vibrating body displays.',
     fryCare:

@@ -23,7 +23,7 @@ export const platy: Species = {
   },
 
   visuals: {
-    iconShape: 'plump',
+    iconShape: 'fusiform',
     adultSizeCM: 6,
     color: 'INCREDIBLY VARIABLE! WILD TYPE: Dull olive-gray/brown body with black spots. BRED MORPHS (hundreds!): MICKEY MOUSE (three black spots forming Mickey silhouette on tail base - iconic!), KOI (orange/white/black patches like koi carp), SUNSET (red/orange/yellow gradient), BLUE CORAL (neon blue body), WAGTAIL (black fins with colored body - any color combo!), TUXEDO (half black/half color split), PANDA (black/white), NEON (fluorescent GloFish variants), RED (solid red), GOLD (solid yellow-gold), DALMATIAN (white with black spots). Males slimmer, females rounder/deeper-bodied. Males have GONOPODIUM (modified anal fin)',
   },
@@ -39,8 +39,8 @@ export const platy: Species = {
     substrate: 'any',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.7,
     },
     
@@ -54,14 +54,14 @@ export const platy: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes:
       'Platies appreciate BALANCED planting: open swimming space center/front (active swimmers!) with MODERATE background/side planting for security and FRY HIDING SPOTS. Best plants: Java Fern, Anubias (hard leaves), Vallisneria (tall background), Amazon Sword (broad leaves), FLOATING PLANTS (Water Sprite, Frogbit - essential for fry survival! babies hide here). Avoid OVER-PLANTING (they need open swimming areas). Dense planting protects fry from adult cannibalism but adults prefer open water. Algae growth on plants/glass = natural grazing food (they love picking algae!).',
     hardscape: ['Smooth river stones (create caves/territories)', 'Minimal driftwood (can lower pH - they prefer alkaline!)', 'Open swimming space center'],
   },
 
   behavior: {
-    tags: ['peaceful', 'active', 'colorful', 'hardy', 'livebearer', 'prolific_breeder'],
+    tags: ['peaceful', 'active', 'colorful', 'livebearer'],
     minGroupSize: 6,
     description:
       'Platies are PEACEFUL, ACTIVE, COLORFUL LIVEBEARERS perfect for community tanks! They\'re constantly SWIMMING exploring all levels (middle/top zones), displaying vibrant colors, and interacting socially. Males display to each other (flaring fins, chasing) but rarely fight seriously. They\'re PROLIFIC BREEDERS: females give birth to 20-50 FREE-SWIMMING FRY every 4-6 weeks with ZERO effort! Females can STORE SPERM for 6+ months producing multiple broods from single mating (even pure female groups sometimes have fry!). Adults will EAT their own fry if not separated (natural population control). Watch them constantly grazing algae from glass/plants. They\'re EXTREMELY HARDY: tolerating parameter swings, beginner mistakes, diverse conditions. Peaceful toward all tankmates (one of safest community fish!).',
@@ -94,7 +94,7 @@ export const platy: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -126,7 +126,7 @@ export const platy: Species = {
   care: {
     difficulty: 'beginner',
     diet: 'omnivore',
-    effort: 'very-low',
+    effort: 'low',
     cost: 'low',
     specialRequirements: [
       'Hard alkaline water preferred (GH 10-30+, pH 7.0-8.5)', 
@@ -154,14 +154,14 @@ export const platy: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['tropical-flakes', 'spirulina-flakes', 'algae-wafers', 'vegetable-matter'],
+      primaryFoods: ['flakes', 'spirulina', 'algae-wafers', 'vegetables'],
       supplements: ['bloodworms', 'brine-shrimp', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -179,7 +179,7 @@ export const platy: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'moderate',

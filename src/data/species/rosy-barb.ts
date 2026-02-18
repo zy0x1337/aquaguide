@@ -24,7 +24,7 @@ export const rosyBarb: Species = {
   },
 
   visuals: {
-    iconShape: 'torpedo',
+    iconShape: 'fusiform',
     adultSizeCM: 10,
     color: 'SEXUALLY DIMORPHIC! MALES: Base silver-pink body transforming to SPECTACULAR ROSY-RED to DEEP CRIMSON during breeding (like glowing rubies!) especially head/belly area. Black spot/marking on dorsal fin base. Fins develop red-orange tinting. Slimmer torpedo-shaped profile. FEMALES: Silver-gold body with minimal red coloration, rounder/deeper-bodied especially when gravid (carrying eggs - belly hugely swollen). Both sexes have dark-edged scales creating subtle reticulated pattern. Juveniles pale silver. Variants: Neon Rosy (enhanced colors), Longfin Rosy (extended fins), Gold Rosy (xanthic yellow)',
   },
@@ -40,8 +40,8 @@ export const rosyBarb: Species = {
     substrate: 'gravel',
     
     swimmingZone: {
-      primary: 'middle',
-      secondary: 'top',
+      primary: 'midwater',
+      secondary: 'surface',
       preference: 0.8,
     },
     
@@ -55,14 +55,14 @@ export const rosyBarb: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes:
       'Rosy Barbs appreciate BALANCED planting: OPEN SWIMMING SPACE center (they\'re ACTIVE horizontal swimmers needing 80-100cm clear runs!), with MODERATE background/side vegetation for security. Best plants: Hardy species (Vallisneria, Amazon Sword, Anubias - they may nibble soft plants!), FLOATING PLANTS (Salvinia, Frogbit - create dappled shade mimicking stream canopy). Avoid DELICATE PLANTS (they may uproot/nibble). Provide OPEN horizontal swimming lanes center/front - this is critical for schooling behavior and prevents boredom (bored barbs = aggressive fin nippers!).',
     hardscape: ['Rounded smooth river stones (creates natural stream look)', 'Driftwood roots/branches (territorial markers, mimics fallen logs)', 'Background plants (security)', 'NO SHARP EDGES (active swimmers!)'],
   },
 
   behavior: {
-    tags: ['active', 'schooling', 'hardy', 'semi-aggressive', 'fin_nipper', 'colorful'],
+    tags: ['active', 'schooler', 'semi-aggressive', 'fin_nipper', 'colorful'],
     minGroupSize: 8,
     description:
       'Rosy Barbs are EXTREMELY ACTIVE SCHOOLING FISH displaying dynamic behaviors! They\'re CONSTANT SWIMMERS cruising horizontally in tight coordinated groups exploring every level. Watch males display SPECTACULAR ROSY-RED BREEDING COLORS competing for females with fin flaring, body tilting, chasing displays (like underwater courtship dances!). They\'re SOCIAL establishing hierarchies within schools. CRITICAL: They\'re NOTORIOUS FIN NIPPERS when kept in SMALL GROUPS (under 8) or understimulated! In groups under 6 they become AGGRESSIVE bullies chasing/nipping constantly. But in LARGE SCHOOLS (8-12+) aggression distributes across group and they\'re peaceful community fish! They\'re POWERFUL JUMPERS (can leap 15-20cm!) - secure lid MANDATORY. Active foragers constantly picking at substrate/plants searching for food.',
@@ -101,7 +101,7 @@ export const rosyBarb: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-12',
+        surface: 6-12,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -114,13 +114,13 @@ export const rosyBarb: Species = {
     },
     
     activity: {
-      level: 'very-high',
+      level: 'high',
       peakTimes: ['all-day'],
       nocturnal: false,
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'school',
       maxMalesPerTank: 6,
     },
     
@@ -165,14 +165,14 @@ export const rosyBarb: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['tropical-flakes', 'micro-pellets', 'spirulina-flakes'],
-      supplements: ['bloodworms', 'daphnia', 'brine-shrimp', 'blanched-vegetables'],
+      primaryFoods: ['flakes', 'micro-pellets', 'spirulina'],
+      supplements: ['bloodworms', 'daphnia', 'brine-shrimp', 'vegetables'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -189,7 +189,7 @@ export const rosyBarb: Species = {
       },
       filter: {
         required: true,
-        type: 'HOB',
+        type: 'hang-on-back',
         flowRate: 'moderate',
       },
       airstone: true,

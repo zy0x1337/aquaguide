@@ -54,14 +54,14 @@ export const kuhliLoach: Species = {
   },
 
   habitat: {
-    planting: 'very-heavy',
+    planting: 'dense',
     plantingNotes:
       'Kuhli Loaches LOVE densely planted tanks with ABUNDANT hiding spots! They prefer BOTTOM areas with caves, tubes, and leaf litter. Best plants: broad-leaved (Anubias, Java Fern, Amazon Sword—provide shade), stem plants (Rotala, Ludwigia), fine plants (Java Moss, Christmas Moss), floating plants (Salvinia, Frogbit—dim lighting). CRITICAL: SOFT SUBSTRATE mandatory—FINE SAND ONLY (play sand, pool filter sand). They BURROW constantly, sifting sand through gills. Gravel or coarse sand INJURES their delicate bellies and barbels. Leaf litter (Indian Almond leaves, oak leaves) mimics natural habitat and provides hiding spots.',
     hardscape: ['CRITICAL: Multiple caves/tubes (PVC pipes 4cm+ diameter, terracotta pots, slate caves)', 'Smooth driftwood', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth river stones', 'AVOID sharp decorations—injure scaleless skin'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shy', 'nocturnal', 'social', 'burrowing', 'bottom_dweller', 'scaleless'],
+    tags: ['peaceful', 'shy', 'nocturnal', 'social', 'bottom_dweller', 'scaleless'],
     minGroupSize: 6,
     description:
       'Kuhli Loaches are SHY, NOCTURNAL NOODLES creating adorable social behaviors! They\'re EXTREME bottom-dwellers spending 98% of time on substrate. Watch them BURROW: they disappear COMPLETELY into sand for HOURS/DAYS, then suddenly reappear like magic (burrowing helps them feel secure). They\'re HIGHLY SOCIAL and form "NOODLE PILES"—groups of 6-10 tangled together in caves sleeping like spaghetti! This behavior is ADORABLE and shows they feel secure. They\'re NOCTURNAL: during day, they hide in caves/sand. At NIGHT, they emerge and become ACTIVE scavengers, racing around substrate searching for food using barbels (sensory whiskers). Watch them DIG through sand with mouths, sifting substrate through gills looking for worms/food. They\'re 100% PEACEFUL and ignore all tankmates. PARADOX: More hiding spots = MORE visible loaches (they feel secure).',
@@ -106,7 +106,7 @@ export const kuhliLoach: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-12',
+        surface: 6-12,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -125,7 +125,7 @@ export const kuhliLoach: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 10,
     },
     
@@ -136,7 +136,7 @@ export const kuhliLoach: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'omnivore',
     effort: 'low',
     cost: 'low',
@@ -169,9 +169,9 @@ export const kuhliLoach: Species = {
     ],
     
     feeding: {
-      frequency: 'daily',
-      primaryFoods: ['sinking-pellets', 'sinking-wafers', 'bloodworms', 'tubifex'],
-      supplements: ['brine-shrimp', 'daphnia', 'mosquito-larvae'],
+      frequency: 'once-daily',
+      primaryFoods: ['pellets', 'wafers', 'bloodworms', 'tubifex'],
+      supplements: ['brine-shrimp', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -195,7 +195,7 @@ export const kuhliLoach: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
