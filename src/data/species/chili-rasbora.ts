@@ -1,7 +1,7 @@
 import type { Species } from '../../types/species';
 
 export const chiliRasbora: Species = {
-  id: 'rasbora-002',
+  id: 'chili-rasbora',
   slug: 'chili-rasbora',
   imageUrl: '/images/species/chili-rasbora.jpg',
   funFact: "Chili Rasboras are living embers—tiny red sparks dancing through planted tanks like fireflies! At barely 0.8 inches (2cm), they're among the smallest aquarium fish in the world, yet they glow like hot coals under proper lighting. Despite their tiny size, they have huge personalities and perform mesmerizing schooling displays when kept in large groups (12-20+). Watch males chase females in elaborate courtship dances, vibrating their bodies and circling through plants! Here's the wild part: they're continuous spawners—females scatter 2-5 adhesive eggs daily for weeks when conditioned, sticking them to leaf undersides like tiny jewels. Males establish temporary territories and intensify to neon red during spawning. Fun fact: discovered 1978 in Borneo, but didn't reach hobby until early 2000s. Now they're nano tank royalty!",

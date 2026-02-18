@@ -3,8 +3,15 @@ import type { Species } from '../../types/species';
 export const sterbaiCory: Species = {
   id: 'cory-sterbai',
   slug: 'sterbai-cory',
-  imageUrl: '/images/species/sterbai-cory.jpg',
+  imageUrl: '/images/species/corydoras-sterbai.jpg',
   funFact: "Sterbai Corys are the only Corydoras that can happily live in warm Discus tanks! While most Corys prefer cooler water (22-24°C), Sterbais thrive at 26-28°C—making them the perfect warm-water bottom-dweller. Named after German ichthyologist Dr. Günther Sterba, they're instantly recognizable by their stunning orange pectoral fins that flash like tiny flames when they swim.",
+
+  imageCredit: {
+    photographer: 'Matthew Mannell (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Corydoras_Sterbai.jpg',
+    license: 'Public Domain',
+    licenseUrl: 'https://en.wikipedia.org/wiki/Public_domain',
+  },
 
   taxonomy: {
     scientificName: 'Corydoras sterbai',

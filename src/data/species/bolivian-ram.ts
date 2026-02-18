@@ -6,6 +6,13 @@ export const bolivianRam: Species = {
   imageUrl: '/images/species/bolivian-ram.jpg',
   funFact: "Bolivian Rams are the 'gentle giants' of the dwarf cichlid world—peaceful, hardy, and forgiving compared to their high-maintenance cousin, the German Blue Ram. Watch them work: they're 'eartheaters' that spend all day taking mouthfuls of sand, sifting it through their gills like underwater gold miners, and spitting out the clean sand in little clouds. It looks like they're chewing constantly but never eating—they are eating! Tiny food particles are extracted during every sand-sift. They're the aquarium's 'slow food' movement—calm, methodical grazers who take their time with every meal. Perfect for peaceful community tanks!",
 
+  imageCredit: {
+    photographer: 'Elma (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Male_altispinosa_dwarf_cichlid_(3229597033).jpg',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+  },
+  
   taxonomy: {
     scientificName: 'Mikrogeophagus altispinosus',
     commonName: 'Bolivian Ram',
