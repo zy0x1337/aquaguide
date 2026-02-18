@@ -223,8 +223,8 @@ export const otocinclusMacrospilus: Species = {
     ],
     
     estimatedCosts: {
-      initial: { min: 40, max: 100, currency: 'EUR' },
-      monthly: { min: 5, max: 15, currency: 'EUR' },
+      initial: { min: 80, max: 200, currency: 'EUR' },
+      monthly: { min: 5, max: 25, currency: 'EUR' },
     },
   },
 };
