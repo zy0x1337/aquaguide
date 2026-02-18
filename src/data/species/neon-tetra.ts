@@ -4,7 +4,7 @@ export const neonTetra: Species = {
   id: 'tetra-001',
   slug: 'neon-tetra',
   imageUrl: '/images/species/neon-tetra.jpg',
-  funFact: "In the wild, Neon Tetras live in blackwater streams so dark that their iridescent stripe is the only way they can locate each other in the gloom.",
+  funFact: "In the wild, Neon Tetras live in blackwater streams so dark that their iridescent stripe is the only way they can locate each other in the gloom. This 'neon beacon' evolved for communication in pitch-black jungle waters!",
 
   imageCredit: {
     photographer: 'JH Tan (via Wikimedia Commons)',
@@ -17,15 +17,15 @@ export const neonTetra: Species = {
     scientificName: 'Paracheirodon innesi',
     commonName: 'Neon Tetra',
     family: 'Characidae',
-    origin: 'Peru, Brazil (Amazon Basin, Solimões)',
+    origin: 'Peru, Brazil (Amazon Basin, Solimões River tributaries)',
     region: 'South America',
-    biotope: 'Blackwater tributaries with tea-colored, acidic water rich in tannins from decaying leaves',
+    biotope: 'Blackwater tributaries with tea-colored, acidic water rich in tannins from decaying leaves, sandy substrates, and dense overhanging vegetation',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 3,
-    color: 'Iridescent blue stripe, bright red belly, silver-white underside',
+    color: 'Iconic iridescent electric-blue stripe running from nose to adipose fin, contrasted by brilliant crimson-red belly from mid-body to tail. Silver-white underside. Males: slimmer with straighter blue stripe. Females: rounder belly creating curved blue stripe, especially when gravid. Colors intensify in dark substrate and tannin-stained water',
   },
 
   environment: {
@@ -36,16 +36,16 @@ export const neonTetra: Species = {
     gh: { min: 2, max: 10 },
     kh: { min: 1, max: 5 },
     flow: 'low',
-    substrate: 'any',
+    substrate: 'dark-sand',
     
     swimmingZone: {
       primary: 'midwater',
-      secondary: 'surface',
+      secondary: 'all',
       preference: 0.75,
     },
     
     spaceNeeds: {
-      horizontalCM: 50,
+      horizontalCM: 60,
       verticalCM: 25,
       territories: 0,
     },
@@ -55,49 +55,49 @@ export const neonTetra: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Dense background planting (Cryptocoryne, Anubias, Java Fern) provides security, but leave the center and front open for schooling. Floating plants (Frogbit, Water Lettuce) dim the lighting and recreate their dark blackwater habitat. Leaf litter on the substrate releases beneficial tannins.',
-    hardscape: ['Branchy Driftwood', 'Indian Almond Leaves', 'River Stones', 'Bogwood'],
+    plantingNotes: 'Neon Tetras look stunning in blackwater biotope setups! Dense background planting (Cryptocoryne, Vallisneria, Java Fern) provides security, but leave the center open for schooling displays. Floating plants (Frogbit, Water Lettuce, Salvinia) are essential—they dim lighting (Neons hate bright light!) and recreate their dark jungle stream habitat. Leaf litter (Indian Almond, Oak) on substrate releases tannins, creates biofilm for grazing, and completes the natural look. Dark substrate (black sand) makes neon colors pop dramatically.',
+    hardscape: ['Branchy Driftwood (creates tannins + hiding spots)', 'Indian Almond Leaves (mandatory for blackwater setup)', 'River Stones', 'Bogwood'],
   },
 
   behavior: {
     tags: ['shoaler', 'peaceful', 'shy', 'colorful', 'active'],
     minGroupSize: 10,
-    description: 'A peaceful shoaling fish famous for its neon-like blue and red coloration. While often called "schooling," Neon Tetras in home aquariums display loose shoaling behavior—they swim near each other for security but forage independently. When startled, they tighten into a cohesive group. Their iridescent stripe evolved to help them stay visible to each other in pitch-black jungle streams. Colors fade dramatically under stress or when kept in groups smaller than 10.',
+    description: 'Neon Tetras are the iconic community shoaling fish—but their behavior is often misunderstood. They form loose shoals (not tight schools) in home aquariums, swimming near each other for security but foraging independently. When startled, they snap into tight formations like a single organism—it\'s mesmerizing! Their iridescent stripe evolved as a "neon beacon" to locate each other in pitch-black jungle streams. Watch them display confidence in groups of 10+ vs. timidity in small groups (under 6): large groups explore openly, small groups hide constantly with faded colors. They\'re active during day, most vibrant after feeding. Males perform subtle displays (shimmering, circling) during courtship.',
     
     compatibility: {
-      goodMates: ['Corydoras', 'Otocinclus', 'Harlequin Rasboras', 'Dwarf Gouramis', 'Apistogramma', 'Cherry Shrimp', 'Nerite Snails'],
-      badMates: ['Angelfish (natural predators)', 'Large Cichlids', 'Goldfish', 'Bettas (risk of fin-nipping)', 'Aggressive Barbs'],
-      notes: 'Ideal community fish for nano and planted tanks. The primary risk is being seen as food by larger species. Angelfish and Neons is a classic combo in stores, but Angelfish are their natural predators in the Amazon and will hunt them when adult.',
+      goodMates: ['Corydoras (all species)', 'Otocinclus', 'Harlequin Rasboras', 'Dwarf Gouramis', 'Apistogramma', 'Cherry Shrimp', 'Nerite Snails', 'Cardinal Tetras (similar needs)', 'Rummynose Tetras'],
+      badMates: ['Angelfish (natural predators!)', 'Large Cichlids', 'Goldfish', 'Bettas (fin-nipping risk)', 'Aggressive Barbs (Tiger, Rosy)', 'Discus (temperature incompatibility)'],
+      notes: 'Neon Tetras are classic community fish for planted tanks—but the Angelfish combo is a disaster waiting to happen. Angelfish hunt Neons in the wild and will eat them once adult (4+ inches). This is the #1 beginner mistake! Otherwise, Neons are peaceful, safe with shrimp, and perfect for calm community setups. They\'re sensitive to water quality—only add to mature tanks (8+ weeks cycled).',
       
       rules: [
         {
           type: 'avoid',
           target: 'angelfish',
-          reason: 'Angelfish are natural predators of Neon Tetras in the wild and will hunt them once they reach adult size (4+ inches)',
+          reason: 'Angelfish are natural predators of Neon Tetras in the Amazon. The combo is popular in stores but ends in tragedy—adult Angels hunt and eat Neons. Avoid despite store recommendations',
           severity: 'high',
         },
         {
           type: 'avoid',
-          target: 'large cichlids',
-          reason: 'Any fish with a mouth large enough to swallow a Neon will eventually try',
+          target: 'large cichlids or predatory fish',
+          reason: 'Any fish with a mouth large enough to swallow a Neon will eventually try. This includes Discus (temp mismatch), Oscars, and larger Gouramis',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'group-size >= 10',
-          reason: 'Neons are obligate shoalers and suffer psychological stress in groups under 10. Colors fade and they hide constantly',
+          reason: 'Neons are obligate shoalers suffering psychological stress in groups under 10. Colors fade, they hide constantly, and die prematurely. 10 is absolute minimum; 15-20 creates confident schools',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'bettas',
-          reason: 'Usually fine, but some Bettas may nip at Neons mistaking their movement for food. Monitor closely in first week',
+          reason: 'Usually fine, but some Bettas may nip at Neons mistaking their movement for food. Also, Neons may nip Betta fins if underfed. Monitor closely in first week',
           severity: 'low',
         },
         {
           type: 'requires',
-          condition: 'tank-cycled >= 8 weeks',
-          reason: 'Neons are sensitive to unstable water parameters and often die in new tanks (New Tank Syndrome)',
+          condition: 'tank cycled >= 8 weeks',
+          reason: 'CRITICAL: Neons are "New Tank Syndrome" victims. They\'re sensitive to ammonia/nitrite spikes and parameter instability. Only add to fully mature tanks',
           severity: 'critical',
         },
       ],
@@ -110,7 +110,7 @@ export const neonTetra: Species = {
     },
     
     aggressionLevel: {
-      intraspecific: 2,
+      intraspecific: 1,
       interspecific: 1,
       territorial: 0,
     },
@@ -138,31 +138,34 @@ export const neonTetra: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Must be kept in groups of 10+ for psychological health', 
-      'Only add to fully cycled tanks (8+ weeks old)', 
-      'Soft lighting preferred (floating plants recommended)',
-      'Avoid bright white substrates (use dark sand or gravel)',
+      'Groups of 10+ mandatory (shoaling species)', 
+      'Add to mature tanks only (8+ weeks cycled)', 
+      'Soft, acidic water preferred (pH 6.0-6.5)', 
+      'Dim lighting or floating plants (hate bright light)', 
+      'Dark substrate enhances colors',
     ],
 
     proTips: [
-      "Dim the lights or add floating plants. In bright light, Neons lose confidence, stay near the bottom, and their colors fade.",
-      "Add Indian Almond Leaves or Alder Cones. The tannins (which turn water tea-colored) mimic their natural blackwater habitat and boost their immune system against diseases.",
-      "Feed tiny foods. Their mouths are incredibly small! Use crushed flakes, micro-pellets (< 0.5mm), or finely ground spirulina. They'll pick food off the substrate like bottom feeders.",
-      "Dark substrate = vibrant colors. Neons evolved in streams with dark, muddy bottoms covered in leaves. White gravel causes stress and washed-out colors.",
-      "Buy from reputable breeders if possible. Mass-farmed Neons (especially from Asia) often carry Neon Tetra Disease and have weaker genetics.",
+      "Dim lighting = confident Neons! In bright light, Neons lose confidence, stay near bottom, and colors fade. Add floating plants (Frogbit, Water Sprite) to diffuse light. They evolved in shaded jungle streams—bright tanks cause chronic stress.",
+      "Blackwater conditions = disease resistance! Add Indian Almond Leaves or Alder Cones to release tannins (turns water tea-colored). This mimics natural habitat, boosts immune system, and prevents diseases. They look stunning in blackwater setups!",
+      "Feed tiny foods! Their mouths are incredibly small. Use crushed flakes, micro-pellets (< 0.5mm), or baby brine shrimp. They'll pick food off substrate like tiny vacuum cleaners. Feed small portions 2x daily.",
+      "Dark substrate = vibrant colors! Neons evolved over dark, muddy leaf-litter bottoms. White gravel causes stress and washed-out colors. Use black sand or dark gravel—the visual difference is dramatic.",
+      "Temperature distinction: Neons prefer cooler water (22-24°C) than Cardinal Tetras (25-27°C). Don't keep them in tropical community tanks at 27°C+—shortens lifespan. They're not heat-loving fish!",
+      "Buy quality stock! Mass-farmed Neons (especially from Asian fish mills) often carry Neon Tetra Disease and have weaker genetics. Buy from local breeders or quarantine all new arrivals for 4+ weeks.",
     ],
 
     commonMistakes: [
-      "Adding them to a brand-new tank. Neons are highly sensitive to ammonia and nitrite spikes. In tanks less than 8 weeks old, they often die from 'New Tank Syndrome' even if water tests look okay.",
-      "Buying only 3-5. This causes chronic stress. They'll hide constantly, refuse to eat, and their colors will fade. 10 is the absolute minimum—larger groups (15-20) display far better behavior.",
-      "Pairing them with Angelfish. It's the most popular combo in stores, but it's also terrible advice. Angelfish hunt Neons in the wild and will eat them once they're large enough.",
-      "Keeping them in overly warm water (>26°C). Unlike their cousins the Cardinal Tetras, Neons prefer cooler temps (22-24°C). High temps shorten their lifespan.",
+      "Adding to brand-new tanks. #1 killer! Neons are highly sensitive to ammonia/nitrite spikes. In tanks under 8 weeks old, they die from 'New Tank Syndrome' even when water tests show 0/0 parameters—they need stability, not just absence of toxins.",
+      "Groups under 10 fish. This causes chronic stress. They hide constantly, refuse food, colors fade, and die within months. 10 is minimum; 15-20 displays natural behavior. Don't buy 5-6 'to start'—buy the full group.",
+      "Pairing with Angelfish. Most popular store combo but terrible advice. Angelfish hunt Neons in the Amazon! Juvenile Angels coexist fine—adult Angels eat Neons. This ends in tragedy every time.",
+      "Keeping too warm (>26°C). Unlike Cardinals, Neons prefer cooler temps (22-24°C). Tropical tanks at 27°C+ shorten lifespan dramatically. They're temperate tropicals, not heat-lovers.",
+      "Bright lighting without cover. Neons evolved in shaded jungle streams. Bright light = stressed fish hiding near bottom with faded colors. Always provide floating plants or dim lighting.",
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'daphnia'],
-      supplements: ['spirulina', 'bloodworms', 'brine-shrimp'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'brine-shrimp', 'daphnia'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -175,7 +178,7 @@ export const neonTetra: Species = {
       waterChangePercentage: 25,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Neons are sensitive to parameter swings. Use dechlorinated water matched to tank temp. Vacuum gently around plants to avoid disturbing them.',
+      notes: 'Weekly 25% water changes with MATCHED temperature water. Neons are sensitive to parameter swings—never add cold water directly. Use dechlorinator. Vacuum gently around plants. Keep nitrates below 20ppm for best health and coloration.',
     },
     
     equipment: {
@@ -197,21 +200,21 @@ export const neonTetra: Species = {
   health: {
     lifespanYears: 5,
     commonDiseases: ['neon-tetra-disease', 'ich', 'fin-rot', 'false-neon-disease', 'columnaris'],
-    sensitivities: ['New Tank Syndrome', 'High Nitrite', 'Sudden pH swings', 'Bright light', 'High temperatures (>26°C)'],
+    sensitivities: ['New Tank Syndrome', 'High nitrite', 'Sudden pH swings', 'Bright light', 'High temperatures (>26°C)'],
   },
 
   scientificContext: {
-    wildHabitat: "Inhabits clearwater and blackwater tributaries of the Amazon Basin, particularly the Solimões River in Peru and Brazil. The water is tea-colored due to tannins from decaying leaves, extremely soft (<1 dGH), and acidic (pH 4.0-6.0). These streams are shaded by dense jungle canopy, resulting in dim lighting conditions. The substrate is composed of fine sand, silt, and thick layers of leaf litter.",
-    sexualDimorphism: "Subtle and difficult to identify. Females are noticeably rounder and deeper-bodied, especially when carrying eggs. This causes their iridescent blue stripe to appear 'bent' or curved. Males are slimmer with a straighter, more horizontal blue line. Under spawning conditions, males develop a slightly hooked anal fin.",
-    variants: ['Longfin Neon', 'Gold Neon (Leucistic)', 'Diamond Head Neon', 'Albino Neon (extremely rare)'],
+    wildHabitat: "Neon Tetras inhabit clearwater and blackwater tributaries of the Amazon Basin, particularly the Solimões River in Peru and Brazil. Wild habitat: shallow (20-80cm deep) tea-colored water stained by tannins from decaying leaves, EXTREMELY soft (<1 dGH), acidic (pH 4.0-6.0), warm (22-26°C), virtually no water hardness. Dense jungle canopy creates DIM LIGHTING conditions. Substrate is fine sand, silt, and thick leaf litter. They occupy mid-water zones in schools of hundreds, feeding on insect larvae, small crustaceans, and fallen insects.",
+    sexualDimorphism: "Subtle and difficult. Females: noticeably rounder and deeper-bodied especially when gravid (carrying eggs), causing iridescent blue stripe to appear 'bent' or curved. Larger overall. Males: slimmer, more streamlined with straighter horizontal blue line. Slightly smaller. Under spawning conditions, males develop slightly hooked anal fin. Easy to sex only when females are egg-filled; otherwise nearly identical.",
+    variants: ['Standard Neon (wild-type)', 'Longfin Neon (captive mutation)', 'Gold Neon (leucistic mutation)', 'Diamond Head Neon (enhanced iridescence)', 'Albino Neon (extremely rare)'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
-    trigger: 'Breeding requires near-total darkness (eggs are photosensitive and will die if exposed to light). Use RO water or collected rainwater to achieve extremely soft water (GH < 1, KH 0) and acidify to pH 5.5 using peat moss or commercial pH-down. Condition breeding pairs separately with live foods (daphnia, brine shrimp) for 2 weeks. Introduce pair into breeding tank at night.',
-    fryCare: 'Eggs hatch in 24 hours but remain light-sensitive for the first 5 days. Keep breeding tank in complete darkness or cover with black fabric. Fry are microscopic and require infusoria (green water) or liquid fry food for the first week. After 7 days, introduce newly-hatched brine shrimp. Gradually increase lighting over 2 weeks. Mortality is very high (50-70%) even with perfect care.',
-    notes: 'Neon Tetra breeding is considered one of the hardest among common aquarium fish. The combination of extreme water softness, total darkness, and photosensitive eggs makes it a challenge even for experienced breeders. Most commercial Neons are now bred in massive farms in Asia using specialized RO systems.',
+    trigger: 'Neon Tetra breeding is EXPERT-LEVEL—one of the hardest common aquarium fish to breed! Requires: 1) Near-total DARKNESS (eggs are photosensitive and die if exposed to light!), 2) EXTREMELY SOFT WATER (GH <1, KH 0)—use RO water or collected rainwater, 3) ACIDIC pH 5.0-5.5 using peat moss or pH-down, 4) Temperature 24-25°C, 5) Separate conditioning of breeding pairs with live foods (daphnia, brine shrimp) for 2 weeks. Introduce pair into breeding tank at NIGHT. Spawning usually occurs at dawn.',
+    fryCare: 'Eggs hatch in 24 hours but remain LIGHT-SENSITIVE for first 5 days—keep breeding tank in COMPLETE DARKNESS (cover with black fabric!). Fry are microscopic and require infusoria (green water) or liquid fry food for first week. After 7 days, introduce newly-hatched brine shrimp nauplii. Gradually increase lighting over 2 weeks. Mortality is VERY HIGH (50-70%) even with perfect care. Fry grow slowly: 1cm at 8 weeks. Maturity at 6-8 months.',
+    notes: 'Neon breeding is considered one of the HARDEST projects for common aquarium fish. The combination of extreme water softness, total darkness, and photosensitive eggs makes success rare for home breeders. Most commercial Neons are bred in massive Asian farms using specialized RO systems and hormone injections. For hobbyists, breeding is a bucket-list challenge—not recommended for beginners.',
   },
   
   experienceData: {

@@ -55,19 +55,19 @@ export const pygmyCory: Species = {
   
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Pygmies LOVE heavily planted tanks. Unlike Bronze or Panda Corys that need open floor space, Pygmies use the entire water column and actually prefer forests of plants to weave through. Use fine-leaved plants (Cabomba, Water Sprite, Rotala) in the background and midground, moss (Java Moss, Christmas Moss) on hardscape, and floating plants (Salvinia, Frogbit) to diffuse light. They spend hours hovering among plant stems like tiny helicopters. Still provide some open sandy areas for their occasional bottom-foraging sessions.',
+    plantingNotes: 'Pygmies love heavily planted tanks. Unlike Bronze or Panda Corys that need open floor space, Pygmies use the entire water column and actually prefer forests of plants to weave through. Use fine-leaved plants (Cabomba, Water Sprite, Rotala) in the background and midground, moss (Java Moss, Christmas Moss) on hardscape, and floating plants (Salvinia, Frogbit) to diffuse light. They spend hours hovering among plant stems like tiny helicopters. Still provide some open sandy areas for their occasional bottom-foraging sessions.',
     hardscape: ['Smooth River Stones', 'Small Driftwood (Spider Wood)', 'Leaf Litter (Indian Almond, Oak)', 'Moss-covered decorations'],
   },
   
   behavior: {
     tags: ['shoaler', 'peaceful', 'bottom_dweller', 'midwater', 'nano', 'scaleless', 'active'],
     minGroupSize: 10,
-    description: 'Pygmy Corys are the rebels of the Corydoras family. While their larger cousins (Bronze, Panda, Sterbai) are devoted bottom-dwellers, Pygmies spend 50-60% of their time hovering in MIDWATER. They school in tight, synchronized formations like tiny fighter jets, darting through plants, pausing to drift, then suddenly zooming to the substrate to sniff for food. Their schooling behavior is mesmerizing—10-15 Pygmies moving as one organism, changing direction instantly. When feeding time comes, they remember they\'re catfish and descend en masse to vacuum the sand. Their barbels twitch constantly, sensing chemical trails. They\'re incredibly social and become noticeably stressed in groups under 10—they huddle, hide, and lose their confidence. In proper groups (12-15+), they own the tank, exploring every layer fearlessly.',
+    description: 'Pygmy Corys are the rebels of the Corydoras family. While their larger cousins (Bronze, Panda, Sterbai) are devoted bottom-dwellers, Pygmies spend 50-60% of their time hovering in midwater. They school in tight, synchronized formations like tiny fighter jets, darting through plants, pausing to drift, then suddenly zooming to the substrate to sniff for food. Their schooling behavior is mesmerizing—10-15 Pygmies moving as one organism, changing direction instantly. When feeding time comes, they remember they\'re catfish and descend en masse to vacuum the sand. Their barbels twitch constantly, sensing chemical trails. They\'re incredibly social and become noticeably stressed in groups under 10—they huddle, hide, and lose their confidence. In proper groups (12-15+), they own the tank, exploring every layer fearlessly.',
     
     compatibility: {
       goodMates: ['Ember Tetras', 'Chili Rasboras', 'Celestial Pearl Danios', 'Microrasboras (Phoenix, Kubotai)', 'Endler Guppies', 'Otocinclus', 'Dwarf Shrimp (Cherry, Crystal, Caridina)', 'Nerite Snails', 'Ramshorn Snails', 'Small Rasboras'],
       badMates: ['Bettas (sometimes nippy)', 'Large Cichlids', 'Goldfish', 'Aggressive Barbs', 'Large Tetras', 'Any fish >5cm with predatory tendencies'],
-      notes: 'Pygmies are NANO SPECIALISTS. Their tiny size (2.3cm) makes them perfect for small tanks but vulnerable to anything remotely aggressive. They\'re ideal tankmates for other nano species that occupy different zones. Because Pygmies use midwater, they don\'t compete with bottom-dwellers like larger Corys might.',
+      notes: 'Pygmies are nano specialists. Their tiny size (2.3cm) makes them perfect for small tanks but vulnerable to anything remotely aggressive. They\'re ideal tankmates for other nano species that occupy different zones. Because Pygmies use midwater, they don\'t compete with bottom-dwellers like larger Corys might.',
       
       rules: [
         {
@@ -79,7 +79,7 @@ export const pygmyCory: Species = {
         {
           type: 'requires',
           condition: 'group-size >= 10',
-          reason: 'Pygmies are TIGHT schoolers. Unlike larger Corys (6 is okay), Pygmies need 10+ to display natural behavior. In small groups they hide constantly and lose confidence',
+          reason: 'Pygmies are tight schoolers. Unlike larger Corys (6 is okay), Pygmies need 10+ to display natural behavior. In small groups they hide constantly and lose confidence',
           severity: 'high',
         },
         {
@@ -91,7 +91,7 @@ export const pygmyCory: Species = {
         {
           type: 'requires',
           condition: 'nitrates < 20ppm',
-          reason: 'Pygmies are MORE nitrate-sensitive than larger Corys. At 30-40ppm nitrates, they become lethargic and prone to disease. Weekly water changes mandatory',
+          reason: 'Pygmies are more nitrate-sensitive than larger Corys. At 30-40ppm nitrates, they become lethargic and prone to disease. Weekly water changes mandatory',
           severity: 'medium',
         },
         {
@@ -140,24 +140,24 @@ export const pygmyCory: Species = {
     specialRequirements: [
       'Groups of 10-15+ required for natural schooling behavior', 
       'Fine sand substrate mandatory (finest barbels of all Corys)', 
-      'Nitrates MUST stay below 20ppm (more sensitive than larger Corys)',
-      'MICRO-sized foods required—their mouths are tiny!',
+      'Nitrates must stay below 20ppm (more sensitive than larger Corys)',
+      'Micro-sized foods required—their mouths are tiny!',
     ],
 
     proTips: [
-      "Pygmies need LARGE groups to shine. 6 Pygmies = stressed, hiding, boring. 15 Pygmies = confident school exploring every inch, synchronized swimming, constant activity. The difference is night and day. Save up and buy proper numbers.",
-      "Feed MICRO-foods. Regular sinking wafers are too large for their tiny mouths. Use crushed flakes, micro-pellets (<0.5mm), finely ground spirulina, baby brine shrimp, or specialized nano fish foods. Watch them swarm like piranhas!",
-      "Midwater swimming is NORMAL. New keepers panic when Pygmies hover in plants instead of sitting on the bottom like 'proper' Corys. This is their natural behavior! They evolved in shallow streams where midwater = safety from benthic predators.",
+      "Pygmies need large groups to shine. 6 Pygmies = stressed, hiding, boring. 15 Pygmies = confident school exploring every inch, synchronized swimming, constant activity. The difference is night and day. Save up and buy proper numbers.",
+      "Feed MICRO-FOODS. Regular sinking wafers are too large for their tiny mouths. Use crushed flakes, micro-pellets (<0.5mm), finely ground spirulina, baby brine shrimp, or specialized nano fish foods. Watch them swarm like tiny piranhas!",
+      "Midwater swimming is normal. New keepers panic when Pygmies hover in plants instead of sitting on the bottom like 'proper' Corys. This is their natural behavior! They evolved in shallow streams where midwater = safety from benthic predators.",
       "Pygmies are nitrate canaries. If your Pygmies become lethargic or start dying randomly, test nitrates immediately. They decline at 20-30ppm while other fish seem fine. This makes them excellent water quality indicators.",
-      "Despite their size, Pygmies produce MINIMAL bioload. 15 Pygmies = bioload of 3-4 Neon Tetras. You can keep surprisingly large groups in nano tanks (15-20 in a 40L) without overloading the filter.",
+      "Despite their size, Pygmies produce minimal bioload. 15 Pygmies = bioload of 3-4 Neon Tetras. You can keep surprisingly large groups in nano tanks (15-20 in a 40L) without overloading the filter.",
       "Breeding happens spontaneously in healthy groups. You'll randomly find tiny eggs on plants and glass. Females are picky egg-layers, placing each egg individually after careful inspection. Parents rarely eat eggs compared to larger Corys.",
     ],
 
     commonMistakes: [
-      "Buying only 6-8 because they're more expensive than other Corys. This defeats the purpose! Pygmies NEED 10+ to school properly. In small groups they hide, stress, and never display their amazing synchronized swimming behavior.",
+      "Buying only 6-8 because they're more expensive than other Corys. This defeats the purpose! Pygmies need 10+ to school properly. In small groups they hide, stress, and never display their amazing synchronized swimming behavior.",
       "Using regular Cory pellets/wafers. These are too big! Pygmies nibble at large wafers but can't consume them efficiently. They need micro-pellets, crushed flakes, or baby-fish-sized foods. Underfeeding kills more Pygmies than overfeeding.",
-      "Assuming all Corys have identical care. Pygmies are MORE nitrate-sensitive, need LARGER groups (10+ vs 6), require FINER sand, and eat SMALLER foods than Bronze or Panda Corys. Don't apply Bronze Cory care to Pygmies!",
-      "Mixing with ANY fish over 5cm. 'Peaceful' is relative. Even non-aggressive larger fish might accidentally inhale a 2.3cm Pygmy or stress them through sheer size intimidation. Stick to nano tankmates.",
+      "Assuming all Corys have identical care. Pygmies are more nitrate-sensitive, need larger groups (10+ vs 6), require finer sand, and eat smaller foods than Bronze or Panda Corys. Don't apply Bronze Cory care to Pygmies!",
+      "Mixing with any fish over 5cm. 'Peaceful' is relative. Even non-aggressive larger fish might accidentally inhale a 2.3cm Pygmy or stress them through sheer size intimidation. Stick to nano tankmates.",
       "Expecting 10-year lifespans like larger Corys. Pygmies live 3-5 years max, even in perfect conditions. This is normal for their size. They're not 'fragile'—just naturally shorter-lived like most nano fish.",
     ],
     
@@ -177,7 +177,7 @@ export const pygmyCory: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Pygmies are nitrate-sensitive. Weekly 30% water changes are MANDATORY to keep nitrates under 20ppm. Use gentle siphon to avoid sucking up tiny Pygmies! Vacuum sandy areas gently to prevent anaerobic pockets.',
+      notes: 'Pygmies are nitrate-sensitive. Weekly 30% water changes are mandatory to keep nitrates under 20ppm. Use gentle siphon to avoid sucking up tiny Pygmies! Vacuum sandy areas gently to prevent anaerobic pockets.',
     },
     
     equipment: {
@@ -204,7 +204,7 @@ export const pygmyCory: Species = {
   
   scientificContext: {
     wildHabitat: "Pygmy Corys inhabit shallow tributary streams and flooded forest pools in the Rio Madeira basin, Brazil. These are slow-moving, soft-water environments (pH 6.0-6.5, GH <5) with sandy/muddy bottoms covered in leaf litter and dense marginal vegetation. Water depth is often just 10-30cm. During dry season, they congregate in shrinking pools, forming massive schools of hundreds. The midwater swimming behavior evolved as protection—in ultra-shallow water, staying near the bottom exposes them to benthic predators (larger catfish, cichlids). By hovering midwater near vegetation, they avoid bottom threats while staying hidden from surface predators (birds). This unique behavior is a direct adaptation to their shallow-water habitat.",
-    sexualDimorphism: "Subtle when young, obvious when mature. Females are noticeably rounder and deeper-bodied, especially when gravid (carrying eggs). Males are slimmer, smaller, and more streamlined. From above, gravid females look like tiny footballs while males look like torpedoes. During breeding, females become VERY round—almost comically plump.",
+    sexualDimorphism: "Subtle when young, obvious when mature. Females are noticeably rounder and deeper-bodied, especially when gravid (carrying eggs). Males are slimmer, smaller, and more streamlined. From above, gravid females look like tiny footballs while males look like torpedoes. During breeding, females become very round—almost comically plump.",
     variants: ['Standard Pygmy (wild-type)', 'Captive-bred (more common, hardier)'],
   },
   
@@ -212,8 +212,8 @@ export const pygmyCory: Species = {
     method: 'egg_layer',
     difficulty: 'beginner',
     trigger: 'Pygmies breed spontaneously in healthy, well-fed groups. No special triggers needed! Condition group with live/frozen foods (baby brine shrimp, daphnia, micro-worms) and perform regular cool water changes (23°C water added to 24°C tank). Females choose males through "courtship inspection"—swimming along the male, checking him out from multiple angles before deciding. Rejected males try again with different females.',
-    fryCare: 'Females lay 3-8 eggs per spawning event, placing each egg individually on plants, moss, or glass after careful inspection. Eggs are tiny (1mm), translucent, and sticky. Unlike larger Corys, Pygmy parents RARELY eat eggs. Fry hatch in 3-4 days and are microscopic (<2mm). Initial feeding is CRITICAL—use infusoria, green water, or ultra-fine powdered fry food for 5-7 days. After one week, introduce micro-worms and newly-hatched baby brine shrimp. Growth is slow—fry reach 1cm at 6-8 weeks. Many breeders simply leave eggs in heavily planted tanks and find juvenile Pygmies appearing randomly.',
-    notes: 'Pygmy breeding is surprisingly easy IF you have large groups (15+) and pristine water quality. In perfect conditions, healthy females spawn weekly, laying small batches continuously. The challenge isn\'t triggering spawning—it\'s raising the tiny fry, which require microscopic foods and daily water changes.',
+    fryCare: 'Females lay 3-8 eggs per spawning event, placing each egg individually on plants, moss, or glass after careful inspection. Eggs are tiny (1mm), translucent, and sticky. Unlike larger Corys, Pygmy parents rarely eat eggs. Fry hatch in 3-4 days and are microscopic (<2mm). Initial feeding is critical—use infusoria, green water, or ultra-fine powdered fry food for 5-7 days. After one week, introduce micro-worms and newly-hatched baby brine shrimp. Growth is slow—fry reach 1cm at 6-8 weeks. Many breeders simply leave eggs in heavily planted tanks and find juvenile Pygmies appearing randomly.',
+    notes: 'Pygmy breeding is surprisingly easy if you have large groups (15+) and pristine water quality. In perfect conditions, healthy females spawn weekly, laying small batches continuously. The challenge isn\'t triggering spawning—it\'s raising the tiny fry, which require microscopic foods and daily water changes.',
   },
   
   experienceData: {

@@ -4,7 +4,7 @@ export const siameseAlgaeEater: Species = {
   id: 'species-siamese-algae-eater',
   slug: 'siamese-algae-eater',
   imageUrl: '/images/species/siamese-algae-eater.jpg',
-  funFact: "TRUE Siamese Algae Eaters (Crossocheilus atrilimes/oblongus) are BLACK BRUSH ALGAE (BBA) ASSASSINS - one of ONLY 3 FISH SPECIES that reliably consume this notorious red algae plague! They have SPECIALIZED MOUTHPARTS with razor-sharp scraping plates for shaving biofilm from rocks like living vacuum cleaners! Here's the CRITICAL catch: 90% of 'SAEs' sold in stores are MISIDENTIFIED imposters - usually aggressive Chinese Algae Eaters (Gyrinocheilus aymonieri) that grow 30cm, become territorial monsters, and SUCK SLIME COATS OFF FISH causing infections/death! TRUE SAE identification: 1) Black stripe extends THROUGH TAIL FIN (not ending at base!), 2) Two BARBELS near mouth, 3) NO sucker mouth, 4) Gold shoulder blaze, 5) Max 14cm. They're HILLSTREAM SPECIALISTS needing HIGH FLOW (powerhead mandatory!) and oxygen-rich water from Mekong rapids. From Thai/Laos fast-flowing streams!",
+  funFact: "True Siamese Algae Eaters (Crossocheilus atrilimes/oblongus) are BLACK BRUSH ALGAE (BBA) assassins - one of only 3 fish species that reliably consume this notorious red algae plague! They have specialized mouthparts with razor-sharp scraping plates for shaving biofilm from rocks like living vacuum cleaners! Here's the critical catch: 90% of 'SAEs' sold in stores are misidentified imposters - usually aggressive Chinese Algae Eaters (Gyrinocheilus aymonieri) that grow 30cm, become territorial monsters, and suck slime coats off fish causing infections/death! True SAE identification: 1) Black stripe extends through tail fin (not ending at base!), 2) Two barbels near mouth, 3) NO sucker mouth, 4) Gold shoulder blaze, 5) Max 14cm. They're hillstream specialists needing high flow (powerhead mandatory!) and oxygen-rich water from Mekong rapids. From Thai/Laos fast-flowing streams!",
 
   imageCredit: {
     photographer: 'Basile Morin (via Wikimedia Commons)',
@@ -25,7 +25,7 @@ export const siameseAlgaeEater: Species = {
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 14,
-    color: 'CRITICAL IDENTIFICATION FEATURES (90% store fish are WRONG SPECIES!): TRUE SAE: Dark olive-brown to golden-tan body. SHARP JET-BLACK horizontal stripe runs from SNOUT through EYE extending INTO TAIL FIN (zigzag pattern in tail - CRITICAL ID!). Gold/bronze shoulder blaze above black stripe (distinctive!). Two small BARBELS (whisker-like projections) near mouth. CLEAR or slightly yellowish fins. NO sucker mouth (normal mouth). Belly silver-white. IMPOSTERS TO AVOID: CHINESE ALGAE EATER (Gyrinocheilus): Black stripe ENDS at tail base (doesn\'t enter fin!), LARGE SUCKER MOUTH, NO barbels, red stripe edges, grows 30cm, aggressive! FLYING FOX (Epalzeorhynchos): Black stripe bordered by GOLD BANDS above/below, fins with black/red tint, more aggressive. Always verify TRUE SAE before buying!',
+    color: 'CRITICAL IDENTIFICATION FEATURES (90% store fish are wrong species!): True SAE: Dark olive-brown to golden-tan body. Sharp jet-black horizontal stripe runs from snout through eye extending INTO TAIL FIN (zigzag pattern in tail - critical ID!). Gold/bronze shoulder blaze above black stripe (distinctive!). Two small barbels (whisker-like projections) near mouth. Clear or slightly yellowish fins. NO sucker mouth (normal mouth). Belly silver-white. IMPOSTERS TO AVOID: CHINESE ALGAE EATER (Gyrinocheilus): Black stripe ENDS at tail base (doesn\'t enter fin!), LARGE SUCKER MOUTH, no barbels, red stripe edges, grows 30cm, aggressive! FLYING FOX (Epalzeorhynchos): Black stripe bordered by gold bands above/below, fins with black/red tint, more aggressive. Always verify true SAE before buying!',
   },
 
   environment: {
@@ -56,45 +56,45 @@ export const siameseAlgaeEater: Species = {
   habitat: {
     planting: 'sparse',
     plantingNotes:
-      'TRUE Siamese Algae Eaters are HILLSTREAM AUFWUCHS GRAZERS preferring MINIMAL PLANTING with exposed rock/driftwood surfaces for biofilm grazing! They\'re from fast-flowing rapids and need: 1) SMOOTH RIVER PEBBLES (main grazing surfaces - they scrape biofilm 24/7!), 2) DRIFTWOOD BRANCHES (covered in aufwuchs/algae), 3) LIMESTONE ROCKS (calcium-rich for biofilm growth), 4) OPEN SWIMMING AREAS (they\'re active swimmers!). Best plants: HARDY ATTACHED SPECIES (Anubias, Java Fern, Bolbitis - tied to rocks/wood, tolerate high flow). They will NOT harm healthy plants (herbivores eating only algae/biofilm - safe for planted tanks!). Avoid delicate stem plants (high flow damages them).',
-    hardscape: ['CRITICAL: SMOOTH RIVER PEBBLES (3-8cm - main food source for biofilm grazing!)', 'Driftwood branches (aufwuchs-covered surfaces)', 'Limestone slabs/rocks (promote biofilm/algae growth)', 'High-flow rock arrangements (create current zones)', 'NO SHARP EDGES (constant contact during grazing)'],
+      'True Siamese Algae Eaters are hillstream aufwuchs grazers preferring minimal planting with exposed rock/driftwood surfaces for biofilm grazing! They\'re from fast-flowing rapids and need: 1) Smooth river pebbles (main grazing surfaces - they scrape biofilm 24/7!), 2) Driftwood branches (covered in aufwuchs/algae), 3) Limestone rocks (calcium-rich for biofilm growth), 4) Open swimming areas (they\'re active swimmers!). Best plants: Hardy attached species (Anubias, Java Fern, Bolbitis - tied to rocks/wood, tolerate high flow). They will NOT harm healthy plants (herbivores eating only algae/biofilm - safe for planted tanks!). Avoid delicate stem plants (high flow damages them).',
+    hardscape: ['CRITICAL: Smooth river pebbles (3-8cm - main food source for biofilm grazing!)', 'Driftwood branches (aufwuchs-covered surfaces)', 'Limestone slabs/rocks (promote biofilm/algae growth)', 'High-flow rock arrangements (create current zones)', 'No sharp edges (constant contact during grazing)'],
   },
 
   behavior: {
     tags: ['algae_eater', 'active', 'peaceful', 'bottom_dweller', 'hillstream'],
     minGroupSize: 1,
     description:
-      'TRUE Siamese Algae Eaters are HYPERACTIVE AUFWUCHS GRAZERS displaying unique hillstream behaviors! Watch them constantly SCRAPING SURFACES with specialized mouthparts (razor-sharp plates shaving biofilm/algae from rocks like living sanders!). They spend 80% of time HEAD-DOWN against current grazing rock surfaces. They\'re TIRELESS WORKERS: 8-12 hours daily grazing, swimming against flow, resting briefly. They\'re PEACEFUL toward most tankmates but TERRITORIAL toward similar-looking species (Flying Foxes, other SAEs - attacks on sight!). Singles are fine (solo grazers naturally) but can keep groups 3+ in large tanks (200L+) with multiple territories. They\'re JUMPERS when startled - secure lid mandatory!',
+      'True Siamese Algae Eaters are hyperactive aufwuchs grazers displaying unique hillstream behaviors! Watch them constantly scraping surfaces with specialized mouthparts (razor-sharp plates shaving biofilm/algae from rocks like living sanders!). They spend 80% of time head-down against current grazing rock surfaces. They\'re tireless workers: 8-12 hours daily grazing, swimming against flow, resting briefly. They\'re peaceful toward most tankmates but territorial toward similar-looking species (Flying Foxes, other SAEs - attacks on sight!). Singles are fine (solo grazers naturally) but can keep groups 3+ in large tanks (200L+) with multiple territories. They\'re jumpers when startled - secure lid mandatory!',
     
     compatibility: {
       goodMates: ['Fast-swimming hillstream species (Hillstream Loaches, White Cloud Minnows)', 'Danios (Zebra, Pearl - match energy)', 'Rainbowfish (active swimmers)', 'Barbs (Tiger, Rosy - robust)', 'Corydoras (bottom level different)', 'Peaceful community fish (Tetras in groups)', 'Adult shrimp (Amano - too large to eat)'],
       badMates: ['Chinese Algae Eater (aggressive imposter - fights!)', 'Flying Fox (SAE attacks on sight - similar appearance!)', 'Other SAEs unless large tank 200L+ (territorial)', 'Slow algae competitors (Otocinclus - outcompeted for food)', 'Very small fish (may eat fry-sized fish under 2cm)', 'Slow-moving peaceful species (SAE too active)'],
       notes:
-        'TRUE Siamese Algae Eaters are PEACEFUL COMMUNITY FISH perfect for active tanks! They\'re non-aggressive toward different-looking tankmates and focus on grazing. CRITICAL: They\'re TERRITORIAL toward SIMILAR-LOOKING SPECIES (Flying Foxes, other SAEs) attacking viciously! Keep SOLO or groups 3+ in LARGE TANKS (200L+) with multiple territories and sightline breaks. They\'re safe with ADULT SHRIMP (Amano, large Neocaridina) but may eat SHRIMPLETS under 1cm opportunistically. Best in HIGH-FLOW community tanks with active fish matching their energy. They OUTCOMPETE slow algae-eaters (Otos) for food - avoid mixing.',
+        'True Siamese Algae Eaters are peaceful community fish perfect for active tanks! They\'re non-aggressive toward different-looking tankmates and focus on grazing. CRITICAL: They\'re territorial toward similar-looking species (Flying Foxes, other SAEs) attacking viciously! Keep solo or groups 3+ in large tanks (200L+) with multiple territories and sightline breaks. They\'re safe with adult shrimp (Amano, large Neocaridina) but may eat shrimplets under 1cm opportunistically. Best in high-flow community tanks with active fish matching their energy. They outcompete slow algae-eaters (Otos) for food - avoid mixing.',
       
       rules: [
         {
           type: 'warning',
-          target: 'verify TRUE SAE identification before buying',
-          reason: 'CRITICAL: 90% of store "SAEs" are MISIDENTIFIED imposters (usually aggressive Chinese Algae Eaters!). Chinese grow 30cm, become territorial monsters, suck slime coats off fish causing infections/death. TRUE SAE ID: Black stripe extends INTO TAIL FIN (zigzag pattern), two barbels near mouth, NO sucker mouth, max 14cm. Always verify before buying!',
+          target: 'verify true SAE identification before buying',
+          reason: 'CRITICAL: 90% of store "SAEs" are misidentified imposters (usually aggressive Chinese Algae Eaters!). Chinese grow 30cm, become territorial monsters, suck slime coats off fish causing infections/death. True SAE ID: Black stripe extends INTO TAIL FIN (zigzag pattern), two barbels near mouth, NO sucker mouth, max 14cm. Always verify before buying!',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'HIGH FLOW with powerhead/strong filter (15x+ tank volume turnover)',
-          reason: 'SAEs are HILLSTREAM SPECIALISTS from Mekong rapids needing HIGH FLOW and oxygen-rich water! Without strong current: lethargy, no grazing behavior, stress, early death. They should swim HEAD-DOWN against current 24/7. Powerhead mandatory - this is non-negotiable',
+          condition: 'high flow with powerhead/strong filter (15x+ tank volume turnover)',
+          reason: 'SAEs are hillstream specialists from Mekong rapids needing high flow and oxygen-rich water! Without strong current: lethargy, no grazing behavior, stress, early death. They should swim head-down against current 24/7. Powerhead mandatory - this is non-negotiable',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'BIOFILM/ALGAE surfaces or supplemental feeding',
-          reason: 'SAEs are AUFWUCHS GRAZERS needing constant biofilm/algae for grazing. Introducing to CLEAN TANKS with no algae = STARVATION and death! They must have grazing surfaces OR daily supplemental spirulina wafers/blanched vegetables. This is critical for survival',
+          condition: 'biofilm/algae surfaces or supplemental feeding',
+          reason: 'SAEs are aufwuchs grazers needing constant biofilm/algae for grazing. Introducing to clean tanks with no algae = starvation and death! They must have grazing surfaces OR daily supplemental spirulina wafers/blanched vegetables. This is critical for survival',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'mixing with Flying Foxes or other SAEs in small tanks',
-          reason: 'SAEs are TERRITORIAL toward similar-looking species (Flying Foxes, other SAEs) attacking viciously on sight! Keep SOLO or groups 3+ in LARGE tanks (200L+) only. Small tanks = constant fighting, injuries, stress',
+          reason: 'SAEs are territorial toward similar-looking species (Flying Foxes, other SAEs) attacking viciously on sight! Keep solo or groups 3+ in large tanks (200L+) only. Small tanks = constant fighting, injuries, stress',
           severity: 'high',
         },
       ],
@@ -135,31 +135,31 @@ export const siameseAlgaeEater: Species = {
     effort: 'medium',
     cost: 'medium',
     specialRequirements: [
-      'VERIFY TRUE SAE identification (90% mislabeled!) - CRITICAL', 
-      'HIGH FLOW with powerhead (15x+ turnover) - hillstream requirement', 
-      'BIOFILM/ALGAE surfaces (smooth river pebbles, driftwood)', 
+      'Verify true SAE identification (90% mislabeled!) - critical', 
+      'High flow with powerhead (15x+ turnover) - hillstream requirement', 
+      'Biofilm/algae surfaces (smooth river pebbles, driftwood)', 
       'Supplemental spirulina-based foods daily', 
       'High oxygen levels (airstones + surface agitation)', 
-      'CLEAN WATER (low organics, high flow)', 
+      'Clean water (low organics, high flow)', 
       'Secure lid (jumpers when startled)',
     ],
 
     proTips: [
-      "SPECIES VERIFICATION IS CRITICAL! 90% of store 'SAEs' are MISIDENTIFIED imposters (usually Chinese Algae Eaters!). TRUE SAE identification checklist: 1) Black stripe extends INTO TAIL FIN (zigzag pattern - CRITICAL!), 2) Two BARBELS near mouth, 3) NO sucker mouth (normal mouth), 4) Gold shoulder blaze, 5) Max 14cm size. CHINESE ALGAE EATER (avoid!): Black stripe ENDS at tail base, LARGE SUCKER MOUTH, no barbels, grows 30cm, aggressive! FLYING FOX (avoid mixing!): Gold bands above/below black stripe, colored fins. Always verify before buying - this saves disasters!",
-      "BLACK BRUSH ALGAE (BBA) CONTROL: SAEs are one of ONLY 3 FISH SPECIES eating BBA reliably! For effective BBA control: 1) Introduce YOUNG SAE (5-8cm) when BBA present (they're hungriest!), 2) Keep SLIGHTLY HUNGRY (don't overfeed - forces grazing), 3) Provide variety (alternates between BBA/biofilm/supplements). CRITICAL: Introducing to CLEAN TANKS with NO ALGAE = STARVATION! They need constant grazing surfaces. BBA takes weeks to control - be patient.",
-      "HIGH FLOW = HEALTH! SAEs are HILLSTREAM SPECIALISTS from Mekong rapids needing STRONG CURRENT and oxygen-rich water! Setup: 1) Canister filter with high flow output, 2) POWERHEAD (15x+ tank volume turnover), 3) Airstones for oxygen. They should swim HEAD-DOWN against current 24/7 grazing surfaces. Without flow: lethargy, no grazing, stress, early death. Flow test: SAE should actively swim against current - if resting constantly, flow too weak.",
-      "Supplemental SPIRULINA-BASED FOODS daily! While SAEs are famous algae-eaters, they need VARIED DIET for health: Daily staple: spirulina wafers/algae pellets (clip to rock - watch them scrape!), blanched zucchini/cucumber discs (2-3x weekly), nori sheets (seaweed - clip near current), occasional high-quality flakes. Feed small amounts ensuring food reaches bottom. They're herbivores - avoid high-protein foods (can't metabolize efficiently causing organ damage!).",
-      "Provide BIOFILM SURFACES! SAEs graze AUFWUCHS (biofilm/microorganisms) from surfaces constantly. Setup: 1) SMOOTH RIVER PEBBLES (3-8cm - main grazing surfaces!), 2) Driftwood branches (algae-covered), 3) Limestone rocks (promote biofilm growth). In new/clean tanks without algae: supplement daily or they starve! Mature tanks with established biofilm = ideal.",
-      "Singles are FINE! Despite store advice, SAEs are SOLITARY GRAZERS naturally - singles thrive! Groups possible in LARGE TANKS (200L+) with 3+ fish (odd numbers reduce aggression) and multiple territories/sightline breaks. Small groups (2 fish) = dominant fish bullies submissive constantly. Solo = peaceful, natural behavior.",
+      "Species verification is critical! 90% of store 'SAEs' are misidentified imposters (usually Chinese Algae Eaters!). True SAE identification checklist: 1) Black stripe extends INTO TAIL FIN (zigzag pattern - critical!), 2) Two barbels near mouth, 3) NO sucker mouth (normal mouth), 4) Gold shoulder blaze, 5) Max 14cm size. Chinese Algae Eater (avoid!): Black stripe ends at tail base, large sucker mouth, no barbels, grows 30cm, aggressive! Flying Fox (avoid mixing!): Gold bands above/below black stripe, colored fins. Always verify before buying - this saves disasters!",
+      "Black Brush Algae (BBA) control: SAEs are one of only 3 fish species eating BBA reliably! For effective BBA control: 1) Introduce young SAE (5-8cm) when BBA present (they're hungriest!), 2) Keep slightly hungry (don't overfeed - forces grazing), 3) Provide variety (alternates between BBA/biofilm/supplements). CRITICAL: Introducing to clean tanks with no algae = starvation! They need constant grazing surfaces. BBA takes weeks to control - be patient.",
+      "High flow = health! SAEs are hillstream specialists from Mekong rapids needing strong current and oxygen-rich water! Setup: 1) Canister filter with high flow output, 2) Powerhead (15x+ tank volume turnover), 3) Airstones for oxygen. They should swim head-down against current 24/7 grazing surfaces. Without flow: lethargy, no grazing, stress, early death. Flow test: SAE should actively swim against current - if resting constantly, flow too weak.",
+      "Supplemental spirulina-based foods daily! While SAEs are famous algae-eaters, they need varied diet for health: Daily staple: spirulina wafers/algae pellets (clip to rock - watch them scrape!), blanched zucchini/cucumber discs (2-3x weekly), nori sheets (seaweed - clip near current), occasional high-quality flakes. Feed small amounts ensuring food reaches bottom. They're herbivores - avoid high-protein foods (can't metabolize efficiently causing organ damage!).",
+      "Provide biofilm surfaces! SAEs graze aufwuchs (biofilm/microorganisms) from surfaces constantly. Setup: 1) Smooth river pebbles (3-8cm - main grazing surfaces!), 2) Driftwood branches (algae-covered), 3) Limestone rocks (promote biofilm growth). In new/clean tanks without algae: supplement daily or they starve! Mature tanks with established biofilm = ideal.",
+      "Singles are fine! Despite store advice, SAEs are solitary grazers naturally - singles thrive! Groups possible in large tanks (200L+) with 3+ fish (odd numbers reduce aggression) and multiple territories/sightline breaks. Small groups (2 fish) = dominant fish bullies submissive constantly. Solo = peaceful, natural behavior.",
     ],
 
     commonMistakes: [
-      "Buying WRONG SPECIES. BIGGEST PROBLEM! 90% of store 'SAEs' are Chinese Algae Eaters (aggressive imposters!). Chinese grow 30cm, suck slime coats off fish causing infections, become territorial monsters. Many 'my SAE turned aggressive' complaints are actually Chinese. ALWAYS verify: TRUE SAE = black stripe INTO tail fin, barbels, NO sucker mouth. Don't trust store labels!",
-      "No high flow. SAEs are HILLSTREAM SPECIALISTS needing STRONG CURRENT! In low-flow tanks: lethargy, no grazing behavior, stress, early death (60% of SAE failures!). They evolved in Mekong rapids - need powerhead + canister filter creating 15x+ turnover. Without flow they don't display natural behaviors.",
-      "Introducing to CLEAN TANKS with no algae. SAEs are AUFWUCHS GRAZERS needing constant biofilm/algae for grazing. Clean tanks = NO FOOD = STARVATION within weeks! Either: 1) Add to mature tanks with established algae/biofilm, 2) Supplement DAILY with spirulina wafers/vegetables if tank clean. This is critical.",
-      "Overfeeding. SAEs are supposed to be CONSTANTLY HUNGRY grazing 8-12 hours daily! Overfeeding (large daily meals) = lazy, stops eating algae/BBA, defeats purpose. Feed SMALL amounts spirulina supplements letting them forage rest of time. Slightly hungry = active grazing.",
-      "Mixing with Flying Foxes or multiple SAEs in small tanks. SAEs are TERRITORIAL toward similar-looking species attacking viciously! Single SAE + Flying Fox in 120L = constant fighting, stress, injuries. Keep SAE solo OR groups 3+ in 200L+ only.",
-      "High-protein diet. SAEs are HERBIVORES specialized for aufwuchs/algae. Feeding high-protein foods (bloodworms, meaty pellets) regularly = can't metabolize efficiently → excessive fat deposits, organ degeneration. Stick to spirulina-based plant foods.",
+      "Buying wrong species. Biggest problem! 90% of store 'SAEs' are Chinese Algae Eaters (aggressive imposters!). Chinese grow 30cm, suck slime coats off fish causing infections, become territorial monsters. Many 'my SAE turned aggressive' complaints are actually Chinese. Always verify: true SAE = black stripe into tail fin, barbels, no sucker mouth. Don't trust store labels!",
+      "No high flow. SAEs are hillstream specialists needing strong current! In low-flow tanks: lethargy, no grazing behavior, stress, early death (60% of SAE failures!). They evolved in Mekong rapids - need powerhead + canister filter creating 15x+ turnover. Without flow they don't display natural behaviors.",
+      "Introducing to clean tanks with no algae. SAEs are aufwuchs grazers needing constant biofilm/algae for grazing. Clean tanks = no food = starvation within weeks! Either: 1) Add to mature tanks with established algae/biofilm, 2) Supplement daily with spirulina wafers/vegetables if tank clean. This is critical.",
+      "Overfeeding. SAEs are supposed to be constantly hungry grazing 8-12 hours daily! Overfeeding (large daily meals) = lazy, stops eating algae/BBA, defeats purpose. Feed small amounts spirulina supplements letting them forage rest of time. Slightly hungry = active grazing.",
+      "Mixing with Flying Foxes or multiple SAEs in small tanks. SAEs are territorial toward similar-looking species attacking viciously! Single SAE + Flying Fox in 120L = constant fighting, stress, injuries. Keep SAE solo OR groups 3+ in 200L+ only.",
+      "High-protein diet. SAEs are herbivores specialized for aufwuchs/algae. Feeding high-protein foods (bloodworms, meaty pellets) regularly = can't metabolize efficiently → excessive fat deposits, organ degeneration. Stick to spirulina-based plant foods.",
     ],
     
     feeding: {
@@ -178,7 +178,7 @@ export const siameseAlgaeEater: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes MANDATORY. SAEs are HILLSTREAM SPECIALISTS intolerant to organic waste accumulation - they need PRISTINE WATER at all times! Keep: ammonia/nitrite 0ppm, nitrate under 20ppm. They require HIGH DISSOLVED OXYGEN and STRONG WATER MOVEMENT from powerhead + canister filter (15x+ turnover). Clean filter monthly maintaining bacteria. Vacuum substrate gently (they graze surfaces constantly). Test water weekly. High flow + clean water = natural behaviors and health.',
+      notes: 'Weekly 30% water changes mandatory. SAEs are hillstream specialists intolerant to organic waste accumulation - they need pristine water at all times! Keep: ammonia/nitrite 0ppm, nitrate under 20ppm. They require high dissolved oxygen and strong water movement from powerhead + canister filter (15x+ turnover). Clean filter monthly maintaining bacteria. Vacuum substrate gently (they graze surfaces constantly). Test water weekly. High flow + clean water = natural behaviors and health.',
     },
     
     equipment: {
@@ -205,21 +205,21 @@ export const siameseAlgaeEater: Species = {
 
   scientificContext: {
     wildHabitat:
-      'Crossocheilus oblongus/atrilimes inhabits FAST-FLOWING HILLSTREAMS and rapids in Mekong + Chao Phraya river basins (Thailand, Laos, Cambodia, Vietnam). Wild habitat: shallow to moderate depth (30-150cm) fast-flowing sections over LIMESTONE/PEBBLE BEDS, STRONG CURRENT (water velocity 50-100 cm/s!), CLEAR highly-oxygenated water, heavy AUFWUCHS GROWTH (biofilm - diatoms, algae, microorganisms covering surfaces). They\'re specialized AUFWUCHS GRAZERS with modified mouthparts containing razor-sharp scraping plates for shaving biofilm from rocks. They graze constantly against current using pectoral fins for station-holding. Famous for consuming BLACK BRUSH ALGAE (Rhodophyta red algae) - one of only 3 fish species eating it reliably!',
+      'Crossocheilus oblongus/atrilimes inhabits fast-flowing hillstreams and rapids in Mekong + Chao Phraya river basins (Thailand, Laos, Cambodia, Vietnam). Wild habitat: shallow to moderate depth (30-150cm) fast-flowing sections over limestone/pebble beds, strong current (water velocity 50-100 cm/s!), clear highly-oxygenated water, heavy aufwuchs growth (biofilm - diatoms, algae, microorganisms covering surfaces). They\'re specialized aufwuchs grazers with modified mouthparts containing razor-sharp scraping plates for shaving biofilm from rocks. They graze constantly against current using pectoral fins for station-holding. Famous for consuming black brush algae (Rhodophyta red algae) - one of only 3 fish species eating it reliably!',
     sexualDimorphism:
-      'EXTREMELY DIFFICULT to sex (no reliable external differences). Males MAY be: Slightly slimmer overall, more aggressive/territorial behavior. Females MAY be: Slightly fuller-bodied, rounder belly when mature. These differences are SUBTLE and unreliable. Best method: Observing spawning behavior (never documented in home aquaria). Juveniles impossible to sex. Most hobbyists never successfully sex SAEs.',
-    variants: ['Crossocheilus oblongus (most common TRUE SAE)', 'Crossocheilus atrilimes (closely related - nearly identical)', 'Crossocheilus langei (rare - most efficient BBA eater!)', 'IMPOSTERS: Chinese Algae Eater (Gyrinocheilus - avoid!), Flying Fox (Epalzeorhynchos - different species)'],
+      'Extremely difficult to sex (no reliable external differences). Males may be: Slightly slimmer overall, more aggressive/territorial behavior. Females may be: Slightly fuller-bodied, rounder belly when mature. These differences are subtle and unreliable. Best method: Observing spawning behavior (never documented in home aquaria). Juveniles impossible to sex. Most hobbyists never successfully sex SAEs.',
+    variants: ['Crossocheilus oblongus (most common true SAE)', 'Crossocheilus atrilimes (closely related - nearly identical)', 'Crossocheilus langei (rare - most efficient BBA eater!)', 'Imposters: Chinese Algae Eater (Gyrinocheilus - avoid!), Flying Fox (Epalzeorhynchos - different species)'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
     trigger:
-      'Siamese Algae Eater breeding is EXTREMELY RARE in captivity - never reliably documented in home aquaria! Wild spawning triggers: 1) SEASONAL COOL WATER DROP during monsoon season (temp drops from 27°C to 22-23°C over weeks), 2) HEAVY CURRENT increase (flooding rains increase flow 5-10x!), 3) Migration to upstream spawning areas, 4) Large mature groups (natural behavior). Home aquarists have NEVER successfully bred SAEs - all commercial fish are WILD-CAUGHT imports from Thailand/Laos.',
+      'Siamese Algae Eater breeding is extremely rare in captivity - never reliably documented in home aquaria! Wild spawning triggers: 1) Seasonal cool water drop during monsoon season (temp drops from 27°C to 22-23°C over weeks), 2) Heavy current increase (flooding rains increase flow 5-10x!), 3) Migration to upstream spawning areas, 4) Large mature groups (natural behavior). Home aquarists have never successfully bred SAEs - all commercial fish are wild-caught imports from Thailand/Laos.',
     fryCare:
-      'Breeding details UNKNOWN from home aquaria (never documented!). Presumed wild behavior based on related species: Eggs scattered in fast-flowing sections among rocks/gravel (adhesive eggs stick to substrate), parents show NO parental care (egg scatterers), eggs hatch 2-3 days in fast-flowing oxygenated water, fry need INFUSORIA first week (green water, liquid fry food), then micro-algae and aufwuchs. Growth presumably slow: 3cm at 6 months, 6cm at 1 year. Extremely challenging.',
+      'Breeding details unknown from home aquaria (never documented!). Presumed wild behavior based on related species: Eggs scattered in fast-flowing sections among rocks/gravel (adhesive eggs stick to substrate), parents show no parental care (egg scatterers), eggs hatch 2-3 days in fast-flowing oxygenated water, fry need infusoria first week (green water, liquid fry food), then micro-algae and aufwuchs. Growth presumably slow: 3cm at 6 months, 6cm at 1 year. Extremely challenging.',
     notes:
-      'Siamese Algae Eater breeding is the HOLY GRAIL of cyprinid breeding - NEVER reliably achieved in home aquaria! All commercial SAEs are WILD-CAUGHT from Mekong river system. Why breeding fails: 1) Require MASSIVE SEASONAL ENVIRONMENTAL CHANGES (temp drops, flow increases impossible to replicate), 2) Need large spawning groups (6-10+ mature adults), 3) Migratory spawning behavior (move to specific upstream areas), 4) Unknown specific spawning triggers. Most hobbyists focus on their ALGAE-EATING prowess rather than breeding attempts.',
+      'Siamese Algae Eater breeding is the holy grail of cyprinid breeding - never reliably achieved in home aquaria! All commercial SAEs are wild-caught from Mekong river system. Why breeding fails: 1) Require massive seasonal environmental changes (temp drops, flow increases impossible to replicate), 2) Need large spawning groups (6-10+ mature adults), 3) Migratory spawning behavior (move to specific upstream areas), 4) Unknown specific spawning triggers. Most hobbyists focus on their algae-eating prowess rather than breeding attempts.',
   },
   
   experienceData: {

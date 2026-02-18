@@ -4,7 +4,7 @@ export const bolivianRam: Species = {
   id: 'cichlid-015',
   slug: 'bolivian-ram',
   imageUrl: '/images/species/bolivian-ram.jpg',
-  funFact: "Bolivian Rams are the GENTLE GIANTS of the dwarf cichlid world—peaceful, hardy, and FORGIVING compared to their high-maintenance cousin, the German Blue Ram. Watch them work: they're 'eartheaters' that spend ALL DAY taking mouthfuls of sand, sifting it through their gills like underwater gold miners, and spitting out the clean sand in little clouds. It looks like they're chewing constantly but never eating—they ARE eating! Tiny food particles are extracted during every sand-sift. They're the aquarium's SLOW FOOD movement—calm, methodical grazers who take their time with every meal. Perfect for peaceful community tanks!",
+  funFact: "Bolivian Rams are the 'gentle giants' of the dwarf cichlid world—peaceful, hardy, and forgiving compared to their high-maintenance cousin, the German Blue Ram. Watch them work: they're 'eartheaters' that spend all day taking mouthfuls of sand, sifting it through their gills like underwater gold miners, and spitting out the clean sand in little clouds. It looks like they're chewing constantly but never eating—they are eating! Tiny food particles are extracted during every sand-sift. They're the aquarium's 'slow food' movement—calm, methodical grazers who take their time with every meal. Perfect for peaceful community tanks!",
 
   taxonomy: {
     scientificName: 'Mikrogeophagus altispinosus',
@@ -48,25 +48,25 @@ export const bolivianRam: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes: 'Bolivian Rams appreciate planted tanks but don\'t need jungle density. Plant moderately with hardy species (Anubias, Amazon Swords, Cryptocoryne, Vallisneria) that can handle occasional sand disturbance from their digging. They\'re NOT plant destroyers but will uproot delicate carpets during sand-sifting. Leave LARGE OPEN SANDY AREAS (50%+ of substrate) for foraging behavior—this is CRITICAL for their natural behavior. They spend hours sifting through sand, and without adequate space they become stressed. Smooth river stones create territories and spawning sites. Driftwood adds tannins and visual barriers.',
+    plantingNotes: 'Bolivian Rams appreciate planted tanks but don\'t need jungle density. Plant moderately with hardy species (Anubias, Amazon Swords, Cryptocoryne, Vallisneria) that can handle occasional sand disturbance from their digging. They\'re not plant destroyers but will uproot delicate carpets during sand-sifting. Leave LARGE open sandy areas (50%+ of substrate) for foraging behavior—this is CRITICAL for their natural behavior. They spend hours sifting through sand, and without adequate space they become stressed. Smooth river stones create territories and spawning sites. Driftwood adds tannins and visual barriers.',
     hardscape: ['Smooth flat stones (spawning sites - CRITICAL)', 'Driftwood (territories + tannins)', 'Caves (rarely used but appreciated)', 'River stones scattered on sand'],
   },
 
   behavior: {
     tags: ['peaceful', 'pair-bonding', 'substrate-sifter', 'cichlid', 'slow_eater'],
     minGroupSize: 2,
-    description: 'Bolivian Rams are REMARKABLY peaceful for cichlids—they\'re the diplomats of the dwarf cichlid family. Unlike aggressive cichlids, Bolivians are SHY, GENTLE, and CO-OPERATIVE. They spend their days methodically sifting through sand like underwater archaeologists, taking mouthfuls, filtering it through gills, and spitting out clean sand in beautiful clouds. This "eartheater" behavior is MESMERIZING to watch and happens ALL DAY LONG. They\'re SLOW, DELIBERATE feeders—no frantic rushing or food aggression. They pick at food carefully, chew thoughtfully, and often spit it out multiple times before swallowing tiny particles. This makes them VULNERABLE to fast competitive feeders. Bolivians form STRONG pair bonds with elaborate courtship: side-by-side swimming, fin displays, and synchronized movements. Pairs stay together for life and cooperate during breeding. They\'re gregarious and appreciate company of their own kind (4-6 fish create natural groupings without aggression). Non-breeding Bolivians are PEACEFUL toward all tankmates, only showing mild territoriality during spawning.',
+    description: 'Bolivian Rams are remarkably peaceful for cichlids—they\'re the diplomats of the dwarf cichlid family. Unlike aggressive cichlids, Bolivians are shy, gentle, and co-operative. They spend their days methodically sifting through sand like underwater archaeologists, taking mouthfuls, filtering it through gills, and spitting out clean sand in beautiful clouds. This "eartheater" behavior is mesmerizing to watch and happens all day long. They\'re slow, deliberate feeders—no frantic rushing or food aggression. They pick at food carefully, chew thoughtfully, and often spit it out multiple times before swallowing tiny particles. This makes them vulnerable to fast competitive feeders. Bolivians form strong pair bonds with elaborate courtship: side-by-side swimming, fin displays, and synchronized movements. Pairs stay together for life and cooperate during breeding. They\'re gregarious and appreciate company of their own kind (4-6 fish create natural groupings without aggression). Non-breeding Bolivians are peaceful toward all tankmates, only showing mild territoriality during spawning.',
     
     compatibility: {
       goodMates: ['Peaceful Tetras (Cardinal, Rummynose, Ember)', 'Peaceful Corydoras', 'Kuhli Loaches', 'Otocinclus', 'Peaceful Plecos', 'Hatchetfish', 'Peaceful Rasboras', 'Snails'],
       badMates: ['Fast aggressive feeders (Danios, Barbs)', 'Aggressive Cichlids', 'Fin-nippers (Tiger Barbs)', 'Very active schools that stress them', 'Large predatory fish'],
-      notes: 'Bolivian Rams are IDEAL community cichlids—peaceful, non-aggressive, and compatible with most calm tankmates. HOWEVER: They are SLOW FEEDERS and get OUTCOMPETED by fast fish (Danios, Barbs, active Tetras). In tanks with hyper-active schools, Bolivians slowly STARVE because they can\'t compete for food. Pair them with CALM, PEACEFUL species only (Cardinal Tetras, Corydoras, Otocinclus). Target feeding (dropping food directly near them with turkey baster) helps. Breeding pairs claim small territories (30cm radius) around spawning sites but use threat displays, not violence. They\'re safe with other peaceful bottom-dwellers like Corydoras.',
+      notes: 'Bolivian Rams are ideal community cichlids—peaceful, non-aggressive, and compatible with most calm tankmates. HOWEVER: They are SLOW feeders and get outcompeted by fast fish (Danios, Barbs, active Tetras). In tanks with hyper-active schools, Bolivians slowly starve because they can\'t compete for food. Pair them with calm, peaceful species only (Cardinal Tetras, Corydoras, Otocinclus). Target feeding (dropping food directly near them with turkey baster) helps. Breeding pairs claim small territories (30cm radius) around spawning sites but use threat displays, not violence. They\'re safe with other peaceful bottom-dwellers like Corydoras.',
       
       rules: [
         {
           type: 'warning',
           target: 'fast aggressive feeders (Danios, Barbs, Rainbow Sharks)',
-          reason: 'Bolivian Rams are SLOW methodical feeders. Fast fish (Danios, Barbs) mob food and eat everything before Bolivians even arrive. Result: slow starvation over weeks/months. Keep with CALM peaceful fish only or use target feeding',
+          reason: 'Bolivian Rams are slow methodical feeders. Fast fish (Danios, Barbs) mob food and eat everything before Bolivians even arrive. Result: slow starvation over weeks/months. Keep with calm peaceful fish only or use target feeding',
           severity: 'high',
         },
         {
@@ -78,13 +78,13 @@ export const bolivianRam: Species = {
         {
           type: 'warning',
           target: 'aggressive cichlids',
-          reason: 'Bolivians are PEACEFUL and submissive. Aggressive species (Oscars, Jack Dempseys, African cichlids) will bully them relentlessly. Keep with peaceful community fish only',
+          reason: 'Bolivians are peaceful and submissive. Aggressive species (Oscars, Jack Dempseys, African cichlids) will bully them relentlessly. Keep with peaceful community fish only',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'stable clean water',
-          reason: 'Bolivians are MORE tolerant than German Rams but still sensitive to nitrates (keep <20ppm) and parameter swings. Weekly water changes mandatory',
+          reason: 'Bolivians are more tolerant than German Rams but still sensitive to nitrates (keep <20ppm) and parameter swings. Weekly water changes mandatory',
           severity: 'medium',
         },
       ],
@@ -133,20 +133,20 @@ export const bolivianRam: Species = {
     ],
 
     proTips: [
-      "Bolivian Rams vs German Blue Rams: Bolivians are HARDIER, LARGER (8cm vs 5cm), MORE PEACEFUL, and tolerate WIDER water parameters (pH 6.5-7.8, temp 23-28°C). German Rams are MORE COLORFUL but DELICATE (need pH 5.5-6.5, temp 28-30°C, die easily from stress). For beginners? BOLIVIANS win every time. They're the 'easy mode' Ram.",
-      "Sand-sifting behavior: They take mouthfuls of sand, filter it through gills, and spit out clean sand. It looks like they're chewing constantly but never swallowing—they ARE eating! Tiny particles (detritus, microfauna, food scraps) are extracted during each sift. This happens ALL DAY. It's their job, their hobby, their life.",
-      "SLOW FEEDER problem: Bolivians are methodical, careful eaters. They pick up food, chew it, spit it out, pick it up again—breaking it into tiny pieces. Fast fish (Danios, Barbs) swarm food and eat everything in 30 seconds. Bolivians arrive 2 minutes later and find nothing. Solution: SINK pellets/wafers directly near Bolivians using turkey baster. Target feeding ensures they get food.",
-      "Pairs form STRONG bonds. Once paired (6-12 months old), they stay together for life. Watch courtship: synchronized swimming, fin spreading, body quivering. It's like underwater ballroom dancing. If one partner dies, survivor often refuses to pair again.",
-      "Hardy compared to German Rams: Bolivians tolerate pH 6.5-7.8 (German Rams need <6.5), temp 23-28°C (German Rams need 28-30°C), and moderate hardness (German Rams need soft water). If your water is neutral-alkaline and moderate hardness, Bolivians are your ONLY Ram option.",
+      "Bolivian Rams vs German Blue Rams: Bolivians are HARDIER, LARGER (8cm vs 5cm), more peaceful, and tolerate wider water parameters (pH 6.5-7.8, temp 23-28°C). German Rams are more colorful but delicate (need pH 5.5-6.5, temp 28-30°C, die easily from stress). For beginners? Bolivians win every time. They're the 'easy mode' Ram.",
+      "Sand-sifting behavior: They take mouthfuls of sand, filter it through gills, and spit out clean sand. It looks like they're chewing constantly but never swallowing—they are eating! Tiny particles (detritus, microfauna, food scraps) are extracted during each sift. This happens all day. It's their job, their hobby, their life.",
+      "SLOW FEEDER problem: Bolivians are methodical, careful eaters. They pick up food, chew it, spit it out, pick it up again—breaking it into tiny pieces. Fast fish (Danios, Barbs) swarm food and eat everything in 30 seconds. Bolivians arrive 2 minutes later and find nothing. Solution: sink pellets/wafers directly near Bolivians using turkey baster. Target feeding ensures they get food.",
+      "Pairs form strong bonds. Once paired (6-12 months old), they stay together for life. Watch courtship: synchronized swimming, fin spreading, body quivering. It's like underwater ballroom dancing. If one partner dies, survivor often refuses to pair again.",
+      "Hardy compared to German Rams: Bolivians tolerate pH 6.5-7.8 (German Rams need <6.5), temp 23-28°C (German Rams need 28-30°C), and moderate hardness (German Rams need soft water). If your water is neutral-alkaline and moderate hardness, Bolivians are your only Ram option.",
       "Groups of 4-6 create natural dynamics without aggression. They're not schoolers but appreciate company of their own kind. Multiple pairs coexist peacefully in large tanks (150L+) with visual barriers.",
     ],
 
     commonMistakes: [
-      "Gravel substrate = stressed, unhappy Bolivians. They MUST sift sand. It's their core behavior, like birds flying or dogs digging. Gravel prevents this and causes chronic stress. Always use SAND (pool filter sand, play sand, aquarium sand—any fine sand works).",
-      "Pairing with fast aggressive feeders = slow starvation. Bolivians are SLOW, CALM feeders. In tanks with Danios, Barbs, or Rainbow Sharks, Bolivians get ZERO food and slowly waste away over months. Pair with CALM fish (Cardinal Tetras, Corydoras) only.",
-      "Expecting German Ram colors. Bolivians are LESS COLORFUL (peachy-orange vs electric blue) but MORE ELEGANT and SUBTLE. They're understated beauties. If you want neon colors, buy German Rams (but accept delicate care). Bolivians are for people who value HARDINESS over flash.",
-      "Assuming all cichlids are aggressive. Bolivians are GENTLE, SHY, and PEACEFUL. They're more peaceful than many Tetras! Don't avoid them because 'cichlids are mean'—Bolivians break the stereotype.",
-      "No flat stones for spawning. Breeding pairs NEED flat stones (10-15cm diameter) to spawn. Without them, they become frustrated and stressed. Provide 2-3 flat stones even if not breeding—it's part of their natural behavior to clean and prepare surfaces.",
+      "Gravel substrate = stressed, unhappy Bolivians. They MUST sift sand. It's their core behavior, like birds flying or dogs digging. Gravel prevents this and causes chronic stress. Always use sand (pool filter sand, play sand, aquarium sand—any fine sand works).",
+      "Pairing with fast aggressive feeders = slow starvation. Bolivians are slow, calm feeders. In tanks with Danios, Barbs, or Rainbow Sharks, Bolivians get zero food and slowly waste away over months. Pair with calm fish (Cardinal Tetras, Corydoras) only.",
+      "Expecting German Ram colors. Bolivians are less colorful (peachy-orange vs electric blue) but more elegant and subtle. They're understated beauties. If you want neon colors, buy German Rams (but accept delicate care). Bolivians are for people who value hardiness over flash.",
+      "Assuming all cichlids are aggressive. Bolivians are gentle, shy, and peaceful. They're more peaceful than many Tetras! Don't avoid them because 'cichlids are mean'—Bolivians break the stereotype.",
+      "No flat stones for spawning. Breeding pairs need flat stones (10-15cm diameter) to spawn. Without them, they become frustrated and stressed. Provide 2-3 flat stones even if not breeding—it's part of their natural behavior to clean and prepare surfaces.",
     ],
     
     feeding: {
@@ -165,7 +165,7 @@ export const bolivianRam: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes maintain stable parameters. Vacuum sand LIGHTLY to remove solid waste but leave some detritus for natural foraging. Bolivians help keep substrate clean through sand-sifting. Keep nitrates below 20ppm (they\'re more sensitive than average fish). Stable parameters > perfect parameters.',
+      notes: 'Weekly 30% water changes maintain stable parameters. Vacuum sand lightly to remove solid waste but leave some detritus for natural foraging. Bolivians help keep substrate clean through sand-sifting. Keep nitrates below 20ppm (they\'re more sensitive than average fish). Stable parameters > perfect parameters.',
     },
     
     equipment: {
@@ -191,17 +191,17 @@ export const bolivianRam: Species = {
   },
 
   scientificContext: {
-    wildHabitat: "Bolivian Rams inhabit shallow (20-80cm), slow-moving streams and rivers in the UPPER Amazon Basin (Bolivia, Brazil headwaters). Water is CLEAR to slightly tannin-stained, NEUTRAL pH (6.5-7.5), MODERATE hardness (GH 8-12), and warm (24-27°C). Substrate is SANDY with scattered rocks and moderate vegetation (not jungle density like German Ram habitat). Water flow is GENTLE. This habitat explains their HARDINESS compared to German Rams (which come from soft, acidic blackwater). Bolivians evolved in more forgiving water chemistry, making them ADAPTABLE to average aquarium conditions.",
-    sexualDimorphism: "Males are LARGER (8cm vs 7cm females), develop LONGER dorsal and anal fin filaments (elegant trailing rays), and show MORE INTENSE coloration (brighter orange, deeper reds). Females are rounder, fuller-bodied, especially when gravid. During breeding, females develop swollen bellies and males' colors intensify dramatically. Juveniles impossible to sex—buy 6-8 and let them pair naturally.",
+    wildHabitat: "Bolivian Rams inhabit shallow (20-80cm), slow-moving streams and rivers in the upper Amazon Basin (Bolivia, Brazil headwaters). Water is clear to slightly tannin-stained, neutral pH (6.5-7.5), moderate hardness (GH 8-12), and warm (24-27°C). Substrate is sandy with scattered rocks and moderate vegetation (not jungle density like German Ram habitat). Water flow is gentle. This habitat explains their hardiness compared to German Rams (which come from soft, acidic blackwater). Bolivians evolved in more forgiving water chemistry, making them adaptable to average aquarium conditions.",
+    sexualDimorphism: "Males are larger (8cm vs 7cm females), develop longer dorsal and anal fin filaments (elegant trailing rays), and show more intense coloration (brighter orange, deeper reds). Females are rounder, fuller-bodied, especially when gravid. During breeding, females develop swollen bellies and males' colors intensify dramatically. Juveniles impossible to sex—buy 6-8 and let them pair naturally.",
     variants: ['Wild Type (standard peachy-orange)', 'No color morphs (unlike German Rams with Electric Blue, Gold, Balloon variants)'],
   },
 
   breeding: {
     method: 'substrate_spawner',
     difficulty: 'medium',
-    trigger: 'Bolivian Rams breed readily in home aquariums with proper conditions: 1) BONDED PAIR (let them choose partners naturally from group of 6+), 2) Soft, slightly acidic water (pH 6.5-7.0, GH 6-10), 3) Large water change (40-50%) with slightly COOLER water (23-24°C) to simulate rainy season, 4) Conditioning with high-protein live/frozen foods (bloodworms, brine shrimp) for 2-3 weeks until female plump, 5) Flat stone (10-15cm) for spawning site. Pair cleans stone obsessively for DAYS before spawning.',
-    fryCare: 'Female lays 100-300 eggs on pre-cleaned flat stone. Both parents guard and fan eggs. Eggs hatch in 48-72 hours at 26°C into wriggling larvae. Parents DIG PITS in sand and MOVE larvae multiple times over 5-7 days (pit rotation). Fry become free-swimming at 7-9 days. BOTH parents herd fry like border collies—keeping school together, retrieving stragglers in mouths. Parental care is EXCELLENT. Feed fry baby brine shrimp and finely crushed flakes. Parents guard fry for 4-6 weeks. In community tanks, fry disappear quickly (eaten). For successful rearing, use species-only breeding tank. Growth moderate: 1cm at 4 weeks, 2cm at 8 weeks.',
-    notes: 'Bolivian Rams are GOOD parents with strong biparental care. Unlike German Rams (which often eat eggs), Bolivians have HIGH success rates. Watching them herd fry clouds is ADORABLE. They\'re less prone to eating eggs/fry than German Rams. Pairs may spawn every 4-6 weeks if conditions maintained. Breeding is EASIER than German Rams due to hardier fry and better parental instincts.',
+    trigger: 'Bolivian Rams breed readily in home aquariums with proper conditions: 1) Bonded pair (let them choose partners naturally from group of 6+), 2) Soft, slightly acidic water (pH 6.5-7.0, GH 6-10), 3) Large water change (40-50%) with slightly cooler water (23-24°C) to simulate rainy season, 4) Conditioning with high-protein live/frozen foods (bloodworms, brine shrimp) for 2-3 weeks until female plump, 5) Flat stone (10-15cm) for spawning site. Pair cleans stone obsessively for days before spawning.',
+    fryCare: 'Female lays 100-300 eggs on pre-cleaned flat stone. Both parents guard and fan eggs. Eggs hatch in 48-72 hours at 26°C into wriggling larvae. Parents dig pits in sand and move larvae multiple times over 5-7 days (pit rotation). Fry become free-swimming at 7-9 days. Both parents herd fry like border collies—keeping school together, retrieving stragglers in mouths. Parental care is excellent. Feed fry baby brine shrimp and finely crushed flakes. Parents guard fry for 4-6 weeks. In community tanks, fry disappear quickly (eaten). For successful rearing, use species-only breeding tank. Growth moderate: 1cm at 4 weeks, 2cm at 8 weeks.',
+    notes: 'Bolivian Rams are good parents with strong biparental care. Unlike German Rams (which often eat eggs), Bolivians have high success rates. Watching them herd fry clouds is adorable. They\'re less prone to eating eggs/fry than German Rams. Pairs may spawn every 4-6 weeks if conditions maintained. Breeding is easier than German Rams due to hardier fry and better parental instincts.',
   },
   
   experienceData: {
