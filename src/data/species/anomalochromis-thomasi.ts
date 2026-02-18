@@ -1,7 +1,7 @@
 import type { Species } from '../../types/species';
 
 export const anomalochromisThomasi: Species = {
-  id: 'cichlid-001',
+  id: 'anomalochromis-thomasi',
   slug: 'african-butterfly-cichlid',
   imageUrl: '/images/species/african-butterfly-cichlid.jpg',
   funFact: "African Butterfly Cichlids are the GENTLE GIANTS of the cichlid world—except they're not giants, they're tiny (8cm)! Unlike their aggressive African relatives, these peaceful beauties form LIFELONG pair bonds and raise their babies together with Disney-movie-level devotion. Watch breeding pairs work as a coordinated team: one parent fans the eggs while the other patrols for threats, then they SWITCH shifts like aquatic co-parents. Most adorable: fry literally EAT MUCUS from their parents' skin for the first week—it's like cichlid baby formula!",
@@ -40,7 +40,7 @@ export const anomalochromisThomasi: Species = {
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'midwater',
+      secondary: 'middle',
       preference: 0.75,
     },
     
@@ -54,13 +54,13 @@ export const anomalochromisThomasi: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'African Butterfly Cichlids are the ONLY African cichlids that WON\'T destroy your planted tank! Unlike Lake Malawi/Tanganyika cichlids that uproot everything, A. thomasi are PLANT-SAFE even during breeding—making them perfect for Dutch-style aquascapes. Plant heavily with Anubias, Cryptocoryne, Amazon Swords, Java Fern, and Vallisneria. They appreciate shaded areas under floating plants (Water Sprite, Frogbit) since their wild habitat is heavily shaded by forest canopy. Dense planting provides security for shy juveniles and natural spawning sites for pairs. Leave open sandy areas for foraging and fry-herding behavior.',
     hardscape: ['Smooth flat stones (CRITICAL for spawning - 10-15cm diameter)', 'Driftwood (creates tannins + shade)', 'Leaf litter (Indian Almond, Oak leaves)', 'Caves and coconut shells (hiding spots)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'social', 'pair_bonding', 'substrate_spawner', 'parental_care'],
+    tags: ['peaceful', 'social', 'pair-bonding', 'substrate-spawner', 'parental-care'],
     minGroupSize: 8,
     description: 'African Butterfly Cichlids are REMARKABLY peaceful for cichlids—they\'re the gentle souls of the family. Juveniles are shy, gregarious schooling fish that feel secure in groups of 8+. As they mature (6-12 months), they form LIFELONG monogamous pairs with intense courtship displays: side-by-side swimming, color flashing, and elaborate fin spreading. Once paired, they become inseparable—constantly swimming together, foraging together, and "chatting" with subtle body language. During breeding, pairs claim a small territory (~30cm radius around spawning site) and become mildly territorial—chasing other fish away but NEVER causing serious harm. Non-breeding pairs remain peaceful. Their parenting is ADORABLE: both parents guard eggs 24/7 in shifts, fan them with pectoral fins, remove dead eggs with surgical precision, and later herd clouds of fry like aquatic sheepdogs. They\'re active during the day, constantly exploring substrate for food.',
     
@@ -110,7 +110,7 @@ export const anomalochromisThomasi: Species = {
     },
     
     activity: {
-      level: 'moderate',
+      level: 'medium',
       peakTimes: ['morning', 'afternoon'],
       nocturnal: false,
     },
