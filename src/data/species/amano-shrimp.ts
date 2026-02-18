@@ -1,7 +1,7 @@
 import type { Species } from '../../types/species';
 
 export const amanoShrimp: Species = {
-  id: 'species-amano-shrimp',
+  id: 'amano-shrimp',
   slug: 'amano-shrimp',
   imageUrl: '/images/species/amano-shrimp.jpg',
   funFact: "Amano Shrimp are the UNDISPUTED algae-eating champions of the freshwater aquarium world! Named after legendary aquascaper Takashi Amano (who popularized them in the 1980s), they can devour hair algae that even snails won't touch. A single Amano can eat its own body weight in algae daily. Watch them work: they're like tiny transparent bulldozers, constantly shoveling food into their mouths with their tiny hands. Fun fact: they molt (shed their shell) every 4-6 weeks, and you'll often find the empty shell—don't panic, it's not a dead shrimp!",
@@ -40,7 +40,7 @@ export const amanoShrimp: Species = {
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'midwater',
+      secondary: 'middle',
       preference: 0.85,
     },
     
@@ -54,13 +54,13 @@ export const amanoShrimp: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'Amano Shrimp THRIVE in heavily planted tanks with algae, biofilm, and hiding spots. They love Java Moss, Java Fern, Anubias, and Marimo moss balls—anything that grows biofilm or soft algae. Driftwood is ESSENTIAL for biofilm grazing. They climb everything: plants, glass, filter intakes, heaters. Dense planting provides security during molting (when they\'re vulnerable). Floating plants help diffuse light and encourage algae growth on surfaces. Unlike Neocaridina (Cherry Shrimp), Amanos appreciate some water flow—position plants near filter outputs for current.',
     hardscape: ['Driftwood (biofilm source - CRITICAL)', 'Smooth river stones', 'Moss-covered rocks', 'Caves for molting security'],
   },
 
   behavior: {
-    tags: ['algae_eater', 'peaceful', 'active', 'social', 'nano_safe', 'diurnal', 'cleanup_crew'],
+    tags: ['algae-eater', 'peaceful', 'active', 'social'],
     minGroupSize: 5,
     description: 'Amano Shrimp are the aquarium\'s tireless janitors—constantly moving, climbing, and eating. They\'re HYPERACTIVE compared to Cherry Shrimp, always on the go like caffeinated cleaners. Watch them "sweep" with their tiny fan-like hands (maxillipeds), shoveling detritus and algae into their mouths at incredible speed. They\'re bold and curious, often ignoring fish entirely while exploring every surface. Unlike shy Cherry Shrimp, Amanos work in broad daylight, climbing glass, marching across plants, and even riding the filter current like a water slide. They\'re peaceful but assertive—they\'ll steal food from slower shrimp without aggression. Social in groups of 5+, they often graze together in algae "parties." Females carrying eggs (green saddle visible through shell) are even bolder, constantly foraging for protein.',
     
@@ -157,9 +157,9 @@ export const amanoShrimp: Species = {
     ],
     
     feeding: {
-      frequency: '2-3x-weekly',
+      frequency: 'every-other-day',
       primaryFoods: ['algae', 'biofilm', 'wafers', 'vegetables'],
-      supplements: ['shrimp-pellets', 'blanched-zucchini', 'blanched-spinach'],
+      supplements: ['pellets', 'vegetables'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -183,7 +183,7 @@ export const amanoShrimp: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'moderate',
+        flowRate: 'medium',
       },
       airstone: false,
       lighting: 'medium',
@@ -205,7 +205,7 @@ export const amanoShrimp: Species = {
 
   breeding: {
     method: 'amphidromous',
-    difficulty: 'expert',
+    difficulty: 'hard',
     trigger: 'Amano Shrimp breeding is EXTREMELY DIFFICULT and nearly impossible for hobbyists. Females frequently carry eggs in freshwater tanks (you\'ll see green saddle), but larvae REQUIRE BRACKISH WATER (specific gravity 1.024, full marine salinity) to survive. Breeding requires: 1) Females with eggs, 2) Separate brackish water tank (35 ppt salinity), 3) Algae-covered surfaces for larvae to graze, 4) 6-8 WEEKS of larval care in saltwater, 5) Gradual transition back to freshwater after metamorphosis. Larvae are microscopic filter-feeders that eat diatoms/phytoplankton. Most hobbyists fail due to larval death.',
     fryCare: 'Females release 1,000-3,000 microscopic larvae (zoea stage) that MUST be transferred to brackish water within hours. Larvae are free-swimming and feed on algae growing on tank walls—they cannot eat normal foods. After 4-6 weeks, larvae metamorphose into tiny shrimp (2mm) and must be SLOWLY acclimated back to freshwater over 1-2 weeks. Survival rate is <5% even for experts. Commercial breeders use hormone injections to synchronize spawning. Home breeding is possible but requires marine aquarium experience.',
     notes: 'Almost all Amano Shrimp sold in stores are wild-caught from Japan/Taiwan or farmed commercially. Home breeding is so difficult that it\'s not economically viable. If your female drops eggs in freshwater, the larvae will die within 24 hours—they cannot survive without saltwater. Enjoy watching females carry eggs (fascinating to see green saddle through shell), but don\'t expect babies. This is why Amanos are more expensive than Cherry Shrimp (which breed easily in freshwater).',
