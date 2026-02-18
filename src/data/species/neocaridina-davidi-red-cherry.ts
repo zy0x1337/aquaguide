@@ -1,6 +1,6 @@
 import type { Species } from '../../types/species';
 
-export const cherryShrimp: Species = {
+export const neocaridinaDavidiRedCherry: Species = {
   id: 'shrimp-018',
   slug: 'cherry-shrimp',
   imageUrl: '/images/species/cherry-shrimp.jpg',
@@ -47,13 +47,13 @@ export const cherryShrimp: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'Cherry Shrimp are ALGAE-GRAZING MACHINES that live for biofilm! Plant HEAVILY with Java Moss (CRITICAL—best shrimp plant ever), Marimo moss balls, Java Fern, Anubias, Cryptocoryne, and any plants that grow biofilm. Dense planting provides hiding spots during molting (when they\'re vulnerable) and creates SURFACE AREA for biofilm growth (their primary food source). Floating plants (Water Sprite, Frogbit) diffuse light and drop detritus for grazing. Leaves with BROAD SURFACES (Anubias) become grazing platforms where shrimp congregate like tiny lawnmowers. Avoid sharp decorations—shrimp can puncture shells during molting.',
     hardscape: ['Driftwood (biofilm source)', 'Smooth river stones', 'Terracotta caves (hiding spots)', 'Indian Almond leaves (tannins + biofilm)', 'Lava rock (porous = biofilm heaven)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'algae_eater', 'social', 'active', 'cleanup_crew'],
+    tags: ['peaceful', 'algae_eater', 'social', 'active'],
     minGroupSize: 10,
     description: 'Cherry Shrimp are the aquarium\'s TIRELESS JANITORS—constantly grazing, climbing, and cleaning EVERY surface. Watch them work: they walk on glass, plants, substrate, filter intakes, heaters—EVERYTHING becomes a grazing platform. They pick at biofilm, algae, detritus, leftover food, and dead plant matter with their tiny claws. Social creatures that appreciate company—groups of 10+ create natural "grazing parties" where they cluster on favorite feeding spots. Females carrying eggs (berried) become MORE active, constantly fanning eggs with swimmerets to oxygenate them. Males are smaller, less colorful, and faster swimmers. During "mating frenzies," males swim frantically around tank searching for recently-molted females (who release pheromones). It\'s CHAOS: males zoom everywhere in synchronized madness!',
     
@@ -90,7 +90,7 @@ export const cherryShrimp: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-20',
+        surface: 10-20,
         midwater: '10-20',
         bottom: '10-100',
       },
@@ -109,7 +109,7 @@ export const cherryShrimp: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 999,
     },
     
@@ -151,9 +151,9 @@ export const cherryShrimp: Species = {
     ],
     
     feeding: {
-      frequency: '2-3x-weekly',
-      primaryFoods: ['biofilm', 'algae', 'wafers', 'shrimp-pellets'],
-      supplements: ['blanched-vegetables', 'spirulina', 'leaves'],
+      frequency: 'every-other-day',
+      primaryFoods: ['biofilm', 'algae-wafers', 'wafers', 'pellets'],
+      supplements: ['vegetables', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -177,7 +177,7 @@ export const cherryShrimp: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
@@ -198,7 +198,7 @@ export const cherryShrimp: Species = {
   },
 
   breeding: {
-    method: 'direct_development',
+    method: 'other',
     difficulty: 'beginner',
     trigger: 'Cherry Shrimp breeding is AUTOMATIC—easiest invertebrate to breed! No special setup needed. Provide: 1) Stable parameters (pH 7.0-7.5, GH 8-12, temp 22-25°C), 2) Regular feeding (shrimp pellets, blanched vegetables, biofilm), 3) Calcium for shell growth (GH 8+ or add cuttlebone). Females molt every 4-6 weeks. IMMEDIATELY after molting, they release pheromones that trigger MATING FRENZY: males swim FRANTICALLY around tank searching for female. Once mated, female develops SADDLE (yellow/green eggs visible through shell on back). After 1-2 weeks, saddle eggs move to swimmerets under tail—she\'s now BERRIED.',
     fryCare: 'Females carry 20-50 eggs under tail for 3-4 WEEKS (shorter in warmer water: 3 weeks at 25°C, 4 weeks at 20°C). She fans eggs constantly with swimmerets to oxygenate them. Eggs start yellow/green, darken to brown, then you see TINY EYE SPOTS (eggs about to hatch). After 21-28 days, she releases FULLY-FORMED shrimplets (2mm miniature adults—NO larval stage!). Shrimplets are INDEPENDENT immediately: they graze biofilm, hide in moss, and grow rapidly. NO parental care. In shrimp-only tanks, survival is 80-90%. In community tanks with fish, provide DENSE JAVA MOSS for hiding—survival drops to 10-30%. Shrimplets reach maturity at 3-5 months.',
