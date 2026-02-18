@@ -6,13 +6,6 @@ export const pandaCory: Species = {
   imageUrl: '/images/species/panda-cory.jpg',
   funFact: "Panda Corys are named after giant pandas because of their adorable black eye patches! But here's the magical part: they can breathe air through their intestines. Watch them zoom to the surface, gulp a bubble, and zip back down like tiny aquatic astronauts refueling their oxygen tanks. It's the cutest superpower in the aquarium world.",
 
-  imageCredit: {
-    photographer: 'Haplochromis (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Corydoras_panda_by_Haplochromis.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
-
   taxonomy: {
     scientificName: 'Corydoras panda',
     commonName: 'Panda Corydoras',

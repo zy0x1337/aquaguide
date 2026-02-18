@@ -6,13 +6,6 @@ export const molly: Species = {
   imageUrl: '/images/species/molly.jpg',
   funFact: "Mollies are brackish water survivors with extreme salinity tolerance! They naturally inhabit coastal estuaries and mangrove swamps where fresh and saltwater mix, thriving anywhere from pure freshwater to full marine conditions (35ppt)! They're one of the only community fish that can live in saltwater aquariums and are used to cycle new marine tanks! Here's the catch: they're HARD WATER OBLIGATES and develop 'the shimmies' (death wobble disease) in soft/acidic water—50% of molly deaths! Mollies shimmy = side-to-side rocking motion indicating mineral deficiency/stress. They need GH 15-30+ and pH 7.5-8.5 (alkaline!). Add aquarium salt (1 tsp per 20L) for best health. Males are relentless breeders harassing females constantly—1 male : 2-3 females ratio mandatory! Livebearers producing 20-100 fry every 4-6 weeks! Black Mollies are most inbred/weakest genetically. From Central American warm coastal waters!",
 
-  imageCredit: {
-    photographer: 'Marrabbio2 (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Poecilia_sphenops_couple.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
-
   taxonomy: {
     scientificName: 'Poecilia sphenops',
     commonName: 'Molly / Short-finned Molly / Black Molly',

@@ -6,13 +6,6 @@ export const ramCichlid: Species = {
   imageUrl: '/images/species/ram-cichlid.jpg',
   funFact: "German Blue Rams are temperature extremists requiring warm stable temps (26-29°C) - they're the hottest community fish! Here's the critical catch: they're hyper-sensitive to temperature fluctuations - even ±1-2°C swings over 24 hours = stress, disease, death within days! They evolved in Venezuelan tropical streams (30°C year-round) and cannot tolerate cold. They're peaceful dwarf cichlids (6cm) displaying spectacular courtship dances creating 'sand volcanoes' (excavated mounds marking territory) and mate for life forming monogamous pairs with fierce parental care! Watch pairs perform synchronized swimming displays and communicate via body quivering. They're substrate spawners laying 150-500 eggs on flat surfaces (slate rocks, broad leaves) with both parents actively guarding/fanning eggs for 72 hours! They're safe for community tanks unlike most cichlids. Electric blue bodies with neon spots, black eye stripe, orange fins! From Orinoco Basin!",
 
-  imageCredit: {
-    photographer: 'Karelj (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mikrogeophagus_ramirezi_01.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
-
   taxonomy: {
     scientificName: 'Mikrogeophagus ramirezi',
     commonName: 'German Blue Ram / Blue Ram Cichlid / Butterfly Cichlid / Ramirezi',

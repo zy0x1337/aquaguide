@@ -6,13 +6,6 @@ export const siameseAlgaeEater: Species = {
   imageUrl: '/images/species/siamese-algae-eater.jpg',
   funFact: "True Siamese Algae Eaters (Crossocheilus atrilimes/oblongus) are BLACK BRUSH ALGAE (BBA) assassins - one of only 3 fish species that reliably consume this notorious red algae plague! They have specialized mouthparts with razor-sharp scraping plates for shaving biofilm from rocks like living vacuum cleaners! Here's the critical catch: 90% of 'SAEs' sold in stores are misidentified imposters - usually aggressive Chinese Algae Eaters (Gyrinocheilus aymonieri) that grow 30cm, become territorial monsters, and suck slime coats off fish causing infections/death! True SAE identification: 1) Black stripe extends through tail fin (not ending at base!), 2) Two barbels near mouth, 3) NO sucker mouth, 4) Gold shoulder blaze, 5) Max 14cm. They're hillstream specialists needing high flow (powerhead mandatory!) and oxygen-rich water from Mekong rapids. From Thai/Laos fast-flowing streams!",
 
-  imageCredit: {
-    photographer: 'Basile Morin (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Crossocheilus_langei_01.jpg',
-    license: 'CC BY-SA 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/'
-  },
-
   taxonomy: {
     scientificName: 'Crossocheilus oblongus / Crossocheilus atrilimes',
     commonName: 'Siamese Algae Eater (SAE) / True SAE',

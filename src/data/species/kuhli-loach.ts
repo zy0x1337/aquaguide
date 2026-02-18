@@ -6,13 +6,6 @@ export const kuhliLoach: Species = {
   imageUrl: '/images/species/kuhli-loach.jpg',
   funFact: "Kuhli Loaches are living noodles creating adorable cuddle piles in caves! They're nearly scaleless (tiny embedded scales) making them look like striped eels or snakes slithering through substrate. Watch groups of 6-10 form 'noodle piles'—tangled masses of loaches sleeping together in caves like spaghetti! They're burrowing machines: disappearing completely into sand for days then suddenly reappearing like magic. Here's the weird part: they can gulp atmospheric air using modified intestines for emergency oxygen (not primary breathing). Males perform spiral spawning dances: pairs twist around each other while swimming to the surface, releasing eggs among floating plant roots. CRITICAL: They're scaleless = highly sensitive to copper medications (deadly—use half-dose everything). From Southeast Asian blackwater streams!",
 
-  imageCredit: {
-    photographer: 'Marrabbio2 (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pangio_kuhlii.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
-
   taxonomy: {
     scientificName: 'Pangio kuhlii',
     commonName: 'Kuhli Loach',

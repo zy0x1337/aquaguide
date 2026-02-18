@@ -6,13 +6,6 @@ export const neonTetra: Species = {
   imageUrl: '/images/species/neon-tetra.jpg',
   funFact: "In the wild, Neon Tetras live in blackwater streams so dark that their iridescent stripe is the only way they can locate each other in the gloom. This 'neon beacon' evolved for communication in pitch-black jungle waters!",
 
-  imageCredit: {
-    photographer: 'JH Tan (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Neon_Tetra.jpg',
-    license: 'CC BY 2.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/'
-  },
-
   taxonomy: {
     scientificName: 'Paracheirodon innesi',
     commonName: 'Neon Tetra',

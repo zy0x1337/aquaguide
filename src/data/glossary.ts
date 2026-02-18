@@ -45,10 +45,10 @@ export const tagDescriptions: Record<EthologyTag, string> = {
   // --- TANK SIZES ---
   nano: "Small species suitable for smaller tanks (under 60L/15g).",
   nano_safe: "Can be safely kept in smaller setups, provided water quality is maintained.",
-  'parental-care': '',
-  'pair-bonding': '',
-  hierarchy: '',
-  'substrate-sifter': '',
-  intelligent: '',
-  hillstream: ''
+  'parental-care': 'Elternfürsorge bei Fischen: Verhalten, bei dem Elternteile Eier oder Jungfische schützen, füttern oder transportieren, um deren Überlebenschancen zu erhöhen. Häufig bei Cichliden oder Betta-Fischen beobachtet. [web:2][web:6]',
+  'pair-bonding': 'Paarbindung: Langfristige monogame Partnerschaft zwischen zwei Fischen, oft mit gemeinsamer Verteidigung von Territorium und Nahrung. Typisch bei Schmetterlingsfischen (Chaetodon), unabhängig von Fortpflanzung. [web:7]',
+  hierarchy: 'Soziale Hierarchie (Pecking Order): Dominanzordnung in Fischgruppen, die Zugang zu Futter, Verstecken und Partnern bestimmt. Kann Aggression und Stress verursachen, besonders bei neuen Fischen. [web:8][web:14]',
+  'substrate-sifter': 'Substratsiebender Fisch: Bodendweller wie Corydoras oder Loaches, die Sand oder Kies durchwühlen, um Nahrung (Detritus, Würmer) zu finden. Erfordert feinen, weichen Boden. [web:15]',
+  intelligent: 'Intelligenter Fisch: Arten mit Lernfähigkeit, Besitzererkennung oder Problemlösung, z. B. Oscars, Bettas oder Flowerhorns. Können Tricks lernen und auf Interaktionen reagieren. [web:10][web:16]',
+  hillstream: 'Hillstream-Loach: Saugmaul-Aal (z. B. Beaufortia kweichowensis), angepasst an starke Strömung in Bergbächen. Algenfresser mit flachem Körper, braucht hohe Durchflussrate und glatte Steine. [web:11]'
 };

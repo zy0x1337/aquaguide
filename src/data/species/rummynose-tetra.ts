@@ -6,13 +6,6 @@ export const rummynoseTetra: Species = {
   imageUrl: '/images/species/rummy-nose-tetra.jpg',
   funFact: "Rummynose Tetras are living water quality barometers with their brilliant red noses acting as real-time health indicators! Flaming red nose = perfect water quality and health. Faded/pale nose = instant warning of stress, ammonia spikes, nitrate problems, temperature swings, or parameter shifts - they change color within minutes giving you early warning before disasters! They're the 'canary in the coal mine' for aquariums. Watch them display synchronized schooling - they swim in tight formation like one organism moving in perfect unison (balletic displays!). They're blackwater specialists from Amazon Rio Tapajós needing ultra-soft acidic tannin-stained water (pH 5.5-6.5, GH under 8). Groups 12+ create mesmerizing schools! From Brazilian blackwater streams!",
 
-  imageCredit: {
-    photographer: 'Rummy-nose Tetra (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rummy-nose_tetra_(Hemigrammus_rhodostomus).jpg',
-    license: 'Public Domain',
-    licenseUrl: 'https://en.wikipedia.org/wiki/Public_domain'
-  },
-
   taxonomy: {
     scientificName: 'Petitella rhodostoma / Hemigrammus bleheri',
     commonName: 'Rummy Nose Tetra / Firehead Tetra',

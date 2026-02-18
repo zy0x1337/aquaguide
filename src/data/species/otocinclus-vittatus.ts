@@ -6,13 +6,6 @@ export const otocinclusVittatus: Species = {
   imageUrl: '/images/species/otocinclus-vittatus.jpg',
   funFact: "Otocinclus are nature's tiny vacuums creating adorable grazing parties! Watch groups of 6-10 work glass and plants in synchronized rows like little lawnmowers. They're the only 100% shrimp-safe algae eater—mouths too small for any shrimp! Here's the critical catch: they're starvation machines if added to new tanks—60% die within 2-4 weeks from lack of biofilm/algae! They're obligate aufwuchs eaters (specialized algae/biofilm grazers) requiring constant food supply. In the wild, they school in thousands grazing algae-covered rocks 24/7. Males perform 'glass dances': racing up and down aquarium glass chasing females during spawning. From Amazon River margins with moderate flow!",
 
-  imageCredit: {
-    photographer: 'Haps (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Otocinclus_vittatus.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
-
   taxonomy: {
     scientificName: 'Otocinclus vittatus',
     commonName: 'Otocinclus Catfish',

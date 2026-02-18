@@ -1,4 +1,4 @@
-// Auto-generated species index
+import type { Species } from '../../types/species';
 import { africanDwarfFrog } from './african-dwarf-frog';
 import { amanoShrimp } from './amano-shrimp';
 import { anomalochromisThomasi } from './anomalochromis-thomasi';
@@ -38,7 +38,7 @@ import { siameseAlgaeEater } from './siamese-algae-eater';
 import { sparklingGourami } from './sparkling-gourami';
 import { swordtail } from './swordtail';
 import { whiteCloudMinnow } from './white-cloud-minnow';
-import type { Species } from '../../types/species';
+import { bolivianRam } from './bolivian-ram';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -80,6 +80,7 @@ export const allSpecies: Species[] = [
   sparklingGourami,
   swordtail,
   whiteCloudMinnow,
+  bolivianRam
 ];
 
 export {
@@ -122,4 +123,5 @@ export {
   sparklingGourami,
   swordtail,
   whiteCloudMinnow,
+  bolivianRam
 };

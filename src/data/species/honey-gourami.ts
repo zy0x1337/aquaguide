@@ -6,13 +6,6 @@ export const honeyGourami: Species = {
   imageUrl: '/images/species/honey-gourami.jpg',
   funFact: "Honey Gouramis are peaceful centerpieces with dramatic color changes! Watch males transform from golden-honey to intense black with neon yellow stripes during breeding—it's like watching a fish change costumes! They're bubble nest artists building intricate floating foam nests among plants, using saliva bubbles arranged in perfect domes. Here's the cool part: they have a labyrinth organ (like bettas)—a specialized air-breathing structure allowing them to gulp atmospheric oxygen at the surface! Watch them swim to the top, tilt sideways, and breathe air directly—they can survive in low-oxygen water where other fish suffocate. Males perform courtship dances: circling females, flaring fins, displaying black breeding colors, leading females to bubble nests. From India/Bangladesh rice paddies and slow streams!",
 
-  imageCredit: {
-    photographer: 'Hristo Hristov (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Trichogaster_chuna.jpg',
-    license: 'CC BY-SA 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/'
-  },
-
   taxonomy: {
     scientificName: 'Trichogaster chuna',
     commonName: 'Honey Gourami',

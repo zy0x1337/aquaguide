@@ -6,13 +6,6 @@ export const platy: Species = {
   imageUrl: '/images/species/platy.jpeg',
   funFact: "Platies are color-morphing champions selectively bred into hundreds of colors/patterns! Original wild fish were dull olive-gray, but decades of breeding created: MICKEY MOUSE (three black spots forming Mickey's silhouette on tail!), KOI (orange/white/black like koi carp), SUNSET (red/orange/yellow gradient), BLUE CORAL (neon blue), WAGTAIL (black fins with colored body), TUXEDO (half black/half color), PANDA (black/white), NEON (fluorescent colors). They come in every color imaginable - some morphs unrecognizable from wild ancestors! Here's the fun: they're effortless breeders producing 20-50 fry every 4-6 weeks with zero effort! Females can store sperm for 6+ months producing multiple broods from single mating. They're the ultimate beginner fish: peaceful, hardy, colorful, undemanding, breeding-machines. From Mexican spring-fed rivers with hard alkaline water!",
 
-  imageCredit: {
-    photographer: 'Marrabbio2 (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Xiphophorus_maculatus_1.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
-
   taxonomy: {
     scientificName: 'Xiphophorus maculatus',
     commonName: 'Platy / Southern Platyfish / Moonfish',

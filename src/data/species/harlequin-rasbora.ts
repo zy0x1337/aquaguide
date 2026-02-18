@@ -6,13 +6,6 @@ export const harlequinRasbora: Species = {
   imageUrl: '/images/species/harlequin-rasbora.jpg',
   funFact: "Harlequin Rasboras are the original schooling fish—the classic that started it all! Named after Italian theatre's Harlequin character whose costume featured diamond patterns, their triangular black wedge looks like a harlequin's mask or cape. Watch them school in perfect formation: 10-15 fish moving as one organism through planted tanks in mesmerizing synchronized displays! Here's the unique breeding trick: unlike most egg-scatterers, Harlequins lay eggs on the underside of broad leaves (like Java Fern, Amazon Sword), turning leaves upside down in elaborate spawning dances! Their black wedge is a mood indicator: intense black = confident, faded pale = stressed. They're also blackwater beauties: under tannin-stained water (Indian Almond leaves), their metallic orange glows like copper! From Southeast Asia's peat swamps!",
 
-  imageCredit: {
-    photographer: 'Christa Rohrbach (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Trigonostigma_heteromorpha_-_Karlsruhe_Zoo_01.jpg',
-    license: 'CC BY 2.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/de/deed.en'
-  },
-
   taxonomy: {
     scientificName: 'Trigonostigma heteromorpha',
     commonName: 'Harlequin Rasbora',
