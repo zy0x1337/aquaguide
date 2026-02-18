@@ -1,7 +1,7 @@
 import type { Species } from '../../types/species';
 
 export const africanDwarfFrog: Species = {
-  id: 'frog-001',
+  id: 'african-dwarf-frog',
   slug: 'african-dwarf-frog',
   imageUrl: '/images/species/african-dwarf-frog.jpg',
   funFact: "African Dwarf Frogs are FULLY aquatic amphibians that must surface to breathe air—if they can't reach the surface, they'll drown! They're nearly blind, navigating by smell and touch with their sensitive fingertips. Watch them 'zen float' motionless mid-water for minutes, arms and legs spread wide like tiny underwater starfish. Males even 'sing' at night—a buzzing hum to attract females that sounds like someone underwater playing a kazoo!",
@@ -47,13 +47,13 @@ export const africanDwarfFrog: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'African Dwarf Frogs LOVE planted tanks with BROAD-LEAVED plants near the surface for resting platforms. They\'re clumsy swimmers that tire easily—give them "lily pads" to rest on! Best plants: Anubias (all varieties), Amazon Swords, large Cryptocoryne, Java Fern, and especially floating plants (Water Sprite, Frogbit) that create shaded areas. Avoid tall, narrow-leaved plants they can\'t grip. Dense planting creates a maze-like environment that mimics their wild habitat and reduces stress. They spend hours perched on broad leaves near the surface, occasionally kicking to the top for air gulps.',
     hardscape: ['Smooth River Stones (no sharp edges)', 'Driftwood Caves (hiding spots)', 'Terracotta Pots (on sides as caves)', 'Shallow platforms near surface'],
   },
 
   behavior: {
-    tags: ['amphibian', 'peaceful', 'social', 'nocturnal', 'clumsy', 'slow_eater'],
+    tags: ['peaceful', 'social', 'nocturnal'],
     minGroupSize: 2,
     description: 'African Dwarf Frogs are the aquarium\'s zen masters—slow, peaceful, and comically clumsy. They\'re NEARLY BLIND, relying on smell and touch (sensitive fingertips) to navigate and find food. Watching them hunt is both adorable and frustrating: they lunge at food, miss completely, bump into it accidentally, then slowly figure out where it went. Their signature behavior is "zen floating"—hanging motionless mid-water with limbs spread like tiny starfish, sometimes for 5-10 minutes. They\'re social creatures that enjoy company of their own kind, often cuddling together in piles on broad leaves or in caves. Males "sing" at night (a buzzing hum audible through tank glass) to attract females. They\'re most active at dawn and dusk (crepuscular) but feed anytime food is available. Unlike fish, they take FOREVER to eat—slowly chewing and swallowing each bite.',
     
@@ -126,7 +126,7 @@ export const africanDwarfFrog: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'carnivore',
     effort: 'medium',
     cost: 'low',
@@ -160,7 +160,7 @@ export const africanDwarfFrog: Species = {
     feeding: {
       frequency: 'every-other-day',
       primaryFoods: ['bloodworms', 'brine-shrimp', 'mysis-shrimp'],
-      supplements: ['daphnia', 'frog-pellets'],
+      supplements: ['daphnia', 'pellets'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -206,7 +206,7 @@ export const africanDwarfFrog: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'expert',
+    difficulty: 'hard',
     trigger: 'Breeding requires PERFECT conditions: lower water level by 30%, increase feeding (live blackworms ideal), raise temperature to 27-28°C, and perform large water changes to simulate rainy season. Males sing intensely at night. After 1-2 weeks of conditioning, males clasp females in amplexus (underwater "hug") and swim to surface together repeatedly, releasing eggs/sperm at surface. Spawning lasts 6-24 hours.',
     fryCare: 'Females lay 500-2000 tiny eggs (1mm) that float or stick to plants. Remove adults immediately (they eat eggs). Eggs hatch in 48-72 hours into tiny tadpoles (5mm). CRITICAL: Tadpoles are FILTER FEEDERS that need liquid fry food (infusoria, commercial liquid fry food) multiple times daily. They cannot eat normal foods. Metamorphosis takes 6-12 weeks. Tadpoles develop back legs first, then front legs, then absorb tail. Survival rate is LOW (<10%) without specialized care. Raising froglets requires dedication and experience.',
     notes: 'Breeding is challenging and usually accidental in home aquariums. Most breeders are commercial farms using hormone injections. Natural breeding requires large groups (6+ frogs), perfect conditions, and expert-level tadpole care. Amplexus behavior (males hugging females for hours) is fascinating to observe even without successful spawning.',
