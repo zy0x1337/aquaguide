@@ -39,6 +39,8 @@ import { sparklingGourami } from './sparkling-gourami';
 import { swordtail } from './swordtail';
 import { whiteCloudMinnow } from './white-cloud-minnow';
 import { bolivianRam } from './bolivian-ram';
+import { sterbaiCory } from './sterbai-cory';
+import { clownPleco } from './clown-pleco';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -80,7 +82,9 @@ export const allSpecies: Species[] = [
   sparklingGourami,
   swordtail,
   whiteCloudMinnow,
-  bolivianRam
+  bolivianRam,
+  sterbaiCory,
+  clownPleco
 ];
 
 export {
@@ -123,5 +127,7 @@ export {
   sparklingGourami,
   swordtail,
   whiteCloudMinnow,
-  bolivianRam
+  bolivianRam,
+  sterbaiCory,
+  clownPleco
 };

@@ -1,7 +1,7 @@
 import type { Species } from '../../types/species';
 
 export const clownPleco: Species = {
-  id: 'pleco-019',
+  id: 'clown-pleco',
   slug: 'clown-pleco',
   imageUrl: '/images/species/clown-pleco.jpg',
   funFact: "Clown Plecos are the tiny giants of the pleco world—maxing out at a cute 4 inches (10cm) vs their cousin the Common Pleco's terrifying 18-24 inches! Watch a Clown Pleco work: they rasp driftwood with specialized teeth, leaving intricate patterns like tiny lumberjacks carving sculptures. Driftwood isn't decoration for them—it's food. They're xylivores (wood-eaters) who extract nutrients from decaying wood. Without driftwood, they slowly starve despite eating algae wafers. It's like feeding a cow only bread—not nutritionally complete. Always provide multiple pieces of driftwood—they'll literally eat themselves a home!",
