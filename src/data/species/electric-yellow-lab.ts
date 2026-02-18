@@ -172,7 +172,7 @@ export const electricYellowLab: Species = {
     feeding: {
       frequency: 'twice-daily',
       primaryFoods: ['spirulina', 'algae-wafers', 'vegetables'],
-      supplements: ['zucchini', 'pellets'],
+      supplements: ['blanched-zucchini', 'pellets'],
       vegetarian: true,
       liveFood: {
         required: false,

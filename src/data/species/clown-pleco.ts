@@ -4,7 +4,7 @@ export const clownPleco: Species = {
   id: 'pleco-019',
   slug: 'clown-pleco',
   imageUrl: '/images/species/clown-pleco.jpg',
-  funFact: "Clown Plecos are the TINY GIANTS of the pleco world—maxing out at a cute 4 inches (10cm) vs their cousin the Common Pleco's TERRIFYING 18-24 inches! Watch a Clown Pleco work: they RASP driftwood with specialized teeth, leaving intricate patterns like tiny lumberjacks carving sculptures. Driftwood isn't decoration for them—it's FOOD. They're XYLIVORES (wood-eaters) who extract nutrients from decaying wood. Without driftwood, they slowly STARVE despite eating algae wafers. It's like feeding a cow only bread—not nutritionally complete. Always provide multiple pieces of driftwood—they'll literally eat themselves a home!",
+  funFact: "Clown Plecos are the tiny giants of the pleco world—maxing out at a cute 4 inches (10cm) vs their cousin the Common Pleco's TERRIFYING 18-24 inches! Watch a Clown Pleco work: they RASP driftwood with specialized teeth, leaving intricate patterns like tiny lumberjacks carving sculptures. Driftwood isn't decoration for them—it's FOOD. They're XYLIVORES (wood-eaters) who extract nutrients from decaying wood. Without driftwood, they slowly STARVE despite eating algae wafers. It's like feeding a cow only bread—not nutritionally complete. Always provide multiple pieces of driftwood—they'll literally eat themselves a home!",
 
   taxonomy: {
     scientificName: 'Panaqolus maccus',
@@ -146,7 +146,7 @@ export const clownPleco: Species = {
     feeding: {
       frequency: 'once-daily',
       primaryFoods: ['algae-wafers', 'vegetables', 'spirulina'],
-      supplements: ['zucchini'],
+      supplements: ['blanched-zucchini'],
       vegetarian: true,
       liveFood: {
         required: false,

@@ -106,7 +106,7 @@ export const melanotaeniaLacustris: Species = {
       ],
       
       idealTankmates: {
-        surface: '10-15',
+        surface: 10-15,
         midwater: '15-25',
         bottom: '8-12',
       },
@@ -119,13 +119,13 @@ export const melanotaeniaLacustris: Species = {
     },
     
     activity: {
-      level: 'very-high',
-      peakTimes: ['dawn', 'dusk'],
+      level: 'high',
+      peakTimes: ['morning', 'evening'],
       nocturnal: false,
     },
     
     socialStructure: {
-      type: 'schooling',
+      type: 'school',
       maxMalesPerTank: 10,
     },
     
@@ -136,7 +136,7 @@ export const melanotaeniaLacustris: Species = {
   },
 
   care: {
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     diet: 'omnivore',
     effort: 'medium',
     cost: 'medium',
@@ -172,14 +172,14 @@ export const melanotaeniaLacustris: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['high-quality-flakes', 'micro-pellets', 'spirulina-flakes', 'color-enhancing-pellets'],
-      supplements: ['frozen-bloodworms', 'brine-shrimp', 'daphnia', 'blanched-vegetables', 'algae-wafers'],
+      primaryFoods: ['flakes', 'micro-pellets', 'spirulina', 'pellets'],
+      supplements: ['bloodworms', 'brine-shrimp', 'daphnia', 'blanched-zucchini', 'algae-wafers'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -221,7 +221,7 @@ export const melanotaeniaLacustris: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'intermediate',
+    difficulty: 'medium',
     trigger:
       'Lake Kutubu Rainbowfish breeding is ACHIEVABLE with proper setup! They\'re CONTINUOUS SPAWNERS depositing small egg batches over several days/weeks (not single mass spawning event!). Natural triggers: 1) HEAVY CONDITIONING with live/frozen foods (bloodworms, brine shrimp, daphnia - feed 2-3x daily for 2 weeks fattening fish), 2) SPAWNING MOPS or fine-leaved plants (Java Moss, spawning yarn mops - egg deposition sites), 3) Slightly warmer water (25-26°C - 2°C increase), 4) Hard alkaline water (pH 7.5-8.0), 5) Dawn spawning (most active early morning). Wild spawning peaks during RAINY SEASON (raised water levels/temp). Condition group as harem: 2-3 males with 3-4 females.',
     fryCare:

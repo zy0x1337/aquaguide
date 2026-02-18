@@ -165,7 +165,7 @@ export const goldSpotPleco: Species = {
     feeding: {
       frequency: 'every-other-day',
       primaryFoods: [ 'algae-wafers', 'vegetables'],
-      supplements: ['zucchini', 'spirulina', 'pellets'],
+      supplements: ['blanched-zucchini', 'spirulina', 'pellets'],
       vegetarian: true,
       liveFood: {
         required: false,

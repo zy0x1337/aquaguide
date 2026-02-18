@@ -47,13 +47,13 @@ export const cardinalTetra: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'Cardinal Tetras look STUNNING in heavily planted blackwater-style tanks. Plant DENSELY on background and sides with Cryptocoryne, Amazon Swords, Java Fern, and Anubias. Leave CENTER OPEN for schooling displays—watching 20+ Cardinals swim in synchronized waves through open water is the main attraction! Floating plants (Red Root Floaters, Frogbit, Water Sprite) create the DIM LIGHTING they prefer—Cardinals are blackwater fish adapted to shaded forest streams. DARK SUBSTRATE (black sand or dark gravel) DRAMATICALLY enhances their red coloration—the contrast is stunning. Add leaf litter (Indian Almond, Oak leaves) to release tannins and stain water amber/tea-color—mimics natural habitat and brings out maximum color intensity.',
     hardscape: ['Driftwood (Spider Wood, Mopani - releases tannins)', 'Smooth River Rocks', 'Indian Almond Leaves (tannins + biofilm)', 'Oak Leaf Litter'],
   },
 
   behavior: {
-    tags: ['shoaler', 'peaceful', 'midwater', 'shy', 'diurnal', 'colorful', 'schooling'],
+    tags: ['shoaler', 'peaceful', 'midwater', 'shy', 'diurnal', 'colorful'],
     minGroupSize: 12,
     description: 'Cardinal Tetras are the MORE VIBRANT, HARDIER cousins of Neon Tetras—think of them as "Neon Tetras 2.0." They form LOOSE shoals that swim independently, exploring plants and grazing on biofilm, but when STARTLED (shadow, sudden movement), the shoal SNAPS into a TIGHT synchronized formation and zooms away like a single organism. It\'s mesmerizing! They explore the entire tank CONFIDENTLY when kept in proper numbers (12+), but become SHY and hide constantly in small groups (under 10). Their red stripe is a HEALTH BAROMETER: BRIGHT vibrant red = happy, healthy fish; PALE pink or washed-out = stress, poor diet, illness. Cardinals are PEACEFUL toward all tankmates—no fin-nipping, no aggression. They\'re active during the day, most vibrant in morning after feeding.',
     
@@ -96,7 +96,7 @@ export const cardinalTetra: Species = {
       ],
       
       idealTankmates: {
-        surface: '0-10',
+        surface: 0-10,
         midwater: '12-30',
         bottom: '6-15',
       },
@@ -184,7 +184,7 @@ export const cardinalTetra: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',

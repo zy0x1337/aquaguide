@@ -85,7 +85,7 @@ export const celestialPearlDanio: Species = {
           severity: 'high',
         },
         {
-          type: 'suggestion',
+          type: 'warning',
           condition: 'female-biased ratio (2-3 females per male)',
           reason: 'Reduces male territorial sparring and creates more peaceful group dynamics. Too many males = constant displays',
           severity: 'low',
@@ -112,7 +112,7 @@ export const celestialPearlDanio: Species = {
     },
     
     socialStructure: {
-      type: 'group',
+      type: 'shoal',
       maxMalesPerTank: 8,
     },
     
@@ -155,14 +155,14 @@ export const celestialPearlDanio: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'daphnia', 'baby-brine-shrimp'],
-      supplements: ['bloodworms', 'microworms', 'spirulina'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes', 'daphnia', 'brine-shrimp'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
         recommended: true,
       },
-      fastingDay: 'weekly',
+      fastingDay: 'sunday',
     },
     
     maintenance: {
@@ -180,7 +180,7 @@ export const celestialPearlDanio: Species = {
       filter: {
         required: true,
         type: 'sponge',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
