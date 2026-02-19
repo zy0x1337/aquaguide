@@ -1,289 +1,274 @@
 import { SEOHead } from '../components/seo/SEOHead';
-import { Database, ShieldCheck, Zap, Users, Github, Sparkles, Target, Lightbulb, Rocket, CheckCircle2, Clock } from 'lucide-react';
+import { Database, ShieldCheck, Zap, Target, Lightbulb, CheckCircle2, ArrowRight, Droplets } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { allSpecies } from '../data/species';
 import { biotopes } from '../data/biotopes';
 
 const AboutPage = () => {
-  const stats = [
-    { label: 'Species', value: allSpecies.length, icon: '🐠' },
-    { label: 'Biotopes', value: biotopes.length, icon: '🌊' },
-    { label: 'Active Users', value: '1,200+', icon: '👥' },
-    { label: 'Tank Setups', value: '3,500+', icon: '🎨' },
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 dark:from-[#1c1917] dark:via-stone-900 dark:to-[#1c1917]">
-      <SEOHead title="About AquaGuide" description="Learn about our mission to make aquarium keeping accessible through data-driven tools and scientific accuracy." />
+      <SEOHead 
+        title="About AquaGuide" 
+        description="Learn about our mission to make aquarium keeping accessible through data-driven tools and scientific accuracy." 
+      />
       
-      {/* 1. Hero Section with Animated Gradient */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600 text-white pt-32 pb-20 px-6">
-        {/* Animated Wave Background */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] animate-pulse"></div>
-        </div>
-
-        <div className="relative max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6 border border-white/20">
-            <Sparkles className="w-4 h-4" />
+      {/* Hero Section */}
+      <div className="relative pt-24 pb-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/30 px-4 py-2 rounded-full text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-8 border border-indigo-100 dark:border-indigo-900/50">
+            <Droplets className="w-4 h-4" />
             Science-Backed Aquarium Guide
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
-            Data-Driven<br />
-            <span className="bg-gradient-to-r from-yellow-200 via-pink-200 to-cyan-200 bg-clip-text text-transparent">
-              Aquaristics
-            </span>
+          <h1 className="text-5xl md:text-6xl font-black text-stone-900 dark:text-white mb-6 leading-tight tracking-tight">
+            Data-Driven<br className="md:hidden" /> Aquaristics
           </h1>
           
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-12 leading-relaxed">
-            Fighting aquarium myths with scientific data, modern visualization, and community-driven insights.
+          <p className="text-xl text-stone-600 dark:text-stone-400 max-w-2xl mx-auto leading-relaxed">
+            We combine scientific data with modern design to help aquarists make informed decisions—from species compatibility to water parameters.
           </p>
-
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
-            {stats.map(stat => (
-              <div key={stat.label} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                <div className="text-3xl mb-2">{stat.icon}</div>
-                <div className="text-3xl md:text-4xl font-black mb-1">{stat.value}</div>
-                <div className="text-sm text-blue-200 font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* 2. Mission Statement (Bento Grid) */}
-      <div className="max-w-6xl mx-auto px-6 -mt-12 mb-24 relative z-10">
+      {/* Problem & Solution Cards */}
+      <div className="max-w-5xl mx-auto px-6 mb-20">
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Card 1: Problem */}
-          <div className="bg-white dark:bg-stone-800/50 rounded-3xl p-8 border border-stone-200/60 dark:border-stone-700/40 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-              <Target className="w-7 h-7 text-white" />
+          {/* The Challenge */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-12 h-12 bg-red-100 dark:bg-red-950/30 rounded-xl flex items-center justify-center mb-6">
+              <Target className="w-6 h-6 text-red-600 dark:text-red-400" />
             </div>
-            <h3 className="text-2xl font-black text-stone-900 dark:text-white mb-4">The Problem</h3>
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-3">The Challenge</h3>
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed">
-              The aquarium hobby is plagued by contradictory advice. "Ask 10 aquarists, get 11 opinions." 
-              Beginners waste money on incompatible fish, overstocked tanks, and outdated 'rules of thumb'.
+              Aquarium advice is often contradictory. Beginners struggle with incompatible fish, incorrect water parameters, and outdated rules that don't reflect modern aquarium science.
             </p>
           </div>
 
-          {/* Card 2: Solution */}
-          <div className="bg-white dark:bg-stone-800/50 rounded-3xl p-8 border border-stone-200/60 dark:border-stone-700/40 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-              <Lightbulb className="w-7 h-7 text-white" />
+          {/* Our Approach */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-12 h-12 bg-green-100 dark:bg-green-950/30 rounded-xl flex items-center justify-center mb-6">
+              <Lightbulb className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
-            <h3 className="text-2xl font-black text-stone-900 dark:text-white mb-4">Our Solution</h3>
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-3">Our Approach</h3>
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed">
-              <strong className="text-stone-900 dark:text-white">Standardized, curated data.</strong> We cross-reference scientific databases, 
-              adjust for captive breeding, and visualize compatibility in real-time. No more guessing.
+              We provide <strong className="text-stone-900 dark:text-white font-semibold">standardized, scientifically sourced data</strong> with practical adjustments for home aquariums. Every compatibility rule is backed by species behavior and environmental needs.
             </p>
           </div>
         </div>
       </div>
 
-      {/* 3. Features Grid */}
-      <div className="max-w-7xl mx-auto px-6 mb-24">
+      {/* Core Principles */}
+      <div className="max-w-6xl mx-auto px-6 mb-20">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-black text-stone-900 dark:text-white mb-4">What Makes Us Different</h2>
+          <h2 className="text-3xl font-bold text-stone-900 dark:text-white mb-3">Core Principles</h2>
           <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-            We're not just another fish wiki. Here's why AquaGuide stands out.
+            What guides our approach to aquarium data and tools.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {/* Feature 1 */}
-          <div className="group bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 rounded-3xl p-8 border border-blue-200/60 dark:border-blue-800/40 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Database className="w-8 h-8 text-white" />
+          {/* Principle 1 */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40 hover:border-indigo-200 dark:hover:border-indigo-800/50 transition-all">
+            <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-950/30 rounded-xl flex items-center justify-center mb-6">
+              <Database className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
             </div>
-            <h3 className="text-xl font-black text-stone-900 dark:text-white mb-3">Scientific Sources</h3>
+            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-3">Scientific Sources</h3>
             <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
-              Taxonomy and habitat data cross-referenced with FishBase, IUCN Red List, and peer-reviewed literature. 
-              We don't guess water parameters.
+              We cross-reference data with FishBase, IUCN Red List, and peer-reviewed literature. Water parameters and habitat information are documented, not guessed.
             </p>
           </div>
 
-          {/* Feature 2 */}
-          <div className="group bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-3xl p-8 border border-green-200/60 dark:border-green-800/40 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <ShieldCheck className="w-8 h-8 text-white" />
+          {/* Principle 2 */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40 hover:border-green-200 dark:hover:border-green-800/50 transition-all">
+            <div className="w-12 h-12 bg-green-100 dark:bg-green-950/30 rounded-xl flex items-center justify-center mb-6">
+              <ShieldCheck className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
-            <h3 className="text-xl font-black text-stone-900 dark:text-white mb-3">Curated Safety</h3>
+            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-3">Beginner Safety</h3>
             <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
-              No user-generated chaos. Every species profile is manually reviewed. 
-              Compatibility rules are beginner-safe and prevent common disasters (like Bettas with fin-nippers).
+              Every species profile is manually curated. Compatibility warnings prevent common mistakes like pairing Bettas with fin-nippers or Neon Tetras with Angelfish.
             </p>
           </div>
 
-          {/* Feature 3 */}
-          <div className="group bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20 rounded-3xl p-8 border border-purple-200/60 dark:border-purple-800/40 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Zap className="w-8 h-8 text-white" />
+          {/* Principle 3 */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40 hover:border-purple-200 dark:hover:border-purple-800/50 transition-all">
+            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-950/30 rounded-xl flex items-center justify-center mb-6">
+              <Zap className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
-            <h3 className="text-xl font-black text-stone-900 dark:text-white mb-3">Real-Time Tools</h3>
+            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-3">Practical Tools</h3>
             <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
-              Tank Builder calculates bioload geometrically, not by "inch per gallon" myths. 
-              Compatibility checks happen live as you add species.
+              Beyond static information, we provide interactive tools like the Tank Builder with real-time compatibility checks and bioload calculations.
             </p>
           </div>
         </div>
       </div>
 
-      {/* 4. Methodology Timeline */}
-      <div className="max-w-4xl mx-auto px-6 mb-24">
+      {/* Methodology */}
+      <div className="max-w-4xl mx-auto px-6 mb-20">
+        <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 md:p-12 border border-stone-200/60 dark:border-stone-700/40 shadow-sm">
+          <h2 className="text-2xl font-bold text-stone-900 dark:text-white mb-8 text-center">Our Methodology</h2>
+          
+          <div className="space-y-6">
+            {/* Step 1 */}
+            <div className="flex gap-4 items-start">
+              <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-950/30 rounded-lg flex items-center justify-center text-indigo-700 dark:text-indigo-300 font-bold text-lg flex-shrink-0">
+                1
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-stone-900 dark:text-white mb-1">Data Collection</h4>
+                <p className="text-stone-600 dark:text-stone-400 text-sm">
+                  We extract taxonomy, standard length, distribution, and habitat parameters from scientific databases like FishBase and IUCN.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex gap-4 items-start">
+              <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-950/30 rounded-lg flex items-center justify-center text-indigo-700 dark:text-indigo-300 font-bold text-lg flex-shrink-0">
+                2
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-stone-900 dark:text-white mb-1">Aquarium Adjustment</h4>
+                <p className="text-stone-600 dark:text-stone-400 text-sm">
+                  We adjust wild parameters for captive-bred tolerance. For example, wild Neon Tetras live at pH 4.5, but tank-bred individuals tolerate pH 6.0–7.0.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex gap-4 items-start">
+              <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-950/30 rounded-lg flex items-center justify-center text-indigo-700 dark:text-indigo-300 font-bold text-lg flex-shrink-0">
+                3
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-stone-900 dark:text-white mb-1">Behavioral Analysis</h4>
+                <p className="text-stone-600 dark:text-stone-400 text-sm">
+                  We calculate space requirements based on swimming behavior, not arbitrary "inches per gallon" rules. A territorial 5cm Betta needs different space than a schooling 5cm Danio.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Current Database Stats */}
+      <div className="max-w-5xl mx-auto px-6 mb-20">
+        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/20 dark:to-blue-950/20 rounded-2xl p-8 md:p-12 border border-indigo-200/60 dark:border-indigo-800/40">
+          <h2 className="text-2xl font-bold text-stone-900 dark:text-white mb-8 text-center">Current Database</h2>
+          
+          <div className="grid sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <div className="text-center">
+              <div className="text-5xl font-black text-indigo-600 dark:text-indigo-400 mb-2">
+                {allSpecies.length}
+              </div>
+              <div className="text-stone-600 dark:text-stone-400 font-medium">
+                Species Profiles
+              </div>
+              <p className="text-xs text-stone-500 dark:text-stone-500 mt-2">
+                Freshwater fish, invertebrates, and amphibians
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="text-5xl font-black text-indigo-600 dark:text-indigo-400 mb-2">
+                {biotopes.length}
+              </div>
+              <div className="text-stone-600 dark:text-stone-400 font-medium">
+                Biotope Guides
+              </div>
+              <p className="text-xs text-stone-500 dark:text-stone-500 mt-2">
+                From Amazonian blackwater to African Rift Lakes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Development Status */}
+      <div className="max-w-5xl mx-auto px-6 mb-20">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-black text-stone-900 dark:text-white mb-4">Our Process</h2>
-          <p className="text-lg text-stone-600 dark:text-stone-400">
-            How we turn scientific data into practical advice.
+          <h2 className="text-3xl font-bold text-stone-900 dark:text-white mb-3">Development Roadmap</h2>
+          <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+            AquaGuide is actively developed with new features shipping regularly.
           </p>
         </div>
 
-        <div className="space-y-8">
-          {/* Step 1 */}
-          <div className="flex gap-6 items-start group">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg flex-shrink-0 group-hover:scale-110 transition-transform">
-              01
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Released */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40">
+            <div className="flex items-center gap-2 mb-6">
+              <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+              <h3 className="text-lg font-bold text-stone-900 dark:text-white">Recently Released</h3>
             </div>
-            <div className="flex-1 bg-white dark:bg-stone-800/50 rounded-2xl p-6 border border-stone-200/60 dark:border-stone-700/40">
-              <h4 className="text-xl font-black text-stone-900 dark:text-white mb-2">Raw Data Extraction</h4>
-              <p className="text-stone-600 dark:text-stone-400">
-                We pull standard length (SL), distribution, and habitat data from FishBase, IUCN, and scientific journals. 
-                No anecdotal forum posts.
-              </p>
-            </div>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <span>Species Database with detailed care profiles</span>
+              </li>
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <span>Biotope Explorer with educational content</span>
+              </li>
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <span>Interactive Tank Builder</span>
+              </li>
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <span>My Tanks management dashboard</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Step 2 */}
-          <div className="flex gap-6 items-start group">
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg flex-shrink-0 group-hover:scale-110 transition-transform">
-              02
+          {/* In Development */}
+          <div className="bg-white dark:bg-stone-800/50 rounded-2xl p-8 border border-stone-200/60 dark:border-stone-700/40">
+            <div className="flex items-center gap-2 mb-6">
+              <ArrowRight className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+              <h3 className="text-lg font-bold text-stone-900 dark:text-white">In Development</h3>
             </div>
-            <div className="flex-1 bg-white dark:bg-stone-800/50 rounded-2xl p-6 border border-stone-200/60 dark:border-stone-700/40">
-              <h4 className="text-xl font-black text-stone-900 dark:text-white mb-2">Aquarium Adjustment</h4>
-              <p className="text-stone-600 dark:text-stone-400">
-                We adjust wild parameters for captive reality. Example: Wild Neon Tetras live at pH 4.5, 
-                but tank-bred tolerate 6.0-7.0. We document both.
-              </p>
-            </div>
-          </div>
-
-          {/* Step 3 */}
-          <div className="flex gap-6 items-start group">
-            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg flex-shrink-0 group-hover:scale-110 transition-transform">
-              03
-            </div>
-            <div className="flex-1 bg-white dark:bg-stone-800/50 rounded-2xl p-6 border border-stone-200/60 dark:border-stone-700/40">
-              <h4 className="text-xl font-black text-stone-900 dark:text-white mb-2">Geometric Calculation</h4>
-              <p className="text-stone-600 dark:text-stone-400">
-                We calculate swimming space requirements based on body shape and behavior. 
-                A 5cm Betta needs different space than a 5cm Danio (one is territorial, one is a schooler).
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 5. Roadmap */}
-      <div className="max-w-6xl mx-auto px-6 mb-24">
-        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/20 dark:to-blue-950/20 rounded-3xl p-12 border border-indigo-200/60 dark:border-indigo-800/40">
-          <div className="flex items-center gap-3 mb-8">
-            <Rocket className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
-            <h2 className="text-3xl font-black text-stone-900 dark:text-white">What's Next</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Completed */}
-            <div>
-              <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-4 flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-green-500" />
-                Recently Shipped
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>45+ Species Database with detailed care profiles</span>
-                </li>
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Biotope Explorer with educational narratives</span>
-                </li>
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Tank Builder with real-time compatibility checks</span>
-                </li>
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>My Tanks Dashboard for tracking your setups</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Coming Soon */}
-            <div>
-              <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-4 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-blue-500" />
-                Coming Soon
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-blue-500 mt-1">→</span>
-                  <span>Advanced Search & Filter System</span>
-                </li>
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-blue-500 mt-1">→</span>
-                  <span>Water Parameter Calculator Tools</span>
-                </li>
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-blue-500 mt-1">→</span>
-                  <span>Disease Diagnosis Interactive Tool</span>
-                </li>
-                <li className="flex items-start gap-2 text-stone-600 dark:text-stone-400">
-                  <span className="text-blue-500 mt-1">→</span>
-                  <span>Community Tank Showcases</span>
-                </li>
-              </ul>
-            </div>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <ArrowRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                <span>Advanced search and filtering system</span>
+              </li>
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <ArrowRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                <span>Water parameter calculators</span>
+              </li>
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <ArrowRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                <span>Disease diagnosis tool</span>
+              </li>
+              <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400 text-sm">
+                <ArrowRight className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                <span>Plant database expansion</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* 6. CTA Section */}
+      {/* Call to Action */}
       <div className="max-w-4xl mx-auto px-6 pb-24">
-        <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-12 text-center text-white shadow-2xl">
-          <Users className="w-16 h-16 mx-auto mb-6 opacity-90" />
-          <h2 className="text-3xl md:text-4xl font-black mb-4">Join the Community</h2>
-          <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-            Start building your dream aquarium with data-driven tools and expert guidance.
+        <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-10 text-center text-white shadow-lg">
+          <h2 className="text-3xl font-bold mb-4">Start Building Your Aquarium</h2>
+          <p className="text-lg text-indigo-100 mb-8 max-w-2xl mx-auto">
+            Explore our species database and use the Tank Builder to create your perfect setup.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               to="/species"
-              className="inline-flex items-center gap-2 bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-all hover:scale-105 shadow-lg"
+              className="inline-flex items-center justify-center gap-2 bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold hover:bg-indigo-50 transition-colors"
             >
-              Explore Species
+              Browse Species
             </Link>
             <Link 
               to="/tank-builder"
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/20 transition-colors"
             >
-              Build a Tank
+              Open Tank Builder
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* 7. Open Source Badge (Optional) */}
-      <div className="max-w-4xl mx-auto px-6 pb-24 text-center">
-        <a 
-          href="https://github.com/zy0x1337/aquaguide" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white transition-colors"
-        >
-          <Github className="w-5 h-5" />
-          <span className="font-medium">View source on GitHub</span>
-        </a>
       </div>
     </div>
   );
