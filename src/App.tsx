@@ -29,6 +29,10 @@ import DiseaseDetailPage from './pages/DiseaseDetailPage';
 import { PlantsIndexPage } from './pages/PlantsIndexPage';
 import { PlantDetailPage } from './pages/PlantDetailPage';
 
+// 🌊 BIOTOPE PAGES
+import BiotopeIndexPage from './pages/BiotopeIndexPage';
+import BiotopeDetailPage from './pages/BiotopeDetailPage';
+
 // 🐠 MY TANKS & DASHBOARD
 import DashboardPage from './pages/DashboardPage';
 import MyTanksPage from './pages/MyTanksPage';
@@ -76,6 +80,10 @@ function App() {
             {/* 🌱 Plant Routes */}
             <Route path="/plants" element={<PlantsIndexPage />} />
             <Route path="/plants/:slug" element={<PlantDetailPage />} />
+
+            {/* 🌊 Biotope Routes */}
+            <Route path="/biotopes" element={<BiotopeIndexPage />} />
+            <Route path="/biotopes/:id" element={<BiotopeDetailPage />} />
 
             {/* 🐠 Dashboard & My Tanks (Protected) */}
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect, Home, LayoutDashboard } from 'lucide-react';
+import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect, Home, LayoutDashboard, Waves } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 import { useAuth } from '../../lib/supabase/auth';
@@ -18,6 +18,7 @@ export const Navbar = () => {
     { path: '/', label: 'Home', icon: Home },
     { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
+    { path: '/biotopes', label: 'Biotopes', icon: Waves },
     { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
     ...(user ? [{ path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }] : []),
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
