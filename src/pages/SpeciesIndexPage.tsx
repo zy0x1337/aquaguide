@@ -1,5 +1,5 @@
 import { useState, useMemo, Suspense, lazy } from 'react';
-import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Filter, ChevronDown, Thermometer, TestTube } from 'lucide-react';
+import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Filter, ChevronDown, Thermometer, TestTube, Sparkles, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { allSpecies } from '../data/species';
@@ -16,6 +16,9 @@ import { cn } from '../lib/utils';
 import type { Difficulty, Species, Region, EthologyTag } from '../types/species';
 
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
+
+// TODO: Replace with actual header image URL
+const HEADER_IMAGE_URL = 'https://images.unsplash.com/photo-1573472420143-0c68f179bdc7?q=80&w=2094&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 interface Filters {
   level: Difficulty | null;
@@ -190,55 +193,77 @@ const SpeciesIndexPage = () => {
 
   // Filter Sidebar Content (reused for desktop and mobile)
   const FilterContent = () => (
-    <div className="space-y-8">
+    <div className="space-y-5 md:space-y-6">
       <div className="space-y-3">
-        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
-          <Activity className="w-3 h-3 mr-1.5" /> Level
+        <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <Activity className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Level
         </label>
         <div className="flex flex-wrap gap-2">
-          <FilterChip label="Beginner" isActive={filters.level === 'beginner'} onClick={() => setFilters({ ...filters, level: filters.level === 'beginner' ? null : 'beginner' })} colorClass="text-emerald-700 bg-emerald-50 border-emerald-100" activeClass="bg-emerald-500 text-white border-emerald-600" />
-          <FilterChip label="Medium" isActive={filters.level === 'medium'} onClick={() => setFilters({ ...filters, level: filters.level === 'medium' ? null : 'medium' })} colorClass="text-amber-700 bg-amber-50 border-amber-100" activeClass="bg-amber-500 text-white border-amber-600" />
-          <FilterChip label="Expert" isActive={filters.level === 'expert'} onClick={() => setFilters({ ...filters, level: filters.level === 'expert' ? null : 'expert' })} colorClass="text-rose-700 bg-rose-50 border-rose-100" activeClass="bg-rose-500 text-white border-rose-600" />
+          <FilterChip 
+            label="Beginner" 
+            icon={<Sparkles className="w-3 h-3 md:w-3.5 md:h-3.5" />}
+            isActive={filters.level === 'beginner'} 
+            onClick={() => setFilters({ ...filters, level: filters.level === 'beginner' ? null : 'beginner' })} 
+            colorClass="text-emerald-700 bg-emerald-50 border-emerald-200 hover:bg-emerald-100 dark:text-emerald-300 dark:bg-emerald-950/30 dark:border-emerald-800" 
+            activeClass="bg-emerald-600 text-white border-emerald-700 shadow-lg" 
+          />
+          <FilterChip 
+            label="Medium" 
+            icon={<TrendingUp className="w-3 h-3 md:w-3.5 md:h-3.5" />}
+            isActive={filters.level === 'medium'} 
+            onClick={() => setFilters({ ...filters, level: filters.level === 'medium' ? null : 'medium' })} 
+            colorClass="text-amber-700 bg-amber-50 border-amber-200 hover:bg-amber-100 dark:text-amber-300 dark:bg-amber-950/30 dark:border-amber-800" 
+            activeClass="bg-amber-600 text-white border-amber-700 shadow-lg" 
+          />
+          <FilterChip 
+            label="Expert" 
+            icon={<Activity className="w-3 h-3 md:w-3.5 md:h-3.5" />}
+            isActive={filters.level === 'expert'} 
+            onClick={() => setFilters({ ...filters, level: filters.level === 'expert' ? null : 'expert' })} 
+            colorClass="text-rose-700 bg-rose-50 border-rose-200 hover:bg-rose-100 dark:text-rose-300 dark:bg-rose-950/30 dark:border-rose-800" 
+            activeClass="bg-rose-600 text-white border-rose-700 shadow-lg" 
+          />
         </div>
       </div>
 
       <div className="space-y-3">
-        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
-          <Globe2 className="w-3 h-3 mr-1.5" /> Region
+        <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <Globe2 className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Region
         </label>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {regions.map(region => (
             <FilterChip 
               key={region}
-              label={region} 
+              label={region.replace(' ', '\n')}
               isActive={filters.region === region} 
               onClick={() => setFilters({ ...filters, region: filters.region === region ? null : region })} 
+              className="text-center leading-tight py-2.5"
             />
           ))}
         </div>
       </div>
 
-      <div className="pt-6 border-t border-slate-100 space-y-6">
-        <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
-            <Box className="w-3 h-3 mr-1.5" /> Tank Size
+      <div className="pt-4 border-t-2 border-slate-200 dark:border-slate-700 space-y-4 md:space-y-5">
+        <div className="space-y-2.5">
+          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+            <Box className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Tank Size
           </label>
           <select 
-            className="w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+            className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm md:text-base rounded-xl px-3 md:px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
             value={filters.tankSize || ''}
             onChange={(e) => setFilters({ ...filters, tankSize: e.target.value === '' ? null : Number(e.target.value) })}
           >
-            <option value="">Any Tank Size</option>
-            <option value="30">Max 30 Liters (Nano)</option>
-            <option value="60">Max 60 Liters (Standard)</option>
-            <option value="120">Max 120 Liters</option>
-            <option value="200">Max 200 Liters</option>
+            <option value="">Any Size</option>
+            <option value="30">🪴 Max 30L (Nano)</option>
+            <option value="60">🐠 Max 60L (Small)</option>
+            <option value="120">🏠 Max 120L (Medium)</option>
+            <option value="200">🏰 Max 200L (Large)</option>
           </select>
         </div>
 
-        <div className="space-y-3 relative">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
-            <Droplets className="w-3 h-3 mr-1.5" /> Biotope
+        <div className="space-y-2.5 relative">
+          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+            <Droplets className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Biotope
           </label>
           <input 
             type="text" 
@@ -246,31 +271,31 @@ const SpeciesIndexPage = () => {
             onChange={(e) => handleBiotopeInput(e.target.value)}
             onFocus={() => filters.biotope.length >= 2 && setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-            placeholder="e.g. 'Mekong'..."
-            className="w-full bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+            placeholder="e.g. 'Amazon'..."
+            className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm md:text-base rounded-xl px-3 md:px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           />
           
           {showSuggestions && biotopeSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full bg-white border border-slate-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto">
+            <div className="absolute z-50 w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl mt-1 max-h-60 overflow-y-auto">
               {biotopeSuggestions.map((b) => (
                 <button
                   key={b.id}
                   onClick={() => selectBiotope(b)}
-                  className="w-full text-left px-4 py-3 hover:bg-indigo-50 transition-colors border-b border-slate-100 last:border-0 group"
+                  className="w-full text-left px-4 py-3 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors border-b border-slate-100 dark:border-slate-700 last:border-0 group"
                 >
-                  <div className="font-bold text-slate-800 text-sm group-hover:text-indigo-700">{b.label}</div>
-                  <div className="text-xs text-slate-500 truncate">{b.description}</div>
+                  <div className="font-bold text-slate-800 dark:text-slate-200 text-sm group-hover:text-indigo-700 dark:group-hover:text-indigo-400">{b.label}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 truncate">{b.description}</div>
                 </button>
               ))}
             </div>
           )}
 
-          <div className="flex flex-wrap gap-2 pt-1">
+          <div className="flex flex-wrap gap-1.5 md:gap-2 pt-1">
             {['Blackwater', 'Amazon', 'Rice Paddies'].map(tag => (
               <button 
                 key={tag}
                 onClick={() => setFilters({ ...filters, biotope: tag })}
-                className="px-2.5 py-1 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-700 text-[10px] font-bold uppercase rounded-lg border border-slate-200 transition-all whitespace-nowrap"
+                className="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-slate-600 dark:text-slate-300 hover:text-indigo-700 dark:hover:text-indigo-400 text-[10px] md:text-[11px] font-bold uppercase rounded-lg border border-slate-200 dark:border-slate-700 transition-all whitespace-nowrap"
               >
                 {tag}
               </button>
@@ -278,13 +303,25 @@ const SpeciesIndexPage = () => {
           </div>
         </div>
 
-        <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
-            <PawPrint className="w-3 h-3 mr-1.5" /> Type
+        <div className="space-y-2.5">
+          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+            <PawPrint className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Type
           </label>
-          <div className="flex flex-wrap gap-2">
-            <FilterChip label="Fish" isActive={filters.type === 'fish'} onClick={() => setFilters({ ...filters, type: filters.type === 'fish' ? null : 'fish' })} />
-            <FilterChip label="Invertebrates" isActive={filters.type === 'invertebrate'} onClick={() => setFilters({ ...filters, type: filters.type === 'invertebrate' ? null : 'invertebrate' })} />
+          <div className="grid grid-cols-2 gap-2">
+            <FilterChip 
+              label="Fish" 
+              icon={<Fish className="w-3 h-3 md:w-3.5 md:h-3.5" />}
+              isActive={filters.type === 'fish'} 
+              onClick={() => setFilters({ ...filters, type: filters.type === 'fish' ? null : 'fish' })} 
+              className="justify-center"
+            />
+            <FilterChip 
+              label="Inverts" 
+              icon={<PawPrint className="w-3 h-3 md:w-3.5 md:h-3.5" />}
+              isActive={filters.type === 'invertebrate'} 
+              onClick={() => setFilters({ ...filters, type: filters.type === 'invertebrate' ? null : 'invertebrate' })} 
+              className="justify-center"
+            />
           </div>
         </div>
       </div>
@@ -293,61 +330,98 @@ const SpeciesIndexPage = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-slate-50 pb-20">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-16 md:pb-20">
         <SEOHead 
           title="Species Database - AquaGuide" 
           description="Browse our complete collection of aquarium fish and invertebrates."
         />
 
-        {/* Header */}
-        <div className="bg-white border-b border-slate-200 pt-20 sm:pt-24 pb-8 sm:pb-12 px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-3 sm:mb-4 tracking-tight">
-              Species <span className="text-indigo-600">Database</span>
-            </h1>
-            <p className="text-slate-500 text-base sm:text-lg mb-6 sm:mb-8">
-              Explore {allSpecies.length} documented species.
-            </p>
+        {/* Hero Section with Background Image */}
+        <div className="relative h-[45vh] min-h-[400px] md:h-[55vh] md:min-h-[500px] overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img 
+              src={HEADER_IMAGE_URL}
+              alt="Aquarium species"
+              className="w-full h-full object-cover"
+            />
+            {/* Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/90"></div>
+            {/* Additional gradient for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/30 to-cyan-900/30"></div>
+          </div>
 
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                <div className="relative flex items-center bg-slate-50 rounded-2xl p-2 shadow-lg border border-slate-200">
-                  <div className="pl-3 text-slate-400">
-                    <Search className="w-5 h-5" />
+          <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col justify-end pb-8 md:pb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="max-w-3xl"
+            >
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 md:px-4 py-1.5 md:py-2 mb-4 md:mb-5 text-white/90 text-xs md:text-sm font-semibold shadow-lg">
+                <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                <span>{allSpecies.length} Species</span>
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 md:mb-4 tracking-tight leading-[1.1]">
+                Species Database
+              </h1>
+              
+              <p className="text-sm sm:text-base md:text-lg text-slate-200 mb-6 md:mb-8 leading-relaxed max-w-2xl">
+                Discover detailed care guides and habitat requirements for freshwater fish and invertebrates.
+              </p>
+
+              {/* Enhanced Search Bar */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="relative group max-w-2xl"
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                <div className="relative flex items-center bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border border-white/50">
+                  <div className="pl-3 md:pl-4 text-slate-400">
+                    <Search className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <input 
                     type="text" 
-                    placeholder="Search species..." 
+                    placeholder="Search by name or region..." 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full p-2 sm:p-3 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 bg-transparent border-none focus:ring-0 outline-none"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 bg-transparent border-none focus:ring-0 outline-none font-medium"
                   />
                   {searchTerm && (
-                    <button onClick={() => setSearchTerm('')} className="mr-2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
-                      <X className="w-5 h-5" />
+                    <button 
+                      onClick={() => setSearchTerm('')} 
+                      className="mr-1.5 md:mr-2 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors" 
+                      aria-label="Clear search"
+                    >
+                      <X className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                   )}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-4 sm:-mt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-4 md:-mt-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
             
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:block lg:col-span-1 space-y-6">
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 sticky top-24">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-bold text-slate-900 flex items-center text-sm sm:text-base">
-                    <SlidersHorizontal className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-indigo-500" /> Filters
+            <aside className="hidden lg:block lg:col-span-1">
+              <div className="bg-white dark:bg-slate-800 p-5 md:p-6 rounded-xl md:rounded-2xl shadow-lg border-2 border-slate-200 dark:border-slate-700 sticky top-24">
+                <div className="flex items-center justify-between mb-5 pb-4 border-b-2 border-slate-200 dark:border-slate-700">
+                  <h3 className="font-bold text-slate-900 dark:text-white flex items-center text-sm md:text-base">
+                    <SlidersHorizontal className="w-4 h-4 md:w-5 md:h-5 mr-2 text-indigo-500" /> Filters
                   </h3>
                   {hasActiveFilters && (
-                    <button onClick={resetFilters} className="text-xs text-rose-500 font-bold hover:underline">
-                      Reset
+                    <button 
+                      onClick={resetFilters} 
+                      className="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1"
+                    >
+                      <X className="w-3 h-3" /> Reset
                     </button>
                   )}
                 </div>
@@ -357,92 +431,144 @@ const SpeciesIndexPage = () => {
 
             {/* Mobile Filter Drawer */}
             <MobileFilterDrawer isOpen={isMobileDrawerOpen} onClose={() => setIsMobileDrawerOpen(false)}>
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-200">
-                <h3 className="font-bold text-slate-900">Quick Filters</h3>
+              <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-slate-200">
+                <h3 className="font-bold text-slate-900 text-lg">Filters</h3>
                 {hasActiveFilters && (
-                  <button onClick={resetFilters} className="text-xs text-rose-500 font-bold hover:underline">
-                    Reset All
+                  <button 
+                    onClick={resetFilters} 
+                    className="text-xs text-rose-600 font-bold hover:underline flex items-center gap-1"
+                  >
+                    <X className="w-3 h-3" /> Reset
                   </button>
                 )}
               </div>
               <FilterContent />
             </MobileFilterDrawer>
 
-            {/* Mobile Filter Button */}
+            {/* Mobile Filter Button - Enhanced & Always Visible */}
             <MobileFilterButton 
               onClick={() => setIsMobileDrawerOpen(true)} 
               activeFiltersCount={activeFilterCount} 
             />
 
             {/* Main Content */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 space-y-4 md:space-y-6">
               {/* Advanced Filters - Desktop only */}
-              <div className="hidden lg:block bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="hidden lg:block bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl shadow-lg border-2 border-slate-200 dark:border-slate-700 overflow-hidden"
+              >
                 <button
                   onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                  className="w-full flex items-center justify-between px-4 py-3 bg-gradient-to-r from-indigo-50 to-blue-50 hover:from-indigo-100 hover:to-blue-100 border-2 border-indigo-200 rounded-xl transition-all font-semibold text-sm text-indigo-900"
+                  className="w-full flex items-center justify-between px-5 md:px-6 py-3.5 md:py-4 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 hover:from-indigo-100 hover:to-blue-100 dark:hover:from-indigo-900/40 dark:hover:to-blue-900/40 border-b-2 border-indigo-200 dark:border-indigo-800 transition-all font-semibold text-sm text-indigo-900 dark:text-indigo-300"
                 >
-                  <span className="flex items-center gap-2">
-                    <Filter className="w-4 h-4" />
+                  <span className="flex items-center gap-3">
+                    <Filter className="w-5 h-5" />
                     Advanced Filters
                     {showAdvancedFilters && activeFilterCount > 5 && (
-                      <span className="bg-indigo-500 text-white text-xs px-2 py-0.5 rounded-full">
-                        {activeFilterCount - 5}
+                      <span className="bg-indigo-600 text-white text-xs px-2.5 py-1 rounded-full font-bold shadow-lg">
+                        +{activeFilterCount - 5}
                       </span>
                     )}
                   </span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${showAdvancedFilters ? 'rotate-180' : ''}`} />
                 </button>
 
                 <AnimatePresence>
                   {showAdvancedFilters && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                      <div className="mt-4 pt-4 border-t border-slate-200">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="bg-gradient-to-br from-rose-50 to-orange-50 p-4 rounded-xl border border-rose-200">
-                            <label className="text-xs font-bold text-rose-900 mb-3 block flex items-center">
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }} 
+                      animate={{ height: 'auto', opacity: 1 }} 
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="p-5 md:p-6 bg-slate-50 dark:bg-slate-900/50">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                          <div className="bg-gradient-to-br from-rose-50 to-orange-50 dark:from-rose-950/30 dark:to-orange-950/30 p-5 rounded-xl border-2 border-rose-200 dark:border-rose-800">
+                            <label className="text-xs font-bold text-rose-900 dark:text-rose-300 mb-4 block flex items-center">
                               <Thermometer className="w-4 h-4 mr-2" /> Temperature
                             </label>
-                            <Slider min={15} max={35} value={[filters.tempMin, filters.tempMax]} onChange={([tempMin, tempMax]) => setFilters({ ...filters, tempMin, tempMax })} formatLabel={(v) => `${v}°C`} />
+                            <Slider 
+                              min={15} 
+                              max={35} 
+                              value={[filters.tempMin, filters.tempMax]} 
+                              onChange={([tempMin, tempMax]) => setFilters({ ...filters, tempMin, tempMax })} 
+                              formatLabel={(v) => `${v}°C`} 
+                            />
                           </div>
 
-                          <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl border border-cyan-200">
-                            <label className="text-xs font-bold text-cyan-900 mb-3 block flex items-center">
-                              <TestTube className="w-4 h-4 mr-2" /> pH Range
+                          <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30 p-5 rounded-xl border-2 border-cyan-200 dark:border-cyan-800">
+                            <label className="text-xs font-bold text-cyan-900 dark:text-cyan-300 mb-4 block flex items-center">
+                              <TestTube className="w-4 h-4 mr-2" /> pH Level
                             </label>
-                            <Slider min={4.0} max={9.0} step={0.1} value={[filters.phMin, filters.phMax]} onChange={([phMin, phMax]) => setFilters({ ...filters, phMin, phMax })} formatLabel={(v) => v.toFixed(1)} />
+                            <Slider 
+                              min={4.0} 
+                              max={9.0} 
+                              step={0.1} 
+                              value={[filters.phMin, filters.phMax]} 
+                              onChange={([phMin, phMax]) => setFilters({ ...filters, phMin, phMax })} 
+                              formatLabel={(v) => v.toFixed(1)} 
+                            />
                           </div>
 
-                          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-4 rounded-xl border border-amber-200">
-                            <label className="text-xs font-bold text-amber-900 mb-3 block flex items-center">
+                          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 p-5 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+                            <label className="text-xs font-bold text-amber-900 dark:text-amber-300 mb-4 block flex items-center">
                               <Box className="w-4 h-4 mr-2" /> Max Size: {filters.maxBodySize}cm
                             </label>
-                            <input type="range" min="2" max="30" value={filters.maxBodySize} onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} className="w-full accent-amber-500" />
+                            <input 
+                              type="range" 
+                              min="2" 
+                              max="30" 
+                              value={filters.maxBodySize} 
+                              onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} 
+                              className="w-full h-2 bg-amber-200 rounded-lg appearance-none cursor-pointer accent-amber-600"
+                            />
                           </div>
 
                           <div>
-                            <label className="text-xs font-bold text-slate-700 mb-2 block">Diet</label>
-                            <select value={filters.diet} onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })} className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                            <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3 block flex items-center">
+                              <Activity className="w-4 h-4 mr-2" /> Diet
+                            </label>
+                            <select 
+                              value={filters.diet} 
+                              onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })} 
+                              className="w-full px-4 py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                            >
                               <option value="all">Any Diet</option>
-                              <option value="omnivore">Omnivore</option>
-                              <option value="carnivore">Carnivore</option>
-                              <option value="herbivore">Herbivore</option>
+                              <option value="omnivore">🍽️ Omnivore</option>
+                              <option value="carnivore">🥩 Carnivore</option>
+                              <option value="herbivore">🌿 Herbivore</option>
                             </select>
                           </div>
 
                           <div>
-                            <label className="text-xs font-bold text-slate-700 mb-2 block">Temperament</label>
-                            <select value={filters.temperament} onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })} className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
-                              <option value="all">Any Temperament</option>
-                              <option value="peaceful">Peaceful Only</option>
-                              <option value="semi-aggressive">Semi-Aggressive</option>
+                            <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3 block flex items-center">
+                              <Activity className="w-4 h-4 mr-2" /> Temperament
+                            </label>
+                            <select 
+                              value={filters.temperament} 
+                              onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })} 
+                              className="w-full px-4 py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                            >
+                              <option value="all">Any</option>
+                              <option value="peaceful">😌 Peaceful</option>
+                              <option value="semi-aggressive">⚡ Semi-Aggressive</option>
                             </select>
                           </div>
 
                           <div className="md:col-span-2">
-                            <label className="text-xs font-bold text-slate-700 mb-3 block">Behavior Tags</label>
-                            <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                              <CheckboxGroup options={['peaceful', 'schooler', 'bottom_dweller', 'surface_dweller', 'nocturnal', 'algae_eater', 'jumper', 'nano_safe']} selected={filters.behaviorTags} onChange={(behaviorTags) => setFilters({ ...filters, behaviorTags: behaviorTags as EthologyTag[] })} />
+                            <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3 block flex items-center">
+                              <Activity className="w-4 h-4 mr-2" /> Behavior Tags
+                            </label>
+                            <div className="bg-white dark:bg-slate-800 p-5 rounded-xl border-2 border-slate-200 dark:border-slate-700">
+                              <CheckboxGroup 
+                                options={['peaceful', 'schooler', 'bottom_dweller', 'surface_dweller', 'nocturnal', 'algae_eater', 'jumper', 'nano_safe']} 
+                                selected={filters.behaviorTags} 
+                                onChange={(behaviorTags) => setFilters({ ...filters, behaviorTags: behaviorTags as EthologyTag[] })} 
+                              />
                             </div>
                           </div>
                         </div>
@@ -450,12 +576,17 @@ const SpeciesIndexPage = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
 
-              {/* Results */}
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3 sm:p-4 mb-6">
+              {/* Results Header - Compact on Mobile */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl shadow-lg border-2 border-slate-200 dark:border-slate-700 p-3 md:p-5"
+              >
                 {activeFilters.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-slate-100">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4 pb-3 md:pb-4 border-b-2 border-slate-200 dark:border-slate-700">
                     {activeFilters.map((filter: any) => (
                       <FilterBadge key={filter.key} label={filter.label} value={filter.value} onRemove={filter.clear} />
                     ))}
@@ -463,44 +594,69 @@ const SpeciesIndexPage = () => {
                 )}
                 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <h2 className="text-base sm:text-lg font-bold text-slate-800 flex items-center">
-                    Found 
-                    <span className="mx-2 px-2 sm:px-3 py-1 bg-indigo-600 text-white rounded-lg font-black text-xs sm:text-sm shadow-md">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <span className="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400">Found</span>
+                    <span className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg md:rounded-xl font-black text-base md:text-lg shadow-lg">
                       {filteredSpecies.length}
-                    </span> 
-                    <span className="hidden sm:inline">Species</span>
-                  </h2>
+                    </span>
+                    <span className="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 hidden sm:inline">Species</span>
+                  </div>
                   
                   {hasActiveFilters && (
-                    <button onClick={resetFilters} className="text-xs font-bold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 px-3 py-2 rounded-lg transition-colors flex items-center border border-rose-100 self-start sm:self-auto">
-                      <X className="w-3.5 h-3.5 mr-1.5" /> Reset Filters
+                    <button 
+                      onClick={resetFilters} 
+                      className="text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all flex items-center gap-1.5 md:gap-2 border-2 border-rose-200 dark:border-rose-800 shadow-sm hover:shadow-md self-start sm:self-auto"
+                    >
+                      <X className="w-3.5 h-3.5 md:w-4 md:h-4" /> Clear Filters
                     </button>
                   )}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Species Grid */}
               {filteredSpecies.length > 0 ? (
                 <Suspense fallback={<SpeciesGridSkeleton />}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {filteredSpecies.map((s: Species) => <SpeciesCard key={s.id} data={s} />)}
-                  </div>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
+                  >
+                    {filteredSpecies.map((s: Species, index: number) => (
+                      <motion.div
+                        key={s.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.5) }}
+                      >
+                        <SpeciesCard data={s} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
                 </Suspense>
               ) : (
-                <div className="text-center py-12 sm:py-20 bg-white rounded-3xl border border-dashed border-slate-300">
-                  <div className="animate-bounce-slow mb-4">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto shadow-inner">
-                      <Fish className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300" />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center py-12 md:py-20 bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 shadow-lg"
+                >
+                  <div className="animate-bounce mb-5 md:mb-6">
+                    <div className="w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                      <Fish className="w-7 h-7 md:w-10 md:h-10 text-slate-400 dark:text-slate-500" />
                     </div>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2">No swimmers found</h3>
-                  <p className="text-sm text-slate-500 max-w-xs mx-auto mb-4 sm:mb-6 px-4">
-                    No species match your criteria.
+                  <h3 className="text-lg md:text-2xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">No Species Found</h3>
+                  <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-5 md:mb-6 px-4">
+                    Try adjusting your filters or search term.
                   </p>
-                  <button onClick={resetFilters} className="px-4 sm:px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition-colors shadow-lg">
-                    Clear Filters
+                  <button 
+                    onClick={resetFilters} 
+                    className="px-5 md:px-8 py-2.5 md:py-4 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white text-sm md:text-base font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+                  >
+                    Clear All Filters
                   </button>
-                </div>
+                </motion.div>
               )}
             </div>
           </div>
@@ -510,9 +666,25 @@ const SpeciesIndexPage = () => {
   );
 };
 
-const FilterChip = ({ label, isActive, onClick, colorClass = "text-slate-600 bg-slate-50 border-slate-200 hover:bg-slate-100", activeClass = "bg-slate-800 text-white border-slate-900 shadow-md" }: any) => (
-  <button onClick={onClick} className={cn("px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide border transition-all duration-200", isActive ? activeClass : colorClass)}>
-    {label}
+const FilterChip = ({ 
+  label, 
+  icon,
+  isActive, 
+  onClick, 
+  colorClass = "text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100 dark:text-slate-300 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700", 
+  activeClass = "bg-gradient-to-r from-indigo-600 to-blue-600 text-white border-indigo-700 shadow-lg",
+  className = ""
+}: any) => (
+  <button 
+    onClick={onClick} 
+    className={cn(
+      "px-3 py-2 md:py-2.5 rounded-lg md:rounded-xl text-[11px] md:text-xs font-bold uppercase tracking-wide border-2 transition-all duration-200 flex items-center gap-1.5 md:gap-2",
+      isActive ? activeClass : colorClass,
+      className
+    )}
+  >
+    {icon}
+    <span className="whitespace-nowrap">{label}</span>
   </button>
 );
 

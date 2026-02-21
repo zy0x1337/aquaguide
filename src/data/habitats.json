@@ -2,46 +2,186 @@
   {
     "id": "amazon-blackwater",
     "title": "Amazon Blackwater",
-    "subtitle": "The home of Neon Tetras and Discus Cichlids",
-    "imageUrl": "https://images.unsplash.com/photo-1543822709-08a8e1005b8a?auto=format&fit=crop&q=80&w=2000",
-    "description": "For half the year, the Amazon River floods the surrounding jungle. Fish literally swim between tree trunks and falling leaves. The water is tea-brown as decaying foliage releases tannins. This makes the water extremely soft and acidic, leaving bacteria with almost no chance to survive.",
+    "subtitle": "The flooded igapó forests of the Rio Negro",
+    "imageUrl": "https://images.unsplash.com/photo-1708502784334-b0ac594319b7?q=80&w=1699&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "The Rio Negro is the largest blackwater river in the world. During the annual flood pulse, the water rises up to 15 meters, flooding the surrounding rainforest (Igapó). The water is stained a deep tea-brown by humic and tannic acids released from miles of decaying forest litter. This creates an extreme environment: the water is virtually devoid of dissolved minerals, extremely acidic, and highly resistant to bacterial growth.",
     "conditions": {
-      "temperature": "24°C - 30°C (Warm)",
-      "waterType": "Extremely soft & acidic (pH 4.5 - 6.5)",
-      "flow": "Low to moderate flow",
-      "visibility": "Low (turbid due to tannins)"
+      "temperature": "26°C - 29°C",
+      "waterType": "Extremely soft & acidic",
+      "flow": "Sluggish (approx. 2 km/h)",
+      "visibility": "Low (1-2m due to tannins)"
     },
-    "ecology": "The dark coloration of the water provides small fish with protection from predators. Falling insects and the fine microfauna in the leaf litter form the primary food source. Plants hardly grow here, as the dark water allows very little light to penetrate.",
-    "speciesIds": ["neon-tetra", "corydoras-panda", "symphysodon-aequifasciatus"]
+    "waterParameters": {
+      "ph": "4.0 - 5.5",
+      "gh": "< 1 dGH",
+      "kh": "< 1 dKH",
+      "tds": "10 - 30 µS/cm"
+    },
+    "setupGuide": {
+      "substrate": "Fine white or light silica sand, heavily covered with leaf litter.",
+      "hardscape": "Tangled driftwood, twisted roots, and dried botanicals (Indian almond leaves, alder cones, seed pods).",
+      "flora": "Very sparse due to low light. Floating plants (Limnobium laevigatum), Echinodorus species, or Eleocharis.",
+      "lighting": "Dim lighting to mimic the dense jungle canopy and tannin-stained water."
+    },
+    "ecology": "The stark acidity and lack of minerals mean very few aquatic plants can survive here. Instead, the ecosystem relies on allochthonous input (material falling from the forest canopy). Insects, fruits, and the biofilm growing on submerged wood form the base of the food web. The dark water provides crucial camouflage for small characins and dwarf cichlids against predators.",
+    "speciesIds": [
+      "neon-tetra", "cardinal-tetra", "rummynose-tetra", "ember-tetra",
+      "black-skirt-tetra", "bronze-cory", "corydoras-paleatus", "panda-cory",
+      "pygmy-cory", "sterbai-cory", "bristlenose-pleco", "clown-pleco",
+      "gold-spot-pleco", "otocinclus-macrospilus", "otocinclus-vittatus",
+      "bolivian-ram", "ram-cichlid", "oscar"
+    ]
   },
   {
     "id": "lake-tanganyika-rocky",
     "title": "Lake Tanganyika Rocky Coast",
-    "subtitle": "Clear water and endless stone deserts",
-    "imageUrl": "https://images.unsplash.com/photo-1622353102377-5116773a4b64?auto=format&fit=crop&q=80&w=2000",
-    "description": "Lake Tanganyika in East Africa is the second oldest freshwater lake on Earth. Its rocky coasts drop steeply and offer countless crevices and caves inhabited by highly specialized cichlids.",
+    "subtitle": "The ancient, alkaline stone deserts of East Africa",
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1696531220266-362a418da9b4?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Lake Tanganyika is the second oldest and second deepest freshwater lake on Earth. Its rocky coastal zones (such as Kipili or Ndole Bay) feature steep, sediment-free cliffs and boulder fields that drop dramatically into the abyss. The lake's water chemistry is unique: it is highly alkaline and rich in dissolved salts, with a carbonate hardness (KH) that often exceeds its general hardness (GH).",
     "conditions": {
-      "temperature": "24°C - 27°C",
-      "waterType": "Hard & alkaline (pH 8.5 - 9.2)",
-      "flow": "Surface movement, but calm inside caves",
-      "visibility": "Crystal clear (up to 20m visibility)"
+      "temperature": "24°C - 28°C",
+      "waterType": "Hard & highly alkaline",
+      "flow": "Strong surface movement, calm at depth",
+      "visibility": "Crystal clear (up to 20m)"
     },
-    "ecology": "The water is extremely rich in minerals. Filamentous algae growing on the rocks are the most important food source. Every rock cluster is stubbornly defended as territory. Wood or soft sand play almost no role here.",
-    "speciesIds": ["neolamprologus-brichardi", "julidochromis-marlieri"]
+    "waterParameters": {
+      "ph": "8.5 - 9.2",
+      "gh": "11 - 17 dGH",
+      "kh": "16 - 20 dKH",
+      "tds": "600 - 700 µS/cm"
+    },
+    "setupGuide": {
+      "substrate": "Aragonite sand or crushed coral to buffer the high pH and KH naturally.",
+      "hardscape": "Massive rock formations, stacked to the surface to create countless caves and line-of-sight breaks. No wood.",
+      "flora": "Virtually none. Some Vallisneria or hardy Anubias can be used, but rocks should dominate.",
+      "lighting": "Bright lighting to encourage the growth of thick green algae (Aufwuchs) on the rocks."
+    },
+    "ecology": "The extreme mineral content and high pH isolate the lake evolutionarily. The rocky shores are dominated by highly specialized endemic cichlids. A thick carpet of biocover (Aufwuchs) grows on the sunlit rocks, harboring microscopic organisms. This biocover is the primary food source for grazing cichlids, while complex cave systems provide breeding grounds and territorial boundaries.",
+    "speciesIds": [
+      "electric-yellow-lab"
+    ]
   },
   {
     "id": "se-asia-peat-swamp",
     "title": "Southeast Asian Peat Swamp",
-    "subtitle": "Dark, shallow, and densely overgrown",
-    "imageUrl": "https://images.unsplash.com/photo-1616213768297-c81216d7a46f?auto=format&fit=crop&q=80&w=2000",
-    "description": "These shallow, stagnant waters in Indonesia and Malaysia are extremely acidic and protected by dense vegetation. They often dry out partially or are heavily influenced by monsoon seasons.",
+    "subtitle": "The acidic, labyrinthine pools of Borneo & Malaysia",
+    "imageUrl": "https://images.unsplash.com/photo-1617015626700-d5abc4702f98?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Peat swamp forests in regions like Johor (Malaysia) or Borneo are characterized by waterlogged soils where dead plant material cannot fully decompose, forming thick layers of peat. Relying heavily on monsoon rains, these shallow pools can partially dry up. The water is deeply stained with humic acids, dropping the pH to levels comparable to vinegar in extreme cases.",
+    "conditions": {
+      "temperature": "25°C - 30°C",
+      "waterType": "Extremely soft & acidic",
+      "flow": "Stagnant or very slow",
+      "visibility": "Low (tea-colored water)"
+    },
+    "waterParameters": {
+      "ph": "3.5 - 6.0",
+      "gh": "0 - 3 dGH",
+      "kh": "0 - 2 dKH",
+      "tds": "10 - 50 µS/cm"
+    },
+    "setupGuide": {
+      "substrate": "Peat moss, aquatic soil, covered in dense layers of decaying leaves and botanical debris.",
+      "hardscape": "Complex tangles of twiggy wood and roots extending from the surface down to the substrate.",
+      "flora": "Cryptocoryne species, riparian grasses (Eleocharis), and dense floating plants to block light.",
+      "lighting": "Very subdued lighting. The water column should appear dark and moody."
+    },
+    "ecology": "Due to the stagnant, warm, and decomposing nature of the swamp, the water is often severely oxygen-depleted. Fish from this biotope (like Anabantoids/Labyrinth fish) have evolved specialized respiratory organs to gulp atmospheric air from the surface. The dense root structures and leaf litter provide essential refuge for these small, often shy species.",
+    "speciesIds": [
+      "betta-splendens", "betta-splendens-female", "honey-gourami",
+      "sparkling-gourami", "harlequin-rasbora", "chili-rasbora", "kuhli-loach"
+    ]
+  },
+  {
+    "id": "central-american-river",
+    "title": "Central American River",
+    "subtitle": "Sun-drenched, fast-flowing coastal streams",
+    "imageUrl": "https://images.unsplash.com/photo-1589973488443-496846cae737?q=80&w=1115&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "The rivers and coastal streams of Mexico, Honduras, and Belize cut through limestone-rich terrain, creating hard, alkaline waterways that flow rapidly toward the Gulf of Mexico. These sun-drenched rivers are the evolutionary birthplace of the world's most famous livebearing fish. The water is highly oxygenated, crystal clear, and rich in calcium and magnesium.",
     "conditions": {
       "temperature": "22°C - 28°C",
-      "waterType": "Soft & very acidic (pH 4.0 - 6.0)",
-      "flow": "Stagnant water",
-      "visibility": "Low (due to tannins and plants)"
+      "waterType": "Hard & slightly alkaline",
+      "flow": "Moderate to fast",
+      "visibility": "High (Clear water)"
     },
-    "ecology": "Many labyrinth fish (like Bettas or Gouramis) originate from here. They have learned to breathe atmospheric air, as the warm, stagnant water is often oxygen-depleted. Floating plants further darken the water.",
-    "speciesIds": ["betta-splendens", "trichopodus-leerii"]
+    "waterParameters": {
+      "ph": "7.0 - 8.2",
+      "gh": "10 - 20 dGH",
+      "kh": "8 - 15 dKH",
+      "tds": "300 - 500 µS/cm"
+    },
+    "setupGuide": {
+      "substrate": "A mix of coarse gravel, river pebbles, and larger smooth cobblestones.",
+      "hardscape": "Scattered, water-worn river rocks and thick, sturdy pieces of driftwood.",
+      "flora": "Sturdy plants that can handle water flow and hard water, such as Vallisneria, Sagittaria, or Hornwort.",
+      "lighting": "Bright lighting to mimic the sun-drenched shallow rivers, promoting natural green algae growth."
+    },
+    "ecology": "Because of the constant water flow, these habitats are incredibly rich in dissolved oxygen. The strong sunlight promotes the growth of filamentous algae on the rocks, which serves as a primary food source for grazing livebearers. The fish here are strong swimmers, continuously navigating the current while hunting for insect larvae that fall into the river.",
+    "speciesIds": [
+      "platy", "swordtail", "molly", "endler-guppy"
+    ]
+  },
+  {
+    "id": "asian-hillstream",
+    "title": "Asian Hillstream",
+    "subtitle": "Frigid, rushing mountain torrents of Southeast Asia",
+    "imageUrl": "https://images.unsplash.com/photo-1756710349233-ff4fe41822ce?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Originating high in the mountains of China, Vietnam, and India, these shallow, rapid streams cascade over boulder fields. The water is exceptionally clean, highly oxygenated, and significantly cooler than typical tropical habitats. The relentless current shapes the environment, smoothing stones over millennia and preventing the accumulation of any fine sediment or organic debris.",
+    "conditions": {
+      "temperature": "18°C - 23°C (Sub-tropical)",
+      "waterType": "Neutral & moderately soft",
+      "flow": "Extremely fast (Torrential)",
+      "visibility": "Crystal clear"
+    },
+    "waterParameters": {
+      "ph": "6.5 - 7.5",
+      "gh": "2 - 10 dGH",
+      "kh": "2 - 6 dKH",
+      "tds": "50 - 150 µS/cm"
+    },
+    "setupGuide": {
+      "substrate": "A riverbed style mix of smooth pebbles, small boulders, and coarse sand. No fine soil.",
+      "hardscape": "Large, smooth, water-worn boulders and stones stacked to create natural flow-breaks. Small pieces of smooth wood.",
+      "flora": "Traditional rooted plants will be uprooted. Use epiphytes attached to rocks (Anubias, Java Fern, Bolbitis).",
+      "lighting": "Extremely bright lighting to encourage thick carpets of aufwuchs/algae on the boulders."
+    },
+    "ecology": "Survival here dictates physical adaptation. Fish have evolved streamlined bodies (like Danios) to cut through the current, or specialized suckermouths to cling to boulders. The entire food web relies on the bright sun hitting the shallow water, fueling the growth of diatoms and biofilm on the rocks, which in turn support specialized grazing fish and shrimp.",
+    "speciesIds": [
+      "zebra-danio", "white-cloud-minnow", "cherry-barb", "rosy-barb", "amano-shrimp", "siamese-algae-eater"
+    ]
+  },
+  {
+    "id": "lake-kutubu",
+    "title": "Lake Kutubu",
+    "subtitle": "The isolated, limestone-fed jewel of Papua New Guinea",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Clouds_over_Lake_Kutubu.jpg/960px-Clouds_over_Lake_Kutubu.jpg?20100610214134",
+    "imageCredit": {
+      "photographer": "Iain Taylor1",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Clouds_over_Lake_Kutubu.jpg",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+    },
+    "description": "Lake Kutubu is a remote, spectacular highland lake in Papua New Guinea, situated 800 meters above sea level. Fed primarily by underground springs flowing through dense limestone karst, the lake's water is incredibly clear, hard, and alkaline. It is a hotspot of endemism—meaning the species found here, like the famous Turquoise Rainbowfish, exist nowhere else on the planet.",
+    "conditions": {
+      "temperature": "20°C - 25°C",
+      "waterType": "Hard & alkaline",
+      "flow": "Very slow (Lake margins)",
+      "visibility": "Crystal clear (up to 10m)"
+    },
+    "waterParameters": {
+      "ph": "7.5 - 9.0",
+      "gh": "10 - 20 dGH",
+      "kh": "8 - 15 dKH",
+      "tds": "250 - 400 µS/cm"
+    },
+    "setupGuide": {
+      "substrate": "Sand mixed with crushed coral or limestone to naturally buffer the high pH.",
+      "hardscape": "Limestone rocks, karst rock formations, and submerged branches along the edges.",
+      "flora": "Dense thickets of aquatic vegetation such as Ceratophyllum (Hornwort), Vallisneria, and Najas grass.",
+      "lighting": "Moderate to bright lighting to support the dense underwater forests."
+    },
+    "ecology": "The margins of Lake Kutubu are fringed with dense reeds and aquatic plants, offering shelter and breeding grounds for Rainbowfish and Gobies. The high mineral content ensures stable water chemistry, while the isolation of the lake has allowed these species to evolve striking colors and unique behaviors undisturbed by outside predators.",
+    "speciesIds": [
+      "lake-kutubu-rainbowfish", "bumblebee-goby"
+    ]
   }
 ]

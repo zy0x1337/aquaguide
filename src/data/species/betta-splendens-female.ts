@@ -4,7 +4,14 @@ export const bettaSplendensFemale: Species = {
   id: 'betta-splendens-female',
   slug: 'betta-splendens-female',
   imageUrl: '/images/species/betta-splendens-female.jpg',
-  funFact: "Female Bettas are often underestimated as 'docile' versions of males—wrong! They're fierce, feisty, and fully capable of aggression. The difference? Males fight rivals on sight; females establish hierarchies through calculated bullying. In Sorority tanks (female-only groups), they create brutal pecking orders with a queen bee ruling through intimidation. But here's the secret: single female Bettas are easier than males for community tanks—they're less territorial, faster swimmers, and compatible with more tankmates. Think of them as 'confident but not psychotic.'",
+  funFact: "Female Bettas are often underestimated as 'docile' versions of males, but that's wrong! They're fierce, feisty, and fully capable of aggression. The difference? Males fight rivals on sight; females establish hierarchies through calculated bullying. In Sorority tanks (female-only groups), they create brutal pecking orders with a queen bee ruling through intimidation. But here's the secret: single female Bettas are easier than males for community tanks. They're less territorial, faster swimmers, and compatible with more tankmates. Think of them as 'confident but not psychotic.'",
+
+  imageCredit: {
+    photographer: 'Klaus Rudloff (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Anomalochromis_thomasi_A.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
 
   taxonomy: {
     scientificName: 'Betta splendens',
@@ -48,19 +55,19 @@ export const bettaSplendensFemale: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Female Bettas love planted tanks! For single females in community tanks: plant moderately with broad-leaved plants (Anubias, Amazon Swords) for resting spots near surface, plus floating plants (Water Sprite, Frogbit) to diffuse light and create territories. For Sororities (5+ females): JUNGLE-STYLE planting is mandatory—dense vegetation that breaks lines of sight prevents constant chasing. Think impenetrable Amazon rainforest: Vallisneria forests, Cryptocoryne thickets, driftwood mazes, floating plant carpets. If you can see from one side of tank to other = not dense enough for sorority. Single females are plant-safe; sororities may uproot delicate carpets during territory disputes.',
+    plantingNotes: 'Female Bettas love planted tanks! For single females in community tanks: plant moderately with broad-leaved plants (Anubias, Amazon Swords) for resting spots near surface, plus floating plants (Water Sprite, Frogbit) to diffuse light and create territories. For Sororities (5+ females): JUNGLE-STYLE planting is mandatory. Dense vegetation that breaks lines of sight prevents constant chasing. Think impenetrable Amazon rainforest: Vallisneria forests, Cryptocoryne thickets, driftwood mazes, floating plant carpets. If you can see from one side of tank to other = not dense enough for sorority. Single females are plant-safe; sororities may uproot delicate carpets during territory disputes.',
     hardscape: ['Driftwood (creates territories + tannins)', 'Smooth Caves', 'Indian Almond Leaves (botanicals)', 'Floating cork bark (resting platforms)'],
   },
 
   behavior: {
     tags: ['semi-aggressive', 'surface_dweller', 'labyrinth_fish', 'territorial', 'hierarchy'],
     minGroupSize: 1,
-    description: 'Female Bettas are complex creatures—less aggressive than males but not peaceful! Single females are confident, curious, and surprisingly good community fish. They claim a small territory (10-20cm radius, usually near surface) but coexist peacefully with most tankmates. They are fast swimmers (short fins = speed) and bold during feeding—no shrinking violets here! Unlike males, single females rarely harass tankmates and focus energy on exploring and foraging. Sororities (5+ females) are a different animal entirely. Females in groups establish strict hierarchies through intimidation: chasing, fin nipping, body slamming. There\'s always an alpha female (queen bee) who dominates, mid-ranking enforcers, and stressed bottom-rank scapegoats. Hierarchy is never stable—constant micro-aggressions, occasional full fights, and sudden rank changes. Stressed females show horizontal stripes and hide constantly. Sororities require expert monitoring—daily observation for injuries, stress, and escalating violence. They\'re not beginner projects.',
+    description: 'Female Bettas are complex creatures. They are less aggressive than males but not peaceful! Single females are confident, curious, and surprisingly good community fish. They claim a small territory (10-20cm radius, usually near surface) but coexist peacefully with most tankmates. They are fast swimmers (short fins = speed) and bold during feeding. No shrinking violets here! Unlike males, single females rarely harass tankmates and focus energy on exploring and foraging. Sororities (5+ females) are a different animal entirely. Females in groups establish strict hierarchies through intimidation: chasing, fin nipping, body slamming. There\'s always an alpha female (queen bee) who dominates, mid-ranking enforcers, and stressed bottom-rank scapegoats. Hierarchy is never stable. Constant micro-aggressions, occasional full fights, and sudden rank changes. Stressed females show horizontal stripes and hide constantly. Sororities require expert monitoring with daily observation for injuries, stress, and escalating violence. They\'re not beginner projects.',
     
     compatibility: {
       goodMates: ['Peaceful Tetras (Neon, Cardinal, Ember)', 'Corydoras', 'Rasboras', 'Kuhli Loaches', 'Snails (Nerite, Mystery)', 'Peaceful bottom-dwellers', 'Fast midwater schoolers'],
       badMates: ['Male Bettas (NEVER together except brief breeding)', 'Other female Bettas (unless proper sorority setup)', 'Fin-nippers (Tiger Barbs, Serpae Tetras)', 'Guppies (males resemble Bettas = attacked)', 'Gouramis (territorial conflict)', 'Long-finned slow fish'],
-      notes: 'Single female Bettas are easier community fish than males! They\'re less territorial, faster swimmers, and compatible with more tankmates. HOWEVER: NEVER keep 2 females together—they\'ll fight to death. Either keep 1 alone in community tank OR 5+ in proper sorority setup (100L+, heavily planted, expert-level care). NEVER keep male + female together permanently—males harass females to death outside brief breeding encounters (hours, not days). Female Bettas are safe with most peaceful community fish but will attack fish with long flowing fins (mistaken for rival Bettas) or bright red coloration (triggers aggression).',
+      notes: 'Single female Bettas are easier community fish than males! They\'re less territorial, faster swimmers, and compatible with more tankmates. HOWEVER: NEVER keep 2 females together. They\'ll fight to death. Either keep 1 alone in community tank OR 5+ in proper sorority setup (100L+, heavily planted, expert-level care). NEVER keep male + female together permanently. Males harass females to death outside brief breeding encounters (hours, not days). Female Bettas are safe with most peaceful community fish but will attack fish with long flowing fins (mistaken for rival Bettas) or bright red coloration (triggers aggression).',
       
       rules: [
         {
@@ -78,7 +85,7 @@ export const bettaSplendensFemale: Species = {
         {
           type: 'requires',
           condition: 'Sorority tanks (5+ females)',
-          reason: 'Sororities are ADVANCED projects requiring: 100L+ tank, jungle-style planting, 5+ females (odd numbers), daily observation, backup isolation tanks, stress management skills. Failure rate is high—injuries, stress, deaths common. NOT for beginners. Single females in community tanks are much easier',
+          reason: 'Sororities are ADVANCED projects requiring: 100L+ tank, jungle-style planting, 5+ females (odd numbers), daily observation, backup isolation tanks, stress management skills. Failure rate is high. Injuries, stress, deaths common. NOT for beginners. Single females in community tanks are much easier',
           severity: 'high',
         },
         {
@@ -135,17 +142,17 @@ export const bettaSplendensFemale: Species = {
     proTips: [
       "Single female Bettas are underrated community fish! They're easier than males: less territorial, faster swimmers (short fins), and compatible with more tankmates. If you want a Betta in a community tank, choose a single female over a male. She'll claim a small territory but coexist peacefully with Tetras, Corydoras, Rasboras.",
       "Ovipositor (egg spot): White dot on belly between pelvic fins. If you see it = definitely female. Young females may not show it yet. Males never have it.",
-      "Modern female varieties (Koi, Galaxy, Candy, Dumbo) are stunning—rival males in beauty! Don't judge females by drab pet store tanks. In planted tanks with good food and low stress, they bloom into gorgeous fish with vibrant colors.",
+      "Modern female varieties (Koi, Galaxy, Candy, Dumbo) are stunning. They rival males in beauty! Don't judge females by drab pet store tanks. In planted tanks with good food and low stress, they bloom into gorgeous fish with vibrant colors.",
       "Short fins = speed. Female Bettas are fast swimmers and excellent at competing for food in community tanks. Males with giant fins struggle; females zoom in and grab pellets effortlessly.",
-      "SORORITY REALITY CHECK: Success rate is <50% even for experienced keepers. Requires 100L+ tank, 5-9 females (odd numbers), jungle planting, daily observation, and backup tanks for injured/bullied fish. If you're new to Bettas, skip sororities. Keep one female in community tank instead—it's easier, safer, and she'll be happier.",
+      "SORORITY REALITY CHECK: Success rate is <50% even for experienced keepers. Requires 100L+ tank, 5-9 females (odd numbers), jungle planting, daily observation, and backup tanks for injured/bullied fish. If you're new to Bettas, skip sororities. Keep one female in community tank instead. It's easier, safer, and she'll be happier.",
       "Breeding stripes: Vertical dark bars appear when female is receptive to male. Horizontal stripes = stress. Vertical = 'I'm interested'; Horizontal = 'Help, I'm scared.'",
     ],
 
     commonMistakes: [
-      "Thinking females are 'friendly' or 'peaceful.' They're less aggressive than males but still semi-aggressive. Respect their personality—they're confident hunters, not timid schooling fish.",
+      "Thinking females are 'friendly' or 'peaceful.' They're less aggressive than males but still semi-aggressive. Respect their personality. They're confident hunters, not timid schooling fish.",
       "Keeping male + female together permanently. Breeding is a temporary meeting (2-24 hours max) under supervision. Males harass females constantly outside spawning. Female will be stressed to death. Always separate after breeding.",
       "Attempting sororities without research. 2-4 females = guaranteed bloodbath (dominant female kills others). Sororities need 5+ females, 100L+ tanks, jungle planting, and expert monitoring. Failure means injuries, stress, deaths. If unsure, keep one female in community tank.",
-      "Judging female beauty by pet store appearance. Store females are stressed, pale, and crammed in tanks. Give her planted tank, good food, warm water—watch her transform into a vibrant beauty in 2-4 weeks.",
+      "Judging female beauty by pet store appearance. Store females are stressed, pale, and crammed in tanks. Give her planted tank, good food, warm water. Watch her transform into a vibrant beauty in 2-4 weeks.",
       "Assuming females are slower or weaker. Short fins = speed and agility. Females are faster, more efficient swimmers than males. They're also just as aggressive when defending territory.",
     ],
     
@@ -165,7 +172,7 @@ export const bettaSplendensFemale: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes. Bettas are messy eaters and produce moderate waste. Vacuum substrate to remove uneaten food. Keep nitrates below 20ppm. Warm water (26-28°C) is critical—Bettas are tropical fish and suffer below 24°C.',
+      notes: 'Weekly 30% water changes. Bettas are messy eaters and produce moderate waste. Vacuum substrate to remove uneaten food. Keep nitrates below 20ppm. Warm water (26-28°C) is critical. Bettas are tropical fish and suffer below 24°C.',
     },
     
     equipment: {
@@ -191,7 +198,7 @@ export const bettaSplendensFemale: Species = {
   },
 
   scientificContext: {
-    wildHabitat: "Female Betta splendens inhabit shallow, warm, stagnant waters in Southeast Asia: rice paddies, ditches, floodplains, slow-moving streams, and swamps. These are low-oxygen environments (hence labyrinth organ evolution). Water is soft, slightly acidic, warm (26-30°C), and densely vegetated. During dry season, pools shrink and Bettas survive in puddles by breathing atmospheric air. Females are less territorial than males in the wild—they tolerate proximity when food/shelter is abundant but still establish loose hierarchies.",
+    wildHabitat: "Female Betta splendens inhabit shallow, warm, stagnant waters in Southeast Asia: rice paddies, ditches, floodplains, slow-moving streams, and swamps. These are low-oxygen environments (hence labyrinth organ evolution). Water is soft, slightly acidic, warm (26-30°C), and densely vegetated. During dry season, pools shrink and Bettas survive in puddles by breathing atmospheric air. Females are less territorial than males in the wild. They tolerate proximity when food/shelter is abundant but still establish loose hierarchies.",
     sexualDimorphism: "Short fins (1-2cm) vs males' flowing fins (5-10cm+). Smaller size (5cm vs males 6-7cm). Egg spot (ovipositor): white dot on belly between pelvic fins (males lack this). Breeding stripes: vertical dark bars when receptive; horizontal stripes when stressed. Body shape: females rounder, fuller belly (especially when gravid/carrying eggs). Behavior: females less aggressive toward other species but brutal toward each other in hierarchies.",
     variants: ['Wild Type (brownish-red with faint stripes)', 'Koi Female (white/orange/black patches)', 'Galaxy Female (blue/red speckled)', 'Candy Female (pastel gradients)', 'Dumbo Ear Female (giant pectoral fins)', 'Crowntail Female (spiky fin rays)', 'Halfmoon Female (180° tail spread)'],
   },
@@ -199,9 +206,9 @@ export const bettaSplendensFemale: Species = {
   breeding: {
     method: 'bubble_nester',
     difficulty: 'medium',
-    trigger: 'Breeding Female Bettas requires careful planning: 1) Condition pair separately for 2 weeks with high-protein live foods (bloodworms, brine shrimp) until female is plump with eggs (visible white belly), 2) Introduce female to male\'s territory (breeding tank with bubble nest) in clear container first so they see each other without contact, 3) Female shows vertical breeding stripes when receptive (dark bars), 4) Release female. Male courts aggressively—chasing, displaying, building nest. Female will be harassed heavily. Watch carefully! If female shows horizontal stripes (stress) or hides constantly, remove her. 5) Spawning occurs under bubble nest in embrace (male wraps around female, squeezing eggs out). Violent-looking but normal. 6) Immediately remove female after spawning—male will attack her to protect eggs.',
-    fryCare: 'Male guards bubble nest and eggs alone. Female plays no parental role and will eat eggs/fry if given chance—remove her immediately. Male fans eggs, retrieves fallen eggs, and guards fry for 2-3 days after hatching. Remove male once fry are free-swimming (3-5 days post-hatch) or he\'ll eat them. Fry need infusoria, then baby brine shrimp. Growth is slow; reach 1cm at 4 weeks. Separate males at 8-12 weeks when aggression starts.',
-    notes: 'Female Bettas are spawning machines—they produce eggs every 2-3 weeks if well-fed. Breeding stripes (vertical bars) indicate readiness. Never leave male + female together permanently. Breeding is violent—male chases, bites fins, and body-slams female. This is normal courtship but causes injuries. Supervise closely and separate immediately after spawning. Female needs recovery time (1-2 weeks) before next breeding.',
+    trigger: 'Breeding Female Bettas requires careful planning: 1) Condition pair separately for 2 weeks with high-protein live foods (bloodworms, brine shrimp) until female is plump with eggs (visible white belly), 2) Introduce female to male\'s territory (breeding tank with bubble nest) in clear container first so they see each other without contact, 3) Female shows vertical breeding stripes when receptive (dark bars), 4) Release female. Male courts aggressively with chasing, displaying, building nest. Female will be harassed heavily. Watch carefully! If female shows horizontal stripes (stress) or hides constantly, remove her. 5) Spawning occurs under bubble nest in embrace (male wraps around female, squeezing eggs out). Violent-looking but normal. 6) Immediately remove female after spawning. Male will attack her to protect eggs.',
+    fryCare: 'Male guards bubble nest and eggs alone. Female plays no parental role and will eat eggs/fry if given chance. Remove her immediately. Male fans eggs, retrieves fallen eggs, and guards fry for 2-3 days after hatching. Remove male once fry are free-swimming (3-5 days post-hatch) or he\'ll eat them. Fry need infusoria, then baby brine shrimp. Growth is slow; reach 1cm at 4 weeks. Separate males at 8-12 weeks when aggression starts.',
+    notes: 'Female Bettas are spawning machines. They produce eggs every 2-3 weeks if well-fed. Breeding stripes (vertical bars) indicate readiness. Never leave male + female together permanently. Breeding is violent. Male chases, bites fins, and body-slams female. This is normal courtship but causes injuries. Supervise closely and separate immediately after spawning. Female needs recovery time (1-2 weeks) before next breeding.',
   },
   
   experienceData: {

@@ -4,7 +4,7 @@ export const anomalochromisThomasi: Species = {
   id: 'anomalochromis-thomasi',
   slug: 'african-butterfly-cichlid',
   imageUrl: '/images/species/african-butterfly-cichlid.jpg',
-  funFact: "African Butterfly Cichlids are the 'gentle giants' of the cichlid world—except they're not giants, they're tiny (8cm)! Unlike their aggressive African relatives, these peaceful beauties form lifelong pair bonds and raise their babies together with Disney-movie-level devotion. Watch breeding pairs work as a coordinated team: one parent fans the eggs while the other patrols for threats, then they switch shifts like aquatic co-parents. Most adorable: fry literally eat mucus from their parents' skin for the first week—it's like cichlid baby formula!",
+  funFact: "African Butterfly Cichlids are the 'gentle giants' of the cichlid world—except they're tiny (8cm)! Unlike their aggressive African relatives, these peaceful beauties form lifelong pair bonds and raise their babies together with remarkable devotion. Watch breeding pairs work as a coordinated team: one parent fans the eggs while the other patrols, then they switch shifts. Most fascinating: fry feed on parental mucus (specialized skin secretions) during their first week—nature's perfect baby formula!",
 
   imageCredit: {
     photographer: 'Klaus Rudloff (via Wikimedia Commons)',
@@ -17,15 +17,15 @@ export const anomalochromisThomasi: Species = {
     scientificName: 'Anomalochromis thomasi',
     commonName: 'African Butterfly Cichlid',
     family: 'Cichlidae',
-    origin: 'West Africa (Guinea, Liberia, Sierra Leone - coastal lowland rivers)',
+    origin: 'West Africa (Guinea, Liberia, Sierra Leone)',
     region: 'Africa',
-    biotope: 'Shallow, slow-moving forest streams, swamps, and savannah wetlands with muddy/sandy substrates, dense vegetation, submerged roots, and leaf litter. Shaded, tannin-stained water',
+    biotope: 'Shallow, slow-moving forest streams and swamps with soft, acidic, tannin-stained water. Muddy/sandy substrates, dense vegetation, submerged roots, and leaf litter create shaded habitats.',
   },
 
   visuals: {
     iconShape: 'compressed',
     adultSizeCM: 8,
-    color: 'Silvery-yellow base with blue iridescent spots scattered across body. Two striking horizontal stripes: blue stripe along midline, red-orange stripe on upper body/dorsal fin. Males show more intense coloration when breeding. Juveniles are drab grey-brown (ugly duckling phase)',
+    color: 'Silvery-yellow base with iridescent blue spots across body. Two horizontal stripes: blue along midline, red-orange on upper body. Males show intense coloration when breeding. Juveniles are drab grey-brown.',
   },
 
   environment: {
@@ -55,43 +55,43 @@ export const anomalochromisThomasi: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'African Butterfly Cichlids are the ONLY African cichlids that won\'t destroy your planted tank! Unlike Lake Malawi/Tanganyika cichlids that uproot everything, A. thomasi are plant-safe even during breeding—making them perfect for Dutch-style aquascapes. Plant heavily with Anubias, Cryptocoryne, Amazon Swords, Java Fern, and Vallisneria. They appreciate shaded areas under floating plants (Water Sprite, Frogbit) since their wild habitat is heavily shaded by forest canopy. Dense planting provides security for shy juveniles and natural spawning sites for pairs. Leave open sandy areas for foraging and fry-herding behavior.',
-    hardscape: ['Smooth flat stones (CRITICAL for spawning - 10-15cm diameter)', 'Driftwood (creates tannins + shade)', 'Leaf litter (Indian Almond, Oak leaves)', 'Caves and coconut shells (hiding spots)'],
+    plantingNotes: 'African Butterfly Cichlids are among the few African cichlids that won\'t destroy planted tanks. Unlike Rift Lake cichlids that uproot everything, A. thomasi are plant-safe even during breeding. Plant heavily with Anubias, Cryptocoryne, Amazon Swords, Java Fern, and Vallisneria. Floating plants (Water Sprite, Frogbit) create shaded areas mimicking their forest stream habitat. Dense planting provides security and natural spawning sites. Leave open sandy areas for foraging and fry-herding.',
+    hardscape: ['Smooth flat stones (10-15cm diameter, critical for spawning)', 'Driftwood (tannins and shade)', 'Leaf litter (Indian Almond, Oak leaves)', 'Caves and coconut shells'],
   },
 
   behavior: {
     tags: ['peaceful', 'social', 'pair-bonding', 'parental-care'],
     minGroupSize: 8,
-    description: 'African Butterfly Cichlids are remarkably peaceful for cichlids—they\'re the gentle souls of the family. Juveniles are shy, gregarious schooling fish that feel secure in groups of 8+. As they mature (6-12 months), they form lifelong monogamous pairs with intense courtship displays: side-by-side swimming, color flashing, and elaborate fin spreading. Once paired, they become inseparable—constantly swimming together, foraging together, and "chatting" with subtle body language. During breeding, pairs claim a small territory (~30cm radius around spawning site) and become mildly territorial—chasing other fish away but never causing serious harm. Non-breeding pairs remain peaceful. Their parenting is adorable: both parents guard eggs 24/7 in shifts, fan them with pectoral fins, remove dead eggs with surgical precision, and later herd clouds of fry like aquatic sheepdogs. They\'re active during the day, constantly exploring substrate for food.',
+    description: 'African Butterfly Cichlids are remarkably peaceful for cichlids. Juveniles are shy, social fish that feel secure in groups of 8+. As they mature (6-12 months), they form monogamous pairs with intense courtship displays: side-by-side swimming, color flashing, and fin spreading. Paired fish become inseparable, constantly swimming and foraging together. During breeding, pairs claim a small territory (~30cm radius) and become mildly territorial, but rarely cause serious harm. Their parenting is exceptional: both parents guard eggs in shifts, fan them with fins, remove dead eggs, and later herd fry clouds. They\'re active during daytime, constantly exploring substrate for food.',
     
     compatibility: {
-      goodMates: ['Peaceful Tetras (Congo, Ember, Rummynose)', 'Small peaceful Barbs (Cherry, Rosy)', 'Corydoras (all species)', 'Kuhli Loaches', 'Peaceful Rainbowfish', 'Otocinclus', 'Peaceful Gouramis', 'Rasboras'],
-      badMates: ['Aggressive Cichlids (Oscars, Jack Dempseys, most African Rift Lake cichlids)', 'Fin-nippers (Tiger Barbs, Serpae Tetras)', 'Large predatory fish', 'Fast competitive feeders (can outcompete shy juveniles)'],
-      notes: 'This is one of the FEW African cichlids suitable for peaceful community tanks! They\'re less aggressive than even Rams or Kribs. Pairs claim ~30cm territory during breeding but use threat displays (fin flaring, body shaking) rather than violence. They coexist peacefully with bottom-dwellers like Corydoras. Avoid housing with aggressive cichlids or fin-nippers. Best kept in species groups (8+ juveniles) or as breeding pairs in community tanks.',
+      goodMates: ['Peaceful Tetras (Congo, Ember, Rummynose)', 'Small Barbs (Cherry, Rosy)', 'Corydoras', 'Kuhli Loaches', 'Peaceful Rainbowfish', 'Otocinclus', 'Peaceful Gouramis', 'Rasboras'],
+      badMates: ['Aggressive Cichlids (Oscars, Jack Dempseys, Rift Lake cichlids)', 'Fin-nippers (Tiger Barbs, Serpae Tetras)', 'Large predatory fish', 'Fast competitive feeders'],
+      notes: 'One of the few African cichlids suitable for peaceful community tanks. Less aggressive than Rams or Kribs. Pairs claim ~30cm territory during breeding but use threat displays rather than violence. Coexist peacefully with bottom-dwellers like Corydoras. Best kept as juvenile groups (8+) or breeding pairs in community tanks.',
       
       rules: [
         {
           type: 'warning',
           target: 'breeding pairs with other cichlids',
-          reason: 'Breeding pairs become mildly territorial (30cm radius). They rarely harm tankmates but will chase intruders away from eggs/fry. Provide adequate space (80L minimum) and visual barriers (plants, wood)',
+          reason: 'Breeding pairs become mildly territorial (30cm radius). They rarely harm tankmates but will chase intruders. Provide adequate space (80L minimum) and visual barriers.',
           severity: 'low',
         },
         {
           type: 'requires',
-          condition: 'soft acidic water for health and breeding',
-          reason: 'Wild habitat has pH 5.5-6.5, GH 2-6. They survive in neutral water but colors fade and breeding success drops. Soft water brings out stunning coloration',
+          condition: 'soft acidic water',
+          reason: 'Wild habitat has pH 5.5-6.5, GH 2-6. They survive in neutral water but colors fade and breeding success drops. Soft water brings out best coloration.',
           severity: 'medium',
         },
         {
           type: 'requires',
-          condition: 'group of 8+ juveniles OR bonded pair for adults',
-          reason: 'Juveniles are shy and stressed in small groups. Adults form pairs and become aggressive toward same-species rivals. Either keep large juvenile group or single bonded pair',
+          condition: 'group of 8+ juveniles OR bonded pair',
+          reason: 'Juveniles are shy and stressed in small groups. Adults form pairs and may be aggressive toward same-species rivals. Keep large juvenile group or single bonded pair.',
           severity: 'medium',
         },
         {
           type: 'avoid',
           target: 'aggressive cichlids',
-          reason: 'A. thomasi are peaceful and submissive. Aggressive species (Oscars, Jack Dempseys, African Rift Lake cichlids) will bully them relentlessly. Keep with peaceful community fish only',
+          reason: 'A. thomasi are peaceful and submissive. Aggressive species will bully them relentlessly. Keep with peaceful community fish only.',
           severity: 'high',
         },
       ],
@@ -133,27 +133,28 @@ export const anomalochromisThomasi: Species = {
     cost: 'low',
     specialRequirements: [
       'Soft, acidic water (pH 6.0-6.5, GH 2-6) for best coloration and breeding', 
-      'Multiple smooth flat stones (10-15cm) for spawning sites', 
+      'Multiple smooth flat stones (10-15cm) for spawning', 
       'Groups of 8+ juveniles OR bonded pair for adults',
       'Planted tank with shaded areas',
-      'Stable water parameters (avoid sudden changes)',
+      'Stable water parameters',
     ],
 
     proTips: [
-      "JUVENILE UGLY DUCKLING PHASE: Baby A. thomasi are drab grey-brown and easily overlooked in stores. Don't judge! After 4-6 months in soft, acidic, planted tanks, they transform into stunning adults with blue/red striped beauty. Be patient and watch the magic happen.",
-      "Provide 3-5 flat stones (10-15cm diameter) scattered around the tank. Pairs are picky about spawning sites and will 'test' multiple locations—cleaning surfaces, doing trial runs—before choosing THE ONE. Smooth river stones or slate tiles work perfectly.",
-      "MUCUS FEEDING: During first week after hatching, fry literally graze mucus from parents' skin. Both mom and dad produce nutrient-rich mucus that fry nibble off their bodies. It looks bizarre but it's normal! Don't panic and don't separate fry from parents.",
-      "Soft water = STUNNING colors. In hard water (GH >10), they survive but look washed-out. Use RO water, peat filtration, or Indian Almond leaves to soften water. The color difference is dramatic—like going from black-and-white TV to 4K.",
-      "Lifelong pair bonds: Once paired, they stay together for life (5-8 years). If one partner dies, the survivor often refuses to pair again. It's both heartwarming and heartbreaking.",
-      "Parent-fry bond lasts 4-6 WEEKS. Parents herd, protect, and 'talk to' fry with body flicks. Watching them shepherd 100+ babies around the tank like aquatic border collies is mesmerizing.",
+      "JUVENILE TRANSFORMATION: Baby A. thomasi are drab grey-brown and easily overlooked. After 4-6 months in soft, acidic, planted tanks with quality food, they transform into stunning adults with blue/red coloration. Be patient!",
+      "Provide 3-5 flat stones (10-15cm diameter) scattered around the tank. Pairs are selective about spawning sites and will test multiple locations before choosing. Smooth river stones or slate tiles work well.",
+      "PARENTAL MUCUS FEEDING: During the first week after hatching, fry graze specialized mucus secretions from parents' skin. Both parents produce nutrient-rich mucus that fry nibble. This is normal biological behavior, not aggression!",
+      "Soft water = vibrant colors. In hard water (GH >10), they survive but look washed-out. Use RO water, peat filtration, or Indian Almond leaves to soften water. The color difference is dramatic.",
+      "Lifelong pair bonds: Once paired, they typically stay together for life (5-8 years). If one partner dies, survivors often refuse to pair again.",
+      "Parent-fry bond lasts 4-6 weeks. Parents herd, protect, and communicate with fry through body movements. Watching them shepherd 100+ babies is fascinating.",
     ],
 
     commonMistakes: [
-      "Expecting immediate color. Juveniles are dull grey-brown for months. Store-bought fish look disappointing. Give them 4-6 months in soft, acidic water with good food and watch them bloom into beauties. They're worth the wait!",
-      "Hard, alkaline water. They survive in pH 7.5, GH 15+, but colors fade to pale yellow and breeding fails. They need soft, acidic conditions (pH 6.0-6.5, GH 2-6) to look their best and breed successfully.",
-      "Separating fry from parents too early. First-time breeders panic when fry graze on parents' bodies ('Are they being eaten?!'). NO! Fry eat parental mucus for nutrition. Separating them reduces survival. Leave family together for 4-6 weeks.",
-      "Housing with aggressive cichlids. A. thomasi are peaceful and shy. Aggressive species (Oscars, most African Rift Lake cichlids) will bully them constantly. Keep with peaceful community fish only.",
-      "Keeping single fish. Juveniles are social schoolers (need 8+). Adults form pairs and become stressed alone. Either keep large juvenile group or bonded pair—never singles.",
+      "Expecting immediate color in juveniles. Store-bought juveniles are dull grey-brown for months. Give them 4-6 months in optimal conditions and watch them develop stunning coloration.",
+      "Hard, alkaline water. They survive in pH 7.5, GH 15+, but colors fade and breeding fails. They need soft, acidic conditions (pH 6.0-6.5, GH 2-6) to thrive.",
+      "Separating fry from parents too early. First-time breeders may panic seeing fry on parents' bodies. This is normal mucus-feeding behavior. Separating them reduces survival. Keep family together for 4-6 weeks.",
+      "Housing with aggressive cichlids. A. thomasi are peaceful and shy. Aggressive species (Oscars, Rift Lake cichlids) will bully them. Keep with peaceful community fish only.",
+      "Keeping single fish. Juveniles are social (need 8+). Adults form pairs and become stressed alone. Keep either large juvenile group or bonded pair—never singles.",
+      "Insufficient spawning sites. Provide multiple flat stones. Pairs are selective and need options.",
     ],
     
     feeding: {
@@ -172,7 +173,7 @@ export const anomalochromisThomasi: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes maintain soft, acidic conditions. Vacuum sandy substrate lightly to remove waste but leave some leaf litter for tannins. During breeding, reduce water changes to 10-15% to avoid shocking eggs/fry. Use RO water or peat filtration to maintain low pH/GH.',
+      notes: 'Weekly 30% water changes maintain soft, acidic conditions. Vacuum sandy substrate lightly while preserving some leaf litter for tannins. During breeding, reduce water changes to 10-15% to avoid shocking eggs/fry. Use RO water or peat filtration to maintain low pH/GH.',
     },
     
     equipment: {
@@ -194,21 +195,27 @@ export const anomalochromisThomasi: Species = {
   health: {
     lifespanYears: 6,
     commonDiseases: ['ich', 'velvet', 'bacterial-infections', 'bloat', 'hole-in-head-disease'],
-    sensitivities: ['Stress (color fades dramatically)', 'Hard water (reduced coloration and breeding)', 'High nitrates (>20ppm)', 'Sudden parameter changes', 'Poor diet (loses color)'],
+    sensitivities: [
+      'Stress (color fades dramatically)', 
+      'Hard water (reduced coloration and breeding)', 
+      'High nitrates (>20ppm)', 
+      'Sudden parameter changes', 
+      'Poor diet (color loss)',
+    ],
   },
 
   scientificContext: {
-    wildHabitat: "African Butterfly Cichlids inhabit shallow (10-50cm depth), slow-moving forest streams, swamps, and savannah wetlands in coastal lowland West Africa (Guinea, Liberia, Sierra Leone). These are soft, acidic, tannin-stained waters (pH 5.5-6.5, GH 2-4) with muddy or sandy substrates, dense aquatic vegetation, submerged roots, and thick leaf litter. Water is heavily shaded by forest canopy, creating dim, dappled lighting. Temperatures range 24-28°C year-round. During rainy season, water levels rise and cooler rain triggers spawning. Unlike aggressive Rift Lake cichlids from hard alkaline water, A. thomasi evolved in peaceful, soft-water environments—explaining their gentle temperament.",
-    sexualDimorphism: "Difficult to sex outside breeding. Males are slightly larger (8cm vs 7cm females), develop longer dorsal and anal fin filaments, and show more intense blue/red coloration when mature. Females have rounder, fuller bellies especially when gravid (carrying eggs). During breeding, males display vivid colors and females' bellies swell noticeably. Juveniles are impossible to sex visually. Best method: buy 8-10 juveniles and let them pair naturally.",
-    variants: ['Wild Type (silvery-yellow with blue/red stripes)', 'Gold/Xanthoristic (rare—golden-yellow body, reduced melanin)'],
+    wildHabitat: "African Butterfly Cichlids inhabit shallow (10-50cm depth), slow-moving forest streams and swamps in coastal West Africa (Guinea, Liberia, Sierra Leone). These are soft, acidic, tannin-stained waters (pH 5.5-6.5, GH 2-4) with muddy or sandy substrates, dense vegetation, submerged roots, and thick leaf litter. Water is heavily shaded by forest canopy. Temperatures range 24-28°C year-round. Cooler rain during rainy season triggers spawning. Unlike Rift Lake cichlids from hard alkaline water, A. thomasi evolved in peaceful, soft-water environments—explaining their gentle temperament.",
+    sexualDimorphism: "Difficult to sex outside breeding. Males are slightly larger (8cm vs 7cm), develop longer dorsal and anal fin filaments, and show more intense coloration when mature. Females have rounder bellies, especially when gravid. During breeding, males display vivid colors and females' bellies swell noticeably. Juveniles cannot be visually sexed. Best method: buy 8-10 juveniles and allow natural pairing.",
+    variants: ['Wild Type (silvery-yellow with blue/red stripes)', 'Gold/Xanthic (rare—golden-yellow body with reduced melanin)'],
   },
 
   breeding: {
     method: 'substrate_spawner',
     difficulty: 'beginner',
-    trigger: 'African Butterfly Cichlids are one of the EASIEST cichlids to breed! Trigger spawning with: 1) Soft, acidic water (pH 6.0-6.5, GH 2-6)—this is CRITICAL, 2) Large (40-50%) water change with slightly cooler water (23-24°C) to simulate rainy season, 3) Conditioning with live/frozen foods (bloodworms, brine shrimp, daphnia) for 2 weeks to fatten up pair, 4) Provide multiple flat stones (10-15cm diameter) for spawning sites. Pairs will court intensely—swimming side-by-side, vibrating bodies, flashing colors—before choosing a spawning site.',
-    fryCare: 'Female lays 50-500 eggs (average 150-200) on pre-cleaned flat stone. Male fertilizes immediately. Both parents guard eggs 24/7 in shifts—one fans eggs with pectorals while other patrols. They remove dead/fungused eggs with surgical precision. Eggs hatch in 2-3 days at 26°C into wriggling larvae. Parents move larvae to shallow pit dug in substrate. At 5-7 days, fry become free-swimming. CRITICAL: Fry graze mucus from parents\' skin for first week (looks weird but normal!). After 7-10 days, supplement with microworms, infusoria, powdered flakes. Parents herd fry in tight clouds, protecting them fiercely. Fry survival is high (70-90%) with parental care. Parents guard fry for 4-6 weeks before losing interest. Growth is moderate: 1cm at 4 weeks, 2cm at 8 weeks.',
-    notes: 'Exceptional parental care—both parents cooperate intensely. Watch them herd fry, retrieve wanderers in their mouths, and coordinate defense. It\'s one of the most rewarding breeding experiences in fishkeeping. Pairs may spawn every 4-6 weeks if well-fed. Remove older fry before next spawn or parents may eat them to protect new batch. One of the BEST beginner cichlid breeding projects—easy, reliable, and educational!',
+    trigger: 'One of the easiest cichlids to breed. Trigger spawning with: 1) Soft, acidic water (pH 6.0-6.5, GH 2-6)—critical, 2) Large (40-50%) water change with slightly cooler water (23-24°C) to simulate rainy season, 3) Conditioning with live/frozen foods (bloodworms, brine shrimp, daphnia) for 2 weeks, 4) Multiple flat stones (10-15cm diameter) for spawning sites. Pairs court intensely—swimming side-by-side, vibrating, flashing colors—before choosing a site.',
+    fryCare: 'Female lays 50-300 eggs (average 150-200) on pre-cleaned flat stone. Male fertilizes immediately. Both parents guard eggs 24/7 in shifts. They remove dead eggs precisely. Eggs hatch in 2-3 days at 26°C into larvae. Parents move larvae to shallow substrate pit. At 5-7 days, fry become free-swimming. CRITICAL: Fry graze parental mucus for first week (normal behavior). After 7-10 days, supplement with microworms, infusoria, powdered flakes. Parents herd fry protectively for 4-6 weeks. Survival is high (70-90%) with parental care. Growth: 1cm at 4 weeks, 2cm at 8 weeks.',
+    notes: 'Exceptional parental care—both parents cooperate intensely. Watch them herd fry, retrieve wanderers in mouths, and coordinate defense. One of the most rewarding breeding experiences. Pairs may spawn every 4-6 weeks if well-fed. Remove older fry before next spawn to prevent predation. Excellent beginner cichlid breeding project!',
   },
   
   experienceData: {
@@ -216,10 +223,10 @@ export const anomalochromisThomasi: Species = {
     survivalRate: 0.75,
     
     commonFailures: [
-      { issue: 'dull-coloration', cause: 'hard-alkaline-water-poor-diet', frequency: 0.30 },
+      { issue: 'dull-coloration', cause: 'hard-alkaline-water-or-poor-diet', frequency: 0.30 },
       { issue: 'failed-breeding', cause: 'hard-water-or-no-flat-stones', frequency: 0.25 },
-      { issue: 'bullying-by-aggressive-fish', cause: 'housed-with-aggressive-cichlids', frequency: 0.18 },
-      { issue: 'stress-hiding', cause: 'kept-alone-or-small-group', frequency: 0.12 },
+      { issue: 'bullying', cause: 'housed-with-aggressive-cichlids', frequency: 0.18 },
+      { issue: 'stress-hiding', cause: 'kept-alone-or-inadequate-group', frequency: 0.12 },
       { issue: 'fry-death', cause: 'separated-from-parents-too-early', frequency: 0.10 },
     ],
     
