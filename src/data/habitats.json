@@ -1,0 +1,47 @@
+[
+  {
+    "id": "amazon-blackwater",
+    "title": "Amazonas Schwarzwasser",
+    "subtitle": "Die Heimat des Neonsalmlers und der Diskusbuntbarsche",
+    "imageUrl": "https://images.unsplash.com/photo-1543822709-08a8e1005b8a?auto=format&fit=crop&q=80&w=2000",
+    "description": "Ein halbes Jahr lang überflutet der Amazonas den umgebenden Dschungel. Die Fische schwimmen buchstäblich zwischen Baumstämmen und herabfallenden Blättern. Das Wasser ist teebraun, da verrottendes Laub Tannine abgibt. Dadurch ist das Wasser extrem weich und sauer, wodurch Bakterien kaum eine Chance haben.",
+    "conditions": {
+      "temperature": "24°C - 30°C (Warm)",
+      "waterType": "Extrem weich & sauer (pH 4.5 - 6.5)",
+      "flow": "Kaum bis mäßige Strömung",
+      "visibility": "Gering (trüb durch Tannine)"
+    },
+    "ecology": "Die dunkle Färbung des Wassers bietet kleinen Fischen Schutz vor Räubern. Die herabfallenden Insekten und die feine Mikrofauna in der Laubschicht bilden die Nahrungsgrundlage. Pflanzen wachsen hier kaum, da das dunkle Wasser wenig Licht durchlässt.",
+    "speciesIds": ["neon-tetra", "corydoras-panda", "symphysodon-aequifasciatus"]
+  },
+  {
+    "id": "lake-tanganyika-rocky",
+    "title": "Tanganjikasee Felsküste",
+    "subtitle": "Klares Wasser und endlose Steinwüsten",
+    "imageUrl": "https://images.unsplash.com/photo-1622353102377-5116773a4b64?auto=format&fit=crop&q=80&w=2000",
+    "description": "Der Tanganjikasee in Ostafrika ist der zweitälteste Süßwassersee der Erde. Seine Felsküsten fallen steil ab und bieten unzählige Spalten und Höhlen, die von hochspezialisierten Buntbarschen bewohnt werden.",
+    "conditions": {
+      "temperature": "24°C - 27°C",
+      "waterType": "Hart & alkalisch (pH 8.5 - 9.2)",
+      "flow": "Oberflächenbewegung, aber ruhig in den Höhlen",
+      "visibility": "Kristallklar (bis zu 20m Sichtweite)"
+    },
+    "ecology": "Das Wasser ist extrem mineralreich. Fadenalgen, die auf den Steinen wachsen, sind die wichtigste Nahrungsquelle. Jede Steingruppe wird hartnäckig als Territorium verteidigt. Holz oder weicher Sand spielen hier kaum eine Rolle.",
+    "speciesIds": ["neolamprologus-brichardi", "julidochromis-marlieri"]
+  },
+  {
+    "id": "se-asia-peat-swamp",
+    "title": "Südostasiatischer Torfsumpf",
+    "subtitle": "Dunkel, flach und dicht bewachsen",
+    "imageUrl": "https://images.unsplash.com/photo-1616213768297-c81216d7a46f?auto=format&fit=crop&q=80&w=2000",
+    "description": "Diese flachen, stehenden Gewässer in Indonesien und Malaysia sind extrem sauer und durch dichte Vegetation geschützt. Oft trocknen sie teilweise aus oder sind stark von Regenzeiten geprägt.",
+    "conditions": {
+      "temperature": "22°C - 28°C",
+      "waterType": "Weich & sehr sauer (pH 4.0 - 6.0)",
+      "flow": "Stehendes Wasser",
+      "visibility": "Gering (durch Tannine und Pflanzen)"
+    },
+    "ecology": "Viele Labyrinthfische (wie Kampffische oder Fadenfische) stammen von hier. Sie haben gelernt, atmosphärische Luft zu atmen, da das warme, stehende Wasser oft sauerstoffarm ist. Schwimmpflanzen dunkeln das Wasser zusätzlich ab.",
+    "speciesIds": ["betta-splendens", "trichopodus-leerii"]
+  }
+]
