@@ -10,9 +10,9 @@ export const SwimmingZoneVisualizer = ({ swimmingZone }: Props) => {
   const { primary, secondary, preference } = swimmingZone;
   
   const zones = [
-    { id: 'surface', label: 'Surface', icon: Waves },
-    { id: 'midwater', label: 'Midwater', icon: Fish },
-    { id: 'bottom', label: 'Bottom', icon: Anchor }
+    { id: 'surface', label: 'Surface', icon: Waves, color: 'text-cyan-500' },
+    { id: 'midwater', label: 'Midwater', icon: Fish, color: 'text-blue-500' },
+    { id: 'bottom', label: 'Bottom', icon: Anchor, color: 'text-amber-600' }
   ] as const;
 
   const getZoneOpacity = (zoneId: string) => {
@@ -30,7 +30,7 @@ export const SwimmingZoneVisualizer = ({ swimmingZone }: Props) => {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-lg p-4 md:p-6 border border-slate-200 dark:border-slate-700">
       <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2 pb-4 border-b border-slate-200 dark:border-slate-700">
-        <Droplets className="w-4 h-4" />
+        <Droplets className="w-4 h-4 text-blue-500" />
         Swimming Zones
       </h4>
       
@@ -56,7 +56,7 @@ export const SwimmingZoneVisualizer = ({ swimmingZone }: Props) => {
                   isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-slate-600'
                 }`}>
                   <div className="p-1.5 rounded-lg bg-slate-50 dark:bg-slate-900">
-                    <Icon className="w-4 h-4" />
+                    <Icon className={`w-4 h-4 ${zone.color}`} />
                   </div>
                   <span className="text-sm font-medium">{zone.label}</span>
                 </div>

@@ -10,9 +10,9 @@ export const SpaceNeedsIndicator = ({ spaceNeeds, tankSize }: Props) => {
   const { horizontalCM, verticalCM, territories } = spaceNeeds;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-lg p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+    <div className="bg-white dark:bg-slate-800 rounded-lg p-5 md:p-6 border border-slate-200 dark:border-slate-700">
       <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 md:mb-5 flex items-center gap-2">
-        <Maximize2 className="w-4 h-4" />
+        <Maximize2 className="w-4 h-4 text-indigo-500" />
         Space Requirements
       </h4>
 
@@ -21,7 +21,7 @@ export const SpaceNeedsIndicator = ({ spaceNeeds, tankSize }: Props) => {
         <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-3 md:p-4 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300">
-              <MoveHorizontal className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+              <MoveHorizontal className="w-4 h-4 text-indigo-500" />
               Floor Space
             </div>
             <span className="text-base md:text-lg font-semibold text-slate-900 dark:text-white">{horizontalCM}cm</span>
@@ -36,7 +36,7 @@ export const SpaceNeedsIndicator = ({ spaceNeeds, tankSize }: Props) => {
           <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-3 md:p-4 border border-slate-200 dark:border-slate-700">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300">
-                <MoveVertical className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                <MoveVertical className="w-4 h-4 text-purple-500" />
                 Tank Height
               </div>
               <span className="text-base md:text-lg font-semibold text-slate-900 dark:text-white">{verticalCM}cm</span>
@@ -52,7 +52,7 @@ export const SpaceNeedsIndicator = ({ spaceNeeds, tankSize }: Props) => {
           <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-3 md:p-4 border border-slate-200 dark:border-slate-700">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300">
-                <Shield className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                <Shield className="w-4 h-4 text-amber-500" />
                 Territories
               </div>
               <span className="text-base md:text-lg font-semibold text-slate-900 dark:text-white">{territories}</span>
@@ -67,7 +67,7 @@ export const SpaceNeedsIndicator = ({ spaceNeeds, tankSize }: Props) => {
         {territories !== undefined && territories === 0 && (
           <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-3 md:p-4 border border-slate-200 dark:border-slate-700">
             <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-              <Shield className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+              <Shield className="w-4 h-4 text-emerald-500" />
               Non-Territorial
             </div>
             <div className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
