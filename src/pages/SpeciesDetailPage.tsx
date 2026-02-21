@@ -430,35 +430,35 @@ const SpeciesDetailPage = () => {
 
                   {/* Stats & Costs */}
                   <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                    <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 rounded-xl p-5 md:p-6 border-2 border-indigo-200 dark:border-indigo-800 shadow-lg">
-                      <h4 className="text-xs md:text-sm font-black text-indigo-900 dark:text-indigo-300 uppercase mb-4 md:mb-5 flex items-center gap-2 tracking-wider">
+                    <div className="bg-white dark:bg-slate-800 rounded-lg p-5 md:p-6 border border-slate-200 dark:border-slate-700">
+                      <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
                         <TrendingUp className="w-4 h-4" /> Ownership Stats
                       </h4>
                       <div className="space-y-4">
-                        <StatBar label="Difficulty" value={data.care.difficulty} color="indigo" />
-                        <StatBar label="Maintenance" value={data.care.effort} color="blue" />
-                        <StatBar label="Cost" value={data.care.cost} color="emerald" />
+                        <StatBar label="Difficulty" value={data.care.difficulty} />
+                        <StatBar label="Maintenance" value={data.care.effort} />
+                        <StatBar label="Cost" value={data.care.cost} />
                       </div>
                     </div>
 
                     {data.experienceData?.estimatedCosts && (
-                      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 rounded-xl p-5 md:p-6 border-2 border-emerald-200 dark:border-emerald-800 shadow-lg">
-                        <h4 className="text-xs md:text-sm font-black text-emerald-900 dark:text-emerald-300 uppercase mb-4 md:mb-5 flex items-center gap-2 tracking-wider">
+                      <div className="bg-white dark:bg-slate-800 rounded-lg p-5 md:p-6 border border-slate-200 dark:border-slate-700">
+                        <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
                           <DollarSign className="w-4 h-4" /> Est. Costs
                         </h4>
                         <div className="space-y-4">
                           <div>
-                            <div className="text-[10px] md:text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2 uppercase tracking-wide">Initial Setup</div>
-                            <div className="text-2xl md:text-3xl font-black text-emerald-900 dark:text-emerald-200">
+                            <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Initial Setup</div>
+                            <div className="text-2xl font-bold text-slate-900 dark:text-white">
                               {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
-                              <span className="text-sm md:text-base ml-1 font-bold">{data.experienceData.estimatedCosts.initial.currency}</span>
+                              <span className="text-sm ml-1">{data.experienceData.estimatedCosts.initial.currency}</span>
                             </div>
                           </div>
                           <div>
-                            <div className="text-[10px] md:text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2 uppercase tracking-wide">Monthly</div>
-                            <div className="text-2xl md:text-3xl font-black text-emerald-900 dark:text-emerald-200">
+                            <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Monthly</div>
+                            <div className="text-2xl font-bold text-slate-900 dark:text-white">
                               {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
-                              <span className="text-sm md:text-base ml-1 font-bold">{data.experienceData.estimatedCosts.monthly.currency}</span>
+                              <span className="text-sm ml-1">{data.experienceData.estimatedCosts.monthly.currency}</span>
                             </div>
                           </div>
                         </div>
@@ -1164,23 +1164,20 @@ const ParameterCard = ({ icon, label, value, gradient, borderColor }: { icon: Re
   </div>
 );
 
-const StatBar = ({ label, value, color }: { label: string; value: string; color: string }) => {
+const StatBar = ({ label, value }: { label: string; value: string }) => {
   const steps = value === 'low' || value === 'beginner' ? 1 : value === 'medium' || value === 'intermediate' ? 2 : 3;
-  const colors = {
-    indigo: 'bg-indigo-600',
-    blue: 'bg-blue-600',
-    emerald: 'bg-emerald-600'
-  }[color];
   
   return (
     <div>
-      <div className="flex items-center justify-between mb-2 md:mb-3">
-        <span className="text-xs md:text-sm text-slate-600 dark:text-slate-400 font-bold">{label}</span>
-        <span className="text-xs md:text-sm font-black text-slate-900 dark:text-slate-100 uppercase">{value}</span>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">{label}</span>
+        <span className="text-sm font-semibold text-slate-900 dark:text-white capitalize">{value}</span>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         {[1, 2, 3].map(i => (
-          <div key={i} className={`h-2.5 md:h-3 flex-1 rounded-full transition-all ${i <= steps ? colors : 'bg-slate-200 dark:bg-slate-700'}`} />
+          <div key={i} className={`h-2 flex-1 rounded-full ${
+            i <= steps ? 'bg-slate-800 dark:bg-slate-300' : 'bg-slate-200 dark:bg-slate-700'
+          }`} />
         ))}
       </div>
     </div>
