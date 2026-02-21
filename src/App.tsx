@@ -30,8 +30,8 @@ import { PlantsIndexPage } from './pages/PlantsIndexPage';
 import { PlantDetailPage } from './pages/PlantDetailPage';
 
 // 🌊 BIOTOPE PAGES
-import BiotopeIndexPage from './pages/BiotopeIndexPage';
-import BiotopeDetailPage from './pages/BiotopeDetailPage';
+import { HabitatsIndexPage } from './pages/HabitatsIndexPage';
+import { HabitatsDetailPage } from './pages/HabitatsDetailPage';
 
 // 🐠 MY TANKS & DASHBOARD
 import DashboardPage from './pages/DashboardPage';
@@ -81,9 +81,13 @@ function App() {
             <Route path="/plants" element={<PlantsIndexPage />} />
             <Route path="/plants/:slug" element={<PlantDetailPage />} />
 
-            {/* 🌊 Biotope Routes */}
-            <Route path="/biotopes" element={<BiotopeIndexPage />} />
-            <Route path="/biotopes/:id" element={<BiotopeDetailPage />} />
+            {/* 🌊 Habitat/Biotope Routes */}
+            <Route path="/habitats" element={<HabitatsIndexPage />} />
+            <Route path="/habitats/:slug" element={<HabitatsDetailPage />} />
+            
+            {/* Keep old biotope routes temporarily to avoid breaking existing links */}
+            <Route path="/biotopes" element={<HabitatsIndexPage />} />
+            <Route path="/biotopes/:slug" element={<HabitatsDetailPage />} />
 
             {/* 🐠 Dashboard & My Tanks (Protected) */}
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
