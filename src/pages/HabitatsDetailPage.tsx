@@ -1,14 +1,12 @@
 import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, Droplets, Thermometer, Waves, Eye } from 'lucide-react';
+import { allSpecies } from '../data/species';
 import habitatsData from '../data/habitats.json';
-import { AnimatedTransition } from '../components/ui/AnimatedTransition';
-import { useSpecies } from '../contexts/SpeciesContext';
-import { SpeciesCard } from '../components/species/SpeciesCard';
+import AnimatedTransition from '../components/ui/AnimatedTransition';
 
 export const HabitatsDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { allSpecies } = useSpecies();
 
   const habitat = useMemo(() => 
     habitatsData.find((h) => h.id === slug),
@@ -17,7 +15,7 @@ export const HabitatsDetailPage: React.FC = () => {
   const habitatSpecies = useMemo(() => {
     if (!habitat || !allSpecies) return [];
     return allSpecies.filter((s) => habitat.speciesIds.includes(s.id));
-  }, [habitat, allSpecies]);
+  }, [habitat]);
 
   if (!habitat) {
     return (
@@ -68,7 +66,7 @@ export const HabitatsDetailPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
                   The Environment
                 </h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg whitespace-pre-line">
                   {habitat.description}
                 </p>
               </div>
@@ -78,7 +76,7 @@ export const HabitatsDetailPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                   Ecology & Survival
                 </h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg whitespace-pre-line">
                   {habitat.ecology}
                 </p>
               </div>
@@ -146,14 +144,50 @@ export const HabitatsDetailPage: React.FC = () => {
               </div>
             </div>
             
-            {habitatSpecies.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {habitatSpecies.map((species) => (
-                  <SpeciesCard 
-                    key={species.id} 
-                    species={species}
-                  />
-                ))}
+                                        {habitatSpecies.map((s) => {
+                  const species = s as any; // TS-Workaround für Union Types
+                  return (
+                    <Link 
+                      key={species.id} 
+                      to={`/species/${species.slug || species.id}`}
+                      className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-emerald-500/30 flex flex-col h-full"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-900">
+                        <img 
+                          src={species.imageUrl || species.visuals?.imageUrl || '/placeholder-fish.jpg'} 
+                          alt={species.taxonomy?.commonName || species.name || 'Species Image'}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        {species.care?.difficulty && (
+                          <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-2.5 py-1 rounded-full capitalize">
+                            {species.care.difficulty}
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-5 flex-1 flex flex-col">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 transition-colors">
+                          {species.taxonomy?.commonName || species.name || 'Unknown Species'}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 italic mb-4">
+                          {species.taxonomy?.scientificName}
+                        </p>
+                        
+                        <div className="mt-auto flex flex-wrap gap-2">
+                          {species.visuals?.adultSizeCM && (
+                            <span className="inline-flex items-center text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md">
+                              Up to {species.visuals.adultSizeCM}cm
+                            </span>
+                          )}
+                          {species.environment?.minTankSizeLiters && (
+                            <span className="inline-flex items-center text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-md">
+                              Min {species.environment.minTankSizeLiters}L
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             ) : (
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-12 text-center shadow-sm">
@@ -161,10 +195,9 @@ export const HabitatsDetailPage: React.FC = () => {
                   No species from this habitat are currently in our database.
                 </p>
               </div>
-            )}
+            )`{'}'}`
           </div>
         </div>
-      </div>
     </AnimatedTransition>
   );
 };
