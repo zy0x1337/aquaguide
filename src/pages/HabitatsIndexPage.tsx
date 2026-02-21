@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Droplets, MapPin, Wind } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import habitatsData from '../data/habitats.json';
-import { PageHeader } from '../components/ui/PageHeader';
-import { AnimatedTransition } from '../components/ui/AnimatedTransition';
+import  PageHeader  from '../components/ui/PageHeader';
+import  AnimatedTransition  from '../components/ui/AnimatedTransition';
 
 export const HabitatsIndexPage: React.FC = () => {
   return (
