@@ -1,47 +1,47 @@
 [
   {
     "id": "amazon-blackwater",
-    "title": "Amazonas Schwarzwasser",
-    "subtitle": "Die Heimat des Neonsalmlers und der Diskusbuntbarsche",
+    "title": "Amazon Blackwater",
+    "subtitle": "The home of Neon Tetras and Discus Cichlids",
     "imageUrl": "https://images.unsplash.com/photo-1543822709-08a8e1005b8a?auto=format&fit=crop&q=80&w=2000",
-    "description": "Ein halbes Jahr lang überflutet der Amazonas den umgebenden Dschungel. Die Fische schwimmen buchstäblich zwischen Baumstämmen und herabfallenden Blättern. Das Wasser ist teebraun, da verrottendes Laub Tannine abgibt. Dadurch ist das Wasser extrem weich und sauer, wodurch Bakterien kaum eine Chance haben.",
+    "description": "For half the year, the Amazon River floods the surrounding jungle. Fish literally swim between tree trunks and falling leaves. The water is tea-brown as decaying foliage releases tannins. This makes the water extremely soft and acidic, leaving bacteria with almost no chance to survive.",
     "conditions": {
       "temperature": "24°C - 30°C (Warm)",
-      "waterType": "Extrem weich & sauer (pH 4.5 - 6.5)",
-      "flow": "Kaum bis mäßige Strömung",
-      "visibility": "Gering (trüb durch Tannine)"
+      "waterType": "Extremely soft & acidic (pH 4.5 - 6.5)",
+      "flow": "Low to moderate flow",
+      "visibility": "Low (turbid due to tannins)"
     },
-    "ecology": "Die dunkle Färbung des Wassers bietet kleinen Fischen Schutz vor Räubern. Die herabfallenden Insekten und die feine Mikrofauna in der Laubschicht bilden die Nahrungsgrundlage. Pflanzen wachsen hier kaum, da das dunkle Wasser wenig Licht durchlässt.",
+    "ecology": "The dark coloration of the water provides small fish with protection from predators. Falling insects and the fine microfauna in the leaf litter form the primary food source. Plants hardly grow here, as the dark water allows very little light to penetrate.",
     "speciesIds": ["neon-tetra", "corydoras-panda", "symphysodon-aequifasciatus"]
   },
   {
     "id": "lake-tanganyika-rocky",
-    "title": "Tanganjikasee Felsküste",
-    "subtitle": "Klares Wasser und endlose Steinwüsten",
+    "title": "Lake Tanganyika Rocky Coast",
+    "subtitle": "Clear water and endless stone deserts",
     "imageUrl": "https://images.unsplash.com/photo-1622353102377-5116773a4b64?auto=format&fit=crop&q=80&w=2000",
-    "description": "Der Tanganjikasee in Ostafrika ist der zweitälteste Süßwassersee der Erde. Seine Felsküsten fallen steil ab und bieten unzählige Spalten und Höhlen, die von hochspezialisierten Buntbarschen bewohnt werden.",
+    "description": "Lake Tanganyika in East Africa is the second oldest freshwater lake on Earth. Its rocky coasts drop steeply and offer countless crevices and caves inhabited by highly specialized cichlids.",
     "conditions": {
       "temperature": "24°C - 27°C",
-      "waterType": "Hart & alkalisch (pH 8.5 - 9.2)",
-      "flow": "Oberflächenbewegung, aber ruhig in den Höhlen",
-      "visibility": "Kristallklar (bis zu 20m Sichtweite)"
+      "waterType": "Hard & alkaline (pH 8.5 - 9.2)",
+      "flow": "Surface movement, but calm inside caves",
+      "visibility": "Crystal clear (up to 20m visibility)"
     },
-    "ecology": "Das Wasser ist extrem mineralreich. Fadenalgen, die auf den Steinen wachsen, sind die wichtigste Nahrungsquelle. Jede Steingruppe wird hartnäckig als Territorium verteidigt. Holz oder weicher Sand spielen hier kaum eine Rolle.",
+    "ecology": "The water is extremely rich in minerals. Filamentous algae growing on the rocks are the most important food source. Every rock cluster is stubbornly defended as territory. Wood or soft sand play almost no role here.",
     "speciesIds": ["neolamprologus-brichardi", "julidochromis-marlieri"]
   },
   {
     "id": "se-asia-peat-swamp",
-    "title": "Südostasiatischer Torfsumpf",
-    "subtitle": "Dunkel, flach und dicht bewachsen",
+    "title": "Southeast Asian Peat Swamp",
+    "subtitle": "Dark, shallow, and densely overgrown",
     "imageUrl": "https://images.unsplash.com/photo-1616213768297-c81216d7a46f?auto=format&fit=crop&q=80&w=2000",
-    "description": "Diese flachen, stehenden Gewässer in Indonesien und Malaysia sind extrem sauer und durch dichte Vegetation geschützt. Oft trocknen sie teilweise aus oder sind stark von Regenzeiten geprägt.",
+    "description": "These shallow, stagnant waters in Indonesia and Malaysia are extremely acidic and protected by dense vegetation. They often dry out partially or are heavily influenced by monsoon seasons.",
     "conditions": {
       "temperature": "22°C - 28°C",
-      "waterType": "Weich & sehr sauer (pH 4.0 - 6.0)",
-      "flow": "Stehendes Wasser",
-      "visibility": "Gering (durch Tannine und Pflanzen)"
+      "waterType": "Soft & very acidic (pH 4.0 - 6.0)",
+      "flow": "Stagnant water",
+      "visibility": "Low (due to tannins and plants)"
     },
-    "ecology": "Viele Labyrinthfische (wie Kampffische oder Fadenfische) stammen von hier. Sie haben gelernt, atmosphärische Luft zu atmen, da das warme, stehende Wasser oft sauerstoffarm ist. Schwimmpflanzen dunkeln das Wasser zusätzlich ab.",
+    "ecology": "Many labyrinth fish (like Bettas or Gouramis) originate from here. They have learned to breathe atmospheric air, as the warm, stagnant water is often oxygen-depleted. Floating plants further darken the water.",
     "speciesIds": ["betta-splendens", "trichopodus-leerii"]
   }
 ]
