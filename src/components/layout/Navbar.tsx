@@ -18,7 +18,7 @@ export const Navbar = () => {
     { path: '/', label: 'Home', icon: Home },
     { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
-    { path: '/biotopes', label: 'Biotopes', icon: Waves },
+    { path: '/habitats', label: 'Habitats', icon: Waves },
     { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
     ...(user ? [{ path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }] : []),
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
