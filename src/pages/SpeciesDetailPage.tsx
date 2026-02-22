@@ -422,42 +422,48 @@ const SpeciesDetailPage = () => {
                   </div>
 
                   {/* Stats & Costs */}
-                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                    <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 rounded-xl p-5 md:p-6 border-2 border-indigo-200 dark:border-indigo-800 shadow-lg">
-                      <h4 className="text-xs md:text-sm font-black text-indigo-900 dark:text-indigo-300 uppercase mb-4 md:mb-5 flex items-center gap-2 tracking-wider">
-                        <TrendingUp className="w-4 h-4" /> Ownership Stats
-                      </h4>
-                      <div className="space-y-4">
-                        <StatBar label="Difficulty" value={data.care.difficulty} color="indigo" />
-                        <StatBar label="Maintenance" value={data.care.effort} color="blue" />
-                        <StatBar label="Cost" value={data.care.cost} color="emerald" />
-                      </div>
-                    </div>
+<div className="grid md:grid-cols-2 gap-4 md:gap-6">
+  {/* Ownership Stats */}
+  <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+    <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+      <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Ownership Stats
+    </h4>
+    <div className="space-y-4">
+      <StatBar label="Difficulty" value={data.care.difficulty} />
+      <StatBar label="Maintenance" value={data.care.effort} />
+      <StatBar label="Cost" value={data.care.cost} />
+    </div>
+  </div>
 
-                    {data.experienceData?.estimatedCosts && (
-                      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 rounded-xl p-5 md:p-6 border-2 border-emerald-200 dark:border-emerald-800 shadow-lg">
-                        <h4 className="text-xs md:text-sm font-black text-emerald-900 dark:text-emerald-300 uppercase mb-4 md:mb-5 flex items-center gap-2 tracking-wider">
-                          <DollarSign className="w-4 h-4" /> Est. Costs
-                        </h4>
-                        <div className="space-y-4">
-                          <div>
-                            <div className="text-[10px] md:text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2 uppercase tracking-wide">Initial Setup</div>
-                            <div className="text-2xl md:text-3xl font-black text-emerald-900 dark:text-emerald-200">
-                              {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
-                              <span className="text-sm md:text-base ml-1 font-bold">{data.experienceData.estimatedCosts.initial.currency}</span>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-[10px] md:text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2 uppercase tracking-wide">Monthly</div>
-                            <div className="text-2xl md:text-3xl font-black text-emerald-900 dark:text-emerald-200">
-                              {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
-                              <span className="text-sm md:text-base ml-1 font-bold">{data.experienceData.estimatedCosts.monthly.currency}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+  {/* Est. Costs */}
+  {data.experienceData?.estimatedCosts && (
+    <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+      <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+        <DollarSign className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Est. Costs
+      </h4>
+      <div className="space-y-4">
+        <div>
+          <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Initial Setup</div>
+          <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
+            {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
+            <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
+              {data.experienceData.estimatedCosts.initial.currency}
+            </span>
+          </div>
+        </div>
+        <div>
+          <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Monthly</div>
+          <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
+            {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
+            <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
+              {data.experienceData.estimatedCosts.monthly.currency}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
                 </motion.div>
               )}
 
@@ -465,179 +471,194 @@ const SpeciesDetailPage = () => {
               {activeTab === 'care' && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
                   {/* Care Level Overview */}
-                  <div className="grid sm:grid-cols-3 gap-3 md:gap-4">
-                    <CareLevelCard 
-                      label="Difficulty" 
-                      value={data.care.difficulty}
-                      icon={<Target className="w-5 h-5" />}
-                      colors={{
-                        easy: { bg: 'bg-emerald-50 dark:bg-emerald-950/30', text: 'text-emerald-700 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-800' },
-                        medium: { bg: 'bg-amber-50 dark:bg-amber-950/30', text: 'text-amber-700 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-800' },
-                        hard: { bg: 'bg-rose-50 dark:bg-rose-950/30', text: 'text-rose-700 dark:text-rose-400', border: 'border-rose-200 dark:border-rose-800' },
-                        expert: { bg: 'bg-purple-50 dark:bg-purple-950/30', text: 'text-purple-700 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-800' }
-                      }}
-                    />
-                    <CareLevelCard 
-                      label="Time Effort" 
-                      value={data.care.effort}
-                      icon={<Clock className="w-5 h-5" />}
-                      colors={{
-                        low: { bg: 'bg-emerald-50 dark:bg-emerald-950/30', text: 'text-emerald-700 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-800' },
-                        medium: { bg: 'bg-amber-50 dark:bg-amber-950/30', text: 'text-amber-700 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-800' },
-                        high: { bg: 'bg-rose-50 dark:bg-rose-950/30', text: 'text-rose-700 dark:text-rose-400', border: 'border-rose-200 dark:border-rose-800' }
-                      }}
-                    />
-                    <CareLevelCard 
-                      label="Cost" 
-                      value={data.care.cost}
-                      icon={<DollarSign className="w-5 h-5" />}
-                      colors={{
-                        low: { bg: 'bg-emerald-50 dark:bg-emerald-950/30', text: 'text-emerald-700 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-800' },
-                        medium: { bg: 'bg-amber-50 dark:bg-amber-950/30', text: 'text-amber-700 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-800' },
-                        high: { bg: 'bg-rose-50 dark:bg-rose-950/30', text: 'text-rose-700 dark:text-rose-400', border: 'border-rose-200 dark:border-rose-800' }
-                      }}
-                    />
-                  </div>
+<div className="grid sm:grid-cols-3 gap-3 md:gap-4">
+  <CareLevelCard 
+    label="Difficulty" 
+    value={data.care.difficulty}
+    icon={<Target className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
+    colors={{
+      easy: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      hard: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      expert: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+    }}
+  />
+  <CareLevelCard 
+    label="Time Effort" 
+    value={data.care.effort}
+    icon={<Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
+    colors={{
+      low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+    }}
+  />
+  <CareLevelCard 
+    label="Cost" 
+    value={data.care.cost}
+    icon={<DollarSign className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />}
+    colors={{
+      low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+      high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+    }}
+  />
+</div>
 
                   {/* Feeding Guide */}
-                  <div>
-                    <SectionHeader title="Feeding Guide" icon={<Utensils className="w-5 h-5" />} />
-                    <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 rounded-xl p-5 md:p-6 border-2 border-emerald-200 dark:border-emerald-800 shadow-lg space-y-5">
-                      
-                      {/* Diet Type Badge */}
-                      <div className="flex items-center gap-3 pb-4 border-b-2 border-emerald-200 dark:border-emerald-800">
-                        <div className="p-3 bg-emerald-100 dark:bg-emerald-900/50 rounded-xl">
-                          <Utensils className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-                        </div>
-                        <div>
-                          <div className="text-[10px] md:text-xs font-black text-emerald-600 dark:text-emerald-500 uppercase tracking-wider mb-1">
-                            Diet Type
-                          </div>
-                          <div className="text-xl md:text-2xl font-black text-emerald-900 dark:text-emerald-300 capitalize">
-                            {data.care.diet}
-                          </div>
-                        </div>
-                      </div>
+<div>
+  <SectionHeader title="Feeding Guide" icon={<Utensils className="w-5 h-5" />} />
+  <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+    
+    {/* Diet Type - Clean Header */}
+    <div className="flex items-center gap-4 pb-6 border-b border-slate-200 dark:border-slate-700">
+      <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-md">
+        <Utensils className="w-6 h-6 text-white" />
+      </div>
+      <div>
+        <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+          Diet Type
+        </div>
+        <div className="text-2xl font-black text-slate-900 dark:text-slate-100 capitalize">
+          {data.care.diet}
+        </div>
+      </div>
+    </div>
 
-                      {/* Feeding Schedule */}
-                      {data.care.feeding && (
-                        <>
-                          <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border-2 border-emerald-200 dark:border-emerald-800">
-                              <div className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                                Frequency
-                              </div>
-                              <div className="text-lg md:text-xl font-black text-slate-900 dark:text-white capitalize">
-                                {data.care.feeding.frequency.replace(/-/g, ' ')}
-                              </div>
-                            </div>
-                            
-                            {data.care.feeding.fastingDay && data.care.feeding.fastingDay !== 'none' && (
-                              <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border-2 border-amber-200 dark:border-amber-800">
-                                <div className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                                  Fasting Day
-                                </div>
-                                <div className="text-lg md:text-xl font-black text-amber-900 dark:text-amber-300 capitalize">
-                                  {data.care.feeding.fastingDay}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Food Types */}
-                          <div>
-                            <h4 className="text-sm font-black text-emerald-900 dark:text-emerald-300 mb-3 flex items-center gap-2">
-                              <Apple className="w-4 h-4" />
-                              Primary Foods
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {data.care.feeding.primaryFoods.map((food) => (
-                                <span 
-                                  key={food}
-                                  className="px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 border-2 border-emerald-300 dark:border-emerald-700 capitalize"
-                                >
-                                  {food.replace(/-/g, ' ')}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-
-                          {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
-                            <div>
-                              <h4 className="text-sm font-black text-emerald-900 dark:text-emerald-300 mb-3 flex items-center gap-2">
-                                <Pill className="w-4 h-4" />
-                                Supplements
-                              </h4>
-                              <div className="flex flex-wrap gap-2">
-                                {data.care.feeding.supplements.map((supplement) => (
-                                  <span 
-                                    key={supplement}
-                                    className="px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-300 border-2 border-teal-300 dark:border-teal-700 capitalize"
-                                  >
-                                    {supplement.replace(/-/g, ' ')}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Live Food Requirement */}
-                          {data.care.feeding.liveFood && (
-                            <div className={`p-4 rounded-xl border-2 ${
-                              data.care.feeding.liveFood.required 
-                                ? 'bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-800' 
-                                : 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800'
-                            }`}>
-                              <div className="flex items-center gap-2 text-sm font-bold">
-                                {data.care.feeding.liveFood.required ? (
-                                  <>
-                                    <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
-                                    <span className="text-rose-800 dark:text-rose-300">
-                                      Live food required
-                                    </span>
-                                  </>
-                                ) : data.care.feeding.liveFood.recommended ? (
-                                  <>
-                                    <Info className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                                    <span className="text-blue-800 dark:text-blue-300">
-                                      Live food recommended for optimal health
-                                    </span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                    <span className="text-emerald-800 dark:text-emerald-300">
-                                      Live food optional
-                                    </span>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </>
-                      )}
-
-                      {/* Fallback to generated advice */}
-                      {!data.care.feeding && (
-                        <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border-2 border-emerald-200 dark:border-emerald-800">
-                          <ul className="space-y-3">
-                            {getFeedingAdvice().map((tip, i) => (
-                              <li key={i} className="flex gap-3 text-sm md:text-base text-slate-700 dark:text-slate-300">
-                                <span className="text-emerald-500 dark:text-emerald-400 font-black text-lg">•</span>
-                                <span className="leading-relaxed">{tip}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+    {/* Feeding Schedule - Clean Grid */}
+    {data.care.feeding && (
+      <>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="group hover:shadow-md transition-all border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-slate-300 dark:hover:border-slate-600">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-emerald-50 dark:group-hover:bg-emerald-950/20">
+                <Clock className="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+              </div>
+              <div className="flex-1">
+                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Frequency
+                </div>
+                <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">
+                  {data.care.feeding.frequency.replace(/-/g, ' ')}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {data.care.feeding.fastingDay && data.care.feeding.fastingDay !== 'none' && (
+            <div className="group hover:shadow-md transition-all border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-amber-300 dark:hover:border-amber-600">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-amber-50 dark:group-hover:bg-amber-950/20">
+                  <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                    Fasting Day
                   </div>
+                  <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">
+                    {data.care.feeding.fastingDay}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Food Types - Clean Tags */}
+        <div>
+          <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+            <Apple className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            Primary Foods
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {data.care.feeding.primaryFoods.map((food) => (
+              <span 
+  key={food}
+  className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer capitalize"
+>
+  {food.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Supplements */}
+        {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
+          <div>
+            <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+              <Pill className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+              Supplements
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {data.care.feeding.supplements.map((supplement) => (
+                <span 
+  key={supplement}
+  className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-teal-50 dark:hover:bg-teal-950/20 hover:border-teal-300 dark:hover:border-teal-700 transition-all cursor-pointer capitalize"
+>
+  {supplement.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Live Food - Clean Status Cards */}
+        {data.care.feeding.liveFood && (
+          <div className={`grid gap-3 p-4 border border-slate-200 dark:border-slate-700 rounded-xl ${
+            data.care.feeding.liveFood.required ? 'bg-rose-50/50 dark:bg-rose-950/10' : 
+            data.care.feeding.liveFood.recommended ? 'bg-blue-50/50 dark:bg-blue-950/10' : 
+            'bg-emerald-50/50 dark:bg-emerald-950/10'
+          }`}>
+            <div className="flex items-center gap-3 text-sm font-semibold">
+              {data.care.feeding.liveFood.required ? (
+                <>
+                  <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+                  <span className="text-slate-900 dark:text-slate-100 font-bold">
+                    Live food required
+                  </span>
+                </>
+              ) : data.care.feeding.liveFood.recommended ? (
+                <>
+                  <Info className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <span className="text-slate-900 dark:text-slate-100 font-bold">
+                    Live food recommended for optimal health
+                  </span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <span className="text-slate-900 dark:text-slate-100 font-bold">
+                    Live food optional
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </>
+    )}
+
+    {/* Fallback */}
+    {!data.care.feeding && (
+      <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
+        <ul className="space-y-3">
+          {getFeedingAdvice().map((tip, i) => (
+            <li key={i} className="flex gap-3 text-base text-slate-700 dark:text-slate-300">
+              <span className="text-emerald-500 dark:text-emerald-400 font-bold text-xl mt-0.5 flex-shrink-0">→</span>
+              <span className="leading-relaxed">{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</div>
 
                   {/* Maintenance Schedule */}
                   {data.care.maintenance && (
                     <div>
                       <SectionHeader title="Maintenance Schedule" icon={<Calendar className="w-5 h-5" />} />
-                      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-xl p-5 md:p-6 border-2 border-blue-200 dark:border-blue-800 shadow-lg space-y-4">
+                      <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
                         
                         {/* Water Changes */}
                         <div className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-blue-200 dark:border-blue-800">
@@ -683,7 +704,7 @@ const SpeciesDetailPage = () => {
       {/* Heater */}
       {data.care.equipment.heater && (
         <EquipmentCardNew 
-          icon={<Thermometer className="w-5 h-5" />}
+          icon={<Thermometer className="w-5 h-5 text-rose-600 dark:text-rose-400" />}
           label="Heater"
           required={data.care.equipment.heater.required}
           details={data.care.equipment.heater.watts ? `${data.care.equipment.heater.watts}W recommended` : undefined}
@@ -694,7 +715,7 @@ const SpeciesDetailPage = () => {
       {/* Filter */}
       {data.care.equipment.filter && (
         <EquipmentCardNew 
-          icon={<Wind className="w-5 h-5" />}
+          icon={<Wind className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
           label="Filter"
           required={data.care.equipment.filter.required}
           details={data.care.equipment.filter.type ? `${data.care.equipment.filter.type} - ${data.care.equipment.filter.flowRate || 'standard'}` : undefined}
@@ -705,7 +726,7 @@ const SpeciesDetailPage = () => {
       {/* Airstone */}
       {data.care.equipment.airstone !== undefined && (
         <EquipmentCardNew 
-          icon={<CircleDot className="w-5 h-5" />}
+          icon={<CircleDot className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />}
           label="Airstone"
           required={data.care.equipment.airstone}
           color="cyan"
@@ -715,7 +736,7 @@ const SpeciesDetailPage = () => {
       {/* Lighting */}
       {data.care.equipment.lighting && (
         <EquipmentCardNew 
-          icon={<Lightbulb className="w-5 h-5" />}
+          icon={<Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
           label="Lighting"
           required={true}
           details={`${data.care.equipment.lighting} intensity`}
@@ -726,7 +747,7 @@ const SpeciesDetailPage = () => {
       {/* CO2 */}
       {data.care.equipment.co2 !== undefined && (
         <EquipmentCardNew 
-          icon={<Beaker className="w-5 h-5" />}
+          icon={<Beaker className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
           label="CO₂ System"
           required={data.care.equipment.co2}
           color="emerald"
@@ -737,26 +758,26 @@ const SpeciesDetailPage = () => {
 )}
 
                   {/* Special Requirements */}
-                  {data.care.specialRequirements && data.care.specialRequirements.length > 0 && (
-                    <div>
-                      <SectionHeader title="Special Requirements" icon={<AlertTriangle className="w-5 h-5" />} />
-                      <div className="space-y-3">
-                        {data.care.specialRequirements.map((requirement, index) => (
-                          <div 
-                            key={index}
-                            className="bg-gradient-to-r from-rose-50 to-orange-50 dark:from-rose-950/30 dark:to-orange-950/30 rounded-xl p-4 md:p-5 border-2 border-rose-200 dark:border-rose-800 flex gap-3 shadow-lg"
-                          >
-                            <div className="p-2 bg-rose-100 dark:bg-rose-900/50 rounded-lg flex-shrink-0">
-                              <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
-                            </div>
-                            <p className="text-sm md:text-base text-rose-900 dark:text-rose-300 font-semibold leading-relaxed">
-                              {requirement}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+{data.care.specialRequirements && data.care.specialRequirements.length > 0 && (
+  <div>
+    <SectionHeader title="Special Requirements" icon={<AlertTriangle className="w-5 h-5" />} />
+    <div className="space-y-3">
+      {data.care.specialRequirements.map((requirement, index) => (
+        <div 
+          key={index}
+          className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-slate-200 dark:border-slate-700 flex gap-3 shadow-sm"
+        >
+          <div className="p-2 bg-rose-50 dark:bg-rose-950/30 rounded-lg flex-shrink-0 border border-rose-200/50 dark:border-rose-800/50">
+            <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+          </div>
+          <p className="text-sm md:text-base text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
+            {requirement}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
                   {/* Aggression Profile */}
                   {data.behavior.aggressionLevel && (
@@ -1141,7 +1162,7 @@ const InfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string;
 );
 
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
-  <h3 className="text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
+  <h3 className="text-lg md:text-xl font-grey text-slate-800 dark:text-slate-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
     <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
     {title}
   </h3>
@@ -1157,23 +1178,21 @@ const ParameterCard = ({ icon, label, value }: { icon: React.ReactNode; label: s
   </div>
 );
 
-const StatBar = ({ label, value, color }: { label: string; value: string; color: string }) => {
-  const steps = value === 'low' || value === 'beginner' ? 1 : value === 'medium' || value === 'intermediate' ? 2 : 3;
-  const colors = {
-    indigo: 'bg-indigo-600',
-    blue: 'bg-blue-600',
-    emerald: 'bg-emerald-600'
-  }[color];
+const StatBar = ({ label, value }: { label: string; value: string }) => {
+  const steps = value === 'low' || value === 'beginner' ? 1 : 
+               value === 'medium' || value === 'intermediate' ? 2 : 3;
   
   return (
     <div>
-      <div className="flex items-center justify-between mb-2 md:mb-3">
-        <span className="text-xs md:text-sm text-slate-600 dark:text-slate-400 font-bold">{label}</span>
-        <span className="text-xs md:text-sm font-black text-slate-900 dark:text-slate-100 uppercase">{value}</span>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">{label}</span>
+        <span className="text-sm font-semibold text-slate-900 dark:text-white capitalize">{value}</span>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         {[1, 2, 3].map(i => (
-          <div key={i} className={`h-2.5 md:h-3 flex-1 rounded-full transition-all ${i <= steps ? colors : 'bg-slate-200 dark:bg-slate-700'}`} />
+          <div key={i} className={`h-2 flex-1 rounded-full ${
+            i <= steps ? 'bg-slate-800 dark:bg-slate-300' : 'bg-slate-200 dark:bg-slate-700'
+          }`} />
         ))}
       </div>
     </div>
@@ -1287,15 +1306,15 @@ const AggressionBar = ({ label, level }: { label: string; level: number }) => (
 );
 
 const MistakeCard = ({ issue, cause, frequency }: { issue: string; cause: string; frequency: number }) => (
-  <div className="bg-red-50 dark:bg-red-950/30 rounded-xl p-4 md:p-5 border-2 border-red-200 dark:border-red-800 shadow-lg">
+  <div className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-red-200/60 dark:border-red-800/40 shadow-sm">
     <div className="flex items-center justify-between mb-2 md:mb-3">
-      <h5 className="font-black text-red-900 dark:text-red-200 capitalize text-sm md:text-base">{issue.replace(/-/g, ' ')}</h5>
-      <span className="text-[10px] md:text-xs font-black text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg">
+      <h5 className="font-black text-slate-900 dark:text-slate-100 capitalize text-sm md:text-base">{issue.replace(/-/g, ' ')}</h5>
+      <span className="text-[10px] md:text-xs font-black text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 md:px-3 py-1 md:py-1.5 rounded-lg border border-red-200/50 dark:border-red-800/50">
         {Math.round(frequency * 100)}% affected
       </span>
     </div>
-    <p className="text-xs md:text-sm text-red-800 dark:text-red-300 leading-relaxed">
-      <strong className="font-bold">Cause:</strong> {cause.replace(/-/g, ' ')}
+    <p className="text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+      <strong className="font-bold text-red-800 dark:text-red-300">Cause:</strong> {cause.replace(/-/g, ' ')}
     </p>
   </div>
 );
@@ -1401,12 +1420,12 @@ interface EquipmentCardNewProps {
 
 const EquipmentCardNew = ({ icon, label, required, details, color }: EquipmentCardNewProps) => {
   const colorConfig = {
-    rose: { bg: 'bg-rose-50 dark:bg-rose-950/30', text: 'text-rose-600 dark:text-rose-400', border: 'border-rose-200 dark:border-rose-800' },
-    blue: { bg: 'bg-blue-50 dark:bg-blue-950/30', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-200 dark:border-blue-800' },
-    cyan: { bg: 'bg-cyan-50 dark:bg-cyan-950/30', text: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-800' },
-    amber: { bg: 'bg-amber-50 dark:bg-amber-950/30', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-800' },
-    emerald: { bg: 'bg-emerald-50 dark:bg-emerald-950/30', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-800' }
-  };
+  rose: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+  blue: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+  cyan: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+  amber: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+  emerald: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+};
   
   const colors = colorConfig[color];
   
