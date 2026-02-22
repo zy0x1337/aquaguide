@@ -6,6 +6,13 @@ export const puntigrusTetrazona: Species = {
   imageUrl: '/images/species/puntigrus-tetrazona.jpg',
   funFact: "Tiger Barbs are the playground bullies of the aquarium world - but they're not actually mean, just hyperactive! Their infamous fin-nipping behavior is massively reduced when kept in large groups (10+) because they're too busy establishing their own social pecking order to bother other fish. In groups of 6 or fewer, they get bored and look for trouble. Think of them like energetic puppies - if you don't give them enough playmates, they'll chew your furniture (or in this case, your Angelfish's fins). Interestingly, the 'four stripes' pattern is disruption coloration - in murky Southeast Asian streams, the vertical bars break up their body outline making them harder for predators to track as they dart between plants.",
 
+  imageCredit: {
+    photographer: 'Anandarajkumar',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:A_Male_Tiger_barb.png',
+    license: 'CC BY-SA 3.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  },
+
   taxonomy: {
     scientificName: 'Puntigrus tetrazona',
     commonName: 'Tiger Barb',
@@ -47,13 +54,13 @@ export const puntigrusTetrazona: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Tiger Barbs need SPACE more than heavy planting. They\'re incredibly active swimmers requiring large open areas for schooling, chasing, and their constant high-speed antics. Setup: 60-70% open swimming space in center/front, 30-40% planted perimeter (sides and back). Use robust plants that tolerate their boisterous behavior: Java Fern, Anubias (attached to wood), Vallisneria, Amazon Swords, Java Moss. Avoid delicate stem plants (they uproot them during spawning or rough play). Floating plants work well (Water Sprite, Frogbit) to diffuse light. DO NOT densely plant entire tank - they become frustrated, stressed, and MORE aggressive when cramped. Tiger Barbs appreciate planted areas for shelter but spend 80% of time in open water schooling.',
     hardscape: ['Driftwood (Mopani, Spiderwood - creates tannins)', 'Smooth river stones', 'Indian Almond Leaves (optional, for blackwater effect)', 'Caves and crevices (limited use - they rarely hide)', 'Avoid sharp rocks (they swim fast and can injure themselves)'],
   },
 
   behavior: {
-    tags: ['schooling', 'semi-aggressive', 'fin_nipper', 'active', 'boisterous'],
+    tags: ['schooler', 'semi-aggressive', 'fin_nipper', 'active'],
     minGroupSize: 10,
     description: 'Tiger Barbs are hyperactive, social schooling fish with notorious reputations as fin-nippers - but this behavior is MASSIVELY exaggerated when kept properly. In groups of 10-12+, they form complex social hierarchies where males constantly spar with EACH OTHER (not tankmates) for dominance and female attention. These mock battles involve parallel swimming, flank displays, and chasing - pure posturing, no injuries. When kept in large groups, they\'re so preoccupied with their own school dynamics that they largely ignore other species. The fin-nipping problem occurs primarily in small groups (4-6 fish) where bored individuals seek stimulation by harassing slower tankmates. They\'re constantly in motion - schooling, foraging, play-fighting, exploring every inch of the tank. Activity level is exhausting to watch - they never stop! Males are particularly feisty, showing off bright colors and chasing rivals and females. Despite reputation, they\'re NOT truly aggressive (no sustained attacks, no killing) - just boisterous and rambunctious like overexcited children. Think "annoying" not "dangerous." They occupy mid-water primarily but forage on substrate and occasionally dart to surface for food.',
     
@@ -96,7 +103,7 @@ export const puntigrusTetrazona: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '10-15',
         bottom: '6-8',
       },
@@ -109,13 +116,13 @@ export const puntigrusTetrazona: Species = {
     },
     
     activity: {
-      level: 'very-high',
+      level: 'high',
       peakTimes: ['all-day'],
       nocturnal: false,
     },
     
     socialStructure: {
-      type: 'hierarchical-group',
+      type: 'school',
       maxMalesPerTank: 999,
     },
     
@@ -128,7 +135,7 @@ export const puntigrusTetrazona: Species = {
   care: {
     difficulty: 'beginner',
     diet: 'omnivore',
-    effort: 'low-medium',
+    effort: 'medium',
     cost: 'low',
     specialRequirements: [
       'Large group (10-12+ individuals minimum) to reduce aggression',
@@ -158,8 +165,8 @@ export const puntigrusTetrazona: Species = {
     
     feeding: {
       frequency: 'once-daily',
-      primaryFoods: ['high-quality-flakes', 'micro-pellets', 'spirulina-flakes', 'bloodworms', 'brine-shrimp'],
-      supplements: ['daphnia', 'mosquito-larvae', 'blanched-spinach', 'blanched-zucchini', 'blanched-peas'],
+      primaryFoods: ['flakes', 'micro-pellets', 'spirulina', 'bloodworms', 'brine-shrimp'],
+      supplements: ['daphnia','blanched-zucchini'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -219,7 +226,7 @@ export const puntigrusTetrazona: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'easy',
+    difficulty: 'beginner',
     trigger: 'Tiger Barbs breed readily in home aquariums with minimal effort. Breeding setup: 40-60L dedicated tank, bare bottom or spawning grid/marbles (prevents egg eating), spawning mop or fine-leaved plants (Java Moss, spawning yarn), soft water (GH 3-6°, pH 6.0-6.5), temperature 26-27°C, gentle sponge filter, dim lighting. Conditioning: Select 6-8 healthiest, most colorful adults (equal males/females). Separate sexes for 10-14 days. Feed heavily 2-3x daily with protein-rich live/frozen foods (bloodworms, brine shrimp, daphnia). Females will become noticeably plump with eggs (round belly, yellowish egg mass visible). Introduce conditioned group to breeding tank in evening. Spawning occurs at dawn - males intensify colors (scarlet snouts), chase females vigorously, pair off. Females scatter 200-500 eggs among plants/mop while male fertilizes. Spawning lasts 1-3 hours.',
     fryCare: 'Remove adults IMMEDIATELY post-spawning - they are voracious egg eaters and will consume entire spawn within hours. Eggs are tiny (1mm), transparent, adhesive, scattered throughout plants. Fertile eggs remain clear; infertile turn white/opaque (remove with turkey baster to prevent fungus). Eggs hatch in 24-48 hours at 26°C. Newly hatched fry are nearly microscopic (2-3mm), immobile, attached to surfaces via adhesive threads, surviving on yolk sac. At 3-5 days, fry become free-swimming. First foods: infusoria or liquid fry food for 5-7 days (they\'re too tiny for baby brine shrimp initially). At 7-10 days, introduce freshly-hatched baby brine shrimp (Artemia nauplii) - fry grow explosively on this. Feed 4-5x daily in small amounts. At 3-4 weeks, transition to finely crushed flakes and micro pellets. Water quality is CRITICAL for fry - perform daily 10-15% water changes with aged, temperature-matched water. Use gentle sponge filter to avoid sucking up fry. Fry develop adult coloration (black bars appear) at 6-8 weeks. Sexual maturity at 6-8 months. Expect 100-300 surviving fry from successful spawn.',
     notes: 'Tiger Barbs are among the EASIEST egg-scattering species to breed - perfect for beginners wanting breeding experience. They spawn readily (every 2-3 weeks when well-conditioned), produce large spawns (200-500 eggs), don\'t require extreme water parameters, and fry are relatively hardy. Main challenges: preventing adults from eating eggs (requires immediate removal) and raising microscopic fry (need infusoria first 5-7 days). Commercial breeding is extensive - most trade specimens are captive-bred in Southeast Asia and Eastern Europe. Tiger Barbs have been bred in aquariums for 100+ years with no wild collection necessary. Breeding them at home is rewarding and profitable (LFS often buy healthy juveniles). Selective breeding created color morphs (Green, Albino, Platinum) through 50+ years of captive propagation.',

@@ -43,6 +43,7 @@ import { sterbaiCory } from './sterbai-cory';
 import { clownPleco } from './clown-pleco';
 import { sewelliaLineolata } from './sewellia-lineolata';
 import { hyphessobryconMegalopterus } from './hyphessobrycon-megalopterus';
+import { puntigrusTetrazona } from './puntigrus-tetrazona';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -88,7 +89,8 @@ export const allSpecies: Species[] = [
   sterbaiCory,
   clownPleco,
   sewelliaLineolata,
-  hyphessobryconMegalopterus
+  hyphessobryconMegalopterus,
+  puntigrusTetrazona
 ];
 
 export {
@@ -135,5 +137,6 @@ export {
   sterbaiCory,
   clownPleco,
   sewelliaLineolata,
-  hyphessobryconMegalopterus
+  hyphessobryconMegalopterus,
+  puntigrusTetrazona
 };
