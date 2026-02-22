@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/zy0x1337/aquaguide/compare/v0.0.8...v1.0.0) (2026-02-22)
+
+
+### Features
+
+* Add dark hero background like Diseases page ([d0d185c](https://github.com/zy0x1337/aquaguide/commit/d0d185cdd78388e18a09b12be73258b556b47991))
+* Add diagram rendering to KnowledgeDetailPage ([90d2c4d](https://github.com/zy0x1337/aquaguide/commit/90d2c4d3a71ad93f2fca44a6ff88610e9ae68b29))
+* Add lazy loading with infinite scroll to SpeciesIndexPage ([6f7d7c4](https://github.com/zy0x1337/aquaguide/commit/6f7d7c43b3b386d25c0b4923add209dc3c4b5828))
+* Add nitrogen cycle diagram to correct location ([d31d822](https://github.com/zy0x1337/aquaguide/commit/d31d82228f596b0c2592acd953bf5fde6f463226))
+* Add professional nitrogen cycle diagram SVG ([38ba23f](https://github.com/zy0x1337/aquaguide/commit/38ba23f4e0604cdd38d8adb10df654d8990ecfb9))
+* Add ScrollToTop component for route changes ([cbe86b4](https://github.com/zy0x1337/aquaguide/commit/cbe86b4687218bc7b5a6cee65d1b3e7cb6614d69))
+* Add ScrollToTop component to App ([05c6879](https://github.com/zy0x1337/aquaguide/commit/05c6879ececa269eca8a5404661aa3d39e549ebb))
+* Completely redesign nitrogen cycle diagram ([1c630ea](https://github.com/zy0x1337/aquaguide/commit/1c630eaa804f14fea1b5e95bfb7cfe64545c4c76))
+* Improve ComparisonPage mobile view and UX ([1620d07](https://github.com/zy0x1337/aquaguide/commit/1620d07d51b1f73a4c8bc17108061f0d0239084f))
+* Major redesign of Did You Know box, Knowledge Hub and Article pages ([3afe99a](https://github.com/zy0x1337/aquaguide/commit/3afe99a33ff5611e35794609f61dcd1603fd8e55))
+* Major Tank Builder UI/UX improvements ([cd85f4c](https://github.com/zy0x1337/aquaguide/commit/cd85f4c9bc238e2847023df8634988f59c8f6117))
+* Redesign Did You Know box with modern gradient styling ([c03998c](https://github.com/zy0x1337/aquaguide/commit/c03998c77a5f4548958caf81db0ac4354d54d5d8))
+* Redesign Knowledge article page with better readability ([18342e1](https://github.com/zy0x1337/aquaguide/commit/18342e1ea4a23fd01bc5892291bb60ba5e6f8616))
+* Redesign Knowledge Hub with modern card layout ([b6bb91c](https://github.com/zy0x1337/aquaguide/commit/b6bb91ca1161a518655aba85725772fac738d6a0))
+
+
+### Bug Fixes
+
+* Make hero section compact like Diseases page ([e47234a](https://github.com/zy0x1337/aquaguide/commit/e47234acee65de7e5681ce1e4dc05561fa637b84))
+
+
+### Documentation
+
+* Add installation step to RELEASE.md for standard-version ([bcc5cb2](https://github.com/zy0x1337/aquaguide/commit/bcc5cb2b966628ccca04cf8643ade78d665036a1))
+
 ### [0.0.8](https://github.com/zy0x1337/aquaguide/compare/v0.0.7...v0.0.8) (2026-02-22)
 
 
