@@ -1,5 +1,5 @@
-import { useState, useMemo, Suspense, lazy } from 'react';
-import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Thermometer, TestTube, Sparkles, TrendingUp } from 'lucide-react';
+import { useState, useMemo, Suspense, lazy, useRef, useEffect, useCallback } from 'react';
+import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Thermometer, TestTube, Sparkles, TrendingUp, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { allSpecies } from '../data/species';
@@ -18,6 +18,10 @@ import type { Difficulty, Species, Region, EthologyTag } from '../types/species'
 const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(module => ({ default: module.SpeciesCard })));
 
 const HEADER_IMAGE_URL = 'https://images.unsplash.com/photo-1573472420143-0c68f179bdc7?q=80&w=2094&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
+// Pagination settings
+const INITIAL_LOAD = 24; // First page load
+const LOAD_MORE_INCREMENT = 12; // Load 12 more on each scroll
 
 interface Filters {
   level: Difficulty | null;
@@ -40,6 +44,11 @@ const SpeciesIndexPage = () => {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [biotopeSuggestions, setBiotopeSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  // Lazy loading state
+  const [displayCount, setDisplayCount] = useState(INITIAL_LOAD);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
   
   const [filters, setFilters] = useState<Filters>({
     level: null,
@@ -139,6 +148,53 @@ const SpeciesIndexPage = () => {
     return uniqueSpecies;
   }, [searchTerm, filters, fuse]);
 
+  // Reset display count when filters change
+  useEffect(() => {
+    setDisplayCount(INITIAL_LOAD);
+  }, [filteredSpecies]);
+
+  // Get the species to display (with lazy loading)
+  const displayedSpecies = useMemo(() => {
+    return filteredSpecies.slice(0, displayCount);
+  }, [filteredSpecies, displayCount]);
+
+  const hasMore = displayCount < filteredSpecies.length;
+
+  // Load more handler
+  const loadMore = useCallback(() => {
+    if (!hasMore || isLoadingMore) return;
+    
+    setIsLoadingMore(true);
+    // Simulate loading delay for smooth UX
+    setTimeout(() => {
+      setDisplayCount(prev => Math.min(prev + LOAD_MORE_INCREMENT, filteredSpecies.length));
+      setIsLoadingMore(false);
+    }, 300);
+  }, [hasMore, isLoadingMore, filteredSpecies.length]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+          loadMore();
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasMore, isLoadingMore, loadMore]);
+
   const resetFilters = () => {
     setFilters({
       level: null,
@@ -156,6 +212,7 @@ const SpeciesIndexPage = () => {
       behaviorTags: []
     });
     setSearchTerm('');
+    setDisplayCount(INITIAL_LOAD);
   };
 
   const handleBiotopeInput = (value: string) => {
@@ -584,25 +641,46 @@ const SpeciesIndexPage = () => {
 
               {/* Species Grid */}
               {filteredSpecies.length > 0 ? (
-                <Suspense fallback={<SpeciesGridSkeleton />}>
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
-                  >
-                    {filteredSpecies.map((s: Species, index: number) => (
-                      <motion.div
-                        key={s.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.5) }}
-                      >
-                        <SpeciesCard data={s} />
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </Suspense>
+                <>
+                  <Suspense fallback={<SpeciesGridSkeleton />}>
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
+                    >
+                      {displayedSpecies.map((s: Species, index: number) => (
+                        <motion.div
+                          key={s.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.5) }}
+                        >
+                          <SpeciesCard data={s} />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </Suspense>
+
+                  {/* Load More Trigger & Indicator */}
+                  {hasMore && (
+                    <div ref={loadMoreRef} className="py-8 flex justify-center">
+                      {isLoadingMore && (
+                        <div className="flex items-center gap-3 text-indigo-600 dark:text-indigo-400">
+                          <Loader2 className="w-6 h-6 animate-spin" />
+                          <span className="text-sm font-semibold">Loading more species...</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Showing X of Y indicator */}
+                  {displayedSpecies.length > 0 && (
+                    <div className="text-center text-sm text-slate-500 dark:text-slate-400 py-4">
+                      Showing {displayedSpecies.length} of {filteredSpecies.length} species
+                    </div>
+                  )}
+                </>
               ) : (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
