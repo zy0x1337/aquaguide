@@ -41,6 +41,7 @@ import { whiteCloudMinnow } from './white-cloud-minnow';
 import { bolivianRam } from './bolivian-ram';
 import { sterbaiCory } from './sterbai-cory';
 import { clownPleco } from './clown-pleco';
+import { sewelliaLineolata } from './sewellia-lineolata';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -84,7 +85,8 @@ export const allSpecies: Species[] = [
   whiteCloudMinnow,
   bolivianRam,
   sterbaiCory,
-  clownPleco
+  clownPleco,
+  sewelliaLineolata
 ];
 
 export {
@@ -129,5 +131,6 @@ export {
   whiteCloudMinnow,
   bolivianRam,
   sterbaiCory,
-  clownPleco
+  clownPleco,
+  sewelliaLineolata
 };

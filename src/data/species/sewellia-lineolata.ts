@@ -16,7 +16,7 @@ export const sewelliaLineolata: Species = {
   },
 
   visuals: {
-    iconShape: 'ray',
+    iconShape: 'compressed',
     adultSizeCM: 6,
     color: 'Stunning tiger-striped pattern with alternating golden-yellow and dark brown/black reticulated lines running horizontally across the flattened body. Ventral side is pale cream. Fins are transparent with dark spots and bands. Pattern intensity varies by mood and dominance (dominant individuals show darker, more contrasted markings). Under UV light, some specimens show subtle blue-green iridescence.',
   },
@@ -28,12 +28,12 @@ export const sewelliaLineolata: Species = {
     ph: { min: 6.5, max: 7.5, ideal: 7.0 },
     gh: { min: 6, max: 15 },
     kh: { min: 3, max: 10 },
-    flow: 'very-high',
+    flow: 'high',
     substrate: 'smooth-river-stones',
     
     swimmingZone: {
       primary: 'bottom',
-      secondary: 'hardscape',
+      secondary: 'midwater',
       preference: 0.95,
     },
     
@@ -53,7 +53,7 @@ export const sewelliaLineolata: Species = {
   },
 
   behavior: {
-    tags: ['grazer', 'bottom_dweller', 'rheophilic', 'diurnal', 'social'],
+    tags: ['bottom_dweller', 'diurnal', 'social'],
     minGroupSize: 4,
     description: 'Sewellia are peaceful, active bottom-dwellers that spend 90% of their time grazing biofilm and algae from rocks and glass. They use their sucker-disc to "walk" across surfaces, scraping with rasping mouthparts. Despite their flat, stingray-like appearance, they\'re incredibly entertaining to watch. They\'re highly social and should always be kept in groups of 4-6+ (the more, the better). In groups, they establish loose hierarchies with dominant males claiming prime grazing spots, but aggression is limited to posturing and chasing - no serious injuries. They\'re diurnal (active during day) and love to bask in high-flow areas, flattening their bodies against stones. When startled, they can "jet" across the tank with surprising speed. They occasionally rest in caves or under ledges but spend most time actively foraging.',
     
@@ -96,7 +96,7 @@ export const sewelliaLineolata: Species = {
       ],
       
       idealTankmates: {
-        surface: '8-12',
+        surface: 8-12,
         midwater: '6-10',
         bottom: '4-8',
       },
@@ -115,7 +115,7 @@ export const sewelliaLineolata: Species = {
     },
     
     socialStructure: {
-      type: 'hierarchical-group',
+      type: 'shoal',
       maxMalesPerTank: 999,
     },
     
@@ -126,9 +126,9 @@ export const sewelliaLineolata: Species = {
   },
 
   care: {
-    difficulty: 'advanced',
+    difficulty: 'medium',
     diet: 'herbivore',
-    effort: 'medium-high',
+    effort: 'medium',
     cost: 'medium',
     specialRequirements: [
       'Very high water flow (turnover 15-20x tank volume per hour) via multiple powerheads or wavemakers',
@@ -158,15 +158,15 @@ export const sewelliaLineolata: Species = {
     ],
     
     feeding: {
-      frequency: 'constant-grazing',
-      primaryFoods: ['biofilm', 'algae', 'aufwuchs', 'microorganisms'],
-      supplements: ['repashy-soilent-green', 'algae-wafers', 'blanched-zucchini', 'spirulina-flakes'],
+      frequency: 'once-daily',
+      primaryFoods: ['biofilm', 'algae-wafers', 'aufwuchs'],
+      supplements: ['blanched-zucchini', 'spirulina', 'flakes'],
       vegetarian: true,
       liveFood: {
         required: false,
         recommended: false,
       },
-      fastingDay: null,
+      fastingDay: "sunday",
     },
     
     maintenance: {
@@ -184,7 +184,7 @@ export const sewelliaLineolata: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'very-high',
+        flowRate: 'strong',
       },
       airstone: true,
       lighting: 'moderate',
@@ -219,7 +219,7 @@ export const sewelliaLineolata: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'very-hard',
+    difficulty: 'expert',
     trigger: 'Rarely bred in home aquariums. Most specimens are wild-caught. Breeding requires: cooling period (drop to 16-18°C for 6-8 weeks to simulate dry season), then gradual warming + increased feeding (simulates monsoon rains and food abundance), pH 6.5-7.0, extreme pristine water quality, group of 6-8 adults with multiple males/females. Spawning observed in early morning in strong current. Males display to females by flaring pectoral fins and vibrating.',
     fryCare: 'Eggs (1-1.5mm diameter, adhesive) are scattered among rocks in high-flow areas. No parental care - eggs and fry are on their own. Eggs hatch in 5-7 days at 20°C. Fry are 4-5mm long with fully formed sucker-disc. They immediately grasp substrate and begin grazing biofilm. Fry are nearly impossible to spot (camouflaged against stones). First food: biofilm, aufwuchs, green algae. Supplement with powdered spirulina and microscopic algae cultures. Fry grow extremely slowly - 6-8 months to reach 2cm, 18-24 months to reach adult size (6cm). Raising fry requires mature, aged tanks with extensive biofilm cultivation.',
     notes: 'Breeding Sewellia in captivity is extremely rare and considered expert-level. Commercial breeding is virtually non-existent - 99% of trade specimens are wild-caught from Vietnam. Major challenges: inducing spawning (requires seasonal temperature/photoperiod manipulation), locating microscopic eggs among rocks, providing adequate biofilm for fry, slow growth rate requiring 18-24 months to raise sellable fish. Most successful breeding reports come from large, outdoor concrete pools that simulate natural seasonal cycles. Not recommended for home aquarists unless you have multiple dedicated species tanks and years of hillstream experience.',
