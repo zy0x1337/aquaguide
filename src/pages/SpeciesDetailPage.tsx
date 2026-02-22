@@ -427,30 +427,109 @@ const SpeciesDetailPage = () => {
                 {/* OVERVIEW TAB */}
                 {activeTab === 'overview' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                    {/* Parameters Grid - SOFTER COLORS */}
+                    {/* Parameters Grid - PROFESSIONAL REDESIGN */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
-                      <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
-                        <ParameterCard 
-                          icon={<Thermometer className="w-5 h-5 text-rose-400" />}
-                          label="Temperature"
-                          value={`${data.environment.tempC.min}-${data.environment.tempC.max}°C`}
-                        />
-                        <ParameterCard 
-                          icon={<Droplets className="w-5 h-5 text-sky-400" />}
-                          label="pH Level"
-                          value={`${data.environment.ph.min}-${data.environment.ph.max}`}
-                        />
-                        <ParameterCard 
-                          icon={<Activity className="w-5 h-5 text-blue-400" />}
-                          label="Water Flow"
-                          value={capitalize(data.environment.flow)}
-                        />
-                        <ParameterCard 
-                          icon={<Box className="w-5 h-5 text-amber-400" />}
-                          label="Substrate"
-                          value={capitalize(data.environment.substrate || 'Any')}
-                        />
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        {/* Temperature Card */}
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                                <Thermometer className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                              </div>
+                              <div>
+                                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Temperature</div>
+                                <div className="text-2xl font-black text-slate-900 dark:text-slate-100">
+                                  {data.environment.tempC.min}–{data.environment.tempC.max}°C
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {data.environment.tempC.ideal && (
+                            <div className="flex items-center gap-2 text-xs">
+                              <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-rose-500"
+                                  style={{ 
+                                    width: `${((data.environment.tempC.ideal - 15) / (35 - 15)) * 100}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="font-bold text-slate-600 dark:text-slate-400">Ideal: {data.environment.tempC.ideal}°C</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pH Card */}
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                                <Droplets className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                              </div>
+                              <div>
+                                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">pH Level</div>
+                                <div className="text-2xl font-black text-slate-900 dark:text-slate-100">
+                                  {data.environment.ph.min}–{data.environment.ph.max}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {data.environment.ph.ideal && (
+                            <div className="flex items-center gap-2 text-xs">
+                              <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-gradient-to-r from-rose-500 via-emerald-500 to-blue-500"
+                                  style={{ 
+                                    width: `${((data.environment.ph.ideal - 4) / (9 - 4)) * 100}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="font-bold text-slate-600 dark:text-slate-400">Ideal: {data.environment.ph.ideal}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Water Flow Card */}
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                              <Activity className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Water Flow</div>
+                              <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.environment.flow}</div>
+                            </div>
+                            <div className="flex gap-1">
+                              {[1, 2, 3].map(i => (
+                                <div 
+                                  key={i} 
+                                  className={`w-1.5 h-8 rounded-full ${
+                                    (data.environment.flow === 'low' && i <= 1) ||
+                                    (data.environment.flow === 'medium' && i <= 2) ||
+                                    (data.environment.flow === 'high' && i <= 3)
+                                      ? 'bg-slate-700 dark:bg-slate-300'
+                                      : 'bg-slate-300 dark:bg-slate-700'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Substrate Card */}
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                              <Box className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Substrate</div>
+                              <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.environment.substrate || 'Any'}</div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -1047,16 +1126,6 @@ const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }
     <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
     {title}
   </h3>
-);
-
-const ParameterCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
-    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-      <div className="text-slate-600 dark:text-slate-400">{icon}</div>
-      <span className="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">{label}</span>
-    </div>
-    <div className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100">{value}</div>
-  </div>
 );
 
 const StatBar = ({ label, value }: { label: string; value: string }) => {
