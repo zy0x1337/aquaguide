@@ -1,438 +1,404 @@
 import { Link } from 'react-router-dom';
 import { 
-  Search, BookOpen, Droplets, Target,
-  TrendingUp, Shield, Zap, ArrowRight,
-  Fish, Leaf, Waves, Stethoscope, Database, Sparkles
+  Zap, ChevronRight, ArrowRight,
+  Search, Layers, Sparkles, Activity, Database, Shield, Gauge
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { allSpecies } from '../data/species';
-import { allPlants } from '../data/plants';
-import { allKnowledgeArticles } from '../data/knowledge';
+import { allSpecies, bettaSplendens, neonTetra, oscar, amanoShrimp } from '../data/species';
 
 const HomePage = () => {
-  // Real statistics from actual data
-  const stats = {
-    species: allSpecies.length,
-    plants: allPlants.length,
-    articles: allKnowledgeArticles.length,
-    dataPoints: 15 // Per species: temp, pH, hardness, size, lifespan, diet, behavior tags, tank size, group size, breeding, origin, family, etc.
+  const featuredSpecies = [bettaSplendens, neonTetra, oscar, amanoShrimp];
+
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+  };
+
+  const stagger = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
   };
 
   return (
     <PageTransition>
       <SEOHead 
-        title="AquaGuide - Your Complete Aquarium Resource"
-        description="Comprehensive aquarium database with detailed species profiles, care guides, water chemistry knowledge, and professional tank planning tools."
+        title="AquaGuide - Professional Aquarium Database"
+        description="Science-based aquarium planning with detailed species profiles, water parameter filtering, and compatibility analysis."
       />
       
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+      <div className="min-h-screen bg-white dark:bg-slate-950">
         
-        {/* UNDERWATER BACKGROUND EFFECTS */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          {/* Gradient Ocean Background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-cyan-50/30 to-teal-50/50 dark:from-slate-950 dark:via-blue-950/20 dark:to-slate-950" />
+        {/* HERO SECTION - Cleaner, more focused */}
+        <section className="relative pt-20 sm:pt-32 pb-16 sm:pb-24 px-6 overflow-hidden">
+          {/* Subtle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-cyan-50/20 dark:from-slate-950 dark:via-slate-950 dark:to-indigo-950/20" />
           
-          {/* Animated Wave Layers */}
-          <svg className="absolute bottom-0 w-full h-64 opacity-20 dark:opacity-10" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <motion.path
-              fill="currentColor"
-              className="text-blue-300 dark:text-blue-900"
-              d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,154.7C672,149,768,171,864,186.7C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-              animate={{
-                d: [
-                  "M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,154.7C672,149,768,171,864,186.7C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-                  "M0,128L48,144C96,160,192,192,288,186.7C384,181,480,139,576,128C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-                  "M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,154.7C672,149,768,171,864,186.7C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                ]
-              }}
-              transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            />
-          </svg>
+          {/* Animated gradient orbs - more subtle */}
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.2, 0.3]
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-400/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ 
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3"
+          />
 
-          {/* Floating Bubbles */}
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-blue-300/30 dark:bg-blue-400/20 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                bottom: -20
-              }}
-              animate={{
-                y: [-20, -window.innerHeight - 100],
-                x: [0, Math.random() * 100 - 50],
-                opacity: [0, 0.6, 0]
-              }}
-              transition={{
-                duration: 8 + Math.random() * 6,
-                repeat: Infinity,
-                delay: Math.random() * 5,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-
-          {/* Floating Fish Silhouettes */}
-          <motion.div
-            className="absolute top-1/4 left-0 opacity-5 dark:opacity-10"
-            animate={{ x: [-100, window.innerWidth + 100] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <Fish className="w-16 h-16 text-blue-900 dark:text-blue-300" />
-          </motion.div>
-          <motion.div
-            className="absolute top-1/3 right-0 opacity-5 dark:opacity-10"
-            animate={{ x: [window.innerWidth + 100, -100] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear", delay: 3 }}
-          >
-            <Fish className="w-20 h-20 text-cyan-900 dark:text-cyan-300 scale-x-[-1]" />
-          </motion.div>
-        </div>
-
-        {/* CONTENT */}
-        <div className="relative z-10">
-          
-          {/* HERO SECTION - Keep original design */}
-          <section className="pt-32 pb-20 px-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+              
+              {/* Text Content - improved typography */}
+              <motion.div 
+                className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none"
+                initial="initial"
+                animate="animate"
+                variants={stagger}
+              >
+                <motion.div variants={fadeInUp}>
+                  <span className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 dark:from-indigo-500/20 dark:to-cyan-500/20 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-8 border border-indigo-200/50 dark:border-indigo-500/30">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    v0.0.7 Beta
+                  </span>
+                </motion.div>
                 
-                {/* Text Content */}
-                <div className="flex-1 text-center lg:text-left">
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wide mb-6 border border-indigo-200 dark:border-indigo-800">
-                      <Sparkles className="w-3 h-3" />
-                      v0.0.7 Beta Live
+                <motion.h1 
+                  variants={fadeInUp}
+                  className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.05]"
+                >
+                  Learn all about your{' '}
+                  <span className="relative">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-cyan-500">
+                      favorite Fish
                     </span>
-                    
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                      Learn all about your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">favorite Fish</span>
-                    </h1>
-                    <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-                      The modern standard for aquarium planning. 
-                      Explore <span className="font-bold text-slate-900 dark:text-white">{stats.species} documented species</span> with science-based compatibility checks and smart filtering.
-                    </p>
+                    {/* Animated underline */}
+                    <motion.div 
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.8, duration: 0.8 }}
+                      className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 via-purple-500 to-cyan-500 origin-left rounded-full"
+                    />
+                  </span>
+                </motion.h1>
+                
+                <motion.p 
+                  variants={fadeInUp}
+                  className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed"
+                >
+                  Build healthy, balanced aquariums with confidence. Explore{' '}
+                  <span className="font-bold text-slate-900 dark:text-white">{allSpecies.length}+ species</span>,{' '}
+                  check compatibility, and plan your perfect tank.
+                </motion.p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                      <Link 
-                        to="/species" 
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
-                      >
-                        <Search className="w-5 h-5" />
-                        Browse Database
-                      </Link>
-                      <Link 
-                        to="/tank-builder" 
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 text-slate-900 dark:text-white font-bold rounded-xl transition-all border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md"
-                      >
-                        <Zap className="w-5 h-5 text-amber-500" />
-                        Tank Builder
-                      </Link>
-                    </div>
-                  </motion.div>
-                  
-                  {/* Mini Stats */}
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="mt-10 flex items-center justify-center lg:justify-start gap-8 text-sm font-medium text-slate-500 dark:text-slate-500"
+                <motion.div 
+                  variants={fadeInUp}
+                  className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+                >
+                  <Link 
+                    to="/species" 
+                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 font-semibold rounded-2xl transition-all duration-300 shadow-lg shadow-slate-900/20 dark:shadow-white/10 hover:shadow-xl hover:shadow-slate-900/30 dark:hover:shadow-white/20 hover:-translate-y-0.5"
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span>Always Free</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-indigo-500" />
-                      <span>Scientific Data</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-rose-500" />
-                      <span>Mobile Ready</span>
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Right: Glassmorphic Stats Card */}
-                <div className="flex-1 w-full max-w-lg">
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="relative"
+                    <Search className="w-5 h-5" />
+                    Browse Database
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link 
+                    to="/tank-builder" 
+                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-2xl transition-all duration-300 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow-md hover:-translate-y-0.5"
                   >
-                    {/* Main Stats Card */}
-                    <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-slate-700/50 shadow-2xl">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center shadow-lg">
-                          <Database className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-slate-900 dark:text-white">Database Overview</h3>
-                          <p className="text-sm text-slate-600 dark:text-slate-400">Real-time statistics</p>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <StatBox icon={<Fish className="w-5 h-5" />} label="Fish Species" value={stats.species} color="from-blue-500 to-cyan-500" />
-                        <StatBox icon={<Leaf className="w-5 h-5" />} label="Plants" value={stats.plants} color="from-green-500 to-emerald-500" />
-                        <StatBox icon={<BookOpen className="w-5 h-5" />} label="Articles" value={stats.articles} color="from-purple-500 to-pink-500" />
-                        <StatBox icon={<Target className="w-5 h-5" />} label="Data Points" value={`${stats.dataPoints}+`} color="from-orange-500 to-red-500" />
-                      </div>
-
-                      {/* Data Points Detail */}
-                      <div className="mt-6 pt-6 border-t border-slate-200/50 dark:border-slate-700/50">
-                        <p className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-3">Per Species Data</p>
-                        <div className="flex flex-wrap gap-2">
-                          {['Temperature', 'pH Range', 'Hardness', 'Adult Size', 'Lifespan', 'Diet', 'Behavior', 'Tank Size', 'Group Size', 'Origin', 'Family', 'Breeding', 'Care Level'].map((param) => (
-                            <span key={param} className="text-[10px] px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-semibold">
-                              {param}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Decorative SVG Elements */}
-                    <div className="absolute -top-4 -right-4 w-24 h-24 opacity-20">
-                      <svg viewBox="0 0 100 100" className="text-indigo-500">
-                        <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5">
-                          <animateTransform
-                            attributeName="transform"
-                            type="rotate"
-                            from="0 50 50"
-                            to="360 50 50"
-                            dur="20s"
-                            repeatCount="indefinite"
-                          />
-                        </circle>
-                      </svg>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* FEATURES SECTION WITH SVG ILLUSTRATIONS */}
-          <section className="py-20 px-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                  Everything you need to succeed
-                </h2>
-                <p className="text-lg text-slate-600 dark:text-slate-400">
-                  Stop guessing. Use professional tools backed by {stats.dataPoints}+ data points per species.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                <FeatureCard 
-                  icon={<Search className="w-6 h-6" />}
-                  title="Advanced Filtering"
-                  desc={`Search through ${stats.species} species by temperature, pH, size, behavior, and origin.`}
-                  link="/species"
-                  gradient="from-blue-500 to-cyan-500"
-                />
-                <FeatureCard 
-                  icon={<Shield className="w-6 h-6" />}
-                  title="Compatibility Analysis"
-                  desc="Science-based compatibility checks covering water parameters, temperament, and tank requirements."
-                  link="/tank-builder"
-                  gradient="from-emerald-500 to-green-500"
-                />
-                <FeatureCard 
-                  icon={<BookOpen className="w-6 h-6" />}
-                  title="Knowledge Hub"
-                  desc={`${stats.articles} expert guides on nitrogen cycle, water chemistry, disease prevention, and more.`}
-                  link="/knowledge"
-                  gradient="from-purple-500 to-pink-500"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* CATEGORY QUICK LINKS */}
-          <section className="py-20 px-6 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <QuickLinkCard 
-                  icon={<Fish className="w-8 h-8" />}
-                  title="Fish Species"
-                  count={stats.species}
-                  link="/species"
-                  color="blue"
-                />
-                <QuickLinkCard 
-                  icon={<Leaf className="w-8 h-8" />}
-                  title="Plants"
-                  count={stats.plants}
-                  link="/plants"
-                  color="green"
-                />
-                <QuickLinkCard 
-                  icon={<Waves className="w-8 h-8" />}
-                  title="Habitats"
-                  count="Guides"
-                  link="/habitats"
-                  color="cyan"
-                />
-                <QuickLinkCard 
-                  icon={<Stethoscope className="w-8 h-8" />}
-                  title="Diseases"
-                  count="Database"
-                  link="/diseases"
-                  color="red"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* DATA SHOWCASE */}
-          <section className="py-20 px-6">
-            <div className="max-w-5xl mx-auto">
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-12 border border-slate-700 shadow-2xl relative overflow-hidden">
-                {/* Decorative SVG Background */}
-                <div className="absolute inset-0 opacity-10">
-                  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <defs>
-                      <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white"/>
-                      </pattern>
-                    </defs>
-                    <rect width="100" height="100" fill="url(#grid)" />
-                  </svg>
-                </div>
-
-                <div className="relative z-10">
-                  <div className="text-center mb-10">
-                    <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-                      Comprehensive Species Profiles
-                    </h2>
-                    <p className="text-lg text-slate-300">
-                      Each species includes {stats.dataPoints}+ parameters for accurate tank planning
-                    </p>
+                    <Zap className="w-5 h-5 text-amber-500" />
+                    Tank Builder
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform opacity-0 group-hover:opacity-100" />
+                  </Link>
+                </motion.div>
+                
+                {/* Trust indicators */}
+                <motion.div 
+                  variants={fadeInUp}
+                  className="mt-12 flex items-center justify-center lg:justify-start gap-6 sm:gap-8 text-sm font-medium text-slate-500 dark:text-slate-500"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-xs sm:text-sm">Always Free</span>
                   </div>
-
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <DataPointCategory title="Water Parameters" items={['Temperature Range', 'pH Range', 'Water Hardness (GH)', 'Carbonate Hardness (KH)']} />
-                    <DataPointCategory title="Physical Traits" items={['Adult Size', 'Growth Rate', 'Lifespan', 'Sexual Dimorphism']} />
-                    <DataPointCategory title="Behavior & Care" items={['Temperament', 'Activity Level', 'Diet Type', 'Care Difficulty']} />
+                  <div className="flex items-center gap-2">
+                    <Shield className="w-3.5 h-3.5 text-indigo-500" />
+                    <span className="text-xs sm:text-sm">Scientific Data</span>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <Database className="w-3.5 h-3.5 text-cyan-500" />
+                    <span className="text-xs sm:text-sm">{allSpecies.length}+ Species</span>
+                  </div>
+                </motion.div>
+              </motion.div>
 
-                  <div className="mt-10 text-center">
-                    <Link 
-                      to="/species"
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-slate-100 text-slate-900 font-bold rounded-xl transition-all shadow-lg"
+              {/* Visual Grid - improved layout */}
+              <motion.div 
+                className="flex-1 w-full max-w-lg lg:max-w-xl"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                  {featuredSpecies.map((fish, idx) => (
+                    <motion.div
+                      key={fish.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + idx * 0.1, duration: 0.6 }}
+                      className={idx % 2 !== 0 ? 'translate-y-8' : ''}
                     >
-                      Explore All Species
-                      <ArrowRight className="w-5 h-5" />
-                    </Link>
-                  </div>
+                      <Link 
+                        to={`/species/${fish.slug}`}
+                        className="group relative overflow-hidden rounded-2xl sm:rounded-3xl aspect-[4/3] block shadow-lg hover:shadow-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 transition-all duration-500 hover:-translate-y-2"
+                      >
+                        <img 
+                          src={fish.imageUrl} 
+                          alt={fish.taxonomy.commonName}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
+                        
+                        {/* Info overlay */}
+                        <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
+                          <div className="transform transition-transform duration-300 group-hover:translate-y-0 translate-y-2">
+                            <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-300 mb-1">
+                              {fish.taxonomy.family}
+                            </p>
+                            <h3 className="text-white font-bold text-base sm:text-lg leading-tight mb-2 group-hover:text-indigo-200 transition-colors">
+                              {fish.taxonomy.commonName}
+                            </h3>
+                            <div className="flex items-center gap-2 text-xs text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <Gauge className="w-3 h-3" />
+                              <span>{fish.visuals.adultSizeCM}cm</span>
+                              <span className="text-slate-500">•</span>
+                              <span className="capitalize">{fish.care.difficulty}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* FINAL CTA */}
-          <section className="py-24 px-6">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                Ready to Start Your Journey?
+        {/* STATS BAR - New section */}
+        <section className="py-12 px-6 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <StatCard number={allSpecies.length.toString()} label="Species Documented" />
+              <StatCard number="10+" label="Compatibility Checks" />
+              <StatCard number="72" label="Data Points per Fish" />
+              <StatCard number="100%" label="Free & Open" />
+            </div>
+          </div>
+        </section>
+
+        {/* FEATURES - Improved cards */}
+        <section className="py-20 sm:py-32 px-6">
+          <div className="max-w-7xl mx-auto">
+            {/* Section header */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-3xl mx-auto mb-16 sm:mb-20"
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">
+                Everything you need to succeed
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
-                Join aquarists worldwide using AquaGuide to build healthier, more sustainable aquariums.
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                Professional-grade tools designed for both beginners and experienced aquarists.
               </p>
+            </motion.div>
+
+            {/* Feature grid */}
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+              <FeatureCard 
+                icon={<Search className="w-7 h-7" />}
+                iconBg="from-indigo-500 to-purple-500"
+                title="Smart Filtering"
+                desc="Find compatible species by filtering temperature, pH, size, and behavior. Advanced search with real-time results."
+                link="/species"
+                linkText="Search Species"
+              />
+              <FeatureCard 
+                icon={<Activity className="w-7 h-7" />}
+                iconBg="from-emerald-500 to-teal-500"
+                title="Compatibility Engine"
+                desc="Our algorithm analyzes 10+ data points including behavior, parameters, and size ratios to prevent conflicts."
+                link="/tank-builder"
+                linkText="Check Compatibility"
+              />
+              <FeatureCard 
+                icon={<Layers className="w-7 h-7" />}
+                iconBg="from-rose-500 to-orange-500"
+                title="Biotopes & Guides"
+                desc="Learn about natural habitats and recreate them with detailed biotope guides and authentic setups."
+                link="/biotopes"
+                linkText="Explore Biotopes"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* CTA - More modern design */}
+        <section className="relative py-20 sm:py-32 overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950" />
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-5" />
+          
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-indigo-600/20 via-transparent to-transparent" />
+
+          <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+                Ready to build your
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+                  perfect aquarium?
+                </span>
+              </h2>
+              <p className="text-lg sm:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Join hobbyists worldwide using AquaGuide to create healthy, thriving aquatic ecosystems.
+              </p>
+              
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link 
                   to="/species" 
-                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-bold rounded-xl transition-all shadow-xl hover:shadow-2xl"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold rounded-2xl transition-all duration-300 shadow-xl shadow-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/40 hover:-translate-y-1"
                 >
-                  Browse {stats.species} Species
+                  Browse {allSpecies.length}+ Species
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link 
-                  to="/knowledge" 
-                  className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold rounded-xl transition-all border-2 border-slate-200 dark:border-slate-700 shadow-lg"
+                  to="/about" 
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-2xl transition-all duration-300 border-2 border-white/20 hover:border-white/30"
                 >
-                  Read Knowledge Base
+                  Learn More
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
-          </section>
 
-        </div>
+              {/* Social proof */}
+              <div className="mt-12 flex items-center justify-center gap-8 text-sm text-slate-400">
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    {[1,2,3].map(i => (
+                      <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 border-2 border-slate-900" />
+                    ))}
+                  </div>
+                  <span>Trusted by hobbyists</span>
+                </div>
+                <div className="hidden sm:block w-px h-4 bg-slate-700" />
+                <span className="hidden sm:inline">Open source & free forever</span>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
       </div>
     </PageTransition>
   );
 };
 
-const StatBox = ({ icon, label, value, color }: any) => (
-  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl p-4 border border-slate-200/50 dark:border-slate-700/50">
-    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white mb-3 shadow-lg`}>
-      {icon}
+// Improved components
+const StatCard = ({ number, label }: { number: string; label: string }) => (
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5 }}
+    className="text-center"
+  >
+    <div className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">
+      {number}
     </div>
-    <div className="text-2xl font-black text-slate-900 dark:text-white mb-1">{value}</div>
-    <div className="text-xs text-slate-600 dark:text-slate-400 font-medium">{label}</div>
-  </div>
+    <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium">
+      {label}
+    </div>
+  </motion.div>
 );
 
-const FeatureCard = ({ icon, title, desc, link, gradient }: any) => (
-  <Link
-    to={link}
-    className="group bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-2xl p-8 border border-white/20 dark:border-slate-700/50 hover:shadow-2xl transition-all hover:-translate-y-2"
+const FeatureCard = ({ 
+  icon, 
+  iconBg,
+  title, 
+  desc, 
+  link, 
+  linkText 
+}: { 
+  icon: any; 
+  iconBg: string;
+  title: string; 
+  desc: string; 
+  link: string; 
+  linkText: string;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    whileHover={{ y: -8 }}
+    className="group relative bg-white dark:bg-slate-900 p-8 rounded-3xl border-2 border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 shadow-lg hover:shadow-2xl transition-all duration-300"
   >
-    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform shadow-lg`}>
+    {/* Icon */}
+    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${iconBg} text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
       {icon}
     </div>
-    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+    
+    {/* Content */}
+    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3">
       {title}
     </h3>
-    <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+    <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
       {desc}
     </p>
-  </Link>
-);
-
-const QuickLinkCard = ({ icon, title, count, link, color }: any) => {
-  const colors: any = {
-    blue: 'from-blue-500 to-cyan-500',
-    green: 'from-green-500 to-emerald-500',
-    cyan: 'from-cyan-500 to-blue-500',
-    red: 'from-red-500 to-rose-500'
-  };
-
-  return (
-    <Link
-      to={link}
-      className="group bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-2xl p-6 border border-white/20 dark:border-slate-700/50 hover:shadow-xl transition-all hover:-translate-y-1"
+    
+    {/* Link */}
+    <Link 
+      to={link} 
+      className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
     >
-      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${colors[color]} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
-        {icon}
-      </div>
-      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{title}</h3>
-      <p className="text-2xl font-black text-slate-900 dark:text-white">{count}</p>
+      {linkText} 
+      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
     </Link>
-  );
-};
-
-const DataPointCategory = ({ title, items }: any) => (
-  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">{title}</h4>
-    <ul className="space-y-2">
-      {items.map((item: string) => (
-        <li key={item} className="flex items-center gap-2 text-slate-300 text-sm">
-          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-          {item}
-        </li>
-      ))}
-    </ul>
-  </div>
+    
+    {/* Hover gradient effect */}
+    <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${iconBg} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
+  </motion.div>
 );
 
 export default HomePage;
