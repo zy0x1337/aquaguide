@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, TrendingUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
 import AddInhabitantModal from '../components/tanks/AddInhabitantModal';
@@ -222,11 +222,18 @@ const TankDetailPage = () => {
 
   if (isLoading || !tank) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading tank...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full blur-xl opacity-20 animate-pulse"></div>
+            <div className="relative w-16 h-16 border-4 border-indigo-600 dark:border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          </div>
+          <p className="text-slate-700 dark:text-slate-300 font-bold">Loading tank...</p>
+        </motion.div>
       </div>
     );
   }
@@ -252,91 +259,114 @@ const TankDetailPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <SEOHead
         title={`${tank.name} - My Tanks`}
         description={`Manage ${tank.name}, a ${tank.volumeLiters}L ${tank.type} aquarium.`}
       />
 
+      {/* Enhanced Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 sm:py-12"
+        className="relative overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4xIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-10"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
           <Link
             to="/my-tanks"
-            className="inline-flex items-center text-indigo-200 hover:text-white mb-6 transition-colors text-sm font-semibold"
+            className="inline-flex items-center text-white/90 hover:text-white mb-6 transition-colors text-sm font-bold gap-1 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg backdrop-blur-sm"
           >
-            <ArrowLeft className="w-4 h-4 mr-1.5" />
+            <ArrowLeft className="w-4 h-4" />
             Back to My Tanks
           </Link>
 
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold mb-2">{tank.name}</h1>
-              <p className="text-sm sm:text-base text-indigo-200">
-                {tank.volumeLiters}L • {tank.type.charAt(0).toUpperCase() + tank.type.slice(1)} • {totalFish} fish • {totalPlants} plants
-              </p>
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                  <Droplets className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">{tank.name}</h1>
+                  <div className="flex flex-wrap items-center gap-2 mt-1">
+                    <span className="text-sm md:text-base text-indigo-200 font-semibold">{tank.volumeLiters}L</span>
+                    <span className="text-indigo-300">•</span>
+                    <span className="text-sm md:text-base text-indigo-200 font-semibold capitalize">{tank.type}</span>
+                    <span className="text-indigo-300">•</span>
+                    <span className="text-sm md:text-base text-indigo-200 font-semibold">{totalFish} fish</span>
+                    <span className="text-indigo-300">•</span>
+                    <span className="text-sm md:text-base text-indigo-200 font-semibold">{totalPlants} plants</span>
+                  </div>
+                </div>
+              </div>
             </div>
+            
             <button
               onClick={() => setIsEditModalOpen(true)}
-              className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors text-sm w-fit"
+              className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-5 py-3 rounded-xl transition-all font-bold shadow-lg hover:shadow-xl transform hover:scale-105 w-fit"
             >
               <Edit className="w-4 h-4" />
               Edit Tank
             </button>
           </div>
 
-          <div className="mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            <StatCard
-              icon={<Thermometer className="w-4 h-4 sm:w-5 sm:h-5" />}
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <EnhancedStatCard
+              icon={<Thermometer className="w-5 h-5" />}
               label="Temperature"
               value={`${tank.parameters.tempC}°C`}
+              gradient="from-orange-500 to-red-500"
             />
-            <StatCard
-              icon={<Droplets className="w-4 h-4 sm:w-5 sm:h-5" />}
+            <EnhancedStatCard
+              icon={<Droplets className="w-5 h-5" />}
               label="pH Level"
               value={tank.parameters.ph}
+              gradient="from-blue-500 to-cyan-500"
             />
-            <StatCard
-              icon={<FishIcon className="w-4 h-4 sm:w-5 sm:h-5" />}
+            <EnhancedStatCard
+              icon={<FishIcon className="w-5 h-5" />}
               label="Total Fish"
               value={totalFish}
+              gradient="from-purple-500 to-pink-500"
             />
-            <StatCard
-              icon={<Leaf className="w-4 h-4 sm:w-5 sm:h-5" />}
+            <EnhancedStatCard
+              icon={<Leaf className="w-5 h-5" />}
               label="Total Plants"
               value={totalPlants}
+              gradient="from-emerald-500 to-green-500"
             />
           </div>
         </div>
       </motion.header>
 
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
+      {/* Enhanced Tab Navigation */}
+      <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b-2 border-slate-200 dark:border-slate-700 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-4 sm:gap-8 overflow-x-auto">
-            <TabButton
+          <div className="flex gap-2 md:gap-4 overflow-x-auto scrollbar-hide">
+            <EnhancedTabButton
               active={activeTab === 'overview'}
               onClick={() => setActiveTab('overview')}
-              icon={<FishIcon className="w-4 h-4" />}
+              icon={<Sparkles className="w-4 h-4" />}
               label="Overview"
             />
-            <TabButton
+            <EnhancedTabButton
               active={activeTab === 'parameters'}
               onClick={() => setActiveTab('parameters')}
               icon={<Activity className="w-4 h-4" />}
               label="Parameters"
               badge={parameterReadings.length}
             />
-            <TabButton
+            <EnhancedTabButton
               active={activeTab === 'maintenance'}
               onClick={() => setActiveTab('maintenance')}
               icon={<Wrench className="w-4 h-4" />}
               label="Maintenance"
               badge={maintenanceLogs.length}
             />
-            <TabButton
+            <EnhancedTabButton
               active={activeTab === 'reminders'}
               onClick={() => setActiveTab('reminders')}
               icon={<Bell className="w-4 h-4" />}
@@ -346,36 +376,41 @@ const TankDetailPage = () => {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        {activeTab === 'overview' && (
-          <OverviewTab
-            tank={tank}
-            compatibilityWarnings={compatibilityWarnings}
-            onAddFish={() => { setModalType('fish'); setIsInhabitantModalOpen(true); }}
-            onAddPlant={() => { setModalType('plant'); setIsInhabitantModalOpen(true); }}
-            onRemoveInhabitant={handleRemoveInhabitant}
-          />
-        )}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+        <AnimatePresence mode="wait">
+          {activeTab === 'overview' && (
+            <OverviewTab
+              key="overview"
+              tank={tank}
+              compatibilityWarnings={compatibilityWarnings}
+              onAddFish={() => { setModalType('fish'); setIsInhabitantModalOpen(true); }}
+              onAddPlant={() => { setModalType('plant'); setIsInhabitantModalOpen(true); }}
+              onRemoveInhabitant={handleRemoveInhabitant}
+            />
+          )}
 
-        {activeTab === 'parameters' && (
-          <ParametersTab
-            readings={parameterReadings}
-            onAddReading={() => setIsParameterModalOpen(true)}
-            onDeleteReading={handleDeleteParameterReading}
-          />
-        )}
+          {activeTab === 'parameters' && (
+            <ParametersTab
+              key="parameters"
+              readings={parameterReadings}
+              onAddReading={() => setIsParameterModalOpen(true)}
+              onDeleteReading={handleDeleteParameterReading}
+            />
+          )}
 
-        {activeTab === 'maintenance' && (
-          <MaintenanceTab
-            logs={maintenanceLogs}
-            onAddLog={() => setIsMaintenanceModalOpen(true)}
-            onDeleteLog={handleDeleteMaintenanceLog}
-          />
-        )}
+          {activeTab === 'maintenance' && (
+            <MaintenanceTab
+              key="maintenance"
+              logs={maintenanceLogs}
+              onAddLog={() => setIsMaintenanceModalOpen(true)}
+              onDeleteLog={handleDeleteMaintenanceLog}
+            />
+          )}
 
-        {activeTab === 'reminders' && (
-          <ReminderPanel tankId={id!} tankName={tank.name} />
-        )}
+          {activeTab === 'reminders' && (
+            <RemindersTab key="reminders" tankId={id!} tankName={tank.name} />
+          )}
+        </AnimatePresence>
       </main>
 
       <AddInhabitantModal
@@ -409,7 +444,7 @@ const TankDetailPage = () => {
   );
 };
 
-// Component code abbreviated for space - keeping same implementation
+// TAB COMPONENTS
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const getSubstrateLabel = (substrate?: string) => {
     if (!substrate) return 'Not specified';
@@ -421,23 +456,354 @@ const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRem
     const labels: Record<string, string> = { low: 'Low (10-30 PAR)', medium: 'Medium (30-50 PAR)', high: 'High (50+ PAR)' };
     return labels[lighting] || lighting;
   };
+  
   return (
-    <div className="space-y-6 sm:space-y-8">
-      {compatibilityWarnings.length > 0 && (<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 sm:p-6"><div className="flex gap-3"><AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0" /><div><h3 className="font-bold text-amber-900 mb-2 text-sm sm:text-base">Compatibility Warnings</h3><ul className="space-y-1">{compatibilityWarnings.map((warning: string, i: number) => (<li key={i} className="text-xs sm:text-sm text-amber-800">• {warning}</li>))}</ul></div></div></motion.div>)}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6">Tank Setup</h2><div className="grid sm:grid-cols-2 gap-3 sm:gap-4"><SetupCard icon={<Mountain className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />} label="Substrate" value={getSubstrateLabel(tank.substrate)} isEmpty={!tank.substrate} /><SetupCard icon={<Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" />} label="Lighting" value={getLightingLabel(tank.lighting)} isEmpty={!tank.lighting} /></div></motion.div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6">Current Water Parameters</h2><div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4"><ParamCard label="pH" value={tank.parameters.ph} status="good" /><ParamCard label="Temperature" value={`${tank.parameters.tempC}°C`} status="good" /><ParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'warning' : 'good'} /><ParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'warning' : 'good'} /><ParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />{(tank.parameters.gh != null && tank.parameters.gh > 0) && <ParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}{(tank.parameters.kh != null && tank.parameters.kh > 0) && <ParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}{(tank.parameters.tds != null && tank.parameters.tds > 0) && <ParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}{(tank.parameters.salinity != null && tank.parameters.salinity > 0) && <ParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}</div></motion.div>
-      <InhabitantsSection title="Fish" icon={<FishIcon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />} inhabitants={tank.inhabitants?.fish || []} speciesData={allSpecies} linkPrefix="/species" onAdd={onAddFish} onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'fish')} emptyMessage="No fish added yet" addButtonLabel="Add Fish" addButtonColor="bg-indigo-600 hover:bg-indigo-700" />
-      <InhabitantsSection title="Plants" icon={<Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />} inhabitants={tank.inhabitants?.plants || []} speciesData={allPlants} linkPrefix="/plants" onAdd={onAddPlant} onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'plant')} emptyMessage="No plants added yet" addButtonLabel="Add Plant" addButtonColor="bg-emerald-600 hover:bg-emerald-700" />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="space-y-6 md:space-y-8"
+    >
+      {compatibilityWarnings.length > 0 && (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          className="relative"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur-lg opacity-20"></div>
+          <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 rounded-2xl p-5 md:p-6 shadow-lg">
+            <div className="flex gap-3 md:gap-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-amber-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                <AlertTriangle className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-black text-amber-900 dark:text-amber-300 mb-3 text-base md:text-lg">Compatibility Warnings</h3>
+                <ul className="space-y-2">
+                  {compatibilityWarnings.map((warning: string, i: number) => (
+                    <li key={i} className="text-sm md:text-base text-amber-800 dark:text-amber-200 flex items-start gap-2">
+                      <span className="text-amber-500 mt-0.5">•</span>
+                      <span>{warning}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ delay: 0.05 }}
+        className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 p-5 md:p-6"
+      >
+        <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white mb-5 md:mb-6 flex items-center gap-2">
+          <Mountain className="w-6 h-6 text-indigo-600" />
+          Tank Setup
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <EnhancedSetupCard 
+            icon={<Mountain className="w-6 h-6 text-amber-600" />} 
+            label="Substrate" 
+            value={getSubstrateLabel(tank.substrate)} 
+            isEmpty={!tank.substrate}
+            gradient="from-amber-500 to-orange-500"
+          />
+          <EnhancedSetupCard 
+            icon={<Lightbulb className="w-6 h-6 text-yellow-600" />} 
+            label="Lighting" 
+            value={getLightingLabel(tank.lighting)} 
+            isEmpty={!tank.lighting}
+            gradient="from-yellow-500 to-amber-500"
+          />
+        </div>
+      </motion.div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ delay: 0.1 }}
+        className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 p-5 md:p-6"
+      >
+        <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white mb-5 md:mb-6 flex items-center gap-2">
+          <Activity className="w-6 h-6 text-blue-600" />
+          Current Water Parameters
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          <EnhancedParamCard label="pH" value={tank.parameters.ph} status={tank.parameters.ph >= 6.5 && tank.parameters.ph <= 7.5 ? 'good' : 'warning'} />
+          <EnhancedParamCard label="Temperature" value={`${tank.parameters.tempC}°C`} status="good" />
+          <EnhancedParamCard label="Ammonia" value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'danger' : 'good'} />
+          <EnhancedParamCard label="Nitrite" value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'danger' : 'good'} />
+          <EnhancedParamCard label="Nitrate" value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
+          {(tank.parameters.gh != null && tank.parameters.gh > 0) && <EnhancedParamCard label="GH" value={`${tank.parameters.gh}°dGH`} status="good" />}
+          {(tank.parameters.kh != null && tank.parameters.kh > 0) && <EnhancedParamCard label="KH" value={`${tank.parameters.kh}°dKH`} status="good" />}
+          {(tank.parameters.tds != null && tank.parameters.tds > 0) && <EnhancedParamCard label="TDS" value={`${tank.parameters.tds} ppm`} status="good" />}
+          {(tank.parameters.salinity != null && tank.parameters.salinity > 0) && <EnhancedParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
+        </div>
+      </motion.div>
+
+      <InhabitantsSection 
+        title="Fish" 
+        icon={<FishIcon className="w-6 h-6 text-indigo-600" />} 
+        inhabitants={tank.inhabitants?.fish || []} 
+        speciesData={allSpecies} 
+        linkPrefix="/species" 
+        onAdd={onAddFish} 
+        onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'fish')} 
+        emptyMessage="No fish added yet" 
+        addButtonLabel="Add Fish" 
+        addButtonGradient="from-indigo-600 to-purple-600"
+      />
+
+      <InhabitantsSection 
+        title="Plants" 
+        icon={<Leaf className="w-6 h-6 text-emerald-600" />} 
+        inhabitants={tank.inhabitants?.plants || []} 
+        speciesData={allPlants} 
+        linkPrefix="/plants" 
+        onAdd={onAddPlant} 
+        onRemove={(speciesId) => onRemoveInhabitant(speciesId, 'plant')} 
+        emptyMessage="No plants added yet" 
+        addButtonLabel="Add Plant" 
+        addButtonGradient="from-emerald-600 to-green-600"
+      />
+    </motion.div>
+  );
+};
+
+const ParametersTab = ({ readings, onAddReading }: any) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
+    className="space-y-6"
+  >
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+        <Activity className="w-6 h-6 md:w-7 md:h-7 text-blue-600" />
+        Parameter History
+      </h2>
+      <button 
+        onClick={onAddReading} 
+        className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-3 rounded-xl font-black shadow-lg hover:shadow-xl transition-all transform hover:scale-105 w-fit"
+      >
+        <Plus className="w-5 h-5" />
+        Log Parameters
+      </button>
+    </div>
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 p-5 md:p-6">
+      <ParameterChart readings={readings} />
+    </div>
+  </motion.div>
+);
+
+const MaintenanceTab = ({ logs, onAddLog, onDeleteLog }: any) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
+    className="space-y-6"
+  >
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+        <Wrench className="w-6 h-6 md:w-7 md:h-7 text-purple-600" />
+        Maintenance History
+      </h2>
+      <button 
+        onClick={onAddLog} 
+        className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl font-black shadow-lg hover:shadow-xl transition-all transform hover:scale-105 w-fit"
+      >
+        <Plus className="w-5 h-5" />
+        Log Maintenance
+      </button>
+    </div>
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 p-5 md:p-6">
+      <MaintenanceTimeline logs={logs} onDelete={onDeleteLog} />
+    </div>
+  </motion.div>
+);
+
+const RemindersTab = ({ tankId, tankName }: { tankId: string; tankName: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
+    className="space-y-6"
+  >
+    <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+      <Bell className="w-6 h-6 md:w-7 md:h-7 text-indigo-600" />
+      Reminders
+    </h2>
+    <ReminderPanel tankId={tankId} tankName={tankName} />
+  </motion.div>
+);
+
+// UTILITY COMPONENTS
+const EnhancedStatCard = ({ icon, label, value, gradient }: any) => (
+  <div className="group relative">
+    <div className={`absolute inset-0 bg-gradient-to-r ${gradient} rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity`}></div>
+    <div className="relative bg-white/30 backdrop-blur-md rounded-xl p-4 border-2 border-white/40 shadow-lg">
+      <div className="flex items-center gap-2 mb-2">
+        <div className={`w-8 h-8 rounded-lg bg-gradient-to-r ${gradient} flex items-center justify-center shadow-md`}>
+          <div className="text-white">{icon}</div>
+        </div>
+        <span className="text-xs font-bold text-white/90 uppercase tracking-wider">{label}</span>
+      </div>
+      <div className="text-2xl font-black text-white">{value}</div>
+    </div>
+  </div>
+);
+
+const EnhancedTabButton = ({ active, onClick, icon, label, badge }: any) => (
+  <button 
+    onClick={onClick} 
+    className={`relative flex items-center gap-2 px-4 md:px-5 py-3 md:py-4 font-bold transition-all whitespace-nowrap ${
+      active 
+        ? 'text-indigo-600 dark:text-indigo-400' 
+        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+    }`}
+  >
+    {icon}
+    <span className="text-sm md:text-base">{label}</span>
+    {badge !== undefined && badge > 0 && (
+      <span className="ml-1 px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300 text-xs font-black rounded-full">
+        {badge}
+      </span>
+    )}
+    {active && (
+      <motion.div
+        layoutId="activeTab"
+        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-t-lg"
+        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+      />
+    )}
+  </button>
+);
+
+const EnhancedSetupCard = ({ icon, label, value, isEmpty, gradient }: any) => (
+  <div className="group relative">
+    {!isEmpty && <div className={`absolute inset-0 bg-gradient-to-r ${gradient} rounded-xl blur-lg opacity-20 group-hover:opacity-30 transition-opacity`}></div>}
+    <div className={`relative ${
+      isEmpty 
+        ? 'bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700' 
+        : 'bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-800/50 border-slate-200 dark:border-slate-700'
+    } border-2 rounded-xl p-4 md:p-5 shadow-lg hover:shadow-xl transition-all`}>
+      <div className="flex items-center gap-3 mb-3">
+        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center ${
+          isEmpty ? 'bg-slate-200 dark:bg-slate-700' : `bg-gradient-to-r ${gradient} shadow-lg`
+        }`}>
+          <div className={isEmpty ? 'text-slate-400 dark:text-slate-500' : 'text-white'}>{icon}</div>
+        </div>
+        <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{label}</span>
+      </div>
+      <div className={`text-base md:text-lg font-black ${
+        isEmpty ? 'text-slate-500 dark:text-slate-400 italic' : 'text-slate-900 dark:text-white'
+      }`}>{value}</div>
+    </div>
+  </div>
+);
+
+const EnhancedParamCard = ({ label, value, status }: any) => {
+  const config = {
+    good: { gradient: 'from-emerald-500 to-green-500', bg: 'from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30', border: 'border-emerald-200 dark:border-emerald-700', icon: CheckCircle },
+    warning: { gradient: 'from-amber-500 to-orange-500', bg: 'from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30', border: 'border-amber-300 dark:border-amber-700', icon: AlertTriangle },
+    danger: { gradient: 'from-red-500 to-rose-500', bg: 'from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30', border: 'border-red-300 dark:border-red-700', icon: AlertTriangle }
+  }[status];
+  
+  const Icon = config.icon;
+  
+  return (
+    <div className="group relative">
+      <div className={`absolute inset-0 bg-gradient-to-r ${config.gradient} rounded-xl blur-lg opacity-20 group-hover:opacity-30 transition-opacity`}></div>
+      <div className={`relative bg-gradient-to-br ${config.bg} border-2 ${config.border} rounded-xl p-4 shadow-lg hover:shadow-xl transition-all`}>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{label}</span>
+          <div className={`w-8 h-8 rounded-lg bg-gradient-to-r ${config.gradient} flex items-center justify-center shadow-md`}>
+            <Icon className="w-4 h-4 text-white" />
+          </div>
+        </div>
+        <div className="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{value}</div>
+      </div>
     </div>
   );
 };
-const ParametersTab = ({ readings, onAddReading }: any) => (<div className="space-y-6"><div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><h2 className="text-xl sm:text-2xl font-bold text-slate-900">Parameter History</h2><button onClick={onAddReading} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base"><Plus className="w-4 h-4 sm:w-5 sm:h-5" />Log Parameters</button></div><div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><ParameterChart readings={readings} /></div></div>);
-const MaintenanceTab = ({ logs, onAddLog, onDeleteLog }: any) => (<div className="space-y-6"><div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><h2 className="text-xl sm:text-2xl font-bold text-slate-900">Maintenance History</h2><button onClick={onAddLog} className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base"><Plus className="w-4 h-4 sm:w-5 sm:h-5" />Log Maintenance</button></div><div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><MaintenanceTimeline logs={logs} onDelete={onDeleteLog} /></div></div>);
-const StatCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) => (<div className="bg-white/20 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/30"><div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2 text-indigo-200">{icon}<span className="text-[10px] sm:text-xs font-semibold uppercase">{label}</span></div><div className="text-lg sm:text-2xl font-bold">{value}</div></div>);
-const SetupCard = ({ icon, label, value, isEmpty }: any) => (<div className={`bg-gradient-to-br ${isEmpty ? 'from-slate-50 to-slate-100 border-slate-200' : 'from-indigo-50 to-purple-50 border-indigo-200'} border-2 rounded-xl p-3 sm:p-4`}><div className="flex items-center gap-2 sm:gap-3 mb-2"><div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center ${isEmpty ? 'bg-slate-200' : 'bg-white'}`}>{icon}</div><span className="text-xs sm:text-sm font-semibold text-slate-700">{label}</span></div><div className={`text-base sm:text-lg font-bold ${isEmpty ? 'text-slate-500 italic' : 'text-slate-900'}`}>{value}</div></div>);
-const TabButton = ({ active, onClick, icon, label, badge }: any) => (<button onClick={onClick} className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3 sm:py-4 font-semibold border-b-2 transition-colors whitespace-nowrap text-sm sm:text-base ${active ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-600 hover:text-slate-900'}`}>{icon}<span className="hidden sm:inline">{label}</span><span className="sm:hidden">{label.split(' ')[0]}</span>{badge !== undefined && badge > 0 && <span className="ml-1 px-1.5 sm:px-2 py-0.5 bg-indigo-100 text-indigo-600 text-[10px] sm:text-xs font-bold rounded-full">{badge}</span>}</button>);
-const ParamCard = ({ label, value, status }: any) => { const statusColors = { good: 'from-emerald-50 to-green-50 border-emerald-200', warning: 'from-amber-50 to-orange-50 border-amber-300', danger: 'from-red-50 to-rose-50 border-red-300' }; const iconColors = { good: 'text-emerald-600', warning: 'text-amber-600', danger: 'text-red-600' }; return (<div className={`bg-gradient-to-br ${statusColors[status]} border-2 rounded-xl p-3 sm:p-4`}><div className="flex items-center justify-between mb-1 sm:mb-2"><span className="text-xs sm:text-sm font-semibold text-slate-700">{label}</span>{status === 'good' ? <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColors[status]}`} /> : <AlertTriangle className={`w-4 h-4 sm:w-5 sm:h-5 ${iconColors[status]}`} />}</div><div className="text-lg sm:text-2xl font-bold text-slate-900">{value}</div></div>); };
-const InhabitantsSection = ({ title, icon, inhabitants, speciesData, linkPrefix, onAdd, onRemove, emptyMessage, addButtonLabel, addButtonColor }: any) => (<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-4 sm:p-6"><div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6"><h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">{icon}{title} ({inhabitants.length} species)</h2><button onClick={onAdd} className={`flex items-center gap-2 ${addButtonColor} text-white px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base w-fit`}><Plus className="w-4 h-4" />{addButtonLabel}</button></div>{inhabitants.length === 0 ? <div className="text-center py-12 text-slate-500 text-sm sm:text-base"><p>{emptyMessage}</p></div> : (<div className="space-y-3">{inhabitants.map((inhabitant: any, index: number) => { const species = speciesData.find((s: any) => s.id === inhabitant.speciesId); if (!species) return null; return <InhabitantCard key={`${inhabitant.speciesId}-${index}`} name={inhabitant.speciesName} scientificName={species.taxonomy.scientificName} quantity={inhabitant.quantity} slug={species.slug} imageUrl={species.imageUrl} linkPrefix={linkPrefix} onRemove={() => onRemove(inhabitant.speciesId)} />; })}</div>)}</motion.div>);
-const InhabitantCard = ({ name, scientificName, quantity, slug, imageUrl, linkPrefix, onRemove }: any) => (<div className="flex items-center gap-3 sm:gap-4 bg-slate-50 hover:bg-slate-100 rounded-xl p-3 sm:p-4 border border-slate-200 transition-colors group">{imageUrl ? <img src={imageUrl} alt={name} className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover flex-shrink-0" /> : (<div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg flex items-center justify-center flex-shrink-0"><span className="text-slate-500 text-[10px] sm:text-xs font-bold">No Image</span></div>)}<Link to={`${linkPrefix}/${slug}`} className="flex-1 min-w-0"><h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors text-sm sm:text-base truncate">{name}</h3><p className="text-xs sm:text-sm text-slate-500 italic truncate">{scientificName}</p><p className="text-[10px] sm:text-xs text-slate-600 mt-1">Quantity: {quantity}</p></Link><button onClick={(e) => { e.preventDefault(); if (confirm(`Remove ${name} from tank?`)) onRemove(); }} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0" title="Remove"><Trash2 className="w-4 h-4 sm:w-5 sm:h-5" /></button></div>);
+
+const InhabitantsSection = ({ title, icon, inhabitants, speciesData, linkPrefix, onAdd, onRemove, emptyMessage, addButtonLabel, addButtonGradient }: any) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }} 
+    animate={{ opacity: 1, y: 0 }} 
+    className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 p-5 md:p-6"
+  >
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5 md:mb-6">
+      <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+        {icon}
+        {title} ({inhabitants.length} species)
+      </h2>
+      <button 
+        onClick={onAdd} 
+        className={`flex items-center gap-2 bg-gradient-to-r ${addButtonGradient} hover:brightness-110 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 w-fit`}
+      >
+        <Plus className="w-4 h-4" />
+        {addButtonLabel}
+      </button>
+    </div>
+    {inhabitants.length === 0 ? (
+      <div className="text-center py-12 text-slate-500 dark:text-slate-400">
+        <p className="text-sm md:text-base">{emptyMessage}</p>
+      </div>
+    ) : (
+      <div className="space-y-3">
+        {inhabitants.map((inhabitant: any, index: number) => {
+          const species = speciesData.find((s: any) => s.id === inhabitant.speciesId);
+          if (!species) return null;
+          return (
+            <InhabitantCard 
+              key={`${inhabitant.speciesId}-${index}`} 
+              name={inhabitant.speciesName} 
+              scientificName={species.taxonomy.scientificName} 
+              quantity={inhabitant.quantity} 
+              slug={species.slug} 
+              imageUrl={species.imageUrl} 
+              linkPrefix={linkPrefix} 
+              onRemove={() => onRemove(inhabitant.speciesId)} 
+            />
+          );
+        })}
+      </div>
+    )}
+  </motion.div>
+);
+
+const InhabitantCard = ({ name, scientificName, quantity, slug, imageUrl, linkPrefix, onRemove }: any) => (
+  <div className="group flex items-center gap-3 md:gap-4 bg-gradient-to-r from-slate-50 to-white dark:from-slate-800/50 dark:to-slate-800 hover:from-slate-100 hover:to-slate-50 dark:hover:from-slate-700 dark:hover:to-slate-800 rounded-xl p-3 md:p-4 border-2 border-slate-200 dark:border-slate-700 transition-all shadow-sm hover:shadow-md">
+    {imageUrl ? (
+      <img src={imageUrl} alt={name} className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0 shadow-md" />
+    ) : (
+      <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
+        <span className="text-slate-500 dark:text-slate-400 text-xs font-bold">No Image</span>
+      </div>
+    )}
+    <Link to={`${linkPrefix}/${slug}`} className="flex-1 min-w-0">
+      <h3 className="font-black text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-sm md:text-base truncate">{name}</h3>
+      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 italic truncate">{scientificName}</p>
+      <div className="mt-1 inline-flex items-center gap-1.5 px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
+        <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+        <span className="text-xs font-bold text-indigo-700 dark:text-indigo-300">Qty: {quantity}</span>
+      </div>
+    </Link>
+    <button 
+      onClick={(e) => { e.preventDefault(); if (confirm(`Remove ${name} from tank?`)) onRemove(); }} 
+      className="p-2 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex-shrink-0" 
+      title="Remove"
+    >
+      <Trash2 className="w-5 h-5" />
+    </button>
+  </div>
+);
 
 export default TankDetailPage;
