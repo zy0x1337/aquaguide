@@ -36,6 +36,7 @@ import { platy } from './platy';
 import { pygmyCory } from './pygmy-cory';
 import { ramCichlid } from './ram-cichlid';
 import { rosyBarb } from './rosy-barb';
+import { rudd } from './rudd';
 import { rummynoseTetra } from './rummynose-tetra';
 import { sailfinPleco } from './sailfin-pleco';
 import { siameseAlgaeEater } from './siamese-algae-eater';
@@ -88,6 +89,7 @@ export const allSpecies: Species[] = [
   pygmyCory,
   ramCichlid,
   rosyBarb,
+  rudd,
   rummynoseTetra,
   sailfinPleco,
   siameseAlgaeEater,
@@ -141,6 +143,7 @@ export {
   pygmyCory,
   ramCichlid,
   rosyBarb,
+  rudd,
   rummynoseTetra,
   sailfinPleco,
   siameseAlgaeEater,
