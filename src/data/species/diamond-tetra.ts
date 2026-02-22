@@ -47,7 +47,7 @@ export const diamondTetra: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Diamond Tetras look best in well-lit tanks with moderate planting—not too dense, not bare. They need swimming space to show off their schooling behavior and sparkling scales. Plant background and sides with tall plants (Amazon Swords, Vallisneria, Cryptocoryne) but leave center and front open for schooling displays. Lighting is CRITICAL—their "diamond" effect only shows under proper illumination. Use full-spectrum LED lights positioned to catch their scales at angles. Dark substrate (black sand or dark gravel) provides contrast that makes their iridescence pop. Add some floating plants for shade but don\'t block all light—you need directional lighting to see the sparkle. Driftwood and river stones create natural aesthetic but keep hardscape minimal—the fish are the stars!',
     hardscape: ['Driftwood (Manzanita, Malaysian)', 'Smooth River Stones', 'Optional: Indian Almond Leaves (light tannin staining)'],
   },
@@ -161,7 +161,7 @@ export const diamondTetra: Species = {
     feeding: {
       frequency: 'twice-daily',
       primaryFoods: ['micro-pellets', 'flakes', 'brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'spirulina', 'color-enhancing-food'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,

@@ -47,7 +47,7 @@ export const congoTetra: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Congo Tetras look stunning in well-planted tanks with open swimming space. They need room to school and display but appreciate planted backgrounds for security. Plant densely along back and sides (Amazon Swords, Vallisneria, Cryptocoryne, Java Fern) but leave center 60-70% open for schooling displays—watching 10+ Congo Tetras swim in synchronized formations under proper lighting is absolutely mesmerizing! Dark substrate (black sand or dark gravel) is MANDATORY—it provides contrast that makes their rainbow iridescence explode visually. Some floating plants (Red Root Floaters, Frogbit) create dappled lighting that mimics natural Congo River habitat and intensifies colors. Avoid bright, sterile tanks—they stress Congos and wash out colors.',
     hardscape: ['Driftwood (Manzanita, Malaysian - creates natural look)', 'Smooth river stones/boulders', 'Optional: Indian Almond Leaves (light tannin staining)', 'Minimal hardscape—fish are the stars!'],
   },
@@ -161,7 +161,7 @@ export const congoTetra: Species = {
     feeding: {
       frequency: 'twice-daily',
       primaryFoods: ['flakes', 'micro-pellets', 'brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'spirulina', 'color-enhancing-food'],
+      supplements: ['bloodworms', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,

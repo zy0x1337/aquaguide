@@ -28,7 +28,7 @@ export const sailfinPleco: Species = {
     ph: { min: 6.0, max: 8.0, ideal: 7.0 },
     gh: { min: 4, max: 20 },
     kh: { min: 2, max: 15 },
-    flow: 'strong',
+    flow: 'high',
     substrate: 'sand',
     
     swimmingZone: {
@@ -134,8 +134,8 @@ export const sailfinPleco: Species = {
   care: {
     difficulty: 'expert',
     diet: 'herbivore',
-    effort: 'very-high',
-    cost: 'very-high',
+    effort: 'high',
+    cost: 'high',
     specialRequirements: [
       'MINIMUM 500L tank (800-1000L+ realistic for adult)', 
       'MASSIVE driftwood (3-4 feet long)', 
@@ -191,7 +191,7 @@ export const sailfinPleco: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'very-strong',
+        flowRate: 'strong',
       },
       airstone: true,
       lighting: 'low',
@@ -213,7 +213,7 @@ export const sailfinPleco: Species = {
 
   breeding: {
     method: 'cave_spawner',
-    difficulty: 'nearly-impossible',
+    difficulty: 'expert',
     trigger: 'Sailfin Pleco breeding in home aquariums is NEARLY IMPOSSIBLE and virtually never attempted by hobbyists. Requirements are absurd: 1) Minimum 2000L+ tank or pond (adults need space), 2) Mature breeding pair (12+ inches, 5+ years old, extremely difficult to sex), 3) MASSIVE caves (12+ inches diameter, 3+ feet long), 4) Perfect water parameters (pH 6.5-7.0, GH 5-10, temp 26-28°C), 5) Simulated seasonal flooding (large water changes with cooler water). Males excavate massive burrows in riverbanks in wild—impossible to replicate in aquariums. Commercial breeding occurs in outdoor ponds in tropical climates (Asia, South America).',
     fryCare: 'In the extremely rare event of successful spawning: Females lay 500-5000 eggs in cave/burrow. Male guards eggs for 7-14 days, fanning constantly. Eggs hatch into 1-2cm fry that emerge looking like tiny armored submarines. Fry rasp biofilm, algae, and wood immediately. Feed crushed algae wafers, spirulina, blanched vegetables. Fry grow slowly: 5cm at 6 months, 10cm at 1 year. Males are aggressive toward fry—remove or provide massive space. Raising hundreds of fry requires industrial-scale facilities—not feasible for hobbyists.',
     notes: 'Sailfin breeding is left to commercial farms with massive outdoor pond systems. Hobbyists should never attempt this—it requires facilities comparable to fish farming operations. All Sailfins in trade are commercially bred in Asia (Thailand, Indonesia) or South America. Wild-caught specimens are rare and expensive. If you see spawning behavior (cave excavation, aggression), separate fish immediately—you cannot raise fry in home aquarium.',
