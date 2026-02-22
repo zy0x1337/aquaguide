@@ -14,6 +14,7 @@ import { cherryBarb } from './cherry-barb';
 import { chiliRasbora } from './chili-rasbora';
 import { corydorasPaleatus } from './corydoras-paleatus';
 import { zebraDanio } from './danio-rerio';
+import { diamondTetra } from './diamond-tetra';
 import { electricYellowLab } from './electric-yellow-lab';
 import { emberTetra } from './ember-tetra';
 import { endlerGuppy } from './endler-guppy';
@@ -62,6 +63,7 @@ export const allSpecies: Species[] = [
   chiliRasbora,
   corydorasPaleatus,
   zebraDanio,
+  diamondTetra,
   electricYellowLab,
   emberTetra,
   endlerGuppy,
@@ -92,7 +94,8 @@ export const allSpecies: Species[] = [
   sewelliaLineolata,
   hyphessobryconMegalopterus,
   puntigrusTetrazona,
-  pelvicachromispulcher
+  pelvicachromispulcher,
+  diamondTetra
 ];
 
 export {
@@ -111,6 +114,7 @@ export {
   chiliRasbora,
   corydorasPaleatus,
   zebraDanio,
+  diamondTetra,
   electricYellowLab,
   emberTetra,
   endlerGuppy,
