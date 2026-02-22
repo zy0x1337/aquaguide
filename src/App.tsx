@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
+import { ScrollToTop } from './components/layout/ScrollToTop';
 import { ComparisonBar } from './components/comparison/ComparisonBar';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/error/ErrorBoundary';
@@ -64,6 +65,9 @@ function App() {
       <ToastProvider>
         {/* Notification Permission Banner */}
         <NotificationPermissionBanner />
+
+        {/* ScrollToTop ensures we always start at the top when navigating */}
+        <ScrollToTop />
 
         <Layout>
           <Routes>
