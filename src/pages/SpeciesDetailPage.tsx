@@ -164,976 +164,818 @@ const SpeciesDetailPage = () => {
 
   const compatibleSpecies = findCompatibleSpecies();
 
+  // Sidebar info panel content (reused in header on mobile, sticky on desktop)
+  const SidebarInfoPanel = () => (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-xl">
+      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
+        <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl">
+          <MapPin className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
+        </div>
+        <div>
+          <div className="text-[10px] uppercase font-black text-slate-400 dark:text-slate-500 tracking-wider mb-0.5">Origin</div>
+          <div className="text-base font-bold text-slate-900 dark:text-slate-100">{data.taxonomy.origin}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        <SidebarInfoRow icon={<Activity className="w-4 h-4 text-emerald-500" />} label="Difficulty" value={capitalize(data.care.difficulty)} />
+        <SidebarInfoRow icon={<Heart className="w-4 h-4 text-rose-500" />} label="Temperament" value={data.behavior.tags.includes('peaceful') ? 'Peaceful' : data.behavior.tags.includes('semi-aggressive') ? 'Semi-Aggressive' : 'Varies'} />
+        <SidebarInfoRow icon={<Utensils className="w-4 h-4 text-amber-500" />} label="Diet" value={capitalize(data.care.diet)} />
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <SEOHead title={seoTitle} description={seoDesc} />
 
-      {/* HERO SECTION */}
+      {/* ========== HERO SECTION ========== */}
       <motion.header 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="relative overflow-hidden"
+        className="relative overflow-hidden min-h-[340px] md:min-h-[420px]"
       >
+        {/* Background image + single diagonal overlay */}
         <div className="absolute inset-0 z-0">
           <img 
             src={headerImageUrl} 
             alt={data.taxonomy.commonName} 
             className="w-full h-full object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-900/95" />
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/30 to-cyan-900/30" />
+          {/* Replaced dual heavy overlays with one subtle diagonal gradient */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/80 via-slate-900/35 to-slate-900/5" />
         </div>
         
         <ImageAttribution credit={data.imageCredit} />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
-          <Link 
-            to="/species" 
-            className="inline-flex items-center gap-2 text-slate-200 hover:text-white mb-6 md:mb-8 transition-colors text-sm font-bold bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20 hover:bg-white/20"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Database
-          </Link>
-          
-          <div className="grid lg:grid-cols-5 gap-6 md:gap-8">
-            <div className="lg:col-span-3 space-y-5 md:space-y-6">
-              <div className="flex flex-wrap gap-2">
-                <Badge text={data.environment.type} color="brand" size="md" />
-                <Badge text={data.care.difficulty} color={data.care.difficulty} size="md" />
-              </div>
-              
-              <div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 md:mb-4 leading-tight">
-                  {data.taxonomy.commonName}
-                </h1>
-                <p className="text-lg md:text-xl text-slate-300 italic font-medium">
-                  {data.taxonomy.scientificName}
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
-                <QuickStat icon={<Ruler className="w-4 h-4" />} label="Size" value={`${data.visuals.adultSizeCM}cm`} />
-                <QuickStat icon={<Box className="w-4 h-4" />} label="Tank" value={`${data.environment.minTankSizeLiters}L`} />
-                <QuickStat icon={<Users className="w-4 h-4" />} label="Group" value={`${data.behavior.minGroupSize}+`} />
-                <QuickStat icon={<Heart className="w-4 h-4" />} label="Life expectancy" value={`${data.health.lifespanYears}y`} />
-              </div>
-            </div>
-            
-            <div className="lg:col-span-2">
-              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-5 md:p-6 border-2 border-white/20 shadow-2xl">
-                <div className="flex items-center gap-3 mb-5 pb-5 border-b border-white/20">
-                  <div className="p-3 bg-white/10 rounded-xl">
-                    <MapPin className="w-6 h-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] md:text-xs uppercase font-black text-slate-300 tracking-wider mb-1">Origin</div>
-                    <div className="text-base md:text-lg font-bold text-white">{data.taxonomy.origin}</div>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <InfoRow icon={<Activity className="w-4 h-4 text-emerald-400" />} label="Difficulty" value={capitalize(data.care.difficulty)} />
-                  <InfoRow icon={<Heart className="w-4 h-4 text-rose-400" />} label="Temperament" value={data.behavior.tags.includes('peaceful') ? 'Peaceful' : data.behavior.tags.includes('semi-aggressive') ? 'Semi-Aggressive' : 'Varies'} />
-                  <InfoRow icon={<Utensils className="w-4 h-4 text-amber-400" />} label="Diet" value={capitalize(data.care.diet)} />
-                </div>
-              </div>
-            </div>
+        {/* Back button – absolute, outside content flow */}
+        <Link 
+          to="/species" 
+          className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 text-white/80 hover:text-white text-xs font-bold bg-black/25 hover:bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/15 transition-all"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Back
+        </Link>
+
+        {/* Hero content – left-aligned, compact */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-8 md:pt-16 md:pb-10">
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            <Badge text={data.environment.type} color="brand" size="md" />
+            <Badge text={data.care.difficulty} color={data.care.difficulty} size="md" />
+          </div>
+
+          {/* Name */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-2 leading-tight drop-shadow-lg">
+            {data.taxonomy.commonName}
+          </h1>
+          <p className="text-base md:text-lg text-white/70 italic font-medium mb-5 drop-shadow">
+            {data.taxonomy.scientificName}
+          </p>
+
+          {/* Quick stat pills – compact, minimal footprint */}
+          <div className="flex flex-wrap gap-2">
+            {[
+              { icon: <Ruler className="w-3.5 h-3.5" />, label: `${data.visuals.adultSizeCM} cm` },
+              { icon: <Box className="w-3.5 h-3.5" />,   label: `${data.environment.minTankSizeLiters} L` },
+              { icon: <Users className="w-3.5 h-3.5" />, label: `${data.behavior.minGroupSize}+ Tiere` },
+              { icon: <Heart className="w-3.5 h-3.5" />, label: `${data.health.lifespanYears} Jahre` },
+            ].map(({ icon, label }, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-sm text-white text-xs font-bold border border-white/20"
+              >
+                <span className="text-cyan-300">{icon}</span>
+                {label}
+              </span>
+            ))}
           </div>
         </div>
       </motion.header>
 
-      {/* MAIN CONTENT */}
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
-        {/* Fun Fact */}
-        {data.funFact && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 md:mb-8"
-          >
-            <div className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl p-5 md:p-6 overflow-hidden shadow-xl">
-              <Sparkles className="absolute top-3 right-3 w-16 h-16 md:w-24 md:h-24 text-white/10" />
-              <div className="relative">
-                <div className="text-indigo-200 font-black uppercase text-[10px] md:text-xs tracking-wider mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> Did You Know?
+      {/* ========== MAIN CONTENT ========== */}
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12 lg:grid lg:grid-cols-[1fr_300px] lg:gap-8 lg:items-start">
+
+        {/* ---- Left column: all tab content ---- */}
+        <div>
+          {/* Fun Fact */}
+          {data.funFact && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 md:mb-8"
+            >
+              <div className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl p-5 md:p-6 overflow-hidden shadow-xl">
+                <Sparkles className="absolute top-3 right-3 w-16 h-16 md:w-24 md:h-24 text-white/10" />
+                <div className="relative">
+                  <div className="text-indigo-200 font-black uppercase text-[10px] md:text-xs tracking-wider mb-2 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" /> Did You Know?
+                  </div>
+                  <p className="text-white text-base md:text-lg leading-relaxed font-medium">
+                    "{data.funFact}"
+                  </p>
                 </div>
-                <p className="text-white text-base md:text-lg leading-relaxed font-medium">
-                  "{data.funFact}"
-                </p>
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
 
-        {/* Fin Nipping Warning */}
-        {data.behavior.finNipping && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 md:mb-8"
-          >
-            <FinNippingWarning finNipping={data.behavior.finNipping} />
-          </motion.div>
-        )}
+          {/* Fin Nipping Warning */}
+          {data.behavior.finNipping && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 md:mb-8"
+            >
+              <FinNippingWarning finNipping={data.behavior.finNipping} />
+            </motion.div>
+          )}
 
-        {/* Key Warnings */}
-        {(data.behavior.tags.includes('jumper') || (data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0)) && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 md:mb-8"
-          >
-            <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
-              {data.behavior.tags.includes('jumper') && (
-                <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 p-4 md:p-5 rounded-xl shadow-lg">
-                  <div className="flex gap-3 items-start">
-                    <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex-shrink-0">
-                      <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                    </div>
-                    <div>
-                      <p className="font-black text-amber-900 dark:text-amber-200 text-sm md:text-base mb-1">Jump Risk!</p>
-                      <p className="text-xs md:text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
-                        Secure lid required - known to jump out of open tanks
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
-                <div className="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-2 border-red-300 dark:border-red-700 p-4 md:p-5 rounded-xl shadow-lg">
-                  <div className="flex gap-3 items-start">
-                    <div className="p-2 bg-red-100 dark:bg-red-900/50 rounded-lg flex-shrink-0">
-                      <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
-                    </div>
-                    <div>
-                      <p className="font-black text-red-900 dark:text-red-200 text-sm md:text-base mb-1">Common Mistake</p>
-                      <p className="text-xs md:text-sm text-red-800 dark:text-red-300 leading-relaxed">
-                        {data.experienceData.commonFailures[0].issue.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} 
-                        <span className="inline-block ml-1 px-2 py-0.5 bg-red-200 dark:bg-red-900 text-red-900 dark:text-red-200 rounded text-[10px] font-bold">
-                          {Math.round(data.experienceData.commonFailures[0].frequency * 100)}% affected
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-
-        {/* TAB NAVIGATION */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div className="flex border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto scrollbar-hide">
-              <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
-                Overview
-              </TabButton>
-              <TabButton active={activeTab === 'care'} onClick={() => setActiveTab('care')} icon={<Heart className="w-4 h-4" />}>
-                Care
-              </TabButton>
-              <TabButton active={activeTab === 'habitat'} onClick={() => setActiveTab('habitat')} icon={<Mountain className="w-4 h-4" />}>
-                Habitat
-              </TabButton>
-              <TabButton active={activeTab === 'compatibility'} onClick={() => setActiveTab('compatibility')} icon={<Fish className="w-4 h-4" />}>
-                Mates
-              </TabButton>
-              <TabButton active={activeTab === 'advanced'} onClick={() => setActiveTab('advanced')} icon={<Microscope className="w-4 h-4" />}>
-                Advanced
-              </TabButton>
-            </div>
-
-            {/* Tab Content */}
-            <div className="p-4 md:p-6 lg:p-8">
-              {/* OVERVIEW TAB */}
-              {activeTab === 'overview' && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                  {/* Parameters Grid */}
-                  <div>
-                    <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
-                    <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
-                      <ParameterCard 
-                        icon={<Thermometer className="w-5 h-5 text-rose-500" />}
-                        label="Temperature"
-                        value={`${data.environment.tempC.min}-${data.environment.tempC.max}°C`}
-                      />
-                      <ParameterCard 
-                        icon={<Droplets className="w-5 h-5 text-cyan-500" />}
-                        label="pH Level"
-                        value={`${data.environment.ph.min}-${data.environment.ph.max}`}
-
-                      />
-                      <ParameterCard 
-                        icon={<Activity className="w-5 h-5 text-blue-500" />}
-                        label="Water Flow"
-                        value={capitalize(data.environment.flow)}
-                      />
-                      <ParameterCard 
-                        icon={<Box className="w-5 h-5 text-amber-500" />}
-                        label="Substrate"
-                        value={capitalize(data.environment.substrate || 'Any')}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Swimming Zone & Activity Pattern */}
-                  {(data.environment.swimmingZone || data.behavior.activity) && (
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                      {data.environment.swimmingZone && <SwimmingZoneVisualizer swimmingZone={data.environment.swimmingZone} />}
-                      {data.behavior.activity && <ActivityPatternTimeline activity={data.behavior.activity} />}
-                    </div>
-                  )}
-
-                  {/* Social Structure & Space Needs */}
-                  {(data.behavior.socialStructure || data.environment.spaceNeeds) && (
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                      {data.behavior.socialStructure && (
-                        <SocialStructureCard 
-                          socialStructure={data.behavior.socialStructure} 
-                          minGroupSize={data.behavior.minGroupSize} 
-                        />
-                      )}
-                      {data.environment.spaceNeeds && (
-                        <SpaceNeedsIndicator 
-                          spaceNeeds={data.environment.spaceNeeds} 
-                          tankSize={data.environment.minTankSizeLiters} 
-                        />
-                      )}
-                    </div>
-                  )}
-
-                  {/* Behavior Overview */}
-                  <div>
-                    <SectionHeader title="Behavior & Temperament" icon={<Activity className="w-5 h-5" />} />
-                    <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/20 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
-                      <p className="text-slate-700 dark:text-slate-300 mb-4 md:mb-5 leading-relaxed text-sm md:text-base">
-                        {data.behavior.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {data.behavior.tags.map((tag: string) => (
-                          <TagBadge key={tag} tag={tag} />
-                        ))}
+          {/* Key Warnings */}
+          {(data.behavior.tags.includes('jumper') || (data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0)) && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 md:mb-8"
+            >
+              <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+                {data.behavior.tags.includes('jumper') && (
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 p-4 md:p-5 rounded-xl shadow-lg">
+                    <div className="flex gap-3 items-start">
+                      <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex-shrink-0">
+                        <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                      </div>
+                      <div>
+                        <p className="font-black text-amber-900 dark:text-amber-200 text-sm md:text-base mb-1">Jump Risk!</p>
+                        <p className="text-xs md:text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
+                          Secure lid required - known to jump out of open tanks
+                        </p>
                       </div>
                     </div>
                   </div>
-
-                  {/* Stats & Costs */}
-<div className="grid md:grid-cols-2 gap-4 md:gap-6">
-  {/* Ownership Stats */}
-  <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-    <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
-      <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Ownership Stats
-    </h4>
-    <div className="space-y-4">
-      <StatBar label="Difficulty" value={data.care.difficulty} />
-      <StatBar label="Maintenance" value={data.care.effort} />
-      <StatBar label="Cost" value={data.care.cost} />
-    </div>
-  </div>
-
-  {/* Est. Costs */}
-  {data.experienceData?.estimatedCosts && (
-    <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-      <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
-        <DollarSign className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Est. Costs
-      </h4>
-      <div className="space-y-4">
-        <div>
-          <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Initial Setup</div>
-          <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
-            {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
-            <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
-              {data.experienceData.estimatedCosts.initial.currency}
-            </span>
-          </div>
-        </div>
-        <div>
-          <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Monthly</div>
-          <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
-            {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
-            <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
-              {data.experienceData.estimatedCosts.monthly.currency}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  )}
-</div>
-                </motion.div>
-              )}
-
-              {/* CARE TAB */}
-              {activeTab === 'care' && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                  {/* Care Level Overview */}
-<div className="grid sm:grid-cols-3 gap-3 md:gap-4">
-  <CareLevelCard 
-    label="Difficulty" 
-    value={data.care.difficulty}
-    icon={<Target className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
-    colors={{
-      easy: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      hard: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      expert: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
-    }}
-  />
-  <CareLevelCard 
-    label="Time Effort" 
-    value={data.care.effort}
-    icon={<Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
-    colors={{
-      low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
-    }}
-  />
-  <CareLevelCard 
-    label="Cost" 
-    value={data.care.cost}
-    icon={<DollarSign className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />}
-    colors={{
-      low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-      high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
-    }}
-  />
-</div>
-
-                  {/* Feeding Guide */}
-<div>
-  <SectionHeader title="Feeding Guide" icon={<Utensils className="w-5 h-5" />} />
-  <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
-    
-    {/* Diet Type - Clean Header */}
-    <div className="flex items-center gap-4 pb-6 border-b border-slate-200 dark:border-slate-700">
-      <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-md">
-        <Utensils className="w-6 h-6 text-white" />
-      </div>
-      <div>
-        <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-          Diet Type
-        </div>
-        <div className="text-2xl font-black text-slate-900 dark:text-slate-100 capitalize">
-          {data.care.diet}
-        </div>
-      </div>
-    </div>
-
-    {/* Feeding Schedule - Clean Grid */}
-    {data.care.feeding && (
-      <>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div className="group hover:shadow-md transition-all border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-slate-300 dark:hover:border-slate-600">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-emerald-50 dark:group-hover:bg-emerald-950/20">
-                <Clock className="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
-              </div>
-              <div className="flex-1">
-                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  Frequency
-                </div>
-                <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">
-                  {data.care.feeding.frequency.replace(/-/g, ' ')}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {data.care.feeding.fastingDay && data.care.feeding.fastingDay !== 'none' && (
-            <div className="group hover:shadow-md transition-all border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-amber-300 dark:hover:border-amber-600">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-amber-50 dark:group-hover:bg-amber-950/20">
-                  <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400" />
-                </div>
-                <div className="flex-1">
-                  <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                    Fasting Day
+                )}
+                
+                {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
+                  <div className="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-2 border-red-300 dark:border-red-700 p-4 md:p-5 rounded-xl shadow-lg">
+                    <div className="flex gap-3 items-start">
+                      <div className="p-2 bg-red-100 dark:bg-red-900/50 rounded-lg flex-shrink-0">
+                        <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                      </div>
+                      <div>
+                        <p className="font-black text-red-900 dark:text-red-200 text-sm md:text-base mb-1">Common Mistake</p>
+                        <p className="text-xs md:text-sm text-red-800 dark:text-red-300 leading-relaxed">
+                          {data.experienceData.commonFailures[0].issue.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} 
+                          <span className="inline-block ml-1 px-2 py-0.5 bg-red-200 dark:bg-red-900 text-red-900 dark:text-red-200 rounded text-[10px] font-bold">
+                            {Math.round(data.experienceData.commonFailures[0].frequency * 100)}% affected
+                          </span>
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">
-                    {data.care.feeding.fastingDay}
-                  </div>
-                </div>
+                )}
               </div>
-            </div>
+            </motion.div>
           )}
-        </div>
 
-        {/* Food Types - Clean Tags */}
-        <div>
-          <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
-            <Apple className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            Primary Foods
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {data.care.feeding.primaryFoods.map((food) => (
-              <span 
-  key={food}
-  className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer capitalize"
->
-  {food.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-</span>
-            ))}
+          {/* Mobile-only info panel (visible below lg) */}
+          <div className="lg:hidden mb-6">
+            <SidebarInfoPanel />
           </div>
-        </div>
 
-        {/* Supplements */}
-        {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
-          <div>
-            <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
-              <Pill className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-              Supplements
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {data.care.feeding.supplements.map((supplement) => (
-                <span 
-  key={supplement}
-  className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-teal-50 dark:hover:bg-teal-950/20 hover:border-teal-300 dark:hover:border-teal-700 transition-all cursor-pointer capitalize"
->
-  {supplement.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-</span>
-              ))}
-            </div>
-          </div>
-        )}
+          {/* TAB NAVIGATION */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
+              <div className="flex border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto scrollbar-hide">
+                <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
+                  Overview
+                </TabButton>
+                <TabButton active={activeTab === 'care'} onClick={() => setActiveTab('care')} icon={<Heart className="w-4 h-4" />}>
+                  Care
+                </TabButton>
+                <TabButton active={activeTab === 'habitat'} onClick={() => setActiveTab('habitat')} icon={<Mountain className="w-4 h-4" />}>
+                  Habitat
+                </TabButton>
+                <TabButton active={activeTab === 'compatibility'} onClick={() => setActiveTab('compatibility')} icon={<Fish className="w-4 h-4" />}>
+                  Mates
+                </TabButton>
+                <TabButton active={activeTab === 'advanced'} onClick={() => setActiveTab('advanced')} icon={<Microscope className="w-4 h-4" />}>
+                  Advanced
+                </TabButton>
+              </div>
 
-        {/* Live Food - Clean Status Cards */}
-        {data.care.feeding.liveFood && (
-          <div className={`grid gap-3 p-4 border border-slate-200 dark:border-slate-700 rounded-xl ${
-            data.care.feeding.liveFood.required ? 'bg-rose-50/50 dark:bg-rose-950/10' : 
-            data.care.feeding.liveFood.recommended ? 'bg-blue-50/50 dark:bg-blue-950/10' : 
-            'bg-emerald-50/50 dark:bg-emerald-950/10'
-          }`}>
-            <div className="flex items-center gap-3 text-sm font-semibold">
-              {data.care.feeding.liveFood.required ? (
-                <>
-                  <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
-                  <span className="text-slate-900 dark:text-slate-100 font-bold">
-                    Live food required
-                  </span>
-                </>
-              ) : data.care.feeding.liveFood.recommended ? (
-                <>
-                  <Info className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  <span className="text-slate-900 dark:text-slate-100 font-bold">
-                    Live food recommended for optimal health
-                  </span>
-                </>
-              ) : (
-                <>
-                  <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                  <span className="text-slate-900 dark:text-slate-100 font-bold">
-                    Live food optional
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-      </>
-    )}
-
-    {/* Fallback */}
-    {!data.care.feeding && (
-      <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
-        <ul className="space-y-3">
-          {getFeedingAdvice().map((tip, i) => (
-            <li key={i} className="flex gap-3 text-base text-slate-700 dark:text-slate-300">
-              <span className="text-emerald-500 dark:text-emerald-400 font-bold text-xl mt-0.5 flex-shrink-0">→</span>
-              <span className="leading-relaxed">{tip}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-  </div>
-</div>
-
-                  {/* Maintenance Schedule */}
-                  {data.care.maintenance && (
+              {/* Tab Content */}
+              <div className="p-4 md:p-6 lg:p-8">
+                {/* OVERVIEW TAB */}
+                {activeTab === 'overview' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                    {/* Parameters Grid */}
                     <div>
-                      <SectionHeader title="Maintenance Schedule" icon={<Calendar className="w-5 h-5" />} />
-                      <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-                        
-                        {/* Water Changes */}
-                        <div className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-blue-200 dark:border-blue-800">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
-                              <Droplets className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                                Water Changes
+                      <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
+                      <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+                        <ParameterCard 
+                          icon={<Thermometer className="w-5 h-5 text-rose-500" />}
+                          label="Temperature"
+                          value={`${data.environment.tempC.min}-${data.environment.tempC.max}°C`}
+                        />
+                        <ParameterCard 
+                          icon={<Droplets className="w-5 h-5 text-cyan-500" />}
+                          label="pH Level"
+                          value={`${data.environment.ph.min}-${data.environment.ph.max}`}
+                        />
+                        <ParameterCard 
+                          icon={<Activity className="w-5 h-5 text-blue-500" />}
+                          label="Water Flow"
+                          value={capitalize(data.environment.flow)}
+                        />
+                        <ParameterCard 
+                          icon={<Box className="w-5 h-5 text-amber-500" />}
+                          label="Substrate"
+                          value={capitalize(data.environment.substrate || 'Any')}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Swimming Zone & Activity Pattern */}
+                    {(data.environment.swimmingZone || data.behavior.activity) && (
+                      <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                        {data.environment.swimmingZone && <SwimmingZoneVisualizer swimmingZone={data.environment.swimmingZone} />}
+                        {data.behavior.activity && <ActivityPatternTimeline activity={data.behavior.activity} />}
+                      </div>
+                    )}
+
+                    {/* Social Structure & Space Needs */}
+                    {(data.behavior.socialStructure || data.environment.spaceNeeds) && (
+                      <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                        {data.behavior.socialStructure && (
+                          <SocialStructureCard 
+                            socialStructure={data.behavior.socialStructure} 
+                            minGroupSize={data.behavior.minGroupSize} 
+                          />
+                        )}
+                        {data.environment.spaceNeeds && (
+                          <SpaceNeedsIndicator 
+                            spaceNeeds={data.environment.spaceNeeds} 
+                            tankSize={data.environment.minTankSizeLiters} 
+                          />
+                        )}
+                      </div>
+                    )}
+
+                    {/* Behavior Overview */}
+                    <div>
+                      <SectionHeader title="Behavior & Temperament" icon={<Activity className="w-5 h-5" />} />
+                      <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/20 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+                        <p className="text-slate-700 dark:text-slate-300 mb-4 md:mb-5 leading-relaxed text-sm md:text-base">
+                          {data.behavior.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {data.behavior.tags.map((tag: string) => (
+                            <TagBadge key={tag} tag={tag} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Stats & Costs */}
+                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                      {/* Ownership Stats */}
+                      <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Ownership Stats
+                        </h4>
+                        <div className="space-y-4">
+                          <StatBar label="Difficulty" value={data.care.difficulty} />
+                          <StatBar label="Maintenance" value={data.care.effort} />
+                          <StatBar label="Cost" value={data.care.cost} />
+                        </div>
+                      </div>
+
+                      {/* Est. Costs */}
+                      {data.experienceData?.estimatedCosts && (
+                        <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+                          <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+                            <DollarSign className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Est. Costs
+                          </h4>
+                          <div className="space-y-4">
+                            <div>
+                              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Initial Setup</div>
+                              <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
+                                {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
+                                <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
+                                  {data.experienceData.estimatedCosts.initial.currency}
+                                </span>
                               </div>
-                              <div className="text-lg md:text-xl font-black text-blue-900 dark:text-blue-300">
-                                {data.care.maintenance.waterChangePercentage}% {data.care.maintenance.waterChangeFrequency}
+                            </div>
+                            <div>
+                              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Monthly</div>
+                              <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
+                                {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
+                                <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
+                                  {data.experienceData.estimatedCosts.monthly.currency}
+                                </span>
                               </div>
                             </div>
                           </div>
-                          {data.care.maintenance.notes && (
-                            <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                              {data.care.maintenance.notes}
-                            </p>
-                          )}
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* CARE TAB */}
+                {activeTab === 'care' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                    {/* Care Level Overview */}
+                    <div className="grid sm:grid-cols-3 gap-3 md:gap-4">
+                      <CareLevelCard 
+                        label="Difficulty" 
+                        value={data.care.difficulty}
+                        icon={<Target className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
+                        colors={{
+                          easy: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          hard: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          expert: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+                        }}
+                      />
+                      <CareLevelCard 
+                        label="Time Effort" 
+                        value={data.care.effort}
+                        icon={<Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
+                        colors={{
+                          low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+                        }}
+                      />
+                      <CareLevelCard 
+                        label="Cost" 
+                        value={data.care.cost}
+                        icon={<DollarSign className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />}
+                        colors={{
+                          low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+                          high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+                        }}
+                      />
+                    </div>
+
+                    {/* Feeding Guide */}
+                    <div>
+                      <SectionHeader title="Feeding Guide" icon={<Utensils className="w-5 h-5" />} />
+                      <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                        
+                        <div className="flex items-center gap-4 pb-6 border-b border-slate-200 dark:border-slate-700">
+                          <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-md">
+                            <Utensils className="w-6 h-6 text-white" />
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Diet Type</div>
+                            <div className="text-2xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.care.diet}</div>
+                          </div>
                         </div>
 
-                        {/* Vacuuming */}
-                        {data.care.maintenance.vacuumingNeeded && (
-                          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border-2 border-amber-200 dark:border-amber-800">
-                            <div className="flex items-center gap-2 text-sm font-bold text-amber-800 dark:text-amber-300">
-                              <Wind className="w-4 h-4" />
-                              <span>Regular substrate vacuuming required</span>
+                        {data.care.feeding && (
+                          <>
+                            <div className="grid sm:grid-cols-2 gap-4">
+                              <div className="group hover:shadow-md transition-all border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-slate-300 dark:hover:border-slate-600">
+                                <div className="flex items-center gap-3 mb-3">
+                                  <div className="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-emerald-50 dark:group-hover:bg-emerald-950/20">
+                                    <Clock className="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Frequency</div>
+                                    <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.care.feeding.frequency.replace(/-/g, ' ')}</div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {data.care.feeding.fastingDay && data.care.feeding.fastingDay !== 'none' && (
+                                <div className="group hover:shadow-md transition-all border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-amber-300 dark:hover:border-amber-600">
+                                  <div className="flex items-center gap-3 mb-3">
+                                    <div className="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:bg-amber-50 dark:group-hover:bg-amber-950/20">
+                                      <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400" />
+                                    </div>
+                                    <div className="flex-1">
+                                      <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Fasting Day</div>
+                                      <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.care.feeding.fastingDay}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
+
+                            <div>
+                              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                                <Apple className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Primary Foods
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {data.care.feeding.primaryFoods.map((food) => (
+                                  <span key={food} className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer capitalize">
+                                    {food.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
+                              <div>
+                                <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                                  <Pill className="w-4 h-4 text-teal-600 dark:text-teal-400" /> Supplements
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                  {data.care.feeding.supplements.map((supplement) => (
+                                    <span key={supplement} className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-teal-50 dark:hover:bg-teal-950/20 hover:border-teal-300 dark:hover:border-teal-700 transition-all cursor-pointer capitalize">
+                                      {supplement.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {data.care.feeding.liveFood && (
+                              <div className={`grid gap-3 p-4 border border-slate-200 dark:border-slate-700 rounded-xl ${
+                                data.care.feeding.liveFood.required ? 'bg-rose-50/50 dark:bg-rose-950/10' : 
+                                data.care.feeding.liveFood.recommended ? 'bg-blue-50/50 dark:bg-blue-950/10' : 
+                                'bg-emerald-50/50 dark:bg-emerald-950/10'
+                              }`}>
+                                <div className="flex items-center gap-3 text-sm font-semibold">
+                                  {data.care.feeding.liveFood.required ? (
+                                    <><AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" /><span className="text-slate-900 dark:text-slate-100 font-bold">Live food required</span></>
+                                  ) : data.care.feeding.liveFood.recommended ? (
+                                    <><Info className="w-5 h-5 text-blue-600 dark:text-blue-400" /><span className="text-slate-900 dark:text-slate-100 font-bold">Live food recommended for optimal health</span></>
+                                  ) : (
+                                    <><CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /><span className="text-slate-900 dark:text-slate-100 font-bold">Live food optional</span></>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        )}
+
+                        {!data.care.feeding && (
+                          <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-6">
+                            <ul className="space-y-3">
+                              {getFeedingAdvice().map((tip, i) => (
+                                <li key={i} className="flex gap-3 text-base text-slate-700 dark:text-slate-300">
+                                  <span className="text-emerald-500 dark:text-emerald-400 font-bold text-xl mt-0.5 flex-shrink-0">→</span>
+                                  <span className="leading-relaxed">{tip}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         )}
                       </div>
                     </div>
-                  )}
 
-                  {/* Equipment Checklist */}
-{data.care.equipment && (
-  <div>
-    <SectionHeader title="Required Equipment" icon={<Wrench className="w-5 h-5" />} />
-    <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
-      
-      {/* Heater */}
-      {data.care.equipment.heater && (
-        <EquipmentCardNew 
-          icon={<Thermometer className="w-5 h-5 text-rose-600 dark:text-rose-400" />}
-          label="Heater"
-          required={data.care.equipment.heater.required}
-          details={data.care.equipment.heater.watts ? `${data.care.equipment.heater.watts}W recommended` : undefined}
-          color="rose"
-        />
-      )}
-
-      {/* Filter */}
-      {data.care.equipment.filter && (
-        <EquipmentCardNew 
-          icon={<Wind className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
-          label="Filter"
-          required={data.care.equipment.filter.required}
-          details={data.care.equipment.filter.type ? `${data.care.equipment.filter.type} - ${data.care.equipment.filter.flowRate || 'standard'}` : undefined}
-          color="blue"
-        />
-      )}
-
-      {/* Airstone */}
-      {data.care.equipment.airstone !== undefined && (
-        <EquipmentCardNew 
-          icon={<CircleDot className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />}
-          label="Airstone"
-          required={data.care.equipment.airstone}
-          color="cyan"
-        />
-      )}
-
-      {/* Lighting */}
-      {data.care.equipment.lighting && (
-        <EquipmentCardNew 
-          icon={<Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
-          label="Lighting"
-          required={true}
-          details={`${data.care.equipment.lighting} intensity`}
-          color="amber"
-        />
-      )}
-
-      {/* CO2 */}
-      {data.care.equipment.co2 !== undefined && (
-        <EquipmentCardNew 
-          icon={<Beaker className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
-          label="CO₂ System"
-          required={data.care.equipment.co2}
-          color="emerald"
-        />
-      )}
-    </div>
-  </div>
-)}
-
-                  {/* Special Requirements */}
-{data.care.specialRequirements && data.care.specialRequirements.length > 0 && (
-  <div>
-    <SectionHeader title="Special Requirements" icon={<AlertTriangle className="w-5 h-5" />} />
-    <div className="space-y-3">
-      {data.care.specialRequirements.map((requirement, index) => (
-        <div 
-          key={index}
-          className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-slate-200 dark:border-slate-700 flex gap-3 shadow-sm"
-        >
-          <div className="p-2 bg-rose-50 dark:bg-rose-950/30 rounded-lg flex-shrink-0 border border-rose-200/50 dark:border-rose-800/50">
-            <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
-          </div>
-          <p className="text-sm md:text-base text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">
-            {requirement}
-          </p>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
-                  {/* Aggression Profile */}
-                  {data.behavior.aggressionLevel && (
-                    <div>
-                      <SectionHeader title="Aggression Profile" icon={<AlertTriangle className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 space-y-4 md:space-y-5">
-                        <AggressionBar label="Intraspecific (Same Species)" level={data.behavior.aggressionLevel.intraspecific} />
-                        <AggressionBar label="Interspecific (Other Species)" level={data.behavior.aggressionLevel.interspecific} />
-                        <AggressionBar label="Territorial Behavior" level={data.behavior.aggressionLevel.territorial} />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Health */}
-                  <div>
-                    <SectionHeader title="Health & Disease Prevention" icon={<Heart className="w-5 h-5" />} />
-                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 space-y-5">
+                    {/* Maintenance Schedule */}
+                    {data.care.maintenance && (
                       <div>
-                        <h5 className="text-xs md:text-sm font-black text-slate-700 dark:text-slate-300 uppercase mb-3 md:mb-4 tracking-wider">Common Diseases</h5>
-                        <DiseaseList diseases={data.health.commonDiseases} />
-                      </div>
-                      {data.health.sensitivities && data.health.sensitivities.length > 0 && (
-                        <div>
-                          <h5 className="text-xs md:text-sm font-black text-slate-700 dark:text-slate-300 uppercase mb-3 md:mb-4 tracking-wider">Sensitivities</h5>
-                          <div className="flex flex-wrap gap-2">
-                            {data.health.sensitivities.map((s: string) => (
-                              <span key={s} className="text-xs md:text-sm bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 px-3 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-800 font-bold">
-                                {s}
-                              </span>
-                            ))}
+                        <SectionHeader title="Maintenance Schedule" icon={<Calendar className="w-5 h-5" />} />
+                        <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-blue-200 dark:border-blue-800">
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
+                                <Droplets className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">Water Changes</div>
+                                <div className="text-lg md:text-xl font-black text-blue-900 dark:text-blue-300">
+                                  {data.care.maintenance.waterChangePercentage}% {data.care.maintenance.waterChangeFrequency}
+                                </div>
+                              </div>
+                            </div>
+                            {data.care.maintenance.notes && (
+                              <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{data.care.maintenance.notes}</p>
+                            )}
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Pro Tips & Common Mistakes */}
-                  {(data.care.proTips || data.care.commonMistakes) && (
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                      {data.care.proTips && (
-                        <TipsCard title="Pro Tips" icon={<Lightbulb className="w-4 h-4" />} items={data.care.proTips} variant="success" />
-                      )}
-                      {data.care.commonMistakes && (
-                        <TipsCard title="Avoid These" icon={<XCircle className="w-4 h-4" />} items={data.care.commonMistakes} variant="danger" />
-                      )}
-                    </div>
-                  )}
-
-                  {/* Common Failures */}
-                  {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
-                    <div>
-                      <SectionHeader title="Common Mistakes to Avoid" icon={<XCircle className="w-5 h-5" />} />
-                      <div className="space-y-3">
-                        {data.experienceData.commonFailures
-                          .sort((a, b) => b.frequency - a.frequency)
-                          .map((failure, idx) => (
-                          <MistakeCard key={idx} issue={failure.issue} cause={failure.cause} frequency={failure.frequency} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-
-              {/* HABITAT TAB */}
-              {activeTab === 'habitat' && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                  {/* Water Parameters Detailed */}
-                  <div>
-                    <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
-                    <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/20 p-5 md:p-6 rounded-xl border-2 border-slate-200 dark:border-slate-700 shadow-lg space-y-5 md:space-y-6">
-                      
-                      <div>
-                        <ParameterScale 
-                          label="Temperature" 
-                          unit="°C" 
-                          min={15} 
-                          max={35} 
-                          valueMin={data.environment.tempC.min} 
-                          valueMax={data.environment.tempC.max}
-                          ideal={data.environment.tempC.ideal}
-                          color="rose" 
-                        />
-                      </div>
-
-                      <div>
-                        <ParameterScale 
-                          label="pH" 
-                          unit="" 
-                          min={4.0} 
-                          max={9.0} 
-                          valueMin={data.environment.ph.min} 
-                          valueMax={data.environment.ph.max}
-                          ideal={data.environment.ph.ideal}
-                          color="cyan" 
-                        />
-                      </div>
-
-                      {data.environment.gh && (
-                        <div>
-                          <ParameterScale 
-                            label="GH (General Hardness)" 
-                            unit="°dH" 
-                            min={0} 
-                            max={30} 
-                            valueMin={data.environment.gh.min} 
-                            valueMax={data.environment.gh.max}
-                            color="indigo" 
-                          />
-                        </div>
-                      )}
-
-                      {data.environment.kh && (
-                        <div>
-                          <ParameterScale 
-                            label="KH (Carbonate Hardness)" 
-                            unit="°dH" 
-                            min={0} 
-                            max={20} 
-                            valueMin={data.environment.kh.min} 
-                            valueMax={data.environment.kh.max}
-                            color="purple" 
-                          />
-                        </div>
-                      )}
-
-                      {/* Quick Reference Grid */}
-                      <div className="pt-4 border-t-2 border-slate-200 dark:border-slate-700">
-                        <div className="grid grid-cols-2 gap-3">
-                          {data.environment.tempC.ideal && (
-                            <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-rose-200 dark:border-rose-800">
-                              <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                                Ideal Temp
-                              </div>
-                              <div className="text-base md:text-xl font-black text-rose-600 dark:text-rose-400">
-                                {data.environment.tempC.ideal}°C
-                              </div>
-                            </div>
-                          )}
-
-                          {data.environment.ph.ideal && (
-                            <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-cyan-200 dark:border-cyan-800">
-                              <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                                Ideal pH
-                              </div>
-                              <div className="text-base md:text-xl font-black text-cyan-600 dark:text-cyan-400">
-                                {data.environment.ph.ideal}
-                              </div>
-                            </div>
-                          )}
-
-                          {data.environment.flow && (
-                            <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-blue-200 dark:border-blue-800">
-                              <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                                Flow Rate
-                              </div>
-                              <div className="text-base md:text-xl font-black text-blue-600 dark:text-blue-400 capitalize">
-                                {data.environment.flow}
-                              </div>
-                            </div>
-                          )}
-
-                          {data.environment.substrate && (
-                            <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-amber-200 dark:border-amber-800">
-                              <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                                Substrate
-                              </div>
-                              <div className="text-base md:text-xl font-black text-amber-600 dark:text-amber-400 capitalize">
-                                {data.environment.substrate}
+                          {data.care.maintenance.vacuumingNeeded && (
+                            <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border-2 border-amber-200 dark:border-amber-800">
+                              <div className="flex items-center gap-2 text-sm font-bold text-amber-800 dark:text-amber-300">
+                                <Wind className="w-4 h-4" />
+                                <span>Regular substrate vacuuming required</span>
                               </div>
                             </div>
                           )}
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Tank Setup */}
-                  <div>
-                    <SectionHeader title="Tank Setup Recommendations" icon={<Mountain className="w-5 h-5" />} />
-                    <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
-                      {getTankSetupRecommendations().map((item, i) => (
-                        <SetupCard key={i} title={item.title} description={item.description} />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Planting & Hardscape */}
-                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                    <div>
-                      <SectionHeader title="Planting Density" icon={<Sprout className="w-5 h-5" />} />
-                      <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-5 md:p-6 border-2 border-emerald-200 dark:border-emerald-800">
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-xs md:text-sm font-black text-emerald-900 dark:text-emerald-300 uppercase tracking-wider">{data.habitat.planting}</span>
-                          <BarIndicator level={data.habitat.planting} color="emerald" />
-                        </div>
-                        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">{data.habitat.plantingNotes}</p>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <SectionHeader title="Hardscape Elements" icon={<Mountain className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
-                        <div className="flex flex-wrap gap-2">
-                          {data.habitat.hardscape.map((item: string) => (
-                            <span key={item} className="text-sm md:text-base bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 font-bold">
-                              {item}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* COMPATIBILITY TAB */}
-              {activeTab === 'compatibility' && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                  {data.behavior.compatibility.rules && data.behavior.compatibility.rules.length > 0 && (
-                    <div>
-                      <SectionHeader title="Compatibility Rules" icon={<AlertTriangle className="w-5 h-5" />} />
-                      <div className="space-y-3">
-                        {data.behavior.compatibility.rules.map((rule, idx) => (
-                          <CompatibilityRuleCard key={idx} rule={rule} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div>
-                    <SectionHeader title="Tank Mate Guidelines" icon={<Fish className="w-5 h-5" />} />
-                    <div className="grid md:grid-cols-2 gap-5 md:gap-6">
-                      <div>
-                        <div className="flex items-center gap-2 mb-4">
-                          <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-emerald-500" />
-                          <h4 className="font-black text-emerald-700 dark:text-emerald-400 text-base md:text-lg">Compatible With</h4>
-                        </div>
-                        <div className="space-y-2">
-                          {data.behavior.compatibility.goodMates.map((m: string) => (
-                            <div key={m} className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 px-4 py-3 rounded-xl border-2 border-emerald-200 dark:border-emerald-800 font-bold text-sm md:text-base">
-                              {m}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-4">
-                          <XCircle className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
-                          <h4 className="font-black text-rose-700 dark:text-rose-400 text-base md:text-lg">Avoid Mixing With</h4>
-                        </div>
-                        <div className="space-y-2">
-                          {data.behavior.compatibility.badMates.map((m: string) => (
-                            <div key={m} className="bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 px-4 py-3 rounded-xl border-2 border-rose-200 dark:border-rose-800 font-bold text-sm md:text-base">
-                              {m}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    {data.behavior.compatibility.notes && (
-                      <div className="mt-4 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 md:p-5">
-                        <p className="text-sm md:text-base text-blue-900 dark:text-blue-300 leading-relaxed">
-                          <strong className="font-black">Important Note:</strong> {data.behavior.compatibility.notes}
-                        </p>
                       </div>
                     )}
-                  </div>
 
-                  {compatibleSpecies.length > 0 && (
-                    <div>
-                      <SectionHeader title="Suggested Compatible Species" icon={<Fish className="w-5 h-5" />} />
-                      <div className="mb-4 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 md:p-5 flex gap-3">
-                        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                        <p className="text-xs md:text-sm text-blue-900 dark:text-blue-300 leading-relaxed">
-                          <strong className="font-black">Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. Always verify compatibility based on your specific tank size and setup.
-                        </p>
+                    {/* Equipment Checklist */}
+                    {data.care.equipment && (
+                      <div>
+                        <SectionHeader title="Required Equipment" icon={<Wrench className="w-5 h-5" />} />
+                        <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+                          {data.care.equipment.heater && (
+                            <EquipmentCardNew icon={<Thermometer className="w-5 h-5 text-rose-600 dark:text-rose-400" />} label="Heater" required={data.care.equipment.heater.required} details={data.care.equipment.heater.watts ? `${data.care.equipment.heater.watts}W recommended` : undefined} color="rose" />
+                          )}
+                          {data.care.equipment.filter && (
+                            <EquipmentCardNew icon={<Wind className="w-5 h-5 text-blue-600 dark:text-blue-400" />} label="Filter" required={data.care.equipment.filter.required} details={data.care.equipment.filter.type ? `${data.care.equipment.filter.type} - ${data.care.equipment.filter.flowRate || 'standard'}` : undefined} color="blue" />
+                          )}
+                          {data.care.equipment.airstone !== undefined && (
+                            <EquipmentCardNew icon={<CircleDot className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />} label="Airstone" required={data.care.equipment.airstone} color="cyan" />
+                          )}
+                          {data.care.equipment.lighting && (
+                            <EquipmentCardNew icon={<Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />} label="Lighting" required={true} details={`${data.care.equipment.lighting} intensity`} color="amber" />
+                          )}
+                          {data.care.equipment.co2 !== undefined && (
+                            <EquipmentCardNew icon={<Beaker className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />} label="CO₂ System" required={data.care.equipment.co2} color="emerald" />
+                          )}
+                        </div>
                       </div>
-                      
-                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                        {compatibleSpecies.slice(0, 6).map((species) => (
-                          <SpeciesCard key={species.id} species={species} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              )}
+                    )}
 
-              {/* ADVANCED TAB */}
-              {activeTab === 'advanced' && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                  {data.scientificContext && (
+                    {/* Special Requirements */}
+                    {data.care.specialRequirements && data.care.specialRequirements.length > 0 && (
+                      <div>
+                        <SectionHeader title="Special Requirements" icon={<AlertTriangle className="w-5 h-5" />} />
+                        <div className="space-y-3">
+                          {data.care.specialRequirements.map((requirement, index) => (
+                            <div key={index} className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border-2 border-slate-200 dark:border-slate-700 flex gap-3 shadow-sm">
+                              <div className="p-2 bg-rose-50 dark:bg-rose-950/30 rounded-lg flex-shrink-0 border border-rose-200/50 dark:border-rose-800/50">
+                                <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+                              </div>
+                              <p className="text-sm md:text-base text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">{requirement}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Aggression Profile */}
+                    {data.behavior.aggressionLevel && (
+                      <div>
+                        <SectionHeader title="Aggression Profile" icon={<AlertTriangle className="w-5 h-5" />} />
+                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 space-y-4 md:space-y-5">
+                          <AggressionBar label="Intraspecific (Same Species)" level={data.behavior.aggressionLevel.intraspecific} />
+                          <AggressionBar label="Interspecific (Other Species)" level={data.behavior.aggressionLevel.interspecific} />
+                          <AggressionBar label="Territorial Behavior" level={data.behavior.aggressionLevel.territorial} />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Health */}
                     <div>
-                      <SectionHeader title="Scientific Background" icon={<Microscope className="w-5 h-5" />} />
+                      <SectionHeader title="Health & Disease Prevention" icon={<Heart className="w-5 h-5" />} />
                       <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 space-y-5">
                         <div>
-                          <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Wild Habitat</h5>
-                          <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.scientificContext.wildHabitat}</p>
+                          <h5 className="text-xs md:text-sm font-black text-slate-700 dark:text-slate-300 uppercase mb-3 md:mb-4 tracking-wider">Common Diseases</h5>
+                          <DiseaseList diseases={data.health.commonDiseases} />
                         </div>
-                        <div>
-                          <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Sexual Dimorphism</h5>
-                          <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.scientificContext.sexualDimorphism}</p>
-                        </div>
-                        {data.scientificContext.variants && data.scientificContext.variants.length > 0 && (
+                        {data.health.sensitivities && data.health.sensitivities.length > 0 && (
                           <div>
-                            <h5 className="font-black text-slate-900 dark:text-slate-100 mb-3 md:mb-4 text-sm md:text-base">Known Variants</h5>
+                            <h5 className="text-xs md:text-sm font-black text-slate-700 dark:text-slate-300 uppercase mb-3 md:mb-4 tracking-wider">Sensitivities</h5>
                             <div className="flex flex-wrap gap-2">
-                              {data.scientificContext.variants.map((v: string) => (
-                                <span key={v} className="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-300 px-3 py-2 rounded-lg text-sm md:text-base border-2 border-indigo-200 dark:border-indigo-800 font-bold">
-                                  {v}
-                                </span>
+                              {data.health.sensitivities.map((s: string) => (
+                                <span key={s} className="text-xs md:text-sm bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 px-3 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-800 font-bold">{s}</span>
                               ))}
                             </div>
                           </div>
                         )}
                       </div>
                     </div>
-                  )}
 
-                  {data.breeding && (
-                    <div>
-                      <SectionHeader title="Breeding Guide" icon={<Egg className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center gap-3 mb-5">
-                          <Badge text={data.breeding.difficulty} color={data.breeding.difficulty} size="md" />
-                          <span className="text-sm md:text-base text-slate-600 dark:text-slate-400 capitalize font-semibold">{data.breeding.method.replace(/_/g, ' ')}</span>
+                    {/* Pro Tips & Common Mistakes */}
+                    {(data.care.proTips || data.care.commonMistakes) && (
+                      <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                        {data.care.proTips && <TipsCard title="Pro Tips" icon={<Lightbulb className="w-4 h-4" />} items={data.care.proTips} variant="success" />}
+                        {data.care.commonMistakes && <TipsCard title="Avoid These" icon={<XCircle className="w-4 h-4" />} items={data.care.commonMistakes} variant="danger" />}
+                      </div>
+                    )}
+
+                    {/* Common Failures */}
+                    {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
+                      <div>
+                        <SectionHeader title="Common Mistakes to Avoid" icon={<XCircle className="w-5 h-5" />} />
+                        <div className="space-y-3">
+                          {data.experienceData.commonFailures
+                            .sort((a, b) => b.frequency - a.frequency)
+                            .map((failure, idx) => (
+                            <MistakeCard key={idx} issue={failure.issue} cause={failure.cause} frequency={failure.frequency} />
+                          ))}
                         </div>
-                        
-                        <div className="space-y-4">
-                          {data.breeding.trigger && (
-                            <div>
-                              <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Breeding Trigger</h5>
-                              <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.breeding.trigger}</p>
-                            </div>
-                          )}
-                          {data.breeding.fryCare && (
-                            <div>
-                              <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Fry Care</h5>
-                              <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.breeding.fryCare}</p>
-                            </div>
-                          )}
-                          {data.breeding.notes && (
-                            <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 italic bg-white dark:bg-slate-800 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 leading-relaxed">
-                              {data.breeding.notes}
-                            </p>
-                          )}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* HABITAT TAB */}
+                {activeTab === 'habitat' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                    <div>
+                      <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
+                      <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/20 p-5 md:p-6 rounded-xl border-2 border-slate-200 dark:border-slate-700 shadow-lg space-y-5 md:space-y-6">
+                        <div><ParameterScale label="Temperature" unit="°C" min={15} max={35} valueMin={data.environment.tempC.min} valueMax={data.environment.tempC.max} ideal={data.environment.tempC.ideal} color="rose" /></div>
+                        <div><ParameterScale label="pH" unit="" min={4.0} max={9.0} valueMin={data.environment.ph.min} valueMax={data.environment.ph.max} ideal={data.environment.ph.ideal} color="cyan" /></div>
+                        {data.environment.gh && <div><ParameterScale label="GH (General Hardness)" unit="°dH" min={0} max={30} valueMin={data.environment.gh.min} valueMax={data.environment.gh.max} color="indigo" /></div>}
+                        {data.environment.kh && <div><ParameterScale label="KH (Carbonate Hardness)" unit="°dH" min={0} max={20} valueMin={data.environment.kh.min} valueMax={data.environment.kh.max} color="purple" /></div>}
+
+                        <div className="pt-4 border-t-2 border-slate-200 dark:border-slate-700">
+                          <div className="grid grid-cols-2 gap-3">
+                            {data.environment.tempC.ideal && (
+                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-rose-200 dark:border-rose-800">
+                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Ideal Temp</div>
+                                <div className="text-base md:text-xl font-black text-rose-600 dark:text-rose-400">{data.environment.tempC.ideal}°C</div>
+                              </div>
+                            )}
+                            {data.environment.ph.ideal && (
+                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-cyan-200 dark:border-cyan-800">
+                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Ideal pH</div>
+                                <div className="text-base md:text-xl font-black text-cyan-600 dark:text-cyan-400">{data.environment.ph.ideal}</div>
+                              </div>
+                            )}
+                            {data.environment.flow && (
+                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-blue-200 dark:border-blue-800">
+                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Flow Rate</div>
+                                <div className="text-base md:text-xl font-black text-blue-600 dark:text-blue-400 capitalize">{data.environment.flow}</div>
+                              </div>
+                            )}
+                            {data.environment.substrate && (
+                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-amber-200 dark:border-amber-800">
+                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Substrate</div>
+                                <div className="text-base md:text-xl font-black text-amber-600 dark:text-amber-400 capitalize">{data.environment.substrate}</div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  )}
-                </motion.div>
-              )}
+
+                    <div>
+                      <SectionHeader title="Tank Setup Recommendations" icon={<Mountain className="w-5 h-5" />} />
+                      <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+                        {getTankSetupRecommendations().map((item, i) => (
+                          <SetupCard key={i} title={item.title} description={item.description} />
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                      <div>
+                        <SectionHeader title="Planting Density" icon={<Sprout className="w-5 h-5" />} />
+                        <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-5 md:p-6 border-2 border-emerald-200 dark:border-emerald-800">
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-xs md:text-sm font-black text-emerald-900 dark:text-emerald-300 uppercase tracking-wider">{data.habitat.planting}</span>
+                            <BarIndicator level={data.habitat.planting} color="emerald" />
+                          </div>
+                          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">{data.habitat.plantingNotes}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <SectionHeader title="Hardscape Elements" icon={<Mountain className="w-5 h-5" />} />
+                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+                          <div className="flex flex-wrap gap-2">
+                            {data.habitat.hardscape.map((item: string) => (
+                              <span key={item} className="text-sm md:text-base bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 font-bold">{item}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* COMPATIBILITY TAB */}
+                {activeTab === 'compatibility' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                    {data.behavior.compatibility.rules && data.behavior.compatibility.rules.length > 0 && (
+                      <div>
+                        <SectionHeader title="Compatibility Rules" icon={<AlertTriangle className="w-5 h-5" />} />
+                        <div className="space-y-3">
+                          {data.behavior.compatibility.rules.map((rule, idx) => (
+                            <CompatibilityRuleCard key={idx} rule={rule} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div>
+                      <SectionHeader title="Tank Mate Guidelines" icon={<Fish className="w-5 h-5" />} />
+                      <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+                        <div>
+                          <div className="flex items-center gap-2 mb-4">
+                            <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-emerald-500" />
+                            <h4 className="font-black text-emerald-700 dark:text-emerald-400 text-base md:text-lg">Compatible With</h4>
+                          </div>
+                          <div className="space-y-2">
+                            {data.behavior.compatibility.goodMates.map((m: string) => (
+                              <div key={m} className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 px-4 py-3 rounded-xl border-2 border-emerald-200 dark:border-emerald-800 font-bold text-sm md:text-base">{m}</div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-4">
+                            <XCircle className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
+                            <h4 className="font-black text-rose-700 dark:text-rose-400 text-base md:text-lg">Avoid Mixing With</h4>
+                          </div>
+                          <div className="space-y-2">
+                            {data.behavior.compatibility.badMates.map((m: string) => (
+                              <div key={m} className="bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 px-4 py-3 rounded-xl border-2 border-rose-200 dark:border-rose-800 font-bold text-sm md:text-base">{m}</div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      {data.behavior.compatibility.notes && (
+                        <div className="mt-4 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 md:p-5">
+                          <p className="text-sm md:text-base text-blue-900 dark:text-blue-300 leading-relaxed">
+                            <strong className="font-black">Important Note:</strong> {data.behavior.compatibility.notes}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {compatibleSpecies.length > 0 && (
+                      <div>
+                        <SectionHeader title="Suggested Compatible Species" icon={<Fish className="w-5 h-5" />} />
+                        <div className="mb-4 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 md:p-5 flex gap-3">
+                          <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                          <p className="text-xs md:text-sm text-blue-900 dark:text-blue-300 leading-relaxed">
+                            <strong className="font-black">Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. Always verify compatibility based on your specific tank size and setup.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                          {compatibleSpecies.slice(0, 6).map((species) => (
+                            <SpeciesCard key={species.id} species={species} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* ADVANCED TAB */}
+                {activeTab === 'advanced' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                    {data.scientificContext && (
+                      <div>
+                        <SectionHeader title="Scientific Background" icon={<Microscope className="w-5 h-5" />} />
+                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 space-y-5">
+                          <div>
+                            <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Wild Habitat</h5>
+                            <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.scientificContext.wildHabitat}</p>
+                          </div>
+                          <div>
+                            <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Sexual Dimorphism</h5>
+                            <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.scientificContext.sexualDimorphism}</p>
+                          </div>
+                          {data.scientificContext.variants && data.scientificContext.variants.length > 0 && (
+                            <div>
+                              <h5 className="font-black text-slate-900 dark:text-slate-100 mb-3 md:mb-4 text-sm md:text-base">Known Variants</h5>
+                              <div className="flex flex-wrap gap-2">
+                                {data.scientificContext.variants.map((v: string) => (
+                                  <span key={v} className="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-300 px-3 py-2 rounded-lg text-sm md:text-base border-2 border-indigo-200 dark:border-indigo-800 font-bold">{v}</span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {data.breeding && (
+                      <div>
+                        <SectionHeader title="Breeding Guide" icon={<Egg className="w-5 h-5" />} />
+                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+                          <div className="flex items-center gap-3 mb-5">
+                            <Badge text={data.breeding.difficulty} color={data.breeding.difficulty} size="md" />
+                            <span className="text-sm md:text-base text-slate-600 dark:text-slate-400 capitalize font-semibold">{data.breeding.method.replace(/_/g, ' ')}</span>
+                          </div>
+                          <div className="space-y-4">
+                            {data.breeding.trigger && (
+                              <div>
+                                <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Breeding Trigger</h5>
+                                <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.breeding.trigger}</p>
+                              </div>
+                            )}
+                            {data.breeding.fryCare && (
+                              <div>
+                                <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Fry Care</h5>
+                                <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.breeding.fryCare}</p>
+                              </div>
+                            )}
+                            {data.breeding.notes && (
+                              <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 italic bg-white dark:bg-slate-800 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 leading-relaxed">{data.breeding.notes}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </div>
             </div>
+          </motion.div>
+        </div>
+
+        {/* ---- Right column: sticky sidebar (desktop only) ---- */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-20 space-y-4">
+            <SidebarInfoPanel />
           </div>
-        </motion.div>
+        </aside>
+
       </main>
     </div>
   );
@@ -1141,13 +983,14 @@ const SpeciesDetailPage = () => {
 
 // ==================== HELPER COMPONENTS ====================
 
-const QuickStat = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 md:p-4 border-2 border-white/20 hover:bg-white/20 transition-all shadow-lg">
-    <div className="flex items-center gap-2 mb-1.5">
-      <div className="text-cyan-400">{icon}</div>
-      <span className="text-[10px] md:text-xs text-slate-300 font-bold uppercase tracking-wide">{label}</span>
+// Sidebar info row (light, for white card)
+const SidebarInfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-700 last:border-0">
+    <div className="flex items-center gap-2">
+      {icon}
+      <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">{label}</span>
     </div>
-    <div className="text-lg md:text-xl font-black text-white">{value}</div>
+    <span className="text-sm text-slate-900 dark:text-slate-100 font-bold">{value}</span>
   </div>
 );
 
@@ -1181,7 +1024,6 @@ const ParameterCard = ({ icon, label, value }: { icon: React.ReactNode; label: s
 const StatBar = ({ label, value }: { label: string; value: string }) => {
   const steps = value === 'low' || value === 'beginner' ? 1 : 
                value === 'medium' || value === 'intermediate' ? 2 : 3;
-  
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
@@ -1190,9 +1032,7 @@ const StatBar = ({ label, value }: { label: string; value: string }) => {
       </div>
       <div className="flex gap-1.5">
         {[1, 2, 3].map(i => (
-          <div key={i} className={`h-2 flex-1 rounded-full ${
-            i <= steps ? 'bg-slate-800 dark:bg-slate-300' : 'bg-slate-200 dark:bg-slate-700'
-          }`} />
+          <div key={i} className={`h-2 flex-1 rounded-full ${i <= steps ? 'bg-slate-800 dark:bg-slate-300' : 'bg-slate-200 dark:bg-slate-700'}`} />
         ))}
       </div>
     </div>
@@ -1273,9 +1113,7 @@ const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
 
 const SpeciesCard = ({ species }: { species: Species }) => (
   <Link to={`/species/${species.slug}`} className="group bg-slate-50 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-xl p-4 border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-md hover:shadow-xl">
-    <h5 className="font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm md:text-base line-clamp-1">
-      {species.taxonomy.commonName}
-    </h5>
+    <h5 className="font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm md:text-base line-clamp-1">{species.taxonomy.commonName}</h5>
     <p className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 italic mb-2 md:mb-3 line-clamp-1">{species.taxonomy.scientificName}</p>
     <div className="flex items-center gap-2 text-[10px] md:text-xs text-slate-600 dark:text-slate-400 font-semibold">
       <span>{species.visuals.adultSizeCM}cm</span>
@@ -1339,7 +1177,6 @@ const BarIndicator = ({ level, color }: { level: string; color: 'indigo' | 'emer
     indigo: { active: 'bg-indigo-600', inactive: 'bg-slate-200 dark:bg-slate-700' },
     emerald: { active: 'bg-emerald-600', inactive: 'bg-slate-200 dark:bg-slate-700' },
   }[color];
-  
   return (
     <div className="flex gap-2 flex-1 max-w-[100px] md:max-w-[120px]">
       {[1, 2, 3].map(i => (
@@ -1375,9 +1212,7 @@ const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size
     intermediate: 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
     expert: 'bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800',
   }[color === 'brand' || color === 'enhanced' ? color : text] || 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
-  
   const sizeClasses = size === 'sm' ? 'px-2 py-1 text-[10px]' : 'px-3 py-1.5 text-xs';
-  
   return <span className={`inline-flex items-center rounded-lg font-black uppercase tracking-wide border-2 ${styles} ${sizeClasses}`}>{text}</span>;
 };
 
@@ -1391,20 +1226,13 @@ interface CareLevelCardProps {
 
 const CareLevelCard = ({ label, value, icon, colors }: CareLevelCardProps) => {
   const colorConfig = colors[value] || colors.medium || colors.low;
-  
   return (
     <div className={`${colorConfig.bg} rounded-xl p-4 border-2 ${colorConfig.border} shadow-lg`}>
       <div className="flex items-center gap-2 mb-2">
-        <div className={`p-1.5 rounded-lg ${colorConfig.text}`}>
-          {icon}
-        </div>
-        <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-          {label}
-        </div>
+        <div className={`p-1.5 rounded-lg ${colorConfig.text}`}>{icon}</div>
+        <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{label}</div>
       </div>
-      <div className={`text-xl md:text-2xl font-black ${colorConfig.text} capitalize`}>
-        {value}
-      </div>
+      <div className={`text-xl md:text-2xl font-black ${colorConfig.text} capitalize`}>{value}</div>
     </div>
   );
 };
@@ -1420,40 +1248,24 @@ interface EquipmentCardNewProps {
 
 const EquipmentCardNew = ({ icon, label, required, details, color }: EquipmentCardNewProps) => {
   const colorConfig = {
-  rose: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-  blue: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-  cyan: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-  amber: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-  emerald: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
-};
-  
+    rose:    { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+    blue:    { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+    cyan:    { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+    amber:   { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+    emerald: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+  };
   const colors = colorConfig[color];
-  
   return (
     <div className={`${colors.bg} rounded-xl p-4 border-2 ${colors.border} ${required ? 'shadow-lg' : 'opacity-60'}`}>
       <div className="flex items-center gap-2 mb-2">
-        <div className={`p-1.5 rounded-lg ${colors.text}`}>
-          {icon}
-        </div>
-        <div className="text-sm md:text-base font-black text-slate-900 dark:text-white">
-          {label}
-        </div>
+        <div className={`p-1.5 rounded-lg ${colors.text}`}>{icon}</div>
+        <div className="text-sm md:text-base font-black text-slate-900 dark:text-white">{label}</div>
         {required && (
-          <span className="ml-auto px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 text-[10px] font-black uppercase">
-            Required
-          </span>
+          <span className="ml-auto px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 text-[10px] font-black uppercase">Required</span>
         )}
       </div>
-      {details && (
-        <p className="text-xs text-slate-600 dark:text-slate-400 capitalize">
-          {details}
-        </p>
-      )}
-      {!required && (
-        <p className="text-xs text-slate-500 dark:text-slate-500 italic mt-1">
-          Optional
-        </p>
-      )}
+      {details && <p className="text-xs text-slate-600 dark:text-slate-400 capitalize">{details}</p>}
+      {!required && <p className="text-xs text-slate-500 dark:text-slate-500 italic mt-1">Optional</p>}
     </div>
   );
 };
