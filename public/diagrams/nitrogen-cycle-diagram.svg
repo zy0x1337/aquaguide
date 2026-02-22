@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <!-- Gradients for modern look -->
+    <linearGradient id="ammoniaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nitriteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nitrateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Arrow marker -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="800" fill="#0f172a">
+    Nitrogen Cycle in Aquariums
+  </text>
+  <text x="400" y="70" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#64748b">
+    How beneficial bacteria convert toxic waste into safer compounds
+  </text>
+
+  <!-- Center circle background -->
+  <circle cx="400" cy="420" r="280" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="2" />
+
+  <!-- STAGE 1: AMMONIA (Top Left) -->
+  <g id="stage-ammonia">
+    <!-- Background circle -->
+    <circle cx="250" cy="300" r="90" fill="url(#ammoniaGrad)" opacity="0.15" />
+    <circle cx="250" cy="300" r="90" fill="none" stroke="url(#ammoniaGrad)" stroke-width="4" />
+    
+    <!-- Icon: Fish -->
+    <path d="M 230 280 Q 220 275 215 280 Q 220 285 230 280 L 240 280 Q 245 275 250 280 Q 245 285 240 280 Z" 
+          fill="url(#ammoniaGrad)" opacity="0.8" />
+    <circle cx="235" cy="278" r="2" fill="#fff" />
+    
+    <!-- Label -->
+    <text x="250" y="325" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#dc2626">
+      Ammonia
+    </text>
+    <text x="250" y="345" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#ef4444">
+      NH₃/NH₄⁺
+    </text>
+    <text x="250" y="365" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626">
+      HIGHLY TOXIC
+    </text>
+  </g>
+
+  <!-- Arrow 1: Ammonia to Nitrite -->
+  <path d="M 330 340 Q 400 380 470 340" fill="none" stroke="#64748b" stroke-width="6" marker-end="url(#arrowhead)" opacity="0.6" />
+  <text x="400" y="375" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#475569">
+    Nitrosomonas bacteria
+  </text>
+
+  <!-- STAGE 2: NITRITE (Top Right) -->
+  <g id="stage-nitrite">
+    <!-- Background circle -->
+    <circle cx="550" cy="300" r="90" fill="url(#nitriteGrad)" opacity="0.15" />
+    <circle cx="550" cy="300" r="90" fill="none" stroke="url(#nitriteGrad)" stroke-width="4" />
+    
+    <!-- Icon: Bacteria cluster -->
+    <circle cx="540" cy="280" r="8" fill="url(#nitriteGrad)" opacity="0.8" />
+    <circle cx="555" cy="278" r="6" fill="url(#nitriteGrad)" opacity="0.8" />
+    <circle cx="548" cy="290" r="5" fill="url(#nitriteGrad)" opacity="0.8" />
+    
+    <!-- Label -->
+    <text x="550" y="325" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#d97706">
+      Nitrite
+    </text>
+    <text x="550" y="345" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#f59e0b">
+      NO₂⁻
+    </text>
+    <text x="550" y="365" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#d97706">
+      TOXIC
+    </text>
+  </g>
+
+  <!-- Arrow 2: Nitrite to Nitrate -->
+  <path d="M 560 390 Q 520 480 430 530" fill="none" stroke="#64748b" stroke-width="6" marker-end="url(#arrowhead)" opacity="0.6" />
+  <text x="500" y="470" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#475569">
+    Nitrobacter bacteria
+  </text>
+
+  <!-- STAGE 3: NITRATE (Bottom) -->
+  <g id="stage-nitrate">
+    <!-- Background circle -->
+    <circle cx="400" cy="580" r="90" fill="url(#nitrateGrad)" opacity="0.15" />
+    <circle cx="400" cy="580" r="90" fill="none" stroke="url(#nitrateGrad)" stroke-width="4" />
+    
+    <!-- Icon: Plant -->
+    <path d="M 395 560 Q 390 555 390 550 Q 390 545 395 545 Q 400 545 400 550 L 400 570" 
+          stroke="url(#nitrateGrad)" stroke-width="3" fill="none" opacity="0.8" />
+    <path d="M 400 560 Q 405 555 405 550 Q 405 545 410 545 Q 415 545 415 550" 
+          stroke="url(#nitrateGrad)" stroke-width="3" fill="none" opacity="0.8" />
+    <ellipse cx="393" cy="550" rx="4" ry="7" fill="url(#nitrateGrad)" opacity="0.6" />
+    <ellipse cx="407" cy="550" rx="4" ry="7" fill="url(#nitrateGrad)" opacity="0.6" />
+    
+    <!-- Label -->
+    <text x="400" y="605" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#059669">
+      Nitrate
+    </text>
+    <text x="400" y="625" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#10b981">
+      NO₃⁻
+    </text>
+    <text x="400" y="645" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#059669">
+      LESS HARMFUL
+    </text>
+  </g>
+
+  <!-- Arrow 3: Nitrate back to cycle (via plants/water change) -->
+  <path d="M 310 560 Q 220 500 240 390" fill="none" stroke="#64748b" stroke-width="6" marker-end="url(#arrowhead)" opacity="0.6" />
+  <text x="240" y="480" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#475569">
+    Plants absorb +
+  </text>
+  <text x="240" y="495" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#475569">
+    Water changes
+  </text>
+
+  <!-- Center Info Box -->
+  <rect x="320" y="390" width="160" height="60" rx="12" fill="white" stroke="#cbd5e1" stroke-width="2" />
+  <text x="400" y="412" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#0f172a">
+    Biological Filter
+  </text>
+  <text x="400" y="430" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#64748b">
+    Beneficial bacteria
+  </text>
+  <text x="400" y="444" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#64748b">
+    live in filter media
+  </text>
+
+  <!-- Bottom note -->
+  <text x="400" y="720" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#475569">
+    The cycle takes 4-6 weeks to establish in new aquariums
+  </text>
+  
+  <!-- Legend -->
+  <g id="legend">
+    <rect x="50" y="720" width="16" height="16" rx="3" fill="url(#ammoniaGrad)" />
+    <text x="72" y="732" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#475569">Toxic to fish</text>
+    
+    <rect x="170" y="720" width="16" height="16" rx="3" fill="url(#nitriteGrad)" />
+    <text x="192" y="732" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#475569">Toxic to fish</text>
+    
+    <rect x="290" y="720" width="16" height="16" rx="3" fill="url(#nitrateGrad)" />
+    <text x="312" y="732" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#475569">Safe at low levels</text>
+  </g>
+</svg>
