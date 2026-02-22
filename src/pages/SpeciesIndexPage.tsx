@@ -51,7 +51,7 @@ const SpeciesIndexPage = () => {
     tempMax: 30,
     phMin: 5.0,
     phMax: 9.0,
-    maxBodySize: 30,
+    maxBodySize: 100,
     diet: 'all',
     temperament: 'all',
     behaviorTags: []
@@ -117,7 +117,7 @@ const SpeciesIndexPage = () => {
     if (filters.type) count++;
     if (filters.diet !== 'all') count++;
     if (filters.temperament !== 'all') count++;
-    if (filters.maxBodySize !== 30) count++;
+    if (filters.maxBodySize !== 100) count++;
     if (filters.tempMin !== 15 || filters.tempMax !== 30) count++;
     if (filters.phMin !== 5.0 || filters.phMax !== 9.0) count++;
     if (filters.behaviorTags.length > 0) count++;
@@ -150,7 +150,7 @@ const SpeciesIndexPage = () => {
       tempMax: 30,
       phMin: 5.0,
       phMax: 9.0,
-      maxBodySize: 30,
+      maxBodySize: 100,
       diet: 'all',
       temperament: 'all',
       behaviorTags: []
@@ -370,11 +370,11 @@ const SpeciesIndexPage = () => {
           <input 
             type="range" 
             min="2" 
-            max="30" 
-            step="0.5"
+            max="100" 
+            step="1"
             value={filters.maxBodySize} 
             onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} 
-            className="w-full h-2 bg-amber-200 rounded-lg appearance-none cursor-pointer accent-amber-600"
+            className="w-full h-2 bg-amber-200 dark:bg-amber-800/30 rounded-lg appearance-none cursor-pointer accent-amber-600"
           />
         </div>
 

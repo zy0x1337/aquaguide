@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Droplets, BookOpen, Fish, Leaf, Stethoscope, BoxSelect, Home, LayoutDashboard, Waves } from 'lucide-react';
+import { Droplets, Fish, Leaf, Stethoscope, BoxSelect, Home, LayoutDashboard, Waves, BookOpen } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useState } from 'react';
 import { useAuth } from '../../lib/supabase/auth';
@@ -28,80 +28,62 @@ export const Navbar = () => {
   return (
     <>
       {/* 🖥️ DESKTOP NAV */}
-      <nav className="hidden md:flex fixed top-0 w-full z-50 
-        bg-white/90 dark:bg-[#1c1917]/90 
-        backdrop-blur-md 
-        border-b border-stone-200/60 dark:border-stone-800 
-        h-16 items-center justify-between px-6 transition-all duration-300"
-      >
+      <nav className="hidden md:flex fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 h-16 items-center justify-between px-6 transition-all duration-300 shadow-sm">
         
         {/* LOGO */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 bg-gradient-to-tr from-indigo-600 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
-            <Droplets className="w-5 h-5 fill-white/20" />
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <div className="w-9 h-9 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-300 group-hover:scale-105">
+            <Droplets className="w-5 h-5 text-white" strokeWidth={2.5} />
           </div>
           
-          <div className="flex flex-col justify-center">
-            <span className="text-xl font-black tracking-tighter leading-none text-stone-900 dark:text-white">
-              Aqua<span className="text-indigo-600 dark:text-indigo-400">Guide</span>
-            </span>
-          </div>
+          <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
+            Aqua<span className="text-indigo-600 dark:text-indigo-400">Guide</span>
+          </span>
         </Link>
 
-        {/* CENTER LINKS (Pill Shape) */}
-        <div className="flex items-center gap-1 bg-stone-100/50 dark:bg-stone-800/50 p-1.5 rounded-full border border-stone-200/50 dark:border-stone-700/30">
-          {navLinks.map(link => (
-            <Link 
-              key={link.path}
-              to={link.path}
-              className={`
-                px-5 py-1.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2
-                ${isActive(link.path)
-                  ? 'bg-white dark:bg-stone-700 text-indigo-600 dark:text-white shadow-sm' 
-                  : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-700/50'
-                }
-              `}
-            >
-              {link.label}
-            </Link>
-          ))}
+        {/* CENTER LINKS */}
+        <div className="flex items-center gap-1 bg-slate-100/80 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          {navLinks.slice(0, 6).map(link => {
+            const Icon = link.icon;
+            return (
+              <Link 
+                key={link.path}
+                to={link.path}
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
+                  isActive(link.path)
+                    ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-700/60'
+                }`}
+              >
+                <Icon className="w-4 h-4" strokeWidth={2.5} />
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* RIGHT ACTIONS */}
-        <div className="flex items-center gap-4">
-          {user && (
-            <Link
-              to="/dashboard"
-              className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all text-sm"
-            >
-              Dashboard
-            </Link>
-          )}
+        <div className="flex items-center gap-3">
           {!user && (
             <Link
               to="/login"
-              className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all text-sm"
+              className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-indigo-500/30 transition-all text-sm hover:scale-105"
             >
               Sign In
             </Link>
           )}
-          <div className="h-8 w-px bg-stone-200 dark:bg-stone-800"></div>
+          <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
           <ThemeToggle />
         </div>
       </nav>
 
       {/* 📱 MOBILE TOP BAR */}
-      <nav className="md:hidden fixed top-0 w-full z-50 
-        bg-white/95 dark:bg-[#1c1917]/95 
-        backdrop-blur-md 
-        border-b border-stone-100 dark:border-stone-800 
-        h-14 flex items-center px-4 justify-between transition-colors duration-300 shadow-sm"
-      >
-         <Link to="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-gradient-to-tr from-indigo-600 to-blue-500 rounded-lg flex items-center justify-center text-white shadow-md">
-            <Droplets className="w-4 h-4 fill-white/20" />
+      <nav className="md:hidden fixed top-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 h-14 flex items-center px-4 justify-between transition-all duration-300 shadow-sm">
+        <Link to="/" className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+            <Droplets className="w-4 h-4 text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-lg font-black tracking-tight text-stone-900 dark:text-white">
+          <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white">
             Aqua<span className="text-indigo-600 dark:text-indigo-400">Guide</span>
           </span>
         </Link>
@@ -110,25 +92,30 @@ export const Navbar = () => {
       </nav>
 
       {/* 📱 MOBILE BOTTOM NAV */}
-      <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white dark:bg-[#1c1917] border-t border-stone-200 dark:border-stone-800 pb-safe pt-1 px-1 flex justify-around items-center shadow-[0_-5px_30px_rgba(0,0,0,0.04)] dark:shadow-none transition-colors duration-300">
-        {navLinks.slice(0, 6).map(link => (
-          <Link 
-            key={link.path}
-            to={link.path} 
-            className={`flex flex-col items-center justify-center w-full py-2 rounded-xl transition-all active:scale-95 ${
-              isActive(link.path) ? 'text-indigo-600 dark:text-indigo-400' : 'text-stone-400 dark:text-stone-500'
-            }`}
-          >
-            <div className={`p-1 rounded-full transition-all duration-300 ${
-              isActive(link.path) ? 'bg-indigo-50 dark:bg-indigo-500/10 -translate-y-1' : ''
-            }`}>
-              <link.icon className="w-5 h-5" />
-            </div>
-            <span className={`text-[10px] font-bold mt-0.5 transition-opacity ${isActive(link.path) ? 'opacity-100' : 'opacity-80'}`}>
-              {link.label}
-            </span>
-          </Link>
-        ))}
+      <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 pb-safe pt-2 px-2 flex justify-around items-center shadow-[0_-2px_20px_rgba(0,0,0,0.03)] dark:shadow-none transition-all duration-300">
+        {navLinks.slice(0, 5).map(link => {
+          const Icon = link.icon;
+          return (
+            <Link 
+              key={link.path}
+              to={link.path} 
+              className={`flex flex-col items-center justify-center w-full py-2 rounded-xl transition-all active:scale-95 ${
+                isActive(link.path) ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              <div className={`p-2 rounded-xl transition-all duration-200 ${
+                isActive(link.path) ? 'bg-indigo-50 dark:bg-indigo-500/10 -translate-y-0.5' : ''
+              }`}>
+                <Icon className="w-5 h-5" strokeWidth={2.5} />
+              </div>
+              <span className={`text-[10px] font-bold mt-0.5 transition-all ${
+                isActive(link.path) ? 'opacity-100' : 'opacity-70'
+              }`}>
+                {link.label}
+              </span>
+            </Link>
+          );
+        })}
       </nav>
     </>
   );
