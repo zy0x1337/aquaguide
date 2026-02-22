@@ -1,5 +1,15 @@
 # Release Guide
 
+## Setup (First Time Only)
+
+Before using the release scripts, install dependencies:
+
+```bash
+npm install
+```
+
+This will install `standard-version` and all other required packages.
+
 ## Automated Release Process
 
 This project uses [standard-version](https://github.com/conventional-changelog/standard-version) for automated versioning and changelog generation.
@@ -144,16 +154,18 @@ If you need to manually edit the changelog:
 
 ## Troubleshooting
 
-### "No commits since last release"
+### "standard-version not found" or command not recognized
 
-You haven't made any commits since the last tag. Make some changes first.
-
-### "standard-version not found"
-
-Install dependencies:
+**Solution**: Install dependencies first
 ```bash
 npm install
 ```
+
+This installs `standard-version` along with all other project dependencies.
+
+### "No commits since last release"
+
+You haven't made any commits since the last tag. Make some changes first.
 
 ### Undo a release (before pushing)
 
@@ -199,6 +211,33 @@ After pushing tags, you can create GitHub releases manually or use GitHub Action
 5. ✅ **Use scopes** for better organization
 6. ✅ **Test before releasing** - run `npm run build` and `npm run lint`
 7. ❌ **Don't skip commits** - every change should be documented
+
+## Complete Release Workflow
+
+```bash
+# 1. Make sure dependencies are installed
+npm install
+
+# 2. Make your changes and commit with conventional commits
+git add .
+git commit -m "feat: add new feature"
+
+# 3. Test your changes
+npm run build
+npm run lint
+
+# 4. Preview the release (optional)
+npm run release:dry
+
+# 5. Create the release
+npm run release
+
+# 6. Review the generated CHANGELOG.md
+cat CHANGELOG.md
+
+# 7. Push to GitHub
+git push --follow-tags origin main
+```
 
 ## Version History
 

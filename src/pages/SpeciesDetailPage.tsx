@@ -291,26 +291,59 @@ const SpeciesDetailPage = () => {
 
         {/* ---- Left column: all tab content ---- */}
         <div>
-          {/* Fun Fact - REDESIGNED TO MATCH CLEAN SYSTEM */}
+          {/* Fun Fact - COMPLETELY REDESIGNED WITH VIBRANT GRADIENT */}
           {data.funFact && (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
               className="mb-6 md:mb-8"
             >
-              <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-                <div className="flex items-start gap-3 md:gap-4">
-                  <div className="flex-shrink-0 p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                    <Sparkles className="w-5 h-5 text-amber-500 dark:text-amber-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                      Did You Know?
+              <div className="relative group">
+                {/* Gradient background with blur effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-purple-500 to-indigo-600 rounded-2xl blur-sm opacity-70 group-hover:opacity-90 transition-opacity" />
+                
+                {/* Main card */}
+                <div className="relative bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-7 border-2 border-white/20 dark:border-slate-700/50 shadow-2xl backdrop-blur-xl">
+                  <div className="flex items-start gap-4 md:gap-5">
+                    {/* Icon with glow effect */}
+                    <motion.div 
+                      animate={{ 
+                        scale: [1, 1.1, 1],
+                        rotate: [0, 5, -5, 0]
+                      }}
+                      transition={{ 
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="flex-shrink-0"
+                    >
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl blur-md opacity-50" />
+                        <div className="relative p-3.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg">
+                          <Sparkles className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                        </div>
+                      </div>
+                    </motion.div>
+                    
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-purple-600 to-indigo-600 dark:from-amber-400 dark:via-purple-400 dark:to-indigo-400 uppercase tracking-wider">
+                          Did You Know?
+                        </span>
+                        <div className="h-px flex-1 bg-gradient-to-r from-purple-300 to-transparent dark:from-purple-700" />
+                      </div>
+                      <p className="text-slate-800 dark:text-slate-200 text-sm md:text-base leading-relaxed font-medium">
+                        {data.funFact}
+                      </p>
                     </div>
-                    <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">
-                      {data.funFact}
-                    </p>
                   </div>
+                  
+                  {/* Decorative corner accent */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-400/20 to-transparent dark:from-amber-400/10 rounded-tr-2xl" />
                 </div>
               </div>
             </motion.div>
