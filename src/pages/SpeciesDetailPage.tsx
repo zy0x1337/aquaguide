@@ -375,14 +375,15 @@ const SpeciesDetailPage = () => {
             <SidebarInfoPanel />
           </div>
 
-          {/* TAB NAVIGATION */}
+          {/* TAB NAVIGATION - OPTIMIZED */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
-              <div className="flex border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto scrollbar-hide">
+              {/* Desktop: Horizontal tabs */}
+              <div className="hidden md:flex border-b-2 border-slate-200 dark:border-slate-700">
                 <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
                   Overview
                 </TabButton>
@@ -393,11 +394,32 @@ const SpeciesDetailPage = () => {
                   Habitat
                 </TabButton>
                 <TabButton active={activeTab === 'compatibility'} onClick={() => setActiveTab('compatibility')} icon={<Fish className="w-4 h-4" />}>
-                  Mates
+                  Tank Mates
                 </TabButton>
                 <TabButton active={activeTab === 'advanced'} onClick={() => setActiveTab('advanced')} icon={<Microscope className="w-4 h-4" />}>
                   Advanced
                 </TabButton>
+              </div>
+
+              {/* Mobile: Scrollable horizontal tabs */}
+              <div className="md:hidden border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto scrollbar-hide">
+                <div className="flex min-w-max">
+                  <TabButtonMobile active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
+                    Overview
+                  </TabButtonMobile>
+                  <TabButtonMobile active={activeTab === 'care'} onClick={() => setActiveTab('care')} icon={<Heart className="w-4 h-4" />}>
+                    Care
+                  </TabButtonMobile>
+                  <TabButtonMobile active={activeTab === 'habitat'} onClick={() => setActiveTab('habitat')} icon={<Mountain className="w-4 h-4" />}>
+                    Habitat
+                  </TabButtonMobile>
+                  <TabButtonMobile active={activeTab === 'compatibility'} onClick={() => setActiveTab('compatibility')} icon={<Fish className="w-4 h-4" />}>
+                    Mates
+                  </TabButtonMobile>
+                  <TabButtonMobile active={activeTab === 'advanced'} onClick={() => setActiveTab('advanced')} icon={<Microscope className="w-4 h-4" />}>
+                    Advanced
+                  </TabButtonMobile>
+                </div>
               </div>
 
               {/* Tab Content */}
@@ -1182,17 +1204,33 @@ const MistakeCard = ({ issue, cause, frequency }: { issue: string; cause: string
   </div>
 );
 
+// Desktop Tab Button
 const TabButton = ({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) => (
   <button 
     onClick={onClick} 
-    className={`flex items-center gap-2 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black transition-all whitespace-nowrap ${ 
+    className={`flex-1 flex items-center justify-center gap-2.5 px-4 py-4 text-sm font-black transition-all whitespace-nowrap ${ 
       active 
         ? 'bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
         : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 border-b-4 border-transparent'
     }`}
   >
-    {icon}
-    <span className="hidden sm:inline">{children}</span>
+    <span className={`${active ? 'scale-110' : ''} transition-transform`}>{icon}</span>
+    <span>{children}</span>
+  </button>
+);
+
+// Mobile Tab Button
+const TabButtonMobile = ({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) => (
+  <button 
+    onClick={onClick} 
+    className={`flex flex-col items-center justify-center gap-1.5 px-5 py-3 text-xs font-black transition-all whitespace-nowrap min-w-[80px] ${ 
+      active 
+        ? 'bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
+        : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 border-b-4 border-transparent'
+    }`}
+  >
+    <span className={`${active ? 'scale-110' : ''} transition-transform`}>{icon}</span>
+    <span className="leading-tight">{children}</span>
   </button>
 );
 
