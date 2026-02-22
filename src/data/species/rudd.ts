@@ -47,13 +47,13 @@ export const rudd: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes: 'Rudd are enthusiastic plant-eaters that will devour most soft aquatic plants! They need heavy planting but ONLY hardy, tough species survive. Recommended: Vallisneria (tough leaves), Water Lilies (Nymphaea - too tough to eat), Java Fern (leathery leaves), Anubias (very hard leaves), Potamogeton species (pondweeds - natural food). AVOID: Delicate stem plants, carpeting plants, Cabomba, soft-leaved species—they\'ll be stripped bare within days. Plant densely along edges but leave CENTER 60-70% open for swimming—Rudd are active open-water schoolers that need horizontal swimming space. Dark substrate (black sand or dark gravel) enhances their red fin coloration dramatically. Floating plants (Water Lettuce, Duckweed) provide shade and are natural food—Rudd love eating duckweed!',
     hardscape: ['Driftwood (creates hiding spots)', 'Smooth river stones/boulders', 'Minimal hardscape—plants and swimming space priority'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaler', 'midwater', 'active', 'diurnal', 'plant_eater'],
+    tags: ['peaceful', 'shoaler', 'midwater', 'active', 'diurnal'],
     minGroupSize: 8,
     description: 'Rudd are active, confident shoaling fish that form tight schools in open water—they\'re bold swimmers that explore the entire tank constantly. Unlike shy fish, properly-kept Rudd (groups of 8+) are visible all day, swimming in synchronized formations through midwater and surface. They\'re initially skittish (panic at sudden movements) but become incredibly tame within weeks—feeding-trained Rudd will eat from your hand! Behavior changes with seasons: In warm water (18-25°C) they\'re hyperactive, constantly chasing each other and feeding. In cool water (10-15°C) they slow down but remain active. Below 8°C they enter semi-dormancy and stop feeding entirely. They\'re peaceful toward all tankmates—zero aggression toward other fish. Their only "crime" is enthusiastic plant-eating and competitive feeding (they eat FAST and steal food from slower fish).',
     

@@ -128,7 +128,7 @@ export interface Feeding {
     required: boolean;
     recommended: boolean;
   };
-  fastingDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday' | 'none';
+  fastingDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday' | 'winter' | 'none';
 }
 
 // --- MAINTENANCE TYPES ---

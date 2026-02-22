@@ -47,13 +47,13 @@ export const discus: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes: 'Discus tanks require careful balance: plants for aesthetic and shelter vs. bare-bottom for hygiene (many breeders use bare tanks for easier cleaning). Best compromise: Moderately planted with LARGE broad-leaf plants that tolerate high temps (28-30°C). Recommended: Large Amazon Swords (Discus hide behind leaves), Anubias species (bolted to driftwood), Java Fern (hardy), Vallisneria (tall background). AVOID delicate plants—high temps and frequent water changes stress them. Substrate: Fine sand or bare-bottom (controversial—bare is easier to clean but stressful for Discus). Vertical height critical—Discus are tall fish (20cm) that need vertical swimming space. Dim lighting preferred (floating plants like Amazon Frogbit create shade).',
     hardscape: ['MASSIVE vertical driftwood (creates territories and shelter)', 'Smooth river rocks (minimal—hygiene priority)', 'Indian Almond Leaves (tannins + antibacterial)', 'Alder Cones (blackwater effect)', 'Minimal hardscape—water quality is everything!'],
   },
 
   behavior: {
-    tags: ['peaceful', 'shoaler', 'midwater', 'shy', 'diurnal', 'colorful', 'sensitive'],
+    tags: ['peaceful', 'shoaler', 'midwater', 'shy', 'diurnal', 'colorful'],
     minGroupSize: 6,
     description: 'Discus are peaceful, social cichlids that form hierarchical shoals—they NEED groups of 6+ to feel secure. Keeping 1-3 causes chronic stress, aggression, and premature death. They\'re incredibly shy and skittish: sudden movements, loud noises, or bright lights send them into panic—stressed Discus crash into glass, refuse food, and turn dark. They spend most time hovering mid-tank near vertical driftwood or broad-leaf plants, slowly grazing and observing. Discus have social hierarchy: dominant fish (usually largest) gets prime feeding spots and breeding rights. Subordinates show "stress bars" (dark vertical stripes) when intimidated. They\'re SLOW feeders—it takes 10-20 minutes for them to finish meals (frustrating with fast tankmates). Breeding pairs are monogamous and fiercely protect spawning sites (vertical surfaces like driftwood, broad leaves, or breeding cones). Parents produce skin mucus that fry feed on—watching cloud of babies swarm parents\' bodies is surreal!',
     
@@ -140,8 +140,8 @@ export const discus: Species = {
   care: {
     difficulty: 'expert',
     diet: 'carnivore',
-    effort: 'very-high',
-    cost: 'very-high',
+    effort: 'high',
+    cost: 'high',
     specialRequirements: [
       'PRISTINE water quality (ammonia/nitrite 0, nitrate <10ppm)', 
       'Soft acidic blackwater (pH 5.5-6.5, GH <6) - RO water often required', 
@@ -175,8 +175,8 @@ export const discus: Species = {
     
     feeding: {
       frequency: 'three-times-daily',
-      primaryFoods: ['bloodworms', 'brine-shrimp', 'pellets', 'beefheart'],
-      supplements: ['blackworms', 'spirulina', 'color-enhancing-food'],
+      primaryFoods: ['bloodworms', 'brine-shrimp', 'pellets'],
+      supplements: [ 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -200,7 +200,7 @@ export const discus: Species = {
       filter: {
         required: true,
         type: 'canister',
-        flowRate: 'low',
+        flowRate: 'gentle',
       },
       airstone: false,
       lighting: 'low',
