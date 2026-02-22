@@ -13,7 +13,6 @@ import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
 import { Species } from '../types/species';
 import { SEOHead } from '../components/seo/SEOHead';
-import { ParameterScale } from '../components/ui/ParameterScale';
 import { DiseaseList } from '../components/species/DiseaseList';
 import { ImageAttribution } from '../components/ui/ImageAttribution';
 
@@ -885,48 +884,9 @@ const SpeciesDetailPage = () => {
                   </motion.div>
                 )}
 
-                {/* HABITAT TAB */}
+                {/* HABITAT TAB - SIMPLIFIED (Water Parameters removed) */}
                 {activeTab === 'habitat' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                    <div>
-                      <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
-                      <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/20 p-5 md:p-6 rounded-xl border-2 border-slate-200 dark:border-slate-700 shadow-lg space-y-5 md:space-y-6">
-                        <div><ParameterScale label="Temperature" unit="°C" min={15} max={35} valueMin={data.environment.tempC.min} valueMax={data.environment.tempC.max} ideal={data.environment.tempC.ideal} color="rose" /></div>
-                        <div><ParameterScale label="pH" unit="" min={4.0} max={9.0} valueMin={data.environment.ph.min} valueMax={data.environment.ph.max} ideal={data.environment.ph.ideal} color="cyan" /></div>
-                        {data.environment.gh && <div><ParameterScale label="GH (General Hardness)" unit="°dH" min={0} max={30} valueMin={data.environment.gh.min} valueMax={data.environment.gh.max} color="indigo" /></div>}
-                        {data.environment.kh && <div><ParameterScale label="KH (Carbonate Hardness)" unit="°dH" min={0} max={20} valueMin={data.environment.kh.min} valueMax={data.environment.kh.max} color="purple" /></div>}
-
-                        <div className="pt-4 border-t-2 border-slate-200 dark:border-slate-700">
-                          <div className="grid grid-cols-2 gap-3">
-                            {data.environment.tempC.ideal && (
-                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-rose-200 dark:border-rose-800">
-                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Ideal Temp</div>
-                                <div className="text-base md:text-xl font-black text-rose-600 dark:text-rose-400">{data.environment.tempC.ideal}°C</div>
-                              </div>
-                            )}
-                            {data.environment.ph.ideal && (
-                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-cyan-200 dark:border-cyan-800">
-                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Ideal pH</div>
-                                <div className="text-base md:text-xl font-black text-cyan-600 dark:text-cyan-400">{data.environment.ph.ideal}</div>
-                              </div>
-                            )}
-                            {data.environment.flow && (
-                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-blue-200 dark:border-blue-800">
-                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Flow Rate</div>
-                                <div className="text-base md:text-xl font-black text-blue-600 dark:text-blue-400 capitalize">{data.environment.flow}</div>
-                              </div>
-                            )}
-                            {data.environment.substrate && (
-                              <div className="bg-white dark:bg-slate-800 rounded-lg p-3 border-2 border-amber-200 dark:border-amber-800">
-                                <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Substrate</div>
-                                <div className="text-base md:text-xl font-black text-amber-600 dark:text-amber-400 capitalize">{data.environment.substrate}</div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
                     <div>
                       <SectionHeader title="Tank Setup Recommendations" icon={<Mountain className="w-5 h-5" />} />
                       <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
