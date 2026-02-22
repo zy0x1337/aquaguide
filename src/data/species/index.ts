@@ -12,6 +12,7 @@ import { cardinalTetra } from './cardinal-tetra';
 import { celestialPearlDanio } from './celestial-pearl-danio';
 import { cherryBarb } from './cherry-barb';
 import { chiliRasbora } from './chili-rasbora';
+import { congoTetra } from './congo-tetra';
 import { corydorasPaleatus } from './corydoras-paleatus';
 import { zebraDanio } from './danio-rerio';
 import { diamondTetra } from './diamond-tetra';
@@ -62,6 +63,7 @@ export const allSpecies: Species[] = [
   celestialPearlDanio,
   cherryBarb,
   chiliRasbora,
+  congoTetra,
   corydorasPaleatus,
   zebraDanio,
   diamondTetra,
@@ -114,6 +116,7 @@ export {
   celestialPearlDanio,
   cherryBarb,
   chiliRasbora,
+  congoTetra,
   corydorasPaleatus,
   zebraDanio,
   diamondTetra,
