@@ -33,6 +33,10 @@ import { PlantDetailPage } from './pages/PlantDetailPage';
 import { HabitatsIndexPage } from './pages/HabitatsIndexPage';
 import { HabitatsDetailPage } from './pages/HabitatsDetailPage';
 
+// 📚 KNOWLEDGE HUB PAGES
+import KnowledgeHubPage from './pages/KnowledgeHubPage';
+import KnowledgeDetailPage from './pages/KnowledgeDetailPage';
+
 // 🐠 MY TANKS & DASHBOARD
 import DashboardPage from './pages/DashboardPage';
 import MyTanksPage from './pages/MyTanksPage';
@@ -88,6 +92,10 @@ function App() {
             {/* Keep old biotope routes temporarily to avoid breaking existing links */}
             <Route path="/biotopes" element={<HabitatsIndexPage />} />
             <Route path="/biotopes/:slug" element={<HabitatsDetailPage />} />
+
+            {/* 📚 Knowledge Hub Routes */}
+            <Route path="/knowledge" element={<KnowledgeHubPage />} />
+            <Route path="/knowledge/:slug" element={<KnowledgeDetailPage />} />
 
             {/* 🐠 Dashboard & My Tanks (Protected) */}
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogIn, LogOut, User, Crown, LayoutDashboard, Waves } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogIn, LogOut, User, Crown, LayoutDashboard, Waves, BookOpen } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -40,6 +40,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
     { path: '/species', label: 'Fish', icon: Fish },
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/habitats', label: 'Habitats', icon: Waves },
+    { path: '/knowledge', label: 'Knowledge', icon: BookOpen },
     { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, requireAuth: true },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
