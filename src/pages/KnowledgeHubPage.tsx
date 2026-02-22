@@ -27,12 +27,6 @@ const KnowledgeHubPage = () => {
   const featuredArticle = allKnowledgeArticles[0];
   const totalReadingTime = allKnowledgeArticles.reduce((sum, article) => sum + article.readingTime, 0);
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  };
-
   return (
     <PageTransition>
       <SEOHead 
@@ -40,82 +34,89 @@ const KnowledgeHubPage = () => {
         description="Comprehensive guides on aquarium care, water chemistry, equipment, and more. Learn at your own pace with expert articles."
       />
 
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen bg-slate-50 pb-20">
         
-        {/* HERO SECTION - DARK BACKGROUND LIKE DISEASES */}
-        <header className="bg-slate-900 text-white pt-20 pb-28 relative overflow-hidden">
-          {/* Background gradient orbs */}
+        {/* HERO HEADER - EXACT SAME AS DISEASES */}
+        <header className="bg-slate-900 text-white pt-16 pb-24 relative overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-            <motion.div 
-              initial="initial"
-              animate="animate"
-              variants={fadeInUp}
-              className="max-w-4xl mx-auto mb-16"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-8">
-                <Sparkles className="w-4 h-4" />
-                Expert Guides & Tutorials
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-6">
+              <Sparkles className="w-4 h-4 mr-2" /> Expert Guides
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+              Master Aquarium <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                Knowledge & Skills
               </span>
+            </h1>
+            <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+              Comprehensive guides on water chemistry, equipment, biology, and care. Learn from expert-written articles tailored to every skill level.
+            </p>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-[1.05]">
-                Knowledge Hub
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-                  Master Aquarium Keeping
-                </span>
-              </h1>
-              
-              <p className="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                Dive deep into aquarium keeping with comprehensive, expert-written guides. 
-                Master water chemistry, equipment, biology, and everything in between.
-              </p>
-            </motion.div>
+            {/* COMPACT STATS */}
+            <div className="flex flex-wrap justify-center gap-6 max-w-3xl mx-auto">
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-indigo-500/80 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-2xl font-black text-white">{allKnowledgeArticles.length}</div>
+                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Articles</div>
+                </div>
+              </div>
 
-            {/* Stats Cards */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto"
-            >
-              <StatsCard icon={<BookOpen className="w-6 h-6" />} value={allKnowledgeArticles.length.toString()} label="Expert Articles" color="indigo" />
-              <StatsCard icon={<Clock className="w-6 h-6" />} value={`${totalReadingTime}min`} label="Total Content" color="purple" />
-              <StatsCard icon={<Award className="w-6 h-6" />} value="7" label="Categories" color="cyan" />
-              <StatsCard icon={<TrendingUp className="w-6 h-6" />} value="100%" label="Free Access" color="emerald" />
-            </motion.div>
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-purple-500/80 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-2xl font-black text-white">{totalReadingTime}min</div>
+                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Reading Time</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-cyan-500/80 flex items-center justify-center">
+                  <Award className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-2xl font-black text-white">7</div>
+                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Categories</div>
+                </div>
+              </div>
+            </div>
           </div>
         </header>
 
-        {/* FEATURED ARTICLE - REDESIGNED */}
-        {featuredArticle && (
-          <section className="px-6 -mt-16 relative z-20 pb-16">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-center gap-3 mb-8">
+        {/* CONTENT GRID */}
+        <main className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
+          
+          {/* FEATURED ARTICLE */}
+          {featuredArticle && (
+            <section className="mb-12">
+              <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-3xl font-black text-slate-900 dark:text-white">Featured Article</h2>
+                <h2 className="text-2xl font-black text-slate-900">Featured Article</h2>
               </div>
               <FeaturedArticleCard article={featuredArticle} />
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
-        {/* CATEGORY FILTER - ENHANCED */}
-        <section className="sticky top-16 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-y-2 border-slate-200 dark:border-slate-800 py-6 px-6 shadow-lg">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center gap-3 mb-5">
-              <Filter className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-              <span className="text-sm font-bold text-slate-800 dark:text-slate-200">Filter by Category</span>
+          {/* CATEGORY FILTER */}
+          <section className="mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <Filter className="w-5 h-5 text-slate-500" />
+              <span className="text-sm font-bold text-slate-700">Filter by Category</span>
               {selectedCategory !== 'all' && (
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className="ml-auto text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-bold uppercase tracking-wider"
+                  className="ml-auto text-xs text-indigo-600 hover:text-indigo-700 font-bold uppercase tracking-wider"
                 >
                   Clear filter
                 </button>
@@ -126,132 +127,99 @@ const KnowledgeHubPage = () => {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-bold whitespace-nowrap transition-all duration-200 border-2 ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold whitespace-nowrap transition-all duration-200 text-sm ${
                     selectedCategory === cat.id
-                      ? `bg-gradient-to-r ${cat.color} text-white shadow-xl scale-105 border-transparent`
-                      : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
+                      ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
+                      : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
                   }`}
                 >
-                  <span className={selectedCategory === cat.id ? 'scale-110' : ''}>{cat.icon}</span>
+                  {cat.icon}
                   {cat.label}
                 </button>
               ))}
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ARTICLES GRID - IMPROVED SPACING */}
-        <section className="py-20 px-6 bg-slate-50 dark:bg-slate-950">
-          <div className="max-w-7xl mx-auto">
-            {filteredArticles.length === 0 ? (
-              <div className="text-center py-24">
-                <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <BookOpen className="w-10 h-10 text-slate-400 dark:text-slate-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No articles found</h3>
-                <p className="text-slate-600 dark:text-slate-400 text-lg">Try selecting a different category</p>
+          {/* ARTICLES GRID */}
+          {filteredArticles.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="bg-slate-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-8 h-8 text-slate-400" />
               </div>
-            ) : (
-              <>
-                <div className="flex items-center justify-between mb-10">
-                  <h2 className="text-3xl font-black text-slate-900 dark:text-white">
-                    {selectedCategory === 'all' ? 'All Articles' : categories.find(c => c.id === selectedCategory)?.label}
-                    <span className="ml-4 text-xl font-bold text-slate-500 dark:text-slate-400">({filteredArticles.length})</span>
-                  </h2>
-                </div>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                  {filteredArticles.map((article, idx) => (
-                    <ArticleCard key={article.id} article={article} index={idx} />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </section>
+              <h3 className="text-lg font-bold text-slate-900">No articles found</h3>
+              <p className="text-slate-500">Try selecting a different category</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles.map((article, idx) => (
+                <ArticleCard key={article.id} article={article} index={idx} />
+              ))}
+            </div>
+          )}
+        </main>
 
       </div>
     </PageTransition>
   );
 };
 
-// ENHANCED STATS CARD
-const StatsCard = ({ icon, value, label, color }: { icon: React.ReactNode; value: string; label: string; color: string }) => {
-  const colorClasses = {
-    indigo: 'from-indigo-500 to-indigo-600',
-    purple: 'from-purple-500 to-purple-600',
-    cyan: 'from-cyan-500 to-cyan-600',
-    emerald: 'from-emerald-500 to-emerald-600'
-  }[color];
-
-  return (
-    <div className="group bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 hover:bg-white/20 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
-      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${colorClasses} flex items-center justify-center text-white mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
-        {icon}
-      </div>
-      <div className="text-4xl font-black text-white mb-2">{value}</div>
-      <div className="text-sm font-bold text-slate-300 uppercase tracking-wider">{label}</div>
-    </div>
-  );
-};
-
-// REDESIGNED FEATURED ARTICLE CARD
+// FEATURED ARTICLE CARD
 const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
   const categoryColors: Record<string, string> = {
-    chemistry: 'bg-blue-500 text-white',
-    biology: 'bg-green-500 text-white',
-    equipment: 'bg-purple-500 text-white',
-    maintenance: 'bg-orange-500 text-white',
-    diseases: 'bg-red-500 text-white',
-    plants: 'bg-emerald-500 text-white'
+    chemistry: 'bg-blue-500',
+    biology: 'bg-green-500',
+    equipment: 'bg-purple-500',
+    maintenance: 'bg-orange-500',
+    diseases: 'bg-red-500',
+    plants: 'bg-emerald-500'
   };
 
   return (
     <Link
       to={`/knowledge/${article.slug}`}
-      className="group block bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2"
+      className="group block bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
-      <div className="lg:flex">
+      <div className="md:flex">
         {article.visuals?.headerImage && (
-          <div className="lg:w-5/12 h-80 lg:h-auto overflow-hidden relative">
+          <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative">
             <img
               src={article.visuals.headerImage}
               alt={article.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
-            <div className="absolute top-6 left-6">
-              <span className="px-4 py-2 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider shadow-2xl">
-                ✨ Featured
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+            <div className="absolute top-4 left-4">
+              <span className="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg">
+                Featured
               </span>
             </div>
           </div>
         )}
-        <div className="lg:w-7/12 p-8 lg:p-12 flex flex-col justify-center">
-          <div className="flex gap-2 mb-5">
-            <span className={`text-xs px-3 py-1.5 rounded-full font-bold capitalize ${categoryColors[article.category]} shadow-md`}>
+        <div className="md:w-3/5 p-6 flex flex-col justify-center">
+          <div className="flex gap-2 mb-3">
+            <span className={`text-xs px-2.5 py-1 rounded-lg font-bold capitalize ${categoryColors[article.category]} text-white`}>
               {article.category}
             </span>
           </div>
-          <h3 className="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-5 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
+          <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors leading-tight">
             {article.title}
           </h3>
-          <p className="text-slate-600 dark:text-slate-400 text-base lg:text-lg mb-8 leading-relaxed line-clamp-3">
+          <p className="text-slate-600 text-sm mb-4 leading-relaxed line-clamp-2">
             {article.summary}
           </p>
-          <div className="flex items-center gap-8 text-sm text-slate-500 dark:text-slate-400 mb-8">
-            <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5" />
-              <span className="font-bold">{article.readingTime} min read</span>
+          <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4" />
+              <span className="font-semibold">{article.readingTime} min</span>
             </div>
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              <span className="font-bold">{article.content.sections.length} sections</span>
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-4 h-4" />
+              <span className="font-semibold">{article.content.sections.length} sections</span>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-black text-lg group-hover:gap-5 transition-all">
-            <span>Read Full Article</span>
-            <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+          <div className="flex items-center gap-2 text-indigo-600 font-bold text-sm group-hover:gap-3 transition-all">
+            <span>Read Article</span>
+            <ArrowRight className="w-4 h-4" />
           </div>
         </div>
       </div>
@@ -259,84 +227,66 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
   );
 };
 
-// REDESIGNED ARTICLE CARD
+// ARTICLE CARD - MATCHING DISEASE STYLE
 const ArticleCard = ({ article, index }: { article: KnowledgeArticle; index: number }) => {
   const difficultyColors = {
-    beginner: 'text-emerald-700 bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800',
-    intermediate: 'text-amber-700 bg-amber-100 dark:bg-amber-950/30 dark:text-amber-400 border-amber-300 dark:border-amber-800',
-    advanced: 'text-rose-700 bg-rose-100 dark:bg-rose-950/30 dark:text-rose-400 border-rose-300 dark:border-rose-800'
+    beginner: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    intermediate: 'bg-amber-50 text-amber-700 border-amber-200',
+    advanced: 'bg-rose-50 text-rose-700 border-rose-200'
   };
 
   const categoryColors: Record<string, string> = {
-    chemistry: 'bg-blue-500 text-white border-blue-600',
-    biology: 'bg-green-500 text-white border-green-600',
-    equipment: 'bg-purple-500 text-white border-purple-600',
-    maintenance: 'bg-orange-500 text-white border-orange-600',
-    diseases: 'bg-red-500 text-white border-red-600',
-    plants: 'bg-emerald-500 text-white border-emerald-600'
+    chemistry: 'bg-blue-500 shadow-blue-200',
+    biology: 'bg-green-500 shadow-green-200',
+    equipment: 'bg-purple-500 shadow-purple-200',
+    maintenance: 'bg-orange-500 shadow-orange-200',
+    diseases: 'bg-red-500 shadow-red-200',
+    plants: 'bg-emerald-500 shadow-emerald-200'
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
-      whileHover={{ y: -8 }}
+    <Link
+      to={`/knowledge/${article.slug}`}
+      className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full"
     >
-      <Link
-        to={`/knowledge/${article.slug}`}
-        className="group block bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col"
-      >
-        {/* Header Image */}
-        {article.visuals?.headerImage && (
-          <div className="h-56 overflow-hidden relative">
-            <img
-              src={article.visuals.headerImage}
-              alt={article.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent" />
+      {/* Card Header */}
+      <div className="flex justify-between items-start mb-4">
+        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-white ${categoryColors[article.category]}`}>
+          <BookOpen className="w-6 h-6" />
+        </div>
+        <div className={`px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border ${difficultyColors[article.difficulty]}`}>
+          {article.difficulty}
+        </div>
+      </div>
+
+      <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+        {article.title}
+      </h3>
+
+      {/* Summary */}
+      <div className="mb-4 flex-grow">
+        <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
+          {article.summary}
+        </p>
+      </div>
+
+      {/* Footer */}
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
+        <div className="flex items-center gap-3 text-xs text-slate-500">
+          <div className="flex items-center gap-1">
+            <Clock className="w-3.5 h-3.5" />
+            <span className="font-semibold">{article.readingTime}min</span>
           </div>
-        )}
-
-        <div className="p-6 lg:p-7 flex-1 flex flex-col">
-          {/* Category & Difficulty */}
-          <div className="flex gap-2 mb-5">
-            <span className={`text-xs px-3 py-1.5 rounded-full font-bold capitalize border-2 shadow-sm ${categoryColors[article.category]}`}>
-              {article.category}
-            </span>
-            <span className={`text-xs px-3 py-1.5 rounded-full font-bold capitalize border-2 ${difficultyColors[article.difficulty]}`}>
-              {article.difficulty}
-            </span>
-          </div>
-
-          {/* Title */}
-          <h3 className="text-xl lg:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight line-clamp-2">
-            {article.title}
-          </h3>
-
-          {/* Summary */}
-          <p className="text-slate-600 dark:text-slate-400 text-sm lg:text-base mb-6 line-clamp-3 leading-relaxed flex-1">
-            {article.summary}
-          </p>
-
-          {/* Meta Info */}
-          <div className="flex items-center justify-between pt-5 border-t-2 border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-5 text-sm text-slate-500 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span className="font-bold">{article.readingTime}min</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
-                <span className="font-bold">{article.content.sections.length}</span>
-              </div>
-            </div>
-            <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
+          <div className="flex items-center gap-1">
+            <BookOpen className="w-3.5 h-3.5" />
+            <span className="font-semibold">{article.content.sections.length}</span>
           </div>
         </div>
-      </Link>
-    </motion.div>
+        <span className="text-indigo-600 text-sm font-bold flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
+          Read <ArrowRight className="w-4 h-4 ml-1" />
+        </span>
+      </div>
+    </Link>
   );
 };
 
