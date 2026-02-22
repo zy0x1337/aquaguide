@@ -35,6 +35,7 @@ import { pygmyCory } from './pygmy-cory';
 import { ramCichlid } from './ram-cichlid';
 import { rosyBarb } from './rosy-barb';
 import { rummynoseTetra } from './rummynose-tetra';
+import { sailfinPleco } from './sailfin-pleco';
 import { siameseAlgaeEater } from './siamese-algae-eater';
 import { sparklingGourami } from './sparkling-gourami';
 import { swordtail } from './swordtail';
@@ -84,6 +85,7 @@ export const allSpecies: Species[] = [
   ramCichlid,
   rosyBarb,
   rummynoseTetra,
+  sailfinPleco,
   siameseAlgaeEater,
   sparklingGourami,
   swordtail,
@@ -135,6 +137,7 @@ export {
   ramCichlid,
   rosyBarb,
   rummynoseTetra,
+  sailfinPleco,
   siameseAlgaeEater,
   sparklingGourami,
   swordtail,
