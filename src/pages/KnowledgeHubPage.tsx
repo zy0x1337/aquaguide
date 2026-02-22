@@ -42,10 +42,16 @@ const KnowledgeHubPage = () => {
 
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/20">
         
-        {/* HERO SECTION */}
-        <section className="relative pt-20 sm:pt-28 pb-12 sm:pb-16 px-6 overflow-hidden">
-          {/* Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-purple-50/20 dark:from-slate-950 dark:via-slate-950 dark:to-purple-950/20" />
+        {/* HERO SECTION - ENHANCED */}
+        <section className="relative pt-20 sm:pt-28 pb-12 sm:pb-20 px-6 overflow-hidden">
+          {/* Background with better gradient */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-white to-purple-50/30 dark:from-slate-950 dark:via-slate-950 dark:to-purple-950/20" />
+            <div className="absolute inset-0" style={{ 
+              backgroundImage: 'radial-gradient(circle at 2px 2px, rgb(148 163 184 / 0.05) 1px, transparent 0)',
+              backgroundSize: '32px 32px'
+            }} />
+          </div>
           
           {/* Animated gradient orbs */}
           <motion.div 
@@ -66,61 +72,65 @@ const KnowledgeHubPage = () => {
               initial="initial"
               animate="animate"
               variants={fadeInUp}
-              className="text-center max-w-3xl mx-auto mb-12"
+              className="text-center max-w-4xl mx-auto mb-16"
             >
-              <span className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20 text-purple-700 dark:text-purple-300 text-xs font-semibold uppercase tracking-wider mb-8 border border-purple-200/50 dark:border-purple-500/30">
-                <Sparkles className="w-3.5 h-3.5" />
-                Expert Guides
+              <span className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20 text-purple-700 dark:text-purple-300 text-xs font-bold uppercase tracking-wider mb-8 border-2 border-purple-200/50 dark:border-purple-500/30 shadow-sm">
+                <Sparkles className="w-4 h-4" />
+                Expert Guides & Tutorials
               </span>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.05]">
-                Knowledge Hub
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-[1.05]">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-indigo-800 to-purple-900 dark:from-white dark:via-indigo-200 dark:to-purple-200">
+                  Knowledge Hub
+                </span>
               </h1>
               
               <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                Comprehensive guides on aquarium care, water chemistry, equipment, and more. 
-                Learn from expert-written articles tailored to every skill level.
+                Dive deep into aquarium keeping with comprehensive, expert-written guides. 
+                Master water chemistry, equipment, biology, and everything in between.
               </p>
             </motion.div>
 
-            {/* Stats Cards */}
+            {/* Stats Cards - ENHANCED */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto"
             >
-              <StatsCard icon={<BookOpen className="w-6 h-6" />} value={allKnowledgeArticles.length.toString()} label="Articles" color="indigo" />
-              <StatsCard icon={<Clock className="w-6 h-6" />} value={`${totalReadingTime}min`} label="Total Reading" color="purple" />
+              <StatsCard icon={<BookOpen className="w-6 h-6" />} value={allKnowledgeArticles.length.toString()} label="Expert Articles" color="indigo" />
+              <StatsCard icon={<Clock className="w-6 h-6" />} value={`${totalReadingTime}min`} label="Total Content" color="purple" />
               <StatsCard icon={<Award className="w-6 h-6" />} value="7" label="Categories" color="cyan" />
-              <StatsCard icon={<TrendingUp className="w-6 h-6" />} value="Free" label="Always" color="emerald" />
+              <StatsCard icon={<TrendingUp className="w-6 h-6" />} value="100%" label="Free Access" color="emerald" />
             </motion.div>
           </div>
         </section>
 
-        {/* FEATURED ARTICLE */}
+        {/* FEATURED ARTICLE - REDESIGNED */}
         {featuredArticle && (
-          <section className="px-6 pb-12">
+          <section className="px-6 pb-16">
             <div className="max-w-7xl mx-auto">
-              <div className="flex items-center gap-2 mb-6">
-                <Sparkles className="w-5 h-5 text-amber-500" />
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white">Featured Article</h2>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-3xl font-black text-slate-900 dark:text-white">Featured Article</h2>
               </div>
               <FeaturedArticleCard article={featuredArticle} />
             </div>
           </section>
         )}
 
-        {/* CATEGORY FILTER */}
-        <section className="sticky top-16 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800 py-6 px-6 shadow-sm">
+        {/* CATEGORY FILTER - ENHANCED */}
+        <section className="sticky top-16 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-y-2 border-slate-200 dark:border-slate-800 py-6 px-6 shadow-lg">
           <div className="max-w-7xl mx-auto">
-            <div className="flex items-center gap-3 mb-4">
-              <Filter className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Filter by Category</span>
+            <div className="flex items-center gap-3 mb-5">
+              <Filter className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+              <span className="text-sm font-bold text-slate-800 dark:text-slate-200">Filter by Category</span>
               {selectedCategory !== 'all' && (
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className="ml-auto text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-semibold"
+                  className="ml-auto text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-bold uppercase tracking-wider"
                 >
                   Clear filter
                 </button>
@@ -131,13 +141,13 @@ const KnowledgeHubPage = () => {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold whitespace-nowrap transition-all duration-200 ${
+                  className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-bold whitespace-nowrap transition-all duration-200 border-2 ${
                     selectedCategory === cat.id
-                      ? `bg-gradient-to-r ${cat.color} text-white shadow-lg scale-105`
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                      ? `bg-gradient-to-r ${cat.color} text-white shadow-xl scale-105 border-transparent`
+                      : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
                   }`}
                 >
-                  {cat.icon}
+                  <span className={selectedCategory === cat.id ? 'scale-110' : ''}>{cat.icon}</span>
                   {cat.label}
                 </button>
               ))}
@@ -145,21 +155,23 @@ const KnowledgeHubPage = () => {
           </div>
         </section>
 
-        {/* ARTICLES GRID */}
-        <section className="py-16 px-6">
+        {/* ARTICLES GRID - IMPROVED SPACING */}
+        <section className="py-20 px-6">
           <div className="max-w-7xl mx-auto">
             {filteredArticles.length === 0 ? (
-              <div className="text-center py-20">
-                <BookOpen className="w-16 h-16 text-slate-300 dark:text-slate-700 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No articles found</h3>
-                <p className="text-slate-600 dark:text-slate-400">Try selecting a different category</p>
+              <div className="text-center py-24">
+                <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <BookOpen className="w-10 h-10 text-slate-400 dark:text-slate-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No articles found</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-lg">Try selecting a different category</p>
               </div>
             ) : (
               <>
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="flex items-center justify-between mb-10">
+                  <h2 className="text-3xl font-black text-slate-900 dark:text-white">
                     {selectedCategory === 'all' ? 'All Articles' : categories.find(c => c.id === selectedCategory)?.label}
-                    <span className="ml-3 text-lg font-normal text-slate-500 dark:text-slate-400">({filteredArticles.length})</span>
+                    <span className="ml-4 text-xl font-bold text-slate-500 dark:text-slate-400">({filteredArticles.length})</span>
                   </h2>
                 </div>
 
@@ -178,6 +190,7 @@ const KnowledgeHubPage = () => {
   );
 };
 
+// ENHANCED STATS CARD
 const StatsCard = ({ icon, value, label, color }: { icon: React.ReactNode; value: string; label: string; color: string }) => {
   const colorClasses = {
     indigo: 'from-indigo-500 to-indigo-600',
@@ -187,72 +200,73 @@ const StatsCard = ({ icon, value, label, color }: { icon: React.ReactNode; value
   }[color];
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-slate-100 dark:border-slate-800 shadow-lg hover:shadow-xl transition-all">
-      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorClasses} flex items-center justify-center text-white mb-3 shadow-lg`}>
+    <div className="group bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
+      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${colorClasses} flex items-center justify-center text-white mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
         {icon}
       </div>
-      <div className="text-3xl font-black text-slate-900 dark:text-white mb-1">{value}</div>
-      <div className="text-sm font-semibold text-slate-500 dark:text-slate-400">{label}</div>
+      <div className="text-4xl font-black text-slate-900 dark:text-white mb-2">{value}</div>
+      <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{label}</div>
     </div>
   );
 };
 
+// REDESIGNED FEATURED ARTICLE CARD
 const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
   const categoryColors: Record<string, string> = {
-    chemistry: 'bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400',
-    biology: 'bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400',
-    equipment: 'bg-purple-100 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400',
-    maintenance: 'bg-orange-100 text-orange-700 dark:bg-orange-950/30 dark:text-orange-400',
-    diseases: 'bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400',
-    plants: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400'
+    chemistry: 'bg-blue-500 text-white',
+    biology: 'bg-green-500 text-white',
+    equipment: 'bg-purple-500 text-white',
+    maintenance: 'bg-orange-500 text-white',
+    diseases: 'bg-red-500 text-white',
+    plants: 'bg-emerald-500 text-white'
   };
 
   return (
     <Link
       to={`/knowledge/${article.slug}`}
-      className="group block bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-1"
+      className="group block bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2"
     >
       <div className="lg:flex">
         {article.visuals?.headerImage && (
-          <div className="lg:w-1/2 h-64 lg:h-auto overflow-hidden relative">
+          <div className="lg:w-5/12 h-80 lg:h-auto overflow-hidden relative">
             <img
               src={article.visuals.headerImage}
               alt={article.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-            <div className="absolute top-4 left-4">
-              <span className="px-3 py-1.5 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg">
-                Featured
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
+            <div className="absolute top-6 left-6">
+              <span className="px-4 py-2 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider shadow-2xl">
+                ✨ Featured
               </span>
             </div>
           </div>
         )}
-        <div className="lg:w-1/2 p-8 lg:p-10 flex flex-col justify-center">
-          <div className="flex gap-2 mb-4">
-            <span className={`text-xs px-2.5 py-1 rounded-full font-bold capitalize ${categoryColors[article.category]}`}>
+        <div className="lg:w-7/12 p-8 lg:p-12 flex flex-col justify-center">
+          <div className="flex gap-2 mb-5">
+            <span className={`text-xs px-3 py-1.5 rounded-full font-bold capitalize ${categoryColors[article.category]} shadow-md`}>
               {article.category}
             </span>
           </div>
-          <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
+          <h3 className="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-5 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
             {article.title}
           </h3>
-          <p className="text-slate-600 dark:text-slate-400 text-base mb-6 leading-relaxed line-clamp-3">
+          <p className="text-slate-600 dark:text-slate-400 text-base lg:text-lg mb-8 leading-relaxed line-clamp-3">
             {article.summary}
           </p>
-          <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400 mb-6">
+          <div className="flex items-center gap-8 text-sm text-slate-500 dark:text-slate-400 mb-8">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              <span className="font-semibold">{article.readingTime} min read</span>
+              <Clock className="w-5 h-5" />
+              <span className="font-bold">{article.readingTime} min read</span>
             </div>
             <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4" />
-              <span className="font-semibold">{article.content.sections.length} sections</span>
+              <BookOpen className="w-5 h-5" />
+              <span className="font-bold">{article.content.sections.length} sections</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold group-hover:gap-4 transition-all">
-            <span>Read Article</span>
-            <ArrowRight className="w-5 h-5" />
+          <div className="flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-black text-lg group-hover:gap-5 transition-all">
+            <span>Read Full Article</span>
+            <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </div>
@@ -260,20 +274,21 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
   );
 };
 
+// REDESIGNED ARTICLE CARD
 const ArticleCard = ({ article, index }: { article: KnowledgeArticle; index: number }) => {
   const difficultyColors = {
-    beginner: 'text-green-600 bg-green-100 dark:bg-green-950/30 dark:text-green-400 border-green-200 dark:border-green-800',
-    intermediate: 'text-yellow-600 bg-yellow-100 dark:bg-yellow-950/30 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800',
-    advanced: 'text-red-600 bg-red-100 dark:bg-red-950/30 dark:text-red-400 border-red-200 dark:border-red-800'
+    beginner: 'text-emerald-700 bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800',
+    intermediate: 'text-amber-700 bg-amber-100 dark:bg-amber-950/30 dark:text-amber-400 border-amber-300 dark:border-amber-800',
+    advanced: 'text-rose-700 bg-rose-100 dark:bg-rose-950/30 dark:text-rose-400 border-rose-300 dark:border-rose-800'
   };
 
   const categoryColors: Record<string, string> = {
-    chemistry: 'bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400 border-blue-200 dark:border-blue-800',
-    biology: 'bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400 border-green-200 dark:border-green-800',
-    equipment: 'bg-purple-100 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400 border-purple-200 dark:border-purple-800',
-    maintenance: 'bg-orange-100 text-orange-700 dark:bg-orange-950/30 dark:text-orange-400 border-orange-200 dark:border-orange-800',
-    diseases: 'bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400 border-red-200 dark:border-red-800',
-    plants: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+    chemistry: 'bg-blue-500 text-white border-blue-600',
+    biology: 'bg-green-500 text-white border-green-600',
+    equipment: 'bg-purple-500 text-white border-purple-600',
+    maintenance: 'bg-orange-500 text-white border-orange-600',
+    diseases: 'bg-red-500 text-white border-red-600',
+    plants: 'bg-emerald-500 text-white border-emerald-600'
   };
 
   return (
@@ -285,58 +300,51 @@ const ArticleCard = ({ article, index }: { article: KnowledgeArticle; index: num
     >
       <Link
         to={`/knowledge/${article.slug}`}
-        className="group block bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col"
+        className="group block bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col"
       >
         {/* Header Image */}
         {article.visuals?.headerImage && (
-          <div className="h-48 overflow-hidden relative">
+          <div className="h-56 overflow-hidden relative">
             <img
               src={article.visuals.headerImage}
               alt={article.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent" />
           </div>
         )}
 
-        <div className="p-6 flex-1 flex flex-col">
+        <div className="p-6 lg:p-7 flex-1 flex flex-col">
           {/* Category & Difficulty */}
-          <div className="flex gap-2 mb-4">
-            <span className={`text-xs px-2.5 py-1 rounded-full font-bold capitalize border ${categoryColors[article.category]}`}>
+          <div className="flex gap-2 mb-5">
+            <span className={`text-xs px-3 py-1.5 rounded-full font-bold capitalize border-2 shadow-sm ${categoryColors[article.category]}`}>
               {article.category}
             </span>
-            <span className={`text-xs px-2.5 py-1 rounded-full font-bold capitalize border ${difficultyColors[article.difficulty]}`}>
+            <span className={`text-xs px-3 py-1.5 rounded-full font-bold capitalize border-2 ${difficultyColors[article.difficulty]}`}>
               {article.difficulty}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight line-clamp-2">
+          <h3 className="text-xl lg:text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight line-clamp-2">
             {article.title}
           </h3>
 
           {/* Summary */}
-          <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed flex-1">
+          <p className="text-slate-600 dark:text-slate-400 text-sm lg:text-base mb-6 line-clamp-3 leading-relaxed flex-1">
             {article.summary}
           </p>
 
-          {/* Progress Bar */}
-          <div className="mb-4">
-            <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style={{ width: '0%' }} />
-            </div>
-          </div>
-
           {/* Meta Info */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
-              <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between pt-5 border-t-2 border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-5 text-sm text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                <span className="font-semibold">{article.readingTime}min</span>
+                <span className="font-bold">{article.readingTime}min</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
-                <span className="font-semibold">{article.content.sections.length}</span>
+                <span className="font-bold">{article.content.sections.length}</span>
               </div>
             </div>
             <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
