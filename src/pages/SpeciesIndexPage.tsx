@@ -342,6 +342,7 @@ const SpeciesIndexPage = () => {
           <Slider 
             min={15} 
             max={35} 
+            step={0.5}
             value={[filters.tempMin, filters.tempMax]} 
             onChange={([tempMin, tempMax]) => setFilters({ ...filters, tempMin, tempMax })} 
             formatLabel={(v) => `${v}°C`} 
@@ -370,6 +371,7 @@ const SpeciesIndexPage = () => {
             type="range" 
             min="2" 
             max="30" 
+            step="0.5"
             value={filters.maxBodySize} 
             onChange={(e) => setFilters({ ...filters, maxBodySize: Number(e.target.value) })} 
             className="w-full h-2 bg-amber-200 rounded-lg appearance-none cursor-pointer accent-amber-600"
