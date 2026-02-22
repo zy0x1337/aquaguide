@@ -16,7 +16,7 @@ export const hyphessobryconMegalopterus: Species = {
   },
 
   visuals: {
-    iconShape: 'tetra',
+    iconShape: 'fusiform',
     adultSizeCM: 4.5,
     color: 'Striking sexual dimorphism. Males: silvery-gray body with prominent black shoulder patch behind gill plate, smaller black spot on caudal peduncle, enormous black dorsal and anal fins with white leading edges ("phantom" appearance), reddish pelvic fins. During courtship/display, entire body darkens to charcoal-black. Females: warmer beige-brown body, same shoulder patch but less defined, reddish-orange anal and pelvic fins, smaller rounded dorsal fin, overall softer coloration. Both sexes have semi-transparent body with visible backbone/organs. Eye has brilliant red upper half.',
   },
@@ -47,13 +47,13 @@ export const hyphessobryconMegalopterus: Species = {
   },
 
   habitat: {
-    planting: 'very-dense',
+    planting: 'dense',
     plantingNotes: 'Black Phantom Tetras THRIVE in heavily planted tanks that mimic their natural Pantanal habitat. Use South American plants: Amazon Swords (Echinodorus), Bacopa species, Ludwigia, Cabomba, Water Sprite. Create dense planting on sides and back with open swimming space in center/front. Floating plants (Salvinia, Amazon Frogbit, Water Lettuce) are ESSENTIAL - they diffuse light creating the dim, tannin-stained environment these fish prefer. Without subdued lighting, they become washed-out and shy. Add fine-leaved plants (Cabomba, Myriophyllum) for spawning sites. Avoid sparse, brightly-lit tanks - they stress easily and lose their dramatic black coloration.',
     hardscape: ['Driftwood (Mopani, Spiderwood - essential for tannins)', 'Smooth river stones', 'Indian Almond Leaves (recreates blackwater)', 'Leaf litter (oak, beech, catappa)', 'Twisted roots creating caves'],
   },
 
   behavior: {
-    tags: ['schooling', 'peaceful', 'active', 'display_behavior', 'dimorphic'],
+    tags: ['schooler', 'peaceful', 'active'],
     minGroupSize: 8,
     description: 'Black Phantom Tetras are peaceful, highly social schooling fish that should ALWAYS be kept in groups of 8-12+ individuals. In proper groups, they display fascinating natural behaviors: males constantly perform courtship displays (spreading fins, darkening color, circling), establish loose hierarchies through non-contact "sparring" (parallel swimming with fins flared), and create stunning visual effects when the entire school moves in synchronized patterns. They\'re active swimmers occupying mid-water column, constantly exploring and foraging. Unlike aggressive fish, their displays are purely ritualistic - contact is extremely rare and injuries virtually never occur. Females observe male displays and occasionally join in gentle chasing. In small groups (<6), they become timid, pale, hide constantly, and rarely display. Proper group size unlocks their personality - you\'ll see constant activity, vibrant coloration, and males showing off every few minutes. They\'re most active during dawn/dusk (crepuscular tendency) but remain visible throughout the day in dimly-lit tanks.',
     
@@ -96,7 +96,7 @@ export const hyphessobryconMegalopterus: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '12-20',
         bottom: '6-10',
       },
@@ -110,12 +110,12 @@ export const hyphessobryconMegalopterus: Species = {
     
     activity: {
       level: 'high',
-      peakTimes: ['dawn', 'dusk'],
+      peakTimes: ['morning', 'evening'],
       nocturnal: false,
     },
     
     socialStructure: {
-      type: 'hierarchical-group',
+      type: 'school',
       maxMalesPerTank: 999,
     },
     
@@ -158,8 +158,8 @@ export const hyphessobryconMegalopterus: Species = {
     
     feeding: {
       frequency: 'once-daily',
-      primaryFoods: ['micro-pellets', 'tropical-flakes', 'spirulina-flakes', 'bloodworms', 'brine-shrimp'],
-      supplements: ['daphnia', 'mosquito-larvae', 'frozen-cyclops', 'blanched-vegetables'],
+      primaryFoods: ['micro-pellets', 'flakes', 'spirulina', 'bloodworms', 'brine-shrimp'],
+      supplements: ['daphnia', 'cyclops'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -182,11 +182,11 @@ export const hyphessobryconMegalopterus: Species = {
       },
       filter: {
         required: true,
-        type: 'canister-or-sponge',
+        type: 'sponge',
         flowRate: 'gentle',
       },
       airstone: false,
-      lighting: 'low-moderate',
+      lighting: 'moderate',
       co2: false,
     },
   },
@@ -217,7 +217,7 @@ export const hyphessobryconMegalopterus: Species = {
 
   breeding: {
     method: 'egg_scatterer',
-    difficulty: 'moderate',
+    difficulty: 'medium',
     trigger: 'Black Phantom Tetras breed readily in proper conditions. Setup: 40L breeding tank, bare bottom or marbles (prevents egg eating), spawning mop or thick Java Moss clump, very soft water (GH 1-3°, pH 5.5-6.0 via peat or tannins), temperature 26-27°C, dim lighting or sides covered. Condition pair separately for 2 weeks on high-protein foods (bloodworms, brine shrimp, daphnia) 2-3x daily - female should become noticeably plump with eggs. Introduce pair in evening. Spawning occurs at dawn - male darkens to jet black, circles female performing displays, pair swims side-by-side into plants releasing 200-400 eggs and milt. Eggs are tiny (0.8-1mm), transparent, adhesive. Remove parents immediately after spawning (they eat eggs voraciously if given chance).',
     fryCare: 'Eggs hatch in 24-36 hours at 26°C. Fry are microscopic (2mm) and photophobic (light-sensitive) - keep tank dark or cover sides with paper/cloth. Fry absorb yolk sac for 3-4 days, then become free-swimming. First food: infusoria or liquid fry food for 5-7 days (they\'re too small for baby brine shrimp initially). At day 7-10, introduce freshly-hatched baby brine shrimp (Artemia nauplii) - fry grow rapidly on this. Feed 4-5x daily in small amounts. At 3-4 weeks, introduce finely crushed flakes and micro pellets. Fry are delicate - pristine water quality is CRITICAL. Perform daily 10-20% water changes with aged, temperature-matched water. Use sponge filter (won\'t suck up fry). Dim lighting for first 2 weeks, then gradually increase. Fry develop adult coloration at 8-12 weeks, sexual maturity at 6-8 months. Expect 50-150 fry survival from 200-400 eggs with good care.',
     notes: 'Breeding Black Phantom Tetras is moderately difficult but very achievable for intermediate aquarists. Main challenges: obtaining truly soft water (RO or distilled water remineralized to GH 1-3°), removing parents quickly post-spawn (they\'re aggressive egg eaters), and raising microscopic fry (requires infusoria/liquid fry food first week). Successes: they spawn readily (often spawn in community tanks but eggs/fry get eaten), produce large spawns (200-400 eggs), and fry grow quickly on baby brine shrimp. Much easier than many tetras (Cardinals, Neons require extremely specific water chemistry). Commercial breeding occurs but most trade specimens are captive-bred in Asia/Europe. Rewarding species for breeders wanting to try characin breeding without extreme difficulty.',

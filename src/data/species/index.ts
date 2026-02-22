@@ -42,6 +42,7 @@ import { bolivianRam } from './bolivian-ram';
 import { sterbaiCory } from './sterbai-cory';
 import { clownPleco } from './clown-pleco';
 import { sewelliaLineolata } from './sewellia-lineolata';
+import { hyphessobryconMegalopterus } from './hyphessobrycon-megalopterus';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -86,7 +87,8 @@ export const allSpecies: Species[] = [
   bolivianRam,
   sterbaiCory,
   clownPleco,
-  sewelliaLineolata
+  sewelliaLineolata,
+  hyphessobryconMegalopterus
 ];
 
 export {
@@ -132,5 +134,6 @@ export {
   bolivianRam,
   sterbaiCory,
   clownPleco,
-  sewelliaLineolata
+  sewelliaLineolata,
+  hyphessobryconMegalopterus
 };
