@@ -16,6 +16,7 @@ import { congoTetra } from './congo-tetra';
 import { corydorasPaleatus } from './corydoras-paleatus';
 import { zebraDanio } from './danio-rerio';
 import { diamondTetra } from './diamond-tetra';
+import { discus } from './discus';
 import { electricYellowLab } from './electric-yellow-lab';
 import { emberTetra } from './ember-tetra';
 import { endlerGuppy } from './endler-guppy';
@@ -67,6 +68,7 @@ export const allSpecies: Species[] = [
   corydorasPaleatus,
   zebraDanio,
   diamondTetra,
+  discus,
   electricYellowLab,
   emberTetra,
   endlerGuppy,
@@ -119,6 +121,7 @@ export {
   corydorasPaleatus,
   zebraDanio,
   diamondTetra,
+  discus,
   electricYellowLab,
   emberTetra,
   endlerGuppy,
