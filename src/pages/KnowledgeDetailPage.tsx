@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, BookOpen, Lightbulb, Info, AlertTriangle, AlertCircle, Calendar, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Clock, BookOpen, Lightbulb, Info, AlertTriangle, AlertCircle, Calendar, CheckCircle, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getArticleBySlug } from '../data/knowledge';
 import { PageTransition } from '../components/layout/PageTransition';
@@ -160,6 +160,56 @@ const KnowledgeDetailPage = () => {
               </div>
             </div>
           </motion.div>
+
+          {/* DIAGRAMS - NEW SECTION */}
+          {article.visuals?.diagrams && article.visuals.diagrams.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-16"
+            >
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
+                  <Image className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white">Visual Diagrams</h2>
+              </div>
+              
+              <div className="grid gap-8">
+                {article.visuals.diagrams.map((diagram) => (
+                  <div
+                    key={diagram.id}
+                    className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl"
+                  >
+                    {/* Diagram Image */}
+                    <div className="p-6 lg:p-8 bg-slate-50 dark:bg-slate-800/50">
+                      <img
+                        src={diagram.imageUrl}
+                        alt={diagram.caption}
+                        className="w-full h-auto rounded-xl shadow-lg"
+                      />
+                    </div>
+                    
+                    {/* Diagram Info */}
+                    <div className="p-6 lg:p-8">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+                        {diagram.title}
+                      </h3>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+                        {diagram.caption}
+                      </p>
+                      {diagram.credit && (
+                        <p className="text-sm text-slate-500 dark:text-slate-500 italic">
+                          Credit: {diagram.credit}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           {/* SECTIONS - REDESIGNED */}
           <div className="space-y-16">
