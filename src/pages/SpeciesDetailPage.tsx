@@ -291,22 +291,26 @@ const SpeciesDetailPage = () => {
 
         {/* ---- Left column: all tab content ---- */}
         <div>
-          {/* Fun Fact */}
+          {/* Fun Fact - REDESIGNED TO MATCH CLEAN SYSTEM */}
           {data.funFact && (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="mb-6 md:mb-8"
             >
-              <div className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl p-5 md:p-6 overflow-hidden shadow-xl">
-                <Sparkles className="absolute top-3 right-3 w-16 h-16 md:w-24 md:h-24 text-white/10" />
-                <div className="relative">
-                  <div className="text-indigo-200 font-black uppercase text-[10px] md:text-xs tracking-wider mb-2 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" /> Did You Know?
+              <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="flex-shrink-0 p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <Sparkles className="w-5 h-5 text-amber-500 dark:text-amber-400" />
                   </div>
-                  <p className="text-white text-base md:text-lg leading-relaxed font-medium">
-                    "{data.funFact}"
-                  </p>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                      Did You Know?
+                    </div>
+                    <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">
+                      {data.funFact}
+                    </p>
+                  </div>
                 </div>
               </div>
             </motion.div>
