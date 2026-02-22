@@ -111,7 +111,7 @@ export const nitrogenCycle: KnowledgeArticle = {
   },
   
   visuals: {
-    headerImage: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?w=1200',
+    headerImage: 'https://images.unsplash.com/photo-1579967327980-2a4117da0e4a?q=80&w=1149&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     diagrams: [
       {
         id: 'cycle-diagram',
