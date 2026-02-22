@@ -44,6 +44,7 @@ import { clownPleco } from './clown-pleco';
 import { sewelliaLineolata } from './sewellia-lineolata';
 import { hyphessobryconMegalopterus } from './hyphessobrycon-megalopterus';
 import { puntigrusTetrazona } from './puntigrus-tetrazona';
+import { pelvicachromispulcher } from './pelvicachromis-pulcher';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -90,7 +91,8 @@ export const allSpecies: Species[] = [
   clownPleco,
   sewelliaLineolata,
   hyphessobryconMegalopterus,
-  puntigrusTetrazona
+  puntigrusTetrazona,
+  pelvicachromispulcher
 ];
 
 export {
@@ -138,5 +140,6 @@ export {
   clownPleco,
   sewelliaLineolata,
   hyphessobryconMegalopterus,
-  puntigrusTetrazona
+  puntigrusTetrazona,
+  pelvicachromispulcher
 };

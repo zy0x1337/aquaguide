@@ -16,7 +16,7 @@ export const pelvicachromispulcher: Species = {
   },
 
   visuals: {
-    iconShape: 'cichlid',
+    iconShape: 'fusiform',
     adultSizeCM: 10,
     color: 'Stunning sexual dimorphism and color intensity varies with mood/breeding. Males: larger (up to 10cm), elongated body, golden-yellow to olive-brown dorsal body with iridescent blue-green scales creating metallic sheen, dark lateral stripe from mouth to caudal fin, dorsal fin with gold-ringed eyespots (ocelli) - spectacular peacock-like display when spread, caudal fin with upper lobe extending into filament, red/pink flush on lower body intensifying during courtship. Females: smaller (7-8cm), deeper-bodied (more rotund), same golden-yellow base color, BRILLIANT cherry-red to magenta belly (especially when breeding - becomes incandescent), purple/violet hue on gill plates, shorter rounded fins without filaments, overall warmer coloration. Both sexes show color polymorphisms: some populations have red males, others yellow males.',
   },
@@ -47,13 +47,13 @@ export const pelvicachromispulcher: Species = {
   },
 
   habitat: {
-    planting: 'moderate-dense',
+    planting: 'medium',
     plantingNotes: 'Kribensis appreciate planted tanks but need CAVES more than plants. Setup priority: 1) Multiple cave structures (clay pots, coconut shells, slate caves, driftwood tunnels), 2) Territorial boundaries created by hardscape and plants, 3) Dense planting on sides/back for security. Use robust, African-biotope plants: Anubias (all species - attach to wood/rocks), Bolbitis (African Water Fern), Java Fern, Vallisneria, Crinum species. Avoid delicate stem plants near caves - breeding pairs EXCAVATE vigorously, uprooting anything in their way. They dig pits, move substrate, and completely redecorate spawning areas. Plant roots need to be secured (attach epiphytes to hardscape, use root tabs for swords). Floating plants (Water Sprite, Amazon Frogbit) provide dim lighting that reduces stress.',
     hardscape: ['CAVES (ESSENTIAL): clay pots (horizontal, entrance 4-5cm), coconut shells, slate caves, PVC pipes (10-12cm diameter), driftwood tunnels', 'Smooth river stones (create territory divisions)', 'Malaysian Driftwood or Mopani wood (natural borders)', 'Leaf litter (oak, Indian Almond - mimics natural habitat)', 'Flat stones (spawning surfaces inside caves)'],
   },
 
   behavior: {
-    tags: ['pair_bonding', 'cave_spawner', 'territorial', 'semi-aggressive', 'parental_care'],
+    tags: ['pair-bonding', 'territorial', 'semi-aggressive', 'parental-care'],
     minGroupSize: 2,
     description: 'Kribensis are fascinating dwarf cichlids famous for forming monogamous pairs (though polygyny occurs in wild) and exhibiting world-class parental care. Outside breeding, they\'re relatively peaceful and can work in community tanks with proper planning. Behavior shifts DRAMATICALLY when breeding: pairs become fiercely territorial, claiming 30-50cm radius around their cave and aggressively defending against ANY intruder regardless of size. The breeding ritual is mesmerizing - female displays her cherry-red belly with shimmering movements to entice male into cave, both excavate substrate creating "nursery," pair spawn on cave ceiling (female inverted, laying 40-200 adhesive eggs), then both parents guard eggs/fry with military precision. Division of labor: female stays inside cave tending eggs/fry while male patrols perimeter attacking anything that approaches. When fry emerge (7-10 days), both parents herd the cloud of babies around tank, pre-chewing food and spitting out tiny particles for fry to eat. Parental aggression peaks during first 2-3 weeks with fry - even 30cm Plecos get charged if they drift too close. Non-breeding pairs explore actively, forage substrate, interact peacefully with tankmates, and establish loose territories around preferred caves. They\'re intelligent and interactive - recognize owners, learn feeding times, and show personality.',
     
@@ -96,7 +96,7 @@ export const pelvicachromispulcher: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '10-15',
         bottom: '6-8',
       },
@@ -109,7 +109,7 @@ export const pelvicachromispulcher: Species = {
     },
     
     activity: {
-      level: 'moderate-high',
+      level: 'high',
       peakTimes: ['morning', 'evening'],
       nocturnal: false,
     },
@@ -126,9 +126,9 @@ export const pelvicachromispulcher: Species = {
   },
 
   care: {
-    difficulty: 'beginner-intermediate',
+    difficulty: 'medium',
     diet: 'omnivore',
-    effort: 'low-medium',
+    effort: 'low',
     cost: 'low',
     specialRequirements: [
       'Multiple caves (clay pots, coconut shells, slate) - ESSENTIAL for spawning',
@@ -158,8 +158,8 @@ export const pelvicachromispulcher: Species = {
     
     feeding: {
       frequency: 'once-daily',
-      primaryFoods: ['cichlid-pellets', 'spirulina-flakes', 'bloodworms', 'brine-shrimp', 'daphnia'],
-      supplements: ['blanched-spinach', 'blanched-zucchini', 'blanched-peas', 'mosquito-larvae', 'frozen-mysis-shrimp'],
+      primaryFoods: ['pellets', 'spirulina', 'bloodworms', 'brine-shrimp', 'daphnia', 'flakes'],
+      supplements: ['blanched-zucchini'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -182,11 +182,11 @@ export const pelvicachromispulcher: Species = {
       },
       filter: {
         required: true,
-        type: 'canister-or-hob',
-        flowRate: 'gentle-moderate',
+        type: 'canister',
+        flowRate: 'moderate',
       },
       airstone: false,
-      lighting: 'low-moderate',
+      lighting: 'low',
       co2: false,
     },
   },
@@ -219,7 +219,7 @@ export const pelvicachromispulcher: Species = {
 
   breeding: {
     method: 'cave_spawner',
-    difficulty: 'easy',
+    difficulty: 'beginner',
     trigger: 'Kribensis are among the EASIEST cichlids to breed - often spawn without any special effort. Natural pairing: Purchase 6-8 juveniles (3-4 months old), raise together, let them pair naturally at 6-8 months. Pairs form through mutual mate choice - you\'ll notice two fish spending time together, displaying, and defending shared territory. Breeding triggers: stable water conditions (weekly water changes), protein-rich diet (bloodworms, brine shrimp 3-4x weekly), suitable cave (horizontal clay pot, 4-5cm entrance), warm temperature (26-27°C). Female signals readiness by developing brilliant cherry-red belly and performing shimmering displays near cave entrance. Male responds by entering cave, inspecting, and both begin excavating. Spawning occurs inside cave on ceiling - female inverts (upside-down), lays 40-200 adhesive cream-colored eggs in neat rows while male fertilizes. Entire spawn takes 2-4 hours. No special breeding tank needed - pairs spawn readily in community tanks.',
     fryCare: 'Post-spawn: Female stays in cave guarding eggs while male patrols territory perimeter. Eggs hatch in 2-3 days at 26-27°C - wrigglers remain attached to cave ceiling absorbing yolk sac. At 5-7 days, fry become free-swimming and emerge from cave as cloud of tiny babies (4-5mm). Both parents herd fry constantly - swimming together as tight school. Parents pre-chew food (pellets, flakes) and spit out tiny particles for fry - fascinating to watch! Fry also graze biofilm and algae. Supplement with: finely crushed flakes, powdered spirulina, liquid fry food, baby brine shrimp (Artemia nauplii) at 7-10 days, microworms. Feed fry 3-4x daily. Parents care for fry 21-28 days total. At 3-4 weeks, fry are 1-1.5cm and parents may prepare for next spawn (female shows red belly again). Separate fry to 40-60L grow-out tank at this point. Expect 50-150 surviving fry from 100-200 eggs with parental care. Fry grow quickly - 3-4cm at 3 months, sexual maturity at 6-8 months.',
     notes: 'Breeding Kribensis is INCREDIBLY EASY - perfect first cichlid breeding experience. They spawn every 4-6 weeks when well-fed, require no special setup (just caves), exhibit amazing parental care (both parents involved), and fry are hardy. Challenges are minimal: 1) Increased territorial aggression during breeding (plan community tank carefully), 2) What to do with 100+ fry every 6 weeks (need grow-out space or LFS willing to buy juveniles), 3) Preventing parents from eating older fry when preparing next spawn (separate at 4 weeks). Success rate approaches 95% - if you have male + female + cave + decent water quality, they WILL breed. Commercial breeding is extensive but home breeding remains popular because it\'s so rewarding. Watching both parents care for fry is one of aquarium keeping\'s greatest joys. Many breeders keep Kribensis specifically for this behavior. Single pairs can produce 500-1000+ offspring per year. Selective breeding over decades created various color strains and improved captive hardiness.',
