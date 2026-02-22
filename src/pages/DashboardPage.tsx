@@ -157,18 +157,15 @@ const DashboardPage = () => {
   // Loading State
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="text-center"
         >
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full blur-xl opacity-20 animate-pulse"></div>
-            <Loader2 className="w-20 h-20 text-indigo-600 dark:text-indigo-400 animate-spin mx-auto mb-6 relative" />
-          </div>
-          <p className="text-slate-700 dark:text-slate-300 font-bold text-lg">Loading dashboard...</p>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-2">Fetching your aquarium data</p>
+          <Loader2 className="w-16 h-16 text-indigo-600 dark:text-indigo-400 animate-spin mx-auto mb-4" />
+          <p className="text-slate-700 dark:text-slate-300 font-semibold">Loading dashboard...</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Fetching your aquarium data</p>
         </motion.div>
       </div>
     );
@@ -177,20 +174,20 @@ const DashboardPage = () => {
   // Error State
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-md mx-auto px-4"
         >
-          <div className="w-20 h-20 bg-gradient-to-br from-red-100 to-rose-100 dark:from-red-900/30 dark:to-rose-900/30 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-xl">
-            <Fish className="w-10 h-10 text-red-600 dark:text-red-400" />
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-xl mx-auto mb-4 flex items-center justify-center">
+            <Fish className="w-8 h-8 text-red-600 dark:text-red-400" />
           </div>
-          <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-3">Oops!</h2>
-          <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">{error}</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Oops!</h2>
+          <p className="text-slate-600 dark:text-slate-400 mb-6">{error}</p>
           <button
             onClick={loadDashboardData}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold shadow-sm hover:shadow transition-all"
           >
             Try Again
           </button>
@@ -202,7 +199,7 @@ const DashboardPage = () => {
   // Empty State - No Tanks
   if (stats && stats.totalTanks === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
         <SEOHead
           title="Dashboard"
           description="Your aquarium dashboard - monitor tank health and track activities."
@@ -211,21 +208,14 @@ const DashboardPage = () => {
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden"
+          className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4xIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-10"></div>
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <Activity className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">Dashboard</h1>
-                <p className="text-indigo-200 mt-1">Your aquarium analytics at a glance</p>
-              </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="flex items-center gap-3 mb-2">
+              <Activity className="w-8 h-8" />
+              <h1 className="text-4xl font-bold">Dashboard</h1>
             </div>
+            <p className="text-indigo-100 ml-11">Your aquarium analytics at a glance</p>
           </div>
         </motion.header>
 
@@ -237,21 +227,18 @@ const DashboardPage = () => {
             className="text-center py-20"
           >
             <div className="max-w-md mx-auto">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl blur-2xl opacity-20"></div>
-                <div className="relative w-32 h-32 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-2xl">
-                  <Fish className="w-16 h-16 text-white" />
-                </div>
+              <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <Fish className="w-12 h-12 text-indigo-600 dark:text-indigo-400" />
               </div>
-              <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-4">No Tanks Yet</h2>
-              <p className="text-slate-600 dark:text-slate-400 mb-10 leading-relaxed text-lg">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">No Tanks Yet</h2>
+              <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                 Add your first tank to start tracking water parameters, maintenance schedules, and health metrics.
               </p>
               <Link
                 to="/my-tanks"
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
+                className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-semibold shadow-sm hover:shadow transition-all"
               >
-                <Plus className="w-6 h-6" />
+                <Plus className="w-5 h-5" />
                 Add Your First Tank
               </Link>
             </div>
@@ -262,47 +249,49 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <SEOHead
         title="Dashboard"
         description="Your aquarium dashboard - monitor tank health and track activities."
       />
 
-      {/* Enhanced Header */}
+      {/* Clean Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden"
+        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4xIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-10"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
             <div>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                  <Activity className="w-7 h-7 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">Dashboard</h1>
-                  <p className="text-indigo-200 text-sm md:text-base mt-1">Your aquarium analytics at a glance</p>
-                </div>
+              <div className="flex items-center gap-3 mb-2">
+                <Activity className="w-8 h-8" />
+                <h1 className="text-4xl font-bold">Dashboard</h1>
               </div>
+              <p className="text-indigo-100 ml-11">Your aquarium analytics at a glance</p>
               
-              {/* Quick Stats Badges */}
+              {/* Subtle Stats Badges */}
               {stats && (
-                <div className="flex flex-wrap gap-2 mt-4">
-                  <StatBadge icon={<Droplets className="w-4 h-4" />} label="Tanks" value={stats.totalTanks} />
-                  <StatBadge icon={<Fish className="w-4 h-4" />} label="Fish" value={stats.totalFish} />
-                  <StatBadge icon={<TrendingUp className="w-4 h-4" />} label="Avg Health" value={`${stats.avgHealthScore}%`} gradient />
+                <div className="flex flex-wrap gap-2 mt-4 ml-11">
+                  <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 text-sm font-semibold">
+                    <span className="text-white/70">Tanks: </span>
+                    <span>{stats.totalTanks}</span>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 text-sm font-semibold">
+                    <span className="text-white/70">Fish: </span>
+                    <span>{stats.totalFish}</span>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 text-sm font-semibold">
+                    <span className="text-white/70">Avg Health: </span>
+                    <span>{stats.avgHealthScore}%</span>
+                  </div>
                 </div>
               )}
             </div>
             
             <Link
               to="/my-tanks"
-              className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-6 py-3.5 rounded-xl font-black transition-all shadow-xl hover:shadow-2xl transform hover:scale-105 w-fit"
+              className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-6 py-3 rounded-xl font-semibold transition-all shadow-sm hover:shadow w-fit"
             >
               View All Tanks
               <ArrowRight className="w-5 h-5" />
@@ -312,7 +301,7 @@ const DashboardPage = () => {
       </motion.header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 -mt-8 relative z-10 pb-16 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
         {/* Stats Overview */}
         {stats && <DashboardStats stats={stats} />}
 
@@ -331,13 +320,13 @@ const DashboardPage = () => {
           {/* Left Column - Tank Health */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Sparkles className="w-6 h-6 text-indigo-600" />
                 Tank Health
               </h2>
               <Link
                 to="/my-tanks"
-                className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-bold text-sm flex items-center gap-1 transition-colors"
+                className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-semibold text-sm flex items-center gap-1 transition-colors"
               >
                 View Details
                 <ArrowRight className="w-4 h-4" />
@@ -348,7 +337,7 @@ const DashboardPage = () => {
 
           {/* Right Column - Recent Activity */}
           <div className="space-y-6">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Activity className="w-6 h-6 text-purple-600" />
               Recent Activity
             </h2>
@@ -394,18 +383,5 @@ const DashboardPage = () => {
     </div>
   );
 };
-
-// Stat Badge Component
-const StatBadge = ({ icon, label, value, gradient }: { icon: React.ReactNode; label: string; value: string | number; gradient?: boolean }) => (
-  <div className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm shadow-lg ${
-    gradient 
-      ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white' 
-      : 'bg-white/30 backdrop-blur-md text-white border border-white/20'
-  }`}>
-    {icon}
-    <span className="text-xs font-semibold opacity-90">{label}:</span>
-    <span className="text-base">{value}</span>
-  </div>
-);
 
 export default DashboardPage;
