@@ -40,58 +40,43 @@ const KnowledgeHubPage = () => {
         description="Comprehensive guides on aquarium care, water chemistry, equipment, and more. Learn at your own pace with expert articles."
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/20">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
         
-        {/* HERO SECTION - ENHANCED */}
-        <section className="relative pt-20 sm:pt-28 pb-12 sm:pb-20 px-6 overflow-hidden">
-          {/* Background with better gradient */}
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-white to-purple-50/30 dark:from-slate-950 dark:via-slate-950 dark:to-purple-950/20" />
-            <div className="absolute inset-0" style={{ 
-              backgroundImage: 'radial-gradient(circle at 2px 2px, rgb(148 163 184 / 0.05) 1px, transparent 0)',
-              backgroundSize: '32px 32px'
-            }} />
+        {/* HERO SECTION - DARK BACKGROUND LIKE DISEASES */}
+        <header className="bg-slate-900 text-white pt-20 pb-28 relative overflow-hidden">
+          {/* Background gradient orbs */}
+          <div className="absolute inset-0 z-0 opacity-20">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
           </div>
-          
-          {/* Animated gradient orbs */}
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.2, 0.3]
-            }}
-            transition={{ 
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-400/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"
-          />
 
-          <div className="max-w-7xl mx-auto relative z-10">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
             <motion.div 
               initial="initial"
               animate="animate"
               variants={fadeInUp}
-              className="text-center max-w-4xl mx-auto mb-16"
+              className="max-w-4xl mx-auto mb-16"
             >
-              <span className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 dark:from-purple-500/20 dark:to-indigo-500/20 text-purple-700 dark:text-purple-300 text-xs font-bold uppercase tracking-wider mb-8 border-2 border-purple-200/50 dark:border-purple-500/30 shadow-sm">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-8">
                 <Sparkles className="w-4 h-4" />
                 Expert Guides & Tutorials
               </span>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-[1.05]">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-indigo-800 to-purple-900 dark:from-white dark:via-indigo-200 dark:to-purple-200">
-                  Knowledge Hub
+                Knowledge Hub
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                  Master Aquarium Keeping
                 </span>
               </h1>
               
-              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
                 Dive deep into aquarium keeping with comprehensive, expert-written guides. 
                 Master water chemistry, equipment, biology, and everything in between.
               </p>
             </motion.div>
 
-            {/* Stats Cards - ENHANCED */}
+            {/* Stats Cards */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -104,11 +89,11 @@ const KnowledgeHubPage = () => {
               <StatsCard icon={<TrendingUp className="w-6 h-6" />} value="100%" label="Free Access" color="emerald" />
             </motion.div>
           </div>
-        </section>
+        </header>
 
         {/* FEATURED ARTICLE - REDESIGNED */}
         {featuredArticle && (
-          <section className="px-6 pb-16">
+          <section className="px-6 -mt-16 relative z-20 pb-16">
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
@@ -156,7 +141,7 @@ const KnowledgeHubPage = () => {
         </section>
 
         {/* ARTICLES GRID - IMPROVED SPACING */}
-        <section className="py-20 px-6">
+        <section className="py-20 px-6 bg-slate-50 dark:bg-slate-950">
           <div className="max-w-7xl mx-auto">
             {filteredArticles.length === 0 ? (
               <div className="text-center py-24">
@@ -200,12 +185,12 @@ const StatsCard = ({ icon, value, label, color }: { icon: React.ReactNode; value
   }[color];
 
   return (
-    <div className="group bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
+    <div className="group bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 hover:bg-white/20 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
       <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${colorClasses} flex items-center justify-center text-white mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
         {icon}
       </div>
-      <div className="text-4xl font-black text-slate-900 dark:text-white mb-2">{value}</div>
-      <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{label}</div>
+      <div className="text-4xl font-black text-white mb-2">{value}</div>
+      <div className="text-sm font-bold text-slate-300 uppercase tracking-wider">{label}</div>
     </div>
   );
 };
