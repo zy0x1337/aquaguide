@@ -167,6 +167,7 @@ const SpeciesDetailPage = () => {
   // Sidebar info panel content (reused in header on mobile, sticky on desktop)
   const SidebarInfoPanel = () => (
     <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-xl">
+      {/* Origin header */}
       <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
         <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl">
           <MapPin className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
@@ -176,11 +177,45 @@ const SpeciesDetailPage = () => {
           <div className="text-base font-bold text-slate-900 dark:text-slate-100">{data.taxonomy.origin}</div>
         </div>
       </div>
-      <div className="space-y-3">
+
+      {/* Core rows */}
+      <div className="space-y-1 mb-4">
         <SidebarInfoRow icon={<Activity className="w-4 h-4 text-emerald-500" />} label="Difficulty" value={capitalize(data.care.difficulty)} />
         <SidebarInfoRow icon={<Heart className="w-4 h-4 text-rose-500" />} label="Temperament" value={data.behavior.tags.includes('peaceful') ? 'Peaceful' : data.behavior.tags.includes('semi-aggressive') ? 'Semi-Aggressive' : 'Varies'} />
         <SidebarInfoRow icon={<Utensils className="w-4 h-4 text-amber-500" />} label="Diet" value={capitalize(data.care.diet)} />
+        <SidebarInfoRow icon={<Box className="w-4 h-4 text-blue-500" />} label="Min. Tank" value={`${data.environment.minTankSizeLiters} L`} />
+        <SidebarInfoRow icon={<Users className="w-4 h-4 text-violet-500" />} label="Group Size" value={`${data.behavior.minGroupSize}+ fish`} />
+        <SidebarInfoRow icon={<Clock className="w-4 h-4 text-cyan-500" />} label="Lifespan" value={`${data.health.lifespanYears} yrs`} />
       </div>
+
+      {/* Estimated costs – shown only if data exists */}
+      {data.experienceData?.estimatedCosts && (
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+          <div className="text-[10px] uppercase font-black text-slate-400 dark:text-slate-500 tracking-wider mb-3">
+            Est. Costs
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
+              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Setup</div>
+              <div className="text-sm font-black text-slate-900 dark:text-slate-100">
+                {data.experienceData.estimatedCosts.initial.min}–{data.experienceData.estimatedCosts.initial.max}
+                <span className="text-[10px] ml-0.5 font-bold text-slate-500 dark:text-slate-400">
+                  {data.experienceData.estimatedCosts.initial.currency}
+                </span>
+              </div>
+            </div>
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
+              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Monthly</div>
+              <div className="text-sm font-black text-slate-900 dark:text-slate-100">
+                {data.experienceData.estimatedCosts.monthly.min}–{data.experienceData.estimatedCosts.monthly.max}
+                <span className="text-[10px] ml-0.5 font-bold text-slate-500 dark:text-slate-400">
+                  {data.experienceData.estimatedCosts.monthly.currency}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -994,18 +1029,8 @@ const SidebarInfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: 
   </div>
 );
 
-const InfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="flex items-center justify-between py-2">
-    <div className="flex items-center gap-2">
-      {icon}
-      <span className="text-xs md:text-sm text-slate-300 font-semibold">{label}</span>
-    </div>
-    <span className="text-sm md:text-base text-white font-bold">{value}</span>
-  </div>
-);
-
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
-  <h3 className="text-lg md:text-xl font-grey text-slate-800 dark:text-slate-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
+  <h3 className="text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
     <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
     {title}
   </h3>
@@ -1216,7 +1241,7 @@ const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size
   return <span className={`inline-flex items-center rounded-lg font-black uppercase tracking-wide border-2 ${styles} ${sizeClasses}`}>{text}</span>;
 };
 
-// NEW: CareLevelCard Component
+// CareLevelCard Component
 interface CareLevelCardProps {
   label: string;
   value: string;
@@ -1237,7 +1262,7 @@ const CareLevelCard = ({ label, value, icon, colors }: CareLevelCardProps) => {
   );
 };
 
-// NEW: EquipmentCardNew Component
+// EquipmentCardNew Component
 interface EquipmentCardNewProps {
   icon: React.ReactNode;
   label: string;
@@ -1287,6 +1312,8 @@ const NotFound = () => (
 
 const resolveHeaderImageUrl = (imageUrl?: string, slug?: string) => {
   if (imageUrl) {
+    // Pass through any external URL (http/https) or absolute path as-is
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
     if (imageUrl.startsWith('/images/species/')) return imageUrl;
     if (imageUrl.startsWith('images/species/')) return `/${imageUrl}`;
     if (imageUrl.startsWith('/')) return imageUrl;
