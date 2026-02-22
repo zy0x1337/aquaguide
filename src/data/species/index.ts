@@ -98,8 +98,7 @@ export const allSpecies: Species[] = [
   sewelliaLineolata,
   hyphessobryconMegalopterus,
   puntigrusTetrazona,
-  pelvicachromispulcher,
-  diamondTetra
+  pelvicachromispulcher
 ];
 
 export {
