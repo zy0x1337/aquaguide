@@ -298,26 +298,43 @@ const AuthPage = () => {
               )}
             </AnimatePresence>
 
-            {/* Submit Button */}
+            {/* Submit Button - IMPROVED DESIGN */}
             <motion.button
               type="submit"
               disabled={loading}
               whileHover={{ scale: loading ? 1 : 1.02 }}
               whileTap={{ scale: loading ? 1 : 0.98 }}
-              className="group relative w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent text-base font-bold rounded-xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg hover:shadow-xl transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="group relative w-full flex justify-center items-center gap-2 py-4 px-6 border-2 border-transparent text-base font-bold rounded-xl text-white bg-black dark:bg-white dark:text-black focus:outline-none focus:ring-4 focus:ring-indigo-500/50 shadow-xl hover:shadow-2xl transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 overflow-hidden"
             >
-              {loading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Processing...</span>
-                </>
-              ) : (
-                <>
-                  <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </>
+              {/* Shimmer Effect */}
+              {!loading && (
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 dark:via-black/20 to-transparent" />
               )}
+              
+              {/* Content */}
+              <span className="relative flex items-center gap-2">
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-lg">{isLogin ? 'Sign In' : 'Create Account'}</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
+                  </>
+                )}
+              </span>
             </motion.button>
+
+            {/* Alternative: Continue as Guest */}
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="w-full py-3 text-sm font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Continue as Guest
+            </button>
           </form>
 
           {/* Footer Links */}
