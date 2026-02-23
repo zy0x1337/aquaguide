@@ -9,7 +9,7 @@ import AnimatedTransition from '../components/ui/AnimatedTransition';
 
 export const HabitatsIndexPage: React.FC = () => {
   
-  // Hilfsfunktion: Berechnet, wie viele Fische in einem Biotop leben
+  // Calculate how many species live in a habitat
   const getSpeciesCount = (habitatId: string) => {
     const habitat = habitatsData.find(h => h.id === habitatId);
     if (!habitat) return 0;
@@ -18,7 +18,7 @@ export const HabitatsIndexPage: React.FC = () => {
 
   return (
     <AnimatedTransition>
-      <div className="bg-slate-50 dark:bg-[#0c0a09] min-h-screen pb-24">
+      <div className="bg-gray-50 dark:bg-gray-950 min-h-screen pb-24">
         
         {/* Modern Header Section */}
         <div className="pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -43,12 +43,12 @@ export const HabitatsIndexPage: React.FC = () => {
                 >
                   <Link 
                     to={`/habitats/${habitat.id}`}
-                    className="group block relative rounded-[2rem] overflow-hidden bg-white dark:bg-stone-900 shadow-sm hover:shadow-2xl dark:shadow-none transition-all duration-500 ease-out border border-slate-100 dark:border-stone-800 hover:border-indigo-500/30 flex flex-col h-full"
+                    className="group block relative rounded-[2rem] overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:shadow-2xl dark:shadow-none transition-all duration-500 ease-out border border-gray-100 dark:border-gray-800 hover:border-indigo-500/30 dark:hover:border-indigo-500/30 flex flex-col h-full"
                   >
                     {/* Image Container */}
-                    <div className="relative h-72 w-full overflow-hidden bg-slate-100 dark:bg-stone-800">
+                    <div className="relative h-72 w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
                       {/* Dark Gradient Overlay for text readability */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90" />
                       
                       <img 
                         src={habitat.imageUrl} 
@@ -76,7 +76,7 @@ export const HabitatsIndexPage: React.FC = () => {
                         <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-1 tracking-tight">
                           {habitat.title}
                         </h3>
-                        <p className="text-slate-200 text-sm font-medium line-clamp-1 opacity-90">
+                        <p className="text-gray-200 text-sm font-medium line-clamp-1 opacity-90">
                           {habitat.subtitle}
                         </p>
                       </div>
@@ -84,23 +84,23 @@ export const HabitatsIndexPage: React.FC = () => {
                     
                     {/* Content Section below image */}
                     <div className="p-6 flex flex-col flex-grow">
-                      <p className="text-slate-600 dark:text-stone-400 text-sm leading-relaxed line-clamp-3 mb-6">
+                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-6">
                         {habitat.description}
                       </p>
                       
                       {/* Quick Stats Grid */}
-                      <div className="mt-auto grid grid-cols-2 gap-3 pt-5 border-t border-slate-100 dark:border-stone-800">
-                        <div className="flex items-center gap-2 text-slate-700 dark:text-stone-300">
+                      <div className="mt-auto grid grid-cols-2 gap-3 pt-5 border-t border-gray-100 dark:border-gray-800">
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
                           <Droplets className="w-4 h-4 text-blue-500 flex-shrink-0" />
                           <div className="flex flex-col">
-                            <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 dark:text-stone-500">pH Level</span>
+                            <span className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-gray-500">pH Level</span>
                             <span className="text-xs font-semibold">{habitat.waterParameters?.ph || 'Varies'}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 text-slate-700 dark:text-stone-300">
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
                           <Thermometer className="w-4 h-4 text-rose-500 flex-shrink-0" />
                           <div className="flex flex-col">
-                            <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 dark:text-stone-500">Temp</span>
+                            <span className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-gray-500">Temp</span>
                             <span className="text-xs font-semibold truncate">{habitat.conditions.temperature}</span>
                           </div>
                         </div>

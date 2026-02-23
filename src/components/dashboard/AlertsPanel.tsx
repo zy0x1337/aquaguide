@@ -17,20 +17,20 @@ const AlertsPanel = ({ alerts }: AlertsPanelProps) => {
 
   if (alerts.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-12 text-center">
-        <div className="w-16 h-16 bg-emerald-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-          <Info className="w-8 h-8 text-emerald-600" />
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-12 text-center">
+        <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/30 rounded-full mx-auto mb-4 flex items-center justify-center">
+          <Info className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
         </div>
-        <h3 className="text-lg font-bold text-slate-900 mb-2">All Clear!</h3>
-        <p className="text-slate-600">No parameter issues detected. Your tanks are looking healthy!</p>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">All Clear!</h3>
+        <p className="text-gray-600 dark:text-gray-400">No parameter issues detected. Your tanks are looking healthy!</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-slate-900">Parameter Alerts</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Parameter Alerts</h2>
         <div className="flex items-center gap-2">
           <AlertBadge count={alerts.filter(a => a.level === 'critical').length} level="critical" />
           <AlertBadge count={alerts.filter(a => a.level === 'warning').length} level="warning" />
@@ -51,25 +51,31 @@ const AlertCard = ({ alert, delay }: { alert: ParameterAlert; delay: number }) =
 
   const levelStyles = {
     critical: {
-      border: 'border-red-200',
-      bg: 'bg-red-50',
-      icon: 'text-red-600',
-      iconBg: 'bg-red-100',
+      border: 'border-red-200 dark:border-red-800',
+      bg: 'bg-red-50 dark:bg-red-950/20',
+      icon: 'text-red-600 dark:text-red-400',
+      iconBg: 'bg-red-100 dark:bg-red-950/30',
       badge: 'bg-red-600',
+      text: 'text-gray-900 dark:text-white',
+      secondary: 'text-gray-700 dark:text-gray-300',
     },
     warning: {
-      border: 'border-amber-200',
-      bg: 'bg-amber-50',
-      icon: 'text-amber-600',
-      iconBg: 'bg-amber-100',
+      border: 'border-amber-200 dark:border-amber-800',
+      bg: 'bg-amber-50 dark:bg-amber-950/20',
+      icon: 'text-amber-600 dark:text-amber-400',
+      iconBg: 'bg-amber-100 dark:bg-amber-950/30',
       badge: 'bg-amber-600',
+      text: 'text-gray-900 dark:text-white',
+      secondary: 'text-gray-700 dark:text-gray-300',
     },
     info: {
-      border: 'border-blue-200',
-      bg: 'bg-blue-50',
-      icon: 'text-blue-600',
-      iconBg: 'bg-blue-100',
+      border: 'border-blue-200 dark:border-blue-800',
+      bg: 'bg-blue-50 dark:bg-blue-950/20',
+      icon: 'text-blue-600 dark:text-blue-400',
+      iconBg: 'bg-blue-100 dark:bg-blue-950/30',
       badge: 'bg-blue-600',
+      text: 'text-gray-900 dark:text-white',
+      secondary: 'text-gray-700 dark:text-gray-300',
     },
   };
 
@@ -95,10 +101,10 @@ const AlertCard = ({ alert, delay }: { alert: ParameterAlert; delay: number }) =
         <div className="flex-1">
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
-              <h3 className="font-bold text-slate-900">{alert.title}</h3>
+              <h3 className={`font-bold ${style.text}`}>{alert.title}</h3>
               <Link
                 to={`/my-tanks/${alert.tankId}`}
-                className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1 mt-1"
+                className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium flex items-center gap-1 mt-1"
               >
                 {alert.tankName}
                 <ExternalLink className="w-3 h-3" />
@@ -109,15 +115,15 @@ const AlertCard = ({ alert, delay }: { alert: ParameterAlert; delay: number }) =
             </span>
           </div>
 
-          <p className="text-sm text-slate-700 mb-2">{alert.description}</p>
+          <p className={`text-sm ${style.secondary} mb-2`}>{alert.description}</p>
 
           <div className="flex items-center justify-between">
-            <p className="text-xs text-slate-600">
+            <p className={`text-xs ${style.secondary}`}>
               <strong>Current:</strong> {alert.currentValue}
             </p>
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+              className="flex items-center gap-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300"
             >
               {isExpanded ? (
                 <>
@@ -145,14 +151,14 @@ const AlertCard = ({ alert, delay }: { alert: ParameterAlert; delay: number }) =
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="mt-4 pt-4 border-t border-slate-200">
-              <h4 className="text-sm font-bold text-slate-900 mb-2">💡 Recommendation:</h4>
-              <p className="text-sm text-slate-700 mb-3">{alert.recommendation}</p>
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className={`text-sm font-bold ${style.text} mb-2`}>💡 Recommendation:</h4>
+              <p className={`text-sm ${style.secondary} mb-3`}>{alert.recommendation}</p>
 
-              <h4 className="text-sm font-bold text-slate-900 mb-2">📋 Action Steps:</h4>
+              <h4 className={`text-sm font-bold ${style.text} mb-2`}>📋 Action Steps:</h4>
               <ol className="space-y-1.5 pl-4">
                 {alert.actions.map((action, i) => (
-                  <li key={i} className="text-sm text-slate-700 list-decimal">
+                  <li key={i} className={`text-sm ${style.secondary} list-decimal`}>
                     {action}
                   </li>
                 ))}

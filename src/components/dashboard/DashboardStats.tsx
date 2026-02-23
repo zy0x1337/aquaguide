@@ -63,18 +63,18 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6"
+        className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6"
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center text-white">
             <TrendingUp className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Total Volume</h3>
-            <p className="text-3xl font-bold text-slate-900">{stats.totalVolumeLiters}L</p>
+            <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">Total Volume</h3>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.totalVolumeLiters}L</p>
           </div>
         </div>
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-gray-500 dark:text-gray-400">
           Average: {stats.totalTanks > 0 ? Math.round(stats.totalVolumeLiters / stats.totalTanks) : 0}L per tank
         </div>
       </motion.div>
@@ -84,24 +84,24 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 sm:col-span-2 lg:col-span-3"
+        className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 sm:col-span-2 lg:col-span-3"
       >
-        <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-4">Tank Distribution</h3>
+        <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-4">Tank Distribution</h3>
         <div className="flex gap-4">
           <TypeBadge
             label="Freshwater"
             count={stats.tanksByType.freshwater}
-            color="bg-blue-100 text-blue-700"
+            color="bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400"
           />
           <TypeBadge
             label="Saltwater"
             count={stats.tanksByType.saltwater}
-            color="bg-cyan-100 text-cyan-700"
+            color="bg-cyan-100 text-cyan-700 dark:bg-cyan-950/30 dark:text-cyan-400"
           />
           <TypeBadge
             label="Brackish"
             count={stats.tanksByType.brackish}
-            color="bg-teal-100 text-teal-700"
+            color="bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400"
           />
         </div>
       </motion.div>
@@ -128,16 +128,16 @@ const StatCard = ({
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay }}
-    className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 hover:shadow-xl transition-shadow"
+    className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl transition-shadow"
   >
     <div className="flex items-center gap-4">
       <div className={`w-16 h-16 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center text-white flex-shrink-0`}>
         {icon}
       </div>
       <div className="flex-1">
-        <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-1">{label}</h3>
-        <p className="text-3xl font-bold text-slate-900">{value}</p>
-        {subtitle && <p className="text-xs text-slate-500 mt-1">{subtitle}</p>}
+        <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{label}</h3>
+        <p className="text-3xl font-bold text-gray-900 dark:text-white">{value}</p>
+        {subtitle && <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{subtitle}</p>}
       </div>
     </div>
   </motion.div>

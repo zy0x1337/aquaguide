@@ -63,9 +63,9 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 flex items-center justify-between z-10">
           <h2 className="text-2xl font-bold">Add New Tank</h2>
           <button
             onClick={onClose}
@@ -79,24 +79,24 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Info */}
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2">Tank Name *</label>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Tank Name *</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="e.g., Community Tank, Shrimp Paradise"
-              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
               required
             />
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Type *</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Type *</label>
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
               >
                 <option value="freshwater">Freshwater</option>
                 <option value="saltwater">Saltwater</option>
@@ -105,13 +105,13 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Volume (Liters) *</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Volume (Liters) *</label>
               <input
                 type="number"
                 value={formData.volumeLiters || ''}
                 onChange={(e) => setFormData({ ...formData, volumeLiters: parseFloat(e.target.value) || 0 })}
                 placeholder="e.g., 100"
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
                 required
                 min="1"
               />
@@ -121,11 +121,11 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
           {/* Tank Setup */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Substrate</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Substrate</label>
               <select
                 value={formData.substrate}
                 onChange={(e) => setFormData({ ...formData, substrate: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
               >
                 <option value="">Select substrate...</option>
                 <option value="sand">Sand</option>
@@ -136,11 +136,11 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Lighting</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Lighting</label>
               <select
                 value={formData.lighting}
                 onChange={(e) => setFormData({ ...formData, lighting: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
               >
                 <option value="">Select lighting...</option>
                 <option value="low">Low (10-30 PAR)</option>
@@ -152,7 +152,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
 
           {/* Water Parameters */}
           <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Water Parameters</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">Water Parameters</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <InputField
                 label="Temperature (°C)"
@@ -254,7 +254,7 @@ const AddTankModal = ({ isOpen, onClose, onSubmit }: AddTankModalProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors"
+              className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancel
             </button>
@@ -286,13 +286,13 @@ const InputField = ({
   step?: string;
 }) => (
   <div>
-    <label className="block text-sm font-semibold text-slate-700 mb-2">{label}</label>
+    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{label}</label>
     <input
       type={type}
       value={value}
       onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
       step={step}
-      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
     />
   </div>
 );
