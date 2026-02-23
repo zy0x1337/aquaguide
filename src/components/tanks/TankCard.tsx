@@ -12,7 +12,7 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
   const totalPlants = tank.inhabitants?.plants.length || 0;
 
   return (
-    <div className="group bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-all">
+    <div className="group bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl transition-all">
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
         <div className="flex items-start justify-between mb-4">
@@ -53,7 +53,7 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
       <div className="p-6">
         {/* Water Parameters */}
         <div className="space-y-3 mb-6">
-          <h4 className="text-sm font-bold text-slate-700 uppercase">Water Parameters</h4>
+          <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase">Water Parameters</h4>
           <div className="grid grid-cols-2 gap-3">
             <ParamCard label="pH" value={tank.parameters.ph} />
             <ParamCard label="Ammonia" value={`${tank.parameters.ammonia}ppm`} />
@@ -65,7 +65,7 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
         {/* Action Button */}
         <Link
           to={`/my-tanks/${tank.id}`}
-          className="w-full flex items-center justify-between bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-4 py-3 rounded-xl transition-colors group"
+          className="w-full flex items-center justify-between bg-indigo-50 dark:bg-indigo-950/30 hover:bg-indigo-100 dark:hover:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 font-semibold px-4 py-3 rounded-xl transition-colors group"
         >
           <span>Manage</span>
           <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -87,9 +87,9 @@ const StatBadge = ({ icon, value, label }: { icon: React.ReactNode; value: strin
 );
 
 const ParamCard = ({ label, value }: { label: string; value: string | number }) => (
-  <div className="bg-slate-50 rounded-lg p-3 border border-slate-200">
-    <div className="text-xs text-slate-600 mb-1">{label}</div>
-    <div className="text-lg font-bold text-slate-900">{value}</div>
+  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+    <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">{label}</div>
+    <div className="text-lg font-bold text-gray-900 dark:text-white">{value}</div>
   </div>
 );
 

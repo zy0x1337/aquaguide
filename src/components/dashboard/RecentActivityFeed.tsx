@@ -25,16 +25,16 @@ const activityColors = {
 const RecentActivityFeed = ({ activities }: RecentActivityFeedProps) => {
   if (activities.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-12 text-center">
-        <Clock className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-        <p className="text-slate-500">No recent activity. Start tracking your tanks!</p>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-12 text-center">
+        <Clock className="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
+        <p className="text-gray-500 dark:text-gray-400">No recent activity. Start tracking your tanks!</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
-      <h2 className="text-xl font-bold text-slate-900 mb-6">Recent Activity</h2>
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6">
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Recent Activity</h2>
       <div className="space-y-4">
         {activities.map((activity, index) => (
           <ActivityItem key={activity.id} activity={activity} delay={index * 0.05} isLast={index === activities.length - 1} />
@@ -58,7 +58,7 @@ const ActivityItem = ({ activity, delay, isLast }: { activity: RecentActivity; d
     >
       {/* Timeline line */}
       {!isLast && (
-        <div className="absolute left-3.5 top-10 w-0.5 h-full bg-slate-200" />
+        <div className="absolute left-3.5 top-10 w-0.5 h-full bg-gray-200 dark:bg-gray-700" />
       )}
 
       {/* Icon */}
@@ -69,16 +69,16 @@ const ActivityItem = ({ activity, delay, isLast }: { activity: RecentActivity; d
       {/* Content */}
       <Link
         to={`/my-tanks/${activity.tankId}`}
-        className="block bg-slate-50 hover:bg-slate-100 rounded-lg p-3 transition-colors group"
+        className="block bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg p-3 transition-colors group"
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1">
-            <p className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">
+            <p className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
               {activity.tankName}
             </p>
-            <p className="text-sm text-slate-600 mt-0.5">{activity.description}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{activity.description}</p>
           </div>
-          <span className="text-xs text-slate-500 whitespace-nowrap">{timeAgo}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{timeAgo}</span>
         </div>
       </Link>
     </motion.div>
