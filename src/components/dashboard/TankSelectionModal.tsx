@@ -38,7 +38,7 @@ const TankSelectionModal = ({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden"
+          className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden"
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6">
@@ -60,7 +60,7 @@ const TankSelectionModal = ({
           <div className="p-6 overflow-y-auto max-h-[60vh]">
             {tanks.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-slate-600">No tanks available. Add a tank first!</p>
+                <p className="text-gray-600 dark:text-gray-400">No tanks available. Add a tank first!</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -74,39 +74,39 @@ const TankSelectionModal = ({
                       onSelectTank(tank.id);
                       onClose();
                     }}
-                    className="w-full text-left bg-slate-50 hover:bg-indigo-50 border-2 border-slate-200 hover:border-indigo-300 rounded-xl p-4 transition-all group"
+                    className="w-full text-left bg-gray-50 dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-600 rounded-xl p-4 transition-all group"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 text-lg mb-1">
+                        <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 text-lg mb-1">
                           {tank.name}
                         </h3>
-                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                        <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                           <span>
                             {tank.volumeLiters}L
                           </span>
-                          <span className="w-1 h-1 bg-slate-400 rounded-full" />
+                          <span className="w-1 h-1 bg-gray-400 dark:bg-gray-600 rounded-full" />
                           <span className="capitalize">{tank.type}</span>
-                          <span className="w-1 h-1 bg-slate-400 rounded-full" />
+                          <span className="w-1 h-1 bg-gray-400 dark:bg-gray-600 rounded-full" />
                           <span>
                             {(tank.inhabitants?.fish.reduce((sum, f) => sum + f.quantity, 0) || 0)} fish
                           </span>
                         </div>
                         <div className="mt-2 flex items-center gap-2 text-xs">
-                          <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded font-semibold">
+                          <span className="px-2 py-1 bg-blue-100 dark:bg-blue-950/30 text-blue-700 dark:text-blue-400 rounded font-semibold">
                             pH {tank.parameters.ph}
                           </span>
-                          <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded font-semibold">
+                          <span className="px-2 py-1 bg-orange-100 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 rounded font-semibold">
                             {tank.parameters.tempC}°C
                           </span>
                           {tank.parameters.ammonia > 0 && (
-                            <span className="px-2 py-1 bg-red-100 text-red-700 rounded font-semibold">
+                            <span className="px-2 py-1 bg-red-100 dark:bg-red-950/30 text-red-700 dark:text-red-400 rounded font-semibold">
                               ⚠ NH₃
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="text-indigo-600 group-hover:translate-x-1 transition-transform">
+                      <div className="text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform">
                         →
                       </div>
                     </div>
