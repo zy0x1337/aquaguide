@@ -284,7 +284,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                           >
                             <LogOut className="w-4 h-4" strokeWidth={2.5} />
                             Sign Out
-                          </Link>
+                          </button>
                         </div>
                       </div>
                     )}
