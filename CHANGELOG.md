@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/zy0x1337/aquaguide/compare/v1.0.0...v1.0.1) (2026-02-23)
+
+
+### Features
+
+* add algae growth factors balance SVG illustration ([064216b](https://github.com/zy0x1337/aquaguide/commit/064216bda32e8aadad712b583b579b20baf2380a))
+* Add complete dark mode support to admin and auth pages ([604da23](https://github.com/zy0x1337/aquaguide/commit/604da2329b83a0fbf6ff0fbb891b8ca3c83f2a84))
+* Add dark mode to AddTankModal and EditTankModal ([68b1d04](https://github.com/zy0x1337/aquaguide/commit/68b1d04a8c92f0f13ff11915013d4f7a5518ab48))
+* Add dark mode to all Dashboard components and modals ([1614337](https://github.com/zy0x1337/aquaguide/commit/16143370c8eca288b7605370f73a699c99aad3d9))
+* Add dark mode to AuthPage, SpeciesManager, and UserManager ([5df59f1](https://github.com/zy0x1337/aquaguide/commit/5df59f17455cd0c63e9f9a4f09fa1b5901f840f4))
+* Add dark mode to ComparisonPage and NotFoundPage ([ab5042e](https://github.com/zy0x1337/aquaguide/commit/ab5042e16b6919ffa94eb38b6bb524b792e3d1f4))
+* Add dark mode to ComparisonPage with full styling support ([00269fd](https://github.com/zy0x1337/aquaguide/commit/00269fd1c8145726e91ea10629fe62b758d519d5))
+* add dark mode to core UI components ([276abb1](https://github.com/zy0x1337/aquaguide/commit/276abb18fb467af4e936e20430823832faf52d0f))
+* Add dark mode to DashboardStats, QuickActions, TankHealthList, AlertsPanel, and RecentActivityFeed ([ee07f97](https://github.com/zy0x1337/aquaguide/commit/ee07f9760a5e9c35fbf946aedff94cf29fac62fc))
+* Add dark mode to Habitats, Diseases and Knowledge Hub pages ([56dec20](https://github.com/zy0x1337/aquaguide/commit/56dec20b4321fd8bfed5c58dcd7a6bd3a3aef864))
+* Add dark mode to KnowledgeHubPage and HabitatsIndexPage ([eaff7b2](https://github.com/zy0x1337/aquaguide/commit/eaff7b2ee156c46942ebb47c209bbd1165d139ab))
+* Add dark mode to ReminderPanel and EditTankModal - Complete dashboard dark mode implementation ([385a943](https://github.com/zy0x1337/aquaguide/commit/385a9432365621b2724161148c97073bb2fdd470))
+* Add dark mode to SpeciesManager and UserManager admin pages ([7b48b11](https://github.com/zy0x1337/aquaguide/commit/7b48b11c686ae4c95f9c29e5f5c4ef03540a349a))
+* Add dark mode to TankHealthList, AlertsPanel, RecentActivityFeed, and TankCard ([bcbda9b](https://github.com/zy0x1337/aquaguide/commit/bcbda9b76d52be788057157f4baa80a425b48211))
+* add fishless cycling timeline diagram with ammonia/nitrite/nitrate curves ([af4c98d](https://github.com/zy0x1337/aquaguide/commit/af4c98dca58f3b2ebc2c313daf2583d9a3b3b098))
+* Complete TankDetailPage UI/UX overhaul ([6d01760](https://github.com/zy0x1337/aquaguide/commit/6d017608bd17f35d9b9e50f442bb7e31f493aac2))
+* implement minimal dark mode foundation ([26bded2](https://github.com/zy0x1337/aquaguide/commit/26bded27b8ebfdafafa2f43d3c6ff2c56b3f5982))
+* **knowledge:** Add 3 comprehensive articles - algae control, cycling phase, CO2 management ([6c2f55c](https://github.com/zy0x1337/aquaguide/commit/6c2f55cb7872f163a8c4b4ba1ad3719a24825594))
+* **knowledge:** Add 3 new articles + fix hyphens in all existing articles ([500eb93](https://github.com/zy0x1337/aquaguide/commit/500eb938fa1f4f0bea17205f4e37ded2d5fd01b6))
+* **knowledge:** Add 3 new comprehensive articles - planted tank setup, fish compatibility, filter types ([137cb5c](https://github.com/zy0x1337/aquaguide/commit/137cb5c5960dfd911e0529c437fc131d2f13b8df))
+* migrate SpeciesCard and PlantCard to unified dark mode ([70f575c](https://github.com/zy0x1337/aquaguide/commit/70f575c343c1ce39247335cf2bc47f902e6f53a9))
+* Modernize Dashboard UI/UX with professional design ([3019d82](https://github.com/zy0x1337/aquaguide/commit/3019d8293676753717844abf7f35c2121186ac93))
+* Modernize MyTanks UI with enhanced design ([2c24232](https://github.com/zy0x1337/aquaguide/commit/2c24232b7964511eb68aee286a9ec77041859b51))
+* Redesign AuthPage with modern animations - Remove background emojis/SVGs and improve design ([fac0418](https://github.com/zy0x1337/aquaguide/commit/fac0418974802d61d77daec016dfacae76f96aea))
+* Redesign AuthPage with modern animations and improved UX ([3be274d](https://github.com/zy0x1337/aquaguide/commit/3be274d562fa23724de874a8aeb593bf3c126e91))
+* redesign buttons in Vercel style - modern, professional and clean ([9acf25b](https://github.com/zy0x1337/aquaguide/commit/9acf25b8c1a81d9d55363ce8e923a42fa91bc2d4))
+* reduce KnowledgeHub header size, darker colors, improve HomePage buttons, add full dark mode to TankBuilder ([ce44784](https://github.com/zy0x1337/aquaguide/commit/ce44784800eddf5d1fb24b946c2c9930fd65f597))
+* Update HabitatsIndexPage to use consistent gray color scheme for dark mode ([b5ce777](https://github.com/zy0x1337/aquaguide/commit/b5ce77763695dba6e18caa24c0fe94db2f5e4c74))
+
+
+### Bug Fixes
+
+* add default export to PageHeader component ([eb02cd2](https://github.com/zy0x1337/aquaguide/commit/eb02cd288680f6ea502e8ccdf638a49c6699cedf))
+* Add ThemeContext to share theme state across components ([b29222e](https://github.com/zy0x1337/aquaguide/commit/b29222e8330ca0ea510ef1b0837312450ec36242))
+* Auth tab switcher color logic & redesign KnowledgeHub with modern UI ([92a54c1](https://github.com/zy0x1337/aquaguide/commit/92a54c12f3b43dcb4972b8b331c3c50d4c898f2e))
+* Auto-login after registration when email confirmation is disabled ([0476c46](https://github.com/zy0x1337/aquaguide/commit/0476c467ad02bd1b162870103ca50cba49f100d2))
+* Complete dark mode implementation with theme toggle ([9a2cfef](https://github.com/zy0x1337/aquaguide/commit/9a2cfef6d07ac9e5cce33cacc1513f3e22157112))
+* Correct light mode text visibility in KnowledgeHub, Diseases and About page colors ([84cb908](https://github.com/zy0x1337/aquaguide/commit/84cb9088967cccfd8adcd4ad89a6ddb93210b8d2))
+* escape XML entities in algae diagram, rename to algae-nutrient-diagram.svg ([b4ef504](https://github.com/zy0x1337/aquaguide/commit/b4ef504cb7294d53ee852122c5d833894f3636f9))
+* Fix Featured Article visibility in light mode and add dark mode to DiseaseDetailPage ([c95bd64](https://github.com/zy0x1337/aquaguide/commit/c95bd6421a68fbad0ae9dc5ac8e9ebdb3a5e5c3d))
+* Fix theme toggle - synchronize useTheme hook and ThemeToggle component API ([6a05625](https://github.com/zy0x1337/aquaguide/commit/6a05625b5fde1d3f508db53b8f8fdf96718bbee1))
+* implement infinite scroll lazy loading for AssetBrowser, add dark mode support ([5fb5620](https://github.com/zy0x1337/aquaguide/commit/5fb5620e45b44175e52eeecc99de42a766474f50))
+* Initialize theme system on app mount ([af7880e](https://github.com/zy0x1337/aquaguide/commit/af7880ef2fe5713e8c70b5f94e0afb9b515c984e))
+* Remove blur gradient from search field causing light shadow in dark mode ([46924d6](https://github.com/zy0x1337/aquaguide/commit/46924d6b114fe89cb55d245dff1449be49268d53))
+* remove invalid border-border class from index.css ([f5249a2](https://github.com/zy0x1337/aquaguide/commit/f5249a2201d2762c0b24c1d872797febaa337feb))
+* **SpeciesDetailPage:** Proper dark mode background - full gray-950 ([826e244](https://github.com/zy0x1337/aquaguide/commit/826e24488460f611fa6f974dc408e4b888444107))
+* **SpeciesIndexPage:** Proper dark mode background - full gray-950 ([81e73f6](https://github.com/zy0x1337/aquaguide/commit/81e73f6b2116b706b5df9c32083ede917467a65b))
+
+
+### Code Refactoring
+
+* **knowledge:** Fact-check and fix hyphens in 6 existing articles ([ca7d2aa](https://github.com/zy0x1337/aquaguide/commit/ca7d2aac891cafc792f071bd48c93791a7e4b9ae))
+* **knowledge:** Final 3 articles fact-checked and hyphens removed ([c7d65c6](https://github.com/zy0x1337/aquaguide/commit/c7d65c6683a64efef607238630227697ba5f59c0))
+* Tone down colors for elegant design ([1cfd133](https://github.com/zy0x1337/aquaguide/commit/1cfd133f7f59c1b69cbac3d37cdac14665649417))
+* Tone down colors for more elegant design ([9f258f1](https://github.com/zy0x1337/aquaguide/commit/9f258f123e6a0c52fb3009faf2f277cc372f91af))
+* Tone down colors for professional look ([7cc7596](https://github.com/zy0x1337/aquaguide/commit/7cc7596c32398ab2a49dd0d9215b59fe0a00015c))
+
+
+### Chores
+
+* remove old algae-growth-factors.svg (renamed to algae-nutrient-diagram.svg) ([76e5ff5](https://github.com/zy0x1337/aquaguide/commit/76e5ff50e1f7ca651ea9f59b97ba76567e6f45ff))
+
 ## [1.0.0](https://github.com/zy0x1337/aquaguide/compare/v0.0.8...v1.0.0) (2026-02-22)
 
 
