@@ -14,14 +14,14 @@ const DiseaseIndexPage = () => {
     : allDiseases;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-20 font-sans">
       <SEOHead 
         title="Aquarium Disease Database" 
         description="Diagnose and treat common fish and shrimp diseases like Ich, Fin Rot, and Scutariella." 
       />
 
       {/* HERO HEADER */}
-      <header className="bg-slate-900 text-white pt-16 pb-24 relative overflow-hidden">
+      <header className="bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-rose-500 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
@@ -37,18 +37,18 @@ const DiseaseIndexPage = () => {
               Common Diseases
             </span>
           </h1>
-          <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-gray-300 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
             Don't panic. Most aquarium diseases are treatable if caught early. Search our database of symptoms, treatments, and prevention strategies.
           </p>
 
           {/* SEARCH BAR */}
           <div className="max-w-xl mx-auto relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-slate-400 group-focus-within:text-rose-500 transition-colors" />
+              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-rose-500 transition-colors" />
             </div>
             <input
               type="text"
-              className="block w-full pl-11 pr-4 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:bg-white focus:text-slate-900 focus:ring-4 focus:ring-rose-500/30 transition-all shadow-xl"
+              className="block w-full pl-11 pr-4 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:bg-white dark:focus:bg-gray-800 focus:text-gray-900 dark:focus:text-white focus:ring-4 focus:ring-rose-500/30 transition-all shadow-xl"
               placeholder="Search symptoms (e.g. 'white spots', 'bloating')..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -62,9 +62,9 @@ const DiseaseIndexPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredDiseases.map((disease) => (
             <Link 
-              to={`/diseases/${disease.id}`} // Link zur Detailseite
+              to={`/diseases/${disease.id}`}
               key={disease.id}
-              className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full"
+              className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full"
             >
               {/* Card Header */}
               <div className="flex justify-between items-start mb-4">
@@ -82,27 +82,27 @@ const DiseaseIndexPage = () => {
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                 {disease.name}
               </h3>
 
               {/* Quick Symptoms */}
               <div className="mb-6 space-y-1 flex-grow">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Key Symptoms</p>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Key Symptoms</p>
                 {disease.symptoms.slice(0, 2).map((s, i) => (
-                  <p key={i} className="text-sm text-slate-600 truncate flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 mr-2 shrink-0"></span>
+                  <p key={i} className="text-sm text-gray-600 dark:text-gray-400 truncate flex items-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mr-2 shrink-0"></span>
                     {s}
                   </p>
                 ))}
               </div>
 
               {/* Footer */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
-                <span className="text-xs font-bold text-slate-400 uppercase">
+              <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between mt-auto">
+                <span className="text-xs font-bold text-gray-400 uppercase">
                   {disease.affectedSpecies?.includes('Neocaridina') ? 'Shrimp & Fish' : 'Fish Only'}
                 </span>
-                <span className="text-indigo-600 text-sm font-bold flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
+                <span className="text-indigo-600 dark:text-indigo-400 text-sm font-bold flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
                   Read Guide <ArrowRight className="w-4 h-4 ml-1" />
                 </span>
               </div>
@@ -113,11 +113,11 @@ const DiseaseIndexPage = () => {
         {/* Empty State */}
         {filteredDiseases.length === 0 && (
           <div className="text-center py-20">
-            <div className="bg-slate-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-slate-400" />
+            <div className="bg-gray-100 dark:bg-gray-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-gray-400" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900">No diseases found</h3>
-            <p className="text-slate-500">Try adjusting your search terms.</p>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white">No diseases found</h3>
+            <p className="text-gray-500 dark:text-gray-400">Try adjusting your search terms.</p>
           </div>
         )}
       </main>
@@ -139,21 +139,21 @@ const getCategoryIcon = (cat: string) => {
 
 const getCategoryColor = (cat: string) => {
   switch (cat) {
-    case 'parasitic': return 'bg-rose-500 shadow-rose-200';
-    case 'bacterial': return 'bg-indigo-500 shadow-indigo-200';
-    case 'fungal': return 'bg-emerald-500 shadow-emerald-200';
-    case 'viral': return 'bg-slate-700 shadow-slate-200';
-    default: return 'bg-slate-500';
+    case 'parasitic': return 'bg-rose-500 shadow-rose-200 dark:shadow-none';
+    case 'bacterial': return 'bg-indigo-500 shadow-indigo-200 dark:shadow-none';
+    case 'fungal': return 'bg-emerald-500 shadow-emerald-200 dark:shadow-none';
+    case 'viral': return 'bg-gray-700 shadow-gray-200 dark:shadow-none';
+    default: return 'bg-gray-500';
   }
 };
 
 const getSeverityBadge = (sev: string) => {
   switch (sev) {
-    case 'critical': return 'bg-rose-50 text-rose-700 border-rose-200';
-    case 'high': return 'bg-orange-50 text-orange-700 border-orange-200';
-    case 'medium': return 'bg-amber-50 text-amber-700 border-amber-200';
-    case 'low': return 'bg-slate-100 text-slate-600 border-slate-200';
-    default: return 'bg-slate-100 text-slate-600';
+    case 'critical': return 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-800';
+    case 'high': return 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950/30 dark:text-orange-400 dark:border-orange-800';
+    case 'medium': return 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800';
+    case 'low': return 'bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700';
+    default: return 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400';
   }
 };
 
