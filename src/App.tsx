@@ -116,9 +116,12 @@ function App() {
             {/* ⚖️ Comparison Tool */}
             <Route path="/compare" element={<ComparisonPage />} />
 
-            {/* 👤 Profile & Settings (Protected) */}
+            {/* 👤 Profile & Settings */}
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            {/* Own profile (protected) */}
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            {/* Public profile by userId (anyone can view) */}
+            <Route path="/profile/:userId" element={<ProfilePage />} />
 
             {/* 👑 Admin Routes (Protected) */}
             <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />

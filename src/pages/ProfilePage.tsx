@@ -1,76 +1,99 @@
 import { useState, useRef, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Mail, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload } from 'lucide-react';
+import { User, Mail, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ProfilePage = () => {
+  const { userId } = useParams<{ userId?: string }>();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingHeader, setUploadingHeader] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [headerUrl, setHeaderUrl] = useState<string | null>(null);
+  const [profileUser, setProfileUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const headerInputRef = useRef<HTMLInputElement>(null);
+
+  // Check if viewing own profile
+  const isOwnProfile = !userId || userId === user?.id;
 
   // Load profile from Supabase
   const [profile, setProfile] = useState({
-    displayName: user?.email?.split('@')[0] || 'User',
+    displayName: '',
     bio: 'Aquarium enthusiast and fish keeper',
-    location: 'Hannover, Germany',
+    location: '',
     website: '',
-    favoriteSpecies: 'Betta Splendens',
+    favoriteSpecies: '',
   });
 
-  // Load profile and avatar from Supabase
+  // Load profile data
   useEffect(() => {
-    if (user) {
-      loadProfile();
-    }
-  }, [user]);
+    loadProfile();
+  }, [userId, user]);
 
   const loadProfile = async () => {
-    if (!user) return;
+    setLoading(true);
+    const targetUserId = userId || user?.id;
+    
+    if (!targetUserId) {
+      setLoading(false);
+      return;
+    }
 
     try {
-      const { data, error } = await supabase
+      // Get profile data
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('avatar_url, display_name, bio, location, website, favorite_species')
-        .eq('id', user.id)
+        .select('avatar_url, header_url, display_name, bio, location, website, favorite_species')
+        .eq('id', targetUserId)
         .single();
 
-      if (error) throw error;
+      if (profileError) throw profileError;
 
-      if (data) {
-        setAvatarUrl(data.avatar_url);
+      // Get user email
+      const { data: userData, error: userError } = await supabase.auth.admin.getUserById(targetUserId);
+      
+      if (profileData) {
+        setAvatarUrl(profileData.avatar_url);
+        setHeaderUrl(profileData.header_url);
         setProfile({
-          displayName: data.display_name || user.email?.split('@')[0] || 'User',
-          bio: data.bio || 'Aquarium enthusiast and fish keeper',
-          location: data.location || '',
-          website: data.website || '',
-          favoriteSpecies: data.favorite_species || '',
+          displayName: profileData.display_name || (userData?.user?.email?.split('@')[0]) || 'User',
+          bio: profileData.bio || 'Aquarium enthusiast and fish keeper',
+          location: profileData.location || '',
+          website: profileData.website || '',
+          favoriteSpecies: profileData.favorite_species || '',
         });
+        setProfileUser(userData?.user);
       }
     } catch (error) {
       console.error('Error loading profile:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const stats = [
     { label: 'Tanks', value: '3', icon: Droplets },
     { label: 'Species Kept', value: '12', icon: Fish },
-    { label: 'Member Since', value: new Date(user?.created_at || Date.now()).getFullYear().toString(), icon: Calendar },
+    { label: 'Member Since', value: new Date(profileUser?.created_at || user?.created_at || Date.now()).getFullYear().toString(), icon: Calendar },
     { label: 'Level', value: 'Member', icon: Award },
   ];
 
   const getUserInitials = () => {
-    if (!user?.email) return 'U';
-    const email = user.email.split('@')[0];
-    return email.slice(0, 2).toUpperCase();
+    const email = profileUser?.email || user?.email;
+    if (!email) return 'U';
+    return email.split('@')[0].slice(0, 2).toUpperCase();
   };
 
   const handleSave = async () => {
-    if (!user) return;
+    if (!user || !isOwnProfile) return;
 
     try {
       const { error } = await supabase
@@ -94,16 +117,16 @@ const ProfilePage = () => {
   };
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isOwnProfile) return;
+    
     const file = event.target.files?.[0];
     if (!file || !user) return;
 
-    // Check file size (max 2MB)
     if (file.size > 2 * 1024 * 1024) {
       alert('File size must be less than 2MB');
       return;
     }
 
-    // Check file type
     if (!file.type.startsWith('image/')) {
       alert('Please upload an image file');
       return;
@@ -112,14 +135,12 @@ const ProfilePage = () => {
     setUploading(true);
 
     try {
-      // Convert image to base64
       const reader = new FileReader();
       reader.readAsDataURL(file);
       
       reader.onload = async () => {
         const base64String = reader.result as string;
 
-        // Update profile with avatar URL
         const { error } = await supabase
           .from('profiles')
           .update({ avatar_url: base64String })
@@ -128,7 +149,6 @@ const ProfilePage = () => {
         if (error) throw error;
 
         setAvatarUrl(base64String);
-        // Trigger a storage event to update other components
         window.dispatchEvent(new Event('avatar-updated'));
       };
 
@@ -143,16 +163,91 @@ const ProfilePage = () => {
     }
   };
 
+  const handleHeaderUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isOwnProfile) return;
+    
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload an image file');
+      return;
+    }
+
+    setUploadingHeader(true);
+
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      
+      reader.onload = async () => {
+        const base64String = reader.result as string;
+
+        const { error } = await supabase
+          .from('profiles')
+          .update({ header_url: base64String })
+          .eq('id', user.id);
+
+        if (error) throw error;
+
+        setHeaderUrl(base64String);
+      };
+
+      reader.onerror = () => {
+        throw new Error('Failed to read file');
+      };
+    } catch (error) {
+      console.error('Error uploading header:', error);
+      alert('Failed to upload header. Please try again.');
+    } finally {
+      setUploadingHeader(false);
+    }
+  };
+
+  const handleShareProfile = () => {
+    const profileUrl = `${window.location.origin}/profile/${user?.id}`;
+    navigator.clipboard.writeText(profileUrl);
+    alert('Profile link copied to clipboard!');
+  };
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+          <div className="text-slate-600 dark:text-slate-400">Loading profile...</div>
+        </div>
+      </PageTransition>
+    );
+  }
+
   return (
     <PageTransition>
       <SEOHead 
-        title="Profile - AquaGuide"
-        description="View and manage your AquaGuide profile, tanks, and aquarium journey."
+        title={`${profile.displayName}'s Profile - AquaGuide`}
+        description={`View ${profile.displayName}'s aquarium profile, tanks, and aquarium journey on AquaGuide.`}
       />
       
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           
+          {/* Back Button (if viewing other user's profile) */}
+          {!isOwnProfile && (
+            <motion.button
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 mb-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" strokeWidth={2.5} />
+              <span className="text-sm font-semibold">Back</span>
+            </motion.button>
+          )}
+
           {/* Profile Header Card */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -160,20 +255,52 @@ const ProfilePage = () => {
             className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-6"
           >
             {/* Cover Image */}
-            <div className="h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 relative" />
+            <div className="relative h-32 group">
+              <input
+                ref={headerInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleHeaderUpload}
+                className="hidden"
+              />
+              {headerUrl ? (
+                <img
+                  src={headerUrl}
+                  alt="Header"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600" />
+              )}
+              {isOwnProfile && (
+                <button
+                  onClick={() => headerInputRef.current?.click()}
+                  disabled={uploadingHeader}
+                  className="absolute bottom-4 right-4 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg text-white transition-all opacity-0 group-hover:opacity-100"
+                >
+                  {uploadingHeader ? (
+                    <Upload className="w-4 h-4 animate-pulse" strokeWidth={2.5} />
+                  ) : (
+                    <Camera className="w-4 h-4" strokeWidth={2.5} />
+                  )}
+                </button>
+              )}
+            </div>
 
             {/* Profile Info */}
             <div className="px-6 pb-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-16 mb-4">
                 {/* Avatar */}
                 <div className="relative group">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleAvatarUpload}
-                    className="hidden"
-                  />
+                  {isOwnProfile && (
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarUpload}
+                      className="hidden"
+                    />
+                  )}
                   {avatarUrl ? (
                     <img
                       src={avatarUrl}
@@ -185,17 +312,19 @@ const ProfilePage = () => {
                       {getUserInitials()}
                     </div>
                   )}
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploading}
-                    className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:cursor-not-allowed"
-                  >
-                    {uploading ? (
-                      <Upload className="w-6 h-6 text-white animate-pulse" strokeWidth={2.5} />
-                    ) : (
-                      <Camera className="w-6 h-6 text-white" strokeWidth={2.5} />
-                    )}
-                  </button>
+                  {isOwnProfile && (
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploading}
+                      className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:cursor-not-allowed"
+                    >
+                      {uploading ? (
+                        <Upload className="w-6 h-6 text-white animate-pulse" strokeWidth={2.5} />
+                      ) : (
+                        <Camera className="w-6 h-6 text-white" strokeWidth={2.5} />
+                      )}
+                    </button>
+                  )}
                 </div>
 
                 {/* Name & Email */}
@@ -205,31 +334,49 @@ const ProfilePage = () => {
                   </h1>
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
                     <Mail className="w-4 h-4" strokeWidth={2.5} />
-                    <span className="text-sm">{user?.email}</span>
+                    <span className="text-sm">{profileUser?.email || user?.email}</span>
                   </div>
                 </div>
 
-                {/* Edit Button */}
-                <button
-                  onClick={() => setIsEditing(!isEditing)}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
-                    isEditing
-                      ? 'bg-red-100 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-950/50'
-                      : 'bg-black dark:bg-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-100'
-                  }`}
-                >
-                  {isEditing ? (
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2">
+                  {isOwnProfile ? (
                     <>
-                      <X className="w-4 h-4" strokeWidth={2.5} />
-                      Cancel
+                      {/* Share Button */}
+                      <button
+                        onClick={handleShareProfile}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                      >
+                        Share
+                      </button>
+                      {/* Edit Button */}
+                      <button
+                        onClick={() => setIsEditing(!isEditing)}
+                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                          isEditing
+                            ? 'bg-red-100 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-950/50'
+                            : 'bg-black dark:bg-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-100'
+                        }`}
+                      >
+                        {isEditing ? (
+                          <>
+                            <X className="w-4 h-4" strokeWidth={2.5} />
+                            Cancel
+                          </>
+                        ) : (
+                          <>
+                            <Edit2 className="w-4 h-4" strokeWidth={2.5} />
+                            Edit
+                          </>
+                        )}
+                      </button>
                     </>
                   ) : (
-                    <>
-                      <Edit2 className="w-4 h-4" strokeWidth={2.5} />
-                      Edit Profile
-                    </>
+                    <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400">
+                      Viewing Profile
+                    </div>
                   )}
-                </button>
+                </div>
               </div>
 
               {/* Bio */}
@@ -369,7 +516,7 @@ const ProfilePage = () => {
               </div>
 
               {/* Save Button */}
-              {isEditing && (
+              {isEditing && isOwnProfile && (
                 <button
                   onClick={handleSave}
                   className="group relative inline-flex items-center gap-2 px-6 py-2.5 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
