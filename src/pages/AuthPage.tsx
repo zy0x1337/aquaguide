@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { Mail, Lock, User, ArrowRight, Loader2, AlertCircle, CheckCircle2, Fish, Eye, EyeOff, Droplets, LayoutDashboard, Bell, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
+import { Link } from 'react-router-dom';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -374,9 +375,9 @@ const AuthPage = () => {
               <div className="pt-6 border-t border-gray-200 dark:border-gray-800">
                 <p className="text-xs text-center text-gray-500 dark:text-gray-400 leading-relaxed">
                   By continuing, you agree to our{' '}
-                  <a href="#" className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Terms of Service</a>
+                  <Link to="/terms-of-service" className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Terms of Service</Link>
                   {' '}and{' '}
-                  <a href="#" className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Privacy Policy</a>
+                  <Link to="/privacy-policy" className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Privacy Policy</Link>
                 </p>
               </div>
             </motion.div>
