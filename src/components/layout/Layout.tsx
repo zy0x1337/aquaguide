@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogIn, LogOut, User, Crown, LayoutDashboard, Waves, BookOpen } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight, Settings, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -12,25 +12,67 @@ interface Props {
 
 export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const location = useLocation();
   const { comparedSpecies } = useComparison();
   const { user, signOut } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user) {
+      // Load role and avatar from profiles
       supabase
         .from('profiles')
-        .select('role')
+        .select('role, avatar_url')
         .eq('id', user.id)
         .single()
         .then(({ data }) => {
           setIsAdmin(data?.role === 'admin');
+          setAvatarUrl(data?.avatar_url || null);
         });
     } else {
       setIsAdmin(false);
+      setAvatarUrl(null);
     }
   }, [user]);
+
+  // Listen for avatar updates
+  useEffect(() => {
+    const handleAvatarUpdate = () => {
+      if (user) {
+        supabase
+          .from('profiles')
+          .select('avatar_url')
+          .eq('id', user.id)
+          .single()
+          .then(({ data }) => {
+            setAvatarUrl(data?.avatar_url || null);
+          });
+      }
+    };
+
+    window.addEventListener('avatar-updated', handleAvatarUpdate);
+    return () => window.removeEventListener('avatar-updated', handleAvatarUpdate);
+  }, [user]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+
+    if (profileDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
 
   const isActive = (path: string) => 
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
@@ -41,10 +83,46 @@ export const Layout: React.FC<Props> = ({ children }) => {
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/habitats', label: 'Habitats', icon: Waves },
     { path: '/knowledge', label: 'Knowledge', icon: BookOpen },
-    { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, requireAuth: true },
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
   ];
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (!user?.email) return 'U';
+    const email = user.email.split('@')[0];
+    return email.slice(0, 2).toUpperCase();
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    setProfileDropdownOpen(false);
+  };
+
+  // Avatar Component
+  const AvatarDisplay = ({ size = 'md', className = '' }: { size?: 'sm' | 'md' | 'lg', className?: string }) => {
+    const sizeClasses = {
+      sm: 'w-8 h-8 text-xs',
+      md: 'w-9 h-9 text-sm',
+      lg: 'w-10 h-10 text-base'
+    };
+
+    if (avatarUrl) {
+      return (
+        <img
+          src={avatarUrl}
+          alt="Avatar"
+          className={`${sizeClasses[size]} rounded-full object-cover shadow-sm border-2 border-white dark:border-slate-800 ${className}`}
+        />
+      );
+    }
+
+    return (
+      <div className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold shadow-sm border-2 border-white dark:border-slate-800 ${className}`}>
+        {getUserInitials()}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -66,8 +144,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
             {/* CENTER: MAIN NAVIGATION (Desktop) */}
             <div className="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
               {navItems.map(item => {
-                if (item.requireAuth && !user) return null;
-                
                 const Icon = item.icon;
                 const active = isActive(item.path);
                 return (
@@ -88,12 +164,12 @@ export const Layout: React.FC<Props> = ({ children }) => {
             </div>
 
             {/* RIGHT: ACTIONS */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {/* Compare Button */}
               {comparedSpecies.length > 0 && (
                 <Link
                   to="/compare"
-                  className="relative p-2 rounded-xl bg-emerald-500 dark:bg-emerald-600 text-white hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all hover:scale-105 shadow-sm"
+                  className="relative p-2 rounded-lg bg-emerald-500 dark:bg-emerald-600 text-white hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all hover:scale-105 shadow-sm"
                   title="Compare Species"
                 >
                   <Scale className="w-5 h-5" strokeWidth={2.5} />
@@ -103,27 +179,27 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </Link>
               )}
 
-              {/* Tank Builder (Desktop) */}
+              {/* Tank Builder (Desktop) - Vercel Style */}
               <Link
                 to="/tank-builder"
-                className={`hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 ${
+                className={`hidden lg:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                   isActive('/tank-builder')
-                    ? 'bg-indigo-600 text-white shadow-lg'
-                    : 'bg-indigo-500 text-white hover:bg-indigo-600 shadow-sm hover:shadow-lg hover:scale-105'
+                    ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
+                    : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow-md'
                 }`}
               >
                 <BoxSelect className="w-4 h-4" strokeWidth={2.5} />
                 Builder
               </Link>
 
-              {/* Admin Link (Desktop) */}
+              {/* Admin Link (Desktop) - Vercel Style */}
               {isAdmin && (
                 <Link
                   to="/admin"
-                  className={`hidden lg:flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold transition-all duration-200 ${
+                  className={`hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     isActive('/admin')
-                      ? 'bg-amber-500 text-white shadow-lg'
-                      : 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900 hover:scale-105'
+                      ? 'bg-amber-500 text-white shadow-sm'
+                      : 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900 border border-amber-200 dark:border-amber-800'
                   }`}
                   title="Admin Panel"
                 >
@@ -131,28 +207,91 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </Link>
               )}
 
-              {/* Auth (Desktop) */}
-              <div className="hidden md:flex items-center gap-2">
+              {/* Auth (Desktop) - Vercel Style */}
+              <div className="hidden md:flex items-center gap-3">
                 {user ? (
-                  <>
-                    <div className="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hidden xl:block border border-slate-200 dark:border-slate-700">
-                      {user.email?.split('@')[0]}
-                    </div>
+                  <div className="relative" ref={dropdownRef}>
+                    {/* User Avatar Button with Dropdown */}
                     <button
-                      onClick={() => signOut()}
-                      className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all hover:scale-105"
-                      title="Sign Out"
+                      onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                      className="group relative flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
                     >
-                      <LogOut className="w-5 h-5" strokeWidth={2.5} />
+                      <AvatarDisplay size="md" />
+                      <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 transition-transform ${
+                        profileDropdownOpen ? 'rotate-180' : ''
+                      }`} strokeWidth={2.5} />
                     </button>
-                  </>
+
+                    {/* Dropdown Menu */}
+                    {profileDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                        {/* User Info Header */}
+                        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+                          <div className="flex items-center gap-3">
+                            <AvatarDisplay size="lg" />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                                {user.email?.split('@')[0]}
+                              </div>
+                              <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                                {user.email}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="py-2">
+                          <Link
+                            to="/dashboard"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
+                            Dashboard
+                          </Link>
+                          <Link
+                            to="/settings"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <Settings className="w-4 h-4" strokeWidth={2.5} />
+                            Settings
+                          </Link>
+                          <Link
+                            to="/profile"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <User className="w-4 h-4" strokeWidth={2.5} />
+                            Profile
+                          </Link>
+                        </div>
+
+                        {/* Sign Out */}
+                        <div className="border-t border-slate-200 dark:border-slate-800 py-2">
+                          <button
+                            onClick={handleSignOut}
+                            className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                          >
+                            <LogOut className="w-4 h-4" strokeWidth={2.5} />
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <Link
                     to="/login"
-                    className="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-lg hover:shadow-indigo-500/30 transition-all hover:scale-105"
+                    className="group relative inline-flex items-center gap-2 px-5 py-2 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
                   >
-                    <LogIn className="w-4 h-4" strokeWidth={2.5} />
-                    Sign In
+                    {/* Shimmer effect */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
+                    <span className="relative flex items-center gap-2">
+                      Sign In
+                      <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                    </span>
                   </Link>
                 )}
               </div>
@@ -164,7 +303,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
               {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 {mobileMenuOpen ? (
                   <X className="w-6 h-6 text-slate-700 dark:text-slate-300" strokeWidth={2.5} />
@@ -178,50 +317,81 @@ export const Layout: React.FC<Props> = ({ children }) => {
           {/* MOBILE MENU */}
           {mobileMenuOpen && (
             <div className="lg:hidden py-4 border-t border-slate-200 dark:border-slate-800 animate-in slide-in-from-top-2 duration-200">
-              {/* Auth (Mobile) */}
+              {/* Auth (Mobile) - Vercel Style */}
               <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 {user ? (
-                  <div className="flex items-center justify-between px-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-950 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                        <User className="w-5 h-5" strokeWidth={2.5} />
-                      </div>
-                      <div>
-                        <div className="text-sm font-bold text-slate-900 dark:text-white">{user.email?.split('@')[0]}</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-500">Member</div>
+                  <div className="space-y-2">
+                    {/* User Info */}
+                    <div className="flex items-center gap-3 px-2">
+                      <AvatarDisplay size="lg" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold text-slate-900 dark:text-white truncate">{user.email?.split('@')[0]}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-500 truncate">{user.email}</div>
                       </div>
                     </div>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setMobileMenuOpen(false);
-                      }}
-                      className="p-2 rounded-xl text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
-                    >
-                      <LogOut className="w-5 h-5" strokeWidth={2.5} />
-                    </button>
+                    
+                    {/* Quick Links */}
+                    <div className="space-y-1">
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
+                        Dashboard
+                      </Link>
+                      <Link
+                        to="/settings"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <Settings className="w-4 h-4" strokeWidth={2.5} />
+                        Settings
+                      </Link>
+                      <Link
+                        to="/profile"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <User className="w-4 h-4" strokeWidth={2.5} />
+                        Profile
+                      </Link>
+                      <button
+                        onClick={() => {
+                          signOut();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" strokeWidth={2.5} />
+                        Sign Out
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <Link
                     to="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                    className="group relative flex items-center justify-center gap-2 w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold transition-all shadow-sm overflow-hidden"
                   >
-                    <LogIn className="w-5 h-5" strokeWidth={2.5} />
-                    Sign In
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
+                    <span className="relative flex items-center gap-2">
+                      Sign In
+                      <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+                    </span>
                   </Link>
                 )}
               </div>
 
-              {/* Special Actions (Mobile) */}
+              {/* Special Actions (Mobile) - Vercel Style */}
               <div className="space-y-2 mb-4">
                 <Link
                   to="/tank-builder"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${
                     isActive('/tank-builder')
-                      ? 'bg-indigo-600 text-white shadow-lg'
-                      : 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-950/50'
+                      ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
+                      : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                   }`}
                 >
                   <BoxSelect className="w-5 h-5" strokeWidth={2.5} />
@@ -232,10 +402,10 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   <Link
                     to="/admin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${
                       isActive('/admin')
-                        ? 'bg-amber-500 text-white shadow-lg'
-                        : 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-950/50'
+                        ? 'bg-amber-500 text-white shadow-sm'
+                        : 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900 border border-amber-200 dark:border-amber-800'
                     }`}
                   >
                     <Crown className="w-5 h-5" strokeWidth={2.5} />
@@ -247,8 +417,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
               {/* Main Nav (Mobile) */}
               <div className="space-y-1">
                 {navItems.map(item => {
-                  if (item.requireAuth && !user) return null;
-                  
                   const Icon = item.icon;
                   const active = isActive(item.path);
                   return (
@@ -256,7 +424,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                       key={item.path}
                       to={item.path}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all ${
                         active
                           ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
                           : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'

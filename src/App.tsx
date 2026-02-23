@@ -18,6 +18,10 @@ import NotFoundPage from './pages/NotFoundPage';
 // Auth
 import AuthPage from './pages/AuthPage';
 
+// Legal Pages
+import TermsOfServicePage from './pages/TermsOfServicePage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+
 // Species Pages
 import SpeciesIndexPage from './pages/SpeciesIndexPage';
 import SpeciesDetailPage from './pages/SpeciesDetailPage';
@@ -49,6 +53,10 @@ import { TankBuilderPage } from './pages/TankBuilderPage';
 // ⚖️ COMPARISON
 import ComparisonPage from './pages/ComparisonPage';
 
+// 👤 PROFILE & SETTINGS
+import SettingsPage from './pages/SettingsPage';
+import ProfilePage from './pages/ProfilePage';
+
 // 👑 ADMIN PAGES
 import AdminDashboard from './pages/admin/AdminDashboard';
 import SpeciesManager from './pages/admin/SpeciesManager';
@@ -76,6 +84,11 @@ function App() {
 
             {/* Auth */}
             <Route path="/login" element={<AuthPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+
+            {/* Legal Pages */}
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
             {/* Species Routes */}
             <Route path="/species" element={<SpeciesIndexPage />} />
@@ -111,6 +124,13 @@ function App() {
 
             {/* ⚖️ Comparison Tool */}
             <Route path="/compare" element={<ComparisonPage />} />
+
+            {/* 👤 Profile & Settings */}
+            <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            {/* Own profile (protected) */}
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            {/* Public profile by userId (anyone can view) */}
+            <Route path="/profile/:userId" element={<ProfilePage />} />
 
             {/* 👑 Admin Routes (Protected) */}
             <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />

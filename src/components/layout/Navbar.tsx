@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Droplets, Fish, Leaf, Stethoscope, BoxSelect, Home, LayoutDashboard, Waves, BookOpen } from 'lucide-react';
+import { Droplets, Fish, Leaf, Stethoscope, BoxSelect, Home, Waves, BookOpen, ArrowRight } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { useState } from 'react';
 import { useAuth } from '../../lib/supabase/auth';
@@ -23,6 +23,13 @@ export const Navbar = () => {
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: BookOpen },
   ];
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (!user?.email) return 'U';
+    const email = user.email.split('@')[0];
+    return email.slice(0, 2).toUpperCase();
+  };
 
   return (
     <>
@@ -64,21 +71,15 @@ export const Navbar = () => {
         {/* RIGHT ACTIONS - Vercel Style */}
         <div className="flex items-center gap-3">
           {user ? (
-            // Dashboard Button (replaces old user button) - Vercel Style
+            // User Avatar Button - links to Dashboard
             <Link
               to="/dashboard"
-              className={`group relative inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 overflow-hidden ${
-                isActive('/dashboard')
-                  ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
-                  : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow-md'
-              }`}
+              className="group relative w-9 h-9 rounded-full bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 flex items-center justify-center text-white text-sm font-bold shadow-sm hover:shadow-md transition-all hover:scale-105 border-2 border-white dark:border-gray-800 overflow-hidden"
+              title="Dashboard"
             >
-              {/* Shimmer effect on active */}
-              {isActive('/dashboard') && (
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-              )}
-              <LayoutDashboard className="w-4 h-4 relative" strokeWidth={2.5} />
-              <span className="relative">Dashboard</span>
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              <span className="relative">{getUserInitials()}</span>
             </Link>
           ) : (
             // Sign In Button - Vercel Style
@@ -88,7 +89,10 @@ export const Navbar = () => {
             >
               {/* Shimmer effect */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-              <span className="relative">Sign In</span>
+              <span className="relative flex items-center gap-2">
+                Sign In
+                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+              </span>
             </Link>
           )}
           <div className="h-6 w-px bg-gray-200 dark:bg-gray-700"></div>
@@ -111,13 +115,9 @@ export const Navbar = () => {
           {user && (
             <Link
               to="/dashboard"
-              className={`p-2 rounded-lg transition-all ${
-                isActive('/dashboard')
-                  ? 'bg-coral-50 dark:bg-coral-500/10 text-coral-600 dark:text-coral-400'
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
+              className="w-8 h-8 rounded-full bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 flex items-center justify-center text-white text-xs font-bold shadow-sm border-2 border-white dark:border-gray-900"
             >
-              <LayoutDashboard className="w-5 h-5" strokeWidth={2.5} />
+              {getUserInitials()}
             </Link>
           )}
           <ThemeToggle />
