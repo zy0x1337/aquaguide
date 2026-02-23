@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Mail, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft } from 'lucide-react';
+import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ProfilePage = () => {
@@ -254,7 +254,7 @@ const ProfilePage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-6"
           >
-            {/* Cover Image */}
+            {/* Cover Image - Fixed z-index */}
             <div className="relative h-32 group">
               <input
                 ref={headerInputRef}
@@ -276,7 +276,7 @@ const ProfilePage = () => {
                 <button
                   onClick={() => headerInputRef.current?.click()}
                   disabled={uploadingHeader}
-                  className="absolute bottom-4 right-4 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg text-white transition-all opacity-0 group-hover:opacity-100"
+                  className="absolute bottom-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg text-white transition-all opacity-0 group-hover:opacity-100"
                 >
                   {uploadingHeader ? (
                     <Upload className="w-4 h-4 animate-pulse" strokeWidth={2.5} />
@@ -287,11 +287,11 @@ const ProfilePage = () => {
               )}
             </div>
 
-            {/* Profile Info */}
-            <div className="px-6 pb-6">
+            {/* Profile Info - Fixed positioning */}
+            <div className="relative px-6 pb-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-16 mb-4">
-                {/* Avatar */}
-                <div className="relative group">
+                {/* Avatar - Higher z-index */}
+                <div className="relative group z-20">
                   {isOwnProfile && (
                     <input
                       ref={fileInputRef}
@@ -327,32 +327,33 @@ const ProfilePage = () => {
                   )}
                 </div>
 
-                {/* Name & Email */}
-                <div className="flex-1">
+                {/* Name - Higher z-index, no email */}
+                <div className="flex-1 z-20 bg-white dark:bg-slate-900 px-2 py-1 rounded-lg">
                   <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
                     {profile.displayName}
                   </h1>
-                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                    <Mail className="w-4 h-4" strokeWidth={2.5} />
-                    <span className="text-sm">{profileUser?.email || user?.email}</span>
-                  </div>
+                  {profile.location && (
+                    <div className="text-sm text-slate-600 dark:text-slate-400">
+                      {profile.location}
+                    </div>
+                  )}
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex items-center gap-2">
+                {/* Action Buttons - Highest z-index */}
+                <div className="flex items-center gap-2 z-30">
                   {isOwnProfile ? (
                     <>
                       {/* Share Button */}
                       <button
                         onClick={handleShareProfile}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shadow-sm"
                       >
                         Share
                       </button>
                       {/* Edit Button */}
                       <button
                         onClick={() => setIsEditing(!isEditing)}
-                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm ${
                           isEditing
                             ? 'bg-red-100 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-950/50'
                             : 'bg-black dark:bg-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-100'
@@ -372,7 +373,7 @@ const ProfilePage = () => {
                       </button>
                     </>
                   ) : (
-                    <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400">
+                    <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 shadow-sm">
                       Viewing Profile
                     </div>
                   )}
