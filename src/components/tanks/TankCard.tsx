@@ -67,7 +67,7 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
           to={`/my-tanks/${tank.id}`}
           className="w-full flex items-center justify-between bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-4 py-3 rounded-xl transition-colors group"
         >
-          <span>View Details</span>
+          <span>Manage</span>
           <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>

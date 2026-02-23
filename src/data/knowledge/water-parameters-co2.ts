@@ -43,7 +43,7 @@ export const waterParametersCo2: KnowledgeArticle = {
             subheading: 'Discus/Planted (KH 2-4)',
             content: 'Lower KH allows precise control but requires stable injection. Small pH changes = large CO₂ swings.'
           }
-        }
+        ]
       },
       {
         heading: 'Practical CO₂ Management',
