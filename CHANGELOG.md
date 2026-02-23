@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/zy0x1337/aquaguide/compare/v1.0.2...v1.0.3) (2026-02-23)
+
+
+### Features
+
+* add FavoriteButton to PlantCard and Favorites section to ProfilePage ([e578647](https://github.com/zy0x1337/aquaguide/commit/e578647c546cffc4bf281fb02ab7efcf3a039e7c))
+* add FavoriteButton to SpeciesCard ([35d4312](https://github.com/zy0x1337/aquaguide/commit/35d4312d39649fdc3eb2176e16288d84a0adb85d))
+* add Favorites route and FavoriteButton component ([eb75a68](https://github.com/zy0x1337/aquaguide/commit/eb75a68ac2a19d73c1b33678763d0cf553c4aebc))
+* add Favorites section to ProfilePage with edit mode support ([eb9dc92](https://github.com/zy0x1337/aquaguide/commit/eb9dc92f57cc0cc136e67b9da5bfda9d6009abde))
+* add Favorites system with page and hooks ([b9e2feb](https://github.com/zy0x1337/aquaguide/commit/b9e2febefd5c0f4f9b133f8e966cec78709c0e6e))
+* create favorites table for species and plants ([dc49b3f](https://github.com/zy0x1337/aquaguide/commit/dc49b3f332bd1156208bfb0946cdfc4db8122cf7))
+
+
+### Bug Fixes
+
+* correct closing tag from </Link> to </button> for Sign Out button ([f361bea](https://github.com/zy0x1337/aquaguide/commit/f361bea2ce3516773febb4f548c6150a849a3554))
+* update Sign In button to use /auth route and match Navbar style ([0ab26a7](https://github.com/zy0x1337/aquaguide/commit/0ab26a7934a4d94c1960e7dc5a81bd813aca1f97))
+
 ### [1.0.2](https://github.com/zy0x1337/aquaguide/compare/v1.0.1...v1.0.2) (2026-02-23)
 
 
