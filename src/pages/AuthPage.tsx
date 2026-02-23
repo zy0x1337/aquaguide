@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { Mail, Lock, User, ArrowRight, Loader2, AlertCircle, CheckCircle2, Fish, Eye, EyeOff, Droplets, LayoutDashboard, Bell, Sparkles } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2, AlertCircle, CheckCircle2, Fish, Eye, EyeOff, Droplets, LayoutDashboard, Bell, Sparkles, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 
@@ -69,6 +69,11 @@ const AuthPage = () => {
 
   const features = [
     {
+      icon: User,
+      title: 'Personal Profile',
+      description: 'Create your profile and save your favorite species'
+    },
+    {
       icon: LayoutDashboard,
       title: 'Personal Dashboard',
       description: 'Track all your aquariums in one place'
@@ -82,11 +87,6 @@ const AuthPage = () => {
       icon: Bell,
       title: 'Smart Reminders',
       description: 'Never miss water changes or feeding times'
-    },
-    {
-      icon: Fish,
-      title: 'Species Database',
-      description: 'Access detailed care guides for 1000+ species'
     }
   ];
 
@@ -131,14 +131,20 @@ const AuthPage = () => {
         />
       </div>
 
-      {/* Main Container */}
-      <div className="flex gap-8 items-center max-w-6xl w-full relative z-10">
-        {/* Left Side - Auth Form */}
+      {/* Main Container - Animated to slide left on signup */}
+      <motion.div 
+        animate={{ 
+          x: !isLogin ? (typeof window !== 'undefined' && window.innerWidth >= 1024 ? '-15%' : 0) : 0 
+        }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="flex flex-col lg:flex-row gap-8 items-start lg:items-center max-w-6xl w-full relative z-10"
+      >
+        {/* Auth Form - Slides to center/left */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="max-w-md w-full"
+          className="max-w-md w-full mx-auto lg:mx-0"
         >
           {/* Logo & Header */}
           <motion.div 
@@ -173,10 +179,11 @@ const AuthPage = () => {
             {/* Toggle Tabs - FIXED: Proper active states */}
             <div className="relative flex bg-gray-100 dark:bg-gray-800/50 p-1.5 rounded-2xl">
               <motion.div
-                layout
                 layoutId="authTab"
                 initial={false}
-                animate={{ x: isLogin ? 0 : '100%' }}
+                animate={{ 
+                  x: isLogin ? '0%' : 'calc(100% + 6px)'
+                }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className="absolute inset-y-1.5 w-[calc(50%-6px)] bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg"
               />
@@ -392,7 +399,7 @@ const AuthPage = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right Side - Features Panel (Sign Up Only) */}
+        {/* Features Panel - Shows on desktop right side, mobile below */}
         <AnimatePresence>
           {!isLogin && (
             <motion.div
@@ -400,7 +407,7 @@ const AuthPage = () => {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 50, scale: 0.95 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="hidden lg:block max-w-md w-full"
+              className="max-w-md w-full mx-auto lg:mx-0"
             >
               <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-800/50 p-8">
                 {/* Header */}
@@ -469,7 +476,7 @@ const AuthPage = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 };
