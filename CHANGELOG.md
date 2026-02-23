@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/zy0x1337/aquaguide/compare/v1.0.1...v1.0.2) (2026-02-23)
+
+
+### Features
+
+* add all missing profile fields (header_url, display_name, bio, location, website, favorite_species) ([eebabc4](https://github.com/zy0x1337/aquaguide/commit/eebabc4922ca6853fdd610b76ba5329eea118d0c))
+* add animated features panel for sign up with proper tab activation ([6a1c277](https://github.com/zy0x1337/aquaguide/commit/6a1c277c3d283a70e287928e39bf76ff631bf5ce))
+* add header upload, public profiles with userID, read-only for other users ([8b65780](https://github.com/zy0x1337/aquaguide/commit/8b6578003ecb6ed784d7a7c6689b124806ffa061))
+* add header_url column to profiles table ([682230b](https://github.com/zy0x1337/aquaguide/commit/682230b8b884ba7ee61c020b9e7cc5896a2b96e0))
+* add profile dropdown menu with settings on avatar click ([0b57c35](https://github.com/zy0x1337/aquaguide/commit/0b57c353f0a7ebf59c2ff4e78f04ec862267d626))
+* add routes for Terms of Service and Privacy Policy pages ([f7712d5](https://github.com/zy0x1337/aquaguide/commit/f7712d5c934a1d916c0c1d8620d793f1b7197460))
+* add Settings and Profile pages with modern Vercel-style design ([68bd223](https://github.com/zy0x1337/aquaguide/commit/68bd2233306ba6fb06078a63eb543b7bf3dd216b))
+* apply Vercel-style buttons to Layout.tsx navigation ([cc3568e](https://github.com/zy0x1337/aquaguide/commit/cc3568ef4e65045e8ee204d669845bfe0d88dbda))
+* create Privacy Policy page ([58c20bf](https://github.com/zy0x1337/aquaguide/commit/58c20bfa2c897d7e4acf7cd2f22d6f350974b851))
+* create Terms of Service page ([68177ef](https://github.com/zy0x1337/aquaguide/commit/68177ef22e77087dff6db1242647e2729aa47031))
+* improve sign in button design with shimmer effect and better styling ([a6075c8](https://github.com/zy0x1337/aquaguide/commit/a6075c8cdc24cbcbbda0f63d92e70dfc7ec3f069))
+* link Terms of Service and Privacy Policy pages ([fc6291c](https://github.com/zy0x1337/aquaguide/commit/fc6291c9ef733c2181918f59a3167607aa49cea6))
+* make quick settings functional, add avatar upload, remove complex features ([38afcdd](https://github.com/zy0x1337/aquaguide/commit/38afcdd8dfc93703dd6771887c434c4f60f9023b))
+* replace dashboard button with user avatar profile button ([cc833f1](https://github.com/zy0x1337/aquaguide/commit/cc833f11b43e41637bc46f2e49b6584bdf786191))
+* update Layout and Navbar to use uploaded avatar images ([f210926](https://github.com/zy0x1337/aquaguide/commit/f2109262805ed9b59e8d4b7e73574e8cb8aa1edb))
+
+
+### Bug Fixes
+
+* center auth box on login, fix tab background animation bug ([be144cf](https://github.com/zy0x1337/aquaguide/commit/be144cfee1434a88ace0cf4b2cb24c6c62544fd9))
+* close button tag properly on line 434 ([4e66f94](https://github.com/zy0x1337/aquaguide/commit/4e66f945e7d932f28a0f5cfc2b70facae12f8b02))
+* header z-index issues, remove email display from public profile ([d38ea7e](https://github.com/zy0x1337/aquaguide/commit/d38ea7eb4e3c61a5dc6b0215db91747401061604))
+* load avatar from profiles table instead of localStorage ([5a52609](https://github.com/zy0x1337/aquaguide/commit/5a52609e9a3861ebaee61bd9072d979546fd5e5f))
+* remove language/measurement selectors, use profiles table for avatar instead of storage ([e85d985](https://github.com/zy0x1337/aquaguide/commit/e85d985d5eeff1e8ea4c99db8083532cc9bbbf2f))
+* tab activation bug, center-to-left slide animation, mobile features display ([2dd5b84](https://github.com/zy0x1337/aquaguide/commit/2dd5b84f0af3338c4b04676ca95e83fa6e3c8629))
+
 ### [1.0.1](https://github.com/zy0x1337/aquaguide/compare/v1.0.0...v1.0.1) (2026-02-23)
 
 
