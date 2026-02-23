@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: ['class', '[data-theme="dark"]'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -71,6 +71,9 @@ export default {
           900: '#1d1f22',
           950: '#121314',
         },
+        gray: {
+          950: '#0A0F14', // Dark mode background
+        },
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system'],
@@ -87,7 +90,8 @@ export default {
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
-        float: 'float 6s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'spin-in-180': 'spinIn180 0.3s ease-out',
       },
       keyframes: {
         fadeIn: {
@@ -97,6 +101,10 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        spinIn180: {
+          '0%': { transform: 'rotate(-180deg)', opacity: '0' },
+          '100%': { transform: 'rotate(0deg)', opacity: '1' },
         },
       },
     },

@@ -1,30 +1,41 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export const useTheme = () => {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const storedPrefs = window.localStorage.getItem('color-theme');
-      if (typeof storedPrefs === 'string') {
-        return storedPrefs;
-      }
-      const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
-      if (userMedia.matches) {
-        return 'dark';
-      }
-    }
-    return 'light';
+/**
+ * Ultra-simple dark mode hook
+ * Manages theme state with localStorage persistence and system preference detection
+ */
+export function useTheme() {
+  const [isDark, setIsDark] = useState(() => {
+    // Check localStorage first
+    const stored = localStorage.getItem('aquaguide-theme');
+    if (stored) return stored === 'dark';
+    
+    // Fall back to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('color-theme', theme);
-  }, [theme]);
+    const root = document.documentElement;
+    
+    // Apply or remove dark class
+    if (isDark) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    
+    // Persist to localStorage
+    localStorage.setItem('aquaguide-theme', isDark ? 'dark' : 'light');
+    
+    // Update meta theme-color for mobile browsers
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      metaTheme.setAttribute('content', isDark ? '#0A0F14' : '#FFFFFF');
+    }
+  }, [isDark]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  return {
+    isDark,
+    toggle: () => setIsDark(!isDark),
   };
-
-  return { theme, toggleTheme };
-};
+}
