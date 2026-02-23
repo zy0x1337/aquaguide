@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { 
   Zap, ChevronRight, ArrowRight,
-  Search, Layers, Sparkles, Activity, Database, Shield, Gauge
+  Search, Layers, Activity, Database, Shield, Gauge
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
@@ -79,7 +79,7 @@ const HomePage = () => {
               >
                 <motion.div variants={fadeInUp}>
                   <span className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 dark:from-indigo-500/20 dark:to-cyan-500/20 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-8 border border-indigo-200/50 dark:border-indigo-500/30">
-                    <Sparkles className="w-3.5 h-3.5" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
                     v0.0.7 Beta
                   </span>
                 </motion.div>
@@ -114,26 +114,29 @@ const HomePage = () => {
 
                 <motion.div 
                   variants={fadeInUp}
-                  className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+                  className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3"
                 >
-                  {/* Sign In Button - Improved */}
+                  {/* Sign In Button - Vercel Style */}
                   <Link 
                     to="/auth" 
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/40 hover:-translate-y-0.5"
+                    className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
                   >
-                    <Sparkles className="w-5 h-5" />
-                    Sign In
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    {/* Shimmer effect */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
+                    <span className="relative flex items-center gap-2">
+                      Sign In
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
                   </Link>
                   
-                  {/* Tank Builder Button - Improved */}
+                  {/* Tank Builder Button - Vercel Style */}
                   <Link 
                     to="/tank-builder" 
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-2xl transition-all duration-300 border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                    className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                   >
-                    <Zap className="w-5 h-5 text-amber-500" />
+                    <Zap className="w-4 h-4 text-amber-500" />
                     Tank Builder
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                   </Link>
                 </motion.div>
                 
@@ -300,14 +303,14 @@ const HomePage = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link 
                   to="/species" 
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold rounded-2xl transition-all duration-300 shadow-xl shadow-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/40 hover:-translate-y-1"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-white hover:bg-slate-50 text-slate-900 font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20"
                 >
                   Browse {allSpecies.length}+ Species
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link 
                   to="/about" 
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-2xl transition-all duration-300 border-2 border-white/20 hover:border-white/30"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-lg transition-all duration-200 border border-white/20 hover:border-white/30"
                 >
                   Learn More
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
