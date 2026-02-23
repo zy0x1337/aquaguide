@@ -20,7 +20,6 @@ export const Navbar = () => {
     { path: '/plants', label: 'Plants', icon: Leaf },
     { path: '/habitats', label: 'Habitats', icon: Waves },
     { path: '/tank-builder', label: 'Builder', icon: BoxSelect },
-    ...(user ? [{ path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }] : []),
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: BookOpen },
   ];
@@ -62,14 +61,34 @@ export const Navbar = () => {
           })}
         </div>
 
-        {/* RIGHT ACTIONS */}
+        {/* RIGHT ACTIONS - Vercel Style */}
         <div className="flex items-center gap-3">
-          {!user && (
+          {user ? (
+            // Dashboard Button (replaces old user button) - Vercel Style
             <Link
-              to="/login"
-              className="px-5 py-2 bg-gradient-to-r from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-coral-500/30 dark:hover:shadow-coral-400/30 transition-all text-sm hover:scale-105"
+              to="/dashboard"
+              className={`group relative inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 overflow-hidden ${
+                isActive('/dashboard')
+                  ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
+                  : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow-md'
+              }`}
             >
-              Sign In
+              {/* Shimmer effect on active */}
+              {isActive('/dashboard') && (
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
+              )}
+              <LayoutDashboard className="w-4 h-4 relative" strokeWidth={2.5} />
+              <span className="relative">Dashboard</span>
+            </Link>
+          ) : (
+            // Sign In Button - Vercel Style
+            <Link
+              to="/auth"
+              className="group relative inline-flex items-center gap-2 px-5 py-2 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
+            >
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
+              <span className="relative">Sign In</span>
             </Link>
           )}
           <div className="h-6 w-px bg-gray-200 dark:bg-gray-700"></div>
@@ -88,7 +107,21 @@ export const Navbar = () => {
           </span>
         </Link>
         
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          {user && (
+            <Link
+              to="/dashboard"
+              className={`p-2 rounded-lg transition-all ${
+                isActive('/dashboard')
+                  ? 'bg-coral-50 dark:bg-coral-500/10 text-coral-600 dark:text-coral-400'
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}
+            >
+              <LayoutDashboard className="w-5 h-5" strokeWidth={2.5} />
+            </Link>
+          )}
+          <ThemeToggle />
+        </div>
       </nav>
 
       {/* 📱 MOBILE BOTTOM NAV */}
