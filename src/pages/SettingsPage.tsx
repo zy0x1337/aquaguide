@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { Settings, Bell, Shield, Palette, Database, Save, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Settings, Bell, Shield, Palette, Save, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SettingsPage = () => {
@@ -10,30 +10,56 @@ const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState('general');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
-  // Settings state
-  const [settings, setSettings] = useState({
-    emailNotifications: true,
-    pushNotifications: false,
-    weeklyDigest: true,
-    darkMode: 'system',
-    language: 'en',
-    measurementSystem: 'metric',
+  // Load settings from localStorage
+  const [settings, setSettings] = useState(() => {
+    const saved = localStorage.getItem('aquaguide_settings');
+    return saved ? JSON.parse(saved) : {
+      emailNotifications: true,
+      pushNotifications: false,
+      weeklyDigest: true,
+      language: 'en',
+      measurementSystem: 'metric',
+    };
   });
+
+  // Apply theme on mount and when it changes
+  useEffect(() => {
+    const theme = localStorage.getItem('theme') || 'system';
+    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
 
   const tabs = [
     { id: 'general', label: 'General', icon: Settings },
     { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'privacy', label: 'Privacy & Security', icon: Shield },
     { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'data', label: 'Data & Storage', icon: Database },
+    { id: 'privacy', label: 'Privacy', icon: Shield },
   ];
 
-  const handleSave = async () => {
+  const handleSave = () => {
     setSaveStatus('saving');
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setSaveStatus('saved');
-    setTimeout(() => setSaveStatus('idle'), 2000);
+    // Save to localStorage
+    localStorage.setItem('aquaguide_settings', JSON.stringify(settings));
+    setTimeout(() => {
+      setSaveStatus('saved');
+      setTimeout(() => setSaveStatus('idle'), 2000);
+    }, 500);
+  };
+
+  const handleThemeChange = (theme: string) => {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  const getCurrentTheme = () => {
+    return localStorage.getItem('theme') || 'system';
   };
 
   return (
@@ -123,7 +149,7 @@ const SettingsPage = () => {
                         className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm cursor-not-allowed"
                       />
                       <p className="text-xs text-slate-500 dark:text-slate-500">
-                        Contact support to change your email address
+                        Email address cannot be changed
                       </p>
                     </div>
 
@@ -211,56 +237,6 @@ const SettingsPage = () => {
                   </div>
                 )}
 
-                {/* Privacy Settings */}
-                {activeTab === 'privacy' && (
-                  <div className="p-6 space-y-6">
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                        Privacy & Security
-                      </h2>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Manage your privacy and security settings
-                      </p>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                        <div className="flex items-start gap-3">
-                          <Shield className="w-5 h-5 text-indigo-600 dark:text-indigo-400 mt-0.5" strokeWidth={2.5} />
-                          <div>
-                            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">
-                              Account Security
-                            </h3>
-                            <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
-                              Your account is protected with industry-standard encryption
-                            </p>
-                            <button className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-                              Change Password
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-900">
-                        <div className="flex items-start gap-3">
-                          <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5" strokeWidth={2.5} />
-                          <div>
-                            <h3 className="text-sm font-semibold text-red-900 dark:text-red-400 mb-1">
-                              Delete Account
-                            </h3>
-                            <p className="text-xs text-red-700 dark:text-red-400/80 mb-3">
-                              Permanently delete your account and all associated data
-                            </p>
-                            <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-semibold transition-all">
-                              Delete Account
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
                 {/* Appearance Settings */}
                 {activeTab === 'appearance' && (
                   <div className="p-6 space-y-6">
@@ -281,9 +257,9 @@ const SettingsPage = () => {
                         {['light', 'dark', 'system'].map((mode) => (
                           <button
                             key={mode}
-                            onClick={() => setSettings({ ...settings, darkMode: mode })}
+                            onClick={() => handleThemeChange(mode)}
                             className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
-                              settings.darkMode === mode
+                              getCurrentTheme() === mode
                                 ? 'bg-black dark:bg-white text-white dark:text-black'
                                 : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
                             }`}
@@ -296,36 +272,22 @@ const SettingsPage = () => {
                   </div>
                 )}
 
-                {/* Data Settings */}
-                {activeTab === 'data' && (
+                {/* Privacy Settings */}
+                {activeTab === 'privacy' && (
                   <div className="p-6 space-y-6">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                        Data & Storage
+                        Privacy & Security
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Manage your data and storage preferences
+                        Your privacy and security settings
                       </p>
                     </div>
 
-                    <div className="space-y-4">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-semibold text-slate-900 dark:text-white">Storage Used</span>
-                          <span className="text-sm text-slate-600 dark:text-slate-400">2.4 MB / 100 MB</span>
-                        </div>
-                        <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                          <div className="h-full bg-indigo-600 dark:bg-indigo-400" style={{ width: '2.4%' }} />
-                        </div>
-                      </div>
-
-                      <button className="w-full px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-                        Export My Data
-                      </button>
-
-                      <button className="w-full px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-                        Clear Cache
-                      </button>
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Privacy features coming soon. Your data is encrypted and secure.
+                      </p>
                     </div>
                   </div>
                 )}

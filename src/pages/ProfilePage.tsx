@@ -1,26 +1,45 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Mail, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X } from 'lucide-react';
+import { User, Mail, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ProfilePage = () => {
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [profile, setProfile] = useState({
-    displayName: user?.email?.split('@')[0] || 'User',
-    bio: 'Aquarium enthusiast and fish keeper',
-    location: 'Hannover, Germany',
-    website: '',
-    favoriteSpecies: 'Betta Splendens',
+  const [uploading, setUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Load profile from localStorage
+  const [profile, setProfile] = useState(() => {
+    const saved = localStorage.getItem(`aquaguide_profile_${user?.id}`);
+    return saved ? JSON.parse(saved) : {
+      displayName: user?.email?.split('@')[0] || 'User',
+      bio: 'Aquarium enthusiast and fish keeper',
+      location: 'Hannover, Germany',
+      website: '',
+      favoriteSpecies: 'Betta Splendens',
+    };
   });
+
+  // Load avatar URL on mount
+  useEffect(() => {
+    if (user) {
+      const savedAvatar = localStorage.getItem(`aquaguide_avatar_${user.id}`);
+      if (savedAvatar) {
+        setAvatarUrl(savedAvatar);
+      }
+    }
+  }, [user]);
 
   const stats = [
     { label: 'Tanks', value: '3', icon: Droplets },
     { label: 'Species Kept', value: '12', icon: Fish },
-    { label: 'Member Since', value: '2024', icon: Calendar },
-    { label: 'Level', value: 'Expert', icon: Award },
+    { label: 'Member Since', value: new Date(user?.created_at || Date.now()).getFullYear().toString(), icon: Calendar },
+    { label: 'Level', value: 'Member', icon: Award },
   ];
 
   const getUserInitials = () => {
@@ -30,8 +49,59 @@ const ProfilePage = () => {
   };
 
   const handleSave = () => {
-    // Save profile changes
+    // Save profile to localStorage
+    localStorage.setItem(`aquaguide_profile_${user?.id}`, JSON.stringify(profile));
     setIsEditing(false);
+  };
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+
+    // Check file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      alert('File size must be less than 2MB');
+      return;
+    }
+
+    // Check file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload an image file');
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      // Create a unique file name
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Save URL to localStorage
+      localStorage.setItem(`aquaguide_avatar_${user.id}`, data.publicUrl);
+      setAvatarUrl(data.publicUrl);
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      alert('Failed to upload avatar. Please try again.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -51,22 +121,41 @@ const ProfilePage = () => {
             className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-6"
           >
             {/* Cover Image */}
-            <div className="h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 relative">
-              <button className="absolute bottom-4 right-4 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg text-white transition-all">
-                <Camera className="w-4 h-4" strokeWidth={2.5} />
-              </button>
-            </div>
+            <div className="h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 relative" />
 
             {/* Profile Info */}
             <div className="px-6 pb-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-16 mb-4">
                 {/* Avatar */}
                 <div className="relative group">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white text-2xl font-bold shadow-xl border-4 border-white dark:border-slate-900">
-                    {getUserInitials()}
-                  </div>
-                  <button className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarUpload}
+                    className="hidden"
+                  />
+                  {avatarUrl ? (
+                    <img
+                      src={avatarUrl}
+                      alt="Avatar"
+                      className="w-24 h-24 rounded-full shadow-xl border-4 border-white dark:border-slate-900 object-cover"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white text-2xl font-bold shadow-xl border-4 border-white dark:border-slate-900">
+                      {getUserInitials()}
+                    </div>
+                  )}
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity disabled:cursor-not-allowed"
+                  >
+                    {uploading ? (
+                      <Upload className="w-6 h-6 text-white animate-pulse" strokeWidth={2.5} />
+                    ) : (
+                      <Camera className="w-6 h-6 text-white" strokeWidth={2.5} />
+                    )}
                   </button>
                 </div>
 
