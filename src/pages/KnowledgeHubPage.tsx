@@ -34,10 +34,10 @@ const KnowledgeHubPage = () => {
         description="Comprehensive guides on aquarium care, water chemistry, equipment, and more. Learn at your own pace with expert articles."
       />
 
-      <div className="min-h-screen bg-slate-50 pb-20">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-20">
         
-        {/* HERO HEADER - EXACT SAME AS DISEASES */}
-        <header className="bg-slate-900 text-white pt-16 pb-24 relative overflow-hidden">
+        {/* HERO HEADER */}
+        <header className="bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-24 relative overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
@@ -53,7 +53,7 @@ const KnowledgeHubPage = () => {
                 Knowledge & Skills
               </span>
             </h1>
-            <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-gray-300 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
               Comprehensive guides on water chemistry, equipment, biology, and care. Learn from expert-written articles tailored to every skill level.
             </p>
 
@@ -65,7 +65,7 @@ const KnowledgeHubPage = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-black text-white">{allKnowledgeArticles.length}</div>
-                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Articles</div>
+                  <div className="text-xs font-bold text-gray-300 dark:text-gray-400 uppercase tracking-wider">Articles</div>
                 </div>
               </div>
 
@@ -75,7 +75,7 @@ const KnowledgeHubPage = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-black text-white">{totalReadingTime}min</div>
-                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Reading Time</div>
+                  <div className="text-xs font-bold text-gray-300 dark:text-gray-400 uppercase tracking-wider">Reading Time</div>
                 </div>
               </div>
 
@@ -85,7 +85,7 @@ const KnowledgeHubPage = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-black text-white">7</div>
-                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">Categories</div>
+                  <div className="text-xs font-bold text-gray-300 dark:text-gray-400 uppercase tracking-wider">Categories</div>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ const KnowledgeHubPage = () => {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-black text-slate-900">Featured Article</h2>
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white">Featured Article</h2>
               </div>
               <FeaturedArticleCard article={featuredArticle} />
             </section>
@@ -111,12 +111,12 @@ const KnowledgeHubPage = () => {
           {/* CATEGORY FILTER */}
           <section className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <Filter className="w-5 h-5 text-slate-500" />
-              <span className="text-sm font-bold text-slate-700">Filter by Category</span>
+              <Filter className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Filter by Category</span>
               {selectedCategory !== 'all' && (
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className="ml-auto text-xs text-indigo-600 hover:text-indigo-700 font-bold uppercase tracking-wider"
+                  className="ml-auto text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-bold uppercase tracking-wider"
                 >
                   Clear filter
                 </button>
@@ -130,7 +130,7 @@ const KnowledgeHubPage = () => {
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold whitespace-nowrap transition-all duration-200 text-sm ${
                     selectedCategory === cat.id
                       ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
-                      : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
+                      : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-800'
                   }`}
                 >
                   {cat.icon}
@@ -143,11 +143,11 @@ const KnowledgeHubPage = () => {
           {/* ARTICLES GRID */}
           {filteredArticles.length === 0 ? (
             <div className="text-center py-20">
-              <div className="bg-slate-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="w-8 h-8 text-slate-400" />
+              <div className="bg-gray-100 dark:bg-gray-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">No articles found</h3>
-              <p className="text-slate-500">Try selecting a different category</p>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">No articles found</h3>
+              <p className="text-gray-500 dark:text-gray-400">Try selecting a different category</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -177,7 +177,7 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
   return (
     <Link
       to={`/knowledge/${article.slug}`}
-      className="group block bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+      className="group block bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <div className="md:flex">
         {article.visuals?.headerImage && (
@@ -187,7 +187,7 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
               alt={article.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" />
             <div className="absolute top-4 left-4">
               <span className="px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg">
                 Featured
@@ -201,13 +201,13 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
               {article.category}
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors leading-tight">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
             {article.title}
           </h3>
-          <p className="text-slate-600 text-sm mb-4 leading-relaxed line-clamp-2">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">
             {article.summary}
           </p>
-          <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
+          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
             <div className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
               <span className="font-semibold">{article.readingTime} min</span>
@@ -217,7 +217,7 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
               <span className="font-semibold">{article.content.sections.length} sections</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-indigo-600 font-bold text-sm group-hover:gap-3 transition-all">
+          <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm group-hover:gap-3 transition-all">
             <span>Read Article</span>
             <ArrowRight className="w-4 h-4" />
           </div>
@@ -227,27 +227,27 @@ const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {
   );
 };
 
-// ARTICLE CARD - MATCHING DISEASE STYLE
+// ARTICLE CARD
 const ArticleCard = ({ article, index }: { article: KnowledgeArticle; index: number }) => {
   const difficultyColors = {
-    beginner: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    intermediate: 'bg-amber-50 text-amber-700 border-amber-200',
-    advanced: 'bg-rose-50 text-rose-700 border-rose-200'
+    beginner: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800',
+    intermediate: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800',
+    advanced: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-800'
   };
 
   const categoryColors: Record<string, string> = {
-    chemistry: 'bg-blue-500 shadow-blue-200',
-    biology: 'bg-green-500 shadow-green-200',
-    equipment: 'bg-purple-500 shadow-purple-200',
-    maintenance: 'bg-orange-500 shadow-orange-200',
-    diseases: 'bg-red-500 shadow-red-200',
-    plants: 'bg-emerald-500 shadow-emerald-200'
+    chemistry: 'bg-blue-500 shadow-blue-200 dark:shadow-none',
+    biology: 'bg-green-500 shadow-green-200 dark:shadow-none',
+    equipment: 'bg-purple-500 shadow-purple-200 dark:shadow-none',
+    maintenance: 'bg-orange-500 shadow-orange-200 dark:shadow-none',
+    diseases: 'bg-red-500 shadow-red-200 dark:shadow-none',
+    plants: 'bg-emerald-500 shadow-emerald-200 dark:shadow-none'
   };
 
   return (
     <Link
       to={`/knowledge/${article.slug}`}
-      className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full"
+      className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full"
     >
       {/* Card Header */}
       <div className="flex justify-between items-start mb-4">
@@ -259,20 +259,20 @@ const ArticleCard = ({ article, index }: { article: KnowledgeArticle; index: num
         </div>
       </div>
 
-      <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
         {article.title}
       </h3>
 
       {/* Summary */}
       <div className="mb-4 flex-grow">
-        <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
+        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 leading-relaxed">
           {article.summary}
         </p>
       </div>
 
       {/* Footer */}
-      <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
-        <div className="flex items-center gap-3 text-xs text-slate-500">
+      <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between mt-auto">
+        <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
           <div className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" />
             <span className="font-semibold">{article.readingTime}min</span>
@@ -282,7 +282,7 @@ const ArticleCard = ({ article, index }: { article: KnowledgeArticle; index: num
             <span className="font-semibold">{article.content.sections.length}</span>
           </div>
         </div>
-        <span className="text-indigo-600 text-sm font-bold flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
+        <span className="text-indigo-600 dark:text-indigo-400 text-sm font-bold flex items-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
           Read <ArrowRight className="w-4 h-4 ml-1" />
         </span>
       </div>
