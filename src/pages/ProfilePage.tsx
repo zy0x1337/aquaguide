@@ -1,11 +1,26 @@
 import { useState, useRef, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft } from 'lucide-react';
+import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useFavorites } from '../hooks/useFavorites';
+
+interface SpeciesData {
+  slug: string;
+  common_name: string;
+  scientific_name: string;
+  image_url?: string;
+}
+
+interface PlantData {
+  slug: string;
+  common_name: string;
+  scientific_name: string;
+  image_url?: string;
+}
 
 const ProfilePage = () => {
   const { userId } = useParams<{ userId?: string }>();
@@ -20,6 +35,15 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const headerInputRef = useRef<HTMLInputElement>(null);
+
+  // Favorites
+  const { favorites, loading: favoritesLoading, toggleFavorite } = useFavorites(userId || user?.id);
+  const [speciesData, setSpeciesData] = useState<Record<string, SpeciesData>>({});
+  const [plantsData, setPlantsData] = useState<Record<string, PlantData>>({});
+  const [dataLoading, setDataLoading] = useState(true);
+
+  const favSpecies = favorites.filter((f) => f.item_type === 'species');
+  const favPlants = favorites.filter((f) => f.item_type === 'plant');
 
   // Check if viewing own profile
   const isOwnProfile = !userId || userId === user?.id;
@@ -37,6 +61,59 @@ const ProfilePage = () => {
   useEffect(() => {
     loadProfile();
   }, [userId, user]);
+
+  // Load favorites details
+  useEffect(() => {
+    fetchFavoriteDetails();
+  }, [favorites]);
+
+  const fetchFavoriteDetails = async () => {
+    setDataLoading(true);
+
+    try {
+      // Fetch species details
+      if (favSpecies.length > 0) {
+        const { data: species } = await supabase
+          .from('species')
+          .select('slug, common_name, scientific_name, image_url')
+          .in(
+            'slug',
+            favSpecies.map((f) => f.item_slug)
+          );
+
+        if (species) {
+          const speciesMap: Record<string, SpeciesData> = {};
+          species.forEach((s) => {
+            speciesMap[s.slug] = s;
+          });
+          setSpeciesData(speciesMap);
+        }
+      }
+
+      // Fetch plant details
+      if (favPlants.length > 0) {
+        const { data: plants } = await supabase
+          .from('plants')
+          .select('slug, common_name, scientific_name, image_url')
+          .in(
+            'slug',
+            favPlants.map((f) => f.item_slug)
+          );
+
+        if (plants) {
+          const plantsMap: Record<string, PlantData> = {};
+          plants.forEach((p) => {
+            plantsMap[p.slug] = p;
+          });
+          setPlantsData(plantsMap);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching favorite details:', error);
+    } finally {
+      setDataLoading(false);
+    }
+  };
 
   const loadProfile = async () => {
     setLoading(true);
@@ -83,7 +160,7 @@ const ProfilePage = () => {
     { label: 'Tanks', value: '3', icon: Droplets },
     { label: 'Species Kept', value: '12', icon: Fish },
     { label: 'Member Since', value: new Date(profileUser?.created_at || user?.created_at || Date.now()).getFullYear().toString(), icon: Calendar },
-    { label: 'Level', value: 'Member', icon: Award },
+    { label: 'Favorites', value: favorites.length.toString(), icon: Heart },
   ];
 
   const getUserInitials = () => {
@@ -254,7 +331,7 @@ const ProfilePage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-6"
           >
-            {/* Cover Image - Fixed z-index */}
+            {/* Cover Image */}
             <div className="relative h-32 group">
               <input
                 ref={headerInputRef}
@@ -287,10 +364,10 @@ const ProfilePage = () => {
               )}
             </div>
 
-            {/* Profile Info - Fixed positioning */}
+            {/* Profile Info */}
             <div className="relative px-6 pb-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 -mt-16 mb-4">
-                {/* Avatar - Higher z-index */}
+                {/* Avatar */}
                 <div className="relative group z-20">
                   {isOwnProfile && (
                     <input
@@ -327,7 +404,7 @@ const ProfilePage = () => {
                   )}
                 </div>
 
-                {/* Name - Higher z-index, no email */}
+                {/* Name */}
                 <div className="flex-1 z-20 bg-white dark:bg-slate-900 px-2 py-1 rounded-lg">
                   <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
                     {profile.displayName}
@@ -339,7 +416,7 @@ const ProfilePage = () => {
                   )}
                 </div>
 
-                {/* Action Buttons - Highest z-index */}
+                {/* Action Buttons */}
                 <div className="flex items-center gap-2 z-30">
                   {isOwnProfile ? (
                     <>
@@ -427,11 +504,150 @@ const ProfilePage = () => {
             })}
           </motion.div>
 
+          {/* Favorites Section */}
+          {favorites.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 mb-6"
+            >
+              <div className="flex items-center gap-2 mb-6">
+                <Heart className="w-5 h-5 text-rose-500" fill="currentColor" strokeWidth={2.5} />
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+                  Favorites
+                </h2>
+              </div>
+
+              {/* Species */}
+              {favSpecies.length > 0 && (
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Fish className="w-4 h-4 text-indigo-500" strokeWidth={2.5} />
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">
+                      Fish ({favSpecies.length})
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {favSpecies.map((fav) => {
+                      const data = speciesData[fav.item_slug];
+                      if (!data) return null;
+
+                      return (
+                        <div key={fav.id} className="relative group">
+                          <Link
+                            to={`/species/${data.slug}`}
+                            className="block bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-700 overflow-hidden transition-all"
+                          >
+                            <div className="aspect-[4/3] bg-slate-100 dark:bg-slate-700">
+                              {data.image_url ? (
+                                <img
+                                  src={data.image_url}
+                                  alt={data.common_name}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <Fish className="w-8 h-8 text-slate-300 dark:text-slate-600" />
+                                </div>
+                              )}
+                            </div>
+                            <div className="p-2">
+                              <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                                {data.common_name}
+                              </div>
+                              <div className="text-[10px] text-slate-500 dark:text-slate-400 italic truncate">
+                                {data.scientific_name}
+                              </div>
+                            </div>
+                          </Link>
+                          {/* Remove button (edit mode only) */}
+                          {isOwnProfile && isEditing && (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleFavorite('species', fav.item_slug);
+                              }}
+                              className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
+                            >
+                              <Trash2 className="w-3 h-3" strokeWidth={2.5} />
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Plants */}
+              {favPlants.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Leaf className="w-4 h-4 text-emerald-500" strokeWidth={2.5} />
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">
+                      Plants ({favPlants.length})
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {favPlants.map((fav) => {
+                      const data = plantsData[fav.item_slug];
+                      if (!data) return null;
+
+                      return (
+                        <div key={fav.id} className="relative group">
+                          <Link
+                            to={`/plants/${data.slug}`}
+                            className="block bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 overflow-hidden transition-all"
+                          >
+                            <div className="aspect-[4/3] bg-slate-100 dark:bg-slate-700">
+                              {data.image_url ? (
+                                <img
+                                  src={data.image_url}
+                                  alt={data.common_name}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <Leaf className="w-8 h-8 text-slate-300 dark:text-slate-600" />
+                                </div>
+                              )}
+                            </div>
+                            <div className="p-2">
+                              <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                                {data.common_name}
+                              </div>
+                              <div className="text-[10px] text-slate-500 dark:text-slate-400 italic truncate">
+                                {data.scientific_name}
+                              </div>
+                            </div>
+                          </Link>
+                          {/* Remove button (edit mode only) */}
+                          {isOwnProfile && isEditing && (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleFavorite('plant', fav.item_slug);
+                              }}
+                              className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
+                            >
+                              <Trash2 className="w-3 h-3" strokeWidth={2.5} />
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
           {/* Profile Details */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.3 }}
             className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6"
           >
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
