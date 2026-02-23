@@ -41,3 +41,6 @@ export const PageHeader = ({ title, subtitle, icon, actions, className }: PageHe
     </div>
   );
 };
+
+// Default export for backward compatibility
+export default PageHeader;
