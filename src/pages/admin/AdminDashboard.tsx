@@ -30,14 +30,14 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12">
       <SEOHead title="Admin Dashboard - AquaGuide" description="Manage species, users, and content." />
       
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-black text-slate-900 mb-2">Admin Dashboard</h1>
-          <p className="text-slate-600">Manage your AquaGuide database</p>
+          <h1 className="text-4xl font-black text-gray-900 dark:text-white mb-2">Admin Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400">Manage your AquaGuide database</p>
         </div>
 
         {/* Stats Cards */}
@@ -48,35 +48,35 @@ const AdminDashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-          <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             <Settings className="w-5 h-5" />
             Quick Actions
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             <Link
               to="/admin/species"
-              className="flex items-center gap-4 p-4 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl border border-emerald-200 hover:shadow-md transition-all group"
+              className="flex items-center gap-4 p-4 bg-gradient-to-r from-emerald-50 to-cyan-50 dark:from-emerald-950/30 dark:to-cyan-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800 hover:shadow-md transition-all group"
             >
               <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                 <Fish className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-slate-900">Manage Species</h3>
-                <p className="text-sm text-slate-600">Add, edit, or remove fish and plants</p>
+                <h3 className="font-bold text-gray-900 dark:text-white">Manage Species</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Add, edit, or remove fish and plants</p>
               </div>
             </Link>
 
             <Link
               to="/admin/users"
-              className="flex items-center gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 hover:shadow-md transition-all group"
+              className="flex items-center gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-xl border border-indigo-200 dark:border-indigo-800 hover:shadow-md transition-all group"
             >
               <div className="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                 <Users className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-slate-900">Manage Users</h3>
-                <p className="text-sm text-slate-600">View and modify user roles</p>
+                <h3 className="font-bold text-gray-900 dark:text-white">Manage Users</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">View and modify user roles</p>
               </div>
             </Link>
           </div>
@@ -101,11 +101,11 @@ const StatCard = ({ icon, label, value, color }: StatCardProps) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-bold text-slate-600 uppercase tracking-wide mb-1">{label}</p>
-          <p className="text-3xl font-black text-slate-900">{value}</p>
+          <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{label}</p>
+          <p className="text-3xl font-black text-gray-900 dark:text-white">{value}</p>
         </div>
         <div className={`w-14 h-14 bg-gradient-to-br ${colors[color]} rounded-xl flex items-center justify-center text-white shadow-lg`}>
           {icon}
