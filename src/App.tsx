@@ -49,6 +49,10 @@ import { TankBuilderPage } from './pages/TankBuilderPage';
 // ⚖️ COMPARISON
 import ComparisonPage from './pages/ComparisonPage';
 
+// 👤 PROFILE & SETTINGS
+import SettingsPage from './pages/SettingsPage';
+import ProfilePage from './pages/ProfilePage';
+
 // 👑 ADMIN PAGES
 import AdminDashboard from './pages/admin/AdminDashboard';
 import SpeciesManager from './pages/admin/SpeciesManager';
@@ -111,6 +115,10 @@ function App() {
 
             {/* ⚖️ Comparison Tool */}
             <Route path="/compare" element={<ComparisonPage />} />
+
+            {/* 👤 Profile & Settings (Protected) */}
+            <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
             {/* 👑 Admin Routes (Protected) */}
             <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
