@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, LayoutDashboard, Waves, BookOpen, ArrowRight } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -44,6 +44,13 @@ export const Layout: React.FC<Props> = ({ children }) => {
     { path: '/diseases', label: 'Diseases', icon: Stethoscope },
     { path: '/about', label: 'About', icon: Info },
   ];
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (!user?.email) return 'U';
+    const email = user.email.split('@')[0];
+    return email.slice(0, 2).toUpperCase();
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -113,25 +120,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 Builder
               </Link>
 
-              {/* Dashboard Button (Desktop) - Vercel Style */}
-              {user && (
-                <Link
-                  to="/dashboard"
-                  className={`group hidden lg:flex relative items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 overflow-hidden ${
-                    isActive('/dashboard')
-                      ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
-                      : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow-md'
-                  }`}
-                >
-                  {/* Shimmer effect on active */}
-                  {isActive('/dashboard') && (
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-                  )}
-                  <LayoutDashboard className="w-4 h-4 relative" strokeWidth={2.5} />
-                  <span className="relative">Dashboard</span>
-                </Link>
-              )}
-
               {/* Admin Link (Desktop) - Vercel Style */}
               {isAdmin && (
                 <Link
@@ -151,9 +139,16 @@ export const Layout: React.FC<Props> = ({ children }) => {
               <div className="hidden md:flex items-center gap-3">
                 {user ? (
                   <>
-                    <div className="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hidden xl:block border border-slate-200 dark:border-slate-700">
-                      {user.email?.split('@')[0]}
-                    </div>
+                    {/* User Avatar Button - links to Dashboard */}
+                    <Link
+                      to="/dashboard"
+                      className="group relative w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white text-sm font-bold shadow-sm hover:shadow-md transition-all hover:scale-105 border-2 border-white dark:border-slate-800 overflow-hidden"
+                      title="Dashboard"
+                    >
+                      {/* Shimmer effect */}
+                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                      <span className="relative">{getUserInitials()}</span>
+                    </Link>
                     <button
                       onClick={() => signOut()}
                       className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all border border-transparent hover:border-red-200 dark:hover:border-red-900"
@@ -202,15 +197,19 @@ export const Layout: React.FC<Props> = ({ children }) => {
               <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 {user ? (
                   <div className="flex items-center justify-between px-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-950 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
-                        <User className="w-5 h-5" strokeWidth={2.5} />
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold border-2 border-white dark:border-slate-900 shadow-sm">
+                        {getUserInitials()}
                       </div>
                       <div>
                         <div className="text-sm font-bold text-slate-900 dark:text-white">{user.email?.split('@')[0]}</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-500">Member</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-500">View Dashboard</div>
                       </div>
-                    </div>
+                    </Link>
                     <button
                       onClick={() => {
                         signOut();
@@ -250,21 +249,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   <BoxSelect className="w-5 h-5" strokeWidth={2.5} />
                   Tank Builder
                 </Link>
-
-                {user && (
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${
-                      isActive('/dashboard')
-                        ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
-                        : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
-                  >
-                    <LayoutDashboard className="w-5 h-5" strokeWidth={2.5} />
-                    Dashboard
-                  </Link>
-                )}
 
                 {isAdmin && (
                   <Link
