@@ -50,32 +50,32 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       <SEOHead title={isLogin ? 'Login - AquaGuide' : 'Register - AquaGuide'} description="Access your personal aquarium dashboard." />
       
       {/* Background Blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-200/30 rounded-full blur-3xl" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-200/30 dark:bg-indigo-900/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-200/30 dark:bg-cyan-900/20 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
             {isLogin ? 'Welcome back!' : 'Create your account'}
           </h2>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             {isLogin ? 'Sign in to access your dashboard' : 'Join the AquaGuide community today'}
           </p>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200 p-8">
+        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 p-8">
           {/* Tabs */}
-          <div className="flex bg-slate-100 p-1 rounded-xl mb-6">
+          <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl mb-6">
             <button
               onClick={() => setIsLogin(true)}
               className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
-                isLogin ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                isLogin ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
               Login
@@ -83,7 +83,7 @@ const AuthPage = () => {
             <button
               onClick={() => setIsLogin(false)}
               className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
-                !isLogin ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                !isLogin ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
               Sign Up
@@ -93,15 +93,15 @@ const AuthPage = () => {
           <form className="space-y-6" onSubmit={handleAuth}>
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Username</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-slate-400" />
+                    <User className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                   </div>
                   <input
                     type="text"
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white/50"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white"
                     placeholder="FishLover99"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -111,15 +111,15 @@ const AuthPage = () => {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email address</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email address</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-slate-400" />
+                  <Mail className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                 </div>
                 <input
                   type="email"
                   required
-                  className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white/50"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white"
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -128,15 +128,15 @@ const AuthPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-slate-400" />
+                  <Lock className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                 </div>
                 <input
                   type="password"
                   required
-                  className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white/50"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -145,16 +145,16 @@ const AuthPage = () => {
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
-                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-red-700">{error}</p>
+              <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-3 flex items-start gap-2">
+                <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
               </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -168,7 +168,7 @@ const AuthPage = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               By continuing, you agree to our Terms of Service and Privacy Policy.
             </p>
           </div>
