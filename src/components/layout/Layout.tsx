@@ -13,6 +13,7 @@ interface Props {
 export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const location = useLocation();
   const { comparedSpecies } = useComparison();
   const { user, signOut } = useAuth();
@@ -29,9 +30,31 @@ export const Layout: React.FC<Props> = ({ children }) => {
         .then(({ data }) => {
           setIsAdmin(data?.role === 'admin');
         });
+
+      // Load avatar from localStorage
+      const savedAvatar = localStorage.getItem(`aquaguide_avatar_${user.id}`);
+      if (savedAvatar) {
+        setAvatarUrl(savedAvatar);
+      }
     } else {
       setIsAdmin(false);
+      setAvatarUrl(null);
     }
+  }, [user]);
+
+  // Reload avatar when returning to page
+  useEffect(() => {
+    const handleFocus = () => {
+      if (user) {
+        const savedAvatar = localStorage.getItem(`aquaguide_avatar_${user.id}`);
+        if (savedAvatar) {
+          setAvatarUrl(savedAvatar);
+        }
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, [user]);
 
   // Close dropdown when clicking outside
@@ -74,6 +97,31 @@ export const Layout: React.FC<Props> = ({ children }) => {
   const handleSignOut = () => {
     signOut();
     setProfileDropdownOpen(false);
+  };
+
+  // Avatar Component
+  const AvatarDisplay = ({ size = 'md', className = '' }: { size?: 'sm' | 'md' | 'lg', className?: string }) => {
+    const sizeClasses = {
+      sm: 'w-8 h-8 text-xs',
+      md: 'w-9 h-9 text-sm',
+      lg: 'w-10 h-10 text-base'
+    };
+
+    if (avatarUrl) {
+      return (
+        <img
+          src={avatarUrl}
+          alt="Avatar"
+          className={`${sizeClasses[size]} rounded-full object-cover shadow-sm border-2 border-white dark:border-slate-800 ${className}`}
+        />
+      );
+    }
+
+    return (
+      <div className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold shadow-sm border-2 border-white dark:border-slate-800 ${className}`}>
+        {getUserInitials()}
+      </div>
+    );
   };
 
   return (
@@ -168,9 +216,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                       onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                       className="group relative flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
                     >
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white text-sm font-bold shadow-sm border-2 border-white dark:border-slate-800 overflow-hidden group-hover:shadow-md transition-all">
-                        <span>{getUserInitials()}</span>
-                      </div>
+                      <AvatarDisplay size="md" />
                       <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 transition-transform ${
                         profileDropdownOpen ? 'rotate-180' : ''
                       }`} strokeWidth={2.5} />
@@ -182,9 +228,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                         {/* User Info Header */}
                         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold shadow-sm">
-                              {getUserInitials()}
-                            </div>
+                            <AvatarDisplay size="lg" />
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-bold text-slate-900 dark:text-white truncate">
                                 {user.email?.split('@')[0]}
@@ -279,9 +323,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   <div className="space-y-2">
                     {/* User Info */}
                     <div className="flex items-center gap-3 px-2">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold border-2 border-white dark:border-slate-900 shadow-sm">
-                        {getUserInitials()}
-                      </div>
+                      <AvatarDisplay size="lg" />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-bold text-slate-900 dark:text-white truncate">{user.email?.split('@')[0]}</div>
                         <div className="text-xs text-slate-500 dark:text-slate-500 truncate">{user.email}</div>
