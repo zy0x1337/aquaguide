@@ -36,86 +36,78 @@ const KnowledgeHubPage = () => {
 
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 dark:from-gray-950 dark:via-slate-950 dark:to-gray-950 pb-20">
         
-        {/* Modern Hero Header */}
-        <header className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 dark:from-indigo-900 dark:via-purple-900 dark:to-indigo-950 text-white pt-20 pb-32">
-          {/* Subtle Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-          </div>
-
-          {/* Gradient Orbs */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div 
-              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-purple-400/30 rounded-full blur-3xl"
-            />
-            <motion.div 
-              animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-              className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-cyan-400/30 rounded-full blur-3xl"
-            />
+        {/* Compact Hero Header - Same size as DiseaseIndexPage */}
+        <header className="relative overflow-hidden bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-24">
+          {/* Subtle Background Orbs - Darker */}
+          <div className="absolute inset-0 opacity-15">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-600 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
             {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-wider mb-6"
-            >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-6">
               <Sparkles className="w-4 h-4" />
               Expert Knowledge Base
-            </motion.div>
+            </div>
 
             {/* Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight"
-            >
-              Master Your
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-200">
-                Aquarium Skills
+            <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+              Master Aquarium <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                Knowledge & Skills
               </span>
-            </motion.h1>
+            </h1>
 
             {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-indigo-100 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
-            >
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
               Comprehensive guides on water chemistry, equipment, biology, and care. Learn from expert-written articles.
-            </motion.p>
+            </p>
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-wrap justify-center gap-4 md:gap-6"
-            >
-              <StatCard icon={<BookOpen />} value={allKnowledgeArticles.length} label="Articles" color="from-indigo-500 to-purple-500" />
-              <StatCard icon={<Clock />} value={`${totalReadingTime}min`} label="Total Content" color="from-purple-500 to-pink-500" />
-              <StatCard icon={<Award />} value="7" label="Categories" color="from-cyan-500 to-blue-500" />
-            </motion.div>
+            {/* Compact Stats */}
+            <div className="flex flex-wrap justify-center gap-6 max-w-3xl mx-auto">
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-indigo-500/80 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-2xl font-black text-white">{allKnowledgeArticles.length}</div>
+                  <div className="text-xs font-bold text-gray-300 uppercase tracking-wider">Articles</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-purple-500/80 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-2xl font-black text-white">{totalReadingTime}min</div>
+                  <div className="text-xs font-bold text-gray-300 uppercase tracking-wider">Reading Time</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-cyan-500/80 flex items-center justify-center">
+                  <Award className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-2xl font-black text-white">7</div>
+                  <div className="text-xs font-bold text-gray-300 uppercase tracking-wider">Categories</div>
+                </div>
+              </div>
+            </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-6 -mt-20 relative z-20">
+        <main className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
           
           {/* Featured Article */}
           {featuredArticle && (
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-12"
             >
               <div className="flex items-center gap-3 mb-6">
@@ -132,7 +124,7 @@ const KnowledgeHubPage = () => {
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="mb-8"
           >
             <div className="flex items-center justify-between mb-4">
@@ -180,7 +172,7 @@ const KnowledgeHubPage = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filteredArticles.map((article, idx) => (
@@ -194,19 +186,6 @@ const KnowledgeHubPage = () => {
     </PageTransition>
   );
 };
-
-// Stat Card Component
-const StatCard = ({ icon, value, label, color }: any) => (
-  <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-3 shadow-lg">
-    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white`}>
-      {icon}
-    </div>
-    <div className="text-left">
-      <div className="text-2xl md:text-3xl font-black text-white">{value}</div>
-      <div className="text-xs font-bold text-indigo-100 uppercase tracking-wider">{label}</div>
-    </div>
-  </div>
-);
 
 // Featured Article Card
 const FeaturedArticleCard = ({ article }: { article: KnowledgeArticle }) => {

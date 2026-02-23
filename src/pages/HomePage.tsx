@@ -35,7 +35,7 @@ const HomePage = () => {
       
       <div className="min-h-screen bg-white dark:bg-slate-950">
         
-        {/* HERO SECTION - Cleaner, more focused */}
+        {/* HERO SECTION */}
         <section className="relative pt-20 sm:pt-32 pb-16 sm:pb-24 px-6 overflow-hidden">
           {/* Subtle gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-cyan-50/20 dark:from-slate-950 dark:via-slate-950 dark:to-indigo-950/20" />
@@ -70,7 +70,7 @@ const HomePage = () => {
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
               
-              {/* Text Content - improved typography */}
+              {/* Text Content */}
               <motion.div 
                 className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none"
                 initial="initial"
@@ -116,21 +116,24 @@ const HomePage = () => {
                   variants={fadeInUp}
                   className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
                 >
+                  {/* Sign In Button - Improved */}
                   <Link 
-                    to="/species" 
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 font-semibold rounded-2xl transition-all duration-300 shadow-lg shadow-slate-900/20 dark:shadow-white/10 hover:shadow-xl hover:shadow-slate-900/30 dark:hover:shadow-white/20 hover:-translate-y-0.5"
+                    to="/auth" 
+                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/40 hover:-translate-y-0.5"
                   >
-                    <Search className="w-5 h-5" />
-                    Browse Database
+                    <Sparkles className="w-5 h-5" />
+                    Sign In
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
+                  
+                  {/* Tank Builder Button - Improved */}
                   <Link 
                     to="/tank-builder" 
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-2xl transition-all duration-300 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-2xl transition-all duration-300 border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                   >
                     <Zap className="w-5 h-5 text-amber-500" />
                     Tank Builder
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform opacity-0 group-hover:opacity-100" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </motion.div>
                 
@@ -154,7 +157,7 @@ const HomePage = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Visual Grid - improved layout */}
+              {/* Visual Grid */}
               <motion.div 
                 className="flex-1 w-full max-w-lg lg:max-w-xl"
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -207,7 +210,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* STATS BAR - New section */}
+        {/* STATS BAR */}
         <section className="py-12 px-6 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -219,7 +222,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* FEATURES - Improved cards */}
+        {/* FEATURES */}
         <section className="py-20 sm:py-32 px-6">
           <div className="max-w-7xl mx-auto">
             {/* Section header */}
@@ -268,7 +271,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* CTA - More modern design */}
+        {/* CTA */}
         <section className="relative py-20 sm:py-32 overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950" />
@@ -333,7 +336,7 @@ const HomePage = () => {
   );
 };
 
-// Improved components
+// Components
 const StatCard = ({ number, label }: { number: string; label: string }) => (
   <motion.div 
     initial={{ opacity: 0, scale: 0.9 }}
