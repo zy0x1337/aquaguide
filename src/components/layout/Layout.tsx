@@ -283,7 +283,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   </div>
                 ) : (
                   <Link
-                    to="/login"
+                    to="/auth"
                     className="group relative inline-flex items-center gap-2 px-5 py-2 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
                   >
                     {/* Shimmer effect */}
@@ -370,7 +370,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   </div>
                 ) : (
                   <Link
-                    to="/login"
+                    to="/auth"
                     onClick={() => setMobileMenuOpen(false)}
                     className="group relative flex items-center justify-center gap-2 w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold transition-all shadow-sm overflow-hidden"
                   >
