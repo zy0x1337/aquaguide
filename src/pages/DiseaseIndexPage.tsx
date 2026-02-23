@@ -21,7 +21,7 @@ const DiseaseIndexPage = () => {
       />
 
       {/* HERO HEADER */}
-      <header className="bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-24 relative overflow-hidden">
+      <header className="bg-gray-900 text-white pt-16 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-rose-500 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
@@ -31,13 +31,13 @@ const DiseaseIndexPage = () => {
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-200 text-xs font-bold uppercase tracking-wider mb-6">
             <Stethoscope className="w-4 h-4 mr-2" /> Veterinary Guide
           </div>
-          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-white">
             Diagnose & Treat <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
               Common Diseases
             </span>
           </h1>
-          <p className="text-gray-300 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
             Don't panic. Most aquarium diseases are treatable if caught early. Search our database of symptoms, treatments, and prevention strategies.
           </p>
 

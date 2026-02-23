@@ -37,7 +37,7 @@ const KnowledgeHubPage = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-20">
         
         {/* HERO HEADER */}
-        <header className="bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-24 relative overflow-hidden">
+        <header className="bg-gray-900 text-white pt-16 pb-24 relative overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4"></div>
@@ -47,13 +47,13 @@ const KnowledgeHubPage = () => {
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-6">
               <Sparkles className="w-4 h-4 mr-2" /> Expert Guides
             </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-white">
               Master Aquarium <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
                 Knowledge & Skills
               </span>
             </h1>
-            <p className="text-gray-300 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
               Comprehensive guides on water chemistry, equipment, biology, and care. Learn from expert-written articles tailored to every skill level.
             </p>
 
@@ -65,7 +65,7 @@ const KnowledgeHubPage = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-black text-white">{allKnowledgeArticles.length}</div>
-                  <div className="text-xs font-bold text-gray-300 dark:text-gray-400 uppercase tracking-wider">Articles</div>
+                  <div className="text-xs font-bold text-gray-300 uppercase tracking-wider">Articles</div>
                 </div>
               </div>
 
@@ -75,7 +75,7 @@ const KnowledgeHubPage = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-black text-white">{totalReadingTime}min</div>
-                  <div className="text-xs font-bold text-gray-300 dark:text-gray-400 uppercase tracking-wider">Reading Time</div>
+                  <div className="text-xs font-bold text-gray-300 uppercase tracking-wider">Reading Time</div>
                 </div>
               </div>
 
@@ -85,7 +85,7 @@ const KnowledgeHubPage = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-black text-white">7</div>
-                  <div className="text-xs font-bold text-gray-300 dark:text-gray-400 uppercase tracking-wider">Categories</div>
+                  <div className="text-xs font-bold text-gray-300 uppercase tracking-wider">Categories</div>
                 </div>
               </div>
             </div>
