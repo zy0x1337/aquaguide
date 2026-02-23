@@ -48,9 +48,9 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 flex items-center justify-between z-10">
           <div>
             <h2 className="text-2xl font-bold">Edit Tank</h2>
             <p className="text-indigo-200 text-sm mt-1">Update tank information and setup</p>
@@ -67,18 +67,18 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Basic Info */}
           <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Basic Information</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">Basic Information</h3>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                   Tank Name *
                 </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
                   placeholder="e.g., Community Tank, Betta Paradise"
                   required
                 />
@@ -86,13 +86,13 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                     Tank Type *
                   </label>
                   <select
                     value={formData.type}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
                   >
                     <option value="freshwater">Freshwater</option>
                     <option value="saltwater">Saltwater</option>
@@ -101,14 +101,14 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                     Volume (Liters) *
                   </label>
                   <input
                     type="number"
                     value={formData.volumeLiters || ''}
                     onChange={(e) => setFormData({ ...formData, volumeLiters: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
                     placeholder="e.g., 60"
                     required
                     min="1"
@@ -121,17 +121,17 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
 
           {/* Tank Setup */}
           <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Tank Setup</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">Tank Setup</h3>
             
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                   Substrate
                 </label>
                 <select
                   value={formData.substrate}
                   onChange={(e) => setFormData({ ...formData, substrate: e.target.value })}
-                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
                 >
                   <option value="">Select substrate...</option>
                   <option value="sand">Sand</option>
@@ -142,13 +142,13 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                   Lighting
                 </label>
                 <select
                   value={formData.lighting}
                   onChange={(e) => setFormData({ ...formData, lighting: e.target.value })}
-                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-indigo-600 dark:focus:ring-indigo-400 focus:border-transparent"
                 >
                   <option value="">Select lighting...</option>
                   <option value="low">Low (10-30 PAR)</option>
@@ -160,14 +160,14 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
           </div>
 
           {/* Info Box */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
             <div className="flex gap-3">
-              <div className="text-blue-600 flex-shrink-0">
+              <div className="text-blue-600 dark:text-blue-400 flex-shrink-0">
                 💧
               </div>
               <div>
-                <h4 className="font-semibold text-blue-900 mb-1">Water Parameters</h4>
-                <p className="text-sm text-blue-800">
+                <h4 className="font-semibold text-blue-900 dark:text-blue-300 mb-1">Water Parameters</h4>
+                <p className="text-sm text-blue-800 dark:text-blue-400">
                   To update water parameters, use the <strong>Log Parameters</strong> button in the Dashboard or Parameters tab.
                 </p>
               </div>
@@ -179,7 +179,7 @@ const EditTankModal = ({ isOpen, onClose, onSubmit, tank }: EditTankModalProps) 
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors"
+              className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancel
             </button>
