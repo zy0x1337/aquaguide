@@ -32,7 +32,8 @@ const AuthPage = () => {
         setSuccess('Welcome back! Redirecting...');
         setTimeout(() => navigate('/dashboard'), 1000);
       } else {
-        const { error } = await supabase.auth.signUp({
+        // Sign up
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -42,7 +43,16 @@ const AuthPage = () => {
           },
         });
         if (error) throw error;
-        setSuccess('Account created! Check your email for verification.');
+        
+        // Check if user is immediately confirmed (email confirmation disabled)
+        if (data.user && data.session) {
+          // User is auto-confirmed and logged in
+          setSuccess('Account created! Redirecting to dashboard...');
+          setTimeout(() => navigate('/dashboard'), 1000);
+        } else if (data.user && !data.session) {
+          // Email confirmation is required
+          setSuccess('Account created! Please check your email for verification.');
+        }
       }
     } catch (err: any) {
       setError(err.message || 'An error occurred. Please try again.');
