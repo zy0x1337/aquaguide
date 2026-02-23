@@ -165,15 +165,15 @@ const SpeciesDetailPage = () => {
 
   // Sidebar info panel content (reused in header on mobile, sticky on desktop)
   const SidebarInfoPanel = () => (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-xl">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-xl">
       {/* Origin header */}
-      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
+      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl">
           <MapPin className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
         </div>
         <div>
-          <div className="text-[10px] uppercase font-black text-slate-400 dark:text-slate-500 tracking-wider mb-0.5">Origin</div>
-          <div className="text-base font-bold text-slate-900 dark:text-slate-100">{data.taxonomy.origin}</div>
+          <div className="text-[10px] uppercase font-black text-gray-400 dark:text-gray-500 tracking-wider mb-0.5">Origin</div>
+          <div className="text-base font-bold text-gray-900 dark:text-gray-100">{data.taxonomy.origin}</div>
         </div>
       </div>
 
@@ -189,25 +189,25 @@ const SpeciesDetailPage = () => {
 
       {/* Estimated costs – shown only if data exists */}
       {data.experienceData?.estimatedCosts && (
-        <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
-          <div className="text-[10px] uppercase font-black text-slate-400 dark:text-slate-500 tracking-wider mb-3">
+        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="text-[10px] uppercase font-black text-gray-400 dark:text-gray-500 tracking-wider mb-3">
             Est. Costs
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
-              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Setup</div>
-              <div className="text-sm font-black text-slate-900 dark:text-slate-100">
+            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
+              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Setup</div>
+              <div className="text-sm font-black text-gray-900 dark:text-gray-100">
                 {data.experienceData.estimatedCosts.initial.min}–{data.experienceData.estimatedCosts.initial.max}
-                <span className="text-[10px] ml-0.5 font-bold text-slate-500 dark:text-slate-400">
+                <span className="text-[10px] ml-0.5 font-bold text-gray-500 dark:text-gray-400">
                   {data.experienceData.estimatedCosts.initial.currency}
                 </span>
               </div>
             </div>
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
-              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Monthly</div>
-              <div className="text-sm font-black text-slate-900 dark:text-slate-100">
+            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
+              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Monthly</div>
+              <div className="text-sm font-black text-gray-900 dark:text-gray-100">
                 {data.experienceData.estimatedCosts.monthly.min}–{data.experienceData.estimatedCosts.monthly.max}
-                <span className="text-[10px] ml-0.5 font-bold text-slate-500 dark:text-slate-400">
+                <span className="text-[10px] ml-0.5 font-bold text-gray-500 dark:text-gray-400">
                   {data.experienceData.estimatedCosts.monthly.currency}
                 </span>
               </div>
@@ -219,7 +219,7 @@ const SpeciesDetailPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <SEOHead title={seoTitle} description={seoDesc} />
 
       {/* ========== HERO SECTION ========== */}
@@ -237,7 +237,7 @@ const SpeciesDetailPage = () => {
             className="w-full h-full object-cover" 
           />
           {/* Replaced dual heavy overlays with one subtle diagonal gradient */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/80 via-slate-900/35 to-slate-900/5" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/80 via-gray-900/35 to-gray-900/5" />
         </div>
         
         <ImageAttribution credit={data.imageCredit} />
@@ -305,7 +305,7 @@ const SpeciesDetailPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-purple-500 to-indigo-600 rounded-2xl blur-sm opacity-70 group-hover:opacity-90 transition-opacity" />
                 
                 {/* Main card */}
-                <div className="relative bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-7 border-2 border-white/20 dark:border-slate-700/50 shadow-2xl backdrop-blur-xl">
+                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-6 md:p-7 border-2 border-white/20 dark:border-gray-700/50 shadow-2xl backdrop-blur-xl">
                   <div className="flex items-start gap-4 md:gap-5">
                     {/* Icon with glow effect */}
                     <motion.div 
@@ -336,7 +336,7 @@ const SpeciesDetailPage = () => {
                         </span>
                         <div className="h-px flex-1 bg-gradient-to-r from-purple-300 to-transparent dark:from-purple-700" />
                       </div>
-                      <p className="text-slate-800 dark:text-slate-200 text-sm md:text-base leading-relaxed font-medium">
+                      <p className="text-gray-800 dark:text-gray-200 text-sm md:text-base leading-relaxed font-medium">
                         {data.funFact}
                       </p>
                     </div>
@@ -417,9 +417,9 @@ const SpeciesDetailPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 overflow-hidden">
               {/* Desktop: Horizontal tabs */}
-              <div className="hidden md:flex border-b-2 border-slate-200 dark:border-slate-700">
+              <div className="hidden md:flex border-b-2 border-gray-200 dark:border-gray-700">
                 <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
                   Overview
                 </TabButton>
@@ -438,7 +438,7 @@ const SpeciesDetailPage = () => {
               </div>
 
               {/* Mobile: Scrollable horizontal tabs */}
-              <div className="md:hidden border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto scrollbar-hide">
+              <div className="md:hidden border-b-2 border-gray-200 dark:border-gray-700 overflow-x-auto scrollbar-hide">
                 <div className="flex min-w-max">
                   <TabButtonMobile active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
                     Overview
@@ -468,15 +468,15 @@ const SpeciesDetailPage = () => {
                       <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
                       <div className="grid sm:grid-cols-2 gap-4">
                         {/* Temperature Card */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                           <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center gap-3">
-                              <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                                <Thermometer className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                              <div className="p-2.5 bg-white dark:bg-gray-950/50 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                                <Thermometer className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                               </div>
                               <div>
-                                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Temperature</div>
-                                <div className="text-2xl font-black text-slate-900 dark:text-slate-100">
+                                <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Temperature</div>
+                                <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
                                   {data.environment.tempC.min}–{data.environment.tempC.max}°C
                                 </div>
                               </div>
@@ -484,7 +484,7 @@ const SpeciesDetailPage = () => {
                           </div>
                           {data.environment.tempC.ideal && (
                             <div className="flex items-center gap-2 text-xs">
-                              <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                              <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <div 
                                   className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-rose-500"
                                   style={{ 
@@ -492,21 +492,21 @@ const SpeciesDetailPage = () => {
                                   }}
                                 />
                               </div>
-                              <span className="font-bold text-slate-600 dark:text-slate-400">Ideal: {data.environment.tempC.ideal}°C</span>
+                              <span className="font-bold text-gray-600 dark:text-gray-400">Ideal: {data.environment.tempC.ideal}°C</span>
                             </div>
                           )}
                         </div>
 
                         {/* pH Card */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                           <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center gap-3">
-                              <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                                <Droplets className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                              <div className="p-2.5 bg-white dark:bg-gray-950/50 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                                <Droplets className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                               </div>
                               <div>
-                                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">pH Level</div>
-                                <div className="text-2xl font-black text-slate-900 dark:text-slate-100">
+                                <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">pH Level</div>
+                                <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
                                   {data.environment.ph.min}–{data.environment.ph.max}
                                 </div>
                               </div>
@@ -514,7 +514,7 @@ const SpeciesDetailPage = () => {
                           </div>
                           {data.environment.ph.ideal && (
                             <div className="flex items-center gap-2 text-xs">
-                              <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                              <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <div 
                                   className="h-full bg-gradient-to-r from-rose-500 via-emerald-500 to-blue-500"
                                   style={{ 
@@ -522,20 +522,20 @@ const SpeciesDetailPage = () => {
                                   }}
                                 />
                               </div>
-                              <span className="font-bold text-slate-600 dark:text-slate-400">Ideal: {data.environment.ph.ideal}</span>
+                              <span className="font-bold text-gray-600 dark:text-gray-400">Ideal: {data.environment.ph.ideal}</span>
                             </div>
                           )}
                         </div>
 
                         {/* Water Flow Card */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                           <div className="flex items-center gap-3">
-                            <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                              <Activity className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                            <div className="p-2.5 bg-white dark:bg-gray-950/50 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                              <Activity className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                             </div>
                             <div className="flex-1">
-                              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Water Flow</div>
-                              <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.environment.flow}</div>
+                              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Water Flow</div>
+                              <div className="text-xl font-black text-gray-900 dark:text-gray-100 capitalize">{data.environment.flow}</div>
                             </div>
                             <div className="flex gap-1">
                               {[1, 2, 3].map(i => (
@@ -545,8 +545,8 @@ const SpeciesDetailPage = () => {
                                     (data.environment.flow === 'low' && i <= 1) ||
                                     (data.environment.flow === 'medium' && i <= 2) ||
                                     (data.environment.flow === 'high' && i <= 3)
-                                      ? 'bg-slate-700 dark:bg-slate-300'
-                                      : 'bg-slate-300 dark:bg-slate-700'
+                                      ? 'bg-gray-700 dark:bg-gray-300'
+                                      : 'bg-gray-300 dark:bg-gray-700'
                                   }`}
                                 />
                               ))}
@@ -555,14 +555,14 @@ const SpeciesDetailPage = () => {
                         </div>
 
                         {/* Substrate Card */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                           <div className="flex items-center gap-3">
-                            <div className="p-2.5 bg-white dark:bg-slate-950/50 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                              <Box className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                            <div className="p-2.5 bg-white dark:bg-gray-950/50 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                              <Box className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                             </div>
                             <div className="flex-1">
-                              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Substrate</div>
-                              <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.environment.substrate || 'Any'}</div>
+                              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Substrate</div>
+                              <div className="text-xl font-black text-gray-900 dark:text-gray-100 capitalize">{data.environment.substrate || 'Any'}</div>
                             </div>
                           </div>
                         </div>
@@ -598,8 +598,8 @@ const SpeciesDetailPage = () => {
                     {/* Behavior Overview */}
                     <div>
                       <SectionHeader title="Behavior & Temperament" icon={<Activity className="w-5 h-5" />} />
-                      <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/20 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
-                        <p className="text-slate-700 dark:text-slate-300 mb-4 md:mb-5 leading-relaxed text-sm md:text-base">
+                      <div className="bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-950/20 rounded-xl p-5 md:p-6 border-2 border-gray-200 dark:border-gray-700">
+                        <p className="text-gray-700 dark:text-gray-300 mb-4 md:mb-5 leading-relaxed text-sm md:text-base">
                           {data.behavior.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -613,9 +613,9 @@ const SpeciesDetailPage = () => {
                     {/* Stats & Costs */}
                     <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                       {/* Ownership Stats */}
-                      <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
-                          <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Ownership Stats
+                      <div className="bg-white dark:bg-gray-800 rounded-xl p-5 md:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-gray-600 dark:text-gray-400" /> Ownership Stats
                         </h4>
                         <div className="space-y-4">
                           <StatBar label="Difficulty" value={data.care.difficulty} />
@@ -626,25 +626,25 @@ const SpeciesDetailPage = () => {
 
                       {/* Est. Costs */}
                       {data.experienceData?.estimatedCosts && (
-                        <div className="bg-white dark:bg-slate-800 rounded-xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-                          <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
-                            <DollarSign className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Est. Costs
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 md:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                          <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
+                            <DollarSign className="w-4 h-4 text-gray-600 dark:text-gray-400" /> Est. Costs
                           </h4>
                           <div className="space-y-4">
                             <div>
-                              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Initial Setup</div>
-                              <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
+                              <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Initial Setup</div>
+                              <div className="text-2xl md:text-3xl font-black text-gray-900 dark:text-gray-100">
                                 {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
-                                <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
+                                <span className="text-sm md:text-base ml-1 font-bold text-gray-600 dark:text-gray-400">
                                   {data.experienceData.estimatedCosts.initial.currency}
                                 </span>
                               </div>
                             </div>
                             <div>
-                              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-2">Monthly</div>
-                              <div className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100">
+                              <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Monthly</div>
+                              <div className="text-2xl md:text-3xl font-black text-gray-900 dark:text-gray-100">
                                 {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
-                                <span className="text-sm md:text-base ml-1 font-bold text-slate-600 dark:text-slate-400">
+                                <span className="text-sm md:text-base ml-1 font-bold text-gray-600 dark:text-gray-400">
                                   {data.experienceData.estimatedCosts.monthly.currency}
                                 </span>
                               </div>
@@ -666,10 +666,10 @@ const SpeciesDetailPage = () => {
                         value={data.care.difficulty}
                         icon={<Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
                         colors={{
-                          easy: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          hard: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          expert: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+                          easy: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          medium: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          hard: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          expert: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' }
                         }}
                       />
                       <CareLevelCard 
@@ -677,9 +677,9 @@ const SpeciesDetailPage = () => {
                         value={data.care.effort}
                         icon={<Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
                         colors={{
-                          low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+                          low: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          medium: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          high: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' }
                         }}
                       />
                       <CareLevelCard 
@@ -687,9 +687,9 @@ const SpeciesDetailPage = () => {
                         value={data.care.cost}
                         icon={<DollarSign className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />}
                         colors={{
-                          low: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          medium: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-                          high: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' }
+                          low: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          medium: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+                          high: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' }
                         }}
                       />
                     </div>
@@ -697,47 +697,47 @@ const SpeciesDetailPage = () => {
                     {/* Feeding Guide - Streamlined */}
                     <div>
                       <SectionHeader title="Feeding Guide" icon={<Utensils className="w-5 h-5" />} />
-                      <div className="bg-white dark:bg-slate-800 rounded-xl p-4 md:p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-5">
+                      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm space-y-5">
                         
-                        <div className="flex items-center gap-3 pb-4 border-b border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center gap-3 pb-4 border-b border-gray-200 dark:border-gray-700">
                           <div className="p-2 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg">
                             <Utensils className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Diet Type</div>
-                            <div className="text-xl font-black text-slate-900 dark:text-slate-100 capitalize">{data.care.diet}</div>
+                            <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Diet Type</div>
+                            <div className="text-xl font-black text-gray-900 dark:text-gray-100 capitalize">{data.care.diet}</div>
                           </div>
                         </div>
 
                         {data.care.feeding && (
                           <>
                             <div className="grid sm:grid-cols-2 gap-3">
-                              <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+                              <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
                                 <div className="flex items-center gap-2 mb-1">
-                                  <Clock className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                                  <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Frequency</div>
+                                  <Clock className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                  <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Frequency</div>
                                 </div>
-                                <div className="text-base font-bold text-slate-900 dark:text-slate-100 capitalize">{data.care.feeding.frequency.replace(/-/g, ' ')}</div>
+                                <div className="text-base font-bold text-gray-900 dark:text-gray-100 capitalize">{data.care.feeding.frequency.replace(/-/g, ' ')}</div>
                               </div>
                               
                               {data.care.feeding.fastingDay && data.care.feeding.fastingDay !== 'none' && (
-                                <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+                                <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
                                   <div className="flex items-center gap-2 mb-1">
-                                    <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                                    <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Fasting Day</div>
+                                    <Calendar className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                    <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Fasting Day</div>
                                   </div>
-                                  <div className="text-base font-bold text-slate-900 dark:text-slate-100 capitalize">{data.care.feeding.fastingDay}</div>
+                                  <div className="text-base font-bold text-gray-900 dark:text-gray-100 capitalize">{data.care.feeding.fastingDay}</div>
                                 </div>
                               )}
                             </div>
 
                             <div>
-                              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
+                              <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
                                 <Apple className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> Primary Foods
                               </h4>
                               <div className="flex flex-wrap gap-2">
                                 {data.care.feeding.primaryFoods.map((food) => (
-                                  <span key={food} className="px-3 py-1.5 rounded-md text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 capitalize">
+                                  <span key={food} className="px-3 py-1.5 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 capitalize">
                                     {food.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                                   </span>
                                 ))}
@@ -746,12 +746,12 @@ const SpeciesDetailPage = () => {
 
                             {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
                               <div>
-                                <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
+                                <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
                                   <Pill className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" /> Supplements
                                 </h4>
                                 <div className="flex flex-wrap gap-2">
                                   {data.care.feeding.supplements.map((supplement) => (
-                                    <span key={supplement} className="px-3 py-1.5 rounded-md text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 capitalize">
+                                    <span key={supplement} className="px-3 py-1.5 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 capitalize">
                                       {supplement.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                                     </span>
                                   ))}
@@ -760,18 +760,18 @@ const SpeciesDetailPage = () => {
                             )}
 
                             {data.care.feeding.liveFood && (
-                              <div className={`p-3 border border-slate-200 dark:border-slate-700 rounded-lg ${
+                              <div className={`p-3 border border-gray-200 dark:border-gray-700 rounded-lg ${
                                 data.care.feeding.liveFood.required ? 'bg-rose-50/50 dark:bg-rose-950/10' : 
                                 data.care.feeding.liveFood.recommended ? 'bg-blue-50/50 dark:bg-blue-950/10' : 
                                 'bg-emerald-50/50 dark:bg-emerald-950/10'
                               }`}>
                                 <div className="flex items-center gap-2 text-xs font-semibold">
                                   {data.care.feeding.liveFood.required ? (
-                                    <><AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400" /><span className="text-slate-900 dark:text-slate-100">Live food required</span></>
+                                    <><AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400" /><span className="text-gray-900 dark:text-gray-100">Live food required</span></>
                                   ) : data.care.feeding.liveFood.recommended ? (
-                                    <><Info className="w-4 h-4 text-blue-600 dark:text-blue-400" /><span className="text-slate-900 dark:text-slate-100">Live food recommended</span></>
+                                    <><Info className="w-4 h-4 text-blue-600 dark:text-blue-400" /><span className="text-gray-900 dark:text-gray-100">Live food recommended</span></>
                                   ) : (
-                                    <><CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /><span className="text-slate-900 dark:text-slate-100">Live food optional</span></>
+                                    <><CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /><span className="text-gray-900 dark:text-gray-100">Live food optional</span></>
                                   )}
                                 </div>
                               </div>
@@ -780,10 +780,10 @@ const SpeciesDetailPage = () => {
                         )}
 
                         {!data.care.feeding && (
-                          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+                          <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                             <ul className="space-y-2">
                               {getFeedingAdvice().map((tip, i) => (
-                                <li key={i} className="flex gap-2 text-sm text-slate-700 dark:text-slate-300">
+                                <li key={i} className="flex gap-2 text-sm text-gray-700 dark:text-gray-300">
                                   <span className="text-emerald-500 dark:text-emerald-400 font-bold mt-0.5 flex-shrink-0">→</span>
                                   <span className="leading-relaxed">{tip}</span>
                                 </li>
@@ -798,17 +798,17 @@ const SpeciesDetailPage = () => {
                     {data.care.maintenance && (
                       <div>
                         <SectionHeader title="Maintenance" icon={<Calendar className="w-5 h-5" />} />
-                        <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
                           <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
                             <div className="flex items-center gap-2 mb-2">
                               <Droplets className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Water Changes</div>
+                              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Water Changes</div>
                             </div>
                             <div className="text-base font-bold text-blue-900 dark:text-blue-300">
                               {data.care.maintenance.waterChangePercentage}% {data.care.maintenance.waterChangeFrequency}
                             </div>
                             {data.care.maintenance.notes && (
-                              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-2">{data.care.maintenance.notes}</p>
+                              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mt-2">{data.care.maintenance.notes}</p>
                             )}
                           </div>
                           {data.care.maintenance.vacuumingNeeded && (
@@ -853,11 +853,11 @@ const SpeciesDetailPage = () => {
                         <SectionHeader title="Special Requirements" icon={<AlertTriangle className="w-5 h-5" />} />
                         <div className="space-y-2">
                           {data.care.specialRequirements.map((requirement, index) => (
-                            <div key={index} className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-200 dark:border-slate-700 flex gap-2 shadow-sm">
+                            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 flex gap-2 shadow-sm">
                               <div className="p-1.5 bg-rose-50 dark:bg-rose-950/30 rounded-md flex-shrink-0">
                                 <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                               </div>
-                              <p className="text-xs md:text-sm text-slate-900 dark:text-slate-100 font-semibold leading-relaxed">{requirement}</p>
+                              <p className="text-xs md:text-sm text-gray-900 dark:text-gray-100 font-semibold leading-relaxed">{requirement}</p>
                             </div>
                           ))}
                         </div>
@@ -868,7 +868,7 @@ const SpeciesDetailPage = () => {
                     {data.behavior.aggressionLevel && (
                       <div>
                         <SectionHeader title="Aggression Profile" icon={<AlertTriangle className="w-5 h-5" />} />
-                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 md:p-5 border border-slate-200 dark:border-slate-700 space-y-4">
+                        <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 space-y-4">
                           <AggressionBar label="Intraspecific (Same Species)" level={data.behavior.aggressionLevel.intraspecific} />
                           <AggressionBar label="Interspecific (Other Species)" level={data.behavior.aggressionLevel.interspecific} />
                           <AggressionBar label="Territorial Behavior" level={data.behavior.aggressionLevel.territorial} />
@@ -879,14 +879,14 @@ const SpeciesDetailPage = () => {
                     {/* Health */}
                     <div>
                       <SectionHeader title="Health & Disease Prevention" icon={<Heart className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 md:p-5 border border-slate-200 dark:border-slate-700 space-y-4">
+                      <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 space-y-4">
                         <div>
-                          <h5 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-3 tracking-wider">Common Diseases</h5>
+                          <h5 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase mb-3 tracking-wider">Common Diseases</h5>
                           <DiseaseList diseases={data.health.commonDiseases} />
                         </div>
                         {data.health.sensitivities && data.health.sensitivities.length > 0 && (
                           <div>
-                            <h5 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-3 tracking-wider">Sensitivities</h5>
+                            <h5 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase mb-3 tracking-wider">Sensitivities</h5>
                             <div className="flex flex-wrap gap-2">
                               {data.health.sensitivities.map((s: string) => (
                                 <span key={s} className="text-xs bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 px-2.5 py-1.5 rounded-md border border-amber-200 dark:border-amber-800 font-bold">{s}</span>
@@ -941,15 +941,15 @@ const SpeciesDetailPage = () => {
                             <span className="text-xs md:text-sm font-black text-emerald-900 dark:text-emerald-300 uppercase tracking-wider">{data.habitat.planting}</span>
                             <BarIndicator level={data.habitat.planting} color="emerald" />
                           </div>
-                          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">{data.habitat.plantingNotes}</p>
+                          <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">{data.habitat.plantingNotes}</p>
                         </div>
                       </div>
                       <div>
                         <SectionHeader title="Hardscape Elements" icon={<Mountain className="w-5 h-5" />} />
-                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+                        <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-5 md:p-6 border-2 border-gray-200 dark:border-gray-700">
                           <div className="flex flex-wrap gap-2">
                             {data.habitat.hardscape.map((item: string) => (
-                              <span key={item} className="text-sm md:text-base bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 font-bold">{item}</span>
+                              <span key={item} className="text-sm md:text-base bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-3 py-2 rounded-lg border-2 border-gray-300 dark:border-gray-600 font-bold">{item}</span>
                             ))}
                           </div>
                         </div>
@@ -1035,18 +1035,18 @@ const SpeciesDetailPage = () => {
                     {data.scientificContext && (
                       <div>
                         <SectionHeader title="Scientific Background" icon={<Microscope className="w-5 h-5" />} />
-                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700 space-y-5">
+                        <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-5 md:p-6 border-2 border-gray-200 dark:border-gray-700 space-y-5">
                           <div>
-                            <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Wild Habitat</h5>
-                            <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.scientificContext.wildHabitat}</p>
+                            <h5 className="font-black text-gray-900 dark:text-gray-100 mb-2 text-sm md:text-base">Wild Habitat</h5>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed">{data.scientificContext.wildHabitat}</p>
                           </div>
                           <div>
-                            <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Sexual Dimorphism</h5>
-                            <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.scientificContext.sexualDimorphism}</p>
+                            <h5 className="font-black text-gray-900 dark:text-gray-100 mb-2 text-sm md:text-base">Sexual Dimorphism</h5>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed">{data.scientificContext.sexualDimorphism}</p>
                           </div>
                           {data.scientificContext.variants && data.scientificContext.variants.length > 0 && (
                             <div>
-                              <h5 className="font-black text-slate-900 dark:text-slate-100 mb-3 md:mb-4 text-sm md:text-base">Known Variants</h5>
+                              <h5 className="font-black text-gray-900 dark:text-gray-100 mb-3 md:mb-4 text-sm md:text-base">Known Variants</h5>
                               <div className="flex flex-wrap gap-2">
                                 {data.scientificContext.variants.map((v: string) => (
                                   <span key={v} className="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-300 px-3 py-2 rounded-lg text-sm md:text-base border-2 border-indigo-200 dark:border-indigo-800 font-bold">{v}</span>
@@ -1061,26 +1061,26 @@ const SpeciesDetailPage = () => {
                     {data.breeding && (
                       <div>
                         <SectionHeader title="Breeding Guide" icon={<Egg className="w-5 h-5" />} />
-                        <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 md:p-6 border-2 border-slate-200 dark:border-slate-700">
+                        <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-5 md:p-6 border-2 border-gray-200 dark:border-gray-700">
                           <div className="flex items-center gap-3 mb-5">
                             <Badge text={data.breeding.difficulty} color={data.breeding.difficulty} size="md" />
-                            <span className="text-sm md:text-base text-slate-600 dark:text-slate-400 capitalize font-semibold">{data.breeding.method.replace(/_/g, ' ')}</span>
+                            <span className="text-sm md:text-base text-gray-600 dark:text-gray-400 capitalize font-semibold">{data.breeding.method.replace(/_/g, ' ')}</span>
                           </div>
                           <div className="space-y-4">
                             {data.breeding.trigger && (
                               <div>
-                                <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Breeding Trigger</h5>
-                                <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.breeding.trigger}</p>
+                                <h5 className="font-black text-gray-900 dark:text-gray-100 mb-2 text-sm md:text-base">Breeding Trigger</h5>
+                                <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed">{data.breeding.trigger}</p>
                               </div>
                             )}
                             {data.breeding.fryCare && (
                               <div>
-                                <h5 className="font-black text-slate-900 dark:text-slate-100 mb-2 text-sm md:text-base">Fry Care</h5>
-                                <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base leading-relaxed">{data.breeding.fryCare}</p>
+                                <h5 className="font-black text-gray-900 dark:text-gray-100 mb-2 text-sm md:text-base">Fry Care</h5>
+                                <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed">{data.breeding.fryCare}</p>
                               </div>
                             )}
                             {data.breeding.notes && (
-                              <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 italic bg-white dark:bg-slate-800 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 leading-relaxed">{data.breeding.notes}</p>
+                              <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 italic bg-white dark:bg-gray-800 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 leading-relaxed">{data.breeding.notes}</p>
                             )}
                           </div>
                         </div>
@@ -1109,17 +1109,17 @@ const SpeciesDetailPage = () => {
 
 // Sidebar info row (light, for white card)
 const SidebarInfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-700 last:border-0">
+  <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
     <div className="flex items-center gap-2">
       {icon}
-      <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">{label}</span>
+      <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">{label}</span>
     </div>
-    <span className="text-sm text-slate-900 dark:text-slate-100 font-bold">{value}</span>
+    <span className="text-sm text-gray-900 dark:text-gray-100 font-bold">{value}</span>
   </div>
 );
 
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
-  <h3 className="text-lg md:text-xl font-black text-slate-800 dark:text-slate-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
+  <h3 className="text-lg md:text-xl font-black text-gray-800 dark:text-gray-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
     <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
     {title}
   </h3>
@@ -1131,12 +1131,12 @@ const StatBar = ({ label, value }: { label: string; value: string }) => {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">{label}</span>
-        <span className="text-sm font-semibold text-slate-900 dark:text-white capitalize">{value}</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{label}</span>
+        <span className="text-sm font-semibold text-gray-900 dark:text-white capitalize">{value}</span>
       </div>
       <div className="flex gap-1.5">
         {[1, 2, 3].map(i => (
-          <div key={i} className={`h-2 flex-1 rounded-full ${i <= steps ? 'bg-slate-800 dark:bg-slate-300' : 'bg-slate-200 dark:bg-slate-700'}`} />
+          <div key={i} className={`h-2 flex-1 rounded-full ${i <= steps ? 'bg-gray-800 dark:bg-gray-300' : 'bg-gray-200 dark:bg-gray-700'}`} />
         ))}
       </div>
     </div>
@@ -1173,8 +1173,8 @@ const SetupCard = ({ title, description }: { title: string; description: string 
       <CheckCircle className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
     </div>
     <div>
-      <h5 className="font-black text-slate-900 dark:text-slate-100 mb-1 md:mb-2 text-sm md:text-base">{title}</h5>
-      <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{description}</p>
+      <h5 className="font-black text-gray-900 dark:text-gray-100 mb-1 md:mb-2 text-sm md:text-base">{title}</h5>
+      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{description}</p>
     </div>
   </div>
 );
@@ -1202,8 +1202,8 @@ const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
           rule.severity === 'medium' ? 'text-amber-700 dark:text-amber-300' :
           'text-blue-700 dark:text-blue-300'
         }`}>{rule.type}</span>
-        {rule.target && <span className="text-xs text-slate-600 dark:text-slate-400">• {rule.target}</span>}
-        {rule.condition && <span className="text-xs text-slate-600 dark:text-slate-400">• {rule.condition}</span>}
+        {rule.target && <span className="text-xs text-gray-600 dark:text-gray-400">• {rule.target}</span>}
+        {rule.condition && <span className="text-xs text-gray-600 dark:text-gray-400">• {rule.condition}</span>}
       </div>
       <p className={`text-xs md:text-sm leading-relaxed ${ 
         rule.severity === 'critical' ? 'text-red-900 dark:text-red-200' :
@@ -1216,10 +1216,10 @@ const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
 );
 
 const SpeciesCard = ({ species }: { species: Species }) => (
-  <Link to={`/species/${species.slug}`} className="group bg-slate-50 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-xl p-4 border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-md hover:shadow-xl">
-    <h5 className="font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm md:text-base line-clamp-1">{species.taxonomy.commonName}</h5>
-    <p className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 italic mb-2 md:mb-3 line-clamp-1">{species.taxonomy.scientificName}</p>
-    <div className="flex items-center gap-2 text-[10px] md:text-xs text-slate-600 dark:text-slate-400 font-semibold">
+  <Link to={`/species/${species.slug}`} className="group bg-gray-50 dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-xl p-4 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-md hover:shadow-xl">
+    <h5 className="font-black text-gray-900 dark:text-gray-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm md:text-base line-clamp-1">{species.taxonomy.commonName}</h5>
+    <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 italic mb-2 md:mb-3 line-clamp-1">{species.taxonomy.scientificName}</p>
+    <div className="flex items-center gap-2 text-[10px] md:text-xs text-gray-600 dark:text-gray-400 font-semibold">
       <span>{species.visuals.adultSizeCM}cm</span>
       <span>•</span>
       <span>{species.environment.minTankSizeLiters}L</span>
@@ -1230,10 +1230,10 @@ const SpeciesCard = ({ species }: { species: Species }) => (
 const AggressionBar = ({ label, level }: { label: string; level: number }) => (
   <div>
     <div className="flex items-center justify-between mb-2 md:mb-3">
-      <span className="text-xs md:text-sm text-slate-700 dark:text-slate-300 font-bold">{label}</span>
-      <span className="text-sm md:text-base font-black text-slate-900 dark:text-slate-100">{level}/10</span>
+      <span className="text-xs md:text-sm text-gray-700 dark:text-gray-300 font-bold">{label}</span>
+      <span className="text-sm md:text-base font-black text-gray-900 dark:text-gray-100">{level}/10</span>
     </div>
-    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 md:h-4 overflow-hidden">
+    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 md:h-4 overflow-hidden">
       <div 
         className={`h-full rounded-full transition-all shadow-inner ${ 
           level >= 8 ? 'bg-red-600' :
@@ -1248,14 +1248,14 @@ const AggressionBar = ({ label, level }: { label: string; level: number }) => (
 );
 
 const MistakeCard = ({ issue, cause, frequency }: { issue: string; cause: string; frequency: number }) => (
-  <div className="bg-white dark:bg-slate-800 rounded-lg p-3 md:p-4 border border-red-200/60 dark:border-red-800/40 shadow-sm">
+  <div className="bg-white dark:bg-gray-800 rounded-lg p-3 md:p-4 border border-red-200/60 dark:border-red-800/40 shadow-sm">
     <div className="flex items-center justify-between mb-2">
-      <h5 className="font-bold text-slate-900 dark:text-slate-100 capitalize text-xs md:text-sm">{issue.replace(/-/g, ' ')}</h5>
+      <h5 className="font-bold text-gray-900 dark:text-gray-100 capitalize text-xs md:text-sm">{issue.replace(/-/g, ' ')}</h5>
       <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-1 rounded-md border border-red-200/50 dark:border-red-800/50">
         {Math.round(frequency * 100)}%
       </span>
     </div>
-    <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
       <strong className="font-bold text-red-800 dark:text-red-300">Cause:</strong> {cause.replace(/-/g, ' ')}
     </p>
   </div>
@@ -1267,8 +1267,8 @@ const TabButton = ({ active, onClick, icon, children }: { active: boolean; onCli
     onClick={onClick} 
     className={`flex-1 flex items-center justify-center gap-2.5 px-4 py-4 text-sm font-black transition-all whitespace-nowrap ${ 
       active 
-        ? 'bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
-        : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 border-b-4 border-transparent'
+        ? 'bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
+        : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 border-b-4 border-transparent'
     }`}
   >
     <span className={`${active ? 'scale-110' : ''} transition-transform`}>{icon}</span>
@@ -1282,8 +1282,8 @@ const TabButtonMobile = ({ active, onClick, icon, children }: { active: boolean;
     onClick={onClick} 
     className={`flex flex-col items-center justify-center gap-1.5 px-5 py-3 text-xs font-black transition-all whitespace-nowrap min-w-[80px] ${ 
       active 
-        ? 'bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
-        : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 border-b-4 border-transparent'
+        ? 'bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
+        : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 border-b-4 border-transparent'
     }`}
   >
     <span className={`${active ? 'scale-110' : ''} transition-transform`}>{icon}</span>
@@ -1294,8 +1294,8 @@ const TabButtonMobile = ({ active, onClick, icon, children }: { active: boolean;
 const BarIndicator = ({ level, color }: { level: string; color: 'indigo' | 'emerald' }) => {
   const steps = level === 'low' || level === 'sparse' ? 1 : level === 'medium' ? 2 : 3;
   const colorClasses = {
-    indigo: { active: 'bg-indigo-600', inactive: 'bg-slate-200 dark:bg-slate-700' },
-    emerald: { active: 'bg-emerald-600', inactive: 'bg-slate-200 dark:bg-slate-700' },
+    indigo: { active: 'bg-indigo-600', inactive: 'bg-gray-200 dark:bg-gray-700' },
+    emerald: { active: 'bg-emerald-600', inactive: 'bg-gray-200 dark:bg-gray-700' },
   }[color];
   return (
     <div className="flex gap-2 flex-1 max-w-[100px] md:max-w-[120px]">
@@ -1310,14 +1310,14 @@ const TagBadge = ({ tag }: { tag: string }) => {
   const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
   return (
     <div className="group relative">
-      <span className="cursor-help inline-flex items-center px-3 py-2 rounded-lg text-xs md:text-sm font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-colors">
+      <span className="cursor-help inline-flex items-center px-3 py-2 rounded-lg text-xs md:text-sm font-bold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-colors">
         {tag === 'jumper' && <AlertTriangle className="w-3 h-3 md:w-3.5 md:h-3.5 mr-1.5 text-amber-500" />}
         {capitalize(tag.replace(/_/g, ' '))}
       </span>
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-slate-900 dark:bg-slate-950 text-white text-xs p-3 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-xl border border-slate-700">
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-gray-900 dark:bg-gray-950 text-white text-xs p-3 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-xl border border-gray-700">
         <span className="font-bold block mb-1 capitalize">{tag.replace(/_/g, ' ')}:</span>
         {tagDescriptions[tag as keyof typeof tagDescriptions] || "No description available."}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900 dark:border-t-slate-950"></div>
+        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-950"></div>
       </div>
     </div>
   );
@@ -1331,7 +1331,7 @@ const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size
     medium: 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
     intermediate: 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
     expert: 'bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800',
-  }[color === 'brand' || color === 'enhanced' ? color : text] || 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
+  }[color === 'brand' || color === 'enhanced' ? color : text] || 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700';
   const sizeClasses = size === 'sm' ? 'px-2 py-1 text-[10px]' : 'px-3 py-1.5 text-xs';
   return <span className={`inline-flex items-center rounded-lg font-black uppercase tracking-wide border-2 ${styles} ${sizeClasses}`}>{text}</span>;
 };
@@ -1350,7 +1350,7 @@ const CareLevelCard = ({ label, value, icon, colors }: CareLevelCardProps) => {
     <div className={`${colorConfig.bg} rounded-xl p-4 border-2 ${colorConfig.border} shadow-lg`}>
       <div className="flex items-center gap-2 mb-2">
         <div className={`p-1.5 rounded-lg ${colorConfig.text}`}>{icon}</div>
-        <div className="text-[10px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{label}</div>
+        <div className="text-[10px] md:text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider">{label}</div>
       </div>
       <div className={`text-xl md:text-2xl font-black ${colorConfig.text} capitalize`}>{value}</div>
     </div>
@@ -1368,36 +1368,36 @@ interface EquipmentCardNewProps {
 
 const EquipmentCardNew = ({ icon, label, required, details, color }: EquipmentCardNewProps) => {
   const colorConfig = {
-    rose:    { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-    blue:    { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-    cyan:    { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-    amber:   { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
-    emerald: { bg: 'bg-white dark:bg-slate-800', text: 'text-slate-900 dark:text-slate-100', border: 'border-slate-200 dark:border-slate-700' },
+    rose:    { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+    blue:    { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+    cyan:    { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+    amber:   { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
+    emerald: { bg: 'bg-white dark:bg-gray-800', text: 'text-gray-900 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-700' },
   };
   const colors = colorConfig[color];
   return (
     <div className={`${colors.bg} rounded-lg p-3 border ${colors.border} ${required ? 'shadow-sm' : 'opacity-60'}`}>
       <div className="flex items-center gap-2 mb-1">
         <div className={`${colors.text}`}>{icon}</div>
-        <div className="text-sm font-bold text-slate-900 dark:text-white">{label}</div>
+        <div className="text-sm font-bold text-gray-900 dark:text-white">{label}</div>
         {required && (
           <span className="ml-auto px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 text-[9px] font-black uppercase">Req</span>
         )}
       </div>
-      {details && <p className="text-[10px] text-slate-600 dark:text-slate-400 capitalize">{details}</p>}
-      {!required && <p className="text-[10px] text-slate-500 dark:text-slate-500 italic">Optional</p>}
+      {details && <p className="text-[10px] text-gray-600 dark:text-gray-400 capitalize">{details}</p>}
+      {!required && <p className="text-[10px] text-gray-500 dark:text-gray-500 italic">Optional</p>}
     </div>
   );
 };
 
 const NotFound = () => (
-  <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-6">
-    <div className="text-center max-w-md mx-auto bg-white dark:bg-slate-800 rounded-3xl p-12 shadow-2xl border-2 border-slate-200 dark:border-slate-700">
-      <div className="w-24 h-24 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto mb-6 flex items-center justify-center">
-        <span className="text-4xl font-black text-slate-400 dark:text-slate-500">404</span>
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-6">
+    <div className="text-center max-w-md mx-auto bg-white dark:bg-gray-800 rounded-3xl p-12 shadow-2xl border-2 border-gray-200 dark:border-gray-700">
+      <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+        <span className="text-4xl font-black text-gray-400 dark:text-gray-500">404</span>
       </div>
-      <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Species Not Found</h1>
-      <p className="text-slate-600 dark:text-slate-400 mb-6">The species you're looking for doesn't exist in our database.</p>
+      <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-4">Species Not Found</h1>
+      <p className="text-gray-600 dark:text-gray-400 mb-6">The species you're looking for doesn't exist in our database.</p>
       <Link to="/species" className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-bold bg-indigo-50 dark:bg-indigo-950/30 px-6 py-3 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-all">
         <ArrowLeft className="w-4 h-4" /> Return to Database
       </Link>
