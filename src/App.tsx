@@ -18,6 +18,10 @@ import NotFoundPage from './pages/NotFoundPage';
 // Auth
 import AuthPage from './pages/AuthPage';
 
+// Legal Pages
+import TermsOfServicePage from './pages/TermsOfServicePage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+
 // Species Pages
 import SpeciesIndexPage from './pages/SpeciesIndexPage';
 import SpeciesDetailPage from './pages/SpeciesDetailPage';
@@ -80,6 +84,11 @@ function App() {
 
             {/* Auth */}
             <Route path="/login" element={<AuthPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+
+            {/* Legal Pages */}
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
             {/* Species Routes */}
             <Route path="/species" element={<SpeciesIndexPage />} />
