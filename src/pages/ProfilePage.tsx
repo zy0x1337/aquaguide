@@ -13,27 +13,48 @@ const ProfilePage = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Load profile from localStorage
-  const [profile, setProfile] = useState(() => {
-    const saved = localStorage.getItem(`aquaguide_profile_${user?.id}`);
-    return saved ? JSON.parse(saved) : {
-      displayName: user?.email?.split('@')[0] || 'User',
-      bio: 'Aquarium enthusiast and fish keeper',
-      location: 'Hannover, Germany',
-      website: '',
-      favoriteSpecies: 'Betta Splendens',
-    };
+  // Load profile from Supabase
+  const [profile, setProfile] = useState({
+    displayName: user?.email?.split('@')[0] || 'User',
+    bio: 'Aquarium enthusiast and fish keeper',
+    location: 'Hannover, Germany',
+    website: '',
+    favoriteSpecies: 'Betta Splendens',
   });
 
-  // Load avatar URL on mount
+  // Load profile and avatar from Supabase
   useEffect(() => {
     if (user) {
-      const savedAvatar = localStorage.getItem(`aquaguide_avatar_${user.id}`);
-      if (savedAvatar) {
-        setAvatarUrl(savedAvatar);
-      }
+      loadProfile();
     }
   }, [user]);
+
+  const loadProfile = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('avatar_url, display_name, bio, location, website, favorite_species')
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        setAvatarUrl(data.avatar_url);
+        setProfile({
+          displayName: data.display_name || user.email?.split('@')[0] || 'User',
+          bio: data.bio || 'Aquarium enthusiast and fish keeper',
+          location: data.location || '',
+          website: data.website || '',
+          favoriteSpecies: data.favorite_species || '',
+        });
+      }
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    }
+  };
 
   const stats = [
     { label: 'Tanks', value: '3', icon: Droplets },
@@ -48,10 +69,28 @@ const ProfilePage = () => {
     return email.slice(0, 2).toUpperCase();
   };
 
-  const handleSave = () => {
-    // Save profile to localStorage
-    localStorage.setItem(`aquaguide_profile_${user?.id}`, JSON.stringify(profile));
-    setIsEditing(false);
+  const handleSave = async () => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          display_name: profile.displayName,
+          bio: profile.bio,
+          location: profile.location,
+          website: profile.website,
+          favorite_species: profile.favoriteSpecies,
+        })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      alert('Failed to save profile. Please try again.');
+    }
   };
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,29 +112,29 @@ const ProfilePage = () => {
     setUploading(true);
 
     try {
-      // Create a unique file name
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}-${Date.now()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      
+      reader.onload = async () => {
+        const base64String = reader.result as string;
 
-      // Upload to Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true
-        });
+        // Update profile with avatar URL
+        const { error } = await supabase
+          .from('profiles')
+          .update({ avatar_url: base64String })
+          .eq('id', user.id);
 
-      if (uploadError) throw uploadError;
+        if (error) throw error;
 
-      // Get public URL
-      const { data } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
+        setAvatarUrl(base64String);
+        // Trigger a storage event to update other components
+        window.dispatchEvent(new Event('avatar-updated'));
+      };
 
-      // Save URL to localStorage
-      localStorage.setItem(`aquaguide_avatar_${user.id}`, data.publicUrl);
-      setAvatarUrl(data.publicUrl);
+      reader.onerror = () => {
+        throw new Error('Failed to read file');
+      };
     } catch (error) {
       console.error('Error uploading avatar:', error);
       alert('Failed to upload avatar. Please try again.');
@@ -285,7 +324,7 @@ const ProfilePage = () => {
                   />
                 ) : (
                   <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm">
-                    {profile.location}
+                    {profile.location || 'Not set'}
                   </div>
                 )}
               </div>
@@ -324,7 +363,7 @@ const ProfilePage = () => {
                   />
                 ) : (
                   <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm">
-                    {profile.favoriteSpecies}
+                    {profile.favoriteSpecies || 'Not set'}
                   </div>
                 )}
               </div>

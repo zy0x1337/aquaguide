@@ -17,8 +17,6 @@ const SettingsPage = () => {
       emailNotifications: true,
       pushNotifications: false,
       weeklyDigest: true,
-      language: 'en',
-      measurementSystem: 'metric',
     };
   });
 
@@ -151,52 +149,6 @@ const SettingsPage = () => {
                       <p className="text-xs text-slate-500 dark:text-slate-500">
                         Email address cannot be changed
                       </p>
-                    </div>
-
-                    {/* Language */}
-                    <div className="space-y-2">
-                      <label className="block text-sm font-semibold text-slate-900 dark:text-white">
-                        Language
-                      </label>
-                      <select
-                        value={settings.language}
-                        onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                      >
-                        <option value="en">English</option>
-                        <option value="de">Deutsch</option>
-                        <option value="es">Español</option>
-                        <option value="fr">Français</option>
-                      </select>
-                    </div>
-
-                    {/* Measurement System */}
-                    <div className="space-y-2">
-                      <label className="block text-sm font-semibold text-slate-900 dark:text-white">
-                        Measurement System
-                      </label>
-                      <div className="flex gap-3">
-                        <button
-                          onClick={() => setSettings({ ...settings, measurementSystem: 'metric' })}
-                          className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                            settings.measurementSystem === 'metric'
-                              ? 'bg-black dark:bg-white text-white dark:text-black'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
-                          }`}
-                        >
-                          Metric (cm, L, °C)
-                        </button>
-                        <button
-                          onClick={() => setSettings({ ...settings, measurementSystem: 'imperial' })}
-                          className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                            settings.measurementSystem === 'imperial'
-                              ? 'bg-black dark:bg-white text-white dark:text-black'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
-                          }`}
-                        >
-                          Imperial (in, gal, °F)
-                        </button>
-                      </div>
                     </div>
                   </div>
                 )}
