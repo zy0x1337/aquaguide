@@ -19,24 +19,24 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
         subsections: [
           {
             subheading: 'Temperament Matching',
-            content: 'Peaceful (community): Tetras, rasboras, corydoras, guppies. Coexist without aggression. Semi-aggressive: Gouramis, angelfish, rainbow sharks. Territorial during breeding or if crowded. Aggressive: Cichlids, bettas, tiger barbs. Require species-specific setups or large tanks.'
+            content: 'Peaceful (community): Tetras, rasboras, corydoras, guppies. Coexist without aggression. Semi aggressive: Gouramis, angelfish, rainbow sharks. Territorial during breeding or if crowded. Aggressive: Cichlids, bettas, tiger barbs. Require species specific setups or large tanks.'
           },
           {
             subheading: 'Size Compatibility',
-            content: 'Rule: Adult size difference <2x prevents predation. 1-inch neon tetra + 4-inch angelfish = risk (angels eat neons). Safe: Neons (1 inch) + cherry barbs (2 inches) + honey gourami (2.5 inches). Always research adult sizes, not juvenile store sizes.'
+            content: 'Rule: Adult size difference less than 2 times prevents predation. Research confirms predators consume prey at optimal body mass ratios peaking at intermediate sizes. 1 inch neon tetra plus 4 inch angelfish equals risk (angels eat neons). Safe: Neons (1 inch) plus cherry barbs (2 inches) plus honey gourami (2.5 inches). Always research adult sizes, not juvenile store sizes.'
           },
           {
             subheading: 'Water Parameter Overlap',
-            content: 'Temperature: ±1°C tolerance. pH: ±0.5 units. Example: Neons (24-26°C, pH 6.0-7.0) + cardinal tetras (24-28°C, pH 5.5-7.0) = perfect overlap. Incompatible: Goldfish (18-22°C) + discus (28-30°C).'
+            content: 'Temperature: plus or minus 1°C tolerance. pH: plus or minus 0.5 units. Example: Neons (24 to 26°C, pH 6.0 to 7.0) plus cardinal tetras (24 to 28°C, pH 5.5 to 7.0) equals perfect overlap. Incompatible: Goldfish (18 to 22°C) plus discus (28 to 30°C).'
           },
           {
             subheading: 'Behavioral Patterns',
-            content: 'Activity level: Fast swimmers stress slow fish. Avoid danios (hyper) with bettas (slow fins). Feeding style: Bottom feeders (corys) + mid-level (tetras) + surface (hatchetfish) = full tank utilization. Nocturnal vs diurnal: Kuhli loaches (night) + daytime schoolers coexist peacefully.'
+            content: 'Activity level: Fast swimmers stress slow fish. Avoid danios (hyper) with bettas (slow fins). Feeding style: Bottom feeders (corys) plus mid level (tetras) plus surface (hatchetfish) equals full tank utilization. Nocturnal versus diurnal: Kuhli loaches (night) plus daytime schoolers coexist peacefully.'
           }
         ],
         callout: {
           type: 'important',
-          text: 'Always cross-reference all four pillars. One mismatch overrides three matches.'
+          text: 'Always cross reference all four pillars. One mismatch overrides three matches.'
         }
       },
       {
@@ -45,7 +45,7 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
         subsections: [
           {
             subheading: 'Minimum School Sizes',
-            content: 'Tight schoolers (constant grouping): Neon tetras, cardinal tetras, rummy nose tetras. Minimum 10-15 fish. Loose schoolers (group periodically): Cherry barbs, zebra danios, white cloud minnows. Minimum 6-8 fish. Shoaling (same area, not synchronized): Corydoras, otocinclus. Minimum 6 fish.'
+            content: 'Tight schoolers (constant grouping): Neon tetras, cardinal tetras, rummy nose tetras. Minimum 10 to 15 fish. Loose schoolers (group periodically): Cherry barbs, zebra danios, white cloud minnows. Minimum 6 to 8 fish. Shoaling (same area, not synchronized): Corydoras, otocinclus. Minimum 6 fish.'
           },
           {
             subheading: 'Benefits of Proper Schooling',
@@ -53,29 +53,29 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
           },
           {
             subheading: 'Mixing Similar Species',
-            content: 'Same genus sometimes school together: Cardinal + neon tetras may loosely group. Ember tetras stay separate from neons. Different body shapes rarely mix: Serpae tetras (deep-bodied) ignore rummy nose (slender). Test with small groups first.'
+            content: 'Same genus sometimes school together: Cardinal plus neon tetras may loosely group. Ember tetras stay separate from neons. Different body shapes rarely mix: Serpae tetras (deep bodied) ignore rummy nose (slender). Test with small groups first.'
           }
         ],
         callout: {
           type: 'warning',
-          text: 'Undersized schools cause chronic stress = shortened lifespan + disease susceptibility.'
+          text: 'Undersized schools cause chronic stress equals shortened lifespan plus disease susceptibility.'
         }
       },
       {
         heading: 'Territory and Tank Zoning',
-        content: 'Space allocation prevents conflicts even among semi-compatible species.',
+        content: 'Space allocation prevents conflicts even among semi compatible species.',
         subsections: [
           {
             subheading: 'Horizontal Territory (Bottom)',
-            content: 'Bottom dwellers need floor space: Corydoras (peaceful, 2-3 sq ft/group). Plecos (semi-territorial, 4-6 sq ft each). Loaches (active, 6+ sq ft/group). Caves and driftwood define boundaries. One territory/fish or school.'
+            content: 'Bottom dwellers need floor space: Corydoras (peaceful, 2 to 3 square feet per group). Plecos (semi territorial, 4 to 6 square feet each). Loaches (active, 6 plus square feet per group). Caves and driftwood define boundaries. One territory per fish or school.'
           },
           {
-            subheading: 'Vertical Territory (Mid-Upper)',
-            content: 'Angelfish, gouramis claim vertical zones. Tank height >18 inches allows stacking: Surface: Hatchetfish, guppies. Mid-level: Tetras, rasboras. Lower-mid: Angelfish, larger barbs. Tall plants separate vertical territories.'
+            subheading: 'Vertical Territory (Mid Upper)',
+            content: 'Angelfish, gouramis claim vertical zones. Tank height above 18 inches allows stacking: Surface: Hatchetfish, guppies. Mid level: Tetras, rasboras. Lower mid: Angelfish, larger barbs. Tall plants separate vertical territories.'
           },
           {
             subheading: 'Breeding Territory',
-            content: 'Cichlids, gouramis, bettas become hyper-aggressive when spawning. Isolate breeding pairs in separate tanks. Egg-scatterers (tetras, barbs) less territorial but may eat fry. Dense plants protect eggs/fry in community setups.'
+            content: 'Cichlids, gouramis, bettas become hyper aggressive when spawning. Isolate breeding pairs in separate tanks. Egg scatterers (tetras, barbs) less territorial but may eat fry. Dense plants protect eggs and fry in community setups.'
           }
         ],
         callout: {
@@ -84,29 +84,29 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
         }
       },
       {
-        heading: 'Building Your Community: Step-by-Step',
+        heading: 'Building Your Community: Step by Step',
         content: 'Strategic stocking order minimizes aggression and establishes balance.',
         subsections: [
           {
-            subheading: 'Step 1: Centerpiece Fish (Weeks 5-6 Post-Cycle)',
-            content: 'Choose 1-2 larger peaceful species as focal points. Dwarf cichlids (Apistogramma, Bolivian rams), gouramis (honey, pearl), or rainbow fish. Stock first to claim territory before adding faster schoolers.'
+            subheading: 'Step 1: Centerpiece Fish (Weeks 5 to 6 Post Cycle)',
+            content: 'Choose 1 to 2 larger peaceful species as focal points. Dwarf cichlids (Apistogramma, Bolivian rams), gouramis (honey, pearl), or rainbow fish. Stock first to claim territory before adding faster schoolers.'
           },
           {
             subheading: 'Step 2: Schooling Fish (Week 7)',
-            content: 'Add 1-2 schooling species simultaneously. Tetras, rasboras, or danios in groups of 10-15. Wait 1-2 weeks, observe for aggression before adding more schools. Max 3-4 schooling species total (visual chaos if more).'
+            content: 'Add 1 to 2 schooling species simultaneously. Tetras, rasboras, or danios in groups of 10 to 15. Wait 1 to 2 weeks, observe for aggression before adding more schools. Max 3 to 4 schooling species total (visual chaos if more).'
           },
           {
-            subheading: 'Step 3: Bottom Dwellers (Week 8-9)',
-            content: 'Corydoras (6-8 fish), otocinclus (6 fish), or small plecos (1-2 fish). Bottom feeders added last avoid competition with mid-level feeders establishing routines.'
+            subheading: 'Step 3: Bottom Dwellers (Week 8 to 9)',
+            content: 'Corydoras (6 to 8 fish), otocinclus (6 fish), or small plecos (1 to 2 fish). Bottom feeders added last avoid competition with mid level feeders establishing routines.'
           },
           {
-            subheading: 'Step 4: Cleanup Crew (Week 10+)',
+            subheading: 'Step 4: Cleanup Crew (Week 10 Plus)',
             content: 'Nerite snails (algae), Malaysian trumpet snails (substrate aeration), Amano shrimp (detritus). Inverts added last once fish acclimated and stable.'
           }
         ],
         callout: {
           type: 'important',
-          text: 'Wait 7-10 days between stocking groups. Monitor ammonia/nitrite after each addition.'
+          text: 'Wait 7 to 10 days between stocking groups. Monitor ammonia and nitrite after each addition.'
         }
       },
       {
@@ -114,27 +114,27 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
         content: 'Avoid these frequent errors that lead to tank failures.',
         subsections: [
           {
-            subheading: 'Mixing Fin Nippers with Long-Finned Fish',
-            content: 'Tiger barbs, serpae tetras nip betta/gourami/angelfish fins. Results: Stress, infections, death. Solution: Keep nippers in species-only or with fast, short-finned tankmates.'
+            subheading: 'Mixing Fin Nippers with Long Finned Fish',
+            content: 'Tiger barbs, serpae tetras nip betta, gourami, or angelfish fins. Results: Stress, infections, death. Solution: Keep nippers in species only or with fast, short finned tankmates.'
           },
           {
             subheading: 'Single Schooling Fish',
-            content: 'One tetra/rasbora hides constantly, refuses food. Dies prematurely from stress. Solution: Always buy 6+ minimum, ideally 10-15 for tight schoolers.'
+            content: 'One tetra or rasbora hides constantly, refuses food. Dies prematurely from stress. Solution: Always buy 6 plus minimum, ideally 10 to 15 for tight schoolers.'
           },
           {
-            subheading: 'Overstocking Semi-Aggressive Fish',
-            content: 'Multiple male gouramis/bettas/dwarf cichlids fight in <55 gallons. Females harassed relentlessly. Solution: One male per species, 2-3 females, or species-only tank with heavy dividers.'
+            subheading: 'Overstocking Semi Aggressive Fish',
+            content: 'Multiple male gouramis, bettas, or dwarf cichlids fight in under 55 gallons. Females harassed relentlessly. Solution: One male per species, 2 to 3 females, or species only tank with heavy dividers.'
           }
         ]
       }
     ],
     
     keyTakeaways: [
-      'Match temperament + size (≤2x difference) + water parameters + behavior',
-      'School minimums: 10-15 tight schoolers, 6-8 loose schoolers',
-      'Allocate territories: horizontal (bottom), vertical (mid-upper), breeding zones',
-      'Stocking order: centerpiece → schoolers → bottom dwellers → cleanup crew',
-      'Wait 7-10 days between groups, monitor parameters after each addition'
+      'Match temperament plus size (less than 2x difference) plus water parameters plus behavior',
+      'School minimums: 10 to 15 tight schoolers, 6 to 8 loose schoolers',
+      'Allocate territories: horizontal (bottom), vertical (mid upper), breeding zones',
+      'Stocking order: centerpiece then schoolers then bottom dwellers then cleanup crew',
+      'Wait 7 to 10 days between groups, monitor parameters after each addition'
     ],
     
     relatedTopics: ['stocking-calculator', 'bioload-management', 'aggression-troubleshooting', 'breeding-setup']
@@ -161,10 +161,10 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
       type: 'article'
     },
     {
-      title: 'Schooling Fish: What Fish School Together',
-      author: 'Fishing and Fish',
-      url: 'https://fishingandfish.com/what-fish-school-together/',
-      type: 'article'
+      title: 'Influence of Predator Prey Body Size Ratios',
+      author: 'National Institutes of Health',
+      url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7319243/',
+      type: 'research'
     },
     {
       title: 'Top 10 Fish for a Community Tank',

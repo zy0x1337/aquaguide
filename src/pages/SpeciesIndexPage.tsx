@@ -255,7 +255,7 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-3">
-          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <label className="text-[11px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <Activity className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Level
           </label>
           <div className="flex flex-wrap gap-2">
@@ -287,7 +287,7 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-3">
-          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <label className="text-[11px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <Globe2 className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Region
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -304,11 +304,11 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-2.5">
-          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <label className="text-[11px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <Box className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Tank Size
           </label>
           <select 
-            className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm md:text-base rounded-xl px-3 md:px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
+            className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm md:text-base rounded-xl px-3 md:px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
             value={filters.tankSize || ''}
             onChange={(e) => setFilters({ ...filters, tankSize: e.target.value === '' ? null : Number(e.target.value) })}
           >
@@ -321,7 +321,7 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-2.5 relative">
-          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <label className="text-[11px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <Droplets className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Biotope
           </label>
           <input 
@@ -331,19 +331,19 @@ const SpeciesIndexPage = () => {
             onFocus={() => filters.biotope.length >= 2 && setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
             placeholder="e.g. 'Amazon'..."
-            className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm md:text-base rounded-xl px-3 md:px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+            className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm md:text-base rounded-xl px-3 md:px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           />
           
           {showSuggestions && biotopeSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl mt-1 max-h-60 overflow-y-auto">
+            <div className="absolute z-50 w-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl mt-1 max-h-60 overflow-y-auto">
               {biotopeSuggestions.map((b) => (
                 <button
                   key={b.id}
                   onClick={() => selectBiotope(b)}
-                  className="w-full text-left px-4 py-3 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors border-b border-slate-100 dark:border-slate-700 last:border-0 group"
+                  className="w-full text-left px-4 py-3 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors border-b border-gray-100 dark:border-gray-700 last:border-0 group"
                 >
-                  <div className="font-bold text-slate-800 dark:text-slate-200 text-sm group-hover:text-indigo-700 dark:group-hover:text-indigo-400">{b.label}</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 truncate">{b.description}</div>
+                  <div className="font-bold text-gray-800 dark:text-gray-200 text-sm group-hover:text-indigo-700 dark:group-hover:text-indigo-400">{b.label}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{b.description}</div>
                 </button>
               ))}
             </div>
@@ -354,7 +354,7 @@ const SpeciesIndexPage = () => {
               <button 
                 key={tag}
                 onClick={() => setFilters({ ...filters, biotope: tag })}
-                className="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-slate-600 dark:text-slate-300 hover:text-indigo-700 dark:hover:text-indigo-400 text-[10px] md:text-[11px] font-bold uppercase rounded-lg border border-slate-200 dark:border-slate-700 transition-all whitespace-nowrap"
+                className="px-2.5 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-gray-600 dark:text-gray-300 hover:text-indigo-700 dark:hover:text-indigo-400 text-[10px] md:text-[11px] font-bold uppercase rounded-lg border border-gray-200 dark:border-gray-700 transition-all whitespace-nowrap"
               >
                 {tag}
               </button>
@@ -363,7 +363,7 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-2.5">
-          <label className="text-[11px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center">
+          <label className="text-[11px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <PawPrint className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Type
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -386,7 +386,7 @@ const SpeciesIndexPage = () => {
       </div>
 
       {/* ADVANCED FILTERS */}
-      <div className="space-y-5 pt-5 border-t-2 border-slate-200 dark:border-slate-700">
+      <div className="space-y-5 pt-5 border-t-2 border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2 pb-2 border-b-2 border-purple-100 dark:border-purple-900/50">
           <Thermometer className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           <h4 className="text-xs font-black text-purple-900 dark:text-purple-300 uppercase tracking-wider">Water Parameters</h4>
@@ -436,13 +436,13 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-2.5">
-          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center">
+          <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center">
             <Activity className="w-4 h-4 mr-2" /> Diet
           </label>
           <select 
             value={filters.diet} 
             onChange={(e) => setFilters({ ...filters, diet: e.target.value as any })} 
-            className="w-full px-4 py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+            className="w-full px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
           >
             <option value="all">Any Diet</option>
             <option value="omnivore">🍽️ Omnivore</option>
@@ -452,13 +452,13 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-2.5">
-          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center">
+          <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center">
             <Activity className="w-4 h-4 mr-2" /> Temperament
           </label>
           <select 
             value={filters.temperament} 
             onChange={(e) => setFilters({ ...filters, temperament: e.target.value as any })} 
-            className="w-full px-4 py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+            className="w-full px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
           >
             <option value="all">Any</option>
             <option value="peaceful">😌 Peaceful</option>
@@ -467,10 +467,10 @@ const SpeciesIndexPage = () => {
         </div>
 
         <div className="space-y-2.5">
-          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center">
+          <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center">
             <Activity className="w-4 h-4 mr-2" /> Behavior Tags
           </label>
-          <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700">
             <CheckboxGroup 
               options={['peaceful', 'schooler', 'bottom_dweller', 'surface_dweller', 'nocturnal', 'algae_eater', 'jumper', 'nano_safe']} 
               selected={filters.behaviorTags} 
@@ -484,7 +484,7 @@ const SpeciesIndexPage = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-16 md:pb-20">
+      <div className="min-h-screen bg-white dark:bg-gray-950 pb-16 md:pb-20">
         <SEOHead 
           title="Species Database - AquaGuide" 
           description="Browse our complete collection of aquarium fish and invertebrates."
@@ -498,7 +498,7 @@ const SpeciesIndexPage = () => {
               alt="Aquarium species"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/90"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900/90"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/30 to-cyan-900/30"></div>
           </div>
 
@@ -518,7 +518,7 @@ const SpeciesIndexPage = () => {
                 Species Database
               </h1>
               
-              <p className="text-sm sm:text-base md:text-lg text-slate-200 mb-6 md:mb-8 leading-relaxed max-w-2xl">
+              <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 md:mb-8 leading-relaxed max-w-2xl">
                 Discover detailed care guides and habitat requirements for freshwater fish and invertebrates.
               </p>
 
@@ -526,11 +526,10 @@ const SpeciesIndexPage = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative group max-w-2xl"
+                className="max-w-2xl"
               >
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                <div className="relative flex items-center bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border border-white/50">
-                  <div className="pl-3 md:pl-4 text-slate-400">
+                <div className="flex items-center bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border-2 border-gray-200 dark:border-gray-700">
+                  <div className="pl-3 md:pl-4 text-gray-400">
                     <Search className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <input 
@@ -538,12 +537,12 @@ const SpeciesIndexPage = () => {
                     placeholder="Search by name or region..." 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 bg-transparent border-none focus:ring-0 outline-none font-medium"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-900 dark:text-gray-100 placeholder:text-gray-400 bg-transparent border-none focus:ring-0 outline-none font-medium"
                   />
                   {searchTerm && (
                     <button 
                       onClick={() => setSearchTerm('')} 
-                      className="mr-1.5 md:mr-2 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors" 
+                      className="mr-1.5 md:mr-2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" 
                       aria-label="Clear search"
                     >
                       <X className="w-4 h-4 md:w-5 md:h-5" />
@@ -560,9 +559,9 @@ const SpeciesIndexPage = () => {
             
             {/* Desktop Unified Filter Sidebar */}
             <aside className="hidden lg:block lg:col-span-1">
-              <div className="bg-white dark:bg-slate-800 p-5 md:p-6 rounded-xl md:rounded-2xl shadow-lg border-2 border-slate-200 dark:border-slate-700 sticky top-24">
-                <div className="flex items-center justify-between mb-5 pb-4 border-b-2 border-slate-200 dark:border-slate-700">
-                  <h3 className="font-bold text-slate-900 dark:text-white flex items-center text-sm md:text-base">
+              <div className="bg-white dark:bg-gray-800 p-5 md:p-6 rounded-xl md:rounded-2xl shadow-lg border-2 border-gray-200 dark:border-gray-700 sticky top-24">
+                <div className="flex items-center justify-between mb-5 pb-4 border-b-2 border-gray-200 dark:border-gray-700">
+                  <h3 className="font-bold text-gray-900 dark:text-white flex items-center text-sm md:text-base">
                     <SlidersHorizontal className="w-4 h-4 md:w-5 md:h-5 mr-2 text-indigo-500" /> All Filters
                   </h3>
                   {hasActiveFilters && (
@@ -574,7 +573,7 @@ const SpeciesIndexPage = () => {
                     </button>
                   )}
                 </div>
-                <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600 scrollbar-track-transparent">
+                <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                   <FilterContent />
                 </div>
               </div>
@@ -582,8 +581,8 @@ const SpeciesIndexPage = () => {
 
             {/* Mobile Filter Drawer */}
             <MobileFilterDrawer isOpen={isMobileDrawerOpen} onClose={() => setIsMobileDrawerOpen(false)}>
-              <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-slate-200">
-                <h3 className="font-bold text-slate-900 text-lg">All Filters</h3>
+              <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-200">
+                <h3 className="font-bold text-gray-900 text-lg">All Filters</h3>
                 {hasActiveFilters && (
                   <button 
                     onClick={resetFilters} 
@@ -609,10 +608,10 @@ const SpeciesIndexPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl shadow-lg border-2 border-slate-200 dark:border-slate-700 p-3 md:p-5"
+                className="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border-2 border-gray-200 dark:border-gray-700 p-3 md:p-5"
               >
                 {activeFilters.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4 pb-3 md:pb-4 border-b-2 border-slate-200 dark:border-slate-700">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4 pb-3 md:pb-4 border-b-2 border-gray-200 dark:border-gray-700">
                     {activeFilters.map((filter: any) => (
                       <FilterBadge key={filter.key} label={filter.label} value={filter.value} onRemove={filter.clear} />
                     ))}
@@ -621,11 +620,11 @@ const SpeciesIndexPage = () => {
                 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex items-center gap-2 md:gap-3">
-                    <span className="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400">Found</span>
+                    <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400">Found</span>
                     <span className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg md:rounded-xl font-black text-base md:text-lg shadow-lg">
                       {filteredSpecies.length}
                     </span>
-                    <span className="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 hidden sm:inline">Species</span>
+                    <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 hidden sm:inline">Species</span>
                   </div>
                   
                   {hasActiveFilters && (
@@ -676,7 +675,7 @@ const SpeciesIndexPage = () => {
 
                   {/* Showing X of Y indicator */}
                   {displayedSpecies.length > 0 && (
-                    <div className="text-center text-sm text-slate-500 dark:text-slate-400 py-4">
+                    <div className="text-center text-sm text-gray-500 dark:text-gray-400 py-4">
                       Showing {displayedSpecies.length} of {filteredSpecies.length} species
                     </div>
                   )}
@@ -686,15 +685,15 @@ const SpeciesIndexPage = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="text-center py-12 md:py-20 bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 shadow-lg"
+                  className="text-center py-12 md:py-20 bg-white dark:bg-gray-800 rounded-2xl md:rounded-3xl border-2 border-dashed border-gray-300 dark:border-gray-700 shadow-lg"
                 >
                   <div className="animate-bounce mb-5 md:mb-6">
-                    <div className="w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-full flex items-center justify-center mx-auto shadow-inner">
-                      <Fish className="w-7 h-7 md:w-10 md:h-10 text-slate-400 dark:text-slate-500" />
+                    <div className="w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                      <Fish className="w-7 h-7 md:w-10 md:h-10 text-gray-400 dark:text-gray-500" />
                     </div>
                   </div>
-                  <h3 className="text-lg md:text-2xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">No Species Found</h3>
-                  <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-5 md:mb-6 px-4">
+                  <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3">No Species Found</h3>
+                  <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-5 md:mb-6 px-4">
                     Try adjusting your filters or search term.
                   </p>
                   <button 
@@ -718,7 +717,7 @@ const FilterChip = ({
   icon,
   isActive, 
   onClick, 
-  colorClass = "text-slate-700 bg-slate-50 border-slate-200 hover:bg-slate-100 dark:text-slate-300 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700", 
+  colorClass = "text-gray-700 bg-gray-50 border-gray-200 hover:bg-gray-100 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700", 
   activeClass = "bg-gradient-to-r from-indigo-600 to-blue-600 text-white border-indigo-700 shadow-lg",
   className = ""
 }: any) => (
