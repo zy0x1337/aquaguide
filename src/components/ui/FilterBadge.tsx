@@ -5,32 +5,30 @@ interface FilterBadgeProps {
   label: string;
   value: string;
   onRemove: () => void;
-  className?: string;
+  variant?: 'default' | 'primary' | 'success' | 'warning';
 }
 
-/**
- * Visual indicator for active filters with remove button
- */
-export const FilterBadge = ({ label, value, onRemove, className }: FilterBadgeProps) => {
+export const FilterBadge = ({ label, value, onRemove, variant = 'default' }: FilterBadgeProps) => {
+  const variants = {
+    default: 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700',
+    primary: 'bg-coral-50 dark:bg-coral-900/20 text-coral-700 dark:text-coral-300 border-coral-300 dark:border-coral-700',
+    success: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 border-yellow-300 dark:border-yellow-700',
+  };
+
   return (
-    <div
-      className={cn(
-        "inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10",
-        "border border-indigo-200 dark:border-indigo-500/30 rounded-full",
-        "text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wide",
-        "animate-in fade-in zoom-in duration-200 shadow-sm",
-        "group hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-colors",
-        className
-      )}
-    >
-      <span className="opacity-60 font-medium">{label}:</span>
-      <span>{value}</span>
+    <div className={cn(
+      'inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border transition-all',
+      variants[variant]
+    )}>
+      <span className="text-xs opacity-75">{label}:</span>
+      <span className="font-semibold">{value}</span>
       <button
         onClick={onRemove}
-        className="ml-1 -mr-1 p-0.5 rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400/30 text-indigo-500 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-200 transition-colors"
+        className="ml-1 hover:bg-black/10 dark:hover:bg-white/10 rounded-full p-0.5 transition-colors"
         aria-label={`Remove ${label} filter`}
       >
-        <X className="w-3.5 h-3.5" />
+        <X size={14} />
       </button>
     </div>
   );

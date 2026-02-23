@@ -1,105 +1,80 @@
-import { useState, useEffect, useCallback } from 'react';
-import { X, CheckCircle2, AlertCircle, Info } from 'lucide-react';
+import { useEffect } from 'react';
+import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 import { cn } from '../../lib/utils';
+
+export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 interface ToastProps {
   id: string;
+  type: ToastType;
   message: string;
-  type?: 'success' | 'error' | 'info';
   duration?: number;
   onClose: (id: string) => void;
 }
 
-/**
- * Single Toast Notification Component
- */
-export const Toast = ({ id, message, type = 'info', duration = 3000, onClose }: ToastProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Animation In
-  useEffect(() => {
-    requestAnimationFrame(() => setIsVisible(true));
-  }, []);
-
-  // Auto Close Timer
+export const Toast = ({ id, type, message, duration = 5000, onClose }: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVisible(false);
-      // Wait for exit animation before unmounting
-      setTimeout(() => onClose(id), 300);
+      onClose(id);
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [duration, id, onClose]);
-
-  const handleManualClose = () => {
-    setIsVisible(false);
-    setTimeout(() => onClose(id), 300);
-  };
+  }, [id, duration, onClose]);
 
   const icons = {
-    success: CheckCircle2,
+    success: CheckCircle,
     error: AlertCircle,
-    info: Info
+    info: Info,
+    warning: AlertTriangle,
   };
 
-  const styles = {
-    success: 'bg-emerald-500 border-emerald-600 text-white',
-    error: 'bg-rose-500 border-rose-600 text-white',
-    info: 'bg-indigo-500 border-indigo-600 text-white'
+  const variants = {
+    success: cn(
+      'bg-emerald-50 dark:bg-emerald-900/20',
+      'border-emerald-200 dark:border-emerald-800',
+      'text-emerald-800 dark:text-emerald-200'
+    ),
+    error: cn(
+      'bg-red-50 dark:bg-red-900/20',
+      'border-red-200 dark:border-red-800',
+      'text-red-800 dark:text-red-200'
+    ),
+    info: cn(
+      'bg-sapphire-50 dark:bg-sapphire-900/20',
+      'border-sapphire-200 dark:border-sapphire-800',
+      'text-sapphire-800 dark:text-sapphire-200'
+    ),
+    warning: cn(
+      'bg-yellow-50 dark:bg-yellow-900/20',
+      'border-yellow-200 dark:border-yellow-800',
+      'text-yellow-800 dark:text-yellow-200'
+    ),
   };
 
   const Icon = icons[type];
 
   return (
-    <div
-      className={cn(
-        "pointer-events-auto w-full max-w-sm overflow-hidden rounded-xl border shadow-lg ring-1 ring-black/5 transition-all duration-300 ease-out",
-        styles[type],
-        isVisible ? "translate-y-0 opacity-100 scale-100" : "translate-y-2 opacity-0 scale-95"
-      )}
-      role="alert"
-    >
-      <div className="p-4 flex items-start gap-3">
-        <Icon className="w-5 h-5 flex-shrink-0 mt-0.5" />
-        <div className="flex-1 text-sm font-semibold">{message}</div>
-        <button
-          onClick={handleManualClose}
-          className="flex-shrink-0 hover:bg-white/20 p-1 rounded-lg transition-colors -mr-1 -mt-1"
-          aria-label="Close notification"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
+    <div className={cn(
+      'flex items-start gap-3 p-4 rounded-xl border shadow-lg',
+      'animate-in slide-in-from-top-5 duration-300',
+      'backdrop-blur-sm',
+      variants[type]
+    )}>
+      <Icon className="w-5 h-5 flex-shrink-0 mt-0.5" />
+      <p className="flex-1 text-sm font-medium">{message}</p>
+      <button
+        onClick={() => onClose(id)}
+        className="hover:bg-black/10 dark:hover:bg-white/10 rounded-lg p-1 transition-colors"
+        aria-label="Close notification"
+      >
+        <X size={16} />
+      </button>
     </div>
   );
 };
 
-/**
- * Toast Hook for managing notifications
- */
-export const useToast = () => {
-  const [toasts, setToasts] = useState<Array<{ id: string; message: string; type: 'success' | 'error' | 'info' }>>([]);
-
-  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'info') => {
-    const id = Math.random().toString(36).substr(2, 9);
-    setToasts((prev) => [...prev, { id, message, type }]);
-  }, []);
-
-  const removeToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  }, []);
-
-  return { toasts, showToast, removeToast };
-};
-
-/**
- * Container to render toasts (place in Layout or App root)
- */
-export const ToastContainer = ({ toasts, removeToast }: { toasts: any[], removeToast: (id: string) => void }) => (
-  <div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none p-4 md:p-0">
-    {toasts.map((toast) => (
-      <Toast key={toast.id} {...toast} onClose={removeToast} />
-    ))}
+export const ToastContainer = ({ children }: { children: React.ReactNode }) => (
+  <div className="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-md">
+    {children}
   </div>
 );

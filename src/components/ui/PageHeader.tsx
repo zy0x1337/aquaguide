@@ -1,35 +1,43 @@
-import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { cn } from '../../lib/utils';
 
 interface PageHeaderProps {
   title: string;
-  description?: string;
-  showBack?: boolean;
+  subtitle?: string;
+  icon?: React.ReactNode;
+  actions?: React.ReactNode;
   className?: string;
 }
 
-export default function PageHeader({ title, description, showBack = false, className = "" }: PageHeaderProps) {
-  const navigate = useNavigate();
-
+export const PageHeader = ({ title, subtitle, icon, actions, className }: PageHeaderProps) => {
   return (
-    <div className={`mb-8 ${className}`}>
-      {showBack && (
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center text-sm font-medium text-slate-500 hover:text-indigo-600 mb-4 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Zurück
-        </button>
-      )}
-      <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-        {title}
-      </h1>
-      {description && (
-        <p className="mt-3 text-lg text-slate-600 max-w-2xl leading-relaxed">
-          {description}
-        </p>
+    <div className={cn(
+      'flex flex-col md:flex-row md:items-center md:justify-between gap-4',
+      'pb-6 mb-6 border-b border-gray-200 dark:border-gray-800',
+      className
+    )}>
+      <div className="flex items-start gap-4">
+        {icon && (
+          <div className="p-3 bg-gradient-to-br from-coral-500 to-coral-600 dark:from-coral-400 dark:to-coral-500 rounded-xl shadow-lg text-white">
+            {icon}
+          </div>
+        )}
+        <div>
+          <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-1">
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              {subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+      
+      {actions && (
+        <div className="flex items-center gap-3">
+          {actions}
+        </div>
       )}
     </div>
   );
-}
+};
