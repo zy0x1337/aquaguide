@@ -9,7 +9,6 @@ import { ToastProvider } from './contexts/ToastContext';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
 import { startReminderSystem } from './lib/notifications';
-import { useTheme } from './hooks/useTheme';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -56,9 +55,6 @@ import SpeciesManager from './pages/admin/SpeciesManager';
 import UserManager from './pages/admin/UserManager';
 
 function App() {
-  // Initialize theme system
-  useTheme();
-
   // Start reminder system on app load
   useEffect(() => {
     startReminderSystem();
