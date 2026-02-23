@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight, Settings, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -12,10 +12,12 @@ interface Props {
 
 export const Layout: React.FC<Props> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const location = useLocation();
   const { comparedSpecies } = useComparison();
   const { user, signOut } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user) {
@@ -31,6 +33,23 @@ export const Layout: React.FC<Props> = ({ children }) => {
       setIsAdmin(false);
     }
   }, [user]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+
+    if (profileDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
 
   const isActive = (path: string) => 
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
@@ -50,6 +69,11 @@ export const Layout: React.FC<Props> = ({ children }) => {
     if (!user?.email) return 'U';
     const email = user.email.split('@')[0];
     return email.slice(0, 2).toUpperCase();
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    setProfileDropdownOpen(false);
   };
 
   return (
@@ -138,25 +162,81 @@ export const Layout: React.FC<Props> = ({ children }) => {
               {/* Auth (Desktop) - Vercel Style */}
               <div className="hidden md:flex items-center gap-3">
                 {user ? (
-                  <>
-                    {/* User Avatar Button - links to Dashboard */}
-                    <Link
-                      to="/dashboard"
-                      className="group relative w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white text-sm font-bold shadow-sm hover:shadow-md transition-all hover:scale-105 border-2 border-white dark:border-slate-800 overflow-hidden"
-                      title="Dashboard"
-                    >
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                      <span className="relative">{getUserInitials()}</span>
-                    </Link>
+                  <div className="relative" ref={dropdownRef}>
+                    {/* User Avatar Button with Dropdown */}
                     <button
-                      onClick={() => signOut()}
-                      className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all border border-transparent hover:border-red-200 dark:hover:border-red-900"
-                      title="Sign Out"
+                      onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                      className="group relative flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
                     >
-                      <LogOut className="w-5 h-5" strokeWidth={2.5} />
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white text-sm font-bold shadow-sm border-2 border-white dark:border-slate-800 overflow-hidden group-hover:shadow-md transition-all">
+                        <span>{getUserInitials()}</span>
+                      </div>
+                      <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 transition-transform ${
+                        profileDropdownOpen ? 'rotate-180' : ''
+                      }`} strokeWidth={2.5} />
                     </button>
-                  </>
+
+                    {/* Dropdown Menu */}
+                    {profileDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                        {/* User Info Header */}
+                        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold shadow-sm">
+                              {getUserInitials()}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                                {user.email?.split('@')[0]}
+                              </div>
+                              <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                                {user.email}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="py-2">
+                          <Link
+                            to="/dashboard"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
+                            Dashboard
+                          </Link>
+                          <Link
+                            to="/settings"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <Settings className="w-4 h-4" strokeWidth={2.5} />
+                            Settings
+                          </Link>
+                          <Link
+                            to="/profile"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <User className="w-4 h-4" strokeWidth={2.5} />
+                            Profile
+                          </Link>
+                        </div>
+
+                        {/* Sign Out */}
+                        <div className="border-t border-slate-200 dark:border-slate-800 py-2">
+                          <button
+                            onClick={handleSignOut}
+                            className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                          >
+                            <LogOut className="w-4 h-4" strokeWidth={2.5} />
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <Link
                     to="/login"
@@ -196,29 +276,55 @@ export const Layout: React.FC<Props> = ({ children }) => {
               {/* Auth (Mobile) - Vercel Style */}
               <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 {user ? (
-                  <div className="flex items-center justify-between px-2">
-                    <Link
-                      to="/dashboard"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3"
-                    >
+                  <div className="space-y-2">
+                    {/* User Info */}
+                    <div className="flex items-center gap-3 px-2">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold border-2 border-white dark:border-slate-900 shadow-sm">
                         {getUserInitials()}
                       </div>
-                      <div>
-                        <div className="text-sm font-bold text-slate-900 dark:text-white">{user.email?.split('@')[0]}</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-500">View Dashboard</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold text-slate-900 dark:text-white truncate">{user.email?.split('@')[0]}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-500 truncate">{user.email}</div>
                       </div>
-                    </Link>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setMobileMenuOpen(false);
-                      }}
-                      className="p-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-900"
-                    >
-                      <LogOut className="w-5 h-5" strokeWidth={2.5} />
-                    </button>
+                    </div>
+                    
+                    {/* Quick Links */}
+                    <div className="space-y-1">
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
+                        Dashboard
+                      </Link>
+                      <Link
+                        to="/settings"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <Settings className="w-4 h-4" strokeWidth={2.5} />
+                        Settings
+                      </Link>
+                      <Link
+                        to="/profile"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <User className="w-4 h-4" strokeWidth={2.5} />
+                        Profile
+                      </Link>
+                      <button
+                        onClick={() => {
+                          signOut();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" strokeWidth={2.5} />
+                        Sign Out
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <Link
