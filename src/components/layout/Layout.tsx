@@ -22,39 +22,39 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (user) {
+      // Load role and avatar from profiles
       supabase
         .from('profiles')
-        .select('role')
+        .select('role, avatar_url')
         .eq('id', user.id)
         .single()
         .then(({ data }) => {
           setIsAdmin(data?.role === 'admin');
+          setAvatarUrl(data?.avatar_url || null);
         });
-
-      // Load avatar from localStorage
-      const savedAvatar = localStorage.getItem(`aquaguide_avatar_${user.id}`);
-      if (savedAvatar) {
-        setAvatarUrl(savedAvatar);
-      }
     } else {
       setIsAdmin(false);
       setAvatarUrl(null);
     }
   }, [user]);
 
-  // Reload avatar when returning to page
+  // Listen for avatar updates
   useEffect(() => {
-    const handleFocus = () => {
+    const handleAvatarUpdate = () => {
       if (user) {
-        const savedAvatar = localStorage.getItem(`aquaguide_avatar_${user.id}`);
-        if (savedAvatar) {
-          setAvatarUrl(savedAvatar);
-        }
+        supabase
+          .from('profiles')
+          .select('avatar_url')
+          .eq('id', user.id)
+          .single()
+          .then(({ data }) => {
+            setAvatarUrl(data?.avatar_url || null);
+          });
       }
     };
 
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+    window.addEventListener('avatar-updated', handleAvatarUpdate);
+    return () => window.removeEventListener('avatar-updated', handleAvatarUpdate);
   }, [user]);
 
   // Close dropdown when clicking outside
