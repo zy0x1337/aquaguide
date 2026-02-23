@@ -526,10 +526,9 @@ const SpeciesIndexPage = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative group max-w-2xl"
+                className="max-w-2xl"
               >
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border border-white/50">
+                <div className="flex items-center bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border-2 border-gray-200 dark:border-gray-700">
                   <div className="pl-3 md:pl-4 text-gray-400">
                     <Search className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
