@@ -3,6 +3,7 @@ import { Box, Globe2, Droplets, Thermometer } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Species } from '../../types/species';
 import { CompareButton } from '../comparison/CompareButton';
+import { FavoriteButton } from '../favorites/FavoriteButton';
 
 interface SpeciesCardProps {
   data: Species;
@@ -102,6 +103,11 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
       {/* Compare Button - Positioned absolutely outside card */}
       <div className="absolute top-3 left-3 z-30">
         <CompareButton species={data} size="sm" />
+      </div>
+
+      {/* Favorite Button - Positioned absolutely outside card */}
+      <div className="absolute top-3 left-14 z-30">
+        <FavoriteButton itemType="species" itemSlug={data.slug} size="sm" />
       </div>
     </div>
   );

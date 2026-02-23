@@ -56,6 +56,7 @@ import ComparisonPage from './pages/ComparisonPage';
 // 👤 PROFILE & SETTINGS
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
+import FavoritesPage from './pages/FavoritesPage';
 
 // 👑 ADMIN PAGES
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -127,6 +128,7 @@ function App() {
 
             {/* 👤 Profile & Settings */}
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            <Route path="/favorites" element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
             {/* Own profile (protected) */}
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             {/* Public profile by userId (anyone can view) */}

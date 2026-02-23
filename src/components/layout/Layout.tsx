@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight, Settings, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight, Settings, LayoutDashboard, ChevronDown, Heart } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -207,7 +207,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </Link>
               )}
 
-              {/* Auth (Desktop) - Vercel Style */}
+              {/* Auth (Desktop) - Purple Hover Text */}
               <div className="hidden md:flex items-center gap-3">
                 {user ? (
                   <div className="relative" ref={dropdownRef}>
@@ -251,6 +251,14 @@ export const Layout: React.FC<Props> = ({ children }) => {
                             Dashboard
                           </Link>
                           <Link
+                            to="/favorites"
+                            onClick={() => setProfileDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            <Heart className="w-4 h-4" strokeWidth={2.5} />
+                            Favorites
+                          </Link>
+                          <Link
                             to="/settings"
                             onClick={() => setProfileDropdownOpen(false)}
                             className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -283,14 +291,12 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   </div>
                 ) : (
                   <Link
-                    to="/login"
-                    className="group relative inline-flex items-center gap-2 px-5 py-2 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
+                    to="/auth"
+                    className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white hover:border-transparent overflow-hidden"
                   >
-                    {/* Shimmer effect */}
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-                    <span className="relative flex items-center gap-2">
+                    <span className="relative flex items-center gap-1.5">
                       Sign In
-                      <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                      <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
                     </span>
                   </Link>
                 )}
@@ -317,7 +323,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
           {/* MOBILE MENU */}
           {mobileMenuOpen && (
             <div className="lg:hidden py-4 border-t border-slate-200 dark:border-slate-800 animate-in slide-in-from-top-2 duration-200">
-              {/* Auth (Mobile) - Vercel Style */}
+              {/* Auth (Mobile) */}
               <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 {user ? (
                   <div className="space-y-2">
@@ -339,6 +345,14 @@ export const Layout: React.FC<Props> = ({ children }) => {
                       >
                         <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
                         Dashboard
+                      </Link>
+                      <Link
+                        to="/favorites"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <Heart className="w-4 h-4" strokeWidth={2.5} />
+                        Favorites
                       </Link>
                       <Link
                         to="/settings"
@@ -370,20 +384,19 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   </div>
                 ) : (
                   <Link
-                    to="/login"
+                    to="/auth"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="group relative flex items-center justify-center gap-2 w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg font-semibold transition-all shadow-sm overflow-hidden"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white rounded-lg text-sm font-medium transition-all shadow-sm"
                   >
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-                    <span className="relative flex items-center gap-2">
+                    <span className="flex items-center gap-2">
                       Sign In
-                      <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+                      <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                     </span>
                   </Link>
                 )}
               </div>
 
-              {/* Special Actions (Mobile) - Vercel Style */}
+              {/* Special Actions (Mobile) */}
               <div className="space-y-2 mb-4">
                 <Link
                   to="/tank-builder"
