@@ -395,7 +395,7 @@ const AuthPage = () => {
                   className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline transition-colors"
                 >
                   {isLogin ? 'Sign up for free' : 'Sign in instead'}
-                >
+                </button>
               </p>
             </motion.div>
           </motion.div>
