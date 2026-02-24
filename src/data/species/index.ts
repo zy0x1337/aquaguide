@@ -50,6 +50,7 @@ import { sewelliaLineolata } from './sewellia-lineolata';
 import { hyphessobryconMegalopterus } from './hyphessobrycon-megalopterus';
 import { puntigrusTetrazona } from './puntigrus-tetrazona';
 import { pelvicachromispulcher } from './pelvicachromis-pulcher';
+import { tetraodonMbu } from './tetraodon-mbu';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -95,6 +96,7 @@ export const allSpecies: Species[] = [
   siameseAlgaeEater,
   sparklingGourami,
   swordtail,
+  tetraodonMbu,
   whiteCloudMinnow,
   bolivianRam,
   sterbaiCory,
@@ -149,6 +151,7 @@ export {
   siameseAlgaeEater,
   sparklingGourami,
   swordtail,
+  tetraodonMbu,
   whiteCloudMinnow,
   bolivianRam,
   sterbaiCory,
