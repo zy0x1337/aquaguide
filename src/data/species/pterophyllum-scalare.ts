@@ -23,7 +23,7 @@ export const pterophyllumScalare: Species = {
   },
 
   visuals: {
-    iconShape: 'disc',
+    iconShape: 'fusiform',
     adultSizeCM: 15,
     color: 'Wild type: Stunning silver base with four vertical black stripes across body creating tiger-like pattern! Stripes run from dorsal fin through body to anal fin. Long flowing triangular dorsal and anal fins creating dramatic 15cm height (taller than length!). Pelvic fins elongated into graceful filaments. Eyes crossed by first black stripe. Juveniles have more pronounced stripes, adults may show reduced stripes when stressed. Captive variants: Koi (orange and white patches), Marble (black irregular patterns), Albino (white with red eyes), Black Lace (solid black), Gold (yellow-gold), Leopard (spotted), Zebra (enhanced stripes), Platinum (metallic silver-white). All variants share iconic disc shape and tall fins.',
   },
@@ -54,14 +54,14 @@ export const pterophyllumScalare: Species = {
   },
 
   habitat: {
-    planting: 'heavy',
+    planting: 'dense',
     plantingNotes:
       'Angelfish THRIVE in heavily planted tanks mimicking Amazon floodplains! They use tall vertical plants for: 1) Hiding and ambush hunting (natural behavior), 2) Territory markers and spawning sites, 3) Visual barriers reducing aggression. Best plants: Amazon Sword (Echinodorus, tall broad leaves they love!), Vallisneria (vertical background), Java Fern (attached to driftwood), Anubias (midground), floating plants (dappled lighting, creates shaded areas). Plant density: Dense background and sides with open swimming space in center. Angelfish rarely damage plants but may nibble soft new growth when hungry. Provide vertical structures, they naturally swim among tall plants!',
     hardscape: ['Large driftwood branches (vertical 50cm+ creates territory divisions)', 'Smooth river rocks (football-size creates caves)', 'Spawning slates (20x30cm smooth surfaces for breeding)', 'Vertical root tangles (mimics flooded forest)', 'Broad-leaved plants (natural spawning sites)'],
   },
 
   behavior: {
-    tags: ['intelligent', 'territorial', 'schooling'],
+    tags: ['intelligent', 'territorial', 'schooler'],
     minGroupSize: 6,
     description:
       'Angelfish are intelligent cichlids displaying complex social behaviors and distinct personalities! In groups of 6+, they establish hierarchies: dominant pairs claim territories (corners, tall plants), subordinates respect boundaries. Watch their social dynamics: dominant angels spread fins showing dominance, subordinates tuck fins showing submission, disputes settled through fin displays (rarely physical fights). Paired angels perform elaborate courtship: selecting and cleaning spawning site together (kissing behavior!), circling each other, synchronized swimming. They are ambush predators: hiding behind vertical plants, striking prey with explosive speed. Display remarkable memory: recognizing individual owners (swim to glass when favorite person approaches), learning feeding times, remembering tank layout. CRITICAL: Territorial aggression increases during breeding (paired angels become hyper-aggressive defending spawning site, may attack all tankmates!). Semi-aggressive cichlids, not peaceful community fish despite graceful appearance.',
@@ -100,7 +100,7 @@ export const pterophyllumScalare: Species = {
       ],
       
       idealTankmates: {
-        surface: '6-10',
+        surface: 6-10,
         midwater: '10-15',
         bottom: '6-10',
       },
@@ -119,7 +119,7 @@ export const pterophyllumScalare: Species = {
     },
     
     socialStructure: {
-      type: 'hierarchical',
+      type: 'school',
       maxMalesPerTank: 3,
     },
     
@@ -130,10 +130,10 @@ export const pterophyllumScalare: Species = {
   },
 
   care: {
-    difficulty: 'moderate',
+    difficulty: 'medium',
     diet: 'omnivore',
-    effort: 'moderate',
-    cost: 'moderate',
+    effort: 'medium',
+    cost: 'medium',
     specialRequirements: [
       '240L minimum tank for group of 6', 
       'Tank height 60cm minimum (tall tank mandatory!)', 
@@ -164,8 +164,8 @@ export const pterophyllumScalare: Species = {
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['cichlid-pellets', 'cichlid-flakes', 'frozen-bloodworms'],
-      supplements: ['frozen-brine-shrimp', 'blanched-vegetables', 'frozen-daphnia'],
+      primaryFoods: ['pellets', 'flakes', 'bloodworms'],
+      supplements: ['brine-shrimp', 'vegetables', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -213,7 +213,7 @@ export const pterophyllumScalare: Species = {
 
   breeding: {
     method: 'substrate_spawner',
-    difficulty: 'moderate',
+    difficulty: 'medium',
     trigger:
       'Angelfish breeding is relatively easy once stable pair forms! Natural pairs form in groups of 6+ juveniles raised together (typically at 8-12 months). Breeding triggers: 1) Increase temperature to 28°C, 2) Frequent water changes (30-50% every 3 days with slightly softer water GH 3-5), 3) Heavy feeding with high-protein foods (frozen bloodworms, brine shrimp, live mosquito larvae) 2-3 weeks, 4) Provide spawning surfaces (broad plant leaves like Amazon Sword OR smooth slate 20x30cm positioned vertically at 45-60 degree angle, parents prefer slight angle!). Watch pair behavior: intensely cleaning spawning site together (kissing surface for hours!), chasing other fish away from territory (aggression increases dramatically!), synchronized swimming. Spawning typically happens afternoon before lights out.',
     fryCare:

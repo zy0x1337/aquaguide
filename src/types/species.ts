@@ -1,7 +1,7 @@
 // src/types/species.ts
 
 // --- HELPER TYPES ---
-export type Difficulty = 'beginner' | 'medium' | 'expert';
+export type Difficulty = 'beginner' | 'medium' | 'expert' | 'impossible';
 export type WaterType = 'freshwater' | 'brackish' | 'marine';
 export type Diet = 'carnivore' | 'herbivore' | 'omnivore';
 export type Temperament = 'peaceful' | 'aggressive' | 'semi-aggressive';
@@ -117,7 +117,7 @@ export type FoodType =
   | 'algae-wafers' | 'vegetables' | 'spirulina'
   | 'live-food' | 'frozen-food' | 'biofilm' | 'blanched-zucchini' | 'cyclops' 
   | 'crushed-flakes' | 'cichlid-pellets-large' | 'frozen-tilapia' | 'frozen-krill' 
-  | 'GlasGarten BacterAE' | 'aufwuchs';
+  | 'GlasGarten BacterAE' | 'aufwuchs' | 'live-snails-weekly' | 'frozen-whole-fish' | 'frozen-squid' | 'frozen-krill';
 
 export interface Feeding {
   frequency: FeedingFrequency;
@@ -294,7 +294,8 @@ export interface Species {
   };
 
   breeding?: {
-    method: 'egg_scatterer' | 'mouthbrooder' | 'bubble_nester' | 'livebearer' | 'cave_spawner' | 'egg_layer' | 'substrate_spawner' | 'other'; 
+    method: 'egg_scatterer' | 'mouthbrooder' | 'bubble_nester' | 'livebearer' | 
+    'cave_spawner' | 'egg_layer' | 'substrate_spawner' | 'unknown' | 'other'; 
     difficulty: Difficulty;
     trigger?: string;
     fryCare?: string;

@@ -23,7 +23,7 @@ export const tetraodonMbu: Species = {
   },
 
   visuals: {
-    iconShape: 'round',
+    iconShape: 'globiform',
     adultSizeCM: 67,
     color: 'Stunning golden-yellow to bright olive-green base with intricate chocolate-brown to black maze-like patterns (worm-like squiggles) covering entire body! Belly pale cream to white. Pattern unique to each individual (like fingerprints). Large expressive eyes with ability to move independently. Thick bulbous body shape. Four fused teeth forming powerful beak (visible when mouth open constantly growing!). Can inflate to 2-3x normal size when threatened (puffing with water/air). Juveniles (under 10cm) have simpler patterns, develop complex maze markings as they mature. Adults incredibly thick-bodied and powerful.',
   },
@@ -124,7 +124,7 @@ export const tetraodonMbu: Species = {
     },
     
     finNipping: {
-      risk: 'extreme',
+      risk: 'high',
       targets: ['all tankmates predatory behavior, not fin nipping'],
     },
   },
@@ -132,8 +132,8 @@ export const tetraodonMbu: Species = {
   care: {
     difficulty: 'expert',
     diet: 'carnivore',
-    effort: 'very-high',
-    cost: 'very-high',
+    effort: 'high',
+    cost: 'high',
     specialRequirements: [
       '1500L minimum tank (single adult) with 2000L+ recommended', 
       'Massive filtration 6-8x turnover per hour (dual canister plus sump mandatory)', 
@@ -165,9 +165,9 @@ export const tetraodonMbu: Species = {
     ],
     
     feeding: {
-      frequency: 'five-times-weekly',
-      primaryFoods: ['live-snails-weekly', 'frozen-prawns-shell-on', 'frozen-whole-fish'],
-      supplements: ['frozen-squid', 'frozen-krill', 'live-crayfish'],
+      frequency: 'once-daily',
+      primaryFoods: ['live-snails-weekly', 'frozen-whole-fish'],
+      supplements: ['frozen-squid', 'frozen-krill'],
       vegetarian: false,
       liveFood: {
         required: true,
@@ -190,8 +190,8 @@ export const tetraodonMbu: Species = {
       },
       filter: {
         required: true,
-        type: 'dual-canister-plus-sump',
-        flowRate: 'very-strong',
+        type: 'canister-plus-sump',
+        flowRate: 'strong',
       },
       airstone: true,
       lighting: 'moderate',
