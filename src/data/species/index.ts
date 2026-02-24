@@ -33,6 +33,7 @@ import { otocinclusMacrospilus } from './otocinclus-macrospilus';
 import { otocinclusVittatus } from './otocinclus-vittatus';
 import { pandaCory } from './panda-cory';
 import { platy } from './platy';
+import { pterophyllumScalare } from './pterophyllum-scalare';
 import { pygmyCory } from './pygmy-cory';
 import { ramCichlid } from './ram-cichlid';
 import { rosyBarb } from './rosy-barb';
@@ -42,6 +43,7 @@ import { sailfinPleco } from './sailfin-pleco';
 import { siameseAlgaeEater } from './siamese-algae-eater';
 import { sparklingGourami } from './sparkling-gourami';
 import { swordtail } from './swordtail';
+import { tetraodonMbu } from './tetraodon-mbu';
 import { whiteCloudMinnow } from './white-cloud-minnow';
 import { bolivianRam } from './bolivian-ram';
 import { sterbaiCory } from './sterbai-cory';
@@ -50,7 +52,6 @@ import { sewelliaLineolata } from './sewellia-lineolata';
 import { hyphessobryconMegalopterus } from './hyphessobrycon-megalopterus';
 import { puntigrusTetrazona } from './puntigrus-tetrazona';
 import { pelvicachromispulcher } from './pelvicachromis-pulcher';
-import { tetraodonMbu } from './tetraodon-mbu';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -87,6 +88,7 @@ export const allSpecies: Species[] = [
   otocinclusVittatus,
   pandaCory,
   platy,
+  pterophyllumScalare,
   pygmyCory,
   ramCichlid,
   rosyBarb,
@@ -142,6 +144,7 @@ export {
   otocinclusVittatus,
   pandaCory,
   platy,
+  pterophyllumScalare,
   pygmyCory,
   ramCichlid,
   rosyBarb,
