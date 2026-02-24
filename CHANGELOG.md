@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/zy0x1337/aquaguide/compare/v1.0.3...v1.0.1) (2026-02-24)
+
+
+### Features
+
+* add Axolotl (Ambystoma mexicanum) species profile ([e49962d](https://github.com/zy0x1337/aquaguide/commit/e49962dc803b6908ea1a7502c3948ee341a2115a))
+* add Axolotl to species index ([2776eb1](https://github.com/zy0x1337/aquaguide/commit/2776eb1952e905d6eb93aa66889532db05f2ed98))
+* add dynamic sitemap generator as inline Vite plugin ([61381cc](https://github.com/zy0x1337/aquaguide/commit/61381ccb861fd3d4c4fb93e1b1ec77669d14a5fe))
+* add Pterophyllum scalare (Freshwater Angelfish) species profile ([186f06a](https://github.com/zy0x1337/aquaguide/commit/186f06a55e069ac153ed78720b9619b5ef22d9ac))
+* add Pterophyllum scalare to species index ([54893f3](https://github.com/zy0x1337/aquaguide/commit/54893f329daa39e0ccf9b52d5ea3aca2fd2bf6f8))
+* add Tetraodon mbu (Giant Pufferfish) species profile ([406c283](https://github.com/zy0x1337/aquaguide/commit/406c283354792d6ca26919568bd77c9dd0685571))
+* add Tetraodon mbu to species index ([e44d9a5](https://github.com/zy0x1337/aquaguide/commit/e44d9a58ab6e8c83e9eed0625f3fa9720fee966b))
+
+
+### Bug Fixes
+
+* ensure React loads before contexts, dedupe React instances in build ([40bbae2](https://github.com/zy0x1337/aquaguide/commit/40bbae24f66f6cab8239f1d79e6eed73f903c5c5))
+* escape apostrophes in tetraodon-mbu description ([2760017](https://github.com/zy0x1337/aquaguide/commit/2760017d7b15e987637a0decfb5678b09dd313d5))
+* restore rewrites + git config, add headers properly ([c0cea00](https://github.com/zy0x1337/aquaguide/commit/c0cea0082c497b0a90733e144248355857fe1a9a))
+* sitemap generation as prebuild script, writes to public/ for reliable Vercel deployment ([669dbf0](https://github.com/zy0x1337/aquaguide/commit/669dbf07c29d64c69c9d8c0c359c7d27a8782b00))
+
+
+### Performance Improvements
+
+* lazy load all pages, fix static/dynamic supabase import, add manualChunks ([1afd621](https://github.com/zy0x1337/aquaguide/commit/1afd62102b8923d38e2af032fa45ef22231c0ac4))
+* lighthouse optimizations - CSP headers, font preload, remove Unsplash tracking ([2f40b75](https://github.com/zy0x1337/aquaguide/commit/2f40b75592bf5bcccbf21042d8026b92aa7313a7))
+
+
+### Chores
+
+* remove unused vitest.config.ts (vitest not installed) ([0b16575](https://github.com/zy0x1337/aquaguide/commit/0b165759b28a550496ac219549c69b0be623f22f))
+
 ### [1.0.3](https://github.com/zy0x1337/aquaguide/compare/v1.0.2...v1.0.3) (2026-02-23)
 
 
