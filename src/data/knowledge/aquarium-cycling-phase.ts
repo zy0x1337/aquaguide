@@ -4,7 +4,7 @@ export const aquariumCyclingPhase: KnowledgeArticle = {
   id: 'aquarium-cycling-phase',
   slug: 'aquarium-cycling-phase',
   title: 'Aquarium Cycling Phase: The Complete Fishless Method Guide',
-  category: 'setup',
+  category: 'maintenance',
   difficulty: 'beginner',
   readingTime: 10,
   summary: 'Master the nitrogen cycle safely with our fishless cycling guide. Detailed timelines, testing protocols, and troubleshooting to establish a stable biological filter in 4 to 6 weeks.',

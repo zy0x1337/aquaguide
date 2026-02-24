@@ -80,7 +80,7 @@ const HomePage = () => {
                 <motion.div variants={fadeInUp}>
                   <span className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 dark:from-indigo-500/20 dark:to-cyan-500/20 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-8 border border-indigo-200/50 dark:border-indigo-500/30">
                     <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                    v0.0.7 Beta
+                    v1.0.3 Beta
                   </span>
                 </motion.div>
                 

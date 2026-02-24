@@ -4,7 +4,7 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
   id: 'fish-compatibility-guide',
   slug: 'fish-compatibility-guide',
   title: 'Fish Compatibility: Building Peaceful Community Tanks',
-  category: 'stocking',
+  category: 'maintenance',
   difficulty: 'intermediate',
   readingTime: 14,
   summary: 'Master fish compatibility through temperament assessment, water parameter overlap, schooling behavior, and territory management. Build harmonious communities that thrive.',
@@ -164,7 +164,7 @@ export const fishCompatibilityGuide: KnowledgeArticle = {
       title: 'Influence of Predator Prey Body Size Ratios',
       author: 'National Institutes of Health',
       url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7319243/',
-      type: 'research'
+      type: 'study'
     },
     {
       title: 'Top 10 Fish for a Community Tank',

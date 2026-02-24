@@ -4,7 +4,7 @@ export const quarantineProtocol: KnowledgeArticle = {
   id: 'quarantine-protocol',
   slug: 'quarantine-protocol',
   title: 'Quarantine Protocol: Protecting Your Aquarium from Disease',
-  category: 'health',
+  category: 'maintenance',
   difficulty: 'intermediate',
   readingTime: 13,
   summary: 'Complete quarantine guide for new fish: tank setup, 4 to 6 week timeline, medication trio protocol, and observation checklist. Prevent ich, velvet, and parasites from entering your display tank.',

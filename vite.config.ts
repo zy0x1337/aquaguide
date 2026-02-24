@@ -15,7 +15,7 @@ function sitemapPlugin() {
     name: 'vite-plugin-aquaguide-sitemap',
     apply: 'build' as const,
     async closeBundle() {
-      const SITE_URL = 'https://aquaguide.app';
+      const SITE_URL = 'https://vercel.aquaguide.app';
       const SUPABASE_URL =
         process.env.VITE_SUPABASE_URL ||
         'https://plyiyuctfphxtvzyqttz.supabase.co';

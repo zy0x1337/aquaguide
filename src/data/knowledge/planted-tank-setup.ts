@@ -4,7 +4,7 @@ export const plantedTankSetup: KnowledgeArticle = {
   id: 'planted-tank-setup',
   slug: 'planted-tank-setup',
   title: 'Planted Tank Setup: From Substrate to First Plant',
-  category: 'setup',
+  category: 'plants',
   difficulty: 'beginner',
   readingTime: 13,
   summary: 'Complete low tech planted aquarium guide covering substrate types, hardscape design, plant selection, and lighting. Build a thriving planted ecosystem step by step.',

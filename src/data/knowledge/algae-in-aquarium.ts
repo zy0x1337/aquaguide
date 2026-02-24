@@ -124,7 +124,7 @@ export const algaeInAquarium: KnowledgeArticle = {
       title: 'Influence of Nitrogen and Phosphorus on Microalgal Growth',
       author: 'National Institutes of Health',
       url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7918059/',
-      type: 'research'
+      type: 'study'
     },
     {
       title: 'Algenprobleme im Aquarium',

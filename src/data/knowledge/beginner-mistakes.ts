@@ -4,7 +4,7 @@ export const beginnerMistakes: KnowledgeArticle = {
   id: 'beginner-mistakes',
   slug: 'beginner-mistakes',
   title: 'Common Beginner Mistakes: What Not to Do in Your First Aquarium',
-  category: 'beginner',
+  category: 'maintenance',
   difficulty: 'beginner',
   readingTime: 14,
   summary: 'Avoid the top 10 mistakes that kill beginner tanks: overstocking, skipping cycling, incompatible fish, overfeeding, poor water changes. Learn why each fails and how to prevent disaster.',
@@ -239,14 +239,7 @@ export const beginnerMistakes: KnowledgeArticle = {
       author: 'Bulk Reef Supply',
       url: 'https://fresh.bulkreefsupply.com/content/post/top-10-beginner-aquarium-mistakes-and-how-to-avoid-them',
       type: 'article'
-    },
-    {
-      title: 'Common Beginner Mistakes Starting an Aquarium',
-      author: 'Reddit Aquariums',
-      url: 'https://www.reddit.com/r/Aquariums/comments/ew7ouo/what_are_common_mistakes_for_beginners_starting/',
-      type: 'forum'
     }
   ],
-  
   lastUpdated: '2026-02-23'
 };
