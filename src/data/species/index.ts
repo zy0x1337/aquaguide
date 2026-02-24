@@ -2,6 +2,7 @@ import type { Species } from '../../types/species';
 import { africanDwarfFrog } from './african-dwarf-frog';
 import { amanoShrimp } from './amano-shrimp';
 import { anomalochromisThomasi } from './anomalochromis-thomasi';
+import { axolotl } from './axolotl';
 import { bettaSplendens } from './betta-splendens';
 import { bettaSplendensFemale } from './betta-splendens-female';
 import { blackSkirtTetra } from './black-skirt-tetra';
@@ -57,6 +58,7 @@ export const allSpecies: Species[] = [
   africanDwarfFrog,
   amanoShrimp,
   anomalochromisThomasi,
+  axolotl,
   bettaSplendens,
   bettaSplendensFemale,
   blackSkirtTetra,
@@ -113,6 +115,7 @@ export {
   africanDwarfFrog,
   amanoShrimp,
   anomalochromisThomasi,
+  axolotl,
   bettaSplendens,
   bettaSplendensFemale,
   blackSkirtTetra,
