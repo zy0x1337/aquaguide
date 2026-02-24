@@ -1,0 +1,55 @@
+# AquaGuide – robots.txt
+# https://aquaguide.app
+
+# All crawlers: allow public content
+User-agent: *
+Allow: /
+Allow: /species/
+Allow: /plants/
+Allow: /habitats/
+Allow: /knowledge/
+Allow: /diseases/
+Allow: /about
+Allow: /privacy-policy
+Allow: /terms-of-service
+
+# Block private / user-specific routes
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /dashboard/
+Disallow: /settings
+Disallow: /my-tanks
+Disallow: /my-tanks/
+Disallow: /favorites
+Disallow: /profile
+Disallow: /profile/
+Disallow: /auth
+Disallow: /compare
+
+# Block URL parameters that create duplicate content
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*page=
+Disallow: /*?*q=
+
+# Block AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+Sitemap: https://aquaguide.app/sitemap.xml
