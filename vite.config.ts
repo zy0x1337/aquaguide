@@ -90,43 +90,57 @@ export default defineConfig({
     }),
   ],
 
+  resolve: {
+    // Dedupe React to prevent multiple instances
+    dedupe: ['react', 'react-dom', 'react-router-dom'],
+  },
+
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // ── Vendor: React core ──────────────────────────────────────────
+          // ── Vendor: React core (FIRST - must load before everything) ──
           if (id.includes('node_modules/react/') ||
               id.includes('node_modules/react-dom/') ||
-              id.includes('node_modules/react-router-dom/') ||
-              id.includes('node_modules/react-helmet-async/')) {
+              id.includes('node_modules/scheduler/')) {
             return 'vendor-react';
           }
-          // ── Vendor: Supabase ────────────────────────────────────────────
+          
+          // ── React ecosystem (depends on react core) ──
+          if (id.includes('node_modules/react-router-dom/') ||
+              id.includes('node_modules/react-helmet-async/')) {
+            return 'vendor-react-eco';
+          }
+          
+          // ── Vendor: Supabase ──
           if (id.includes('node_modules/@supabase/')) {
             return 'vendor-supabase';
           }
-          // ── Vendor: Animation / UI ──────────────────────────────────────
+          
+          // ── Vendor: Animation / UI ──
           if (id.includes('node_modules/framer-motion/')) {
             return 'vendor-framer';
           }
-          // ── Vendor: Charts ──────────────────────────────────────────────
+          
+          // ── Vendor: Charts ──
           if (id.includes('node_modules/recharts/') ||
               id.includes('node_modules/d3-') ||
               id.includes('node_modules/victory-')) {
             return 'vendor-charts';
           }
-          // ── Vendor: Icons ───────────────────────────────────────────────
+          
+          // ── Vendor: Icons ──
           if (id.includes('node_modules/lucide-react/')) {
             return 'vendor-icons';
           }
-          // ── Vendor: Misc utils ──────────────────────────────────────────
+          
+          // ── Vendor: Misc utils ──
           if (id.includes('node_modules/')) {
             return 'vendor-misc';
           }
         },
       },
     },
-    // Raise warning threshold slightly since chunks are now properly split
     chunkSizeWarningLimit: 600,
   },
 });
