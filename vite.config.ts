@@ -2,11 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// ---------------------------------------------------------------------------
-// Vite Config
-// Sitemap generation happens via `prebuild` npm script (scripts/generateSitemap.ts)
-// which writes to public/sitemap.xml before Vite copies public/ into dist/.
-// ---------------------------------------------------------------------------
 export default defineConfig({
   plugins: [
     react(),
@@ -16,59 +11,32 @@ export default defineConfig({
       manifest: {
         name: 'AquaGuide - Aquarium Management',
         short_name: 'AquaGuide',
-        description:
-          'Complete aquarium management system for tracking fish, plants, water parameters, and maintenance.',
+        description: 'Complete aquarium management system for tracking fish, plants, water parameters, and maintenance.',
         theme_color: '#4f46e5',
         background_color: '#0f172a',
         display: 'standalone',
         orientation: 'portrait-primary',
         start_url: '/',
         icons: [
-          {
-            src: '/icon-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/icon-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
-            src: '/icon-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/icon-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+          { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
         shortcuts: [
           {
-            name: 'Species Database',
-            short_name: 'Species',
-            description: 'Browse fish species',
-            url: '/species',
+            name: 'Species Database', short_name: 'Species',
+            description: 'Browse fish species', url: '/species',
             icons: [{ src: '/icon-192.png', sizes: '192x192' }],
           },
           {
-            name: 'Plants Database',
-            short_name: 'Plants',
-            description: 'Browse aquatic plants',
-            url: '/plants',
+            name: 'Plants Database', short_name: 'Plants',
+            description: 'Browse aquatic plants', url: '/plants',
             icons: [{ src: '/icon-192.png', sizes: '192x192' }],
           },
           {
-            name: 'Tank Builder',
-            short_name: 'Builder',
-            description: 'Build your tank',
-            url: '/tank-builder',
+            name: 'Tank Builder', short_name: 'Builder',
+            description: 'Build your tank', url: '/tank-builder',
             icons: [{ src: '/icon-192.png', sizes: '192x192' }],
           },
         ],
@@ -121,4 +89,44 @@ export default defineConfig({
       devOptions: { enabled: true, type: 'module' },
     }),
   ],
+
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // ── Vendor: React core ──────────────────────────────────────────
+          if (id.includes('node_modules/react/') ||
+              id.includes('node_modules/react-dom/') ||
+              id.includes('node_modules/react-router-dom/') ||
+              id.includes('node_modules/react-helmet-async/')) {
+            return 'vendor-react';
+          }
+          // ── Vendor: Supabase ────────────────────────────────────────────
+          if (id.includes('node_modules/@supabase/')) {
+            return 'vendor-supabase';
+          }
+          // ── Vendor: Animation / UI ──────────────────────────────────────
+          if (id.includes('node_modules/framer-motion/')) {
+            return 'vendor-framer';
+          }
+          // ── Vendor: Charts ──────────────────────────────────────────────
+          if (id.includes('node_modules/recharts/') ||
+              id.includes('node_modules/d3-') ||
+              id.includes('node_modules/victory-')) {
+            return 'vendor-charts';
+          }
+          // ── Vendor: Icons ───────────────────────────────────────────────
+          if (id.includes('node_modules/lucide-react/')) {
+            return 'vendor-icons';
+          }
+          // ── Vendor: Misc utils ──────────────────────────────────────────
+          if (id.includes('node_modules/')) {
+            return 'vendor-misc';
+          }
+        },
+      },
+    },
+    // Raise warning threshold slightly since chunks are now properly split
+    chunkSizeWarningLimit: 600,
+  },
 });

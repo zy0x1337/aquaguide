@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../lib/supabase';
 import { Loader2 } from 'lucide-react';
 
 interface Props {
@@ -15,18 +16,15 @@ export const ProtectedRoute = ({ children, requireAdmin = false }: Props) => {
 
   React.useEffect(() => {
     if (user) {
-      // Fetch user profile to check role
-      import('../../lib/supabase').then(({ supabase }) => {
-        supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single()
-          .then(({ data }) => {
-            setProfile(data);
-            setProfileLoading(false);
-          });
-      });
+      supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+        .then(({ data }) => {
+          setProfile(data);
+          setProfileLoading(false);
+        });
     } else {
       setProfileLoading(false);
     }

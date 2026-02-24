@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { ScrollToTop } from './components/layout/ScrollToTop';
@@ -9,62 +9,56 @@ import { ToastProvider } from './contexts/ToastContext';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
 import { startReminderSystem } from './lib/notifications';
+import { Loader2 } from 'lucide-react';
 
-// Pages
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
+// ─── Eager (tiny, always needed) ────────────────────────────────────────────
 import NotFoundPage from './pages/NotFoundPage';
 
-// Auth
-import AuthPage from './pages/AuthPage';
+// ─── Lazy pages ─────────────────────────────────────────────────────────────
+const HomePage            = lazy(() => import('./pages/HomePage'));
+const AboutPage           = lazy(() => import('./pages/AboutPage'));
+const AuthPage            = lazy(() => import('./pages/AuthPage'));
+const TermsOfServicePage  = lazy(() => import('./pages/TermsOfServicePage'));
+const PrivacyPolicyPage   = lazy(() => import('./pages/PrivacyPolicyPage'));
 
-// Legal Pages
-import TermsOfServicePage from './pages/TermsOfServicePage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+const SpeciesIndexPage    = lazy(() => import('./pages/SpeciesIndexPage'));
+const SpeciesDetailPage   = lazy(() => import('./pages/SpeciesDetailPage'));
 
-// Species Pages
-import SpeciesIndexPage from './pages/SpeciesIndexPage';
-import SpeciesDetailPage from './pages/SpeciesDetailPage';
+const DiseaseIndexPage    = lazy(() => import('./pages/DiseaseIndexPage'));
+const DiseaseDetailPage   = lazy(() => import('./pages/DiseaseDetailPage'));
 
-// Disease Pages
-import DiseaseIndexPage from './pages/DiseaseIndexPage';
-import DiseaseDetailPage from './pages/DiseaseDetailPage';
+const PlantsIndexPage     = lazy(() => import('./pages/PlantsIndexPage').then(m => ({ default: m.PlantsIndexPage })));
+const PlantDetailPage     = lazy(() => import('./pages/PlantDetailPage').then(m => ({ default: m.PlantDetailPage })));
 
-// 🌱 PLANT PAGES
-import { PlantsIndexPage } from './pages/PlantsIndexPage';
-import { PlantDetailPage } from './pages/PlantDetailPage';
+const HabitatsIndexPage   = lazy(() => import('./pages/HabitatsIndexPage').then(m => ({ default: m.HabitatsIndexPage })));
+const HabitatsDetailPage  = lazy(() => import('./pages/HabitatsDetailPage').then(m => ({ default: m.HabitatsDetailPage })));
 
-// 🌊 BIOTOPE PAGES
-import { HabitatsIndexPage } from './pages/HabitatsIndexPage';
-import { HabitatsDetailPage } from './pages/HabitatsDetailPage';
+const KnowledgeHubPage    = lazy(() => import('./pages/KnowledgeHubPage'));
+const KnowledgeDetailPage = lazy(() => import('./pages/KnowledgeDetailPage'));
 
-// 📚 KNOWLEDGE HUB PAGES
-import KnowledgeHubPage from './pages/KnowledgeHubPage';
-import KnowledgeDetailPage from './pages/KnowledgeDetailPage';
+const DashboardPage       = lazy(() => import('./pages/DashboardPage'));
+const MyTanksPage         = lazy(() => import('./pages/MyTanksPage'));
+const TankDetailPage      = lazy(() => import('./pages/TankDetailPage'));
+const TankBuilderPage     = lazy(() => import('./pages/TankBuilderPage').then(m => ({ default: m.TankBuilderPage })));
 
-// 🐠 MY TANKS & DASHBOARD
-import DashboardPage from './pages/DashboardPage';
-import MyTanksPage from './pages/MyTanksPage';
-import TankDetailPage from './pages/TankDetailPage';
+const ComparisonPage      = lazy(() => import('./pages/ComparisonPage'));
 
-// 🎨 TANK BUILDER
-import { TankBuilderPage } from './pages/TankBuilderPage';
+const SettingsPage        = lazy(() => import('./pages/SettingsPage'));
+const ProfilePage         = lazy(() => import('./pages/ProfilePage'));
+const FavoritesPage       = lazy(() => import('./pages/FavoritesPage'));
 
-// ⚖️ COMPARISON
-import ComparisonPage from './pages/ComparisonPage';
+const AdminDashboard      = lazy(() => import('./pages/admin/AdminDashboard'));
+const SpeciesManager      = lazy(() => import('./pages/admin/SpeciesManager'));
+const UserManager         = lazy(() => import('./pages/admin/UserManager'));
 
-// 👤 PROFILE & SETTINGS
-import SettingsPage from './pages/SettingsPage';
-import ProfilePage from './pages/ProfilePage';
-import FavoritesPage from './pages/FavoritesPage';
-
-// 👑 ADMIN PAGES
-import AdminDashboard from './pages/admin/AdminDashboard';
-import SpeciesManager from './pages/admin/SpeciesManager';
-import UserManager from './pages/admin/UserManager';
+// ─── Page loading fallback ───────────────────────────────────────────────────
+const PageLoader = () => (
+  <div className="min-h-[60vh] flex items-center justify-center">
+    <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+  </div>
+);
 
 function App() {
-  // Start reminder system on app load
   useEffect(() => {
     startReminderSystem();
   }, []);
@@ -72,85 +66,78 @@ function App() {
   return (
     <ErrorBoundary>
       <ToastProvider>
-        {/* Notification Permission Banner */}
         <NotificationPermissionBanner />
-
-        {/* ScrollToTop ensures we always start at the top when navigating */}
         <ScrollToTop />
 
         <Layout>
-          <Routes>
-            {/* Home (Haupt-Datenbank mit Suche) */}
-            <Route path="/" element={<HomePage />} />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Home */}
+              <Route path="/" element={<HomePage />} />
 
-            {/* Auth */}
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/auth" element={<AuthPage />} />
+              {/* Auth */}
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/auth"  element={<AuthPage />} />
 
-            {/* Legal Pages */}
-            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              {/* Legal */}
+              <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+              <Route path="/privacy-policy"   element={<PrivacyPolicyPage />} />
 
-            {/* Species Routes */}
-            <Route path="/species" element={<SpeciesIndexPage />} />
-            <Route path="/species/:slug" element={<SpeciesDetailPage />} />
+              {/* Species */}
+              <Route path="/species"      element={<SpeciesIndexPage />} />
+              <Route path="/species/:slug" element={<SpeciesDetailPage />} />
 
-            {/* Disease Routes */}
-            <Route path="/diseases" element={<DiseaseIndexPage />} />
-            <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
+              {/* Diseases */}
+              <Route path="/diseases"      element={<DiseaseIndexPage />} />
+              <Route path="/diseases/:slug" element={<DiseaseDetailPage />} />
 
-            {/* 🌱 Plant Routes */}
-            <Route path="/plants" element={<PlantsIndexPage />} />
-            <Route path="/plants/:slug" element={<PlantDetailPage />} />
+              {/* Plants */}
+              <Route path="/plants"      element={<PlantsIndexPage />} />
+              <Route path="/plants/:slug" element={<PlantDetailPage />} />
 
-            {/* 🌊 Habitat/Biotope Routes */}
-            <Route path="/habitats" element={<HabitatsIndexPage />} />
-            <Route path="/habitats/:slug" element={<HabitatsDetailPage />} />
-            
-            {/* Keep old biotope routes temporarily to avoid breaking existing links */}
-            <Route path="/biotopes" element={<HabitatsIndexPage />} />
-            <Route path="/biotopes/:slug" element={<HabitatsDetailPage />} />
+              {/* Habitats */}
+              <Route path="/habitats"      element={<HabitatsIndexPage />} />
+              <Route path="/habitats/:slug" element={<HabitatsDetailPage />} />
+              <Route path="/biotopes"      element={<HabitatsIndexPage />} />
+              <Route path="/biotopes/:slug" element={<HabitatsDetailPage />} />
 
-            {/* 📚 Knowledge Hub Routes */}
-            <Route path="/knowledge" element={<KnowledgeHubPage />} />
-            <Route path="/knowledge/:slug" element={<KnowledgeDetailPage />} />
+              {/* Knowledge */}
+              <Route path="/knowledge"      element={<KnowledgeHubPage />} />
+              <Route path="/knowledge/:slug" element={<KnowledgeDetailPage />} />
 
-            {/* 🐠 Dashboard & My Tanks (Protected) */}
-            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-            <Route path="/my-tanks" element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
-            <Route path="/my-tanks/:id" element={<ProtectedRoute><TankDetailPage /></ProtectedRoute>} />
+              {/* Protected: Tanks & Dashboard */}
+              <Route path="/dashboard"       element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+              <Route path="/my-tanks"         element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
+              <Route path="/my-tanks/:id"     element={<ProtectedRoute><TankDetailPage /></ProtectedRoute>} />
 
-            {/* 🎨 Tank Builder */}
-            <Route path="/tank-builder" element={<TankBuilderPage />} />
+              {/* Tank Builder */}
+              <Route path="/tank-builder" element={<TankBuilderPage />} />
 
-            {/* ⚖️ Comparison Tool */}
-            <Route path="/compare" element={<ComparisonPage />} />
+              {/* Comparison */}
+              <Route path="/compare" element={<ComparisonPage />} />
 
-            {/* 👤 Profile & Settings */}
-            <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-            <Route path="/favorites" element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
-            {/* Own profile (protected) */}
-            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-            {/* Public profile by userId (anyone can view) */}
-            <Route path="/profile/:userId" element={<ProfilePage />} />
+              {/* Protected: Profile & Settings */}
+              <Route path="/settings"          element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+              <Route path="/favorites"          element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
+              <Route path="/profile"            element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="/profile/:userId"    element={<ProfilePage />} />
 
-            {/* 👑 Admin Routes (Protected) */}
-            <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/admin/species" element={<ProtectedRoute requireAdmin><SpeciesManager /></ProtectedRoute>} />
-            <Route path="/admin/users" element={<ProtectedRoute requireAdmin><UserManager /></ProtectedRoute>} />
+              {/* Protected: Admin */}
+              <Route path="/admin"         element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/species" element={<ProtectedRoute requireAdmin><SpeciesManager /></ProtectedRoute>} />
+              <Route path="/admin/users"   element={<ProtectedRoute requireAdmin><UserManager /></ProtectedRoute>} />
 
-            {/* About Page */}
-            <Route path="/about" element={<AboutPage />} />
+              {/* About */}
+              <Route path="/about" element={<AboutPage />} />
 
-            {/* 404 Not Found */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-          
-          {/* Global Comparison Bar */}
+              {/* 404 */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+
           <ComparisonBar />
         </Layout>
 
-        {/* PWA Update Prompt */}
         <PWAUpdatePrompt />
       </ToastProvider>
     </ErrorBoundary>
