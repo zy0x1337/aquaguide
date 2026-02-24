@@ -276,9 +276,15 @@ const HomePage = () => {
 
         {/* CTA */}
         <section className="relative py-20 sm:py-32 overflow-hidden">
-          {/* Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950" />
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-5" />
+          {/* Background - Pure gradient, no external image */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950" />
+          
+          {/* Animated aquatic pattern overlay */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.3),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.2),transparent_40%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(168,85,247,0.2),transparent_40%)]" />
+          </div>
           
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-indigo-600/20 via-transparent to-transparent" />
