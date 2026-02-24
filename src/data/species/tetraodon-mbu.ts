@@ -5,13 +5,6 @@ export const tetraodonMbu: Species = {
   slug: 'tetraodon-mbu',
   imageUrl: '/images/species/tetraodon-mbu.jpg',
   funFact: "The Giant Pufferfish (Tetraodon mbu) is the world's largest freshwater pufferfish, reaching a MASSIVE 67cm (26 inches)! They're aquarium geniuses with dog-like personalities: recognizing individual owners within days, begging for food by spitting water, playing with toys, and even allowing gentle petting through the glass! Watch them hunt with surgical precision: stalking prey with sideways crab walk, inflating to 2-3x size when threatened (rarely in aquariums), and cracking snail shells with beak-like teeth that never stop growing (need constant trimming!). Here's the catch: they're MONSTER-sized fish requiring 1500L minimum (for life!), are aggressive predators eating anything that moves, and cost €1000-3000+ just for setup! Their teeth grow continuously and need live snails weekly or dental overgrowth causes starvation. Personality-packed gentle giants if you can handle the extreme commitment. From Congo River!",
-
-  imageCredit: {
-    photographer: 'Wikimedia Commons',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Tetraodon_mbu_1.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
-  },
   
   taxonomy: {
     scientificName: 'Tetraodon mbu',
