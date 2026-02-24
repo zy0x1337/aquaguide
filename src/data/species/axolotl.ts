@@ -54,14 +54,14 @@ export const axolotl: Species = {
   },
 
   habitat: {
-    planting: 'moderate',
+    planting: 'medium',
     plantingNotes:
       'Axolotls do well with moderate planting but plants must tolerate cold water (16-18°C)! Best plants: Java Fern (cold tolerant, attached to driftwood), Anubias species (hardy in cold water, large leaves provide shade), Marimo moss balls (cool water lovers, reduce nitrates!), Java Moss (carpeting option), floating plants (Water Lettuce, Amazon Frogbit for shade and nitrate control). Avoid: Delicate plants (axolotls are clumsy and may uproot), sharp plants (injure delicate skin), tropical plants requiring 24°C+ (die in cold water!). Plant density: Moderate with hiding spots, not too dense (axolotls need open floor space for walking). They rarely damage plants intentionally but may uproot them while walking. Provide shaded areas, they dislike bright light!',
     hardscape: ['Large smooth caves (15cm+ openings for full body hiding)', 'Smooth slate hiding spots (no sharp edges, damage delicate skin!)', 'Large smooth river rocks (hide spots and enrichment)', 'PVC pipe caves (10cm diameter minimum)', 'Smooth terracotta pots (break in half creates perfect caves)', 'Driftwood for plant attachment (smooth only!)'],
   },
 
   behavior: {
-    tags: ['peaceful', 'nocturnal', 'solitary'],
+    tags: ['peaceful', 'nocturnal'],
     minGroupSize: 1,
     description:
       'Axolotls are peaceful curious creatures displaying unique prehistoric behaviors! They are bottom walkers not swimmers, using four legs to walk along substrate (hence Mexican Walking Fish!). Watch their adorable behaviors: Smiling constantly (upturned mouth creates permanent grin!), yawning widely (opening mouth extremely wide, not actual yawn but filter feeding or gill flushing!), floating motionless mid water (gulping air to regulate buoyancy, normal behavior!), rapid gill fluttering when stressed or oxygen low. They have poor eyesight relying on smell and lateral line (sense vibrations) to find food. Display remarkable intelligence: learning feeding times, recognizing owners (swim to glass during feeding!), investigating new tank items. CRITICAL: Cannibalistic tendencies mean they bite anything that moves including tank mates and especially each other! Adults may nip gills or limbs of other axolotls (thankfully regenerate!). Generally peaceful toward humans, tolerate gentle handling (use wet hands only, dry skin burns them!). Nocturnal but adjust to owner feeding schedule. Stress signs: Forward facing gills (normal gills point backward relaxed), pale color (stressed axolotls lose pigment!), rapid gill movement, floating constantly.',
@@ -124,13 +124,13 @@ export const axolotl: Species = {
     },
     
     finNipping: {
-      risk: 'moderate',
+      risk: 'medium',
       targets: ['anything that moves, including other axolotls gills and limbs!'],
     },
   },
 
   care: {
-    difficulty: 'moderate',
+    difficulty: 'medium',
     diet: 'carnivore',
     effort: 'high',
     cost: 'high',
@@ -165,9 +165,9 @@ export const axolotl: Species = {
     ],
     
     feeding: {
-      frequency: 'three-times-weekly',
-      primaryFoods: ['live-earthworms', 'frozen-bloodworms', 'axolotl-pellets'],
-      supplements: ['frozen-brine-shrimp', 'live-blackworms'],
+      frequency: 'every-other-day',
+      primaryFoods: ['bloodworms', 'pellets'],
+      supplements: ['brine-shrimp'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -215,7 +215,7 @@ export const axolotl: Species = {
 
   breeding: {
     method: 'egg_layer',
-    difficulty: 'moderate',
+    difficulty: 'medium',
     trigger:
       'Axolotl breeding requires mature adults (12+ months) and seasonal simulation! Breeding typically happens naturally in late winter to early spring mimicking wild season. Triggers: 1) Cooling period: gradually lower temperature to 12-14°C for 2 months (winter simulation), 2) Then raise temperature slowly to 18-20°C (spring warming triggers breeding!), 3) Increase day length (photoperiod 12-14 hours simulates spring), 4) Heavy feeding with high protein foods (earthworms, bloodworms) for 3 weeks builds breeding condition. Male begins courtship dance: swimming erratically, tail undulating, nudging female, releasing pheromones (chemicals trigger female receptivity!). He deposits spermatophores (sperm packets) on substrate which female picks up with cloaca. Fertilization internal! Female lays 100-300 eggs within 24 hours.',
     fryCare:
