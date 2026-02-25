@@ -5,46 +5,51 @@ export default {
   theme: {
     extend: {
       colors: {
-        // 🐠 AQUARIUM PALETTE
+        // 🐠 AQUARIUM PALETTE - Using CSS Variables for theme support
         coral: {
-          50: '#fef7f2',
-          100: '#fde5d8',
-          200: '#fbcebf',
-          300: '#f8b8a6',
-          400: '#f5a28d',
-          500: '#FF7F50',
-          600: '#e67245',
-          700: '#cc643b',
-          800: '#b35631',
-          900: '#984827',
-          950: '#6d2e1a',
+          50: 'rgb(var(--color-coral-50) / <alpha-value>)',
+          100: 'rgb(var(--color-coral-100) / <alpha-value>)',
+          200: 'rgb(var(--color-coral-200) / <alpha-value>)',
+          300: 'rgb(var(--color-coral-300) / <alpha-value>)',
+          400: 'rgb(var(--color-coral-400) / <alpha-value>)',
+          500: 'rgb(var(--color-coral-500) / <alpha-value>)',
+          600: 'rgb(var(--color-coral-600) / <alpha-value>)',
+          700: 'rgb(var(--color-coral-700) / <alpha-value>)',
+          800: 'rgb(var(--color-coral-800) / <alpha-value>)',
+          900: 'rgb(var(--color-coral-900) / <alpha-value>)',
+          950: 'rgb(var(--color-coral-950) / <alpha-value>)',
         },
         emerald: {
-          50: '#f0fcf4',
-          100: '#d1f5d8',
-          200: '#b2f0bf',
-          300: '#93eba6',
-          400: '#75e68d',
-          500: '#50C878',
-          600: '#46b270',
-          700: '#3da968',
-          800: '#339160',
-          900: '#2a7858',
-          950: '#1e5540',
+          50: 'rgb(var(--color-emerald-50) / <alpha-value>)',
+          100: 'rgb(var(--color-emerald-100) / <alpha-value>)',
+          200: 'rgb(var(--color-emerald-200) / <alpha-value>)',
+          300: 'rgb(var(--color-emerald-300) / <alpha-value>)',
+          400: 'rgb(var(--color-emerald-400) / <alpha-value>)',
+          500: 'rgb(var(--color-emerald-500) / <alpha-value>)',
+          600: 'rgb(var(--color-emerald-600) / <alpha-value>)',
+          700: 'rgb(var(--color-emerald-700) / <alpha-value>)',
+          800: 'rgb(var(--color-emerald-800) / <alpha-value>)',
+          900: 'rgb(var(--color-emerald-900) / <alpha-value>)',
+          950: 'rgb(var(--color-emerald-950) / <alpha-value>)',
         },
         sapphire: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#0F52BA',
-          600: '#0e489f',
-          700: '#0d3f85',
-          800: '#0b356b',
-          900: '#092b57',
-          950: '#061a38',
+          50: 'rgb(var(--color-sapphire-50) / <alpha-value>)',
+          100: 'rgb(var(--color-sapphire-100) / <alpha-value>)',
+          200: 'rgb(var(--color-sapphire-200) / <alpha-value>)',
+          300: 'rgb(var(--color-sapphire-300) / <alpha-value>)',
+          400: 'rgb(var(--color-sapphire-400) / <alpha-value>)',
+          500: 'rgb(var(--color-sapphire-500) / <alpha-value>)',
+          600: 'rgb(var(--color-sapphire-600) / <alpha-value>)',
+          700: 'rgb(var(--color-sapphire-700) / <alpha-value>)',
+          800: 'rgb(var(--color-sapphire-800) / <alpha-value>)',
+          900: 'rgb(var(--color-sapphire-900) / <alpha-value>)',
+          950: 'rgb(var(--color-sapphire-950) / <alpha-value>)',
         },
+        // Keep original gray for compatibility
+        gray: {
+          950: '#0A0F14', // Dark mode background
+        },
+        // 🌊 LEGACY COLORS (kept for backwards compatibility)
         'forest-green': {
           50: '#f0fdf4',
           100: '#dcfce7',
@@ -71,10 +76,7 @@ export default {
           900: '#1d1f22',
           950: '#121314',
         },
-        gray: {
-          950: '#0A0F14', // Dark mode background
-        },
-        // 🌊 OCEAN THEME COLORS
+        // Additional ocean colors (static)
         ocean: {
           50: '#ecfeff',
           100: '#cffafe',
@@ -158,6 +160,9 @@ export default {
     function({ addVariant }) {
       // Add ocean theme variant
       addVariant('ocean', '[data-theme="ocean"] &');
+      // Add theme-aware variants
+      addVariant('theme-light', '[data-theme="light"] &');
+      addVariant('theme-dark', '[data-theme="dark"] &');
     },
   ],
 }
