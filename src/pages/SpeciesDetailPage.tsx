@@ -803,7 +803,7 @@ const SpeciesDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Pro Tips & Common Mistakes */}
+                    {/* Pro Tips & Common Mistakes - MOBILE OPTIMIZED */}
                     {(data.care.proTips || data.care.commonMistakes) && (
                       <div className="grid md:grid-cols-2 gap-4">
                         {data.care.proTips && <TipsCard title="Pro Tips" icon={<Lightbulb className="w-4 h-4" />} items={data.care.proTips} variant="success" />}
@@ -1049,21 +1049,22 @@ const StatBar = ({ label, value }: { label: string; value: string }) => {
   );
 };
 
+// MOBILE OPTIMIZED TipsCard
 const TipsCard = ({ title, icon, items, variant }: { title: string; icon: React.ReactNode; items: string[]; variant: 'success' | 'danger' }) => (
   <div className={`bg-gradient-to-br ${ 
     variant === 'success' ? 'from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-200 dark:border-amber-800' : 'from-rose-50 to-red-50 dark:from-rose-950/30 dark:to-red-950/30 border-rose-200 dark:border-rose-800'
-  } rounded-xl p-5 md:p-6 border-2 shadow-lg`}>
-    <h4 className={`text-xs md:text-sm font-black mb-3 md:mb-4 flex items-center gap-2 uppercase tracking-wider ${ 
+  } rounded-xl p-4 md:p-5 border-2 shadow-lg`}>
+    <h4 className={`text-xs md:text-sm font-black mb-3 flex items-center gap-2 uppercase tracking-wider ${ 
       variant === 'success' ? 'text-amber-900 dark:text-amber-300' : 'text-rose-900 dark:text-rose-300'
     }`}>
       {icon} {title}
     </h4>
-    <ul className="space-y-3">
+    <ul className="space-y-2.5">
       {items.map((item: string, i: number) => (
         <li key={i} className={`flex gap-3 text-xs md:text-sm leading-relaxed ${ 
           variant === 'success' ? 'text-amber-900 dark:text-amber-200' : 'text-rose-900 dark:text-rose-200'
         }`}>
-          <span className={`w-1.5 h-1.5 mt-2 rounded-full flex-shrink-0 ${ 
+          <span className={`w-1.5 h-1.5 mt-1.5 rounded-full flex-shrink-0 ${ 
             variant === 'success' ? 'bg-amber-600 dark:bg-amber-500' : 'bg-rose-600 dark:bg-rose-500'
           }`} />
           <span>{item}</span>
