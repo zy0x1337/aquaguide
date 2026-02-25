@@ -165,11 +165,11 @@ const SpeciesDetailPage = () => {
 
   // Sidebar info panel content (reused in header on mobile, sticky on desktop)
   const SidebarInfoPanel = () => (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-xl">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-lg">
       {/* Origin header */}
       <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl">
-          <MapPin className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
+          <MapPin className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
         </div>
         <div>
           <div className="text-[10px] uppercase font-black text-gray-400 dark:text-gray-500 tracking-wider mb-0.5">Origin</div>
@@ -245,7 +245,7 @@ const SpeciesDetailPage = () => {
         {/* Back button – absolute, outside content flow */}
         <Link 
           to="/species" 
-          className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 text-white/80 hover:text-white text-xs font-bold bg-black/25 hover:bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/15 transition-all"
+          className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 text-white/80 hover:text-white text-xs font-bold bg-black/25 hover:bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 transition-all"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back
         </Link>
@@ -305,7 +305,7 @@ const SpeciesDetailPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-purple-500 to-indigo-600 rounded-2xl blur-sm opacity-70 group-hover:opacity-90 transition-opacity" />
                 
                 {/* Main card */}
-                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-6 md:p-7 border-2 border-white/20 dark:border-gray-700/50 shadow-2xl backdrop-blur-xl">
+                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-5 md:p-6 border-2 border-white/20 dark:border-gray-700/50 shadow-2xl backdrop-blur-xl">
                   <div className="flex items-start gap-4 md:gap-5">
                     {/* Icon with glow effect */}
                     <motion.div 
@@ -322,15 +322,15 @@ const SpeciesDetailPage = () => {
                     >
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl blur-md opacity-50" />
-                        <div className="relative p-3.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg">
-                          <Sparkles className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                        <div className="relative p-3 md:p-3.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg">
+                          <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
                         </div>
                       </div>
                     </motion.div>
                     
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-2 mb-2 md:mb-3">
                         <span className="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-purple-600 to-indigo-600 dark:from-amber-400 dark:via-purple-400 dark:to-indigo-400 uppercase tracking-wider">
                           Did You Know?
                         </span>
@@ -369,10 +369,10 @@ const SpeciesDetailPage = () => {
             >
               <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
                 {data.behavior.tags.includes('jumper') && (
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 p-4 md:p-5 rounded-xl shadow-lg">
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 p-3 md:p-4 rounded-xl shadow-lg">
                     <div className="flex gap-3 items-start">
                       <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex-shrink-0">
-                        <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                        <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                       </div>
                       <div>
                         <p className="font-black text-amber-900 dark:text-amber-200 text-sm md:text-base mb-1">Jump Risk!</p>
@@ -385,10 +385,10 @@ const SpeciesDetailPage = () => {
                 )}
                 
                 {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
-                  <div className="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-2 border-red-300 dark:border-red-700 p-4 md:p-5 rounded-xl shadow-lg">
+                  <div className="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-2 border-red-300 dark:border-red-700 p-3 md:p-4 rounded-xl shadow-lg">
                     <div className="flex gap-3 items-start">
                       <div className="p-2 bg-red-100 dark:bg-red-900/50 rounded-lg flex-shrink-0">
-                        <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                        <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
                       </div>
                       <div>
                         <p className="font-black text-red-900 dark:text-red-200 text-sm md:text-base mb-1">Common Mistake</p>
@@ -417,7 +417,7 @@ const SpeciesDetailPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
               {/* Desktop: Horizontal tabs */}
               <div className="hidden md:flex border-b-2 border-gray-200 dark:border-gray-700">
                 <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
@@ -462,7 +462,7 @@ const SpeciesDetailPage = () => {
               <div className="p-4 md:p-6 lg:p-8">
                 {/* OVERVIEW TAB */}
                 {activeTab === 'overview' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
                     {/* Parameters Grid - STREAMLINED COMPACT DESIGN */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
@@ -548,8 +548,8 @@ const SpeciesDetailPage = () => {
                     {/* Behavior Overview */}
                     <div>
                       <SectionHeader title="Behavior & Temperament" icon={<Activity className="w-5 h-5" />} />
-                      <div className="bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-950/20 rounded-xl p-5 md:p-6 border-2 border-gray-200 dark:border-gray-700">
-                        <p className="text-gray-700 dark:text-gray-300 mb-4 md:mb-5 leading-relaxed text-sm md:text-base">
+                      <div className="bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-950/20 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700">
+                        <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-sm md:text-base">
                           {data.behavior.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -563,7 +563,7 @@ const SpeciesDetailPage = () => {
                     {/* Stats & Costs */}
                     <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                       {/* Ownership Stats */}
-                      <div className="bg-white dark:bg-gray-800 rounded-xl p-5 md:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                         <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
                           <TrendingUp className="w-4 h-4 text-gray-600 dark:text-gray-400" /> Ownership Stats
                         </h4>
@@ -576,25 +576,25 @@ const SpeciesDetailPage = () => {
 
                       {/* Est. Costs */}
                       {data.experienceData?.estimatedCosts && (
-                        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 md:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                           <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
                             <DollarSign className="w-4 h-4 text-gray-600 dark:text-gray-400" /> Est. Costs
                           </h4>
                           <div className="space-y-4">
                             <div>
                               <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Initial Setup</div>
-                              <div className="text-2xl md:text-3xl font-black text-gray-900 dark:text-gray-100">
+                              <div className="text-xl md:text-2xl font-black text-gray-900 dark:text-gray-100">
                                 {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
-                                <span className="text-sm md:text-base ml-1 font-bold text-gray-600 dark:text-gray-400">
+                                <span className="text-sm ml-1 font-bold text-gray-600 dark:text-gray-400">
                                   {data.experienceData.estimatedCosts.initial.currency}
                                 </span>
                               </div>
                             </div>
                             <div>
                               <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Monthly</div>
-                              <div className="text-2xl md:text-3xl font-black text-gray-900 dark:text-gray-100">
+                              <div className="text-xl md:text-2xl font-black text-gray-900 dark:text-gray-100">
                                 {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
-                                <span className="text-sm md:text-base ml-1 font-bold text-gray-600 dark:text-gray-400">
+                                <span className="text-sm ml-1 font-bold text-gray-600 dark:text-gray-400">
                                   {data.experienceData.estimatedCosts.monthly.currency}
                                 </span>
                               </div>
@@ -1025,7 +1025,7 @@ const SidebarInfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: 
 );
 
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
-  <h3 className="text-lg md:text-xl font-black text-gray-800 dark:text-gray-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
+  <h3 className="text-lg md:text-xl font-black text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2 md:gap-3">
     <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
     {title}
   </h3>
@@ -1154,10 +1154,10 @@ const AggressionBar = ({ label, level }: { label: string; level: number }) => (
 );
 
 const MistakeCard = ({ issue, cause, frequency }: { issue: string; cause: string; frequency: number }) => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg p-3 md:p-4 border border-red-200/60 dark:border-red-800/40 shadow-sm">
+  <div className="bg-white dark:bg-gray-800 rounded-lg p-3 md:p-4 border border-red-200 dark:border-red-800 shadow-sm">
     <div className="flex items-center justify-between mb-2">
       <h5 className="font-bold text-gray-900 dark:text-gray-100 capitalize text-xs md:text-sm">{issue.replace(/-/g, ' ')}</h5>
-      <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-1 rounded-md border border-red-200/50 dark:border-red-800/50">
+      <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-1 rounded-md border border-red-200 dark:border-red-800">
         {Math.round(frequency * 100)}%
       </span>
     </div>
@@ -1171,7 +1171,7 @@ const MistakeCard = ({ issue, cause, frequency }: { issue: string; cause: string
 const TabButton = ({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) => (
   <button 
     onClick={onClick} 
-    className={`flex-1 flex items-center justify-center gap-2.5 px-4 py-4 text-sm font-black transition-all whitespace-nowrap ${ 
+    className={`flex-1 flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-black transition-all whitespace-nowrap ${ 
       active 
         ? 'bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
         : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 border-b-4 border-transparent'
