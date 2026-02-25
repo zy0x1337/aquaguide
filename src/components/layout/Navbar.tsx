@@ -68,7 +68,7 @@ export const Navbar = () => {
           })}
         </div>
 
-        {/* RIGHT ACTIONS - Vercel Style */}
+        {/* RIGHT ACTIONS - Purple Gradient Button */}
         <div className="flex items-center gap-3">
           {user ? (
             // User Avatar Button - links to Dashboard
@@ -82,16 +82,14 @@ export const Navbar = () => {
               <span className="relative">{getUserInitials()}</span>
             </Link>
           ) : (
-            // Sign In Button - Vercel Style
+            // Sign In Button - Purple Gradient Hover
             <Link
               to="/auth"
-              className="group relative inline-flex items-center gap-2 px-5 py-2 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
+              className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white hover:border-transparent overflow-hidden"
             >
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-              <span className="relative flex items-center gap-2">
+              <span className="relative flex items-center gap-1.5">
                 Sign In
-                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
               </span>
             </Link>
           )}
