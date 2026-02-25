@@ -864,56 +864,56 @@ const SpeciesDetailPage = () => {
                   </motion.div>
                 )}
 
-                {/* COMPATIBILITY TAB - REORDERED */}
+                {/* COMPATIBILITY TAB - OPTIMIZED */}
                 {activeTab === 'compatibility' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
-                    {/* Tank Mate Guidelines - NOW FIRST */}
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+                    {/* Tank Mate Guidelines - OPTIMIZED */}
                     <div>
                       <SectionHeader title="Tank Mate Guidelines" icon={<Fish className="w-5 h-5" />} />
-                      <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+                      <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <div className="flex items-center gap-2 mb-4">
-                            <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-emerald-500" />
-                            <h4 className="font-black text-emerald-700 dark:text-emerald-400 text-base md:text-lg">Compatible With</h4>
+                          <div className="flex items-center gap-2 mb-3">
+                            <CheckCircle className="w-5 h-5 text-emerald-500" />
+                            <h4 className="font-bold text-emerald-700 dark:text-emerald-400 text-sm">Compatible With</h4>
                           </div>
                           <div className="space-y-2">
                             {data.behavior.compatibility.goodMates.map((m: string) => (
-                              <div key={m} className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 px-4 py-3 rounded-xl border-2 border-emerald-200 dark:border-emerald-800 font-bold text-sm md:text-base">{m}</div>
+                              <div key={m} className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 px-3 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 font-semibold text-sm">{m}</div>
                             ))}
                           </div>
                         </div>
                         <div>
-                          <div className="flex items-center gap-2 mb-4">
-                            <XCircle className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
-                            <h4 className="font-black text-rose-700 dark:text-rose-400 text-base md:text-lg">Avoid Mixing With</h4>
+                          <div className="flex items-center gap-2 mb-3">
+                            <XCircle className="w-5 h-5 text-rose-500" />
+                            <h4 className="font-bold text-rose-700 dark:text-rose-400 text-sm">Avoid Mixing With</h4>
                           </div>
                           <div className="space-y-2">
                             {data.behavior.compatibility.badMates.map((m: string) => (
-                              <div key={m} className="bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 px-4 py-3 rounded-xl border-2 border-rose-200 dark:border-rose-800 font-bold text-sm md:text-base">{m}</div>
+                              <div key={m} className="bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 px-3 py-2 rounded-lg border border-rose-200 dark:border-rose-800 font-semibold text-sm">{m}</div>
                             ))}
                           </div>
                         </div>
                       </div>
                       {data.behavior.compatibility.notes && (
-                        <div className="mt-4 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 md:p-5">
-                          <p className="text-sm md:text-base text-blue-900 dark:text-blue-300 leading-relaxed">
-                            <strong className="font-black">Important Note:</strong> {data.behavior.compatibility.notes}
+                        <div className="mt-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                          <p className="text-sm text-blue-900 dark:text-blue-300 leading-relaxed">
+                            <strong className="font-bold">Important Note:</strong> {data.behavior.compatibility.notes}
                           </p>
                         </div>
                       )}
                     </div>
 
-                    {/* Suggested Compatible Species */}
+                    {/* Suggested Compatible Species - OPTIMIZED */}
                     {compatibleSpecies.length > 0 && (
                       <div>
                         <SectionHeader title="Suggested Compatible Species" icon={<Fish className="w-5 h-5" />} />
-                        <div className="mb-4 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 md:p-5 flex gap-3">
-                          <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                          <p className="text-xs md:text-sm text-blue-900 dark:text-blue-300 leading-relaxed">
-                            <strong className="font-black">Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. Always verify compatibility based on your specific tank size and setup.
+                        <div className="mb-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3 flex gap-2">
+                          <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-blue-900 dark:text-blue-300 leading-relaxed">
+                            <strong className="font-bold">Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. Always verify compatibility based on your specific tank size and setup.
                           </p>
                         </div>
-                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                           {compatibleSpecies.slice(0, 6).map((species) => (
                             <SpeciesCard key={species.id} species={species} />
                           ))}
@@ -921,11 +921,11 @@ const SpeciesDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Compatibility Rules - NOW AT THE END */}
+                    {/* Compatibility Rules - OPTIMIZED */}
                     {data.behavior.compatibility.rules && data.behavior.compatibility.rules.length > 0 && (
                       <div>
                         <SectionHeader title="Compatibility Rules" icon={<AlertTriangle className="w-5 h-5" />} />
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           {data.behavior.compatibility.rules.map((rule, idx) => (
                             <CompatibilityRuleCard key={idx} rule={rule} />
                           ))}
@@ -1086,32 +1086,32 @@ const SetupCard = ({ title, description }: { title: string; description: string 
 );
 
 const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
-  <div className={`flex gap-3 p-4 md:p-5 rounded-xl border-2 shadow-lg ${ 
+  <div className={`flex gap-2 p-3 rounded-lg border shadow-sm ${ 
     rule.severity === 'critical' ? 'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-700' :
     rule.severity === 'high' ? 'bg-orange-50 dark:bg-orange-950/30 border-orange-300 dark:border-orange-700' :
     rule.severity === 'medium' ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-700' :
     'bg-blue-50 dark:bg-blue-950/30 border-blue-300 dark:border-blue-700'
   }`}>
-    <div className="p-2 rounded-lg flex-shrink-0">
-      <AlertTriangle className={`w-5 h-5 ${ 
+    <div className="flex-shrink-0">
+      <AlertTriangle className={`w-4 h-4 ${ 
         rule.severity === 'critical' ? 'text-red-600 dark:text-red-400' :
         rule.severity === 'high' ? 'text-orange-600 dark:text-orange-400' :
         rule.severity === 'medium' ? 'text-amber-600 dark:text-amber-400' :
         'text-blue-600 dark:text-blue-400'
       }`} />
     </div>
-    <div className="flex-1">
-      <div className="flex flex-wrap items-center gap-2 mb-2">
-        <span className={`font-black uppercase text-[10px] md:text-xs tracking-wider ${ 
+    <div className="flex-1 min-w-0">
+      <div className="flex flex-wrap items-center gap-1.5 mb-1">
+        <span className={`font-bold uppercase text-[10px] tracking-wider ${ 
           rule.severity === 'critical' ? 'text-red-700 dark:text-red-300' :
           rule.severity === 'high' ? 'text-orange-700 dark:text-orange-300' :
           rule.severity === 'medium' ? 'text-amber-700 dark:text-amber-300' :
           'text-blue-700 dark:text-blue-300'
         }`}>{rule.type}</span>
-        {rule.target && <span className="text-xs text-gray-600 dark:text-gray-400">• {rule.target}</span>}
-        {rule.condition && <span className="text-xs text-gray-600 dark:text-gray-400">• {rule.condition}</span>}
+        {rule.target && <span className="text-[10px] text-gray-600 dark:text-gray-400">• {rule.target}</span>}
+        {rule.condition && <span className="text-[10px] text-gray-600 dark:text-gray-400">• {rule.condition}</span>}
       </div>
-      <p className={`text-xs md:text-sm leading-relaxed ${ 
+      <p className={`text-xs leading-relaxed ${ 
         rule.severity === 'critical' ? 'text-red-900 dark:text-red-200' :
         rule.severity === 'high' ? 'text-orange-900 dark:text-orange-200' :
         rule.severity === 'medium' ? 'text-amber-900 dark:text-amber-200' :
@@ -1122,10 +1122,10 @@ const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
 );
 
 const SpeciesCard = ({ species }: { species: Species }) => (
-  <Link to={`/species/${species.slug}`} className="group bg-gray-50 dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-xl p-4 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-md hover:shadow-xl">
-    <h5 className="font-black text-gray-900 dark:text-gray-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm md:text-base line-clamp-1">{species.taxonomy.commonName}</h5>
-    <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 italic mb-2 md:mb-3 line-clamp-1">{species.taxonomy.scientificName}</p>
-    <div className="flex items-center gap-2 text-[10px] md:text-xs text-gray-600 dark:text-gray-400 font-semibold">
+  <Link to={`/species/${species.slug}`} className="group bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg p-3 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-sm hover:shadow-md">
+    <h5 className="font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm line-clamp-1">{species.taxonomy.commonName}</h5>
+    <p className="text-[10px] text-gray-500 dark:text-gray-400 italic mb-2 line-clamp-1">{species.taxonomy.scientificName}</p>
+    <div className="flex items-center gap-2 text-[10px] text-gray-600 dark:text-gray-400 font-semibold">
       <span>{species.visuals.adultSizeCM}cm</span>
       <span>•</span>
       <span>{species.environment.minTankSizeLiters}L</span>
