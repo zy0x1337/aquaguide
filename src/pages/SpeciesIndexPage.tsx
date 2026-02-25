@@ -244,6 +244,19 @@ const SpeciesIndexPage = () => {
   const hasActiveFilters = activeFilters.length > 0 || searchTerm;
   const regions: Region[] = ['South America', 'Asia', 'Africa', 'Central America'];
 
+  // Helper to format region names with line breaks
+  const formatRegionLabel = (region: string) => {
+    if (region.includes(' ')) {
+      const parts = region.split(' ');
+      return (
+        <>
+          {parts[0]}<br />{parts.slice(1).join(' ')}
+        </>
+      );
+    }
+    return region;
+  };
+
   // Unified Filter Content
   const FilterContent = () => (
     <div className="space-y-6">
@@ -290,15 +303,20 @@ const SpeciesIndexPage = () => {
           <label className="text-[11px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <Globe2 className="w-3.5 h-3.5 mr-1.5 text-indigo-500" /> Region
           </label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-wrap gap-2">
             {regions.map(region => (
-              <FilterChip 
+              <button
                 key={region}
-                label={region}
-                isActive={filters.region === region} 
-                onClick={() => setFilters({ ...filters, region: filters.region === region ? null : region })} 
-                className="text-center leading-tight py-3 px-2 text-[10px] overflow-hidden text-ellipsis"
-              />
+                onClick={() => setFilters({ ...filters, region: filters.region === region ? null : region })}
+                className={cn(
+                  "px-3 py-2 rounded-lg md:rounded-xl text-[10px] font-bold uppercase tracking-tight border-2 transition-all duration-200 text-center leading-[1.3] min-w-[70px] flex-1",
+                  filters.region === region
+                    ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white border-indigo-700 shadow-lg"
+                    : "text-gray-700 bg-gray-50 border-gray-200 hover:bg-gray-100 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                )}
+              >
+                {formatRegionLabel(region)}
+              </button>
             ))}
           </div>
         </div>
