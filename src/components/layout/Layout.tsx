@@ -207,7 +207,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </Link>
               )}
 
-              {/* Auth (Desktop) - Purple Hover Text */}
+              {/* Auth (Desktop) - Slimmer Purple Gradient */}
               <div className="hidden md:flex items-center gap-3">
                 {user ? (
                   <div className="relative" ref={dropdownRef}>
