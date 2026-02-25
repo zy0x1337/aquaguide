@@ -165,11 +165,11 @@ const SpeciesDetailPage = () => {
 
   // Sidebar info panel content (reused in header on mobile, sticky on desktop)
   const SidebarInfoPanel = () => (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-xl">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-lg">
       {/* Origin header */}
       <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl">
-          <MapPin className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
+          <MapPin className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
         </div>
         <div>
           <div className="text-[10px] uppercase font-black text-gray-400 dark:text-gray-500 tracking-wider mb-0.5">Origin</div>
@@ -245,7 +245,7 @@ const SpeciesDetailPage = () => {
         {/* Back button – absolute, outside content flow */}
         <Link 
           to="/species" 
-          className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 text-white/80 hover:text-white text-xs font-bold bg-black/25 hover:bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/15 transition-all"
+          className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 text-white/80 hover:text-white text-xs font-bold bg-black/25 hover:bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 transition-all"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back
         </Link>
@@ -305,7 +305,7 @@ const SpeciesDetailPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-purple-500 to-indigo-600 rounded-2xl blur-sm opacity-70 group-hover:opacity-90 transition-opacity" />
                 
                 {/* Main card */}
-                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-6 md:p-7 border-2 border-white/20 dark:border-gray-700/50 shadow-2xl backdrop-blur-xl">
+                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-5 md:p-6 border-2 border-white/20 dark:border-gray-700/50 shadow-2xl backdrop-blur-xl">
                   <div className="flex items-start gap-4 md:gap-5">
                     {/* Icon with glow effect */}
                     <motion.div 
@@ -322,15 +322,15 @@ const SpeciesDetailPage = () => {
                     >
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl blur-md opacity-50" />
-                        <div className="relative p-3.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg">
-                          <Sparkles className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                        <div className="relative p-3 md:p-3.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg">
+                          <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
                         </div>
                       </div>
                     </motion.div>
                     
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-2 mb-2 md:mb-3">
                         <span className="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-purple-600 to-indigo-600 dark:from-amber-400 dark:via-purple-400 dark:to-indigo-400 uppercase tracking-wider">
                           Did You Know?
                         </span>
@@ -369,10 +369,10 @@ const SpeciesDetailPage = () => {
             >
               <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
                 {data.behavior.tags.includes('jumper') && (
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 p-4 md:p-5 rounded-xl shadow-lg">
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-2 border-amber-300 dark:border-amber-700 p-3 md:p-4 rounded-xl shadow-lg">
                     <div className="flex gap-3 items-start">
                       <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex-shrink-0">
-                        <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                        <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                       </div>
                       <div>
                         <p className="font-black text-amber-900 dark:text-amber-200 text-sm md:text-base mb-1">Jump Risk!</p>
@@ -385,10 +385,10 @@ const SpeciesDetailPage = () => {
                 )}
                 
                 {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
-                  <div className="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-2 border-red-300 dark:border-red-700 p-4 md:p-5 rounded-xl shadow-lg">
+                  <div className="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border-2 border-red-300 dark:border-red-700 p-3 md:p-4 rounded-xl shadow-lg">
                     <div className="flex gap-3 items-start">
                       <div className="p-2 bg-red-100 dark:bg-red-900/50 rounded-lg flex-shrink-0">
-                        <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                        <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
                       </div>
                       <div>
                         <p className="font-black text-red-900 dark:text-red-200 text-sm md:text-base mb-1">Common Mistake</p>
@@ -417,7 +417,7 @@ const SpeciesDetailPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
               {/* Desktop: Horizontal tabs */}
               <div className="hidden md:flex border-b-2 border-gray-200 dark:border-gray-700">
                 <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<Target className="w-4 h-4" />}>
@@ -462,7 +462,7 @@ const SpeciesDetailPage = () => {
               <div className="p-4 md:p-6 lg:p-8">
                 {/* OVERVIEW TAB */}
                 {activeTab === 'overview' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
                     {/* Parameters Grid - STREAMLINED COMPACT DESIGN */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
@@ -548,8 +548,8 @@ const SpeciesDetailPage = () => {
                     {/* Behavior Overview */}
                     <div>
                       <SectionHeader title="Behavior & Temperament" icon={<Activity className="w-5 h-5" />} />
-                      <div className="bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-950/20 rounded-xl p-5 md:p-6 border-2 border-gray-200 dark:border-gray-700">
-                        <p className="text-gray-700 dark:text-gray-300 mb-4 md:mb-5 leading-relaxed text-sm md:text-base">
+                      <div className="bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900/50 dark:to-blue-950/20 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700">
+                        <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-sm md:text-base">
                           {data.behavior.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -563,7 +563,7 @@ const SpeciesDetailPage = () => {
                     {/* Stats & Costs */}
                     <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                       {/* Ownership Stats */}
-                      <div className="bg-white dark:bg-gray-800 rounded-xl p-5 md:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                         <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
                           <TrendingUp className="w-4 h-4 text-gray-600 dark:text-gray-400" /> Ownership Stats
                         </h4>
@@ -576,25 +576,25 @@ const SpeciesDetailPage = () => {
 
                       {/* Est. Costs */}
                       {data.experienceData?.estimatedCosts && (
-                        <div className="bg-white dark:bg-gray-800 rounded-xl p-5 md:p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm">
                           <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
                             <DollarSign className="w-4 h-4 text-gray-600 dark:text-gray-400" /> Est. Costs
                           </h4>
                           <div className="space-y-4">
                             <div>
                               <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Initial Setup</div>
-                              <div className="text-2xl md:text-3xl font-black text-gray-900 dark:text-gray-100">
+                              <div className="text-xl md:text-2xl font-black text-gray-900 dark:text-gray-100">
                                 {data.experienceData.estimatedCosts.initial.min}-{data.experienceData.estimatedCosts.initial.max}
-                                <span className="text-sm md:text-base ml-1 font-bold text-gray-600 dark:text-gray-400">
+                                <span className="text-sm ml-1 font-bold text-gray-600 dark:text-gray-400">
                                   {data.experienceData.estimatedCosts.initial.currency}
                                 </span>
                               </div>
                             </div>
                             <div>
                               <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Monthly</div>
-                              <div className="text-2xl md:text-3xl font-black text-gray-900 dark:text-gray-100">
+                              <div className="text-xl md:text-2xl font-black text-gray-900 dark:text-gray-100">
                                 {data.experienceData.estimatedCosts.monthly.min}-{data.experienceData.estimatedCosts.monthly.max}
-                                <span className="text-sm md:text-base ml-1 font-bold text-gray-600 dark:text-gray-400">
+                                <span className="text-sm ml-1 font-bold text-gray-600 dark:text-gray-400">
                                   {data.experienceData.estimatedCosts.monthly.currency}
                                 </span>
                               </div>
@@ -606,64 +606,64 @@ const SpeciesDetailPage = () => {
                   </motion.div>
                 )}
 
-                {/* CARE TAB - STREAMLINED */}
+                {/* CARE TAB - VISUAL HIERARCHY OPTIMIZED */}
                 {activeTab === 'care' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                    {/* Care Level Overview - REDESIGNED WITH LIGHTER FONT WEIGHTS */}
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 md:space-y-6">
+                    {/* Care Level Overview */}
                     <div className="grid sm:grid-cols-3 gap-3">
                       <CareLevelCard 
                         label="Difficulty" 
                         value={data.care.difficulty}
-                        icon={<Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
+                        icon={<Target className="w-4 h-4 text-gray-500" />}
                       />
                       <CareLevelCard 
                         label="Time Effort" 
                         value={data.care.effort}
-                        icon={<Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
+                        icon={<Clock className="w-4 h-4 text-gray-500" />}
                       />
                       <CareLevelCard 
                         label="Cost" 
                         value={data.care.cost}
-                        icon={<DollarSign className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />}
+                        icon={<DollarSign className="w-4 h-4 text-gray-500" />}
                       />
                     </div>
 
-                    {/* Feeding Guide - COMPACT VERSION */}
+                    {/* Feeding Guide */}
                     <div>
                       <SectionHeader title="Feeding Guide" icon={<Utensils className="w-5 h-5" />} />
-                      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+                      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm space-y-4">
                         
                         <div className="flex items-center gap-2 pb-3 border-b border-gray-200 dark:border-gray-700">
-                          <Utensils className="w-4 h-4 text-emerald-500" />
+                          <Utensils className="w-4 h-4 text-gray-500" />
                           <div>
-                            <div className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Diet Type</div>
-                            <div className="text-sm font-bold text-gray-900 dark:text-gray-100 capitalize">{data.care.diet}</div>
+                            <div className="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Diet Type</div>
+                            <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 capitalize">{data.care.diet}</div>
                           </div>
                         </div>
 
                         {data.care.feeding && (
                           <>
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
-                                <div className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Frequency</div>
-                                <div className="text-xs font-semibold text-gray-900 dark:text-gray-100 capitalize">{data.care.feeding.frequency.replace(/-/g, ' ')}</div>
+                            <div className="grid grid-cols-2 gap-2.5">
+                              <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-2.5 border border-gray-200 dark:border-gray-700">
+                                <div className="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">Frequency</div>
+                                <div className="text-xs font-medium text-gray-900 dark:text-gray-100 capitalize">{data.care.feeding.frequency.replace(/-/g, ' ')}</div>
                               </div>
                               
                               {data.care.feeding.fastingDay && data.care.feeding.fastingDay !== 'none' && (
-                                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
-                                  <div className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Fasting Day</div>
-                                  <div className="text-xs font-semibold text-gray-900 dark:text-gray-100 capitalize">{data.care.feeding.fastingDay}</div>
+                                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-2.5 border border-gray-200 dark:border-gray-700">
+                                  <div className="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">Fasting Day</div>
+                                  <div className="text-xs font-medium text-gray-900 dark:text-gray-100 capitalize">{data.care.feeding.fastingDay}</div>
                                 </div>
                               )}
                             </div>
 
                             <div>
-                              <h4 className="text-[10px] font-bold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1.5">
-                                <Apple className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Primary Foods
+                              <h4 className="text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-2.5 flex items-center gap-1.5">
+                                <Apple className="w-3.5 h-3.5 text-gray-500" /> Primary Foods
                               </h4>
                               <div className="flex flex-wrap gap-1.5">
                                 {data.care.feeding.primaryFoods.map((food) => (
-                                  <span key={food} className="px-2 py-1 rounded text-[10px] font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 capitalize">
+                                  <span key={food} className="px-2.5 py-1 rounded text-[11px] font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 capitalize">
                                     {food.replace(/-/g, ' ')}
                                   </span>
                                 ))}
@@ -672,12 +672,12 @@ const SpeciesDetailPage = () => {
 
                             {data.care.feeding.supplements && data.care.feeding.supplements.length > 0 && (
                               <div>
-                                <h4 className="text-[10px] font-bold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1.5">
-                                  <Pill className="w-3 h-3 text-teal-600 dark:text-teal-400" /> Supplements
+                                <h4 className="text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-2.5 flex items-center gap-1.5">
+                                  <Pill className="w-3.5 h-3.5 text-gray-500" /> Supplements
                                 </h4>
                                 <div className="flex flex-wrap gap-1.5">
                                   {data.care.feeding.supplements.map((supplement) => (
-                                    <span key={supplement} className="px-2 py-1 rounded text-[10px] font-semibold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 capitalize">
+                                    <span key={supplement} className="px-2.5 py-1 rounded text-[11px] font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 capitalize">
                                       {supplement.replace(/-/g, ' ')}
                                     </span>
                                   ))}
@@ -688,11 +688,11 @@ const SpeciesDetailPage = () => {
                         )}
 
                         {!data.care.feeding && (
-                          <div className="text-xs text-gray-700 dark:text-gray-300 space-y-1">
+                          <div className="text-xs text-gray-700 dark:text-gray-300 space-y-1.5">
                             {getFeedingAdvice().map((tip, i) => (
-                              <div key={i} className="flex gap-2">
-                                <span className="text-emerald-500 dark:text-emerald-400 font-bold">→</span>
-                                <span>{tip}</span>
+                              <div key={i} className="flex gap-2.5">
+                                <span className="text-gray-400 dark:text-gray-500 font-medium">→</span>
+                                <span className="font-normal">{tip}</span>
                               </div>
                             ))}
                           </div>
@@ -700,26 +700,26 @@ const SpeciesDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Maintenance Schedule - Compact */}
+                    {/* Maintenance Schedule */}
                     {data.care.maintenance && (
                       <div>
                         <SectionHeader title="Maintenance" icon={<Calendar className="w-5 h-5" />} />
-                        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
-                          <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+                          <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-3.5 border border-blue-200 dark:border-blue-800">
                             <div className="flex items-center gap-2 mb-2">
                               <Droplets className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Water Changes</div>
+                              <div className="text-[11px] font-semibold text-gray-600 dark:text-gray-400 uppercase">Water Changes</div>
                             </div>
-                            <div className="text-base font-bold text-blue-900 dark:text-blue-300">
+                            <div className="text-base font-semibold text-blue-900 dark:text-blue-300">
                               {data.care.maintenance.waterChangePercentage}% {data.care.maintenance.waterChangeFrequency}
                             </div>
                             {data.care.maintenance.notes && (
-                              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mt-2">{data.care.maintenance.notes}</p>
+                              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mt-2 font-normal">{data.care.maintenance.notes}</p>
                             )}
                           </div>
                           {data.care.maintenance.vacuumingNeeded && (
-                            <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-3 border border-amber-200 dark:border-amber-800">
-                              <div className="flex items-center gap-2 text-xs font-bold text-amber-800 dark:text-amber-300">
+                            <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-3.5 border border-amber-200 dark:border-amber-800">
+                              <div className="flex items-center gap-2 text-xs font-medium text-amber-800 dark:text-amber-300">
                                 <Wind className="w-4 h-4" />
                                 <span>Regular substrate vacuuming required</span>
                               </div>
@@ -729,41 +729,41 @@ const SpeciesDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Equipment Checklist - Compact */}
+                    {/* Equipment Checklist */}
                     {data.care.equipment && (
                       <div>
                         <SectionHeader title="Equipment" icon={<Wrench className="w-5 h-5" />} />
                         <div className="grid sm:grid-cols-2 gap-3">
                           {data.care.equipment.heater && (
-                            <EquipmentCardNew icon={<Thermometer className="w-4 h-4 text-rose-600 dark:text-rose-400" />} label="Heater" required={data.care.equipment.heater.required} details={data.care.equipment.heater.watts ? `${data.care.equipment.heater.watts}W recommended` : undefined} color="rose" />
+                            <EquipmentCard icon={<Thermometer className="w-4 h-4 text-gray-500" />} label="Heater" required={data.care.equipment.heater.required} details={data.care.equipment.heater.watts ? `${data.care.equipment.heater.watts}W recommended` : undefined} />
                           )}
                           {data.care.equipment.filter && (
-                            <EquipmentCardNew icon={<Wind className="w-4 h-4 text-blue-600 dark:text-blue-400" />} label="Filter" required={data.care.equipment.filter.required} details={data.care.equipment.filter.type ? `${data.care.equipment.filter.type} - ${data.care.equipment.filter.flowRate || 'standard'}` : undefined} color="blue" />
+                            <EquipmentCard icon={<Wind className="w-4 h-4 text-gray-500" />} label="Filter" required={data.care.equipment.filter.required} details={data.care.equipment.filter.type ? `${data.care.equipment.filter.type} - ${data.care.equipment.filter.flowRate || 'standard'}` : undefined} />
                           )}
                           {data.care.equipment.airstone !== undefined && (
-                            <EquipmentCardNew icon={<CircleDot className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />} label="Airstone" required={data.care.equipment.airstone} color="cyan" />
+                            <EquipmentCard icon={<CircleDot className="w-4 h-4 text-gray-500" />} label="Airstone" required={data.care.equipment.airstone} />
                           )}
                           {data.care.equipment.lighting && (
-                            <EquipmentCardNew icon={<Lightbulb className="w-4 h-4 text-amber-600 dark:text-amber-400" />} label="Lighting" required={true} details={`${data.care.equipment.lighting} intensity`} color="amber" />
+                            <EquipmentCard icon={<Lightbulb className="w-4 h-4 text-gray-500" />} label="Lighting" required={true} details={`${data.care.equipment.lighting} intensity`} />
                           )}
                           {data.care.equipment.co2 !== undefined && (
-                            <EquipmentCardNew icon={<Beaker className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />} label="CO₂ System" required={data.care.equipment.co2} color="emerald" />
+                            <EquipmentCard icon={<Beaker className="w-4 h-4 text-gray-500" />} label="CO₂ System" required={data.care.equipment.co2} />
                           )}
                         </div>
                       </div>
                     )}
 
-                    {/* Special Requirements - Compact */}
+                    {/* Special Requirements */}
                     {data.care.specialRequirements && data.care.specialRequirements.length > 0 && (
                       <div>
                         <SectionHeader title="Special Requirements" icon={<AlertTriangle className="w-5 h-5" />} />
-                        <div className="space-y-2">
+                        <div className="space-y-2.5">
                           {data.care.specialRequirements.map((requirement, index) => (
-                            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 flex gap-2 shadow-sm">
+                            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-3.5 border border-gray-200 dark:border-gray-700 flex gap-3 shadow-sm">
                               <div className="p-1.5 bg-rose-50 dark:bg-rose-950/30 rounded-md flex-shrink-0">
                                 <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                               </div>
-                              <p className="text-xs md:text-sm text-gray-900 dark:text-gray-100 font-semibold leading-relaxed">{requirement}</p>
+                              <p className="text-xs md:text-sm text-gray-900 dark:text-gray-100 font-medium leading-relaxed">{requirement}</p>
                             </div>
                           ))}
                         </div>
@@ -787,15 +787,15 @@ const SpeciesDetailPage = () => {
                       <SectionHeader title="Health & Disease Prevention" icon={<Heart className="w-5 h-5" />} />
                       <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 md:p-5 border border-gray-200 dark:border-gray-700 space-y-4">
                         <div>
-                          <h5 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase mb-3 tracking-wider">Common Diseases</h5>
+                          <h5 className="text-[11px] font-semibold text-gray-700 dark:text-gray-300 uppercase mb-3 tracking-wider">Common Diseases</h5>
                           <DiseaseList diseases={data.health.commonDiseases} />
                         </div>
                         {data.health.sensitivities && data.health.sensitivities.length > 0 && (
                           <div>
-                            <h5 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase mb-3 tracking-wider">Sensitivities</h5>
+                            <h5 className="text-[11px] font-semibold text-gray-700 dark:text-gray-300 uppercase mb-3 tracking-wider">Sensitivities</h5>
                             <div className="flex flex-wrap gap-2">
                               {data.health.sensitivities.map((s: string) => (
-                                <span key={s} className="text-xs bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 px-2.5 py-1.5 rounded-md border border-amber-200 dark:border-amber-800 font-bold">{s}</span>
+                                <span key={s} className="text-xs bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 px-2.5 py-1.5 rounded-md border border-amber-200 dark:border-amber-800 font-medium">{s}</span>
                               ))}
                             </div>
                           </div>
@@ -811,11 +811,11 @@ const SpeciesDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Common Failures - Compact */}
+                    {/* Common Failures */}
                     {data.experienceData?.commonFailures && data.experienceData.commonFailures.length > 0 && (
                       <div>
                         <SectionHeader title="Common Mistakes to Avoid" icon={<XCircle className="w-5 h-5" />} />
-                        <div className="space-y-2">
+                        <div className="space-y-2.5">
                           {data.experienceData.commonFailures
                             .sort((a, b) => b.frequency - a.frequency)
                             .map((failure, idx) => (
@@ -827,7 +827,7 @@ const SpeciesDetailPage = () => {
                   </motion.div>
                 )}
 
-                {/* HABITAT TAB - OPTIMIZED */}
+                {/* HABITAT TAB */}
                 {activeTab === 'habitat' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
                     <div>
@@ -864,53 +864,51 @@ const SpeciesDetailPage = () => {
                   </motion.div>
                 )}
 
-                {/* COMPATIBILITY TAB - OPTIMIZED */}
+                {/* COMPATIBILITY TAB - VISUAL HIERARCHY OPTIMIZED */}
                 {activeTab === 'compatibility' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                    {/* Tank Mate Guidelines - OPTIMIZED */}
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 md:space-y-6">
                     <div>
                       <SectionHeader title="Tank Mate Guidelines" icon={<Fish className="w-5 h-5" />} />
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
                           <div className="flex items-center gap-2 mb-3">
-                            <CheckCircle className="w-5 h-5 text-emerald-500" />
-                            <h4 className="font-bold text-emerald-700 dark:text-emerald-400 text-sm">Compatible With</h4>
+                            <CheckCircle className="w-4 h-4 text-emerald-500" />
+                            <h4 className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">Compatible With</h4>
                           </div>
                           <div className="space-y-2">
                             {data.behavior.compatibility.goodMates.map((m: string) => (
-                              <div key={m} className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 px-3 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 font-semibold text-sm">{m}</div>
+                              <div key={m} className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 px-3 py-2.5 rounded-lg font-medium text-sm hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors">{m}</div>
                             ))}
                           </div>
                         </div>
                         <div>
                           <div className="flex items-center gap-2 mb-3">
-                            <XCircle className="w-5 h-5 text-rose-500" />
-                            <h4 className="font-bold text-rose-700 dark:text-rose-400 text-sm">Avoid Mixing With</h4>
+                            <XCircle className="w-4 h-4 text-rose-500" />
+                            <h4 className="font-semibold text-rose-700 dark:text-rose-400 text-sm">Avoid Mixing With</h4>
                           </div>
                           <div className="space-y-2">
                             {data.behavior.compatibility.badMates.map((m: string) => (
-                              <div key={m} className="bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 px-3 py-2 rounded-lg border border-rose-200 dark:border-rose-800 font-semibold text-sm">{m}</div>
+                              <div key={m} className="bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-300 px-3 py-2.5 rounded-lg font-medium text-sm hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors">{m}</div>
                             ))}
                           </div>
                         </div>
                       </div>
                       {data.behavior.compatibility.notes && (
-                        <div className="mt-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                        <div className="mt-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3.5">
                           <p className="text-sm text-blue-900 dark:text-blue-300 leading-relaxed">
-                            <strong className="font-bold">Important Note:</strong> {data.behavior.compatibility.notes}
+                            <strong className="font-semibold">Important Note:</strong> {data.behavior.compatibility.notes}
                           </p>
                         </div>
                       )}
                     </div>
 
-                    {/* Suggested Compatible Species - OPTIMIZED */}
                     {compatibleSpecies.length > 0 && (
                       <div>
                         <SectionHeader title="Suggested Compatible Species" icon={<Fish className="w-5 h-5" />} />
-                        <div className="mb-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3 flex gap-2">
+                        <div className="mb-3.5 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3.5 flex gap-2.5">
                           <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                           <p className="text-xs text-blue-900 dark:text-blue-300 leading-relaxed">
-                            <strong className="font-bold">Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. Always verify compatibility based on your specific tank size and setup.
+                            <strong className="font-semibold">Algorithm-based suggestions:</strong> These species match water parameters, size, and temperament. Always verify compatibility based on your specific tank size and setup.
                           </p>
                         </div>
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
@@ -921,11 +919,10 @@ const SpeciesDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Compatibility Rules - OPTIMIZED */}
                     {data.behavior.compatibility.rules && data.behavior.compatibility.rules.length > 0 && (
                       <div>
                         <SectionHeader title="Compatibility Rules" icon={<AlertTriangle className="w-5 h-5" />} />
-                        <div className="space-y-2">
+                        <div className="space-y-2.5">
                           {data.behavior.compatibility.rules.map((rule, idx) => (
                             <CompatibilityRuleCard key={idx} rule={rule} />
                           ))}
@@ -1013,7 +1010,6 @@ const SpeciesDetailPage = () => {
 
 // ==================== HELPER COMPONENTS ====================
 
-// Sidebar info row (light, for white card)
 const SidebarInfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
   <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
     <div className="flex items-center gap-2">
@@ -1025,8 +1021,8 @@ const SidebarInfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: 
 );
 
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
-  <h3 className="text-lg md:text-xl font-black text-gray-800 dark:text-gray-100 mb-4 md:mb-5 flex items-center gap-2 md:gap-3">
-    <div className="text-indigo-600 dark:text-indigo-400">{icon}</div>
+  <h3 className="text-base md:text-lg font-bold text-gray-800 dark:text-gray-100 mb-3.5 md:mb-4 flex items-center gap-2">
+    <div className="text-gray-600 dark:text-gray-400">{icon}</div>
     {title}
   </h3>
 );
@@ -1049,24 +1045,25 @@ const StatBar = ({ label, value }: { label: string; value: string }) => {
   );
 };
 
+// REDESIGNED TipsCard - cleaner visual hierarchy
 const TipsCard = ({ title, icon, items, variant }: { title: string; icon: React.ReactNode; items: string[]; variant: 'success' | 'danger' }) => (
-  <div className={`bg-gradient-to-br ${ 
-    variant === 'success' ? 'from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-200 dark:border-amber-800' : 'from-rose-50 to-red-50 dark:from-rose-950/30 dark:to-red-950/30 border-rose-200 dark:border-rose-800'
-  } rounded-xl p-5 md:p-6 border-2 shadow-lg`}>
-    <h4 className={`text-xs md:text-sm font-black mb-3 md:mb-4 flex items-center gap-2 uppercase tracking-wider ${ 
-      variant === 'success' ? 'text-amber-900 dark:text-amber-300' : 'text-rose-900 dark:text-rose-300'
+  <div className={`${ 
+    variant === 'success' ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800' : 'bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-800'
+  } rounded-xl p-4 md:p-5 border shadow-sm`}>
+    <h4 className={`text-xs md:text-sm font-semibold mb-3 flex items-center gap-2 uppercase tracking-wide ${ 
+      variant === 'success' ? 'text-amber-800 dark:text-amber-300' : 'text-rose-800 dark:text-rose-300'
     }`}>
       {icon} {title}
     </h4>
-    <ul className="space-y-3">
+    <ul className="space-y-2">
       {items.map((item: string, i: number) => (
-        <li key={i} className={`flex gap-3 text-xs md:text-sm leading-relaxed ${ 
+        <li key={i} className={`flex gap-2.5 text-xs md:text-sm leading-relaxed ${ 
           variant === 'success' ? 'text-amber-900 dark:text-amber-200' : 'text-rose-900 dark:text-rose-200'
         }`}>
-          <span className={`w-1.5 h-1.5 mt-2 rounded-full flex-shrink-0 ${ 
-            variant === 'success' ? 'bg-amber-600 dark:bg-amber-500' : 'bg-rose-600 dark:bg-rose-500'
+          <span className={`w-1 h-1 mt-2 rounded-full flex-shrink-0 ${ 
+            variant === 'success' ? 'bg-amber-600' : 'bg-rose-600'
           }`} />
-          <span>{item}</span>
+          <span className="font-normal">{item}</span>
         </li>
       ))}
     </ul>
@@ -1085,12 +1082,13 @@ const SetupCard = ({ title, description }: { title: string; description: string 
   </div>
 );
 
+// OPTIMIZED CompatibilityRuleCard
 const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
-  <div className={`flex gap-2 p-3 rounded-lg border shadow-sm ${ 
-    rule.severity === 'critical' ? 'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-700' :
-    rule.severity === 'high' ? 'bg-orange-50 dark:bg-orange-950/30 border-orange-300 dark:border-orange-700' :
-    rule.severity === 'medium' ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-700' :
-    'bg-blue-50 dark:bg-blue-950/30 border-blue-300 dark:border-blue-700'
+  <div className={`flex gap-2.5 p-3.5 rounded-lg border shadow-sm ${ 
+    rule.severity === 'critical' ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-700' :
+    rule.severity === 'high' ? 'bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-700' :
+    rule.severity === 'medium' ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-700' :
+    'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-700'
   }`}>
     <div className="flex-shrink-0">
       <AlertTriangle className={`w-4 h-4 ${ 
@@ -1101,17 +1099,17 @@ const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
       }`} />
     </div>
     <div className="flex-1 min-w-0">
-      <div className="flex flex-wrap items-center gap-1.5 mb-1">
-        <span className={`font-bold uppercase text-[10px] tracking-wider ${ 
+      <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+        <span className={`font-semibold uppercase text-[10px] tracking-wider ${ 
           rule.severity === 'critical' ? 'text-red-700 dark:text-red-300' :
           rule.severity === 'high' ? 'text-orange-700 dark:text-orange-300' :
           rule.severity === 'medium' ? 'text-amber-700 dark:text-amber-300' :
           'text-blue-700 dark:text-blue-300'
         }`}>{rule.type}</span>
-        {rule.target && <span className="text-[10px] text-gray-600 dark:text-gray-400">• {rule.target}</span>}
-        {rule.condition && <span className="text-[10px] text-gray-600 dark:text-gray-400">• {rule.condition}</span>}
+        {rule.target && <span className="text-[10px] text-gray-600 dark:text-gray-400 font-medium">• {rule.target}</span>}
+        {rule.condition && <span className="text-[10px] text-gray-600 dark:text-gray-400 font-medium">• {rule.condition}</span>}
       </div>
-      <p className={`text-xs leading-relaxed ${ 
+      <p className={`text-xs leading-relaxed font-normal ${ 
         rule.severity === 'critical' ? 'text-red-900 dark:text-red-200' :
         rule.severity === 'high' ? 'text-orange-900 dark:text-orange-200' :
         rule.severity === 'medium' ? 'text-amber-900 dark:text-amber-200' :
@@ -1121,11 +1119,12 @@ const CompatibilityRuleCard = ({ rule }: { rule: any }) => (
   </div>
 );
 
+// OPTIMIZED SpeciesCard
 const SpeciesCard = ({ species }: { species: Species }) => (
   <Link to={`/species/${species.slug}`} className="group bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg p-3 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-sm hover:shadow-md">
-    <h5 className="font-bold text-gray-900 dark:text-gray-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm line-clamp-1">{species.taxonomy.commonName}</h5>
+    <h5 className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 mb-1 text-sm line-clamp-1">{species.taxonomy.commonName}</h5>
     <p className="text-[10px] text-gray-500 dark:text-gray-400 italic mb-2 line-clamp-1">{species.taxonomy.scientificName}</p>
-    <div className="flex items-center gap-2 text-[10px] text-gray-600 dark:text-gray-400 font-semibold">
+    <div className="flex items-center gap-2 text-[10px] text-gray-600 dark:text-gray-400 font-medium">
       <span>{species.visuals.adultSizeCM}cm</span>
       <span>•</span>
       <span>{species.environment.minTankSizeLiters}L</span>
@@ -1135,13 +1134,13 @@ const SpeciesCard = ({ species }: { species: Species }) => (
 
 const AggressionBar = ({ label, level }: { label: string; level: number }) => (
   <div>
-    <div className="flex items-center justify-between mb-2 md:mb-3">
-      <span className="text-xs md:text-sm text-gray-700 dark:text-gray-300 font-bold">{label}</span>
-      <span className="text-sm md:text-base font-black text-gray-900 dark:text-gray-100">{level}/10</span>
+    <div className="flex items-center justify-between mb-2">
+      <span className="text-xs md:text-sm text-gray-700 dark:text-gray-300 font-medium">{label}</span>
+      <span className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100">{level}/10</span>
     </div>
-    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 md:h-4 overflow-hidden">
+    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 md:h-3 overflow-hidden">
       <div 
-        className={`h-full rounded-full transition-all shadow-inner ${ 
+        className={`h-full rounded-full transition-all ${ 
           level >= 8 ? 'bg-red-600' :
           level >= 6 ? 'bg-orange-500' :
           level >= 4 ? 'bg-amber-500' :
@@ -1154,24 +1153,23 @@ const AggressionBar = ({ label, level }: { label: string; level: number }) => (
 );
 
 const MistakeCard = ({ issue, cause, frequency }: { issue: string; cause: string; frequency: number }) => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg p-3 md:p-4 border border-red-200/60 dark:border-red-800/40 shadow-sm">
+  <div className="bg-white dark:bg-gray-800 rounded-lg p-3.5 border border-gray-200 dark:border-gray-700 shadow-sm">
     <div className="flex items-center justify-between mb-2">
-      <h5 className="font-bold text-gray-900 dark:text-gray-100 capitalize text-xs md:text-sm">{issue.replace(/-/g, ' ')}</h5>
-      <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-1 rounded-md border border-red-200/50 dark:border-red-800/50">
+      <h5 className="font-semibold text-gray-900 dark:text-gray-100 capitalize text-xs md:text-sm">{issue.replace(/-/g, ' ')}</h5>
+      <span className="text-[10px] font-semibold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-0.5 rounded border border-red-200 dark:border-red-800">
         {Math.round(frequency * 100)}%
       </span>
     </div>
-    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-      <strong className="font-bold text-red-800 dark:text-red-300">Cause:</strong> {cause.replace(/-/g, ' ')}
+    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-normal">
+      <strong className="font-semibold text-red-800 dark:text-red-300">Cause:</strong> {cause.replace(/-/g, ' ')}
     </p>
   </div>
 );
 
-// Desktop Tab Button
 const TabButton = ({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) => (
   <button 
     onClick={onClick} 
-    className={`flex-1 flex items-center justify-center gap-2.5 px-4 py-4 text-sm font-black transition-all whitespace-nowrap ${ 
+    className={`flex-1 flex items-center justify-center gap-2.5 px-4 py-3 text-sm font-black transition-all whitespace-nowrap ${ 
       active 
         ? 'bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-400 border-b-4 border-indigo-600 dark:border-indigo-500' 
         : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 border-b-4 border-transparent'
@@ -1182,7 +1180,6 @@ const TabButton = ({ active, onClick, icon, children }: { active: boolean; onCli
   </button>
 );
 
-// Mobile Tab Button
 const TabButtonMobile = ({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) => (
   <button 
     onClick={onClick} 
@@ -1242,7 +1239,7 @@ const Badge = ({ text, color, size = 'md' }: { text: string; color: string; size
   return <span className={`inline-flex items-center rounded-lg font-black uppercase tracking-wide border-2 ${styles} ${sizeClasses}`}>{text}</span>;
 };
 
-// CareLevelCard Component - REDESIGNED WITH LIGHTER FONT WEIGHTS
+// CareLevelCard - simplified
 interface CareLevelCardProps {
   label: string;
   value: string;
@@ -1251,36 +1248,35 @@ interface CareLevelCardProps {
 
 const CareLevelCard = ({ label, value, icon }: CareLevelCardProps) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="bg-white dark:bg-gray-800 rounded-lg p-3.5 border border-gray-200 dark:border-gray-700 shadow-sm">
       <div className="flex items-center gap-2 mb-2">
         {icon}
-        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{label}</div>
+        <div className="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{label}</div>
       </div>
       <div className="text-base font-semibold text-gray-900 dark:text-gray-100 capitalize">{value}</div>
     </div>
   );
 };
 
-// EquipmentCardNew Component - STREAMLINED
-interface EquipmentCardNewProps {
+// EquipmentCard - unified simple design
+interface EquipmentCardProps {
   icon: React.ReactNode;
   label: string;
   required: boolean;
   details?: string;
-  color: 'rose' | 'blue' | 'cyan' | 'amber' | 'emerald';
 }
 
-const EquipmentCardNew = ({ icon, label, required, details, color }: EquipmentCardNewProps) => {
+const EquipmentCard = ({ icon, label, required, details }: EquipmentCardProps) => {
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 ${required ? 'shadow-sm' : 'opacity-60'}`}>
-      <div className="flex items-center gap-2 mb-1">
+    <div className={`bg-white dark:bg-gray-800 rounded-lg p-3.5 border border-gray-200 dark:border-gray-700 shadow-sm ${!required && 'opacity-60'}`}>
+      <div className="flex items-center gap-2 mb-1.5">
         {icon}
-        <div className="text-sm font-bold text-gray-900 dark:text-white">{label}</div>
+        <div className="text-sm font-semibold text-gray-900 dark:text-white">{label}</div>
         {required && (
-          <span className="ml-auto px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 text-[9px] font-black uppercase">Req</span>
+          <span className="ml-auto px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 text-[9px] font-semibold uppercase border border-emerald-200 dark:border-emerald-800">Required</span>
         )}
       </div>
-      {details && <p className="text-[10px] text-gray-600 dark:text-gray-400 capitalize">{details}</p>}
+      {details && <p className="text-[10px] text-gray-600 dark:text-gray-400 font-normal capitalize leading-relaxed">{details}</p>}
       {!required && <p className="text-[10px] text-gray-500 dark:text-gray-500 italic">Optional</p>}
     </div>
   );
@@ -1303,7 +1299,6 @@ const NotFound = () => (
 
 const resolveHeaderImageUrl = (imageUrl?: string, slug?: string) => {
   if (imageUrl) {
-    // Pass through any external URL (http/https) or absolute path as-is
     if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
     if (imageUrl.startsWith('/images/species/')) return imageUrl;
     if (imageUrl.startsWith('images/species/')) return `/${imageUrl}`;
