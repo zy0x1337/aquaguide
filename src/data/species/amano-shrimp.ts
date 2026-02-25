@@ -4,7 +4,7 @@ export const amanoShrimp: Species = {
   id: 'amano-shrimp',
   slug: 'amano-shrimp',
   imageUrl: '/images/species/amano-shrimp.jpg',
-  funFact: "Amano Shrimp are algae-eating champions. Named after aquascaper Takashi Amano, one shrimp consumes significant algae daily. Watch them shovel biofilm with fan-like hands. They molt every 3 to 8 weeks—empty shells are normal!",
+  funFact: "Named after the legendary Takashi Amano, these transparent cleanup crews are voracious algae eaters. Their larvae require a journey to the ocean (brackish water) to survive, making breeding a true expert challenge!",
   imageCredit: {
     photographer: 'Máté Molnár',
     sourceUrl: 'https://unsplash.com/de/fotos/4Vn4UK4vyx8',
@@ -63,26 +63,26 @@ export const amanoShrimp: Species = {
       rules: [
         {
           type: 'avoid',
-          target: 'copper-based medications',
-          reason: 'Invertebrates are extremely sensitive to copper. Even trace amounts from medications, fertilizers, or pipes are fatal. Always use shrimp-safe products.',
+          target: 'Copper based Medications',
+          reason: 'Invertebrates are extremely sensitive to copper. Even trace amounts from medications, fertilizers, or pipes are fatal. Always use shrimp safe products.',
           severity: 'critical',
         },
         {
           type: 'warning',
-          target: 'predatory fish',
+          target: 'Predatory fish',
           reason: 'Puffers, loaches, and large cichlids actively hunt shrimp. Heavy planting may help but causes constant stress.',
           severity: 'high',
         },
         {
           type: 'requires',
-          condition: 'stable water parameters',
+          condition: 'Stable water parameters',
           reason: 'Shrimp are sensitive to sudden pH, temperature, or GH changes. Drip acclimate new shrimp for two or more hours. Sudden changes cause failed molts.',
           severity: 'high',
         },
         {
           type: 'requires',
-          condition: 'supplemental feeding',
-          reason: 'Algae alone is insufficient long-term. Amanos need protein and vegetables or they will starve after consuming all available algae.',
+          condition: 'Supplemental feeding',
+          reason: 'Algae alone is insufficient long term. Amanos need protein and vegetables or they will starve after consuming all available algae.',
           severity: 'medium',
         },
       ],
@@ -126,12 +126,12 @@ export const amanoShrimp: Species = {
       'Stable water parameters (shrimp are sensitive)',
       'Driftwood or other surfaces for biofilm',
       'Supplemental feeding (vegetables, algae wafers)',
-      'No copper-based products',
+      'No copper based products',
       'Drip acclimate for two or more hours minimum',
     ],
     
     proTips: [
-      "Amanos excel at eating soft green algae and hair algae. Five to ten Amanos can clear a 100 L tank in two to three weeks. They ignore brown diatoms and black beard algae.",
+      "Amanos excel at eating soft green algae and hair algae. Five to ten Amanos can clear a 100 liter tank in two to three weeks. They ignore brown diatoms and black beard algae.",
       "Supplement their diet! Once algae is depleted, feed blanched zucchini, spinach, algae wafers, or shrimp pellets two to three times per week. Starving shrimp become lethargic.",
       "Molting happens every three to eight weeks. The empty shell looks like a dead shrimp. Do not remove it. Shrimp eat their old shells to recycle calcium. Count your shrimp to confirm.",
       "Drip acclimation is critical. Use airline tubing with a valve to slowly match tank parameters over two or more hours. Sudden changes cause osmotic shock.",

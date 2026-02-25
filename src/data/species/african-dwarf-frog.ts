@@ -5,7 +5,7 @@ export const africanDwarfFrog: Species = {
   slug: 'african-dwarf-frog',
   imageUrl: '/images/species/african-dwarf-frog.jpg',
   
-  funFact: "African Dwarf Frogs must surface to breathe. If they cannot reach the top, they will drown. Nearly blind, they navigate by smell and touch with sensitive fingertips. Watch them zen float motionless mid water, arms spread like tiny underwater starfish. Males sing at night. A buzzing hum that sounds like an underwater kazoo.",
+  funFact: "These nearly blind amphibians are the zen masters of the aquarium, often floating motionless in the 'zen pose' for hours. Males serenade females at night with a buzzing hum that sounds suspiciously like an underwater kazoo!",
 
   taxonomy: {
     scientificName: 'Hymenochirus boettgeri',
@@ -13,13 +13,13 @@ export const africanDwarfFrog: Species = {
     family: 'Pipidae',
     origin: 'Central Africa (Congo Basin, Cameroon, Nigeria)',
     region: 'Africa',
-    biotope: 'Shallow stagnant rainforest pools and slow creeks with dense vegetation and low oxygen',
+    biotope: 'Shallow stagnant rainforest pools and slow creeks with dense vegetation and low oxygen.',
   },
 
   visuals: {
     iconShape: 'frog',
     adultSizeCM: 5,
-    color: 'Olive brown to grey with black mottling, cream belly. Blonde variant: peachy tan with lighter markings',
+    color: 'Olive brown to grey with black mottling, cream belly. Blonde variant: peachy tan with lighter markings.',
   },
 
   environment: {
@@ -76,32 +76,32 @@ export const africanDwarfFrog: Species = {
       rules: [
         {
           type: 'avoid',
-          target: 'most community fish',
-          reason: 'Frogs are nearly blind and slow eaters. Fast fish steal all food before frogs find it. Number one cause of starvation death',
+          target: 'Most community fish',
+          reason: 'Frogs are nearly blind and slow eaters. Fast fish steal all food before frogs find it. Number one cause of starvation death.',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'African Clawed Frogs (Xenopus laevis)',
-          reason: 'Often mislabeled in stores! Clawed Frogs grow to 15 cm and eat Dwarf Frogs. Check webbing: all four feet webbed equals Dwarf; only back feet webbed equals Clawed',
+          reason: 'Often mislabeled in stores! Clawed Frogs grow to 15 cm and eat Dwarf Frogs. Check webbing: all four feet webbed equals Dwarf; only back feet webbed equals Clawed.',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'low flow calm water',
-          reason: 'Weak swimmers exhausted by strong current. Cannot reach surface to breathe. Use sponge filters or baffle outflows',
+          condition: 'Low flow calm water',
+          reason: 'Weak swimmers exhausted by strong current. Cannot reach surface to breathe. Use sponge filters or baffle outflows.',
           severity: 'high',
         },
         {
           type: 'requires',
-          condition: 'target feeding required',
-          reason: 'Nearly blind. Food must be placed at their nose with tweezers turkey baster. Cannot compete for scattered food',
+          condition: 'Target feeding required',
+          reason: 'Nearly blind. Food must be placed at their nose with tweezers turkey baster. Cannot compete for scattered food.',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'shallow tank depth less than 40 cm',
-          reason: 'Must surface every 10 to 15 minutes for air. Deep tanks exhaust them and risk drowning',
+          condition: 'Shallow tank depth less than 40 cm',
+          reason: 'Must surface every 10 to 15 minutes for air. Deep tanks exhaust them and risk drowning.',
           severity: 'high',
         },
       ],
