@@ -4,7 +4,8 @@ export const endlerGuppy: Species = {
   id: 'guppy-001',
   slug: 'endler-guppy',
   imageUrl: '/images/species/endler-guppy.jpg',
-  funFact: "Endler's Livebearers were rediscovered in 1975 by Dr. John Endler in isolated lagoons in Venezuela. They're not just 'small guppies'—they're a completely separate species (Poecilia wingei vs Poecilia reticulata) with explosive metallic colors and hyperactive personalities that put common guppies to shame.",
+  
+  funFact: "Rediscovered in 1975 after being presumed extinct, this distinct species boasts neon metallic colors that are brighter and more intense than those of the common guppy.",
 
   taxonomy: {
     scientificName: 'Poecilia wingei',
@@ -12,13 +13,13 @@ export const endlerGuppy: Species = {
     family: 'Poeciliidae',
     origin: 'Venezuela (Laguna de Patos, Campoma, Cumana)',
     region: 'South America',
-    biotope: 'Warm, hard-water coastal lagoons with dense algae growth and brackish influence from coastal proximity',
+    biotope: 'Warm, mineral-rich coastal lagoons with dense algae growth and potential brackish influence.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 2.5,
-    color: 'Males: Electric neon orange, metallic green, iridescent blue in psychedelic patterns. Females: Plain silver-grey',
+    color: 'Males display vivid neon orange and metallic green patterns, while females are a uniform silver-grey. Pure N-Class strains maintain specific, consistent coloration.',
   },
 
   environment: {
@@ -48,49 +49,49 @@ export const endlerGuppy: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Floating plants (Water Sprite, Guppy Grass, Amazon Frogbit) are mandatory if keeping both sexes—females need hiding spots from relentless male attention. Dense planting provides fry refuges and grazing surfaces for algae. Moss (Java Moss, Christmas Moss) gives fry cover and acts as microfauna breeding grounds. Avoid sharp decorations that can damage delicate fins.',
-    hardscape: ['Smooth River Rocks', 'Driftwood (Malaysian or Mopani)', 'Clay Pots (fry shelters)'],
+    plantingNotes: 'Floating plants are essential for providing cover for females and refuge for fry. Dense planting also creates grazing surfaces for algae, which supplements their diet.',
+    hardscape: ['Smooth river rocks', 'Driftwood', 'Clay pots'],
   },
 
   behavior: {
     tags: ['livebearer', 'surface_dweller', 'active', 'colorful', 'nano', 'shoaler'],
     minGroupSize: 6,
-    description: 'Endlers are hyperactive nano-fish with explosive personalities. Males are in constant motion, displaying their psychedelic colors to females 24/7 in elaborate mating dances. They dart around the surface like tiny missiles, investigating everything. Despite their small size (2.5cm), they have massive energy levels and dominate the upper water column. Males follow females relentlessly—what looks like "harassment" to humans is actually their natural courtship display. Females choose the most vibrant, energetic males. Pure-strain (N-Class) Endlers are significantly hardier than fancy guppies due to lack of inbreeding.',
+    description: 'These tiny fish are hyperactive, constantly darting around the upper water column in search of food or mates. Males are relentless in their courtship, displaying vibrant colors and performing energetic dances to attract females. While peaceful, their constant activity can be stressful for timid tankmates. They are hardy and adaptable but thrive best in the specific hard water conditions of their natural habitat.',
     
     compatibility: {
-      goodMates: ['Corydoras', 'Otocinclus', 'Small Rasboras (Chili, Harlequin)', 'Dwarf Shrimp (Cherry, Amano)', 'Nerite Snails', 'Ember Tetras', 'Microrasboras'],
-      badMates: ['Bettas (attack colorful males)', 'Angelfish (predators)', 'Large Tetras', 'Tiger Barbs (fin nippers)', 'Common Guppies (hybridization risk)', 'Goldfish'],
-      notes: 'Endlers are peaceful surface dwellers ideal for nano community tanks. Their tiny size (2.5cm) makes them vulnerable to larger predators. CRITICAL: Do not mix with common guppies (Poecilia reticulata) if you want to maintain pure genetics—they hybridize easily and the resulting offspring lose the metallic coloration and hardiness.',
+      goodMates: ['Corydoras', 'Otocinclus', 'Small Rasboras', 'Cherry Shrimp', 'Nerite Snails'],
+      badMates: ['Common Guppies', 'Bettas', 'Angelfish', 'Tiger Barbs'],
+      notes: 'Do not mix with common guppies to preserve the genetic purity of the Endler strain.',
       
       rules: [
         {
           type: 'avoid',
           target: 'common guppies',
-          reason: 'Endlers (Poecilia wingei) hybridize with common guppies (Poecilia reticulata). Hybrids lose pure strain genetics, hardiness, and metallic coloration. N-Class purity is permanently lost',
+          reason: 'They hybridize easily with common guppies, resulting in offspring that lose the distinctive coloration and hardiness of the pure strain.',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'bettas',
-          reason: 'Bettas mistake colorful male Endlers for rival bettas and will attack. Females usually ignored but males are targets',
+          reason: 'Bettas often mistake the bright colors and active movements of males for rival fish and will attack them.',
           severity: 'high',
         },
         {
           type: 'requires',
-          condition: 'male-to-female-ratio 1:2 or 1:3',
-          reason: 'Males court females relentlessly. Without enough females, a single female will be chased to exhaustion and stress-death. More females = distributed attention',
+          condition: 'male to female ratio of 1:2 or 1:3',
+          reason: 'Males court females incessantly, and a shortage of females leads to the harassment and exhaustion of the few that are present.',
           severity: 'critical',
         },
         {
           type: 'warning',
           target: 'all-male groups',
-          reason: 'Male-only tanks work well and eliminate breeding. Males are peaceful together and still display vibrant colors',
+          reason: 'An all-male tank eliminates breeding and results in a peaceful, colorful display without the risk of overpopulation.',
           severity: 'low',
         },
         {
           type: 'requires',
-          condition: 'hard-water GH >= 10',
-          reason: 'Endlers evolved in mineral-rich lagoons. In soft water they develop "shimmies" (nervous twitching) and weakened immune systems',
+          condition: 'hard water GH >= 10',
+          reason: 'They are adapted to mineral rich environments and often develop health issues in soft water.',
           severity: 'high',
         },
       ],
@@ -132,27 +133,22 @@ export const endlerGuppy: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'HARD water (GH 10-30) is mandatory—soft water causes shimmies and death', 
-       'Male-to-female ratio of 1:2 or 1:3 prevents female stress', 
-      'Dense floating plants required if keeping both sexes',
-      'Do not mix with common guppies—they hybridize and lose N-Class purity',
+      'Hard water (GH 10-30) is mandatory', 
+      'Ratio of one male to two or three females', 
+      'Dense floating plants',
+      'Separation from common guppies',
     ],
 
     proTips: [
-      "Male-only tanks are amazing. Males display full colors without breeding chaos, coexist peacefully, and eliminate the fry explosion problem. Perfect for nano tanks.",
-      "N-Class (pure strain) Endlers are significantly hardier than fancy guppies. They lack the inbreeding issues and genetic defects common in store guppies. Worth seeking out from specialty breeders.",
-      "Temperature matters: Endlers love warm water (27°C). Higher temps increase metabolism, intensify colors, and boost activity. They tolerate up to 30°C in summer.",
-      "Vegetable matter is key for color. Feed spirulina flakes, blanched zucchini, or algae wafers. The carotenoids intensify their neon orange and make metallic greens pop.",
-      "If breeding, plan ahead. Females drop 10-30 fry every 28 days. In 6 months you'll have 200+ fish. Have a plan: sell to stores, cull poor specimens, or keep males only.",
-      "Avoid hybrids (K-Class). Pet store 'Endlers' are often guppy hybrids. True N-Class Endlers stay tiny (2.5cm), have metallic colors, and specific strain names (Black Bar, Tiger, El Silverado).",
+      "An all-male tank provides a stunning display of color without the risk of overpopulation.",
+      "Seek out N-Class or pure strains from specialty breeders to ensure you get the hardiest and most colorful fish.",
+      "Include vegetable matter like spirulina in their diet to maintain bright colors."
     ],
 
     commonMistakes: [
-      "Keeping them in soft/acidic water. Endlers evolved in hard, alkaline lagoons (GH 15-25, pH 7.5-8.0). In soft water they develop 'shimmies' (nervous twitching disease) and die within weeks.",
-      "Wrong male-to-female ratio. Keeping 3 males with 1 female = dead female from exhaustion. Males court 24/7. You need 2-3 females per male minimum.",
-      "Mixing with common guppies. This permanently ruins N-Class genetics. Hybrids are less colorful, less hardy, and can't be sold as pure strains. Once mixed, you can never go back.",
-      "Underestimating breeding rate. One female = 20 fry/month. After 6 months you'll have 200+ fish. Parents rarely eat fry unlike guppies. You will be overrun without a plan.",
-      "Expecting them to behave like guppies. Endlers are much more active, stay smaller, and prefer warmer water. They're a different species with different needs.",
+      "Keeping them in soft or acidic water leads to nervous disorders and premature death.",
+      "Housing them with common guppies permanently contaminates the pure gene pool.",
+      "Maintaining incorrect gender ratios causes stress and exhaustion in females."
     ],
     
     feeding: {
@@ -171,7 +167,7 @@ export const endlerGuppy: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Endlers are active eaters and produce moderate waste for their size. With breeding populations, bioload increases rapidly. Weekly 30% changes prevent nitrate buildup.',
+      notes: 'Regular water changes are necessary to manage the bioload, especially as the population grows from breeding.',
     },
     
     equipment: {
@@ -193,21 +189,21 @@ export const endlerGuppy: Species = {
   health: {
     lifespanYears: 2,
     commonDiseases: ['shimmies', 'ich', 'fin-rot', 'internal-parasites', 'columnaris'],
-    sensitivities: ['Soft water (causes shimmies)', 'Cold water (<24°C)', 'Acidic pH (<7.0)', 'Overfeeding (bloat)', 'Inbreeding (hybrids only)'],
+    sensitivities: ['Soft water', 'Cold water', 'Acidic pH', 'Overfeeding', 'Inbreeding'],
   },
 
   scientificContext: {
-    wildHabitat: "Endlers inhabit isolated coastal lagoons in northern Venezuela (Laguna de Patos, Campoma). These lagoons are extremely warm (28-32°C), mineral-rich (GH 20-30), alkaline (pH 7.5-8.5), and often have slight brackish influence from coastal proximity. The water is green with algae blooms, and vegetation is dense. The lagoons are small and isolated, leading to distinct color strains in each population. Sadly, some original habitats have been destroyed by development, making wild populations endangered.",
-    sexualDimorphism: "Extreme and immediate. Males are tiny (2.0-2.5cm) with explosive neon colors—metallic greens, electric oranges, iridescent blues in wild patterns. Each strain has unique markings (Tiger, Black Bar, Peacock). Females are significantly larger (3.5-4.0cm), plain silver-grey with a gravid spot (dark area near anal fin when pregnant). Males develop full color by 4-5 weeks old, making sexing juveniles easy.",
-    variants: ['Black Bar Endler (black chevron pattern)', 'Tiger Endler (tiger stripes)', 'El Silverado (silver metallic)', 'Peacock Endler (eye-spots)', 'Japan Blue (blue metallic)', 'Hybrid K-Class (mixed with guppies - avoid)'],
+    wildHabitat: "Native to isolated coastal lagoons in Venezuela, these fish live in warm waters rich in minerals and often green with algae. The specific habitat of the original Endler population, Laguna de Patos, is threatened by urban development and pollution. Conservation of their natural environment is a concern for the species, though they are widely bred in captivity.",
+    sexualDimorphism: "Males are significantly smaller but far more colorful, displaying complex patterns of metallic orange, green, and black. Females are larger and possess a uniform silver grey body with a dark gravid spot near the anal fin when pregnant. These differences are apparent at a very young age.",
+    variants: ['Black Bar', 'Tiger', 'El Silverado', 'Peacock', 'Japan Blue', 'Hybrid K-Class'],
   },
 
   breeding: {
     method: 'livebearer',
     difficulty: 'beginner',
-    trigger: 'Breeding is automatic. Simply adding males and females together triggers immediate breeding. Warmer water (27-28°C) increases breeding frequency. Females reach maturity at 8-10 weeks.',
-    fryCare: 'Fry are born fully formed, free-swimming, and relatively large (5-6mm). They immediately accept crushed flakes, micro-pellets, and baby brine shrimp. No infusoria stage needed unlike egg-layers. Parents rarely eat fry (unlike common guppies). Provide dense plants/moss for fry refuges. Fry grow fast—males show color at 4-5 weeks, full adult size at 8-10 weeks.',
-    notes: 'Endler breeding is too easy—that\'s the problem. Females store sperm for 6+ months and drop 10-30 fry every 28 days. Without population control, you\'ll have 200+ fish in 6 months. Options: 1) Keep males only. 2) Separate sexes. 3) Sell fry to stores. 4) Let nature take its course (add predators). 5) Cull poor specimens to maintain quality. CRITICAL: Never mix strains or with common guppies—this destroys N-Class purity forever.',
+    trigger: 'Breeding occurs readily without intervention when both sexes are present. Slightly raising the temperature can increase the frequency of spawning cycles.',
+    fryCare: 'Fry are born fully formed and capable of swimming immediately. They accept the same foods as adults, provided the particles are small enough. Because adults rarely prey on their young, the population can expand rapidly without intervention. Providing dense cover helps increase the survival rate of the smallest fry.',
+    notes: 'Females are capable of storing sperm for months, producing multiple broods from a single mating. Population control is often the primary challenge for the aquarist.',
   },
   
   experienceData: {

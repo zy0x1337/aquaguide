@@ -4,7 +4,8 @@ export const emberTetra: Species = {
   id: 'ember-tetra',
   slug: 'ember-tetra',
   imageUrl: '/images/species/ember-tetra.jpg',
-  funFact: "Ember Tetras are living fireflies—tiny glowing orange sparks dancing through planted tanks like floating embers from a campfire! Despite being barely 0.8 inches (2cm), they create stunning visual impact in groups of 15-20+, forming loose schools that shimmer through plants like orange clouds. Here's the wild part: they're continuous spawners—females scatter 30-60 eggs every 2 weeks when properly conditioned, but they have zero parental care and eat their own eggs within minutes! Males display intense courtship: chasing females through plants, vibrating bodies, and showing neon orange coloration that glows under dim lighting. Under blackwater conditions (tannin-stained water, dark substrate), their colors intensify to burning ember orange-red—absolutely mesmerizing! From Brazil's Araguaia River blackwater streams!",
+  
+  funFact: "Discovered in 1987, the Ember Tetra is named for its intense orange glow that resembles dying embers, especially when viewed against a dark substrate in a planted aquarium.",
 
   imageCredit: {
     photographer: 'Klaus Rudloff (via Wikimedia Commons)',
@@ -17,15 +18,15 @@ export const emberTetra: Species = {
     scientificName: 'Hyphessobrycon amandae',
     commonName: 'Ember Tetra',
     family: 'Characidae',
-    origin: 'Brazil (Araguaia River basin, Mato Grosso - blackwater tributaries and slow-moving streams)',
+    origin: 'Brazil (Araguaia River basin, Mato Grosso - blackwater tributaries)',
     region: 'South America',
-    biotope: 'Slow-moving blackwater streams with dense vegetation, leaf litter substrate, tannin-stained tea-colored water, soft acidic conditions',
+    biotope: 'Slow-moving blackwater streams with dense vegetation and tannin-stained water.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 2,
-    color: 'Fiery! Intense orange-red body (like glowing embers) that glows under dim lighting. Males: neon orange with more intense coloration, translucent fins with orange tint. Females: slightly duller orange-red, rounder bodies. Under blackwater conditions (dark substrate, tannins), colors intensify to burning ember orange-red. Bright lighting washes out colors to pale orange',
+    color: 'Exhibits a vibrant orange to reddish body color that appears to glow under dim lighting. Males are generally more colorful and slender than the rounder females.',
   },
 
   environment: {
@@ -55,46 +56,43 @@ export const emberTetra: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes:
-      'Ember Tetras are plant-dependent and thrive in densely planted tanks! They prefer mid-water zones, weaving through stem plants and floating plant roots. Floating plants are essential for security and diffusing lighting (they prefer dim conditions). Dark substrate (black sand, dark gravel) creates dramatic contrast—orange bodies glow like burning embers against darkness. Best plants: stem plants (Rotala, Ludwigia, Bacopa), fine-leaved plants (Java Moss, Christmas Moss), broader leaves (Anubias, Java Fern, Cryptocoryne), floating plants (Salvinia, Frogbit, Red Root Floaters). Blackwater setup with Indian Almond leaves intensifies colors dramatically. Soft/dim lighting preferred.',
-    hardscape: ['Driftwood (creates tannins - ideal)', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth stones', 'Minimal—plants are primary focus'],
+    plantingNotes: 'Dense planting is essential to make these shy fish feel secure enough to swim in the open. Floating plants help diffuse bright lighting, which brings out their signature glowing coloration.',
+    hardscape: ['Driftwood', 'Leaf litter', 'Smooth stones'],
   },
 
   behavior: {
     tags: ['peaceful', 'shoaler', 'nano', 'colorful', 'active'],
     minGroupSize: 10,
-    description:
-      'Ember Tetras are tiny orange fireflies creating mesmerizing displays! They form loose schools (shoals, not tight schools) that drift through plants like glowing orange clouds. They\'re highly social and thrive in groups of 10-20+—larger groups = bolder fish with intense colors. Watch them explore mid-water zones constantly, weaving through plants in synchronized movements. Males perform courtship displays: chasing females through vegetation, vibrating bodies, circling displays, showing neon orange coloration. They\'re peaceful toward all tankmates and focus on grazing microorganisms and hunting tiny foods. They\'re shy in sparse tanks but confident in heavily planted setups with floating cover. Despite tiny size (0.8 inches), they\'re active swimmers constantly in motion.',
+    description: 'These small tetras are peaceful shoaling fish that spend their time in the middle and upper layers of the water. They can be quite timid, so keeping them in groups of ten or more is essential to encourage natural activity and confidence. A well planted tank with plenty of cover will make them feel secure and display their best colors. They are active swimmers but appreciate calm water to drift through the vegetation.',
     
     compatibility: {
-      goodMates: ['Other nano fish (CPD, Chili Rasbora, Phoenix Rasbora)', 'Pygmy Corydoras', 'Otocinclus', 'Small peaceful snails', 'Adult shrimp (Cherry, Amano)', 'Kuhli Loaches', 'Small peaceful tetras'],
-      badMates: ['Any fish over 3 inches', 'Bettas (may nip)', 'Angelfish (too large)', 'Larger tetras', 'Aggressive fish', 'Fast/boisterous feeders'],
-      notes:
-        'Ember Tetras are perfect for nano community tanks with peaceful species. They\'re shrimp-safe—mouths too small for adult shrimp (may nibble shrimplets). Best kept with similar-sized, peaceful species. They\'re easily intimidated and outcompeted by larger/faster fish. Species-only tanks or peaceful nano communities ideal. Groups of 10-20+ spread social dynamics and create stunning visual impact—orange cloud effect!',
+      goodMates: ['Chili Rasboras', 'Pygmy Corydoras', 'Otocinclus', 'Cherry Shrimp', 'Kuhli Loaches'],
+      badMates: ['Bettas', 'Angelfish', 'Larger tetras', 'Fast feeders'],
+      notes: 'Best kept in a species only setup or with other peaceful nano fish to ensure they get enough food.',
       
       rules: [
         {
           type: 'requires',
           condition: 'groups of 10-20+ fish',
-          reason: 'Ember Tetras are highly social and timid in small groups. Groups under 10 = stressed, hiding fish with faded colors. Groups of 10-20+ = confident, active schools with intense orange colors. Larger groups create stunning orange cloud displays',
+          reason: 'Small groups lead to shyness and stress, while larger groups encourage natural schooling and vibrant coloration.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'very densely planted tank with floating plants',
-          reason: 'Embers are plant-dependent. Without dense planting, they hide constantly and show stress. Dense plants + floating cover = confident, visible fish with intense colors',
+          reason: 'Without dense cover, these shy fish will hide constantly and lose their coloration.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'dark substrate (black sand, dark gravel)',
-          reason: 'Dark substrate makes orange colors glow dramatically like burning embers. Light substrates wash out colors completely. This dramatically affects visual impact',
+          reason: 'A dark background provides the contrast needed to make their orange coloration truly stand out.',
           severity: 'medium',
         },
         {
           type: 'warning',
           condition: 'dim lighting or floating plants',
-          reason: 'Bright lighting washes out orange colors to pale. Dim lighting or floating plants (diffused light) intensifies ember glow to neon orange',
+          reason: 'Bright lighting washes out their colors and causes stress.',
           severity: 'medium',
         },
       ],
@@ -135,36 +133,29 @@ export const emberTetra: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Groups of 10-20+ (social species)', 
-      'Very dense planting (plant-dependent)', 
-      'Dark substrate (makes colors glow)', 
-      'Dim lighting or floating plants', 
-      'Soft acidic water (blackwater conditions ideal)',
-      'Tiny foods (micro-pellets, crushed flakes)',
+      'Groups of 10-20+', 
+      'Dense planting', 
+      'Dark substrate', 
+      'Dim lighting', 
+      'Soft acidic water',
+      'Tiny foods',
     ],
 
     proTips: [
-      "Group size = color intensity! Small groups (under 10) = stressed, pale, hiding fish. Groups of 10-20+ = confident, neon orange schools creating stunning orange cloud effect. The difference is dramatic. Always buy 10+ if space allows.",
-      "Dark substrate = ember glow! Black sand or dark gravel makes orange bodies glow dramatically like burning embers. Light substrates (white sand, light gravel) wash out colors to pale orange. Simple change = stunning visual impact.",
-      "Blackwater conditions = maximum intensity! Add Indian Almond leaves, driftwood, or blackwater extract to create tannin-stained 'tea' water. Colors intensify to burning ember orange-red—absolutely mesmerizing. This mimics natural habitat.",
-      "Dim lighting or floating plants! Bright lighting washes out colors to pale. Dim lighting or dense floating plants (Salvinia, Frogbit) diffuses light and intensifies neon orange glow. They prefer shaded conditions.",
-      "Feed tiny portions 2-3x daily. Embers have microscopic mouths and stomachs. Use micro-pellets, finely crushed flakes, baby brine shrimp, daphnia. They can't eat standard flakes—too large!",
-      "Watch the courtship dances! Males chase females through plants, vibrating bodies and circling in elaborate displays. They turn neon orange during spawning. Beautiful behavior in mature groups.",
-      "Most shrimp-safe nano fish! Mouths too small for adult shrimp. May nibble shrimplets occasionally but won't decimate colonies. Perfect for planted shrimp tanks.",
+      "Maintaining a dark substrate and tannin-stained water significantly intensifies their fiery orange color.",
+      "Feed very small foods like micro-pellets or crushed flakes, as their mouths are quite tiny."
     ],
 
     commonMistakes: [
-      "Small groups (under 10) = pale hiding fish. Embers are highly social and timid. Groups under 10 = stressed fish with faded colors hiding constantly. Beginners buy 6 and wonder why colors are dull. Buy 10-20+ minimum!",
-      "Light substrate. White sand/gravel washes out orange colors completely. Dark substrate creates dramatic ember glow—orange pops against darkness. Simple fix = huge visual impact.",
-      "Bright lighting. Intense lighting washes out colors to pale orange. Embers prefer dim conditions or floating plants diffusing light. Dim lighting = neon orange glow.",
-      "Sparse planting. Embers are plant-dependent. Without dense plants, they hide constantly behind equipment. Heavily planted tanks = confident, visible fish with intense colors.",
-      "Foods too large. Embers have tiny mouths. Standard flakes are too big. Use micro-pellets, finely crushed flakes, baby brine shrimp. Underfeeding from wrong food size is common.",
+      "Keeping them in small groups results in shy fish that hide behind equipment.",
+      "Bright lighting without floating plants washes out their vibrant colors.",
+      "Using a light-colored substrate makes them appear pale and washed out."
     ],
     
     feeding: {
       frequency: 'twice-daily',
       primaryFoods: ['micro-pellets', 'crushed-flakes', 'brine-shrimp', 'daphnia'],
-      supplements: [ 'spirulina', 'cyclops'],
+      supplements: ['spirulina', 'cyclops'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -177,7 +168,7 @@ export const emberTetra: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: false,
-      notes: 'Weekly 30% water changes. Ember Tetras prefer soft acidic stable water. Keep nitrates below 10ppm—sensitive to poor water quality. Low flow—sponge filters ideal. Add Indian Almond leaves for tannins (intensifies colors). Mature planted tanks with biofilm help significantly.',
+      notes: 'Keep the water clean and stable, as they are sensitive to high nitrate levels and sudden parameter shifts.',
     },
     
     equipment: {
@@ -199,26 +190,21 @@ export const emberTetra: Species = {
   health: {
     lifespanYears: 4,
     commonDiseases: ['ich', 'velvet', 'fin-rot', 'internal-parasites', 'fungal-infections'],
-    sensitivities: ['Sudden parameter changes', 'Poor water quality (nitrates)', 'Bright lighting (stress)', 'Sparse planting (chronic stress)', 'Small groups (social stress)'],
+    sensitivities: ['Sudden parameter changes', 'High nitrates', 'Bright lighting', 'Sparse planting', 'Small groups'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Ember Tetras inhabit slow-moving blackwater tributaries and streams in Araguaia River basin, Mato Grosso, Brazil. Wild habitat: shallow (20-60cm deep) forest streams with dense aquatic vegetation, thick leaf litter substrate (decomposing leaves), tannin-stained tea-colored water, soft acidic conditions (GH 2-6, KH 0-2, pH 5.5-6.5), warm temperatures (24-28°C), minimal flow. They occupy mid-water zones among dense plants, feeding on zooplankton, mosquito larvae, and microorganisms. Discovered relatively recently (1987) and entered hobby 1990s.',
-    sexualDimorphism:
-      'Subtle when not breeding. Males: More intensely colored with neon orange bodies especially during spawning. Slimmer, more streamlined bodies. Actively court females with chasing/vibrating displays. Females: Slightly duller orange coloration. Rounder, fuller bodies especially when gravid (carrying eggs). Less active during spawning. Juveniles (under 4 months) difficult to sex—wait for maturity and observe spawning behavior or body shape.',
-    variants: ['Standard Ember Tetra (wild-type)', 'Some captive-bred lines show slightly enhanced orange coloration'],
+    wildHabitat: "Endemic to the Araguaia River basin in Brazil, this species inhabits shallow, slow-moving blackwater streams. The water is typically stained dark by tannins from decaying organic matter, creating soft and acidic conditions. These habitats are heavily vegetated, providing shelter and foraging grounds for the fish. They feed on small invertebrates and zooplankton among the submerged roots and leaves.",
+    sexualDimorphism: "Males are more intensely colored and display a slimmer body shape compared to females. Females are noticeably rounder, especially when carrying eggs, and may have slightly duller coloration. The differences are subtle and easiest to see when the fish are fully mature and in breeding condition.",
+    variants: ['Standard Ember Tetra'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'medium',
-    trigger:
-      'Ember Tetras are continuous spawners—they scatter small batches every 2 weeks when properly conditioned! Trigger breeding: 1) Mature group (6+ months old) with 10+ fish, 2) Dense fine-leaved plants (Java Moss, Christmas Moss, spawning mops), 3) Excellent conditioning with live/frozen foods (baby brine shrimp, daphnia, microworms, moina) for 2 weeks until females plump, 4) Soft acidic water (GH 2-6, pH 6.0-6.5, temp 26-28°C), 5) Tannin-stained blackwater (Indian Almond leaves). Males chase females intensely through plants with vibrating body displays.',
-    fryCare:
-      'Females scatter 30-60 tiny non-adhesive eggs randomly among plants (continuous spawning strategy). CRITICAL: Adults have zero parental care and eat eggs within minutes—this is the biggest breeding challenge! Provide extremely dense planting so some eggs fall through and survive or remove adults immediately after spawning or collect eggs with turkey baster. Eggs hatch in 24-36 hours at 26°C. Fry are microscopic (1mm) and need infusoria or green water for 5-7 days before graduating to baby brine shrimp nauplii and microworms. Growth is slow: 5mm at 4 weeks, 1cm at 8 weeks, mature at 6 months. Fry rearing is challenging—need microscopic foods ready beforehand.',
-    notes:
-      'Embers breed readily in proper conditions with continuous spawning (every 2 weeks for months). Main challenge: zero parental care—adults eat eggs instantly. Solutions: 1) Extremely dense planting allows 1-5% fry survival naturally (easiest), 2) Separate breeding tank with spawning mops and remove adults immediately (higher survival), 3) Collect eggs daily with turkey baster. For deliberate breeding: separate spawning tank with Java Moss, condition adults heavily with live foods, remove after spawning. Fry need infusoria/green water initially—prepare cultures beforehand.',
+    trigger: 'Condition the group with high-quality live or frozen foods and maintain soft, acidic water. Spawning often occurs in the early morning, with females scattering eggs among fine-leaved plants.',
+    fryCare: 'The tiny eggs are scattered among plants and are prone to being eaten by the parents, so dense moss or a separate rearing tank is recommended. Fry hatch within 24 to 36 hours and are incredibly small, requiring infusoria or green water for the first few days. As they grow, they can accept newly hatched brine shrimp. Frequent small water changes are essential to maintain water quality for the developing fry.',
+    notes: 'They are continuous spawners but offer no parental care, often consuming their own eggs if not separated.',
   },
   
   experienceData: {
