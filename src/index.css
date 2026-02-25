@@ -5,218 +5,222 @@
 @tailwind utilities;
 
 @layer base {
-  /* === THEME VARIABLES === */
-  /* Light Theme (Default) */
-  :root,
-  [data-theme="light"] {
-    /* Primary Colors */
-    --color-coral-50: 254 247 242;
-    --color-coral-100: 253 229 216;
-    --color-coral-200: 251 206 191;
-    --color-coral-300: 248 184 166;
-    --color-coral-400: 245 162 141;
-    --color-coral-500: 255 127 80;    /* #FF7F50 */
-    --color-coral-600: 230 114 69;
-    --color-coral-700: 204 100 59;
-    --color-coral-800: 179 86 49;
-    --color-coral-900: 152 72 39;
-    --color-coral-950: 109 46 26;
-
-    --color-sapphire-50: 239 246 255;
-    --color-sapphire-100: 219 234 254;
-    --color-sapphire-200: 191 219 254;
-    --color-sapphire-300: 147 197 253;
-    --color-sapphire-400: 96 165 250;
-    --color-sapphire-500: 15 82 186;   /* #0F52BA */
-    --color-sapphire-600: 14 72 159;
-    --color-sapphire-700: 13 63 133;
-    --color-sapphire-800: 11 53 107;
-    --color-sapphire-900: 9 43 87;
-    --color-sapphire-950: 6 26 56;
-
-    --color-emerald-50: 240 252 244;
-    --color-emerald-100: 209 245 216;
-    --color-emerald-200: 178 240 191;
-    --color-emerald-300: 147 235 166;
-    --color-emerald-400: 117 230 141;
-    --color-emerald-500: 80 200 120;   /* #50C878 */
-    --color-emerald-600: 70 178 112;
-    --color-emerald-700: 61 169 104;
-    --color-emerald-800: 51 145 96;
-    --color-emerald-900: 42 120 88;
-    --color-emerald-950: 30 85 64;
-
-    /* Background & Text */
-    --color-bg-primary: 255 255 255;
-    --color-bg-secondary: 249 250 251;
-    --color-text-primary: 17 24 39;
-    --color-text-secondary: 107 114 128;
-    --color-border: 229 231 235;
-  }
-
-  /* Dark Theme */
-  [data-theme="dark"],
-  .dark {
-    /* Primary Colors (adjusted for dark mode) */
-    --color-coral-50: 109 46 26;
-    --color-coral-100: 152 72 39;
-    --color-coral-200: 179 86 49;
-    --color-coral-300: 204 100 59;
-    --color-coral-400: 230 114 69;
-    --color-coral-500: 255 127 80;    /* #FF7F50 */
-    --color-coral-600: 255 147 110;
-    --color-coral-700: 255 167 140;
-    --color-coral-800: 255 187 170;
-    --color-coral-900: 255 207 200;
-    --color-coral-950: 254 247 242;
-
-    --color-sapphire-50: 6 26 56;
-    --color-sapphire-100: 9 43 87;
-    --color-sapphire-200: 11 53 107;
-    --color-sapphire-300: 13 63 133;
-    --color-sapphire-400: 14 72 159;
-    --color-sapphire-500: 15 82 186;   /* #0F52BA */
-    --color-sapphire-600: 96 165 250;
-    --color-sapphire-700: 147 197 253;
-    --color-sapphire-800: 191 219 254;
-    --color-sapphire-900: 219 234 254;
-    --color-sapphire-950: 239 246 255;
-
-    --color-emerald-50: 30 85 64;
-    --color-emerald-100: 42 120 88;
-    --color-emerald-200: 51 145 96;
-    --color-emerald-300: 61 169 104;
-    --color-emerald-400: 70 178 112;
-    --color-emerald-500: 80 200 120;   /* #50C878 */
-    --color-emerald-600: 117 230 141;
-    --color-emerald-700: 147 235 166;
-    --color-emerald-800: 178 240 191;
-    --color-emerald-900: 209 245 216;
-    --color-emerald-950: 240 252 244;
-
-    /* Background & Text */
-    --color-bg-primary: 10 15 20;
-    --color-bg-secondary: 17 24 39;
-    --color-text-primary: 243 244 246;
-    --color-text-secondary: 156 163 175;
-    --color-border: 31 41 55;
-  }
-
-  /* Ocean Theme - Turquoise/Teal dominant with warm accents */
-  [data-theme="ocean"] {
-    /* Primary Colors - Ocean Palette */
-    --color-coral-50: 236 254 255;     /* Light Turquoise tint */
-    --color-coral-100: 207 250 254;
-    --color-coral-200: 165 243 252;
-    --color-coral-300: 103 232 249;
-    --color-coral-400: 34 211 238;
-    --color-coral-500: 64 224 208;     /* #40E0D0 Turquoise */
-    --color-coral-600: 6 182 212;
-    --color-coral-700: 8 145 178;
-    --color-coral-800: 21 94 117;
-    --color-coral-900: 22 78 99;
-    --color-coral-950: 8 51 68;
-
-    --color-sapphire-50: 240 253 250;
-    --color-sapphire-100: 204 251 241;
-    --color-sapphire-200: 153 246 228;
-    --color-sapphire-300: 94 234 212;
-    --color-sapphire-400: 45 212 191;
-    --color-sapphire-500: 0 128 128;   /* #008080 Teal */
-    --color-sapphire-600: 13 148 136;
-    --color-sapphire-700: 15 118 110;
-    --color-sapphire-800: 17 94 89;
-    --color-sapphire-900: 19 78 74;
-    --color-sapphire-950: 4 47 46;
-
-    --color-emerald-50: 240 253 244;
-    --color-emerald-100: 220 252 231;
-    --color-emerald-200: 187 247 208;
-    --color-emerald-300: 134 239 172;
-    --color-emerald-400: 74 222 128;
-    --color-emerald-500: 80 200 120;   /* #50C878 Emerald */
-    --color-emerald-600: 34 197 94;
-    --color-emerald-700: 21 128 61;
-    --color-emerald-800: 22 101 52;
-    --color-emerald-900: 20 83 45;
-    --color-emerald-950: 5 46 22;
-
-    /* Background & Text - Ocean inspired */
-    --color-bg-primary: 8 47 73;       /* Deep ocean blue */
-    --color-bg-secondary: 15 76 117;
-    --color-text-primary: 240 253 250;
-    --color-text-secondary: 153 246 228;
-    --color-border: 21 94 117;
-  }
-
-  /* Apply CSS variables to body */
+  /* Light and Dark themes use default Tailwind classes */
   body {
-    @apply transition-colors duration-300;
+    @apply bg-white dark:bg-gray-950;
+    @apply text-gray-900 dark:text-gray-100;
+    @apply transition-colors duration-200;
     @apply font-sans antialiased;
-    background-color: rgb(var(--color-bg-primary));
-    color: rgb(var(--color-text-primary));
   }
 
-  /* Smooth theme transitions */
   html {
-    @apply transition-colors duration-300;
+    @apply transition-colors duration-200;
   }
 
-  /* Ensure images look good in dark mode and ocean theme */
-  [data-theme="dark"] img,
-  [data-theme="ocean"] img {
-    @apply brightness-90;
+  img {
+    @apply dark:brightness-90;
   }
 
-  /* Headings */
   h1, h2, h3, h4, h5, h6 {
-    color: rgb(var(--color-text-primary));
+    @apply text-gray-900 dark:text-gray-100;
   }
 
-  /* Links */
   a {
-    color: rgb(var(--color-coral-600));
-  }
-  
-  a:hover {
-    color: rgb(var(--color-coral-700));
+    @apply text-coral-600 dark:text-coral-400;
+    @apply hover:text-coral-700 dark:hover:text-coral-300;
+    @apply transition-colors;
   }
 
-  /* Selection */
   ::selection {
-    background-color: rgb(var(--color-coral-200));
-    color: rgb(var(--color-text-primary));
+    @apply bg-coral-200 dark:bg-coral-900;
+    @apply text-gray-900 dark:text-gray-100;
   }
 
-  [data-theme="ocean"] ::selection {
-    background-color: rgb(var(--color-coral-400) / 0.4);
-  }
-
-  /* Scrollbar (webkit) */
   ::-webkit-scrollbar {
     @apply w-2;
   }
 
   ::-webkit-scrollbar-track {
-    background-color: rgb(var(--color-bg-secondary));
+    @apply bg-gray-100 dark:bg-gray-900;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: rgb(var(--color-border));
+    @apply bg-gray-300 dark:bg-gray-700;
+    @apply hover:bg-gray-400 dark:hover:bg-gray-600;
     @apply rounded-full;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(var(--color-coral-500) / 0.5);
+  /* === OCEAN THEME ONLY === */
+  /* Background */
+  [data-theme="ocean"] {
+    background-color: #082f49;
+    color: #e0f2fe;
+  }
+
+  [data-theme="ocean"] body {
+    background-color: #082f49;
+    color: #e0f2fe;
+  }
+
+  /* Surfaces */
+  [data-theme="ocean"] .bg-white { background-color: #0c4a6e !important; }
+  [data-theme="ocean"] .dark\:bg-gray-900 { background-color: #0c4a6e !important; }
+  [data-theme="ocean"] .bg-gray-50 { background-color: #075985 !important; }
+  [data-theme="ocean"] .dark\:bg-gray-800 { background-color: #075985 !important; }
+  [data-theme="ocean"] .bg-gray-100 { background-color: #0e7490 !important; }
+  [data-theme="ocean"] .bg-gray-900 { background-color: #164e63 !important; }
+  [data-theme="ocean"] .dark\:bg-gray-950 { background-color: #082f49 !important; }
+  [data-theme="ocean"] .bg-slate-50 { background-color: #075985 !important; }
+  [data-theme="ocean"] .dark\:bg-slate-800 { background-color: #075985 !important; }
+  [data-theme="ocean"] .bg-slate-100 { background-color: #0e7490 !important; }
+  [data-theme="ocean"] .dark\:bg-slate-900 { background-color: #0c4a6e !important; }
+  [data-theme="ocean"] .dark\:bg-slate-950 { background-color: #082f49 !important; }
+
+  /* Text */
+  [data-theme="ocean"] .text-gray-900,
+  [data-theme="ocean"] .text-slate-900 { color: #e0f2fe !important; }
+  [data-theme="ocean"] .dark\:text-white,
+  [data-theme="ocean"] .dark\:text-gray-100 { color: #e0f2fe !important; }
+  [data-theme="ocean"] .text-gray-600,
+  [data-theme="ocean"] .text-gray-500,
+  [data-theme="ocean"] .text-slate-600 { color: #67e8f9 !important; }
+  [data-theme="ocean"] .dark\:text-gray-400,
+  [data-theme="ocean"] .dark\:text-slate-400 { color: #67e8f9 !important; }
+  [data-theme="ocean"] .text-gray-400 { color: #22d3ee !important; }
+  [data-theme="ocean"] .dark\:text-gray-500 { color: #22d3ee !important; }
+  [data-theme="ocean"] .text-gray-700,
+  [data-theme="ocean"] .dark\:text-gray-300 { color: #bae6fd !important; }
+
+  /* Borders */
+  [data-theme="ocean"] .border-gray-200 { border-color: #155e75 !important; }
+  [data-theme="ocean"] .dark\:border-gray-800 { border-color: #155e75 !important; }
+  [data-theme="ocean"] .border-gray-300 { border-color: #0e7490 !important; }
+  [data-theme="ocean"] .dark\:border-gray-700 { border-color: #0e7490 !important; }
+  [data-theme="ocean"] .border-slate-200 { border-color: #155e75 !important; }
+  [data-theme="ocean"] .dark\:border-slate-800 { border-color: #155e75 !important; }
+  [data-theme="ocean"] .border-slate-300 { border-color: #0e7490 !important; }
+  [data-theme="ocean"] .dark\:border-slate-700 { border-color: #0e7490 !important; }
+
+  /* Coral → Turquoise */
+  [data-theme="ocean"] .bg-coral-50 { background-color: #ecfeff !important; }
+  [data-theme="ocean"] .bg-coral-100 { background-color: #cffafe !important; }
+  [data-theme="ocean"] .dark\:bg-coral-900 { background-color: #164e63 !important; }
+  [data-theme="ocean"] .bg-coral-500 { background-color: #40E0D0 !important; }
+  [data-theme="ocean"] .bg-coral-600 { background-color: #06b6d4 !important; }
+  [data-theme="ocean"] .dark\:bg-coral-600 { background-color: #06b6d4 !important; }
+  [data-theme="ocean"] .bg-coral-700 { background-color: #0891b2 !important; }
+  [data-theme="ocean"] .hover\:bg-coral-700:hover { background-color: #0891b2 !important; }
+  [data-theme="ocean"] .dark\:hover\:bg-coral-700:hover { background-color: #0891b2 !important; }
+
+  [data-theme="ocean"] .text-coral-400 { color: #22d3ee !important; }
+  [data-theme="ocean"] .dark\:text-coral-400 { color: #22d3ee !important; }
+  [data-theme="ocean"] .text-coral-500 { color: #40E0D0 !important; }
+  [data-theme="ocean"] .text-coral-600 { color: #06b6d4 !important; }
+  [data-theme="ocean"] .dark\:text-coral-300 { color: #67e8f9 !important; }
+  [data-theme="ocean"] .text-coral-700 { color: #0891b2 !important; }
+  [data-theme="ocean"] .hover\:text-coral-700:hover { color: #0891b2 !important; }
+  [data-theme="ocean"] .dark\:hover\:text-coral-300:hover { color: #67e8f9 !important; }
+
+  [data-theme="ocean"] .border-coral-200 { border-color: #a5f3fc !important; }
+  [data-theme="ocean"] .dark\:border-coral-800 { border-color: #155e75 !important; }
+  [data-theme="ocean"] .border-coral-300 { border-color: #67e8f9 !important; }
+  [data-theme="ocean"] .dark\:border-coral-700 { border-color: #0e7490 !important; }
+  [data-theme="ocean"] .hover\:border-coral-300:hover { border-color: #67e8f9 !important; }
+  [data-theme="ocean"] .dark\:hover\:border-coral-700:hover { border-color: #0e7490 !important; }
+
+  /* Sapphire → Teal */
+  [data-theme="ocean"] .bg-sapphire-100 { background-color: #ccfbf1 !important; }
+  [data-theme="ocean"] .bg-sapphire-500 { background-color: #008080 !important; }
+  [data-theme="ocean"] .text-sapphire-400 { color: #2dd4bf !important; }
+  [data-theme="ocean"] .dark\:text-sapphire-400 { color: #2dd4bf !important; }
+  [data-theme="ocean"] .text-sapphire-500 { color: #008080 !important; }
+  [data-theme="ocean"] .text-sapphire-600 { color: #0d9488 !important; }
+
+  /* Emerald (adjusted) */
+  [data-theme="ocean"] .bg-emerald-50 { background-color: #f0fdfa !important; }
+  [data-theme="ocean"] .dark\:bg-emerald-900 { background-color: #042f2e !important; }
+  [data-theme="ocean"] .bg-emerald-100 { background-color: #ccfbf1 !important; }
+  [data-theme="ocean"] .bg-emerald-500 { background-color: #50C878 !important; }
+  [data-theme="ocean"] .text-emerald-400 { color: #5eead4 !important; }
+  [data-theme="ocean"] .dark\:text-emerald-400 { color: #5eead4 !important; }
+  [data-theme="ocean"] .text-emerald-500 { color: #50C878 !important; }
+  [data-theme="ocean"] .text-emerald-600 { color: #14b8a6 !important; }
+  [data-theme="ocean"] .border-emerald-300 { border-color: #5eead4 !important; }
+  [data-theme="ocean"] .dark\:border-emerald-700 { border-color: #0d9488 !important; }
+  [data-theme="ocean"] .hover\:border-emerald-300:hover { border-color: #2dd4bf !important; }
+  [data-theme="ocean"] .dark\:hover\:border-emerald-700:hover { border-color: #14b8a6 !important; }
+
+  /* Rose (favorites/hearts) */
+  [data-theme="ocean"] .text-rose-500 { color: #ec4899 !important; }
+  [data-theme="ocean"] .bg-rose-50 { background-color: #fce7f3 !important; }
+  [data-theme="ocean"] .dark\:bg-rose-900 { background-color: #831843 !important; }
+  [data-theme="ocean"] .border-rose-300 { border-color: #f472b6 !important; }
+  [data-theme="ocean"] .dark\:border-rose-700 { border-color: #be185d !important; }
+  [data-theme="ocean"] .hover\:border-rose-300:hover { border-color: #ec4899 !important; }
+  [data-theme="ocean"] .dark\:hover\:border-rose-700:hover { border-color: #db2777 !important; }
+
+  /* Amber (achievements) */
+  [data-theme="ocean"] .text-amber-400 { color: #fbbf24 !important; }
+  [data-theme="ocean"] .text-amber-500 { color: #f59e0b !important; }
+  [data-theme="ocean"] .bg-amber-100 { background-color: #fef3c7 !important; }
+  [data-theme="ocean"] .dark\:bg-amber-900 { background-color: #78350f !important; }
+
+  /* Red (delete) */
+  [data-theme="ocean"] .bg-red-500 { background-color: #ef4444 !important; }
+  [data-theme="ocean"] .hover\:bg-red-600:hover { background-color: #dc2626 !important; }
+
+  /* Indigo/Purple gradients */
+  [data-theme="ocean"] .from-indigo-600 { --tw-gradient-from: #0ea5e9 !important; }
+  [data-theme="ocean"] .via-purple-600 { --tw-gradient-via: #06b6d4 !important; }
+  [data-theme="ocean"] .to-blue-600 { --tw-gradient-to: #0891b2 !important; }
+  [data-theme="ocean"] .from-coral-500 { --tw-gradient-from: #40E0D0 !important; }
+  [data-theme="ocean"] .via-sapphire-500 { --tw-gradient-via: #008080 !important; }
+  [data-theme="ocean"] .to-emerald-500 { --tw-gradient-to: #50C878 !important; }
+
+  /* Ocean specific overrides */
+  [data-theme="ocean"] ::selection {
+    background-color: #22d3ee;
+    color: #082f49;
+  }
+
+  [data-theme="ocean"] ::-webkit-scrollbar-track {
+    background-color: #164e63;
+  }
+
+  [data-theme="ocean"] ::-webkit-scrollbar-thumb {
+    background-color: #0e7490;
+  }
+
+  [data-theme="ocean"] ::-webkit-scrollbar-thumb:hover {
+    background-color: #06b6d4;
+  }
+
+  [data-theme="ocean"] img {
+    filter: brightness(0.9) saturate(1.1);
+  }
+
+  [data-theme="ocean"] .shadow-sm {
+    box-shadow: 0 1px 3px 0 rgba(6, 182, 212, 0.2);
+  }
+
+  [data-theme="ocean"] .shadow-lg {
+    box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.3);
+  }
+
+  [data-theme="ocean"] .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.4);
+  }
+
+  [data-theme="ocean"] .shadow-xl {
+    box-shadow: 0 20px 35px -10px rgba(6, 182, 212, 0.35);
   }
 }
 
 @layer components {
-  /* Utility classes for common patterns */
   .card {
-    background-color: rgb(var(--color-bg-primary));
-    border-color: rgb(var(--color-border));
-    @apply border rounded-lg shadow-soft;
+    @apply bg-white dark:bg-gray-900;
+    @apply border border-gray-200 dark:border-gray-800;
+    @apply rounded-lg shadow-soft;
     @apply transition-all duration-200;
   }
 
@@ -227,83 +231,37 @@
 
   .input-base {
     @apply w-full px-4 py-2 rounded-lg;
-    background-color: rgb(var(--color-bg-primary));
-    border-color: rgb(var(--color-border));
-    color: rgb(var(--color-text-primary));
-    @apply border;
-    @apply focus:outline-none focus:ring-2;
+    @apply bg-white dark:bg-gray-900;
+    @apply border border-gray-300 dark:border-gray-700;
+    @apply text-gray-900 dark:text-gray-100;
+    @apply placeholder:text-gray-400 dark:placeholder:text-gray-600;
+    @apply focus:outline-none focus:ring-2 focus:ring-coral-500 dark:focus:ring-coral-400;
     @apply transition-all duration-200;
-  }
-
-  .input-base::placeholder {
-    color: rgb(var(--color-text-secondary) / 0.5);
-  }
-
-  .input-base:focus {
-    border-color: rgb(var(--color-coral-500));
-    --tw-ring-color: rgb(var(--color-coral-500) / 0.3);
   }
 
   .btn-primary {
     @apply px-4 py-2 rounded-lg;
-    background-color: rgb(var(--color-coral-500));
+    @apply bg-coral-500 dark:bg-coral-600;
     @apply text-white;
+    @apply hover:bg-coral-600 dark:hover:bg-coral-700;
     @apply active:scale-95;
     @apply transition-all duration-200;
     @apply font-medium;
-  }
-
-  .btn-primary:hover {
-    background-color: rgb(var(--color-coral-600));
   }
 
   .btn-secondary {
     @apply px-4 py-2 rounded-lg;
-    background-color: rgb(var(--color-bg-secondary));
-    color: rgb(var(--color-text-primary));
+    @apply bg-gray-100 dark:bg-gray-800;
+    @apply text-gray-900 dark:text-gray-100;
+    @apply hover:bg-gray-200 dark:hover:bg-gray-700;
     @apply active:scale-95;
     @apply transition-all duration-200;
     @apply font-medium;
-  }
-
-  .btn-secondary:hover {
-    filter: brightness(1.1);
-  }
-
-  /* Ocean theme specific utilities */
-  [data-theme="ocean"] .card {
-    @apply shadow-lg;
-    box-shadow: 0 4px 20px rgb(var(--color-coral-500) / 0.1);
-  }
-
-  [data-theme="ocean"] .card-hover:hover {
-    box-shadow: 0 8px 30px rgb(var(--color-coral-500) / 0.2);
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  /* Theme-aware utilities */
-  .bg-theme-primary {
-    background-color: rgb(var(--color-bg-primary));
-  }
-
-  .bg-theme-secondary {
-    background-color: rgb(var(--color-bg-secondary));
-  }
-
-  .text-theme-primary {
-    color: rgb(var(--color-text-primary));
-  }
-
-  .text-theme-secondary {
-    color: rgb(var(--color-text-secondary));
-  }
-
-  .border-theme {
-    border-color: rgb(var(--color-border));
   }
 }
