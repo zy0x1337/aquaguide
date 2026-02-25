@@ -294,10 +294,10 @@ const SpeciesIndexPage = () => {
             {regions.map(region => (
               <FilterChip 
                 key={region}
-                label={region.replace(' ', '\n')}
+                label={region}
                 isActive={filters.region === region} 
                 onClick={() => setFilters({ ...filters, region: filters.region === region ? null : region })} 
-                className="text-center leading-tight py-2.5"
+                className="text-center leading-tight py-3 px-2 text-[10px] overflow-hidden text-ellipsis"
               />
             ))}
           </div>
