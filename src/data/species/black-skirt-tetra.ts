@@ -4,7 +4,8 @@ export const blackSkirtTetra: Species = {
   id: 'tetra-004',
   slug: 'black-skirt-tetra',
   imageUrl: '/images/species/black-skirt-tetra.jpg',
-  funFact: "Black Skirt Tetras are the 'elegant goths' of the aquarium world with flowing black 'skirts' (anal fins) that billow like Victorian mourning dresses. But don't let their graceful appearance fool you! Young Black Skirts have a nippy reputation (moody teenagers who pinch for fun). The good news? Fin nipping disappears in large groups (10+) and mature adults (1+ year). Keep them properly and watch them transform from bratty nippers into peaceful schooling beauties. Their black coloration fades with age (like goth kids discovering pastels), turning silvery grey. It's natural, not illness!",
+  
+  funFact: "Often called the Black Widow Tetra, this species is known for the dramatic transformation from a jet-black juvenile to a silvery-grey adult, while retaining its distinctive flowing anal fin.",
 
   taxonomy: {
     scientificName: 'Gymnocorymbus ternetzi',
@@ -12,13 +13,13 @@ export const blackSkirtTetra: Species = {
     family: 'Characidae',
     origin: 'South America (Paraguay River Basin: Brazil, Bolivia, Argentina)',
     region: 'South America',
-    biotope: 'Slow moving, shaded forest streams and tributaries with muddy substrates, dense vegetation, leaf litter, and tannin stained water',
+    biotope: 'Slow-moving forest streams and tributaries with dense vegetation and tannin-stained water.',
   },
 
   visuals: {
     iconShape: 'compressed',
     adultSizeCM: 5,
-    color: 'Juveniles (under 1 year): stunning jet black body with two thick vertical black bars behind gills, flowing black anal fin (the "skirt"), and silvery white belly. Adults (1+ years): Black fades to charcoal grey or silver grey with retained vertical bars. This is normal aging, not disease! Long fin variant has dramatically extended fins',
+    color: 'Juveniles display a deep black body with two vertical bars, while adults naturally fade to a silvery-grey. A long-finned variety is also popular in the aquarium trade.',
   },
 
   environment: {
@@ -48,43 +49,43 @@ export const blackSkirtTetra: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Black Skirt Tetras thrive in densely planted tanks that mimic their wild shaded forest streams. They appreciate tall background plants (Vallisneria, Ludwigia, Rotala), mid ground bushy plants (Cryptocoryne, Hygrophila), and dark substrates (black sand or gravel) that intensify their black coloration. Floating plants (Water Sprite, Frogbit) create shaded areas they love. Dense planting reduces fin nipping by breaking lines of sight and providing security. Open swimming space in center is important for schooling displays. Leaf litter (Indian Almond, Oak leaves) adds tannins and mimics natural habitat.',
-    hardscape: ['Driftwood (creates tannins plus shade)', 'Smooth river stones', 'Caves (rarely used)', 'Leaf litter'],
+    plantingNotes: 'Dense planting along the back and sides provides security and reduces aggression by breaking lines of sight. Floating plants are beneficial for diffusing light and mimicking their natural shady environment.',
+    hardscape: ['Driftwood', 'Smooth river stones', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['shoaler', 'semi-aggressive', 'midwater', 'active', 'fin_nipper'],
     minGroupSize: 10,
-    description: 'Black Skirt Tetras are active, graceful schoolers with a complicated reputation. In large groups (10+), they are peaceful, elegant fish that swim in synchronized formations like aquatic ballet dancers. Their flowing "skirts" (anal fins) billow beautifully as they glide through planted tanks. HOWEVER: in small groups (under 8), they become nippy bullies—chasing tankmates, nipping fins, and causing chaos. This is stress behavior, not inherent aggression. Think of them as insecure teenagers: confident in large friend groups, anxious bullies when isolated. Juveniles (under 1 year) are especially nippy even in large groups—it is a phase they outgrow. Mature adults (1+ years) in proper group sizes (10+) are peaceful and community safe. They establish loose hierarchies within schools but rarely serious fighting. Most active during feeding time, zooming around midwater in tight formations.',
+    description: 'These active schooling fish occupy the middle and upper layers of the aquarium, constantly on the move. They are generally peaceful when kept in sufficient numbers, but they develop a notorious reputation for fin-nipping if crowded or kept in groups that are too small. As they mature, their intense black coloration gradually fades to a softer grey, which is a natural part of the aging process. They are hardy and adaptable, making them an excellent choice for community tanks with appropriately sized tankmates.',
     
     compatibility: {
-      goodMates: ['Fast swimming schoolers (Danios, other Tetras, Rasboras)', 'Bottom dwellers (Corydoras, Loaches)', 'Peaceful Gouramis', 'Rainbowfish', 'Snails', 'Robust Plecos'],
-      badMates: ['Long finned slow fish (Angelfish, Bettas, Fancy Guppies, Gouramis with long fins)', 'Shy timid fish (will be bullied)', 'Aggressive Cichlids', 'Other fin nippers (Tiger Barbs = chaos)'],
-      notes: 'Black Skirt Tetras have a mixed reputation in community tanks. Reality: They are excellent community fish IF kept in groups of 10+ and paired with fast moving or robust tankmates. Avoid pairing with long finned slow fish (Angelfish, Bettas, Fancy Guppies)—young Black Skirts will nip flowing fins, causing stress and injuries. They are safe with short finned fast fish (Danios, Barbs, other Tetras) and bottom dwellers (Corydoras). As they mature (1+ years), fin nipping behavior decreases significantly. Key: large groups plus appropriate tankmates = peaceful schooling beauty.',
+      goodMates: ['Danios', 'Other Tetras', 'Rasboras', 'Corydoras', 'Peaceful Gouramis'],
+      badMates: ['Angelfish', 'Bettas', 'Fancy Guppies', 'Gouramis with long fins'],
+      notes: 'They are excellent community fish when kept in groups of ten or more and paired with fast-moving or robust tankmates.',
       
       rules: [
         {
           type: 'avoid',
-          target: 'long finned slow fish (Angelfish, Bettas, Fancy Guppies)',
-          reason: 'Young Black Skirt Tetras (<1 year) are notorious fin nippers. They target long flowing fins, causing stress, injuries, and infections. Even in large groups, juveniles nip. Mature adults (1+ years) are less nippy but risk remains. Keep with short finned fast fish only',
+          target: 'long-finned slow fish (Angelfish, Bettas, Fancy Guppies)',
+          reason: 'Young Black Skirt Tetras are notorious fin-nippers that target long, flowing fins.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'large groups of 10+ fish',
-          reason: 'CRITICAL for reducing aggression. Groups under 8 = stressed, nippy bullies. Groups of 10+ = confident, peaceful schoolers. Fin nipping behavior drops dramatically in large schools. 8 is minimum; 10 to 15 is ideal',
+          reason: 'Groups smaller than eight become stressed and turn into bullies, while larger schools diffuse aggression.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'juvenile Black Skirts with any slow fish',
-          reason: 'Juveniles (<1 year) are especially nippy even in large groups. If keeping with slower tankmates, buy adult Black Skirts (1+ years old) which are calmer. Or accept that young ones will be bratty for 6 to 12 months',
+          reason: 'Juveniles under one year are significantly more nippy than mature adults.',
           severity: 'medium',
         },
         {
           type: 'requires',
           condition: 'dense planting to break lines of sight',
-          reason: 'Visual barriers reduce chasing and nipping by limiting territory visibility. Open bare tanks = constant harassment. Dense jungle style planting = peaceful coexistence',
+          reason: 'Visual barriers reduce chasing and nipping by limiting territory visibility.',
           severity: 'medium',
         },
       ],
@@ -115,7 +116,7 @@ export const blackSkirtTetra: Species = {
     
     finNipping: {
       risk: 'medium',
-      targets: ['long finned fish', 'slow moving fish', 'shy timid fish'],
+      targets: ['long-finned fish', 'slow-moving fish'],
     },
   },
 
@@ -125,34 +126,28 @@ export const blackSkirtTetra: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Large groups (10+ fish) to reduce fin nipping', 
-      'Dense planting with open swimming areas', 
-      'Dark substrate to maintain black coloration',
-      'Avoid pairing with long finned slow fish',
-      'Accept color fading with age (natural, not illness)',
+      'Large groups (10+ fish)', 
+      'Dense planting', 
+      'Dark substrate',
+      'Appropriate tankmates',
     ],
 
     proTips: [
-      "FIN NIPPING SOLUTION: Groups of 10 to 15+ fish = peaceful behavior. Groups under 8 = stressed bullies. It's that simple. Larger schools diffuse aggression by spreading it across more targets. Single aggressive fish becomes background noise in group of 15.",
-      "Color fading is normal aging, not disease! Juveniles are jet black; adults (1+ years) fade to charcoal or silver grey. This is natural pigment loss with maturity. Dark substrates, tannins (Indian Almond leaves), and quality food help maintain color longer.",
-      "Buy adult Black Skirts (1+ years) if keeping with sensitive tankmates. Juveniles (<1 year) are guaranteed fin nippers regardless of group size. Adults are calmer and less nippy. Ask store for older fish!",
-      "Long fin variety is gorgeous but ironic—they are fin nippers with giant fins! Long fins are more vulnerable to bullying from standard Black Skirts. Keep long fin groups separate or expect damaged fins.",
-      "Stress bars: Faint horizontal stripes appear when stressed (new tank, aggression, poor water). Vertical bars are normal markings. Horizontal bars = check water parameters and group dynamics.",
-      "Dark substrate plus tannins = stunning contrast. Black sand or dark gravel makes their black bodies pop. Add driftwood or Indian Almond leaves for amber tinted water—mimics wild habitat and intensifies colors.",
+      "Maintaining a group of ten or more effectively eliminates fin-nipping behavior by spreading aggression among the school.",
+      "Do not panic when their black color fades to grey; this is a natural sign of maturity, not illness.",
+      "Dark substrate and tannins from Indian Almond leaves can help maintain their coloration longer."
     ],
 
     commonMistakes: [
-      "Small groups (under 8) = #1 mistake. Stressed Black Skirts become nippy terrors. Groups of 3 to 5 create bullying hierarchies with constant harassment. Buy 10 to 15 fish minimum for peaceful behavior. Yes, it's more expensive upfront, but it prevents bloodbaths.",
-      "Pairing with Angelfish or Bettas = disaster. Young Black Skirts see long flowing fins as irresistible targets. Even 'peaceful' Black Skirts in large groups may nip occasionally. Your Angel's fins will be shredded. Choose tankmates wisely!",
-      "Panicking over color fading. 'My Black Skirts are turning grey! Are they sick?' No. This is normal aging (like humans greying). Juveniles are black; adults fade to grey or silver. It's genetics, not disease. Embrace the silver fox stage!",
-      "Bare open tanks. Without visual barriers (plants, wood), Black Skirts chase constantly with nowhere to hide. Dense planting breaks lines of sight and creates territories, reducing aggression dramatically.",
-      "Mixing with other fin nippers (Tiger Barbs, Serpae Tetras). Combining multiple nippy species = chaos. Everyone nips everyone. Stick to one semi aggressive species per tank or keep with only peaceful fish.",
+      "Keeping them in small groups causes stress, leading to aggression toward other tank inhabitants.",
+      "Housing them with long-finned species like Bettas results in damaged fins due to nipping.",
+      "Mistaking the natural fading of adult coloration for a disease or health issue."
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['flakes', 'micro-pellets', 'brine-shrimp'],
-      supplements: ['bloodworms', 'daphnia', 'spirulina', 'vegetables'],
+      primaryFoods: ['flakes', 'micro-pellets'],
+      supplements: ['bloodworms', 'brine-shrimp', 'daphnia', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -165,7 +160,7 @@ export const blackSkirtTetra: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30 percent water changes maintain water quality. Black Skirts are messy eaters and produce moderate waste in large groups. Vacuum substrate weekly. Keep nitrates below 20ppm for best health and color retention.',
+      notes: 'These active fish produce a moderate amount of waste, so regular vacuuming of the substrate is necessary to maintain water quality.',
     },
     
     equipment: {
@@ -187,21 +182,25 @@ export const blackSkirtTetra: Species = {
   health: {
     lifespanYears: 5,
     commonDiseases: ['ich', 'fin-rot', 'velvet', 'neon-tetra-disease', 'bloat'],
-    sensitivities: ['Small groups (stress)', 'Poor water quality (color fades faster)', 'High nitrates', 'Overcrowding'],
+    sensitivities: ['Small groups', 'Poor water quality', 'High nitrates', 'Overcrowding'],
   },
 
   scientificContext: {
-    wildHabitat: "Black Skirt Tetras inhabit slow moving, heavily shaded forest streams and tributaries in the Paraguay River Basin (Brazil, Bolivia, Argentina). These are tannin stained, soft water habitats with muddy substrates, dense aquatic vegetation, submerged roots, and thick leaf litter. Water is warm (23 to 27 degrees C), soft (GH 3 to 8), slightly acidic (pH 6.0 to 7.0), and dim due to forest canopy. They school in large groups (50 to 100+) for protection from predators, explaining why small aquarium groups cause stress. Wild specimens are more intensely black than domesticated strains.",
-    sexualDimorphism: "Subtle differences: Females are rounder, fuller bodied, especially when carrying eggs (gravid). Males are slimmer, more streamlined, with slightly more intense black coloration when mature. Difficult to sex juveniles. Best method: buy large group and observe—rounder fish with swollen bellies during feeding = females.",
-    variants: ['Standard Short fin (classic)', 'Long fin Black Skirt (Veil tail—dramatically extended fins)', 'GloFish Black Skirt (genetically modified fluorescent colors—unnatural but popular)'],
+    wildHabitat: "Native to the Paraguay River Basin in South America, this species inhabits slow-moving forest streams and tributaries. These waters are typically stained with tannins from decaying vegetation, creating dim, acidic conditions. They are often found among submerged roots and dense aquatic plants where they find safety from predators. The IUCN currently lists them as Least Concern, though localized habitat changes occur.",
+    sexualDimorphism: "Females appear noticeably rounder and fuller-bodied than males, especially when carrying eggs. Males are more slender and often have a slightly more pointed anal fin.",
+    variants: [
+      'Standard short-fin', 
+      'Long-fin Black Skirt', 
+      'GloFish Black Skirt'
+    ],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'beginner',
-    trigger: 'Black Skirt Tetras are easy to breed—one of the best beginner egg layers! Trigger spawning with: 1) Soft, slightly acidic water (pH 6.0 to 6.5, GH 4 to 8), 2) Large (40 to 50 percent) water change with slightly cooler water (22 to 23 degrees C) to simulate rainy season, 3) Conditioning with high protein live or frozen foods (brine shrimp, daphnia) for 2 weeks until females visibly plump. Separate sexes during conditioning, then introduce to spawning tank together.',
-    fryCare: 'Females scatter 300 to 500 adhesive eggs among fine leaved plants (Java Moss, spawning mops) or substrate. No parental care—adults eat eggs immediately. Remove adults after spawning. Eggs hatch in 24 to 36 hours at 24 to 26 degrees C into tiny larvae. Fry become free swimming at 3 to 5 days. Feed infusoria or liquid fry food initially, then baby brine shrimp after 1 week. Fry are tiny and grow slowly: 1cm at 4 weeks, 2cm at 8 weeks. Separate by size to prevent cannibalism. Maturity at 6 to 8 months.',
-    notes: 'Black Skirt Tetras breed readily and prolifically in home aquariums. The challenge is not spawning (easy) but raising hundreds of fry (labor intensive). Many breeders let nature take its course in heavily planted tanks—some fry survive to adulthood on their own. For deliberate breeding, use separate spawning tank with spawning mops or Java Moss, condition breeders well, and remove adults immediately post spawn.',
+    trigger: 'Condition the pair with high-protein foods and perform a large water change with slightly cooler water to simulate the rainy season. Spawning often occurs in the early morning.',
+    fryCare: 'The parents will consume the eggs, so moving them to a separate rearing tank is essential. Once the fry are free-swimming after three to five days, feed them infusoria or liquid fry food. As they grow, transition them to baby brine shrimp. Keep the rearing tank dimly lit to encourage healthy development.',
+    notes: 'Breeding is relatively easy, but raising the tiny fry requires a separate tank and microscopic food sources.',
   },
   
   experienceData: {

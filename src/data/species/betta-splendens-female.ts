@@ -4,7 +4,8 @@ export const bettaSplendensFemale: Species = {
   id: 'betta-splendens-female',
   slug: 'betta-splendens-female',
   imageUrl: '/images/species/betta-splendens-female.jpg',
-  funFact: "Don't underestimate the ladies! Female Bettas are faster, smarter, and more peaceful than their dramatic brothers. Perfect community fish when kept solo, fierce rulers when in sororities!",
+  
+  funFact: "While often sold as peaceful community fish, female Bettas can form complex social hierarchies known as sororities, establishing dominance through intricate displays of flaring and chasing.",
 
   taxonomy: {
     scientificName: 'Betta splendens',
@@ -12,13 +13,13 @@ export const bettaSplendensFemale: Species = {
     family: 'Osphronemidae',
     origin: 'Thailand, Cambodia, Vietnam',
     region: 'Asia',
-    biotope: 'Stagnant shallow water bodies including rice paddies and drainage ditches.',
+    biotope: 'Shallow, stagnant rice paddies and slow-moving floodplains with dense vegetation.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 5,
-    color: 'Similar colors to males but with much shorter fins. Shows breeding stripes (vertical) or stress stripes (horizontal).',
+    color: 'Females display the same vibrant coloration as males but feature significantly shorter fins. A distinct white dot, known as an ovipositor, is visible on their belly.',
   },
 
   environment: {
@@ -48,31 +49,31 @@ export const bettaSplendensFemale: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Females thrive in heavily planted aquariums. For sorority setups, jungle style planting becomes mandatory to break visual contact and reduce aggression.',
-    hardscape: ['Driftwood', 'Caves'],
+    plantingNotes: 'Heavy planting creates essential sight breaks that reduce aggression in group settings. Floating plants are crucial to provide cover for subdominant females escaping harassment.',
+    hardscape: ['Driftwood', 'Caves', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['semi-aggressive', 'surface_dweller', 'territorial', 'labyrinth_fish', 'jumper'],
     minGroupSize: 1,
-    description: 'When maintained individually, they display curious and active community behavior. In group settings called sororities, complex and stressful dominance hierarchies emerge. Dominant females persistently harass weaker individuals. Single females prove safer and easier to maintain.',
+    description: 'Female Bettas are active and inquisitive fish that often patrol the entire tank rather than guarding a single spot like males. While less aggressive than males, they still possess a strong territorial drive and will flare at their own reflection or other fish with long fins. In a community setting, a single female often coexists peacefully with fast-moving schooling fish, ignoring them while asserting mild dominance. However, keeping multiple females together requires a complex setup to mitigate their natural instinct to establish a hierarchy through chasing and nipping.',
     
     compatibility: {
-      goodMates: ['Tetras', 'Corydoras', 'Rasboras', 'Snails'],
-      badMates: ['Male Bettas', 'Fin nippers', 'Other females (unless expert)'],
-      notes: 'Never house with males under any circumstances. Sorority setups demand expert level experience and vigilant monitoring.',
+      goodMates: ['Small Tetras', 'Corydoras', 'Rasboras', 'Snails'],
+      badMates: ['Male Bettas', 'Guppies', 'Other females (beginners)', 'Fin nippers'],
+      notes: 'A single female makes an excellent centerpiece for a peaceful community tank, but mixing multiple females requires a specialized setup.',
       
       rules: [
         {
           type: 'avoid',
           target: 'male Bettas',
-          reason: 'Continuous fighting or harassment leads to death of one or both fish.',
+          reason: 'The male will relentlessly harass the female to breed, often causing severe injury or death.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'expert for sororities',
-          reason: 'Elevated risk of mortality and chronic stress in female group dynamics.',
+          reason: 'Without dense hiding spots and correct group dynamics, dominant females will bully weaker individuals to death.',
           severity: 'high',
         },
       ],
@@ -102,7 +103,7 @@ export const bettaSplendensFemale: Species = {
     
     finNipping: {
       risk: 'low',
-      targets: ['long finned fish'],
+      targets: ['long-finned fish'],
     },
   },
 
@@ -113,18 +114,19 @@ export const bettaSplendensFemale: Species = {
     cost: 'low',
     specialRequirements: [
       'Heater mandatory', 
-      'Lid (jumper)',
+      'Tight-fitting lid (jumper)',
+      'Low flow',
     ],
 
     proTips: [
-      "Single females represent underrated community fish options offering personality without excessive aggression.",
-      "The white egg spot visible on the belly provides definitive female confirmation.",
-      "Sorority attempts frequently fail catastrophically. Maintaining one female proves significantly safer and less stressful.",
+      "A single female is often a more reliable community member than a male, displaying high intelligence and recognition of her keeper.",
+      "Look for vertical breeding stripes to indicate readiness to spawn, or horizontal stress stripes to indicate fear or submission.",
+      "Target feeding ensures she gets her share before greedy tank mates steal it, as she may be slower than fish like Tetras."
     ],
 
     commonMistakes: [
-      "Housing females with males, resulting in constant harassment or spawning aggression.",
-      "Attempting sorority setups in undersized aquariums without adequate visual barriers.",
+      "Attempting a sorority in a small tank results in relentless bullying and eventual death of the weaker females.",
+      "Adding flashy, long-finned fish like Guppies triggers the female to attack, mistaking them for rival Bettas.",
     ],
     
     feeding: {
@@ -143,6 +145,7 @@ export const bettaSplendensFemale: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
+      notes: 'Maintain a tight-fitting lid, as these fish are accomplished jumpers capable of escaping through the smallest gaps.',
     },
     
     equipment: {
@@ -164,21 +167,21 @@ export const bettaSplendensFemale: Species = {
   health: {
     lifespanYears: 4,
     commonDiseases: ['fin rot', 'dropsy', 'ich'],
-    sensitivities: ['Cold water', 'Stress'],
+    sensitivities: ['Cold water', 'Strong currents', 'Fin nipping', 'Ammonia spikes'],
   },
 
   scientificContext: {
-    wildHabitat: 'Shallow stagnant water environments with minimal flow and variable oxygen levels.',
-    sexualDimorphism: 'Females possess notably shorter fins and display a prominent white egg spot on the ventral surface.',
-    variants: ['Koi', 'Galaxy', 'Crowntail', 'Veiltail'],
+    wildHabitat: "Native to the shallow, stagnant waters of Thailand's central basin, they inhabit rice paddies, ponds, and slow-moving streams. These environments are often choked with dense vegetation and have very low oxygen levels, which the fish navigates using its labyrinth organ. The water is typically warm, soft, and stained with tannins from decaying organic matter. Seasonal fluctuations in water depth drive their evolutionary adaptation to survive in tiny pockets of water during the dry season.",
+    sexualDimorphism: "Females are easily distinguished by their significantly shorter fins and a prominent white egg spot visible on the underbelly. While males possess long, flowing fins and a torpedo-shaped body, females appear rounder, especially when gravid. Males also lack the distinct ovipositor tube seen on mature females.",
+    variants: ['Koi', 'Galaxy', 'Crowntail', 'Veiltail', 'Plakat'],
   },
 
   breeding: {
     method: 'bubble_nester',
     difficulty: 'medium',
-    trigger: 'Conditioning with high quality foods triggers breeding readiness.',
-    fryCare: 'Male assumes full parental care of bubble nest and developing fry.',
-    notes: 'Spawning involves intense chasing and aggressive behavior from both partners.',
+    trigger: 'Condition the pair separately with high-quality live or frozen foods for two weeks to ensure the female develops eggs. Introducing the female to the male\'s tank in a clear divider container allows them to see each other without physical contact until the male builds a bubble nest and the female displays vertical breeding stripes.',
+    fryCare: 'After spawning, the male tends the eggs in the bubble nest while the female should be removed immediately to prevent her from eating the eggs or being attacked. The fry hatch within 48 hours but remain in the nest until they become free-swimming a few days later. At this stage, they require microscopic foods like infusoria or vinegar eels, graduating to newly hatched brine shrimp as they grow. Maintain a tight lid on the rearing tank to trap humidity, which is critical for the development of their labyrinth organ.',
+    notes: 'Spawning involves intense chasing and aggressive behavior from both partners, requiring a dedicated breeding tank.',
   },
   
   experienceData: {

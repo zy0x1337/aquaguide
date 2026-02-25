@@ -5,7 +5,7 @@ export const africanDwarfFrog: Species = {
   slug: 'african-dwarf-frog',
   imageUrl: '/images/species/african-dwarf-frog.jpg',
   
-  funFact: "Male African Dwarf Frogs sing underwater by contracting their throat muscles, creating a faint buzzing sound to attract mates.",
+  funFact: "As one of the few entirely aquatic frog species, they possess the miraculous ability to regrow lost limbs, heart tissue, and even parts of their brain.",
 
   taxonomy: {
     scientificName: 'Hymenochirus boettgeri',
@@ -13,13 +13,13 @@ export const africanDwarfFrog: Species = {
     family: 'Pipidae',
     origin: 'Central Africa (Congo Basin, Cameroon, Nigeria)',
     region: 'Africa',
-    biotope: 'Shallow, stagnant rainforest pools and slow moving creeks with dense vegetation and muddy substrates.',
+    biotope: 'Shallow, stagnant rainforest pools and slow-moving creeks.',
   },
 
   visuals: {
     iconShape: 'frog',
     adultSizeCM: 5,
-    color: 'Olive to grey bodies with black mottling and a cream colored belly. A blonde variant displays peachy tan skin with lighter markings.',
+    color: 'Olive to grey bodies with black mottling and a cream-colored belly. A blonde variant displays peachy-tan skin with lighter markings.',
   },
 
   environment: {
@@ -46,14 +46,14 @@ export const africanDwarfFrog: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Broad leaved plants like Anubias and Java Fern provide essential resting platforms near the surface. Floating plants offer shade and security for these clumsy swimmers.',
+    plantingNotes: 'Broad-leaved plants like Anubias and Java Fern serve as essential resting platforms near the water surface. Floating plants provide necessary shade and security for these poor swimmers.',
     hardscape: ['Smooth river stones', 'Driftwood', 'Terracotta shelters', 'Floating platforms'],
   },
 
   behavior: {
     tags: ['peaceful', 'social', 'nocturnal'],
     minGroupSize: 2,
-    description: 'These nearly blind amphibians hunt by smell and touch, often lunging past food before locating it with sensitive fingertips. They frequently hang motionless in a zen float to conserve energy between breaths. Social by nature, they often rest together on leaves or in shelters.',
+    description: 'These amphibians are nearly blind and rely entirely on sensitive fingertips and a keen sense of smell to locate food in the murky depths. They are notoriously clumsy hunters, often bumping into prey before realizing it is right in front of them. A unique behavior known as the zen float sees them hanging motionless mid-water with limbs outstretched, a resting posture often mistaken for illness by new keepers. While generally peaceful and social, they are best kept in species-only groups where they can forage without competition from faster fish. Activity peaks at dawn and dusk when they actively explore the tank bottom for morsels.',
 
     compatibility: {
       goodMates: [
@@ -69,7 +69,7 @@ export const africanDwarfFrog: Species = {
         'Cichlids', 
         'Bettas', 
       ],
-      notes: 'A species only tank is the best environment to ensure they receive adequate food without competition.',
+      notes: 'A species-only tank is the best environment to ensure they receive adequate food without competition.',
       
       rules: [
         {
@@ -143,25 +143,26 @@ export const africanDwarfFrog: Species = {
       'Target feeding with tweezers',
       'Sponge filter for gentle flow',
       'Tank depth under 40cm',
-      'Tight fitting lid',
-      'Species only setup',
+      'Tight-fitting lid',
+      'Species-only setup',
     ],
     
     proTips: [
       "Use a turkey baster to deliver food directly in front of the frog to ensure it eats.",
       "Verify the frog has webbing on all four feet to avoid buying the larger African Clawed Frog.",
+      "Avoid bloodworms as a staple food as they can cause bloat; prefer brine shrimp or daphnia.",
     ],
     
     commonMistakes: [
       "Keeping them with fish causes starvation because the frogs cannot compete for food.",
-      "Deep tanks force them to swim too far for air, leading to exhaustion and drowning.",
-      "Gravel substrates cause impaction if ingested during feeding.",
+      "Deep tanks force them to swim too far for air, leading to exhaustion.",
+      "Gravel substrates cause impaction if swallowed during feeding.",
     ],
     
     feeding: {
       frequency: 'every-other-day',
-      primaryFoods: ['bloodworms', 'brine-shrimp'],
-      supplements: ['daphnia', 'pellets'],
+      primaryFoods: ['brine-shrimp', 'daphnia', 'tubifex'],
+      supplements: ['pellets', 'bloodworms'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -198,7 +199,7 @@ export const africanDwarfFrog: Species = {
     commonDiseases: ['dropsy-bloat', 'bacterial-infections', 'fungal-infections', 'chytridiomycosis', 'skin-lesions'],
     sensitivities: [
       'Starvation from competition', 
-      'Copper based medications', 
+      'Copper-based medications', 
       'Salt', 
       'Chlorine', 
       'Strong vibrations'
@@ -206,19 +207,19 @@ export const africanDwarfFrog: Species = {
   },
 
   scientificContext: {
-    wildHabitat: "Inhabits shallow, stagnant pools in Central African rainforests with low oxygen and muddy substrates. These calm, tannin stained waters contain dense vegetation for hiding.",
-    sexualDimorphism: "Males display a small white or pink gland behind the front legs, while females are larger and lack this gland.",
+    wildHabitat: "Native to the Congo River basin in Central Africa, this species populates shallow, stagnant pools within rainforests. These waters are typically tannin-stained, warm, and low in oxygen, lined with thick mud and decomposing leaf litter. They thrive in calm environments where they scavenge along the bottom, surfacing frequently to breathe. While currently listed as Least Concern by the IUCN, habitat degradation poses a potential future threat to local populations.",
+    sexualDimorphism: "Males can be identified by a small, white or pinkish post-axillary gland visible behind each front leg, which females lack. Females grow larger and develop a rounder, fuller body shape, particularly when gravid with eggs. Additionally, males are the ones producing the audible buzzing song during courtship.",
     variants: [
-      'Wild type olive grey', 
-      'Blonde or leucistic tan'
+      'Wild-type olive grey', 
+      'Blonde (leucistic) tan'
     ],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
-    trigger: 'Simulate a rainy season by lowering water levels and slightly raising the temperature to encourage spawning.',
-    fryCare: 'Separate the eggs immediately as adults will eat them. Feed the tiny tadpoles liquid fry food or infusoria several times a day.',
+    trigger: "Breeding is often triggered by simulating a rainy season through environmental changes. Lower the water level gradually by thirty to fifty percent and slightly raise the temperature to 27-28°C. Accompanied by heavy feeding of live foods, this shift encourages males to begin their courtship singing.",
+    fryCare: "The tiny tadpoles are delicate filter feeders that require microscopic food like infusoria or commercial liquid fry food multiple times a day. They are sensitive to water quality and light, so keep them in shallow, shaded containers with frequent, small water changes. Metamorphosis occurs over six to eight weeks, during which legs develop and the tail is absorbed. Survival rates are low without diligent care, as the fry are prone to starvation and water parameter shocks.",
     notes: 'Spawning is rare in home aquaria and usually follows a simulated rainy season.',
   },
 

@@ -4,7 +4,8 @@ export const anomalochromisThomasi: Species = {
   id: 'cichlid-001',
   slug: 'anomalochromis-thomasi',
   imageUrl: '/images/species/anomalochromis-thomasi.jpg',
-  funFact: "Unlike aggressive cichlid cousins, these gentle gems mate for life! Watch breeding pairs become ultimate parents, fiercely guarding babies and herding fry like tiny border collies.",
+  
+  funFact: "The African Butterfly Cichlid is a gentle anomaly among cichlids, forming devoted pairs that calmly herd their fry around the tank like attentive parents.",
 
   imageCredit: {
     photographer: 'Haplochromis (via Wikimedia Commons)',
@@ -19,13 +20,13 @@ export const anomalochromisThomasi: Species = {
     family: 'Cichlidae',
     origin: 'West Africa (Sierra Leone, Guinea, Liberia)',
     region: 'Africa',
-    biotope: 'Forest streams with high oxygen levels, aquatic vegetation, and rocky structures.',
+    biotope: 'Shallow, slow-flowing forest streams with dense vegetation and rocky hiding spots.',
   },
 
   visuals: {
     iconShape: 'compressed',
     adultSizeCM: 7,
-    color: 'Beige body covered in iridescent blue green spangles. Dark vertical bars appear based on mood. Red edging on dorsal fin.',
+    color: 'A pale beige body is overlaid with iridescent blue-green scales and a series of dark vertical bars that shift with mood. Males often display red edges on their dorsal fins.',
   },
 
   environment: {
@@ -55,25 +56,25 @@ export const anomalochromisThomasi: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes: 'Flat stones and broad leaved plants like Anubias provide ideal spawning sites. Visual barriers created with driftwood and plants significantly reduce stress levels.',
-    hardscape: ['Flat stones', 'Driftwood', 'Caves'],
+    plantingNotes: 'Robust plants like Anubias and Java Fern attached to hardscape survive any minor digging during spawning. Dense planting along the back creates visual barriers that reduce shyness and aggression.',
+    hardscape: ['Flat stones', 'Driftwood roots', 'Terracotta caves', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['peaceful', 'pair-bonding', 'cichlid', 'parental-care'],
     minGroupSize: 2,
-    description: 'Delightful dwarf cichlid that defies the typical aggressive stereotype. Calm and slightly shy, forming strong monogamous pair bonds. Displays territorial behavior during spawning but leaves plants intact.',
+    description: 'Defying the aggressive reputation of its family, this dwarf cichlid is a peaceful inhabitant well-suited for community aquariums. They form strong monogamous pairs that stay close together, often patrolling their territory side by side. During spawning, they become dedicated parents, carefully guarding eggs on a flat stone and herding the fry for weeks. They prefer staying near the bottom where they sift through the substrate for food. Adequate cover is essential, as they can be shy and will retreat into vegetation if threatened by faster fish.',
     
     compatibility: {
-      goodMates: ['Tetras', 'Rasboras', 'Corydoras', 'Gouramis', 'Other dwarf cichlids'],
-      badMates: ['Large aggressive Cichlids', 'Fin nippers', 'Hyperactive fish'],
-      notes: 'Outstanding cichlid choice for community aquariums. Simply ensure they have a small designated territory.',
+      goodMates: ['Small Characins', 'Rasboras', 'Corydoras', 'Loricariids', 'Peaceful Gouramis'],
+      badMates: ['Large Cichlids', 'Aggressive Barbs', 'Mbuna', 'Nippy fish'],
+      notes: 'An ideal choice for a West African biotope or a peaceful community setup, provided they have a small territory to call their own.',
       
       rules: [
         {
           type: 'requires',
           condition: 'flat stones',
-          reason: 'Essential for spawning behavior.',
+          reason: 'Flat stones serve as essential spawning sites where the female deposits her adhesive eggs.',
           severity: 'medium',
         },
       ],
@@ -114,19 +115,20 @@ export const anomalochromisThomasi: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Flat surfaces for breeding', 
-      'Clean water',
+      'Clean water', 
+      'Flat stones for spawning', 
+      'Peaceful tankmates'
     ],
 
     proTips: [
-      "Among the best beginner cichlids thanks to hardiness and peaceful temperament.",
-      "Color loss indicates water quality issues or stress. They display their finest colors when comfortable and secure.",
-      "Exceptional parents providing fascinating behaviors. Watching them guide their fry cloud around the aquarium becomes mesmerizing.",
+      "Purchase a group of six juveniles to allow natural pairs to form, as forced pairs often result in incompatibility.",
+      "Condition breeding pairs with high-quality frozen or live foods to stimulate spawning behavior.",
+      "Watch for faded colors, which often indicate stress or poor water quality in this sensitive species.",
     ],
 
     commonMistakes: [
-      "Housing with aggressive tankmates that constantly bully them.",
-      "Failing to provide adequate hiding spots and visual barriers.",
+      "Keeping them in barren tanks without hiding spots causes chronic stress and washed-out colors.",
+      "Placing them with boisterous fish prevents them from competing for food during feeding time.",
     ],
     
     feeding: {
@@ -145,6 +147,7 @@ export const anomalochromisThomasi: Species = {
       waterChangePercentage: 20,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
+      notes: 'They are sensitive to deteriorating water conditions, so regular partial changes are vital to maintain their health.',
     },
     
     equipment: {
@@ -166,21 +169,21 @@ export const anomalochromisThomasi: Species = {
   health: {
     lifespanYears: 5,
     commonDiseases: ['ich', 'parasites'],
-    sensitivities: ['Poor water quality'],
+    sensitivities: ['Poor water quality', 'High nitrates', 'Aggressive tankmates'],
   },
 
   scientificContext: {
-    wildHabitat: 'Inhabits small forest streams throughout West Africa with clean, well oxygenated water.',
-    sexualDimorphism: 'Subtle differences exist. Males grow slightly larger with more intense coloration. Females develop rounder bodies when carrying eggs.',
-    variants: ['Standard'],
+    wildHabitat: "Native to the slow-moving, forested streams of Sierra Leone, Guinea, and Liberia. The water in these habitats is typically stained with tannins from decaying vegetation, creating soft and acidic conditions. They inhabit shallow margins densely packed with aquatic plants and submerged roots. These environments offer ample hiding spots and a rich supply of small invertebrates for food.",
+    sexualDimorphism: "Males attain a larger size and display more elongated dorsal and anal fins compared to females. Females develop a rounder body shape, particularly when full of eggs, and generally exhibit slightly duller coloration. During courtship, the female often displays a more intense reddish or pinkish belly area to attract the male.",
+    variants: ['Wild type'],
   },
 
   breeding: {
     method: 'substrate_spawner',
     difficulty: 'beginner',
-    trigger: 'Quality nutrition and pristine water conditions.',
-    fryCare: 'Parents provide outstanding care. Fry accept baby brine shrimp immediately after becoming free swimming.',
-    notes: 'Breeding occurs readily in appropriate conditions.',
+    trigger: 'Spawning is often initiated by a slight increase in temperature combined with the addition of high-protein live or frozen foods. Performing a larger water change with slightly cooler water can also simulate rainy season conditions.',
+    fryCare: 'Once the fry become free-swimming after about five to seven days, the parents will guide them in a tight school around the tank. They can be fed newly hatched brine shrimp or finely crushed flake food multiple times a day. The parents continue to guard the brood for several weeks, herding them into shelter at night or when danger approaches. As the fry grow, it is important to maintain excellent water quality through frequent small water changes.',
+    notes: 'They are excellent parents, and watching them care for their brood is a rewarding experience for any aquarist.',
   },
   
   experienceData: {
