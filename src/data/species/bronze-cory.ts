@@ -4,7 +4,8 @@ export const bronzeCory: Species = {
   id: 'cory-002',
   slug: 'bronze-cory',
   imageUrl: '/images/species/bronze-cory.jpg',
-  funFact: "Bronze Corydoras are one of the few fish that can 'breathe' air! They dart to the surface, gulp atmospheric oxygen, and process it through their intestines. This adaptation allows them to survive in oxygen-poor waters where other fish would suffocate. You'll see them do this 'Cory zoom' multiple times per hour—it's completely normal and adorable. Watch for groups of 6+ doing synchronized zooms together like tiny synchronized swimmers!",
+  
+  funFact: "These armored catfish possess a specialized intestine that allows them to gulp atmospheric air, enabling them to survive in oxygen-depleted waters where other fish cannot.",
 
   taxonomy: {
     scientificName: 'Corydoras aeneus',
@@ -12,13 +13,13 @@ export const bronzeCory: Species = {
     family: 'Callichthyidae',
     origin: 'Widely distributed across South America: Venezuela, Colombia, Trinidad, Brazil, Argentina',
     region: 'South America',
-    biotope: 'Slow-moving rivers, marshes, floodplains, and shallow pools with soft muddy or sandy bottoms rich in organic matter',
+    biotope: 'Slow-moving rivers, marshes, and floodplains with soft, sandy bottoms rich in organic matter.',
   },
 
   visuals: {
     iconShape: 'depressed',
     adultSizeCM: 6.5,
-    color: 'Bronze-metallic sheen on sides, olive-brown back, cream belly. Albino variant: pink body with red eyes',
+    color: 'The body exhibits a metallic bronze or olive-green sheen with a lighter belly. A popular albino variant displays a pink body and red eyes.',
   },
 
   environment: {
@@ -48,43 +49,43 @@ export const bronzeCory: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes: 'Bronze Corys appreciate planted tanks but need open floor space for foraging. Use robust plants like Amazon Swords, Cryptocoryne, Anubias, and Java Fern that won\'t be uprooted by their constant digging. Avoid delicate carpeting plants (Monte Carlo, HC Cuba) in Cory-heavy tanks—they\'ll accidentally uproot them while sifting substrate. Floating plants (Frogbit, Red Root Floaters) help dim lighting, as Corys prefer subdued light. Leaf litter (Indian Almond, Oak leaves) provides foraging opportunities and beneficial tannins.',
-    hardscape: ['Smooth Driftwood (Malaysian, Mopani)', 'River Stones', 'Terracotta Caves', 'PVC Pipe Shelters'],
+    plantingNotes: 'Robust plants like Anubias and Java Fern are ideal as these active diggers may uproot delicate root systems. Floating plants help diffuse the light, making these crepuscular fish feel more secure.',
+    hardscape: ['Smooth driftwood', 'River stones', 'Terracotta caves', 'PVC pipe shelters'],
   },
 
   behavior: {
     tags: ['shoaler', 'bottom_dweller', 'peaceful', 'robust', 'active', 'scaleless'],
     minGroupSize: 6,
-    description: 'Bronze Corydoras are the "tanks" of the Corydoras world—larger, bolder, and significantly hardier than smaller species like Pandas or Pygmies. They are constantly active, bouncing around the bottom like miniature bulldozers, sifting through substrate for food with unstoppable enthusiasm. Their barbels (whisker-like sensory organs) detect buried food particles with impressive precision. Unlike shy species, Bronzes are confident and often ignore humans entirely—they\'re too busy being aquarium workhorses. They exhibit fascinating social behavior: synchronized swimming, group "dances," adorable "Cory trains" where 3-5 fish line up single-file and march across the tank, and occasional mass dashes to the surface for air gulps. They communicate through body language and subtle chemical signals.',
+    description: 'These peaceful bottom dwellers are the workhorses of the community aquarium, constantly sifting through the substrate for leftovers. They are highly social and should always be kept in groups, where they exhibit engaging behaviors like synchronized swimming and the occasional dash to the surface for air. Unlike some of their more delicate relatives, Bronze Corys are remarkably hardy and adaptable to a range of water conditions. Their barbels are sensitive sensory organs used to detect food in the dark or murky water, so a soft substrate is essential for their well-being.',
     
     compatibility: {
-      goodMates: ['Tetras (Neon, Cardinal, Rummynose)', 'Rasboras', 'Peaceful Cichlids (Angelfish, Rams, Apistogramma)', 'Livebearers (Guppies, Platies)', 'Peaceful Barbs', 'Gouramis', 'Danios', 'Shrimp (Cherry, Amano)', 'Snails'],
-      badMates: ['Large aggressive Cichlids (Oscars, Jack Dempseys)', 'Goldfish (different temperature needs)', 'Bettas (sometimes nippy toward Corys)', 'Aggressive Loaches'],
-      notes: 'Bronze Corys are among the most versatile community fish. Their hardiness, peaceful nature, and wide temperature tolerance (21-27°C) make them compatible with nearly everything peaceful. They ignore most tankmates and focus entirely on the substrate. Their armored bodies make them resistant to fin-nippers.',
+      goodMates: ['Tetras', 'Rasboras', 'Livebearers', 'Gouramis', 'Peaceful Cichlids'],
+      badMates: ['Large aggressive Cichlids', 'Goldfish'],
+      notes: 'They are excellent community residents but should not be expected to clean up uneaten food entirely, as they require a dedicated diet.',
       
       rules: [
         {
           type: 'avoid',
           target: 'large aggressive cichlids',
-          reason: 'Predatory cichlids (Oscars, Jack Dempseys) may attack or eat smaller Corys, especially juveniles',
+          reason: 'Predatory fish may attack or eat these peaceful, slow-moving catfish.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'sand substrate',
-          reason: 'CRITICAL: Gravel erodes barbels, leading to infection, starvation, and death. Sand allows natural foraging behavior',
+          reason: 'Sharp gravel damages their delicate barbels, leading to infection and an inability to locate food.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'group-size >= 6',
-          reason: 'Corydoras are shoaling fish that become stressed, inactive, and hide constantly in small groups. 6 is minimum, 10+ is ideal',
+          reason: 'Being social shoalers, individuals kept alone or in small numbers become withdrawn and stressed.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'goldfish',
-          reason: 'Temperature incompatibility. Goldfish prefer 18-22°C, Bronze Corys prefer 24-26°C. Neither thrives in the overlap zone',
+          reason: 'Goldfish require cooler water temperatures that are outside the optimal range for these tropical catfish.',
           severity: 'medium',
         },
       ],
@@ -125,34 +126,28 @@ export const bronzeCory: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'SAND substrate is mandatory—gravel causes barbel erosion', 
-      'Groups of 6+ required for natural shoaling behavior', 
-      'Sinking foods required (they cannot eat floating flakes)',
-      'Regular substrate vacuuming prevents bacterial buildup',
+      'Sand substrate is mandatory', 
+      'Groups of 6+ required', 
+      'Sinking foods required',
+      'Regular substrate vacuuming',
     ],
 
     proTips: [
-      "Bronze Corys are a long-term commitment. With proper care, they typically live 8-10 years, and exceptional individuals reach 15+ years. That's longer than many dogs! You're not buying a disposable fish—you're adopting a decade-long companion.",
-      "Albino Corys are just Bronze Corys with albinism (leucistic mutation). Same species, same care, same hardy nature. They're not a separate species despite being labeled differently in stores.",
-      "Feed sinking foods AFTER lights dim. Corys are crepuscular (most active at dawn/dusk). Feeding at night ensures they get food before midwater fish steal it.",
-      "The 'Cory shuffle' (wiggling into substrate) is normal foraging behavior. They use barbels to detect food buried 1-2cm deep. This is why sand is critical—gravel prevents this natural behavior entirely.",
-      "Temperature tolerance: Bronzes handle warmer water (up to 27°C) better than Pandas (22-24°C) or Pygmies (22-25°C). Great for tropical community tanks with higher temps.",
-      "Air gulping ('Cory zoom') is normal, not distress. They dash to the surface, gulp air, and process oxygen through intestinal respiration. Frequency increases in low-oxygen water but even well-oxygenated tanks see zooms.",
-      "Barbel health = overall health. Long, intact barbels indicate pristine conditions. Short, eroded barbels signal poor substrate or dirty water. Check barbels weekly as your water quality canary.",
+      "Target feeding with sinking pellets ensures they receive enough nutrition before midwater fish consume it all.",
+      "Observe their barbels regularly; shortened or frayed whiskers often indicate poor water quality or an unsuitable substrate.",
+      "They live significantly longer than many community fish, often reaching ten years with proper care."
     ],
 
     commonMistakes: [
-      "Using gravel substrate. This is the #1 killer of Corydoras. Gravel erodes barbels, causing infection (barbel erosion), inability to find food, and eventual starvation. ONLY use sand.",
-      "Thinking they 'eat poop' or 'clean the tank.' Corys are scavengers that eat leftover food, not waste. They produce waste like any fish. You still need to vacuum substrate weekly.",
-      "Underfeeding. Many assume Corys survive on scraps. They need dedicated sinking foods (Hikari Sinking Wafers, Fluval Bug Bites, bloodworms) or they'll starve while midwater fish thrive.",
-      "Keeping alone or in pairs. Corys are social shoalers that become stressed and inactive without groups. 6 is minimum; 10+ displays natural behaviors like synchronized swimming and Cory trains.",
-      "Ignoring barbel erosion. Short or missing barbels indicate bacterial infection from dirty substrate or sharp gravel. Once barbels are gone, Corys struggle to find food and often die.",
+      "Keeping them on gravel substrate leads to barbel erosion and bacterial infections.",
+      "Relying on them as a cleanup crew often results in starvation.",
+      "Keeping them alone or in pairs causes chronic stress and inactivity."
     ],
     
     feeding: {
       frequency: 'once-daily',
-      primaryFoods: ['wafers', 'pellets', 'bloodworms', 'brine-shrimp'],
-      supplements: ['daphnia', 'vegetables', 'tubifex'],
+      primaryFoods: ['wafers', 'pellets', 'bloodworms'],
+      supplements: ['brine-shrimp', 'daphnia', 'tubifex'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -165,7 +160,7 @@ export const bronzeCory: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'CRITICAL: Vacuum sandy substrate weekly to remove detritus and prevent anaerobic pockets. Corys sift substrate constantly, but this exposes them to bacteria if substrate isn\'t cleaned. Use gentle siphon to avoid sucking up sand.',
+      notes: 'Vacuum the sandy substrate gently to remove waste without disturbing the sand bed.',
     },
     
     equipment: {
@@ -187,21 +182,21 @@ export const bronzeCory: Species = {
   health: {
     lifespanYears: 10,
     commonDiseases: ['barbel-erosion', 'red-blotch-disease', 'ich', 'columnaris', 'nitrite-poisoning'],
-    sensitivities: ['Sharp substrate (causes barbel erosion)', 'Salt (scaleless fish - avoid salt treatments)', 'Copper-based medications', 'High nitrites (more sensitive than other fish)', 'Dirty substrate (bacterial infections)'],
+    sensitivities: ['Sharp substrate', 'Salt treatments', 'Copper medications', 'High nitrites', 'Dirty substrate'],
   },
 
   scientificContext: {
-    wildHabitat: "Bronze Corydoras inhabit an enormous range across South America—from Trinidad and Venezuela down to northern Argentina. They occupy slow-moving rivers, marshes, floodplains, and temporary pools during rainy season. These habitats feature soft muddy or sandy bottoms rich in detritus, leaf litter, and organic matter. Water parameters vary dramatically (pH 6.0-8.0, GH 2-25), making them incredibly adaptable. During dry season, pools shrink and oxygen levels drop—this is when their intestinal breathing adaptation becomes critical for survival.",
-    sexualDimorphism: "Clear when viewed from above. Females are significantly larger, rounder, and deeper-bodied, especially when carrying eggs (gravid). Males are smaller, slimmer, and more streamlined. Females' pectoral fins are shorter and rounder, while males have slightly elongated, more pointed pectoral fins. During breeding condition, females become massive—almost comically round.",
-    variants: ['Wild Type (bronze-metallic)', 'Albino/Leucistic (pink body, red eyes)', 'Black Venezuela (melanistic)', 'Green Laser (separate lineage)', 'Longfin (captive mutation)'],
+    wildHabitat: "Native to a wide range of South American river basins, this species inhabits slow-moving streams and floodplains. These waters are often murky with soft, sandy bottoms rich in organic detritus. Seasonal changes often lead to lower oxygen levels, which they navigate using their ability to process atmospheric air. This adaptability makes them one of the most widespread members of the genus.",
+    sexualDimorphism: "When viewed from above, females are noticeably broader and rounder in the midsection, especially when carrying eggs. Males are smaller, slimmer, and have more pointed dorsal fins. These differences become more pronounced as the fish mature.",
+    variants: ['Wild type Bronze', 'Albino', 'Black Venezuela', 'Green Laser', 'Longfin'],
   },
 
   breeding: {
     method: 'egg_layer',
     difficulty: 'beginner',
-    trigger: 'Bronze Corys are among the easiest egg-layers to breed. Trigger spawning with a large (40-50%) cool water change (2-3°C cooler than tank). This mimics rainy season floods. Condition breeders with high-protein foods (bloodworms, brine shrimp) for 2 weeks prior. Spawning usually occurs within 24-48 hours of water change. Males chase females in "T-position" courtship displays.',
-    fryCare: 'Females lay 100-300 adhesive eggs on glass, plants, and decorations. Remove adults after spawning (they may eat eggs). Eggs hatch in 3-5 days at 24°C. Fry are large and immediately accept microworms, powdered flakes, and crushed pellets—no infusoria stage needed. Growth is fast; juveniles reach 2cm in 6-8 weeks. Maintain pristine water (daily 10% changes) to prevent bacterial infections.',
-    notes: 'Bronze Corys often spawn spontaneously after routine water changes, surprising unprepared aquarists with eggs everywhere. Many breeders keep breeding groups (2 males : 3 females) and collect eggs weekly. Fry survival is high (50-70%) even without special care. This is the beginner\'s egg-laying species.',
+    trigger: 'Spawning is frequently triggered by a substantial water change using slightly cooler water to simulate the rainy season. Conditioning the group with high-quality live or frozen foods for several weeks prior is essential to encourage egg development.',
+    fryCare: 'The adhesive eggs are typically deposited on the aquarium glass or plant leaves and hatch within three to five days. The fry are relatively large upon hatching and can immediately consume microworms or crushed flakes. Maintaining pristine water quality is critical during the early stages to prevent bacterial infections. Frequent small water changes promote rapid and healthy growth.',
+    notes: 'They often spawn spontaneously in well-maintained community tanks, surprising aquarists with eggs on the glass.',
   },
   
   experienceData: {

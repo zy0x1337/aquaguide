@@ -4,7 +4,8 @@ export const cardinalTetra: Species = {
   id: 'tetra-002',
   slug: 'cardinal-tetra',
   imageUrl: '/images/species/cardinal-tetra.jpg',
-  funFact: "Cardinal Tetras are the 'superior' version of Neon Tetras—larger, hardier, and more stunning with a red stripe that runs the full length of their body (Neons stop halfway). In the wild, they form massive schools of thousands in the blackwater tributaries of the Rio Negro, creating a living river of electric blue and crimson red. Watch them in your aquarium: when startled, the loose shoal snaps into a synchronized formation like a single organism, then slowly relaxes back into individuals exploring the tank. It's underwater ballet meets flash mob!",
+  
+  funFact: "Often mistaken for the Neon Tetra, this species boasts a full-length crimson stripe and forms schools so vast in the wild that they resemble a living river of light.",
 
   taxonomy: {
     scientificName: 'Paracheirodon axelrodi',
@@ -12,13 +13,13 @@ export const cardinalTetra: Species = {
     family: 'Characidae',
     origin: 'Brazil, Venezuela, Colombia (Rio Negro, Orinoco Basin - blackwater tributaries)',
     region: 'South America',
-    biotope: 'Blackwater rivers and flooded forest streams with extremely soft, acidic, tannin-stained water (pH 4.0-5.5, GH <1). Shallow water (10-60cm) with dense leaf litter and submerged roots',
+    biotope: 'Blackwater rivers and flooded forest streams with extremely soft, acidic, tannin-stained water.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 5,
-    color: 'Electric blue horizontal stripe running from nose to tail, above a full-length bright crimson-red belly. The blue glows like neon; the red is intense (vs Neon Tetras where red only covers back half). Dark substrate and tannin-stained water make colors pop dramatically',
+    color: 'An iridescent blue-green stripe runs from nose to tail above a brilliant crimson belly. Dark substrates and tannin-stained water enhance these vibrant colors.',
   },
 
   environment: {
@@ -48,49 +49,49 @@ export const cardinalTetra: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Cardinal Tetras look stunning in heavily planted blackwater-style tanks. Plant densely on background and sides with Cryptocoryne, Amazon Swords, Java Fern, and Anubias. Leave center open for schooling displays—watching 20+ Cardinals swim in synchronized waves through open water is the main attraction! Floating plants (Red Root Floaters, Frogbit, Water Sprite) create the dim lighting they prefer—Cardinals are blackwater fish adapted to shaded forest streams. Dark substrate (black sand or dark gravel) dramatically enhances their red coloration—the contrast is stunning. Add leaf litter (Indian Almond, Oak leaves) to release tannins and stain water amber/tea-color—mimics natural habitat and brings out maximum color intensity.',
-    hardscape: ['Driftwood (Spider Wood, Mopani - releases tannins)', 'Smooth River Rocks', 'Indian Almond Leaves (tannins + biofilm)', 'Oak Leaf Litter'],
+    plantingNotes: 'Heavily planted tanks with floating plants provide the dim lighting conditions this shy species prefers. Dark substrate intensifies their coloration significantly.',
+    hardscape: ['Driftwood', 'Indian Almond Leaves', 'River rocks', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['shoaler', 'peaceful', 'midwater', 'shy', 'diurnal', 'colorful'],
     minGroupSize: 12,
-    description: 'Cardinal Tetras are the more vibrant, hardier cousins of Neon Tetras—think of them as "Neon Tetras 2.0." They form loose shoals that swim independently, exploring plants and grazing on biofilm, but when startled (shadow, sudden movement), the shoal snaps into a tight synchronized formation and zooms away like a single organism. It\'s mesmerizing! They explore the entire tank confidently when kept in proper numbers (12+), but become shy and hide constantly in small groups (under 10). Their red stripe is a health barometer: bright vibrant red = happy, healthy fish; pale pink or washed-out = stress, poor diet, illness. Cardinals are peaceful toward all tankmates—no fin-nipping, no aggression. They\'re active during the day, most vibrant in morning after feeding.',
+    description: 'This peaceful shoaling fish is a stunning addition to the community aquarium, renowned for the iridescent blue and red stripes that run the length of its body. It is slightly larger and more robust than the similar Neon Tetra, making it a better choice for community tanks with larger tankmates. In the wild, they congregate in schools of thousands to confuse predators, a behavior that persists in the aquarium where they feel most secure in large groups. They are active swimmers that occupy the middle water layers, exploring their environment with a lively but non-aggressive demeanor.',
     
     compatibility: {
-      goodMates: ['Corydoras (all species)', 'Otocinclus', 'Harlequin Rasboras', 'Rummynose Tetras', 'Ember Tetras', 'Dwarf Cichlids (Apistogramma, Rams)', 'Peaceful Gouramis (Honey, Pearl)', 'Cherry Shrimp', 'Nerite Snails', 'Mystery Snails'],
-      badMates: ['Angelfish (hunt tetras as adults)', 'Large Cichlids', 'Goldfish', 'Aggressive Barbs', 'Bettas (situational—some coexist, some attack)', 'Pufferfish'],
-      notes: 'Cardinals are significantly hardier than Neon Tetras and better suited for community tanks. Their larger size (5cm vs 3cm Neons) makes them less vulnerable to predation—but Angelfish still pose a risk once fully grown (4+ inches). Cardinals prefer warmer water (25°C) than Neons (23°C), making them compatible with most tropical species. Avoid mixing Cardinals with Neons unless you can compromise temp at 24°C—Cardinals will tolerate it but prefer warmer.',
+      goodMates: ['Corydoras', 'Harlequin Rasboras', 'Dwarf Cichlids', 'Otocinclus', 'Peaceful Gouramis'],
+      badMates: ['Angelfish', 'Large Cichlids', 'Bettas', 'Goldfish'],
+      notes: 'They thrive best in a species-specific setup or with other small, peaceful fish that will not outcompete them for food.',
       
       rules: [
         {
           type: 'avoid',
           target: 'angelfish',
-          reason: 'Angelfish prey on tetras in the wild. While Cardinals are larger than Neons (5cm vs 3cm), adult Angelfish (4+ inches) will still hunt them. Young Angels (under 3 inches) coexist peacefully, but once Angels mature they become predators. Not worth the risk',
+          reason: 'Adult Angelfish are natural predators that will consume small tetras.',
           severity: 'high',
         },
         {
           type: 'avoid',
           target: 'large predatory fish',
-          reason: 'Any fish with mouth large enough to swallow a 5cm fish poses threat. Cardinals are small, peaceful, and defenseless',
+          reason: 'Any fish with a mouth large enough to swallow them will pose a threat.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'group size 12+ fish',
-          reason: 'Cardinals need large groups for psychological security. Groups under 12 become stressed, hide constantly, lose vibrant coloration, and die prematurely. 12 is absolute minimum; 20-30 creates spectacular natural behavior',
+          reason: 'Keeping them in smaller groups causes stress and dilutes their natural schooling instincts.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'neon tetras',
-          reason: 'Can be kept together but have different temperature preferences. Cardinals prefer warmer (25°C) vs Neons cooler (23°C). Compromise at 24°C but neither will be optimal. Better to keep one species or the other',
+          reason: 'While they can coexist, Cardinals prefer warmer water than Neons, requiring a temperature compromise.',
           severity: 'low',
         },
         {
           type: 'requires',
           condition: 'tank cycled 6+ weeks',
-          reason: 'Cardinals are more tolerant of new tanks than Neons but still sensitive to ammonia and nitrite. Wait 6-8 weeks after cycling before adding',
+          reason: 'They are sensitive to ammonia and nitrite spikes common in newly established tanks.',
           severity: 'medium',
         },
       ],
@@ -131,36 +132,29 @@ export const cardinalTetra: Species = {
     effort: 'low',
     cost: 'medium',
     specialRequirements: [
-      'Must be kept in groups of 12+ for confidence and color display', 
-      'Prefer warmer water (25°C) than Neon Tetras (23°C)', 
-      'Soft lighting strongly recommended (floating plants)',
-      'Dark substrate brings out stunning red coloration',
-      'Cycled tank (6+ weeks) required',
+      'Groups of 12 or more', 
+      'Soft acidic water', 
+      'Dim lighting',
+      'Dark substrate',
+      'Cycled tank',
     ],
 
     proTips: [
-      "Cardinals vs Neons: Cardinals are more expensive (€3-5 vs €1-2 each) but significantly hardier. They tolerate new tanks better, live longer (5 years vs 3), handle warmer water (better for most community tanks), and are larger (less vulnerable to predation). Worth every cent!",
-      "Temperature is KEY: Cardinals prefer 25°C while Neons prefer 23°C. If keeping both, compromise at 24°C, but Cardinals alone thrive warmer. Most tropical tanks run 25-26°C = Cardinals are perfect fit.",
-      "Red stripe = health barometer. Bright, vibrant crimson red = happy, healthy fish. Pale pink or washed-out red = stress, poor diet, disease, or wrong water parameters. It's an instant visual check!",
-      "Feed micro-foods. Their mouths are tiny despite being larger than Neons. Use micro-pellets (0.5-1mm), finely crushed flakes, or baby brine shrimp. Large pellets = ignored.",
-      "Buy captive-bred when possible (ask store). Wild-caught Cardinals often carry parasites (especially Neon Tetra Disease) and struggle to adapt. Captive-bred (mostly from Asian farms now) are hardier and less disease-prone.",
-      "Blackwater setup = maximum color. Add Indian Almond Leaves or Alder Cones to tint water tea-colored. This mimics natural Rio Negro habitat and intensifies red/blue coloration dramatically. Plus tannins have antibacterial properties.",
-      "Wild-caught Cardinals support sustainable fisheries! Rio Negro fishery is eco-certified—local communities earn income protecting rainforest instead of logging. Buying wild Cardinals helps conservation (but captive-bred are hardier for beginners).",
+      "The vibrancy of the red stripe is a reliable indicator of water quality and overall health.",
+      "Captive-bred specimens are significantly hardier than wild-caught individuals and adapt better to aquarium life.",
+      "Darker substrates and the addition of tannins using Indian Almond leaves will make their colors truly pop."
     ],
 
     commonMistakes: [
-      "Thinking they're same as Neon Tetras. Cardinals are warmer water fish (25°C vs 23°C), larger (5cm vs 3cm), hardier, and need slightly bigger tanks due to larger schools. They're different species with different needs!",
-      "Buying only 6-8. This causes chronic stress and hiding behavior. They lose color, stop eating, and die prematurely. 12 is absolute minimum; 20-30 creates spectacular displays worth the investment.",
-      "Adding them too early. While hardier than Neons, Cardinals still struggle in brand-new tanks. Wait 6-8 weeks after cycling. Ammonia/nitrite = rapid death.",
-      "Hard water tanks. Cardinals need soft water (GH <10, ideally <6). In hard water (GH 15+), colors fade and they become susceptible to disease. Use RO water or rainwater if tap is hard.",
-      "Keeping them with Angelfish. This combo is popular in stores (both from Amazon!) but problematic. Adult Angels hunt Cardinals. Stores sell juveniles that get along—6 months later, Cardinals disappear one by one.",
-      "Bright lighting. Cardinals are blackwater fish adapted to shaded forest streams. Bright lights = stressed, washed-out colors. Use floating plants to diffuse light or keep lighting low/medium.",
+      "Confusing them with Neon Tetras often leads to incorrect water temperature preferences.",
+      "Keeping them in groups smaller than ten causes timidity and color loss.",
+      "Housing them with adult Angelfish results in the tetras being eaten."
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'flakes', 'brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'spirulina', 'frozen-food'],
+      primaryFoods: ['micro-pellets', 'flakes'],
+      supplements: ['bloodworms', 'brine-shrimp', 'daphnia'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -173,7 +167,7 @@ export const cardinalTetra: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes maintain stability. Cardinals tolerate parameter fluctuations better than Neons but still prefer stability. Match new water temperature to tank (25°C) to avoid shock. Vacuum gently—Cardinals are sensitive to disturbed substrate stirring up waste.',
+      notes: 'Perform regular water changes to keep nitrates low, as they are sensitive to deteriorating water conditions.',
     },
     
     equipment: {
@@ -195,21 +189,21 @@ export const cardinalTetra: Species = {
   health: {
     lifespanYears: 5,
     commonDiseases: ['neon-tetra-disease', 'ich', 'columnaris', 'velvet', 'parasites'],
-    sensitivities: ['Ammonia spikes', 'High nitrates (>20ppm)', 'Hard water', 'Bright lighting', 'Temperature shocks', 'Sudden parameter changes'],
+    sensitivities: ['Ammonia spikes', 'High nitrates', 'Hard water', 'Bright lighting', 'Temperature shocks'],
   },
 
   scientificContext: {
-    wildHabitat: "Cardinal Tetras inhabit the blackwater tributaries of the Rio Negro and Orinoco River systems in South America (Brazil, Venezuela, Colombia). These waters are extremely soft (GH <1—almost pure H2O), highly acidic (pH 4.0-5.5), and stained dark brown by tannins from decaying leaves and driftwood. Water is warm (24-28°C year-round), shallow (10-60cm), and dimly lit due to forest canopy and water staining. During rainy season (December-May), they migrate into flooded forest areas where they spawn among submerged roots, leaf litter, and dense vegetation. Schools of thousands create spectacular displays—locals call them 'neon fish' because the blue stripe glows in dim light.",
-    sexualDimorphism: "Subtle and difficult to distinguish. Females are noticeably fuller and rounder in belly, especially when carrying eggs (gravid). Males are slimmer, more streamlined, and slightly smaller overall. Blue stripe remains consistent between sexes. Females may appear slightly less vibrant when actively spawning. Unlike some tetras, males don't develop hooks or extended fins. Best method: observe group from above—rounder fish with deeper bellies = females.",
-    variants: ['Standard Cardinal (wild-type)', 'Wild-Caught (more vibrant but sensitive + parasites)', 'Captive-Bred (hardier, recommended for beginners - mostly from Asian farms now)'],
+    wildHabitat: "Native to the upper Rio Negro and Orinoco drainages, this species inhabits slow-moving blackwater streams rich in tannins. The water is extremely soft and acidic, often stained the color of tea by decaying vegetation. These environments provide dense cover among submerged roots and leaf litter where they find safety from predators.",
+    sexualDimorphism: "Females generally have a rounder, deeper body shape, particularly when laden with eggs. Males are slimmer and slightly smaller, but sexing is difficult without comparison.",
+    variants: ['Standard wild type', 'Golden', 'Albino'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
-    trigger: 'Breeding Cardinals is extremely challenging—one of the hardest projects in fishkeeping. Requires: 1) RO water (GH <1, KH 0) acidified to pH 5.0-5.5 using peat extract or commercial pH-down, 2) Complete darkness—eggs are photosensitive and die if exposed to light, 3) Separate conditioning for 2-3 weeks with live foods (daphnia, brine shrimp, bloodworms) until females visibly plump, 4) Breeding tank with spawning mops or Java Moss, 5) Introduce pairs at night (lights off). Males display by swimming in tight circles around females.',
-    fryCare: 'Eggs hatch in 24-30 hours but remain incredibly light-sensitive for first week. Cover breeding tank with black fabric or keep in complete darkness. Fry are microscopic (smaller than Neon fry) and require green water (infusoria), paramecium, or ultra-fine liquid fry food. After 5-7 days, introduce newly-hatched Artemia nauplii (not adults). Gradually increase lighting over 10-14 days. Mortality is very high (60-80%) even with expert care. Fry are fragile and sensitive to water quality. Growth is slow: 8-10 weeks to reach sellable size (1.5cm).',
-    notes: 'Cardinal breeding is considered one of the most difficult projects in aquarium hobby. Combination of extreme water softness, total darkness, photosensitive eggs, and microscopic fry makes success rare for hobbyists. Most Cardinals in trade are wild-caught from sustainable fisheries in Rio Negro Basin (Brazil)—this supports local conservation and communities. Asian farms are now producing captive-bred Cardinals (hardier) but wild-caught remain common. Breeding Cardinals at home is a bucket-list challenge for expert breeders—not recommended for beginners.',
+    trigger: 'Breeding requires extremely soft, acidic water with a pH below 5.5 and the absence of light, mimicking their deep forest pool habitat.',
+    fryCare: 'The eggs are photosensitive and must be kept in total darkness to hatch successfully. Fry are tiny and require microscopic foods like infusoria for the first few days.',
+    notes: 'Breeding is notoriously difficult in home aquaria, and most specimens sold in the trade are wild-caught.',
   },
   
   experienceData: {

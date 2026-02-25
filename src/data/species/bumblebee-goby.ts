@@ -4,8 +4,8 @@ export const bumblebeeGoby: Species = {
   id: 'bumblebee-goby',
   slug: 'bumblebee-goby',
   imageUrl: '/images/species/bumblebee-goby.jpg',
-  funFact:
-    "Bumblebee Gobies are tiny terrors with big personality—like miniature tigers guarding their caves! Watch them perch on rocks like tiny gargoyles, then pounce on passing prey with lightning speed. Males are dedicated cave dads: females stick 50-200 eggs to cave ceilings and leave, while males guard and fan them 24/7 for 7-10 days without eating. But here's the critical catch: they are true carnivores who refuse dry food and will literally starve to death surrounded by flakes. Live/frozen food only—no exceptions. Watching a group of 6-8 gobies perch together like a tiny gang is adorable!",
+  
+  funFact: "The male Bumblebee Goby is a devoted father who guards his cave-bound eggs for over a week without eating, fanning them constantly to ensure they hatch safely.",
 
   imageCredit: {
     photographer: 'theaquariumkeeper on Pixabay',
@@ -20,13 +20,13 @@ export const bumblebeeGoby: Species = {
     family: 'Gobiidae',
     origin: 'Southeast Asia (Thailand, Indonesia, Vietnam - coastal lowlands, mangrove swamps, estuaries)',
     region: 'Asia',
-    biotope: 'Mangrove swamps, estuaries, tidal streams with mud/sand substrates, leaf litter, mangrove roots. Found in both freshwater and low-brackish depending on locality',
+    biotope: 'Mangrove swamps, estuaries, and tidal streams with mud or sand substrates and submerged roots.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 4,
-    color: 'Bright yellow base with bold black vertical bands (stripes) creating iconic bumblebee appearance. Colors intensify when territorial or breeding. Males show brighter colors than females',
+    color: 'A bright yellow body is contrasted by four thick, vertical black bars. Males often display more intense coloration than females when defending a territory.',
   },
 
   environment: {
@@ -56,46 +56,43 @@ export const bumblebeeGoby: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes:
-      'Bumblebee Gobies appreciate planted tanks but need brackish-tolerant species if keeping in low-salinity water. Java Fern, Anubias, Vallisneria, and hardy Cryptocoryne tolerate brackish conditions. In pure freshwater setups, more plant options work. Provide dense cover and shaded zones (mangrove-style roots, leaf litter). Gobies perch on surfaces and appreciate multiple line-of-sight breaks for confidence.',
-    hardscape: ['Smooth river stones (perching spots)', 'Driftwood tangles (mangrove-style roots)', 'Caves (snail shells, stacked rocks, short PVC pipes, coconut shells)', 'Leaf litter (Indian Almond, oak leaves for microfauna and cover)'],
+    plantingNotes: 'Plants must be salt-tolerant if keeping the fish in brackish conditions, with Java Fern and Anubias being excellent choices. Dense planting provides necessary cover and breaks lines of sight, reducing stress and territorial squabbles.',
+    hardscape: ['Snail shells', 'Small PVC pipes', 'Driftwood tangles', 'Smooth stones'],
   },
 
   behavior: {
     tags: ['bottom_dweller', 'territorial', 'shy', 'social', 'diurnal', 'colorful', 'nano', 'slow_eater'],
     minGroupSize: 6,
-    description:
-      "Bumblebee Gobies are tiny micro-predators with massive personality! They're perch-and-pounce hunters that spend time on bottom surfaces, hopping between caves and ambush points like miniature ninjas. Watch them perch on rocks, driftwood, and leaves like tiny gargoyles, then launch at passing prey with lightning speed! They're shy when alone but become confident and visible in groups of 6-8. Males are mildly territorial, defending small caves but not causing serious harm. They're slow, deliberate feeders—fast tankmates will outcompete them for food. Groups create adorable 'goby gangs' that perch together watching the tank like tiny security guards.",
+    description: 'These small, bottom-dwelling fish are known for their perch-and-pounce hunting style. They spend much of their time resting on rocks or leaves, darting out to snatch passing prey. They are social but territorial, often engaging in harmless displays to defend their chosen cave. In the wild, they inhabit both fresh and brackish waters, requiring keepers to match the salinity to their specific source. They are peaceful toward other species but can be outcompeted for food by faster swimmers.',
     
     compatibility: {
-      goodMates: ['Other Bumblebee Gobies (best choice - species-only tank ideal)', 'Small peaceful brackish fish (Mollies in low-end brackish)', 'Large adult shrimp (may be ignored)', 'Nerite snails', 'Malaysian Trumpet Snails'],
-      badMates: ['Large or aggressive fish', 'Fin-nippers', 'Fast/greedy feeders (Danios, Barbs - gobies will starve)', 'Cherry shrimp (shrimplets eaten)', 'Any fish that outcompetes for food'],
-      notes:
-        'Bumblebee Gobies are best kept in species-only tanks where they get food reliably. In community tanks with fast feeders, gobies slowly starve because they\'re slow, picky eaters. Brackish vs freshwater: some populations tolerate pure freshwater, others need low brackish (SG 1.002-1.006). Ask store about source water and MATCH IT—switching between fresh/brackish causes osmotic shock and death. Most success in species-focused tanks.',
+      goodMates: ['Other Bumblebee Gobies', 'Mollies (in brackish)', 'Nerite snails', 'Large adult shrimp'],
+      badMates: ['Fast feeders', 'Large aggressive fish', 'Fin-nippers'],
+      notes: 'A species-only tank is strongly recommended to ensure these slow feeders receive adequate nutrition.',
       
       rules: [
         {
           type: 'requires',
           condition: 'live or frozen food ONLY',
-          reason: 'CRITICAL: Bumblebee Gobies are true carnivores who refuse dry food. They will starve to death surrounded by flakes/pellets. Feed live/frozen foods only: bloodworms, brine shrimp, daphnia, microworms. This is non-negotiable',
+          reason: 'These obligate carnivores will starve if provided with only dry flakes or pellets.',
           severity: 'critical',
         },
         {
           type: 'warning',
           target: 'fast aggressive feeders',
-          reason: 'Gobies are slow, picky eaters. Fast fish (Danios, Barbs) eat all food before gobies react. Result: slow starvation over weeks. Species-only tank strongly recommended',
+          reason: 'They will be outcompeted for food and slowly starve in the presence of fast-swimming tankmates.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'match source water salinity',
-          reason: 'CRITICAL: Ask store if gobies were raised in freshwater or brackish. Match their source water exactly. Switching fresh↔brackish causes osmotic shock and death. Once acclimated, keep salinity stable for life',
+          reason: 'Switching between fresh and brackish water causes fatal osmotic shock.',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'multiple caves (one per goby minimum)',
-          reason: 'Males defend caves and need territorial space. Provide multiple caves (snail shells, PVC pipes, rock stacks) to reduce aggression',
+          condition: 'multiple caves',
+          reason: 'Multiple hiding spots allow males to establish territories and reduce aggression.',
           severity: 'medium',
         },
       ],
@@ -136,35 +133,29 @@ export const bumblebeeGoby: Species = {
     effort: 'medium',
     cost: 'medium',
     specialRequirements: [
-      'LIVE/FROZEN FOOD ONLY (will NOT eat dry food - critical!)', 
-      'Multiple caves and shaded cover', 
-      'Stable parameters (avoid salinity swings if brackish)',
-      'Target feeding with pipette/turkey baster',
-      'Match source water salinity (fresh vs brackish)',
+      'Live or frozen food only', 
+      'Multiple caves', 
+      'Stable salinity',
+      'Target feeding',
+      'Source water matching',
     ],
 
     proTips: [
-      "CRITICAL: Bumblebee Gobies are true carnivores who refuse dry food. They will starve surrounded by flakes/pellets. Feed live/frozen only: bloodworms, baby brine shrimp, daphnia, microworms, tubifex, cyclops. Some accept frozen after training. Most ignore all dry food until death. Budget for live/frozen foods!",
-      "Brackish vs Freshwater confusion: Some populations tolerate pure freshwater, others need low brackish (SG 1.002-1.006 = 2-8ppt salt). Problem: stores often don't know which! Ask about source water and match it exactly. Switching fresh↔brackish = osmotic shock = death. Once acclimated, keep salinity stable for life. Most gobies sold are brackish-raised.",
-      "Species-only tank = success. In community tanks with fast feeders, gobies slowly starve (they're slow, picky eaters). Best kept alone or with other slow peaceful species. Target-feed with pipette near caves so they get food.",
-      "Feed 2-3 times daily in small portions. Gobies are tiny (1.5 inches) with tiny stomachs. Multiple small feedings better than one large. Drop food near caves with turkey baster so shy gobies eat.",
-      "Groups of 6-8 = confident visible gobies. Alone or pairs = stressed hiding gobies. Groups create adorable 'goby gangs' that perch together. More gobies = more natural behavior.",
-      "Snail shells = perfect caves! Large mystery snail shells, Apple snail shells make ideal caves gobies love. Stack rocks, use short PVC pipes (1-2 inch diameter), coconut shells. Provide 1-2 caves per goby.",
-      "Listen for 'clicking' sounds! Males make audible clicking/popping sounds during territorial displays and courtship. It's adorable and confirms healthy behavior.",
+      "Use a turkey baster to deliver food directly to their cave to ensure they eat before other fish arrive.",
+      "Provide plenty of snail shells or small caves to allow males to establish their own territories.",
+      "Always verify if the stock is wild-caught or tank-raised to determine the correct salinity requirements."
     ],
 
     commonMistakes: [
-      "Assuming they eat dry food = #1 killer. 'My gobies died despite feeding!' Yes—because they refuse flakes/pellets completely. They are obligate carnivores requiring live/frozen meaty foods. No exceptions. Starving gobies hide constantly and waste away.",
-      "Community tank with fast feeders = slow starvation. Gobies are slow, picky eaters. Danios, Barbs, Tetras swarm food and eat everything in 30 seconds. Gobies arrive 2 minutes later = nothing left. Species tank strongly recommended.",
-      "Switching freshwater↔brackish after purchase = osmotic shock death. Once acclimated to fresh or brackish, keep it stable. Don't switch back and forth. Ask store about source water and match it.",
-      "Keeping 1-2 gobies. Small groups (under 6) = stressed, hiding gobies. Groups of 6-8 = confident, visible, natural behavior. They're social and appreciate company.",
-      "No caves. Males need caves for territories and breeding. Without caves, chronic stress and aggression occur. Provide multiple caves (snail shells work perfectly).",
+      "Feeding dry food leads to starvation as they are obligate carnivores that refuse flakes.",
+      "Mixing them with fast-feeding fish results in the gobies being outcompeted for food.",
+      "Acclimating them to a different salinity than their source water causes fatal osmotic shock."
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['bloodworms', 'brine-shrimp', 'daphnia', 'micro-pellets'],
-      supplements: ['tubifex', 'cyclops', 'live-food'],
+      primaryFoods: ['bloodworms', 'brine-shrimp', 'live-food'],
+      supplements: ['daphnia', 'tubifex', 'frozen-food'],
       vegetarian: false,
       liveFood: {
         required: true,
@@ -177,7 +168,7 @@ export const bumblebeeGoby: Species = {
       waterChangePercentage: 20,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 20-30% water changes. If keeping in brackish, maintain stable salinity (use refractometer or hydrometer). Match temperature and salinity of new water exactly. Keep nitrates below 10ppm—gobies are sensitive to poor water quality. Mature tanks with biofilm/microfauna help.',
+      notes: 'Maintain stable salinity levels during water changes to prevent stress.',
     },
     
     equipment: {
@@ -199,31 +190,25 @@ export const bumblebeeGoby: Species = {
   health: {
     lifespanYears: 4,
     commonDiseases: ['ich', 'bacterial-infections', 'internal-wasting-from-starvation', 'osmotic-shock-from-salinity-changes'],
-    sensitivities: ['Rapid parameter changes (especially salinity)', 'Poor water quality (nitrates)', 'Food competition (slow starvation)', 'Medications (some gobies sensitive)'],
+    sensitivities: ['Rapid salinity changes', 'Poor water quality', 'Food competition', 'Dry food diet'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Brachygobius species inhabit lowland coastal systems across Southeast Asia: mangrove swamps, estuaries, tidal streams, and mudflats. They occur in both freshwater and low-brackish conditions depending on locality and tide. Substrate is mud/sand with leaf litter, submerged roots, and mangrove debris. Water is warm (24-28°C), slightly alkaline (pH 7.5-8.5), moderate to hard (GH 10-20). They perch on surfaces and ambush small prey (insect larvae, tiny crustaceans, worms).',
-    sexualDimorphism:
-      'Subtle. Females appear fuller-bodied, especially when gravid (carrying eggs). Males show more intense coloration (brighter yellow, darker blacks) and defend caves during breeding. Males develop slightly more pointed dorsal/anal fins. Difficult to sex juveniles—wait for maturity (6+ months).',
+    wildHabitat: "Inhabiting the coastal waters of Southeast Asia, these fish live in mangrove swamps and tidal streams. They are often found among submerged roots and leaf litter in water that varies from fresh to brackish depending on the tide. This natural variation means the specific salinity requirements depend heavily on the geographic origin of the specimen.",
+    sexualDimorphism: "Females appear rounder and fuller in the body, especially when carrying eggs. Males are generally more slender and display brighter yellow coloration when defending a territory.",
     variants: [
-      'Brachygobius doriae (most commonly sold as "Bumblebee Goby")',
-      'Brachygobius xanthozonus/xanthozona complex',
+      'Brachygobius doriae',
+      'Brachygobius xanthozonus',
       'Brachygobius nunus',
-      'Trade identification frequently inconsistent - many sold under wrong species names',
     ],
   },
 
   breeding: {
     method: 'cave_spawner',
     difficulty: 'expert',
-    trigger:
-      'Bumblebee Goby breeding is challenging but achievable. Trigger spawning: 1) Mature pair (8+ months old), 2) Excellent conditioning with live foods (bloodworms, brine shrimp, daphnia) for 2-3 weeks until female plump, 3) Stable low-brackish water (SG 1.002-1.005) or hard alkaline freshwater (pH 7.5-8.0, GH 12-15), 4) Tight caves/shells for spawning, 5) Slightly warmer temp (27-28°C). Males become territorial and defend caves, displaying to females.',
-    fryCare:
-      'Females lay 50-200 tiny eggs on cave ceiling (upside-down). Female leaves, male becomes cave hermit—guards and fans eggs 24/7 for 7-10 days without eating. Eggs hatch in 7-10 days at 27°C. Fry are microscopic (2mm) and require infusoria or rotifers initially—this is the main bottleneck! After 5-7 days, graduate to baby brine shrimp nauplii. Growth is slow: 1cm at 8 weeks. Larval rearing is difficult—plan rotifer/infusoria cultures before spawning.',
-    notes:
-      'Spawning happens in species tanks with proper conditions. Main challenge: microscopic fry need microscopic foods. Without rotifer/infusoria cultures ready, fry starve. Breeding is achievable for experienced breeders but not beginner-friendly. Male parental care is excellent and adorable to watch.',
+    trigger: 'Condition the group with high-quality live foods and provide plenty of suitable caves. A slight increase in temperature and the addition of fresh water can mimic a seasonal change that triggers spawning.',
+    fryCare: 'The male guards the eggs inside the cave until they hatch. The tiny fry require microscopic foods like infusoria or rotifers for the first few days. Once they are large enough, they can be fed newly hatched brine shrimp. Raising the fry is difficult due to their small size and specific dietary requirements.',
+    notes: 'Breeding is achievable for experienced aquarists but requires preparation of live food cultures for the fry.',
   },
   
   experienceData: {
