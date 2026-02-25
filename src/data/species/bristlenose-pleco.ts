@@ -4,7 +4,7 @@ export const bristlenosePleco: Species = {
   id: 'pleco-001',
   slug: 'bristlenose-pleco',
   imageUrl: '/images/species/bristlenose-pleco.jpg',
-  funFact: "Bristlenose Plecos are the best algae-eating pleco for home aquariums—they stay small (5 inches vs Common Pleco's ridiculous 18-24 inches!). The male's iconic bushy bristles aren't just for show—they're elaborate breeding displays to impress females and mimic nutritious insect larvae to attract prey! Watch a male guard his cave: he'll stay inside for 7-10 days without eating, constantly fanning eggs with his fins to prevent fungus. He's the aquarium world's dedicated single dad—female lays eggs and leaves, male does all parenting. The 'sawdust' you see everywhere? That's pleco poop from rasping wood—it's normal and means they're eating!",
+  funFact: "Bristlenose Plecos are the perfect algae eaters, staying compact at 5 inches (unlike their monstrous 24 inch Common Pleco cousins!). Male's bushy bristles aren't just for show; they mimic insect larvae to lure prey and impress females. Watch a breeding male become a cave hermit for 7 to 10 days, fanning eggs nonstop without eating. He's the aquarium's ultimate single dad! That 'sawdust' everywhere? Pleco poop from rasping wood. Totally normal!",
 
   taxonomy: {
     scientificName: 'Ancistrus sp.',
