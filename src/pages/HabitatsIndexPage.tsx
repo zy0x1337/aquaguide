@@ -18,7 +18,7 @@ export const HabitatsIndexPage: React.FC = () => {
 
   return (
     <AnimatedTransition>
-      <div className="bg-gray-50 dark:bg-gray-950 min-h-screen pb-24">
+      <div className="bg-gray-50 dark:bg-slate-900 min-h-screen pb-24">
         
         {/* Modern Header Section */}
         <div className="pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

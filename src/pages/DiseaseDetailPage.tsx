@@ -11,7 +11,7 @@ const DiseaseDetailPage = () => {
   if (!disease) return <NotFound />;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-20 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 font-sans">
       <SEOHead 
         title={`${disease.name} - Treatment Guide`} 
         description={`How to treat ${disease.name}. Symptoms, causes, and prevention guide.`} 

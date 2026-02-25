@@ -4,7 +4,8 @@ export const cherryBarb: Species = {
   id: 'barb-001',
   slug: 'cherry-barb',
   imageUrl: '/images/species/cherry-barb.jpg',
-  funFact: "Cherry Barbs are the 'gentle souls' of the barb family—peaceful, shy, and utterly non-aggressive (unlike their infamous cousin, the Tiger Barb). Male Cherry Barbs transform into stunning crimson-red jewels during breeding season or when showing off to females—like aquatic peacocks! But here's the critical catch: if you have too many males competing for too few females, the poor girls get harassed to death. Literally. Males chase females relentlessly, causing stress, exhaustion, and death. The magic ratio? 2-3 females per 1 male. Get it right and watch the boys put on a dazzling red display show; get it wrong and watch tragedy unfold.",
+  
+  funFact: "Unlike their boisterous cousins the Tiger Barbs, Cherry Barbs are peaceful fish where males develop a brilliant crimson coloration to court females.",
 
   taxonomy: {
     scientificName: 'Puntius titteya',
@@ -12,13 +13,13 @@ export const cherryBarb: Species = {
     family: 'Cyprinidae',
     origin: 'Sri Lanka (endemic - found nowhere else in wild)',
     region: 'Asia',
-    biotope: 'Shaded, slow-moving forest streams and tributaries with dense vegetation, leaf litter, sandy/muddy substrates, and soft acidic water',
+    biotope: 'Shaded, slow-moving forest streams with dense vegetation and leaf litter.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 5,
-    color: 'Males: Stunning cherry-red body (especially during breeding/courtship) with dark horizontal stripe from nose to tail. Color intensity varies—brightest when competing for females. Females: Silvery-yellow to peachy-tan with same dark stripe, rounder body. Males are visual wow; females are understated elegance',
+    color: 'Males display a vibrant cherry red body, especially during courtship, while females are a more subdued golden tan with a darker lateral stripe.',
   },
 
   environment: {
@@ -48,43 +49,43 @@ export const cherryBarb: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Cherry Barbs thrive in heavily planted tanks that mimic their shaded Sri Lankan forest streams. Dense background and side planting (Vallisneria, Cryptocoryne, Rotala, Ludwigia) provides security and creates visual barriers—critical for reducing male aggression toward females. They love to dart through vegetation in playful chases. Floating plants (Water Sprite, Frogbit) diffuse light and create dim conditions they prefer (wild habitat is heavily shaded by forest canopy). Dark substrate (black sand/gravel) makes male red coloration pop dramatically. Open swimming areas in center allow for schooling displays and courtship behavior.',
-    hardscape: ['Driftwood (creates tannins + territories)', 'Smooth River Stones', 'Leaf litter (Indian Almond, Oak leaves)', 'Caves (rarely used but appreciated)'],
+    plantingNotes: 'Heavily planted tanks with floating plants provide the dim lighting and security this shy species requires. Dark substrate enhances the vibrant red coloration of the males.',
+    hardscape: ['Driftwood', 'Smooth river stones', 'Leaf litter', 'Caves'],
   },
 
   behavior: {
     tags: ['shoaler', 'peaceful', 'midwater', 'active', 'shy'],
     minGroupSize: 8,
-    description: 'Cherry Barbs are the anti-Tiger-Barb—peaceful, shy, and completely non-aggressive toward tankmates. They\'re the gentle introverts of the barb world. In groups (8+), they form loose shoals that explore the tank confidently, but become timid and hide in small groups. Males establish subtle dominance hierarchies through fin displays and body posturing—no actual fighting, just aquatic posturing contests. When courting, males turn intensely red and perform elaborate dances (shimmying, fin spreading, circling females). It\'s beautiful to watch! HOWEVER: Males are relentless in pursuing females. If male:female ratio is wrong (too many males), females get chased constantly, become exhausted, stop eating, and die from stress. This is the #1 Cherry Barb keeping mistake. Proper ratio (2-3 females per male) diffuses harassment—males compete with each other instead of focusing on one poor female.',
+    description: 'These peaceful cyprinids are ideal for community aquariums, exhibiting none of the fin-nipping aggression associated with some other barbs. They are somewhat shy and spend their time swimming in the middle and lower regions of the tank. When kept in groups, they show interesting social interactions, with males displaying their best colors to attract mates. Dense vegetation encourages them to swim in the open rather than hiding.',
     
     compatibility: {
-      goodMates: ['Peaceful Tetras (Neon, Cardinal, Ember)', 'Rasboras (all species)', 'Corydoras', 'Kuhli Loaches', 'Otocinclus', 'Peaceful Gouramis (Honey, Pearl)', 'Snails', 'Shrimp (Cherry, Amano)'],
-      badMates: ['Aggressive fish', 'Tiger Barbs (different temperament—will stress Cherry Barbs)', 'Large Cichlids', 'Fin-nippers', 'Very active aggressive feeders'],
-      notes: 'Cherry Barbs are excellent community fish—peaceful, non-aggressive, shrimp-safe, and compatible with most peaceful species. They\'re much calmer than Tiger Barbs or other aggressive barbs. Safe with all invertebrates (shrimp, snails). They\'re active swimmers but not hyper or chaotic. Males may chase each other during courtship but never harm tankmates. Best kept with similarly peaceful, calm species.',
+      goodMates: ['Peaceful Tetras', 'Rasboras', 'Corydoras', 'Kuhli Loaches', 'Gouramis', 'Snails', 'Shrimp'],
+      badMates: ['Tiger Barbs', 'Large Cichlids', 'Fin-nippers', 'Very active feeders'],
+      notes: 'They are excellent community fish that should not be housed with aggressive or boisterous species.',
       
       rules: [
         {
           type: 'requires',
           condition: 'male to female ratio 1:2 or 1:3',
-          reason: 'CRITICAL: Too many males = females harassed to death. Males chase females relentlessly for breeding. If ratio is wrong (e.g., 6 males, 2 females), the 2 females get chased 24/7, become exhausted, stop eating, and die from stress. Always keep 2-3 females per male. Example: 2 males + 6 females = happy tank',
+          reason: 'Males will relentlessly harass females if they are outnumbered, leading to exhaustion and death.',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'tiger barbs or aggressive barbs',
-          reason: 'Cherry Barbs are peaceful and shy. Tiger Barbs are aggressive and boisterous. Mixing them = stressed Cherry Barbs that hide constantly and lose color. Keep Cherry Barbs with calm peaceful fish only',
+          reason: 'Their peaceful temperament makes them an easy target for bullying by more boisterous barbs.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'group size 8+ fish',
-          reason: 'Cherry Barbs are shy and insecure in small groups. Groups of 6-8 tolerate but 10+ creates natural confident behavior. Larger groups also help diffuse male aggression',
+          reason: 'Keeping them in smaller groups results in shyness and stress.',
           severity: 'medium',
         },
         {
           type: 'requires',
           condition: 'dense planting with visual barriers',
-          reason: 'Heavy planting provides hiding spots for females to escape male harassment. Open bare tanks = nowhere to hide = stressed fish. Dense planting breaks lines of sight and reduces chasing',
+          reason: 'Plants provide essential hiding spots for females to escape the attention of males.',
           severity: 'medium',
         },
       ],
@@ -125,33 +126,28 @@ export const cherryBarb: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'CRITICAL: Maintain 2-3 females per 1 male ratio (wrong ratio = dead females)', 
-      'Groups of 8+ fish for confidence', 
-      'Dense planting with hiding spots',
-      'Soft, slightly acidic water preferred (wild habitat)',
+      'Maintain 2-3 females per male', 
+      'Groups of 8+ fish', 
+      'Dense planting',
+      'Peaceful tankmates',
     ],
 
     proTips: [
-      "MALE:FEMALE RATIO IS EVERYTHING. This is the #1 Cherry Barb mistake. Too many males = dead females from harassment. Aim for 2-3 females per male. Example setups: 2M + 6F = 8 fish total; 3M + 9F = 12 fish total. Males are bright red (easy to sex), females are yellow/silver. Count carefully when buying!",
-      "Males turn brightest red when competing for females. If you want maximum color, keep proper ratio. Males show off their best colors when they have 'girls to impress.' All-male groups = dull colors and constant fighting.",
-      "Cherry Barbs are peaceful unlike Tiger Barbs. Don't mix them! Tiger Barbs are boisterous bullies; Cherry Barbs are shy introverts. Mixing them stresses Cherry Barbs who hide constantly and lose color.",
-      "Spirulina flakes enhance red coloration in males. High-quality foods with carotenoids (shrimp, krill) intensify reds. Feed varied diet for best colors.",
-      "Dark substrate + tannins = stunning male color. Black sand/gravel provides contrast that makes red males pop. Add Indian Almond leaves for tannin-stained water (mimics wild habitat).",
-      "Shrimp-safe! Cherry Barbs are one of the few barbs that won't harass shrimp. Safe with Cherry Shrimp, Amano Shrimp, Neocaridina. Great for planted shrimp tanks.",
+      "A heavily female-biased ratio is crucial because males will relentlessly pursue females during courtship.",
+      "Feeding foods rich in carotenoids enhances the deep red coloration of the males.",
+      "They are one of the few barbs suitable for keeping with delicate species like shrimp due to their peaceful nature."
     ],
 
     commonMistakes: [
-      "Wrong male:female ratio = #1 killer. 6 males + 2 females = disaster. Females get chased relentlessly, become exhausted, stop eating, hide constantly, and die within weeks. Males need 2-3 females each to diffuse harassment. Always buy more females than males!",
-      "Keeping in small groups (under 6). Cherry Barbs are shy and insecure in small numbers. Groups of 3-5 hide constantly and never show natural behavior. 8-12 fish creates confident, active schools.",
-      "Mixing with Tiger Barbs or aggressive barbs. Tiger Barbs are bullies; Cherry Barbs are peaceful. Mixing them = stressed Cherry Barbs that hide and fade. Keep Cherry Barbs with calm peaceful fish only.",
-      "Bare tanks with no plants. Cherry Barbs are forest stream fish adapted to dense vegetation. Bare open tanks = constant stress and hiding. Heavy planting brings out confidence and colors.",
-      "All-male groups for 'better colors.' Yes, males are redder, but all-male groups = constant fighting, stress, dull colors. Proper male:female ratio = brightest males (they show off for females!).",
+      "Keeping too many males results in the harassment and eventual death of the females.",
+      "Housing them with active tankmates causes them to hide and refuse food.",
+      "Small groups lead to nervous behavior and a lack of appetite."
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'flakes', 'brine-shrimp', 'daphnia'],
-      supplements: ['bloodworms', 'spirulina', 'vegetables'],
+      primaryFoods: ['micro-pellets', 'flakes', 'brine-shrimp'],
+      supplements: ['bloodworms', 'daphnia', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -164,7 +160,7 @@ export const cherryBarb: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes maintain stability. Cherry Barbs are hardy and tolerate parameter fluctuations better than tetras. Vacuum substrate to remove waste. Keep nitrates below 20ppm for best health and coloration.',
+      notes: 'Regular water changes are necessary to maintain their health and color intensity.',
     },
     
     equipment: {
@@ -186,21 +182,21 @@ export const cherryBarb: Species = {
   health: {
     lifespanYears: 5,
     commonDiseases: ['ich', 'fin-rot', 'velvet', 'dropsy', 'parasites'],
-    sensitivities: ['Cold water (<22°C)', 'Stress from wrong male:female ratio (females die)', 'Stress from aggressive tankmates', 'Poor diet (color fades)'],
+    sensitivities: ['Cold water', 'Stress from harassment', 'Aggressive tankmates', 'Poor diet'],
   },
 
   scientificContext: {
-    wildHabitat: "Cherry Barbs are endemic to Sri Lanka—found nowhere else in the wild! They inhabit shaded, slow-moving forest streams and tributaries in lowland rainforests. Water is soft (GH 4-8), slightly acidic (pH 6.0-6.5), warm (24-26°C), and stained amber by tannins from decaying leaves. Substrate is sandy/muddy with thick leaf litter. Dense vegetation (submerged plants, roots, overhanging branches) creates dim, shaded environment. Wild populations are threatened by habitat loss (deforestation, agriculture). Aquarium trade relies on captive breeding—most Cherry Barbs sold are farm-raised (good for conservation!).",
-    sexualDimorphism: "Easy to sex! Males: Bright cherry-red body (especially when breeding/excited), slimmer body, dark horizontal stripe. Color varies—brightest when competing for females, duller when stressed/hiding. Females: Silvery-yellow to peachy-tan, rounder fuller body (especially when gravid/carrying eggs), same dark stripe. Juveniles (under 3 months) are all drab and impossible to sex—wait until maturity (4-6 months) to determine sex.",
-    variants: ['Wild Type (standard red males, yellow females)', 'Albino Cherry Barb (pale peachy-pink, less common)'],
+    wildHabitat: "Endemic to Sri Lanka, this species inhabits slow-flowing, shaded streams within rainforests. The water is typically soft and acidic, stained dark by tannins from decaying vegetation. They are found among dense leaf litter and submerged roots in shallow waters. While the IUCN lists them as Least Concern, habitat destruction remains a threat to their limited natural range.",
+    sexualDimorphism: "Males are brightly colored in red, especially when breeding, while females are duller with a yellowish-tan body. Females are also rounder in the belly, particularly when carrying eggs.",
+    variants: ['Wild type', 'Albino'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'beginner',
-    trigger: 'Cherry Barbs are easy to breed—one of the best beginner egg-layers! Trigger spawning with: 1) Proper male:female ratio (1M:2-3F), 2) Conditioning with high-protein live/frozen foods (bloodworms, brine shrimp, daphnia) for 2 weeks until females visibly plump, 3) Slight temperature increase to 26-27°C, 4) Large water change (40-50%) with slightly cooler water to simulate rainy season. Males turn intensely red and perform elaborate courtship dances—shimmying, fin spreading, circling females.',
-    fryCare: 'Females scatter 200-300 adhesive eggs among fine-leaved plants (Java Moss, spawning mops) or substrate. No parental care—adults eat eggs immediately. Remove adults after spawning or use spawning mop/separate tank. Eggs hatch in 24-36 hours at 26°C into tiny larvae. Fry become free-swimming at 3-5 days. Feed infusoria or liquid fry food initially, then newly-hatched baby brine shrimp after 5-7 days. Fry are hardy and accept crushed flakes quickly (easier than most egg-layers). Growth is moderate: 1cm at 4 weeks, 2cm at 8 weeks. Separate by size to prevent cannibalism.',
-    notes: 'Cherry Barbs breed readily and prolifically in community tanks if conditions are right. Many breeders report surprise fry appearing in planted tanks—some survive to adulthood on their own. For deliberate breeding, use separate spawning tank with spawning mops or dense Java Moss, condition breeders well, and remove adults post-spawn. Fry are easy to raise compared to tetras or other egg-layers. One of the best beginner breeding projects!',
+    trigger: 'Condition the group with high-quality live or frozen foods and slightly raise the temperature to simulate the onset of the breeding season. Provide plenty of fine-leaved plants like Java Moss for the scattering of eggs.',
+    fryCare: 'The eggs hatch after about twenty-four hours, and the fry become free-swimming a few days later. They should be fed infusoria or liquid fry food initially before graduating to baby brine shrimp. Parents will eat the eggs, so using a separate breeding tank or spawning mops is recommended for higher yields.',
+    notes: 'Breeding is relatively easy, but the adults provide no parental care and will consume their own eggs if given the chance.',
   },
   
   experienceData: {

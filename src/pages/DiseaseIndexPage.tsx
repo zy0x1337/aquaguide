@@ -14,7 +14,7 @@ const DiseaseIndexPage = () => {
     : allDiseases;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-20 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 pb-20 font-sans">
       <SEOHead 
         title="Aquarium Disease Database" 
         description="Diagnose and treat common fish and shrimp diseases like Ich, Fin Rot, and Scutariella." 

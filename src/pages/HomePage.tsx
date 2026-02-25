@@ -38,7 +38,7 @@ const HomePage = () => {
         {/* HERO SECTION */}
         <section className="relative pt-20 sm:pt-32 pb-16 sm:pb-24 px-6 overflow-hidden">
           {/* Subtle gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-cyan-50/20 dark:from-slate-950 dark:via-slate-950 dark:to-indigo-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-cyan-50/20 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950/20" />
           
           {/* Animated gradient orbs - more subtle */}
           <motion.div 

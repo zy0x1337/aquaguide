@@ -4,7 +4,8 @@ export const celestialPearlDanio: Species = {
   id: 'danio-001',
   slug: 'celestial-pearl-danio',
   imageUrl: '/images/species/celestial-pearl-danio.jpeg',
-  funFact: "Celestial Pearl Danios are the aquarium world's shooting stars—discovered in 2006 in Myanmar and instantly became sensations! Their galaxy-pattern pearl spots on dark blue bodies look like stars scattered across night sky—absolutely mesmerizing in planted tanks. They're so stunning they were over-collected and thought extinct in wild by 2007, but new populations were found. Males are tiny gladiators: watch them spar in harmless fin-flaring displays, circling each other like mini peacocks! Despite 1-inch size, they have huge personalities. Fun fact: they were originally called 'Galaxy Rasboras' but are true Danios (Danio margaritatus). Cooler water triggers breeding—18-19°C for eggs = 95% hatch rate vs 60% at 24°C!",
+  
+  funFact: "Often called the Galaxy Rasbora, this tiny fish displays a starry pattern that made it an instant sensation upon its discovery in 2006.",
 
   taxonomy: {
     scientificName: 'Danio margaritatus',
@@ -12,13 +13,13 @@ export const celestialPearlDanio: Species = {
     family: 'Cyprinidae',
     origin: 'Myanmar (Inle Lake region, Hopong area - shallow seasonal ponds)',
     region: 'Asia',
-    biotope: 'Shallow, vegetated seasonal pools and small streams with dense floating plants, leaf litter, moderate to cool temperatures (20-24°C)',
+    biotope: 'Shallow, vegetated seasonal ponds and small streams fed by springs.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 2.5,
-    color: 'Stunning! Dark midnight blue body covered in bright pearl-white/yellow spots creating iconic galaxy pattern. Males: intense blue-black with bright orange-red fins edged in black. Females: duller blue-grey with less intense coloration, rounder bodies. Fins have distinctive black-and-white striping',
+    color: 'The body features a deep blue background sprinkled with pearly white or yellow spots, resembling a starry sky. Males display vibrant red orange fins with black striping, while females are more subdued in coloration.',
   },
 
   environment: {
@@ -48,46 +49,43 @@ export const celestialPearlDanio: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes:
-      'Celestial Pearl Danios thrive in densely planted tanks—the more plants, the more confident and colorful they become! They prefer lower to mid-water zones, weaving through stems, roots, and crypts. Floating plants are essential for security and grazing microfauna. Dark substrate (black sand, dark gravel) makes their galaxy colors pop dramatically. Create sight-line breaks with plants so males can establish mini-territories without constant confrontation. Best plants: Java Moss (spawning mops), Java Fern, Anubias, Cryptocoryne, Vallisneria, floating plants (Salvinia, Frogbit, Red Root Floaters). Soft lighting preferred.',
-    hardscape: ['Smooth river stones', 'Driftwood (creates shaded zones)', 'Leaf litter (Indian Almond leaves)', 'Caves/overhangs (line-of-sight breaks)'],
+    plantingNotes: 'Dense planting with fine leaved stems and floating plants provides the security these shy fish need to display their best colors. Dark substrate enhances their galaxy like patterning significantly.',
+    hardscape: ['Smooth river stones', 'Driftwood', 'Leaf litter', 'Caves'],
   },
 
   behavior: {
     tags: ['peaceful', 'shoaler', 'nano', 'colorful', 'active'],
     minGroupSize: 10,
-    description:
-      "Celestial Pearl Danios are tiny jewels with big personalities! They're highly social and thrive in groups of 10-20+—larger groups = bolder, more confident fish with intense colors. Watch males perform harmless sparring: they circle each other with fins fully spread, flaring like tiny peacocks in dazzling displays of dominance. No actual fighting—just beautiful choreography! They're active swimmers, constantly exploring mid-water zones, weaving through plants, and grazing biofilm. Unlike typical danios, CPDs are timid without dense plants—in sparse tanks they hide constantly. With proper planting, they become confident and endlessly entertaining. Female-heavy ratios (2-3 females per male) reduce male aggression and create peaceful groups.",
+    description: 'These small cyprinids are renowned for their dazzling coloration and active nature, spending their day foraging among plants in the middle and lower water layers. Males engage in fascinating, harmless sparring matches where they circle one another with fins flared to assert dominance. While generally peaceful, they can be timid and require a well planted environment to feel secure enough to show their full vibrancy. In a large group, they become bolder and their complex social interactions become a captivating display for the observer.',
     
     compatibility: {
-      goodMates: ['Chili Rasboras', 'Ember Tetras', 'Pygmy Corydoras', 'Otocinclus', 'Small peaceful snails', 'Cherry Shrimp (adults safe, shrimplets may be eaten)', 'Kuhli Loaches'],
-      badMates: ['Large fish (will eat CPDs)', 'Aggressive fish', 'Fast/boisterous feeders (Zebra Danios, Tiger Barbs)', 'Angelfish (too large)', 'Bettas (may nip CPD fins)'],
-      notes:
-        'Celestial Pearl Danios are perfect for nano tanks and peaceful community setups. They\'re easily intimidated by larger or more boisterous tankmates and will hide constantly. Best kept with similar-sized, peaceful species or in species-only tanks. Shrimp-safe (adult shrimp ignored; shrimplets occasionally eaten). Groups of 10+ spread aggression and bring out bolder behaviors. Female-biased ratios help reduce male sparring.',
+      goodMates: ['Chili Rasboras', 'Ember Tetras', 'Pygmy Corydoras', 'Otocinclus', 'Cherry Shrimp'],
+      badMates: ['Large fish', 'Aggressive fish', 'Fast feeders', 'Bettas'],
+      notes: 'They are easily intimidated by larger tankmates and thrive best in a species-specific setup or with other peaceful nano fish.',
       
       rules: [
         {
           type: 'requires',
           condition: 'groups of 10+ fish',
-          reason: 'CPDs are highly social and timid in small groups. Groups under 10 = stressed, hiding fish with faded colors. Groups of 10-20+ = confident, active, intensely colored fish. Larger groups spread male aggression',
+          reason: 'Small groups lead to stress and faded coloration because they rely on safety in numbers.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'densely planted tank with floating plants',
-          reason: 'CPDs are plant-dependent. Without dense plants, they hide constantly and show stress (faded colors). Floating plants = security. Dense planting = confident, visible fish',
+          reason: 'Without dense plant cover, these shy fish will hide constantly and refuse to come out.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'large or aggressive fish',
-          reason: 'CPDs are tiny (1 inch) and easily intimidated/eaten by larger fish. Keep with similar-sized peaceful species only',
+          reason: 'Their tiny size makes them an easy target for bullying or predation.',
           severity: 'high',
         },
         {
           type: 'warning',
           condition: 'female-biased ratio (2-3 females per male)',
-          reason: 'Reduces male territorial sparring and creates more peaceful group dynamics. Too many males = constant displays',
+          reason: 'A ratio favoring females helps disperse male attention and reduces sparring intensity.',
           severity: 'low',
         },
       ],
@@ -128,35 +126,29 @@ export const celestialPearlDanio: Species = {
     effort: 'low',
     cost: 'medium',
     specialRequirements: [
-      'Groups of 10-20+ (social species)', 
-      'Densely planted tank with floating plants', 
-      'Dark substrate (makes colors pop)', 
-      'Cooler water preferred (20-24°C)', 
-      'Female-biased ratio reduces aggression',
+      'Groups of 10 or more', 
+      'Dense planting', 
+      'Dark substrate', 
+      'Cool water temperature', 
+      'Female biased ratio',
     ],
 
     proTips: [
-      "GROUP SIZE = COLOR INTENSITY! Small groups (under 10) = stressed, faded, hiding fish. Groups of 10-20+ = confident, intense colors, constant activity, natural sparring displays. The difference is dramatic. Always buy 10+ if possible.",
-      "Cooler water = better colors + breeding! CPDs prefer 20-24°C (68-75°F), cooler than most tropical fish. At 22°C, colors are intense and breeding happens naturally. Higher temps (26°C+) stress them and reduce breeding success.",
-      "Dark substrate = galaxy effect! Black sand or dark gravel makes pearl spots pop dramatically. Light substrates wash out colors. Trust me—the visual difference is stunning!",
-      "Watch the sparring shows! Males perform daily harmless displays: circling each other with fins fully spread, flaring like tiny peacocks. It's beautiful choreographed behavior, not fighting. No injuries occur.",
-      "Live/frozen food = intense colors! Feed daphnia, baby brine shrimp, microworms, bloodworms. Colors intensify within days. They accept quality flakes/micro-pellets but live food brings out galaxy brilliance.",
-      "Floating plants = confident fish! Without floating cover, CPDs hide constantly. Add Salvinia, Frogbit, Red Root Floaters. They'll venture out more with overhead security.",
-      "Female-heavy groups (2-3 females per male) reduce male aggression and create peaceful dynamics. Too many males = constant sparring (harmless but distracting).",
+      "Keep them in cooler water around 22 degrees Celsius to maintain health and encourage natural breeding behavior.",
+      "A darker substrate highlights their iridescent spotting and makes their colors appear much more vivid.",
+      "Feed a varied diet of small live or frozen foods to enhance their coloration and stimulate breeding."
     ],
 
     commonMistakes: [
-      "Small groups (under 10) = stressed hiding fish. CPDs are highly social and need 10-20+ to feel secure. Alone or in pairs = faded colors, constant hiding, stress. Beginners buy 6 and wonder why fish hide—group size matters!",
-      "Sparse planting = invisible fish. CPDs are plant-dependent. Without dense plants and floating cover, they hide constantly. Heavily planted tanks = confident, visible, colorful fish. The difference is night and day.",
-      "Water too warm (26°C+). CPDs prefer cooler water (20-24°C). Higher temps stress them, fade colors, and reduce breeding. They're not typical tropical fish—keep cooler!",
-      "Light substrate. White sand/gravel washes out colors. Dark substrate makes galaxy spots pop dramatically. Simple change = huge visual impact.",
-      "Mixed with large/aggressive fish. CPDs are tiny (1 inch) and timid. Angelfish, Bettas, Tiger Barbs intimidate/eat them. Keep with peaceful nano species only.",
+      "Keeping them in warm tropical temperatures above 26 degrees Celsius causes stress and shortens their lifespan.",
+      "Housing them with large or boisterous fish prevents them from competing for food and causes them to hide.",
+      "Keeping groups smaller than ten individuals leads to shyness and a lack of the social interaction they need."
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['micro-pellets', 'crushed-flakes', 'daphnia', 'brine-shrimp'],
-      supplements: ['bloodworms', 'spirulina'],
+      primaryFoods: ['micro-pellets', 'crushed-flakes'],
+      supplements: ['bloodworms', 'daphnia', 'brine-shrimp', 'spirulina'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -169,7 +161,7 @@ export const celestialPearlDanio: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: false,
-      notes: 'Weekly 30% water changes. CPDs prefer stable, cooler water (20-24°C). Keep nitrates below 10ppm—they\'re sensitive to poor water quality. Low flow preferred (mimics seasonal pools). Mature planted tanks with biofilm help significantly.',
+      notes: 'Keep the water cool and clean, as they are sensitive to high nitrates and elevated temperatures.',
     },
     
     equipment: {
@@ -191,26 +183,21 @@ export const celestialPearlDanio: Species = {
   health: {
     lifespanYears: 4,
     commonDiseases: ['ich', 'velvet', 'internal-parasites', 'stress-fading'],
-    sensitivities: ['Warm water (over 26°C)', 'Poor water quality (nitrates)', 'Sparse planting (chronic stress)', 'Small groups (social stress)'],
+    sensitivities: ['Warm water', 'High nitrates', 'Large tankmates', 'Sparse planting'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Celestial Pearl Danios inhabit shallow, vegetated seasonal ponds and small streams in Hopong area near Inle Lake, Myanmar (Shan State). Wild habitat: shallow (10-30cm deep) spring-fed pools with dense aquatic vegetation, floating plants, leaf litter substrate, moderate to cool temperatures (20-24°C), soft to moderate hardness (GH 4-10), neutral pH (6.5-7.5). Water is clear with low flow. They occupy mid-water zones among plants, feeding on zooplankton, insect larvae, and algae. Discovered 2006; over-collection nearly caused extinction; now captive-bred.',
-    sexualDimorphism:
-      'Easy to sex! Males: Intensely colored with dark blue-black body, bright pearl spots, vivid orange-red fins with black edging. Slimmer, more streamlined body. Actively spar and display. Females: Duller blue-grey body, less intense pearl spots, pale orange fins. Rounder, fuller body especially when gravid. Less active, ignore sparring. Juveniles (under 3 months) difficult to sex—wait for maturity.',
-    variants: ['Standard Celestial Pearl Danio (wild-type coloration)', 'Some line-bred strains show enhanced orange/red coloration'],
+    wildHabitat: "Endemic to a small area near Hopong in Myanmar, this species inhabits shallow ponds and streams fed by springs. These waters are clear, cool, and dense with aquatic vegetation. The specific locality is restricted, making them vulnerable to over collection, though captive breeding has reduced pressure on wild populations. They are currently listed as Near Threatened due to their limited range.",
+    sexualDimorphism: "Males are smaller and more vibrantly colored, displaying bright red orange fins and intense blue bodies. Females are larger, rounder, and possess a more subdued coloration with yellowish fins.",
+    variants: ['Wild type', 'Line bred for enhanced red'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'beginner',
-    trigger:
-      'Celestial Pearl Danios breed easily in heavily planted tanks—often spontaneously! Trigger breeding: 1) Mature group (6+ months old) with 10+ fish, female-biased ratio, 2) Dense planting especially Java Moss or fine-leaved plants (spawning mops), 3) Excellent conditioning with live foods (daphnia, baby brine shrimp, microworms) for 2 weeks, 4) Cooler water (20-22°C)—critical for high hatch rates, 5) Increased water changes (40% twice weekly). Males intensify displays and chase females into plants.',
-    fryCare:
-      'Females scatter 20-50 tiny eggs among fine-leaved plants (Java Moss ideal). CRITICAL: Eggs hatch best at 18-19°C (95% hatch rate) vs 60% at 24°C! Adults eat eggs constantly—collect eggs daily using turkey baster or remove spawning mops to separate hatching tank. Eggs hatch in 2-4 days at 22°C (longer at cooler temps). Fry are tiny (2mm) and free-swimming. Feed infusoria/green water for 5-7 days, then graduate to micro foods: baby brine shrimp nauplii, microworms, finely crushed flakes. Growth is slow: 1cm at 8 weeks, mature at 6 months. Fry accept prepared foods easier than many species.',
-    notes:
-      'CPDs are prolific breeders in proper conditions. Spawning happens almost daily in healthy groups. Main challenge: egg-eating by adults. Either: 1) Heavily plant tank so some eggs survive naturally (easiest), 2) Collect eggs daily and hatch separately (higher survival), 3) Remove spawning mops. Cooler water (18-19°C) for egg hatching = 95% hatch success. Fry care is easy compared to other nano fish.',
+    trigger: 'Spawning is triggered by cooler temperatures and a diet rich in live foods. A drop in temperature to around 18 or 19 degrees Celsius significantly increases egg hatch rates compared to warmer conditions.',
+    fryCare: 'The tiny eggs are scattered among fine leaved plants and hatch within a few days. Parents often eat their own eggs, so providing dense moss or removing the adults can increase survival rates. The fry are very small and require infusoria or liquid fry food for the first week before they can accept newly hatched brine shrimp. They grow slowly and need pristine water conditions to develop correctly.',
+    notes: 'Breeding is frequent in well maintained tanks, but fry require very small food items initially.',
   },
   
   experienceData: {

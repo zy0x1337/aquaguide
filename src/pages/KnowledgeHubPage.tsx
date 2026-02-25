@@ -34,7 +34,7 @@ const KnowledgeHubPage = () => {
         description="Comprehensive guides on aquarium care, water chemistry, equipment, and more. Learn at your own pace with expert articles."
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 dark:from-gray-950 dark:via-slate-950 dark:to-gray-950 pb-20">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 dark:from-gray-950 dark:via-slate-900 dark:to-gray-950 pb-20">
         
         {/* Compact Hero Header - Same size as DiseaseIndexPage */}
         <header className="relative overflow-hidden bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-24">

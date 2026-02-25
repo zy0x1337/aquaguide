@@ -66,7 +66,7 @@ export const PlantsIndexPage = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-16 md:pb-20">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-slate-900 dark:via-slate-850 dark:to-slate-950 pb-16 md:pb-20">
         <SEOHead 
           title="Plant Database - AquaGuide" 
           description="Discover aquatic plants for your aquascape. From beginner-friendly to advanced carpeting plants."

@@ -4,7 +4,8 @@ export const corydorasPaleatus: Species = {
   id: 'species-corydoras-paleatus',
   slug: 'corydoras-paleatus',
   imageUrl: '/images/species/corydoras-paleatus.jpg',
-  funFact: "Peppered Corys made aquarium history in 1876 as one of the FIRST fish ever successfully bred in captivity! Over 150 years later, they're still beloved for their hardiness, peppered pattern (like someone sprinkled black pepper on a silver fish), and ability to breathe air through their intestines. Watch them rocket to the surface for a gulp—it's their superpower for surviving low-oxygen waters.",
+  
+  funFact: "As one of the first tropical fish bred in captivity back in 1876, this hardy species remains a favorite for its ability to survive in cool, oxygen-poor waters by swallowing air at the surface.",
 
   imageCredit: {
     photographer: 'Kuznetsov_Peter on Pixabay',
@@ -19,13 +20,13 @@ export const corydorasPaleatus: Species = {
     family: 'Callichthyidae',
     origin: 'South America (Argentina, Uruguay - Paraná and La Plata river basins)',
     region: 'South America',
-    biotope: 'Shallow, slow-moving rivers, marshes, and floodplains with soft mud or sandy bottoms. Temperate climate with seasonal temperature swings',
+    biotope: 'Shallow, slow-moving rivers and floodplains with sandy substrates in temperate South America.',
   },
 
   visuals: {
     iconShape: 'depressed',
     adultSizeCM: 7,
-    color: 'Silver-green base with black pepper-like mottling across body and fins. Albino variant: peachy-white with red eyes. Longfin variant: dramatically elongated fins',
+    color: 'A silver-green body is overlaid with a distinctive peppered pattern of black and grey spots. An albino variant with a pinkish body and red eyes is also common in the aquarium trade.',
   },
 
   environment: {
@@ -55,49 +56,49 @@ export const corydorasPaleatus: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes: 'Peppered Corys appreciate planted tanks but need generous open floor space for their constant foraging marathons. Use temperate-friendly plants like Vallisneria, Java Fern, Anubias, and Cryptocoryne that tolerate cooler water (20-22°C). They love resting on broad-leaved plants (Amazon Swords, Anubias) like tiny armored lounge chairs. Provide dense planting in back/sides with wide-open sandy areas in front for their digging expeditions. Floating plants optional (they enjoy diffused light but aren\'t as light-sensitive as Pandas).',
-    hardscape: ['Smooth River Stones', 'Driftwood (Malaysian, Mopani)', 'Terracotta Caves', 'Leaf Litter (Oak, Beech - they love cooler-climate leaves)'],
+    plantingNotes: 'Hardy plants like Java Fern and Vallisneria are ideal as they tolerate the cooler water temperatures this species prefers. Broad-leaved plants provide convenient resting spots near the bottom for these active foragers.',
+    hardscape: ['Smooth river stones', 'Driftwood', 'Terracotta caves', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['peaceful', 'shoaler', 'bottom_dweller', 'social', 'robust', 'scaleless', 'coldwater'],
     minGroupSize: 6,
-    description: 'Peppered Corys are the original aquarium Corydoras—tough, adaptable, and endlessly entertaining. They\'re larger and more robust than Pandas or Pygmies, with a confident, outgoing personality similar to Bronze Corys. You\'ll watch them power-vacuum the substrate with unstoppable determination, whiskers twitching as they hunt buried treasures. When they find food, their entire body wiggles with excitement (the "Cory shimmy"). They travel in loose groups, occasionally forming adorable "Cory trains" where 3-6 fish line up and march across the bottom single-file. Unlike shy species, Peppered Corys barely acknowledge human presence—they\'re too busy investigating every grain of sand. Their air-breathing behavior is frequent and dramatic: sudden sprint to surface, audible gulp, rocket back down. In groups of 6+, they display synchronized resting on plant leaves, stacked like pancakes.',
+    description: 'This robust and peaceful catfish is a lively addition to the cooler water aquarium, constantly scavenging along the bottom for food. It is a social species that must be kept in groups, where it will exhibit playful behavior and winks as it searches the substrate. While generally hardy, it possesses sensitive barbels that require a soft sand substrate to prevent erosion and infection. They are famous for their sudden dashes to the surface to gulp air, a behavior made possible by their specialized intestinal breathing. Unlike many Corydoras, they thrive in unheated tanks, making them excellent companions for subtropical species.',
     
     compatibility: {
-      goodMates: ['White Cloud Mountain Minnows', 'Hillstream Loaches', 'Rosy Barbs', 'Paradise Fish', 'Weather Loaches', 'Goldfish (temperate species)', 'Cherry Shrimp', 'Nerite Snails', 'Most peaceful temperate fish'],
-      badMates: ['Tropical fish requiring 26-28°C (Discus, German Rams, Sterbai Corys)', 'Aggressive Cichlids', 'Large predatory catfish', 'Fin-nippers'],
-      notes: 'Peppered Corys are TEMPERATE fish, not tropical! This is critical but often misunderstood. They come from Argentina (33°S latitude)—the aquatic equivalent of North Carolina\'s climate. They thrive in cooler water (18-22°C) and suffer in typical tropical temps (25-28°C). This makes them perfect tankmates for goldfish, White Cloud Minnows, and other temperate species. Mixing them with warm-water tropicals creates a compromise temperature that stresses both groups.',
+      goodMates: ['White Cloud Mountain Minnows', 'Hillstream Loaches', 'Rosy Barbs', 'Goldfish', 'Cherry Shrimp'],
+      badMates: ['Tropical fish requiring 26-28°C', 'Aggressive Cichlids', 'Large predatory catfish'],
+      notes: 'They are ideal inhabitants for unheated or temperate tanks but struggle in the consistently high temperatures required by many tropical species.',
       
       rules: [
         {
           type: 'requires',
           condition: 'temperature <= 24°C',
-          reason: 'CRITICAL: Peppered Corys are temperate/coolwater fish from Argentina. Temperatures over 24°C long-term shorten lifespan dramatically (5 years vs 15 years potential). Keep cool!',
+          reason: 'This species originates from a temperate climate and suffers from heat stress in standard tropical temperatures.',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'tropical fish requiring 26-28°C',
-          reason: 'Temperature incompatibility. Peppered Corys thrive at 20-22°C; tropical fish need 26°C+. The compromise temperature (24-25°C) stresses Peppered Corys and shortens their lifespan',
+          reason: 'A compromise temperature will either overheat the Peppered Cory or chill the tropical tankmates.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'sand substrate',
-          reason: 'Gravel erodes their barbels (whiskers), causing bacterial infection and inability to find food. Sand allows natural foraging behavior',
+          reason: 'Sharp gravel damages their sensitive barbels, leading to infection and an inability to locate food.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'group-size >= 6',
-          reason: 'Shoaling fish that become stressed and hide constantly in small groups. 6 minimum for wellbeing; 8-10+ for full confidence',
+          reason: 'They are social shoalers that become withdrawn and stressed when kept alone or in pairs.',
           severity: 'high',
         },
         {
           type: 'requires',
           target: 'goldfish (fancy varieties)',
-          reason: 'Temperature match! Both prefer 20-22°C. Peppered Corys clean up goldfish mess (leftover food, not waste). Avoid pairing with large goldfish that might outcompete for food',
+          reason: 'Both species thrive in the same cooler temperature range, making them compatible tankmates.',
           severity: 'low',
         },
       ],
@@ -138,33 +139,28 @@ export const corydorasPaleatus: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Cool water (18-22°C ideal) - heater often unnecessary in temperate climates!', 
-      'Sand substrate mandatory for barbel health', 
-      'Groups of 6+ required for shoaling behavior',
-      'Sinking foods essential (they cannot eat floating flakes efficiently)',
+      'Cool water (18-22°C ideal)', 
+      'Sand substrate', 
+      'Groups of 6+',
+      'Sinking foods',
     ],
 
     proTips: [
-      "Peppered Corys are COLDWATER specialists, not tropical fish! Keep them at 20-22°C for maximum lifespan (10-15 years). At 26°C, lifespan drops to 5-7 years max. Temperature is the difference between a short-lived Cory and a 15-year companion.",
-      "In temperate climates (Europe, northern USA), Peppered Corys often don't need heaters year-round. They tolerate room temperature (18-20°C) perfectly. This makes them incredibly economical to keep compared to tropical fish.",
-      "Historical significance: Peppered Corys were first bred in captivity in 1876 in Paris—one of the earliest aquarium fish breeding successes ever. You're keeping a piece of aquarium history!",
-      "Albino Peppered Corys are just leucistic (color mutation) versions—same species, same care. They're not separate fish despite store labels. Albinos have peachy-pink bodies with ruby-red eyes and are slightly more light-sensitive.",
-      "Longfin variants have dramatically elongated fins (especially dorsals and pectorals) from selective breeding. They're stunning but slightly less agile. Avoid pairing with nippy fish.",
-      "Feed sinking foods at night. Peppered Corys are active during daytime but feeding after lights dim ensures they get food before faster midwater fish steal it. They're thorough but slow eaters.",
+      "In many homes, an aquarium heater is unnecessary for this species as they thrive at normal room temperature.",
+      "Feed sinking pellets or wafers in the evening to ensure they get their share before other fish eat it all.",
+      "They are sensitive to salt, so avoid using it as a treatment in their tank."
     ],
 
     commonMistakes: [
-      "Keeping them in tropical tanks at 25-26°C. This is the #1 Peppered Cory killer. They're temperate fish that suffer in warm water. Would you keep a polar bear in Florida? Same concept. Keep them cool (20-22°C) for long, healthy lives.",
-      "Using gravel substrate. This causes barbel erosion (whisker damage), bacterial infections (red blotch disease), and eventual inability to find food. Peppered Corys have sensitive barbels—only use sand.",
-      "Mixing with warm-water-only fish. Don't pair Peppered Corys with Discus, German Rams, or Sterbai Corys that need 26-28°C. The temperature compromise stresses everyone. Choose temperate tankmates.",
-      "Assuming all Corydoras are identical. Peppered Corys need cooler water than Bronze (24-26°C), Panda (22-24°C), or Sterbai (24-28°C). Research each species individually.",
-      "Adding aquarium salt. Peppered Corys are scaleless (armored with plates, not scales) and intolerant to salt. Salt treatments damage their skin and can kill them. Use salt-free medications only.",
+      "Keeping them in heated tropical tanks shortens their lifespan significantly due to metabolic stress.",
+      "Using gravel substrate wears down their barbels and leads to bacterial infections.",
+      "Keeping them alone results in a shy fish that spends all its time hiding."
     ],
     
     feeding: {
       frequency: 'once-daily',
-      primaryFoods: ['wafers', 'pellets', 'bloodworms', 'brine-shrimp'],
-      supplements: ['daphnia', 'vegetables'],
+      primaryFoods: ['wafers', 'pellets', 'bloodworms'],
+      supplements: ['brine-shrimp', 'daphnia', 'vegetables'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -177,7 +173,7 @@ export const corydorasPaleatus: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly substrate vacuuming prevents detritus buildup and bacterial infections. Peppered Corys are hardy but benefit from consistent water quality. Keep nitrates below 30ppm (they tolerate higher than Pandas but lower is better).',
+      notes: 'Regular vacuuming of the substrate is essential to prevent the buildup of waste that can harm their sensitive barbels.',
     },
     
     equipment: {
@@ -199,21 +195,21 @@ export const corydorasPaleatus: Species = {
   health: {
     lifespanYears: 12,
     commonDiseases: ['barbel-erosion', 'red-blotch-disease', 'ich', 'columnaris', 'fungal-infections'],
-    sensitivities: ['High temperatures (>24°C)', 'Salt (scaleless fish)', 'Copper medications', 'Sharp substrate', 'Sudden temperature changes'],
+    sensitivities: ['High temperatures', 'Salt', 'Copper medications', 'Sharp substrate', 'Sudden temperature changes'],
   },
 
   scientificContext: {
-    wildHabitat: "Peppered Corys inhabit the Paraná and La Plata river basins in Argentina and Uruguay—far south of the tropical Amazon (33°S latitude, equivalent to Los Angeles or Morocco). These are temperate regions with seasonal temperature swings. In summer, water reaches 22-24°C; in winter, it drops to 12-15°C. Peppered Corys thrive in shallow marshes, floodplains, and slow-moving streams with muddy or sandy bottoms rich in detritus. This temperate adaptation makes them unique among commonly-kept Corydoras, most of which come from tropical Amazonia. Their hardiness and temperature tolerance explain why they were among the first aquarium fish successfully bred—they tolerated unheated Victorian-era fishbowls better than tropical species.",
-    sexualDimorphism: "Clear when viewed from above. Females are significantly larger, rounder, and deeper-bodied, especially when gravid (carrying eggs). Males are smaller, slimmer, and more torpedo-shaped. Females' pectoral fins are shorter and rounder; males have slightly longer, more pointed pectorals. During breeding season, females become massively plump—almost comically round when full of eggs.",
-    variants: ['Wild Type (peppered silver-green)', 'Albino (leucistic - peachy-white with red eyes)', 'Longfin (elongated fins, captive mutation)', 'High-Fin (taller dorsal, rare)'],
+    wildHabitat: "Native to the cooler river basins of Argentina and Uruguay, this species inhabits waters far south of the Amazon. Unlike many tropical relatives, it is adapted to significant seasonal temperature drops, thriving in environments that would be too cold for most other Corydoras. These habitats are typically shallow and rich in detritus, where the fish forage among leaf litter and muddy substrates. Their ability to breathe atmospheric air allows them to survive in oxygen-poor conditions often found in stagnant backwaters.",
+    sexualDimorphism: "Females grow larger and display a much rounder, broader body shape, particularly when laden with eggs. Males remain smaller and slimmer, often showing a more streamlined profile when viewed from above.",
+    variants: ['Wild Type', 'Albino', 'Longfin', 'High-Fin'],
   },
 
   breeding: {
     method: 'egg_layer',
     difficulty: 'beginner',
-    trigger: 'Peppered Corys are among the easiest egg-layers to breed—they practically breed themselves! Condition breeders with high-protein foods (bloodworms, daphnia, brine shrimp) for 2 weeks. Trigger spawning with a large (40-50%) water change using cool water (16-18°C)—this mimics spring rain flooding in Argentina. Repeat cool water changes daily until spawning occurs (usually within 3-7 days). Males chase females relentlessly in the famous "T-position" courtship: male forms a T-shape with female, she collects sperm in her mouth, then fertilizes eggs externally.',
-    fryCare: 'Females lay 200-400 large, adhesive eggs on glass, plants, rocks, and decorations. Eggs are cream-colored and sticky. Remove adults after spawning (they eat eggs enthusiastically). Eggs hatch in 4-6 days at 20°C (faster in warmer water, slower in cooler). Fry are large and robust compared to other Corys. Feed microworms, powdered flakes, or crushed pellets immediately—no infusoria stage needed. Fry grow quickly; reach 1.5cm in 6 weeks. Maintain cool water (18-20°C) and daily 10% water changes. Fry survival is excellent (60-80%) with minimal care.',
-    notes: 'Peppered Corys have been commercially bred for over 140 years—almost all aquarium specimens are captive-bred, making them incredibly hardy and disease-resistant. Breeding groups (2 males : 3 females) spawn regularly without intervention. Many aquarists report surprise spawnings after routine water changes. This is the beginner\'s egg-laying species—easier than most livebearers!',
+    trigger: 'Spawning is frequently triggered by a large water change with slightly cooler water, simulating the seasonal influx of fresh rainwater. A diet rich in live or frozen foods for several weeks prior helps condition the females for egg production.',
+    fryCare: 'The fry are relatively large upon hatching and can accept newly hatched brine shrimp or microworms almost immediately. They grow quickly in clean, well-oxygenated water with daily small water changes. Because they are sensitive to poor water quality, maintaining pristine conditions is more critical for the fry than for the adults. Keep the rearing tank relatively shallow to facilitate their access to the surface for air.',
+    notes: 'They have been bred in captivity for over a century and are one of the easiest catfish to spawn in the home aquarium.',
   },
   
   experienceData: {

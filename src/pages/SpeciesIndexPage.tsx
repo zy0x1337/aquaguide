@@ -502,7 +502,7 @@ const SpeciesIndexPage = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-white dark:bg-gray-950 pb-16 md:pb-20">
+      <div className="min-h-screen bg-white dark:bg-slate-900 pb-16 md:pb-20">
         <SEOHead 
           title="Species Database - AquaGuide" 
           description="Browse our complete collection of aquarium fish and invertebrates."
