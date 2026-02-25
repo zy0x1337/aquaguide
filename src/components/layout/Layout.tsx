@@ -292,10 +292,10 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 ) : (
                   <Link
                     to="/auth"
-                    className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white hover:border-transparent overflow-hidden"
+                    className="group relative inline-flex items-center gap-1.5 px-1.5 py-1.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white hover:border-transparent overflow-hidden"
                   >
                     <span className="relative flex items-center gap-1.5">
-                      Sign In
+                      Login
                       <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
                     </span>
                   </Link>
