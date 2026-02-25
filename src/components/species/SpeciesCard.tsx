@@ -100,13 +100,9 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
         </div>
       </Link>
 
-      {/* Compare Button - Positioned absolutely outside card */}
-      <div className="absolute top-3 left-3 z-30">
+      {/* Action Buttons Container - Positioned absolutely with flex layout */}
+      <div className="absolute top-3 left-3 z-30 flex items-center gap-2">
         <CompareButton species={data} size="sm" />
-      </div>
-
-      {/* Favorite Button - Positioned absolutely outside card */}
-      <div className="absolute top-3 left-14 z-30">
         <FavoriteButton itemType="species" itemSlug={data.slug} size="sm" />
       </div>
     </div>
