@@ -7,7 +7,7 @@
 @layer base {
   /* === LIGHT + DARK THEMES (Original) === */
   body {
-    @apply bg-white dark:bg-slate-900;
+    @apply bg-white dark:bg-gray-900;
     @apply text-gray-900 dark:text-gray-100;
     @apply transition-colors duration-200;
     @apply font-sans antialiased;
