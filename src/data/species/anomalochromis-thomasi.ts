@@ -4,7 +4,7 @@ export const anomalochromisThomasi: Species = {
   id: 'cichlid-001',
   slug: 'anomalochromis-thomasi',
   imageUrl: '/images/species/anomalochromis-thomasi.jpg',
-  funFact: "Anomalochromis thomasi are Africa's hidden gem cichlids! Unlike aggressive cousins, these are gentle and shy. Watch breeding pairs become the ultimate power couple, fiercely defending babies while herding fry like tiny border collies. They mate for life!",
+  funFact: "Unlike aggressive cichlid cousins, these gentle gems mate for life! Watch breeding pairs become ultimate parents, fiercely guarding babies and herding fry like tiny border collies.",
 
   imageCredit: {
     photographer: 'Haplochromis (via Wikimedia Commons)',
@@ -19,7 +19,7 @@ export const anomalochromisThomasi: Species = {
     family: 'Cichlidae',
     origin: 'West Africa (Sierra Leone, Guinea, Liberia)',
     region: 'Africa',
-    biotope: 'Forest streams with high oxygen, vegetation, and rocky structures.',
+    biotope: 'Forest streams with high oxygen levels, aquatic vegetation, and rocky structures.',
   },
 
   visuals: {
@@ -55,19 +55,19 @@ export const anomalochromisThomasi: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes: 'Flat stones and broad leaved plants like Anubias serve as spawning sites. Visual barriers with driftwood and plants reduce stress.',
+    plantingNotes: 'Flat stones and broad leaved plants like Anubias provide ideal spawning sites. Visual barriers created with driftwood and plants significantly reduce stress levels.',
     hardscape: ['Flat stones', 'Driftwood', 'Caves'],
   },
 
   behavior: {
     tags: ['peaceful', 'pair-bonding', 'cichlid', 'parental-care'],
     minGroupSize: 2,
-    description: 'Delightful dwarf cichlid that defies aggressive stereotype. Calm, slightly shy, and form strong monogamous pair bonds. Territorial during spawning but not plant destroyers.',
+    description: 'Delightful dwarf cichlid that defies the typical aggressive stereotype. Calm and slightly shy, forming strong monogamous pair bonds. Displays territorial behavior during spawning but leaves plants intact.',
     
     compatibility: {
       goodMates: ['Tetras', 'Rasboras', 'Corydoras', 'Gouramis', 'Other dwarf cichlids'],
       badMates: ['Large aggressive Cichlids', 'Fin nippers', 'Hyperactive fish'],
-      notes: 'Excellent cichlid for community tanks. Just ensure they have small territory.',
+      notes: 'Outstanding cichlid choice for community aquariums. Simply ensure they have a small designated territory.',
       
       rules: [
         {
@@ -119,14 +119,14 @@ export const anomalochromisThomasi: Species = {
     ],
 
     proTips: [
-      "One of best beginner cichlids due to hardiness and peaceful nature.",
-      "If they lose color, check water quality or stress levels. Best colors when comfortable.",
-      "Excellent parents. Watching them guide fry cloud around tank is amazing.",
+      "Among the best beginner cichlids thanks to hardiness and peaceful temperament.",
+      "Color loss indicates water quality issues or stress. They display their finest colors when comfortable and secure.",
+      "Exceptional parents providing fascinating behaviors. Watching them guide their fry cloud around the aquarium becomes mesmerizing.",
     ],
 
     commonMistakes: [
-      "Keeping with aggressive tankmates that bully them.",
-      "Not providing enough hiding spots.",
+      "Housing with aggressive tankmates that constantly bully them.",
+      "Failing to provide adequate hiding spots and visual barriers.",
     ],
     
     feeding: {
@@ -170,17 +170,17 @@ export const anomalochromisThomasi: Species = {
   },
 
   scientificContext: {
-    wildHabitat: 'Small forest streams in West Africa.',
-    sexualDimorphism: 'Subtle. Males slightly larger and more colorful. Females rounder when full of eggs.',
+    wildHabitat: 'Inhabits small forest streams throughout West Africa with clean, well oxygenated water.',
+    sexualDimorphism: 'Subtle differences exist. Males grow slightly larger with more intense coloration. Females develop rounder bodies when carrying eggs.',
     variants: ['Standard'],
   },
 
   breeding: {
     method: 'substrate_spawner',
     difficulty: 'beginner',
-    trigger: 'Good food and clean water.',
-    fryCare: 'Parents provide excellent care. Fry eat baby brine shrimp immediately.',
-    notes: 'Very easy to breed.',
+    trigger: 'Quality nutrition and pristine water conditions.',
+    fryCare: 'Parents provide outstanding care. Fry accept baby brine shrimp immediately after becoming free swimming.',
+    notes: 'Breeding occurs readily in appropriate conditions.',
   },
   
   experienceData: {

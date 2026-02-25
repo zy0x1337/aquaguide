@@ -4,7 +4,7 @@ export const bettaSplendensFemale: Species = {
   id: 'betta-splendens-female',
   slug: 'betta-splendens-female',
   imageUrl: '/images/species/betta-splendens-female.jpg',
-  funFact: "Female Bettas are often dismissed as boring. Nothing is further from truth! In sororities, they rule via brutal hierarchies. Kept alone, a single female makes a faster, smarter, and more peaceful community fish than her long finned brothers!",
+  funFact: "Don't underestimate the ladies! Female Bettas are faster, smarter, and more peaceful than their dramatic brothers. Perfect community fish when kept solo, fierce rulers when in sororities!",
 
   taxonomy: {
     scientificName: 'Betta splendens',
@@ -12,7 +12,7 @@ export const bettaSplendensFemale: Species = {
     family: 'Osphronemidae',
     origin: 'Thailand, Cambodia, Vietnam',
     region: 'Asia',
-    biotope: 'Stagnant shallow water, rice paddies, ditches.',
+    biotope: 'Stagnant shallow water bodies including rice paddies and drainage ditches.',
   },
 
   visuals: {
@@ -48,31 +48,31 @@ export const bettaSplendensFemale: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Females love planted tanks. For sororities, dense jungle style planting is mandatory to break lines of sight.',
+    plantingNotes: 'Females thrive in heavily planted aquariums. For sorority setups, jungle style planting becomes mandatory to break visual contact and reduce aggression.',
     hardscape: ['Driftwood', 'Caves'],
   },
 
   behavior: {
     tags: ['semi-aggressive', 'surface_dweller', 'territorial', 'labyrinth_fish', 'jumper'],
     minGroupSize: 1,
-    description: 'Kept alone, curious and active community fish. In groups (sororities), they establish complex and stressful hierarchies. Dominant females bully weaker ones. Single females are safer and easier.',
+    description: 'When maintained individually, they display curious and active community behavior. In group settings called sororities, complex and stressful dominance hierarchies emerge. Dominant females persistently harass weaker individuals. Single females prove safer and easier to maintain.',
     
     compatibility: {
       goodMates: ['Tetras', 'Corydoras', 'Rasboras', 'Snails'],
       badMates: ['Male Bettas', 'Fin nippers', 'Other females (unless expert)'],
-      notes: 'Never keep with males. Sororities are for experts only.',
+      notes: 'Never house with males under any circumstances. Sorority setups demand expert level experience and vigilant monitoring.',
       
       rules: [
         {
           type: 'avoid',
           target: 'male Bettas',
-          reason: 'They fight or harass each other to death.',
+          reason: 'Continuous fighting or harassment leads to death of one or both fish.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'expert for sororities',
-          reason: 'High risk of death and stress in female groups.',
+          reason: 'Elevated risk of mortality and chronic stress in female group dynamics.',
           severity: 'high',
         },
       ],
@@ -117,14 +117,14 @@ export const bettaSplendensFemale: Species = {
     ],
 
     proTips: [
-      "Single females are underrated community fish.",
-      "Egg spot (white dot on belly) confirms female.",
-      "Sororities fail often. Keeping one is safer.",
+      "Single females represent underrated community fish options offering personality without excessive aggression.",
+      "The white egg spot visible on the belly provides definitive female confirmation.",
+      "Sorority attempts frequently fail catastrophically. Maintaining one female proves significantly safer and less stressful.",
     ],
 
     commonMistakes: [
-      "Keeping with males.",
-      "Starting sorority in small tank.",
+      "Housing females with males, resulting in constant harassment or spawning aggression.",
+      "Attempting sorority setups in undersized aquariums without adequate visual barriers.",
     ],
     
     feeding: {
@@ -168,17 +168,17 @@ export const bettaSplendensFemale: Species = {
   },
 
   scientificContext: {
-    wildHabitat: 'Shallow stagnant water.',
-    sexualDimorphism: 'Females have short fins and egg spot.',
+    wildHabitat: 'Shallow stagnant water environments with minimal flow and variable oxygen levels.',
+    sexualDimorphism: 'Females possess notably shorter fins and display a prominent white egg spot on the ventral surface.',
     variants: ['Koi', 'Galaxy', 'Crowntail', 'Veiltail'],
   },
 
   breeding: {
     method: 'bubble_nester',
     difficulty: 'medium',
-    trigger: 'Conditioning',
-    fryCare: 'Male cares for nest.',
-    notes: 'Aggressive spawning.',
+    trigger: 'Conditioning with high quality foods triggers breeding readiness.',
+    fryCare: 'Male assumes full parental care of bubble nest and developing fry.',
+    notes: 'Spawning involves intense chasing and aggressive behavior from both partners.',
   },
   
   experienceData: {
