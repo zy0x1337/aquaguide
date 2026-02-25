@@ -22,18 +22,6 @@ export const FavoriteButton = ({
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(itemType, itemSlug);
 
-  const sizeClasses = {
-    sm: 'p-1.5 w-7 h-7',
-    md: 'p-2 w-9 h-9',
-    lg: 'p-2.5 w-11 h-11',
-  };
-
-  const iconSizes = {
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6',
-  };
-
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,41 +34,28 @@ export const FavoriteButton = ({
     toggleFavorite(itemType, itemSlug);
   };
 
+  // Size variants matching website design system
+  const sizeClasses = size === 'sm' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm';
+
   return (
     <motion.button
+      whileTap={{ scale: 0.95 }}
       onClick={handleClick}
-      whileTap={{ scale: 0.9 }}
-      className={`${
-        sizeClasses[size]
-      } rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-2 ${
+      className={`flex items-center gap-1.5 rounded-lg font-bold transition-all ${
         favorite
-          ? 'border-rose-500 dark:border-rose-400'
-          : 'border-slate-200 dark:border-slate-700'
-      } hover:scale-110 transition-all shadow-lg hover:shadow-xl ${
-        showLabel ? 'flex items-center gap-2 px-4 py-2 w-auto' : ''
-      }`}
+          ? 'bg-coral-600 text-white hover:bg-coral-700 shadow-lg'
+          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-coral-50 dark:hover:bg-coral-900/20 hover:text-coral-700 dark:hover:text-coral-400 border-2 border-gray-200 dark:border-gray-700 hover:border-coral-300 dark:hover:border-coral-700'
+      } ${sizeClasses}`}
       title={favorite ? 'Remove from favorites' : 'Add to favorites'}
     >
       <Heart
-        className={`${
-          iconSizes[size]
-        } transition-colors ${
-          favorite
-            ? 'text-rose-500 dark:text-rose-400'
-            : 'text-slate-400 dark:text-slate-500'
-        }`}
+        className="w-3.5 h-3.5"
         fill={favorite ? 'currentColor' : 'none'}
         strokeWidth={2.5}
       />
       {showLabel && (
-        <span
-          className={`text-sm font-semibold ${
-            favorite
-              ? 'text-rose-500 dark:text-rose-400'
-              : 'text-slate-600 dark:text-slate-400'
-          }`}
-        >
-          {favorite ? 'Favorited' : 'Add to Favorites'}
+        <span>
+          {favorite ? 'Saved' : 'Save'}
         </span>
       )}
     </motion.button>
