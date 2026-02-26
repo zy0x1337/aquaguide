@@ -4,21 +4,22 @@ export const harlequinRasbora: Species = {
   id: 'rasbora-001',
   slug: 'harlequin-rasbora',
   imageUrl: '/images/species/harlequin-rasbora.jpg',
-  funFact: "Harlequin Rasboras are the original schooling fish—the classic that started it all! Named after Italian theatre's Harlequin character whose costume featured diamond patterns, their triangular black wedge looks like a harlequin's mask or cape. Watch them school in perfect formation: 10-15 fish moving as one organism through planted tanks in mesmerizing synchronized displays! Here's the unique breeding trick: unlike most egg-scatterers, Harlequins lay eggs on the underside of broad leaves (like Java Fern, Amazon Sword), turning leaves upside down in elaborate spawning dances! Their black wedge is a mood indicator: intense black = confident, faded pale = stressed. They're also blackwater beauties: under tannin-stained water (Indian Almond leaves), their metallic orange glows like copper! From Southeast Asia's peat swamps!",
+  
+  funFact: "Unlike most rasboras, the Harlequin Rasbora spawns on the underside of broad leaves, flipping upside down in a unique courtship ritual to deposit its eggs.",
 
   taxonomy: {
     scientificName: 'Trigonostigma heteromorpha',
     commonName: 'Harlequin Rasbora',
     family: 'Cyprinidae',
-    origin: 'Southeast Asia (Thailand, Malaysia, Singapore, Sumatra - peat swamps, slow streams)',
+    origin: 'Southeast Asia (Thailand, Malaysia, Singapore, Sumatra)',
     region: 'Asia',
-    biotope: 'Slow-moving blackwater peat swamps and forest streams with dense vegetation, leaf litter substrate, tannin-stained tea-colored water, soft acidic conditions',
+    biotope: 'Slow-moving blackwater peat swamps and forest streams with dense vegetation and tannin stained water.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 4.5,
-    color: 'Stunning! Metallic copper-orange body (like polished pennies) with striking triangular black wedge pattern from mid-body to tail (harlequin mask). Orange shimmers iridescently under lighting. Females: rounder body, wider black wedge. Males: slimmer, narrower wedge. Under blackwater conditions (tannins), orange glows like burning copper',
+    color: 'A metallic copper orange body contrasts sharply with a distinctive triangular black patch covering the rear half. Females typically possess a larger, more rounded body shape compared to the slimmer males.',
   },
 
   environment: {
@@ -48,40 +49,37 @@ export const harlequinRasbora: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes:
-      'Harlequin Rasboras are plant-lovers and thrive in densely planted tanks mimicking Southeast Asian peat swamps! They prefer mid-water zones, swimming through stem plants and around broad leaves. Best plants: broad-leaved (Java Fern, Amazon Sword, Anubias—needed for spawning!), stem plants (Rotala, Ludwigia, Bacopa), fine-leaved (Java Moss, Christmas Moss), floating plants (Salvinia, Frogbit—diffuses lighting). Dark substrate (black sand, dark gravel) creates dramatic contrast—metallic orange pops against darkness. Blackwater setup with Indian Almond leaves intensifies copper-orange colors dramatically. Soft/dim lighting preferred.',
-    hardscape: ['Driftwood (creates tannins - ideal)', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth river stones', 'Minimal—plants are primary focus'],
+    plantingNotes: 'These fish feel most secure in densely planted tanks that mimic the shaded protection of their native peat swamps. Broad leaved plants like Java Fern are essential if breeding is desired.',
+    hardscape: ['Driftwood', 'Leaf litter', 'Smooth river stones'],
   },
 
   behavior: {
     tags: ['peaceful', 'shoaler', 'active'],
     minGroupSize: 8,
-    description:
-      'Harlequin Rasboras are classic schooling fish creating mesmerizing synchronized swimming displays! Groups of 8-15+ move as single organisms, swimming in perfect formation through planted tanks. They\'re active and constantly exploring mid-water zones, weaving through plants gracefully. They\'re 100% peaceful—among the gentlest community fish, never harassing tankmates. Watch their tight schooling when slightly stressed (new tank, water changes) vs loose shoaling when confident (spread out exploring). Their black wedge is a mood indicator: intense black = confident/healthy, faded pale = stressed. Males perform subtle courtship displays: chasing females through plants, circling around broad leaves. They\'re shy in sparse tanks but confident in densely planted setups.',
+    description: 'These peaceful schooling fish are a classic choice for the community aquarium, known for their tight formation swimming. They spend their day actively exploring the middle water layers, weaving gracefully through plants. When kept in large groups, they display a mesmerizing synchronized swimming pattern that creates a stunning visual display. Their distinctive black triangular marking serves as a visual cue, fading when the fish is stressed or frightened.',
     
     compatibility: {
-      goodMates: ['Other peaceful rasboras', 'Small tetras (Neons, Cardinals, Embers)', 'Corydoras', 'Kuhli Loaches', 'Otocinclus', 'Gouramis (peaceful)', 'Adult shrimp', 'Peaceful snails'],
-      badMates: ['Aggressive fish', 'Large cichlids', 'Bettas (may stress Harlequins)', 'Fin-nippers', 'Very fast feeders'],
-      notes:
-        'Harlequin Rasboras are perfect community fish—the gold standard for peaceful schoolers! They\'re compatible with virtually all peaceful species and focus on schooling behavior. They\'re shrimp-safe (ignore adults, may nibble shrimplets). Best in peaceful planted community tanks with similar-sized gentle species. Groups of 8-12+ spread social dynamics and create stunning synchronized swimming displays. Larger groups = tighter schools = more impressive behavior.',
+      goodMates: ['Other peaceful rasboras', 'Small tetras', 'Corydoras', 'Kuhli Loaches', 'Otocinclus', 'Gouramis'],
+      badMates: ['Aggressive fish', 'Large cichlids', 'Fin-nippers'],
+      notes: 'They are the gold standard for community tanks and get along with virtually any peaceful species.',
       
       rules: [
         {
           type: 'requires',
           condition: 'groups of 8-12+ fish',
-          reason: 'Harlequin Rasboras are highly social schoolers. Groups under 6 = stressed, timid fish with faded colors. Groups of 8-12+ = confident, active schools with intense colors and stunning synchronized swimming. This dramatically affects behavior',
+          reason: 'They are highly social and become timid and stressed in smaller numbers.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'densely planted tank',
-          reason: 'Harlequins are plant-dependent. Without dense planting, they hide and show stress. Dense plants = confident, visible fish with natural behavior. Plants also needed for breeding (broad leaves)',
+          reason: 'They feel exposed in bare tanks and will hide constantly without vegetation.',
           severity: 'high',
         },
         {
           type: 'warning',
           condition: 'soft acidic water (pH 6.0-7.0) with tannins',
-          reason: 'Harlequins are blackwater species from peat swamps. Soft acidic water with tannins (Indian Almond leaves) intensifies orange colors to copper glow. They tolerate harder water but colors fade',
+          reason: 'While they adapt to harder water, their colors are most vibrant in blackwater conditions.',
           severity: 'medium',
         },
       ],
@@ -122,29 +120,20 @@ export const harlequinRasbora: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Groups of 8-12+ (social species)', 
+      'Groups of 8-12+', 
       'Densely planted tank', 
-      'Dark substrate (enhances colors)', 
-      'Soft acidic water preferred', 
-      'Blackwater conditions ideal (tannins)',
+      'Dark substrate', 
+      'Soft acidic water preferred',
     ],
 
     proTips: [
-      "GROUP SIZE = SCHOOLING MAGIC! Small groups (under 6) = stressed, hiding fish with faded colors. Groups of 8-12+ = confident, active schools creating stunning synchronized swimming displays moving as single organisms. The difference is dramatic.",
-      "Black wedge = mood indicator! Intense, solid black wedge = confident, healthy fish. Faded, pale wedge = stressed fish (poor water, wrong params, small group, sparse tank). Watch the wedge—it tells everything!",
-      "Blackwater = copper glow! Add Indian Almond leaves, driftwood, or blackwater extract to create tannin-stained 'tea' water. Metallic orange intensifies to glowing copper—absolutely stunning. This mimics natural peat swamp habitat.",
-      "Dark substrate = color pop! Black sand or dark gravel makes metallic orange shimmer dramatically. Light substrates wash out colors. Simple change = huge visual impact.",
-      "Watch the leaf spawning! Unlike most egg-scatterers, Harlequins lay eggs on undersides of broad leaves (Java Fern, Amazon Sword). Males and females turn upside down together under leaf, vibrating bodies. Unique breeding behavior!",
-      "Most peaceful community fish! Harlequins are 100% peaceful toward all tankmates and never nip fins. Perfect for beginners building first community tank.",
-      "Feed small portions 2x daily. Micro-pellets, crushed flakes, baby brine shrimp, daphnia. Small mouths need tiny foods. Varied diet = best colors.",
+      "A dark substrate and tannin stained water significantly enhance their metallic copper coloration.",
+      "Keep them in groups of eight or more to encourage natural schooling behavior and reduce shyness."
     ],
 
     commonMistakes: [
-      "Small groups (under 6) = stressed pale fish. Harlequins are highly social schoolers. Groups under 6 = timid fish hiding with faded black wedges. Beginners buy 4-6 and wonder why colors are dull. Buy 8-12+ for confident schools!",
-      "Light substrate. White sand/gravel washes out metallic orange completely. Dark substrate creates dramatic contrast—orange glows against darkness. Simple fix = huge improvement.",
-      "Sparse planting. Harlequins are plant-dependent. Without dense plants, they hide constantly. Heavily planted tanks = confident, visible fish with natural behavior.",
-      "Bright lighting. Intense lighting stresses them and fades colors. Harlequins prefer dim conditions or floating plants diffusing light. Blackwater setups ideal.",
-      "Hard water. Harlequins tolerate moderate hardness but thrive in soft acidic water (pH 6.0-7.0, GH 2-8) with tannins. Hard alkaline water fades colors noticeably.",
+      "Keeping them in small groups results in shy fish that lack confidence and color.",
+      "Bright lighting without floating plants causes stress and washes out their coloration."
     ],
     
     feeding: {
@@ -163,7 +152,7 @@ export const harlequinRasbora: Species = {
       waterChangePercentage: 25,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: false,
-      notes: 'Weekly 25-30% water changes. Harlequin Rasboras prefer soft acidic stable water. Keep nitrates below 10ppm. Low flow—sponge filters ideal. Add Indian Almond leaves for tannins (intensifies colors). Mature planted tanks with biofilm help significantly.',
+      notes: 'They prefer stable water conditions with low nitrates, so regular maintenance is beneficial.',
     },
     
     equipment: {
@@ -185,26 +174,21 @@ export const harlequinRasbora: Species = {
   health: {
     lifespanYears: 6,
     commonDiseases: ['ich', 'velvet', 'fin-rot', 'internal-parasites'],
-    sensitivities: ['Hard alkaline water (fades colors)', 'Bright lighting (stress)', 'Sparse planting (chronic stress)', 'Small groups (social stress)', 'Parameter swings'],
+    sensitivities: ['Hard alkaline water', 'Bright lighting', 'Sparse planting', 'Small groups', 'Parameter swings'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Harlequin Rasboras inhabit slow-moving blackwater peat swamps and forest streams in Southeast Asia (Thailand, Malaysia, Singapore, Sumatra). Wild habitat: shallow (20-80cm deep) tea-colored water heavily stained with tannins from decomposing leaves, dense aquatic vegetation and submerged roots, thick leaf litter substrate, soft acidic conditions (GH 2-6, KH 1-3, pH 5.5-6.5), warm temperatures (24-28°C), minimal flow. They occupy mid-water zones among plants, feeding on insects, larvae, zooplankton, and algae.',
-    sexualDimorphism:
-      'Subtle but distinguishable. Males: Slimmer, more streamlined torpedo-shaped bodies. Narrower black wedge pattern (pointed). Slightly more intense metallic orange coloration. Actively chase females during spawning. Females: Rounder, fuller bodies especially when gravid (carrying eggs). Wider black wedge pattern (more rounded edges). Slightly duller coloration. Noticeably plumper belly. Easy to distinguish in mature groups (6+ months old) when females plump up.',
-    variants: ['Standard Harlequin Rasbora (Trigonostigma heteromorpha)', 'Glowlight Rasbora (T. hengeli - different species, often confused)', 'Lambchop Rasbora (T. espei - different species)'],
+    wildHabitat: "Native to Southeast Asia, this species inhabits slow-moving, tannin-stained peat swamps and forest streams. The water is typically soft and acidic, rich in decomposing plant matter which gives it a characteristic tea color. These densely vegetated environments provide ample cover and foraging grounds for insect larvae. While common in the aquarium trade, some wild populations face pressure from habitat destruction.",
+    sexualDimorphism: "Females are noticeably rounder and larger than males, particularly when carrying eggs. Males are slimmer and often display a slightly more intense copper coloration.",
+    variants: ['Standard Harlequin', 'Glowlight Rasbora', 'Lambchop Rasbora'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'medium',
-    trigger:
-      'Harlequin Rasboras breed readily in proper conditions with unique leaf-spawning behavior! Trigger breeding: 1) Mature group (6+ months old, 8+ fish) with plump females, 2) Broad-leaved plants (Java Fern, Amazon Sword, Anubias—mandatory!), 3) Excellent conditioning with live/frozen foods (baby brine shrimp, daphnia, bloodworms, mosquito larvae) for 2 weeks until females noticeably plump, 4) Soft acidic water (GH 2-6, pH 6.0-6.5, temp 26-28°C), 5) Tannin-stained blackwater (Indian Almond leaves). Males chase females through plants, leading them to broad leaves. Pairs flip upside down under leaf undersides, vibrating bodies together.',
-    fryCare:
-      'Unlike most egg-scatterers, Harlequins lay 30-80 adhesive eggs on undersides of broad leaves (Java Fern, Amazon Sword). Pairs turn upside down under leaves, pressing bodies together while vibrating—female releases eggs, male fertilizes. Eggs stick to leaf undersides. CRITICAL: Adults eat eggs immediately. Remove adults after spawning or use separate breeding tank. Eggs are light-sensitive—keep tank dark (cover with towels). Eggs hatch in 24-36 hours at 26°C. Fry hang on leaves for 3-4 days absorbing yolk sacs. Once free-swimming (day 5), feed infusoria or liquid fry food for 5-7 days, then graduate to baby brine shrimp nauplii. Growth is moderate: 1cm at 6 weeks, 2cm at 10 weeks, mature at 6 months. Fry rearing is challenging—need microscopic foods.',
-    notes:
-      'Harlequins breed readily in proper conditions but fry rearing is challenging. Main issues: 1) Adults eat eggs immediately (remove or separate), 2) Eggs are light-sensitive (keep dark), 3) Fry need infusoria (prepare cultures beforehand). Unique leaf-spawning behavior is beautiful to watch—pairs flipping upside down under leaves vibrating. For deliberate breeding: separate 10-gallon breeding tank with Java Fern, condition adults heavily, dim lighting, remove after spawning.',
+    trigger: 'Condition the group with live or frozen foods and provide broad-leaved plants for them to spawn underneath.',
+    fryCare: 'The tiny fry require infusoria or liquid fry food for the first few days before they can accept newly hatched brine shrimp. Maintain pristine water quality and low light levels to ensure high survival rates during the early stages.',
+    notes: 'Spawning involves a unique upside-down position under a leaf, making them fascinating to breed.',
   },
   
   experienceData: {

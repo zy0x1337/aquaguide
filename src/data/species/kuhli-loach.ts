@@ -4,7 +4,8 @@ export const kuhliLoach: Species = {
   id: 'loach-001',
   slug: 'kuhli-loach',
   imageUrl: '/images/species/kuhli-loach.jpg',
-  funFact: "Kuhli Loaches are living noodles that create adorable cuddle piles in caves! They're nearly scaleless (tiny embedded scales) making them look like striped eels or snakes slithering through substrate. Watch groups of 6-10 form 'noodle piles': tangled masses of loaches sleeping together in caves like spaghetti! They're burrowing machines, disappearing completely into sand for days then suddenly reappearing like magic. Here's the weird part: they can gulp atmospheric air using modified intestines for emergency oxygen (not primary breathing). Males perform spiral spawning dances: pairs twist around each other while swimming to the surface, releasing eggs among floating plant roots. CRITICAL: They're scaleless which makes them highly sensitive to copper medications (use half-dose everything or they die).",
+  
+  funFact: "These scaleless, eel-like loaches are famous for entwining together in 'noodle piles' when resting, a unique social behavior linked to their need for security.",
 
   taxonomy: {
     scientificName: 'Pangio kuhlii',
@@ -12,13 +13,13 @@ export const kuhliLoach: Species = {
     family: 'Cobitidae',
     origin: 'Southeast Asia (Indonesia, Malaysia, Thailand: Borneo, Sumatra, Java)',
     region: 'Asia',
-    biotope: 'Shallow blackwater forest streams with thick leaf litter substrate, soft acidic water, mud bottoms, minimal flow, and dense vegetation',
+    biotope: 'Shallow blackwater forest streams with thick leaf litter and mud substrates.',
   },
 
   visuals: {
     iconShape: 'depressed',
     adultSizeCM: 10,
-    color: 'Striking eel-like body with distinctive vertical dark brown/black bands alternating with bright orange/salmon/pink bands (like candy canes). 10-15 bands wrapping around body. Belly lighter. Four pairs of barbels around mouth (sensory whiskers for finding food). Tiny beady black eyes. Nearly scaleless appearance with smooth, slimy skin.',
+    color: 'An eel-like body with alternating bands of pinkish-orange and dark brown. They possess tiny eyes and four pairs of sensitive barbels around the mouth.',
   },
 
   environment: {
@@ -48,50 +49,44 @@ export const kuhliLoach: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Kuhli Loaches love densely planted tanks with abundant hiding spots! They prefer bottom areas with caves, tubes, and leaf litter. Best plants: broad-leaved (Anubias, Java Fern, Amazon Sword for shade), stem plants (Rotala, Ludwigia), fine plants (Java Moss, Christmas Moss), floating plants (Salvinia, Frogbit for dim lighting). CRITICAL: Soft substrate mandatory. Fine sand only (play sand, pool filter sand). They burrow constantly, sifting sand through gills. Gravel or coarse sand injures their delicate bellies and barbels. Leaf litter (Indian Almond leaves, oak leaves) mimics natural habitat and provides hiding spots.',
-    hardscape: ['CRITICAL: Multiple caves/tubes (PVC pipes 4cm+ diameter, terracotta pots, slate caves)', 'Smooth driftwood', 'Leaf litter (Indian Almond, oak leaves)', 'Smooth river stones', 'Avoid sharp decorations (injure scaleless skin)'],
+    plantingNotes: 'Dense planting and floating plants help diffuse light, creating the dim environment these shy fish prefer. Leaf litter provides additional cover and foraging grounds.',
+    hardscape: ['PVC pipes', 'Terracotta caves', 'Smooth driftwood', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['peaceful', 'shy', 'nocturnal', 'social', 'bottom_dweller', 'scaleless'],
     minGroupSize: 6,
-    description: 'Kuhli Loaches are shy, nocturnal noodles creating adorable social behaviors! They\'re extreme bottom-dwellers spending 98% of time on substrate. Watch them burrow: they disappear completely into sand for hours or days, then suddenly reappear like magic (burrowing helps them feel secure). They\'re highly social and form "NOODLE PILES": groups of 6-10 tangled together in caves sleeping like spaghetti! This behavior is adorable and shows they feel secure. They\'re nocturnal: during day, they hide in caves or sand. At night, they emerge and become active scavengers, racing around substrate searching for food using barbels (sensory whiskers). Watch them dig through sand with mouths, sifting substrate through gills looking for worms and food. They\'re 100% peaceful and ignore all tankmates. Paradox: More hiding spots equals more visible loaches because they feel secure.',
+    description: 'A shy, nocturnal scavenger that spends daylight hours buried in the substrate or hiding in tight crevices. They are highly social and must be kept in groups, where they will often rest entangled with one another. At night, they emerge to sift through the sand for food using their sensitive barbels. Their scaleless skin makes them particularly sensitive to medications and water quality.',
     
     compatibility: {
-      goodMates: ['Small peaceful fish (tetras, rasboras)', 'Corydoras', 'Otocinclus', 'Peaceful gouramis', 'Bettas (usually safe)', 'Adult shrimp', 'Peaceful snails'],
-      badMates: ['Large aggressive cichlids', 'Large catfish (Plecos compete for caves)', 'Goldfish (wrong temps)', 'Any fish that might eat them', 'Very aggressive bottom-dwellers'],
-      notes: 'Kuhli Loaches are perfect for peaceful community tanks! They\'re 100% peaceful toward all tankmates and focus on scavenging substrate. They\'re bottom-dwellers so avoid mixing with aggressive bottom species (large plecos, aggressive cichlids) that compete for caves. Best with mid-water fish leaving bottom zone to loaches. Shrimp: mostly safe (adults ignored), but shrimplets occasionally eaten. CRITICAL: Groups of 6+ mandatory because they\'re highly social and stressed alone (hide constantly, never come out). Groups form adorable noodle piles in caves.',
+      goodMates: ['Small peaceful fish', 'Corydoras', 'Otocinclus', 'Peaceful Gouramis', 'Rasboras'],
+      badMates: ['Large cichlids', 'Aggressive bottom dwellers', 'Goldfish'],
+      notes: 'Best kept in a species-specific setup or with other small, peaceful fish that will not compete for bottom space.',
       
       rules: [
         {
           type: 'requires',
           condition: 'fine sand substrate',
-          reason: 'CRITICAL: Kuhli Loaches burrow constantly, sifting sand through gills. They need fine sand (play sand, pool filter sand). Gravel or coarse substrate injures their delicate scaleless bellies and barbels. This is non-negotiable because no sand equals chronic injuries.',
+          reason: 'They burrow constantly for security and food; coarse gravel damages their delicate barbels and skin.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'groups of 6-10+ fish',
-          reason: 'Kuhli Loaches are highly social. Singles or small groups (under 6) equal stressed, hiding fish that never come out. Groups of 6-10+ equal confident loaches forming adorable "noodle piles" and exploring actively.',
+          reason: 'They are highly social and become withdrawn and stressed if kept alone or in small numbers.',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'multiple caves/tubes (4cm+ diameter)',
-          reason: 'Kuhli Loaches need caves for security and forming noodle piles. Without caves, they hide in sand constantly and show chronic stress. Provide 3-5+ caves (PVC pipes, terracotta pots, slate caves).',
+          condition: 'multiple caves/tubes',
+          reason: 'Secure hiding spots are essential for them to feel safe enough to come out during the day.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'copper-based medications',
-          reason: 'DEADLY! Kuhli Loaches are scaleless and absorb toxins directly through skin. Copper medications (ich treatments) are highly toxic and kill them. Use half-dose medications or scaleless-safe treatments only.',
+          reason: 'Their scaleless skin absorbs toxins rapidly, making standard copper treatments fatal.',
           severity: 'critical',
-        },
-        {
-          type: 'requires',
-          condition: 'filter intake protection (sponge covers)',
-          reason: 'Kuhli Loaches are escape artists and squeeze into tiny spaces. They get sucked into filter intakes and die. Cover all intakes with sponge or mesh. Check filters regularly.',
-          severity: 'high',
         },
       ],
       
@@ -131,31 +126,23 @@ export const kuhliLoach: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Fine sand substrate mandatory (burrowing)', 
-      'Groups of 6-10+ (highly social)', 
-      'Multiple caves/tubes (noodle piles)', 
-      'Filter intake protection (sponge covers)', 
-      'No copper medications (scaleless, toxic)',
-      'Tight-fitting lid (escape artists)',
+      'Fine sand substrate mandatory', 
+      'Groups of 6-10+', 
+      'Multiple caves/tubes', 
+      'Filter intake protection', 
+      'No copper medications',
+      'Tight-fitting lid',
     ],
 
     proTips: [
-      "Fine sand equals happy loaches! Kuhli Loaches burrow constantly, disappearing into sand for hours or days then reappearing. This is natural and shows they feel secure. Use fine sand (play sand, pool filter sand). Gravel or coarse sand injures their delicate scaleless bellies and barbels. No sand equals chronic injuries and stress.",
-      "GROUP SIZE equals NOODLE PILES! Small groups (under 6) equal stressed, hiding fish you never see. Groups of 6-10+ equal confident loaches forming adorable 'noodle piles' (tangled masses sleeping in caves like spaghetti). This is the cutest behavior in fishkeeping! Buy 6+ minimum.",
-      "More hiding spots equals more visible loaches! Paradox: the more caves and tubes you provide, the more you see loaches because they feel secure. Sparse tanks equal hiding constantly. Provide 3-5+ caves (PVC pipes 4cm+ diameter, terracotta pots, slate caves). They form noodle piles inside!",
-      "Cover filter intakes! Kuhli Loaches are escape artists and squeeze into impossibly tight spaces. They get sucked into filter intakes and die. Cover all intakes with sponge prefilters or mesh. Check filters regularly. Also use tight-fitting lids because they jump!",
-      "Copper equals deadly! Kuhli Loaches are scaleless (nearly) and absorb medications directly through skin. Copper-based ich treatments are highly toxic and kill them within hours. Use half-dose medications or scaleless-safe treatments (Malachite Green, salt). This is non-negotiable.",
-      "Feed at night! Kuhli Loaches are nocturnal. If you feed during day, other fish eat everything before loaches emerge. Feed sinking foods (wafers, pellets, bloodworms) 30 minutes after lights out. Watch them race around hunting!",
-      "Leaf litter enhances behavior! Indian Almond leaves and oak leaves create natural tannin-stained water and provide hiding spots. Loaches love exploring leaf litter. Also helps simulate blackwater habitat.",
+      "Use a sponge pre-filter to prevent these slender fish from being sucked into the filter intake.",
+      "Feed sinking tablets or frozen foods after lights out to ensure they get their share before other fish eat it."
     ],
 
     commonMistakes: [
-      "Gravel substrate. Number one killer! Kuhli Loaches need fine sand for burrowing. Gravel or coarse substrate injures their delicate scaleless bellies and barbels causing infections and death. 40% of failures from wrong substrate. Use fine sand only (play sand, pool filter sand).",
-      "Small groups (under 6). Kuhli Loaches are highly social. Singles or small groups equal stressed fish hiding constantly that you never see. They need groups of 6-10+ to form noodle piles and feel secure. Don't buy 2-3, buy 6+.",
-      "No caves or tubes. Kuhli Loaches need caves for security and forming noodle piles. Without caves, chronic stress. Provide 3-5+ caves (PVC pipes, terracotta pots).",
-      "Copper medications during ich. Kuhli Loaches are scaleless and absorb copper directly (deadly). Many beginners treat ich with copper meds which equals dead loaches within hours. Use half-dose or scaleless-safe treatments only.",
-      "Uncovered filter intakes. Kuhli Loaches squeeze into filter intakes and get sucked in (death). Cover all intakes with sponge prefilters. Check filters regularly.",
-      "Feeding during day only. Loaches are nocturnal. Daytime feeding equals other fish eat everything. Feed sinking foods after lights out so loaches get meals.",
+      "Using gravel or sharp sand leads to infection and erosion of their sensitive barbels.",
+      "Keeping them alone results in a shy fish that hides constantly and rarely feeds.",
+      "Using full-strength medications containing copper is often fatal due to their lack of scales."
     ],
     
     feeding: {
@@ -174,7 +161,7 @@ export const kuhliLoach: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: false,
-      notes: 'Weekly 30% water changes. Kuhli Loaches prefer soft acidic stable water. Keep nitrates below 20ppm (sensitive). Low flow. CRITICAL: Do not vacuum sand deeply because loaches burrow inside! Surface vacuum only. Add leaf litter for tannins. Mature tanks ideal.',
+      notes: 'Be careful when vacuuming the substrate, as they often burrow just below the surface. Check filter intakes regularly.',
     },
     
     equipment: {
@@ -195,28 +182,22 @@ export const kuhliLoach: Species = {
 
   health: {
     lifespanYears: 10,
-    commonDiseases: ['ich', 'skin-infections', 'barbel-erosion', 'fin-rot', 'internal-parasites'],
-    sensitivities: [
-      'Copper medications (deadly, scaleless)', 
-      'Sharp substrate (injuries)', 
-      'High nitrates (over 20ppm)', 
-      'Parameter swings', 
-      'Bright lighting (stress)',
-    ],
+    commonDiseases: ['ich', 'skin-infections', 'barbel-erosion', 'internal-parasites'],
+    sensitivities: ['Copper medications', 'Sharp substrate', 'High nitrates', 'Parameter swings'],
   },
 
   scientificContext: {
-    wildHabitat: 'Kuhli Loaches inhabit shallow forest streams and peat swamps in Southeast Asia (Indonesia, Malaysia, Thailand: Borneo, Sumatra, Java). Wild habitat: shallow (10-40cm deep) slow-moving or stagnant blackwater streams with thick leaf litter substrate (decomposing leaves creating soft mud), tannin-stained tea-colored water, soft acidic conditions (GH 0-6, KH 0-2, pH 5.5-6.5), warm temperatures (24-28°C), minimal flow, and dense vegetation. They burrow into leaf litter and mud during day, emerging at night to scavenge for worms, insect larvae, and organic debris.',
-    sexualDimorphism: 'Difficult until breeding. Males: Slimmer, more streamlined bodies. Slightly larger pectoral fins (muscular for gripping females during spawning). Females: Noticeably plumper and fuller bodies especially when gravid (carrying eggs). Green eggs visible through translucent skin when gravid (unique). Rounder cross-section. Juveniles (under 6 months) impossible to sex. Wait for maturity and egg development.',
-    variants: ['Standard Kuhli Loach (Pangio kuhlii, banded)', 'Black Kuhli Loach (Pangio oblonga, solid dark)', 'Silver/Cinnamon Kuhli (lighter coloration)'],
+    wildHabitat: "Inhabits shallow, slow-moving forest streams and peat swamps in Southeast Asia. The water is typically soft, acidic, and stained dark by tannins from decomposing plant matter. They live among thick leaf litter and mud, burrowing for protection and foraging for small invertebrates. These environments are dimly lit and densely vegetated.",
+    sexualDimorphism: "Females are noticeably plumper than males, especially when carrying eggs, which are visible through their semi-transparent skin. Males have a more streamlined body shape and larger pectoral fins used during courtship.",
+    variants: ['Standard Kuhli (banded)', 'Black Kuhli (solid dark)', 'Silver/Cinnamon Kuhli'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'expert',
-    trigger: 'Kuhli Loach breeding is rare and usually accidental in home aquariums. Trigger: 1) Mature group (12+ months old, 8+ fish) with plump gravid females (green eggs visible through skin), 2) Soft acidic water (GH 2-6, pH 6.0-6.5, temp 26-28°C), 3) Heavy conditioning with live foods (blackworms, tubifex, bloodworms, grindal worms) for 2-3 weeks, 4) Large water changes (50-70%) with cooler water (22-24°C) simulating seasonal flooding or monsoon rains, 5) Floating plants (Salvinia, Water Lettuce for egg laying among roots), 6) Lower barometric pressure (storms). Spawning often triggered by weather changes (storms, pressure drops). Males chase gravid females to surface.',
-    fryCare: 'Surface spawning: Pairs swim to surface in spiral dance, twisting around each other while swimming upward. Eggs released among floating plant roots and fall slowly. 200-300+ bright green eggs scattered (unique color). Eggs are adhesive, sticking to plant roots or glass. Adults ignore eggs (no parental care). Eggs hatch in 24 hours at 27°C. Fry are microscopic (2mm) and bright green (unique). They hang on glass or plants for 2-3 days absorbing yolk. Once free-swimming, feed infusoria or green water for 7-10 days, then graduate to baby brine shrimp nauplii and microworms. Growth is slow: 2cm at 8 weeks, 5cm at 6 months, mature at 12+ months.',
-    notes: 'Kuhli Loach breeding in home aquariums is extremely rare and usually accidental (triggered by storm pressure drops or large water changes). They spawn at surface among floating plants (unusual for bottom-dwellers). Main challenge: fry are microscopic and need infusoria immediately. Accidental spawning more common in heavily planted mature tanks with large groups (8+) during monsoon season simulation (large cool water changes). Don\'t expect breeding but enjoy it if it happens!',
+    trigger: 'Spawning is rare in home aquaria and often triggered by a large water change with cooler water to simulate the rainy season. Pairs perform a spiral dance near the surface to release eggs.',
+    fryCare: 'The bright green eggs are adhesive and hatch within 24 hours. The tiny fry require infusoria for the first week before they can accept newly hatched brine shrimp. Providing heavy cover and pristine water is critical for their survival.',
+    notes: 'Most breeding attempts are accidental, occurring in heavily planted tanks with large groups during stormy weather periods.',
   },
   
   experienceData: {

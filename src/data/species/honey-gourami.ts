@@ -4,21 +4,22 @@ export const honeyGourami: Species = {
   id: 'gourami-001',
   slug: 'honey-gourami',
   imageUrl: '/images/species/honey-gourami.jpg',
-  funFact: "Honey Gouramis are peaceful centerpieces with dramatic color changes! Watch males transform from golden-honey to intense black with neon yellow stripes during breeding—it's like watching a fish change costumes! They're bubble nest artists building intricate floating foam nests among plants, using saliva bubbles arranged in perfect domes. Here's the cool part: they have a labyrinth organ (like bettas)—a specialized air-breathing structure allowing them to gulp atmospheric oxygen at the surface! Watch them swim to the top, tilt sideways, and breathe air directly—they can survive in low-oxygen water where other fish suffocate. Males perform courtship dances: circling females, flaring fins, displaying black breeding colors, leading females to bubble nests. From India/Bangladesh rice paddies and slow streams!",
+  
+  funFact: "Males undergo a dramatic transformation during courtship, turning from a gentle honey gold to a deep black with vibrant yellow stripes while constructing intricate bubble nests at the surface.",
 
   taxonomy: {
     scientificName: 'Trichogaster chuna',
     commonName: 'Honey Gourami',
     family: 'Osphronemidae',
-    origin: 'India and Bangladesh (rice paddies, slow-moving streams, ponds with dense vegetation)',
+    origin: 'India and Bangladesh (rice paddies, slow-moving streams, ponds)',
     region: 'Asia',
-    biotope: 'Slow-moving or stagnant water with dense surface vegetation, floating plants, low oxygen levels, soft acidic water',
+    biotope: 'Slow-moving or stagnant waters with dense surface vegetation and low oxygen levels.',
   },
 
   visuals: {
     iconShape: 'compressed',
     adultSizeCM: 5,
-    color: 'Stunning color-changers! Normal coloration: Males: golden-honey yellow body with subtle orange wash, translucent fins. Females: pale silvery-tan to brownish-gray, very subdued colors. Breeding coloration (males): dramatic transformation to intense black body with bright neon yellow dorsal stripe and yellow throat (absolutely stunning!). Sunset variant: intense orange-red year-round. Yellow/Gold variant: bright golden-yellow',
+    color: 'Males range from golden honey yellow to a striking black and yellow breeding pattern. Females remain a subdued silvery tan with a distinctive dark lateral line.',
   },
 
   environment: {
@@ -48,46 +49,43 @@ export const honeyGourami: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes:
-      'Honey Gouramis are plant-dependent and thrive in densely planted tanks! They prefer surface areas with floating plants (mandatory for bubble nests and security). Best plants: floating plants (Salvinia, Frogbit, Water Lettuce—essential for bubble nests!), tall stem plants (Vallisneria, Hygrophila, Bacopa—reaching surface), broad-leaved plants (Anubias, Java Fern, Amazon Sword), fine plants (Java Moss, Christmas Moss). Dense planting provides security—they hide when stressed. CRITICAL: Low flow setup (gentle filtration)—strong current destroys bubble nests and stresses fish.',
-    hardscape: ['Driftwood (provides hiding spots)', 'Smooth caves', 'Leaf litter (Indian Almond leaves)', 'Minimal—plants are primary focus'],
+    plantingNotes: 'Floating plants are essential for bubble nest construction and providing the sense of security these shy fish require. Dense planting creates the necessary cover to encourage them to swim in the open.',
+    hardscape: ['Driftwood', 'Smooth caves', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['peaceful', 'shy', 'bubble_nester', 'labyrinth_fish', 'centerpiece'],
     minGroupSize: 1,
-    description:
-      'Honey Gouramis are shy, peaceful centerpiece fish perfect for planted community tanks! They\'re timid and slow-moving, preferring to drift through plants gracefully. Watch them explore surface areas constantly, patrolling floating plants and breathing air at the surface (labyrinth organ). Males are bubble nest builders: they construct intricate floating foam nests among plants using saliva bubbles—building for hours, arranging bubbles into perfect domes. Males also perform courtship displays: circling females, flaring fins, displaying black breeding colors, vibrating bodies. CRITICAL: Males can be mildly territorial when breeding (chasing females aggressively)—keep 1 male : 2 females ratio to spread harassment. They\'re peaceful toward other species but slow-moving—easily intimidated by fast/boisterous fish.',
+    description: 'These peaceful labyrinth fish are perfect centerpiece species for quiet community tanks, spending their time gracefully exploring the upper water levels. Males are dedicated bubble nest builders, constructing intricate foam structures among floating plants while displaying dramatic breeding colors. They possess a specialized labyrinth organ that allows them to gulp atmospheric air, enabling them to thrive in oxygen-poor environments. While generally peaceful, males can become territorial toward one another or harass females during spawning, so keeping a single male with multiple females is recommended. They are timid by nature and will retreat into vegetation if kept with boisterous tankmates.',
     
     compatibility: {
-      goodMates: ['Small peaceful tetras (Neons, Cardinals, Embers)', 'Small rasboras (Harlequins, CPD, Chili)', 'Corydoras (all sizes)', 'Kuhli Loaches', 'Otocinclus', 'Peaceful snails', 'Adult shrimp (Cherry, Amano)'],
-      badMates: ['Aggressive fish (cichlids, barbs)', 'Fin-nippers (Tiger Barbs)', 'Bettas (similar niche - territorial)', 'Fast boisterous fish', 'Large predatory fish', 'Very active fish'],
-      notes:
-        'Honey Gouramis are excellent for peaceful planted community tanks with calm species. They\'re 100% peaceful toward other species but slow-moving and easily intimidated. Best with small, peaceful fish (tetras, rasboras, corydoras). Avoid fast/aggressive species. CRITICAL: Keep 1 male : 2 females if keeping pairs (males harass single females relentlessly during breeding). Can keep single males safely. Shrimp: adults safe (ignored), but shrimplets eaten opportunistically. They\'re bubble nesters like bettas—don\'t mix with bettas (territorial conflicts).',
+      goodMates: ['Small peaceful tetras', 'Small rasboras', 'Corydoras', 'Kuhli Loaches', 'Otocinclus', 'Peaceful snails'],
+      badMates: ['Aggressive fish', 'Fin-nippers', 'Bettas', 'Fast boisterous fish'],
+      notes: 'They are excellent for peaceful planted tanks but are easily intimidated by active species. Avoid mixing with Bettas to prevent territorial conflicts.',
       
       rules: [
         {
           type: 'requires',
           condition: 'floating plants mandatory',
-          reason: 'Honey Gouramis need floating plants for bubble nest building (males) and surface security (both sexes). Without floating plants, males can\'t build nests (stress) and both sexes feel exposed. This is essential',
+          reason: 'Males need floating plants to build bubble nests, and both sexes require surface cover to feel secure.',
           severity: 'critical',
         },
         {
           type: 'requires',
-          condition: 'low flow filtration (gentle current)',
-          reason: 'CRITICAL: Strong current destroys bubble nests and stresses Honey Gouramis (they\'re from stagnant water). Use sponge filters or adjust output to minimal flow. Strong flow = chronic stress',
+          condition: 'low flow filtration',
+          reason: 'Strong currents destroy bubble nests and cause chronic stress for this species adapted to stagnant water.',
           severity: 'critical',
         },
         {
           type: 'warning',
           target: 'single females with males',
-          reason: 'Males harass single females relentlessly during breeding (chasing for hours/days). This causes severe stress and can kill females. Keep 1 male : 2+ females ratio or keep males solo',
+          reason: 'Males relentlessly court females, and a single female can be harassed to death without others to share the attention.',
           severity: 'high',
         },
         {
           type: 'warning',
-          condition: 'densely planted tank with hiding spots',
-          reason: 'Honey Gouramis are shy. Without dense plants, they hide constantly behind equipment. Dense planting = confident, visible fish with natural behavior',
+          condition: 'densely planted tank',
+          reason: 'Without dense vegetation, these shy fish will hide constantly and refuse to come out.',
           severity: 'medium',
         },
       ],
@@ -128,30 +126,20 @@ export const honeyGourami: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Floating plants mandatory (bubble nests)', 
-      'Low flow filtration (gentle current)', 
+      'Floating plants mandatory', 
+      'Low flow filtration', 
       'Densely planted tank', 
-      '1 male : 2 females ratio if keeping pairs', 
-      'Peaceful tankmates only',
+      '1 male : 2 females ratio',
     ],
 
     proTips: [
-      "RATIO IS CRITICAL! If keeping pairs, use 1 male : 2+ females. Males harass single females relentlessly during breeding (chasing for hours/days)—this causes severe stress and can kill females. Multiple females spread harassment. OR keep single males safely (they build bubble nests even without females).",
-      "Watch the color transformation! Breeding males change from golden-honey to intense black with neon yellow stripes—absolutely stunning! This is normal and healthy (not disease). Happens when males build bubble nests. Colors return to normal after breeding.",
-      "Labyrinth organ = air breather! Honey Gouramis breathe atmospheric oxygen at surface (like bettas). Watch them tilt sideways and gulp air—normal behavior. This allows them to survive low-oxygen water. Ensure surface access always available.",
-      "Low flow is mandatory! They're from stagnant rice paddies and slow streams. Strong current destroys bubble nests and causes chronic stress. Use sponge filters or baffle HOB output to gentle flow. This is non-negotiable.",
-      "Floating plants = bubble nest success! Males build intricate foam nests among floating plant roots (Salvinia, Frogbit, Water Lettuce). Without floating plants, males can't build nests (stress). Beautiful to watch—they arrange bubbles for hours!",
-      "Feed varied diet! Micro-pellets, crushed flakes, baby brine shrimp, daphnia, bloodworms, mosquito larvae. Live/frozen foods enhance colors dramatically (especially breeding colors). Feed 1-2x daily, small portions.",
-      "Most peaceful gourami! Unlike Dwarf/Pearl Gouramis, Honeys are timid and gentle. Perfect for peaceful community tanks. Never aggressive toward other species.",
+      "Maintain a tight-fitting lid and reduce surface flow to protect the bubble nests males build.",
+      "Keep a ratio of one male to two or three females to prevent the male from harassing a single female."
     ],
 
     commonMistakes: [
-      "Strong filtration flow. #1 mistake! Strong current destroys bubble nests and stresses fish chronically. Honey Gouramis are from stagnant water. Use sponge filters or minimal flow. Strong flow = stressed, unhappy fish.",
-      "Single female with male. Males harass single females relentlessly during breeding (constant chasing). This causes severe stress and kills females. Keep 1M:2F ratio or single males only. Don't buy pairs without extra females.",
-      "No floating plants. Males need floating plants for bubble nest building (biological imperative). Without them, males show stress. Both sexes need floating cover for security. This is essential.",
-      "Aggressive/fast tankmates. Honey Gouramis are timid and slow. Fast fish (barbs, danios) intimidate them constantly. Aggressive fish (cichlids) stress them. Keep with peaceful, calm species only.",
-      "Sparse planting. Honeys are plant-dependent. Without dense plants, they hide behind equipment constantly. Heavily planted tanks = confident, visible fish.",
-      "Mixing with bettas. Both are labyrinth fish (bubble nesters) with similar niches. They show territorial aggression toward each other. Keep separate.",
+      "Keeping them in strong currents destroys their bubble nests and causes stress.",
+      "Housing them with fin-nippers or aggressive fish leads to chronic stress and hiding."
     ],
     
     feeding: {
@@ -170,7 +158,7 @@ export const honeyGourami: Species = {
       waterChangePercentage: 25,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: false,
-      notes: 'Weekly 25-30% water changes. Honey Gouramis prefer soft acidic stable water. Keep nitrates below 10ppm. CRITICAL: Low flow filtration (sponge filters ideal)—strong current destroys bubble nests. Add floating plants (mandatory). Mature planted tanks with biofilm ideal.',
+      notes: 'Perform gentle water changes to avoid disturbing the bubble nest if present.',
     },
     
     equipment: {
@@ -191,27 +179,22 @@ export const honeyGourami: Species = {
 
   health: {
     lifespanYears: 6,
-    commonDiseases: ['ich', 'velvet', 'fin-rot', 'dropsy', 'bacterial-infections'],
-    sensitivities: ['Strong current (chronic stress)', 'Cold water (under 22°C)', 'Parameter swings', 'Bright lighting', 'Aggressive tankmates'],
+    commonDiseases: ['ich', 'velvet', 'fin-rot', 'dropsy'],
+    sensitivities: ['Strong current', 'Cold water', 'Parameter swings', 'Aggressive tankmates'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Honey Gouramis inhabit slow-moving or stagnant water in India and Bangladesh. Wild habitat: rice paddies, ponds, ditches, slow streams with dense surface vegetation, floating plants, minimal flow, low oxygen levels (labyrinth organ adaptation), soft acidic water (pH 6.0-7.0), warm temperatures (24-28°C). They occupy surface zones, breathing air constantly and building bubble nests among floating plants. Feed on insects, larvae, zooplankton at surface.',
-    sexualDimorphism:
-      'Distinct in adults. Males: Slimmer, more elongated bodies. Golden-honey yellow coloration (normal) or intense black with neon yellow stripes (breeding). Pointed dorsal/anal fins. Build bubble nests. Females: Rounder, fuller bodies especially when gravid. Pale silvery-tan to brownish-gray coloration (very subdued). Rounded fins. Never show breeding colors. Easy to distinguish in mature fish (4+ months old) by coloration and body shape.',
-    variants: ['Standard Honey (golden-honey)', 'Sunset/Red Honey (intense orange-red year-round)', 'Gold/Yellow Honey (bright golden-yellow)'],
+    wildHabitat: "Native to the stagnant pools and rice paddies of India and Bangladesh, these fish inhabit warm, slow-moving waters rich in vegetation. They are often found in areas with low oxygen levels, utilizing their labyrinth organ to breathe atmospheric air. The water is typically soft and acidic, stained dark by tannins from decaying organic matter.",
+    sexualDimorphism: "Males are easily distinguished by their brighter coloration and pointed dorsal fins, turning deep black when in breeding condition. Females are larger, rounder in the belly, and retain a uniform silvery-brown coloration.",
+    variants: ['Standard Honey', 'Sunset/Red Honey', 'Gold Honey'],
   },
 
   breeding: {
     method: 'bubble_nester',
     difficulty: 'medium',
-    trigger:
-      'Honey Gouramis breed readily in proper conditions! Trigger breeding: 1) Mature pair (6+ months old) with 1 male : 2 females, 2) Floating plants (Salvinia, Frogbit—mandatory for bubble nest!), 3) Excellent conditioning with live/frozen foods (baby brine shrimp, daphnia, bloodworms, mosquito larvae) for 2 weeks until females plump, 4) Soft acidic water (GH 4-10, pH 6.0-6.8, temp 26-28°C), 5) Low flow (sponge filter only), 6) Shallow water (20-25cm—easier for fry to reach surface). Males build intricate foam nests among floating plants. Males turn intense black with yellow stripes (breeding colors).',
-    fryCare:
-      'Bubble nest spawning: Male builds foam nest among floating plants (takes 1-3 days). When ready, male performs courtship dance (circling female, flaring fins, displaying black colors). Female approaches nest. Pair embraces under nest—male wraps body around female, squeezing eggs out (30-40 eggs per embrace). Male fertilizes eggs and collects them in mouth, spitting into bubble nest. Multiple embraces (100-300 total eggs). CRITICAL: Remove female immediately after spawning (male becomes aggressive protecting nest). Male guards nest, repairs bubbles, adds eggs. Eggs hatch in 24-36 hours at 27°C. Fry hang in nest for 2-3 days absorbing yolk. Remove male when fry free-swimming (day 3-4)—he may eat fry. Fry need infusoria or liquid fry food for 5-7 days, then baby brine shrimp. Growth: 1cm at 4 weeks, 2cm at 8 weeks, mature at 5 months.',
-    notes:
-      'Honey Gouramis breed readily in proper conditions. Main requirements: 1) Floating plants for bubble nest (mandatory), 2) Low flow (strong current destroys nest), 3) Remove female after spawning (male aggressive), 4) Remove male when fry free-swimming (may eat fry), 5) Fry need infusoria initially. Breeding is easier than bettas—less aggressive nest guarding. Beautiful to watch: male\'s color transformation and nest-building behavior.',
+    trigger: 'Lower the water level slightly and raise the temperature to simulate the dry season, prompting the male to build a bubble nest among floating plants. Condition the pair with live foods to encourage spawning behavior.',
+    fryCare: 'Once the eggs hatch, the male guards the nest, and the fry become free-swimming after three days. At this stage, remove the male and feed the tiny fry infusoria or liquid fry food for the first week. As they grow, introduce newly hatched brine shrimp and perform frequent small water changes to maintain quality.',
+    notes: 'Males can become aggressive toward females after spawning; removing the female is often necessary for her safety.',
   },
   
   experienceData: {
@@ -219,10 +202,10 @@ export const honeyGourami: Species = {
     survivalRate: 0.70,
     
     commonFailures: [
-      { issue: 'female-harassment-death', cause: 'single-female-with-male-insufficient-females', frequency: 0.30 },
-      { issue: 'chronic-stress-destroyed-nests', cause: 'strong-filtration-flow', frequency: 0.25 },
-      { issue: 'hiding-stress', cause: 'no-floating-plants-or-sparse-planting', frequency: 0.20 },
-      { issue: 'intimidation-stress', cause: 'aggressive-or-fast-boisterous-tankmates', frequency: 0.15 },
+      { issue: 'female-harassment-death', cause: 'single-female-with-male', frequency: 0.30 },
+      { issue: 'chronic-stress', cause: 'strong-filtration-flow', frequency: 0.25 },
+      { issue: 'hiding-stress', cause: 'no-floating-plants', frequency: 0.20 },
+      { issue: 'intimidation-stress', cause: 'aggressive-tankmates', frequency: 0.15 },
       { issue: 'territorial-conflicts', cause: 'mixed-with-bettas', frequency: 0.10 },
     ],
     
