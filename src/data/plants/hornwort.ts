@@ -4,7 +4,7 @@ export const hornwort: Plant = {
   id: 'plant-hornwort',
   slug: 'ceratophyllum-demersum',
   imageUrl: '/images/plants/ceratophyllum-demersum.jpg',
-  
+
   imageCredit: {
     photographer: 'Laila_ on Pixabay',
     sourceUrl: 'https://pixabay.com/de/photos/hornkraut-verwenden-aquarium-pflanze-3390274/',
@@ -13,12 +13,15 @@ export const hornwort: Plant = {
   },
 
   difficulty: 'easy',
-  
+
+  funFact: 'Hornkraut hat gar keine echten Wurzeln – es ist eine der wenigen echten wurzellosen Wasserpflanzen der Welt. Nährstoffe nimmt es ausschließlich über die Blätter aus dem Wasser auf.',
+
   taxonomy: {
     scientificName: 'Ceratophyllum demersum',
     commonName: 'Hornwort',
     family: 'Ceratophyllaceae',
-    origin: 'Cosmopolitan (worldwide in freshwater)'
+    origin: 'Cosmopolitan (worldwide in freshwater)',
+    nativeRegion: 'Weltweit in Teichen, Seen und langsam fließenden Bächen verbreitet – eines der kosmopolitischsten Wasserpflanzen-Genera'
   },
 
   specs: {
@@ -31,16 +34,22 @@ export const hornwort: Plant = {
   },
 
   parameters: {
-    tempC: { min: 10, max: 30 },
-    ph: { min: 6.0, max: 8.0 }
+    tempC: { min: 10, max: 30, ideal: 22 },
+    ph: { min: 6.0, max: 8.0, ideal: 7.0 },
+    kh: { min: 2, max: 21 },
+    gh: { min: 3, max: 21 },
+    flow: 'low',
+    photoperiodHours: { min: 8, max: 14 }
   },
 
   planting: {
     substrate: false,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Stem cuttings. Simply break or cut stems and replant - roots from nodes within days.',
-    notes: 'Free-floating or weigh down with rock/lead weights. Excellent nitrate sponge. Provides shelter for fry and shrimp. Trim regularly to prevent overgrowth.'
+    propagation: 'Stecklinge. Stängel einfach brechen oder schneiden und liegenlassen – bewurzeln aus den Knoten innerhalb von Tagen.',
+    notes: 'Frei schwimmend oder mit Stein/Bleigewicht beschweren. Hervorragender Nitrat-Schwamm. Bietet Schutz für Brut und Garnelen. Regelmäßig stutzen, um Überwuchs zu verhindern.',
+    trimming: 'Wöchentlich 30–50 % der Masse entfernen. Überschüssige Stecklinge als Fischfutter verwenden oder weiterverschenken.',
+    senescenceNotes: 'Untere Stängelbereiche werden braun und verlieren Blätter – regelmäßiges Kürzen von oben sorgt für immer frisches Wachstum.'
   },
 
   nutrients: {
@@ -52,31 +61,51 @@ export const hornwort: Plant = {
 
   commonProblems: [
     {
-      title: 'Overcrowding',
-      desc: 'Rapid growth fills tank, shades bottom plants, consumes all nutrients.',
-      solution: 'Regular trimming (weekly). Remove 50% weekly. Use clippings for fish food or new tanks.'
+      title: 'Überwuchs',
+      desc: 'Rasantes Wachstum füllt den Tank, beschattet Bodenpflanzen, verbraucht alle Nährstoffe.',
+      solution: 'Wöchentliches Stutzen. 50 % wöchentlich entfernen. Schnittreste als Fischfutter oder für neue Tanks verwenden.'
     },
     {
-      title: 'Leaf Shedding',
-      desc: 'Fine leaves drop off, plant appears bare.',
-      solution: 'Normal adaptation. Add liquid fertilizer. Ensure medium light. Stabilize parameters.'
+      title: 'Blattabfall',
+      desc: 'Feine Blätter fallen ab, Pflanze sieht kahl aus.',
+      solution: 'Normale Akklimatisation. Flüssigdünger zugeben. Mittleres Licht sicherstellen. Parameter stabilisieren.'
     },
     {
-      title: 'Algae Growth',
-      desc: 'Green hair algae or black beard algae on stems.',
-      solution: 'Paradoxically helps fight algae. Trim affected parts. Reduce light. Add nitrate source if low.'
+      title: 'Algenbewuchs',
+      desc: 'Grüne Fadenalgen oder Bartalgen an den Stängeln.',
+      solution: 'Bekämpft paradoxerweise Algen. Betroffene Teile stutzen. Licht reduzieren. Nitratquelle hinzufügen, falls Wert niedrig.'
     },
     {
-      title: 'Slow Growth',
-      desc: 'Minimal elongation, thin sparse growth.',
-      solution: 'Increase light to medium-high. Add macronutrients (nitrate/phosphate). Raise temperature to 24-28°C.'
+      title: 'Langsames Wachstum',
+      desc: 'Minimale Verlängerung, dünner sporadischer Wuchs.',
+      solution: 'Licht auf mittel-hoch erhöhen. Makronährstoffe (Nitrat/Phosphat) zugeben. Temperatur auf 24–28 °C anheben.'
     },
     {
-      title: 'Rotting Bottom',
-      desc: 'Lower stems turn black and disintegrate.',
-      solution: 'Remove dead material immediately. Improve water flow. Never bury in substrate.'
+      title: 'Faulendes Unterende',
+      desc: 'Untere Stängel werden schwarz und zerfallen.',
+      solution: 'Totes Material sofort entfernen. Wasserfluss verbessern. Niemals im Substrat vergraben.'
     }
   ],
+
+  proTips: [
+    'Als "Starter-Pflanze" im Einfahren: neutralisiert Ammoniak-Spitzen und beschleunigt das Cycling.',
+    'Büschel locker binden und an Steinen befestigen für geordnetes Hintergrundbild.',
+    'Fischbrut und Garnelen-Babys verstecken sich perfekt in den dichten Nadeln.'
+  ],
+
+  commonMistakes: [
+    'Nie stutzen – führt zu unkontrolliertem Überwuchs der alles beschattet.',
+    'Im Substrat verankern – Hornkraut hat keine Wurzeln und fault am Boden.',
+    'Bei Lichtmangel einsetzen – wächst dann kaum und wird unansehnlich.'
+  ],
+
+  aquascapeContext: {
+    styles: ['low_tech', 'biotope', 'jungle', 'nature_aquarium'],
+    roleInTank: 'Hintergrundpflanze oder Floating-Teppich. Schneller Nitratpuffer in Becken mit hohem Besatz. Fryprotection und Sichtschutz.',
+    companionFish: ['Guppies', 'Endler', 'Platy', 'Molly', 'Corydoras', 'Cherry Shrimp', 'Neon Tetra'],
+    incompatibleFish: ['Goldfish (frisst es, aber sehr tolerant)', 'Große Cichliden'],
+    substrateRecommendations: ['Kein Substrat nötig – frei schwimmend oder locker aufgehängt']
+  },
 
   relatedPlants: [
     'bacopa-monnieri',
@@ -84,5 +113,5 @@ export const hornwort: Plant = {
     'elodea-canadensis'
   ],
 
-  description: 'The ultimate nitrate sponge and beginner floater. Hornwort grows explosively fast without CO2, oxygenates water heavily, and outcompetes algae for nutrients. Fine feathery leaves create dynamic movement and provide perfect shelter for shrimp, fry, and fish. Use as background, floating carpet, or hang from surface. Trims make excellent fish food. Tolerates extreme conditions (4-30°C).'
+  description: 'Der ultimative Nitrat-Schwamm und Einsteigerfluter. Hornkraut wächst explosionsartig ohne CO₂, sauerstofft das Wasser stark auf und schlägt Algen im Wettbewerb um Nährstoffe. Die feinen, federartigen Blätter erzeugen dynamische Bewegung und bieten perfekten Schutz für Garnelen, Brut und Fische. Als Hintergrundpflanze, schwimmender Teppich oder hängend an der Oberfläche verwendbar. Stecklinge eignen sich als Fischfutter. Verträgt extreme Bedingungen (10–30 °C).'
 };

@@ -15,11 +15,14 @@ export const anubiasNanaPetite: Plant = {
 
   difficulty: 'easy',
 
+  funFact: 'Anubias Nana Petite ist eine Aquarium-Züchtung und kommt so in der Natur nicht vor – sie wurde durch selektive Kultur aus der Dwarf Anubias entwickelt.',
+
   taxonomy: {
     scientificName: "Anubias barteri var. nana 'Petite'",
     commonName: 'Anubias Nana Petite',
     family: 'Araceae',
-    origin: 'Cultivar (originally West Africa)'
+    origin: 'Cultivar (originally West Africa)',
+    nativeRegion: 'Züchtung; Ausgangsart stammt aus beschatteten Fließgewässern Westafrikas'
   },
 
   specs: {
@@ -32,16 +35,22 @@ export const anubiasNanaPetite: Plant = {
   },
 
   parameters: {
-    tempC: { min: 20, max: 28 },
-    ph: { min: 6.0, max: 7.8 }
+    tempC: { min: 20, max: 28, ideal: 24 },
+    ph: { min: 6.0, max: 7.8, ideal: 7.0 },
+    kh: { min: 2, max: 15 },
+    gh: { min: 3, max: 20 },
+    flow: 'low',
+    photoperiodHours: { min: 6, max: 9 }
   },
 
   planting: {
     substrate: false,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Rhizome division. Cut small sections with 2-3 leaves. Use fishing line to attach new divisions.',
-    notes: 'Ultra-miniature epiphyte. Attach to driftwood/rock with fishing line or superglue gel. Avoid direct light to prevent algae. Rhizome MUST stay exposed.'
+    propagation: 'Rhizomteilung. Kleine Abschnitte mit 2–3 Blättern abschneiden. Mit Angelschnur an neuem Hardscape befestigen.',
+    notes: 'Ultra-Miniatur-Epiphyt. An Treibholz oder Stein mit Angelschnur oder Superkleber befestigen. Direktes helles Licht vermeiden, um Algen zu reduzieren. Das Rhizom MUSS freigelegt bleiben.',
+    trimming: 'Einzelne alte Blätter direkt am Stiel entfernen. Rhizom nicht kürzen außer zur Vermehrung.',
+    senescenceNotes: 'Sehr langlebig. Wächst extrem langsam – Geduld ist essenziell. Kein Wachstum über Wochen ist normal, solange keine Fäule sichtbar ist.'
   },
 
   nutrients: {
@@ -51,32 +60,54 @@ export const anubiasNanaPetite: Plant = {
     iron: 'low'
   },
 
+  variants: ['Anubias barteri var. nana \'Petite\'', 'Anubias barteri var. nana \'Mini Coin\''],
+
   commonProblems: [
     {
-      title: 'Rhizome Rot',
-      desc: 'Rhizome turns black/soft, leaves melt.',
-      solution: 'Never bury rhizome in substrate. Ensure good water flow. Remove rotten sections immediately.'
+      title: 'Rhizom-Fäule',
+      desc: 'Rhizom wird schwarz/weich, Blätter schmelzen.',
+      solution: 'Rhizom niemals im Substrat eingraben. Gute Wasserzirkulation sicherstellen. Verfaulte Abschnitte sofort entfernen.'
     },
     {
-      title: 'Algae Growth',
-      desc: 'Green dust algae or hair algae on leaves.',
-      solution: 'Reduce light intensity/duration. Increase water flow. Spot treat with soft brush.'
+      title: 'Algenbewuchs',
+      desc: 'Grünstaub- oder Fadenalgen auf den Blättern.',
+      solution: 'Lichtintensität/-dauer reduzieren. Wasserfluss erhöhen. Manuelle Behandlung mit weicher Bürste.'
     },
     {
-      title: 'No New Growth',
-      desc: 'Plant stable but no new leaves forming.',
-      solution: 'Add trace elements (iron/zinc). Check for nutrient deficiencies. Increase flow around plant.'
+      title: 'Kein neues Wachstum',
+      desc: 'Pflanze stabil, aber keine neuen Blätter.',
+      solution: 'Spurenelemente hinzufügen (Eisen/Zink). Nährstoffmangel prüfen. Wasserbewegung um die Pflanze verbessern.'
     },
     {
-      title: 'Melting Leaves',
-      desc: 'Leaves become translucent and dissolve.',
-      solution: 'Acclimate slowly to new tank parameters. Stabilize temperature (22-26C optimal).'
+      title: 'Schmelzende Blätter',
+      desc: 'Blätter werden durchsichtig und lösen sich auf.',
+      solution: 'Langsam an neue Tankparameter akklimatisieren. Temperatur stabilisieren (22–26 °C optimal).'
     }
   ],
+
+  proTips: [
+    'Ideal für Nano-Aquarien (5–20 L) und detailliertes Hardscape-Design.',
+    'Auf kleinen Steinen oder Treibholzästen befestigen, die als Deko-Element dienen.',
+    'Cherry Shrimps und Neocaridina-Garnelen lieben die kleinen Blätter als Schutzraum.'
+  ],
+
+  commonMistakes: [
+    'Rhizom eingraben – führt zu Fäule.',
+    'Mit zu viel Licht oder Dünger überwältigen – Petite braucht weniger als die meisten Pflanzen.',
+    'Direktes Tageslicht oder sehr helles Kunstlicht – fördert massiven Algenbewuchs.'
+  ],
+
+  aquascapeContext: {
+    styles: ['nature_aquarium', 'low_tech', 'iwagumi', 'biotope'],
+    roleInTank: 'Detailakzent im Vordergrund oder auf Hardscape. Perfekter Skalenbrecher in Nano-Scapes.',
+    companionFish: ['Cherry Shrimp', 'Neocaridina sp.', 'Betta', 'Endlers Livebearer', 'Nano-Rasboras'],
+    incompatibleFish: ['Goldfish', 'Large Cichlids', 'Silver Dollar'],
+    substrateRecommendations: ['Kies (1–2 mm)', 'Fluss-Sand', 'Lavastein als Befestigungsmedium']
+  },
 
   relatedPlants: [
     'anubias-barteri-var-nana'
   ],
 
-  description: 'Anubias Nana Petite is the smallest Anubias variety reaching only 3-5cm total height. Perfect for nano aquariums (5-20L), driftwood detailing, and premium foreground in high-end aquascapes. Ultra-hardy surviving low light without CO2. Slow-growing with minimal maintenance. Dark green round leaves with thick texture. Epiphyte only - attach to hardscape (never plant in substrate). Ideal for shrimps, nano fish (Betta, Endlers). Thrives 20-28C, pH 6-7.8.'
+  description: 'Anubias Nana Petite ist die kleinste Anubias-Variante mit einer Gesamthöhe von nur 3–5 cm. Perfekt für Nano-Aquarien (5–20 L), Treibholz-Details und hochwertige Vordergrundgestaltung. Ultra-robust, überlebt wenig Licht ohne CO₂. Langsam wachsend mit minimalem Pflegeaufwand. Dunkelgrüne, runde Blätter mit dicker Textur. Ausschließlich Epiphyt – an Hartsubstrat befestigen (niemals im Substrat pflanzen). Ideal für Garnelen und Nano-Fische (Betta, Endler).'
 };
