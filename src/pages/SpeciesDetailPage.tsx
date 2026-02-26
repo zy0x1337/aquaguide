@@ -271,8 +271,8 @@ const SpeciesDetailPage = () => {
             {[
               { icon: <Ruler className="w-3.5 h-3.5" />, label: `${data.visuals.adultSizeCM} cm` },
               { icon: <Box className="w-3.5 h-3.5" />,   label: `${data.environment.minTankSizeLiters} L` },
-              { icon: <Users className="w-3.5 h-3.5" />, label: `${data.behavior.minGroupSize}+ Tiere` },
-              { icon: <Heart className="w-3.5 h-3.5" />, label: `${data.health.lifespanYears} Jahre` },
+              { icon: <Users className="w-3.5 h-3.5" />, label: `${data.behavior.minGroupSize}+ fish` },
+              { icon: <Heart className="w-3.5 h-3.5" />, label: `${data.health.lifespanYears} yrs` },
             ].map(({ icon, label }, i) => (
               <span
                 key={i}
