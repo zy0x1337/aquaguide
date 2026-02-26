@@ -14,14 +14,14 @@ export const bacopaMonnieri: Plant = {
 
   difficulty: 'easy',
 
-  funFact: 'Bacopa monnieri wird in der ayurvedischen Medizin seit Jahrtausenden als Gedächtnis- und Konzentrationsmittel eingesetzt – im Aquarium ist sie vor allem als robuster Hintergrundpfleger bekannt.',
+  funFact: 'Bacopa monnieri has been used in Ayurvedic medicine for thousands of years as a memory and concentration aid – in aquariums it is mainly known as a robust background plant.',
 
   taxonomy: {
     scientificName: 'Bacopa monnieri',
     commonName: 'Bacopa Monnieri',
     family: 'Plantaginaceae',
     origin: 'Asia, cosmopolitan aquarium plant',
-    nativeRegion: 'Tropisch-subtropische Feuchtgebiete in Süd- und Südostasien; wächst in flachen Uferzonen stehender und langsam fließender Gewässer'
+    nativeRegion: 'Tropical-subtropical wetlands in South and Southeast Asia; grows in shallow shore zones of standing and slow-flowing waters'
   },
 
   specs: {
@@ -46,10 +46,10 @@ export const bacopaMonnieri: Plant = {
     substrate: true,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Stecklinge. Tops in 5–10 cm Länge abschneiden, untere Blätter entfernen, direkt ins Substrat stecken.',
-    notes: 'Regelmäßiges Stutzen verhindert leggy Wuchs. Tops kneifen fördert buschiges Wachstum. Bewurzelt sich leicht aus Stecklingen.',
-    trimming: 'Tops alle 2–3 Wochen um 1/3 kürzen. Abgeschnittene Tops direkt wieder einpflanzen. Für dichten Busch die Stecklinge eng nebeneinander setzen.',
-    senescenceNotes: 'Untere Blätter vergilben und fallen mit der Zeit ab – das ist normal. Regelmäßiges Stutzen und Nachpflanzen erhält den buschigen Look.'
+    propagation: 'Cuttings. Cut tops 5–10 cm long, remove lower leaves, insert directly into substrate.',
+    notes: 'Regular trimming prevents leggy growth. Pinching tops promotes bushy growth. Roots easily from cuttings.',
+    trimming: 'Trim tops by 1/3 every 2–3 weeks. Replant cut tops directly. For dense bushiness, place cuttings close together.',
+    senescenceNotes: 'Lower leaves yellow and fall off over time – this is normal. Regular trimming and replanting maintains bushy appearance.'
   },
 
   nutrients: {
@@ -61,45 +61,45 @@ export const bacopaMonnieri: Plant = {
 
   commonProblems: [
     {
-      title: 'Leggy Wuchs',
-      desc: 'Lange Internodien, wenige Blätter, mageres Erscheinungsbild.',
-      solution: 'Lichtintensität erhöhen. Tops regelmäßig stutzen. Mehr Kalium und Stickstoff zugeben.'
+      title: 'Leggy Growth',
+      desc: 'Long internodes, few leaves, thin appearance.',
+      solution: 'Increase light intensity. Trim tops regularly. Add more potassium and nitrogen.'
     },
     {
-      title: 'Gelbe Blätter',
-      desc: 'Untere Blätter werden gelb und fallen ab.',
-      solution: 'Flüssigdünger (NPK + Spurenelemente) zugeben. Eisenmangel prüfen. CO₂ verbessern falls injiziert.'
+      title: 'Yellow Leaves',
+      desc: 'Lower leaves turn yellow and fall off.',
+      solution: 'Add liquid fertilizer (NPK + trace elements). Check for iron deficiency. Improve CO₂ if injected.'
     },
     {
-      title: 'Zu kleine Blattgröße',
-      desc: 'Neue Blätter deutlich kleiner als die der reifen Pflanze.',
-      solution: 'Licht auf mittel-hoch erhöhen. Mikronährstoffe hinzufügen. Stabile CO₂-Werte sicherstellen.'
+      title: 'Small Leaf Size',
+      desc: 'New leaves significantly smaller than mature plant.',
+      solution: 'Increase light to medium-high. Add micronutrients. Ensure stable CO₂ levels.'
     },
     {
-      title: 'Schmelzen nach dem Einpflanzen',
-      desc: 'Untere Blätter schmelzen nach dem Einsetzen in neuen Tank.',
-      solution: 'Normale Akklimatisation. Geschmolzene Teile stutzen. 1–2 Wochen auf neues Wachstum warten. Parameterschwankungen vermeiden.'
+      title: 'Melting After Planting',
+      desc: 'Lower leaves melt after insertion into new tank.',
+      solution: 'Normal acclimation. Trim melted parts. Wait 1–2 weeks for new growth. Avoid parameter fluctuations.'
     }
   ],
 
   proTips: [
-    'Stecklinge dicht beieinander einpflanzen (1–2 cm Abstand) für sofortig buschige Wirkung.',
-    'Unter höherem Licht entwickelt Bacopa leicht rötliche Stängel und intensiveres Grün.',
-    'Ideal als "Lernpflanze" für Stecklingstechnik – Fehler verzeiht sie leicht.'
+    'Plant cuttings close together (1–2 cm spacing) for immediate bushy effect.',
+    'Under higher light, Bacopa develops slightly reddish stems and more intense green.',
+    'Ideal as "learning plant" for cutting technique – forgives mistakes easily.'
   ],
 
   commonMistakes: [
-    'Nie stutzen – führt zu langen, kahlen Stängeln.',
-    'Zu wenig Licht – Pflanze wird geil und verliert untere Blätter schnell.',
-    'Einzelne Stiele pflanzen statt Büschel – wirkt im Aquascape dünn und unnatürlich.'
+    'Never trimming – leads to long, bare stems.',
+    'Too little light – plant becomes leggy and loses lower leaves quickly.',
+    'Planting single stems instead of clusters – looks thin and unnatural in aquascape.'
   ],
 
   aquascapeContext: {
     styles: ['dutch', 'nature_aquarium', 'jungle', 'low_tech', 'biotope'],
-    roleInTank: 'Klassische Mittel- bis Hintergrundpflanze. Im Dutch Style als farbliche Kontrastreihe, im Nature Aquarium als natürlicher Hintergrundabschluss.',
+    roleInTank: 'Classic midground to background plant. In Dutch style as color contrast strip, in Nature Aquarium as natural background finish.',
     companionFish: ['Neon Tetra', 'Cardinal Tetra', 'Harlequin Rasbora', 'Corydoras', 'Guppies', 'Platy'],
     incompatibleFish: ['Goldfish', 'Buenos Aires Tetra', 'Silver Dollar'],
-    substrateRecommendations: ['ADA Aqua Soil', 'Tropica Soil', 'Nährstoffboden mit Kiesabdeckung', 'Feiner Kies (2–3 mm)']
+    substrateRecommendations: ['ADA Aqua Soil', 'Tropica Soil', 'Nutrient soil with gravel cover', 'Fine gravel (2–3 mm)']
   },
 
   relatedPlants: [
@@ -108,5 +108,5 @@ export const bacopaMonnieri: Plant = {
     'limnophila-sessiliflora'
   ],
 
-  description: 'Bacopa monnieri ist eine klassische, einfache Stängelpflanze, die sich perfekt für Einsteiger eignet. Wird 20–50 cm hoch mit hellgrünen, ovalen Blättern. Mittlere Wachstumsrate, toleriert breite Parameter (20–27 °C, pH 6,3–8,8). Gedeiht unter mittlerem Licht ohne CO₂-Injektion. Regelmäßiges Stutzen erzeugt buschiges Erscheinungsbild. Ausgezeichnete Hintergrund-/Mittelgrundpflanze, die sich leicht aus Stecklingen vermehrt.'
+  description: 'Bacopa monnieri is a classic, easy stem plant perfect for beginners. Grows 20–50 cm tall with light green, oval leaves. Medium growth rate, tolerates wide parameters (20–27 °C, pH 6.3–8.8). Thrives under medium light without CO₂ injection. Regular trimming creates bushy appearance. Excellent background/midground plant that propagates easily from cuttings.'
 };
