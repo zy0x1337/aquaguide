@@ -1,9 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
 import {
   ArrowLeft, Sun, Wind, Ruler, Layers, Thermometer, Droplets,
-  Sprout, Scissors, AlertTriangle, Sparkles, Target, Leaf, Beaker,
+  Sprout, Scissors, AlertTriangle, Sparkles, Target, Leaf,
   MapPin, CheckCircle, XCircle, Mountain, Fish, FlaskConical,
-  Clock, Lightbulb, Info, Waves, Dna
+  Clock, Lightbulb, Waves, Dna
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -47,7 +47,7 @@ const nutrientBadgeColors: Record<'low' | 'medium' | 'high', string> = {
   high: 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
 };
 
-type Tab = 'overview' | 'care' | 'aquascape' | 'problems' | 'advanced';
+type Tab = 'overview' | 'care' | 'aquascape' | 'problems';
 
 // ─── page ────────────────────────────────────────────────────────────────────
 export const PlantDetailPage = () => {
@@ -159,16 +159,14 @@ export const PlantDetailPage = () => {
                 <TabBtn id="problems" active={activeTab} onClick={setActiveTab} icon={<AlertTriangle className="w-4 h-4" />}>
                   Problems{hasProblems && <span className="ml-1.5 px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black">{plant.commonProblems!.length}</span>}
                 </TabBtn>
-                <TabBtn id="advanced" active={activeTab} onClick={setActiveTab} icon={<Beaker className="w-4 h-4" />}>Advanced</TabBtn>
               </div>
 
               {/* Mobile tabs */}
-              <div className="sm:hidden grid grid-cols-5 border-b-2 border-slate-200 dark:border-slate-700">
+              <div className="sm:hidden grid grid-cols-4 border-b-2 border-slate-200 dark:border-slate-700">
                 <MobileTabBtn id="overview" active={activeTab} onClick={setActiveTab} icon={<Target className="w-4 h-4" />} label="Overview" />
                 <MobileTabBtn id="care" active={activeTab} onClick={setActiveTab} icon={<Leaf className="w-4 h-4" />} label="Care" />
                 <MobileTabBtn id="aquascape" active={activeTab} onClick={setActiveTab} icon={<Mountain className="w-4 h-4" />} label="Scape" />
                 <MobileTabBtn id="problems" active={activeTab} onClick={setActiveTab} icon={<AlertTriangle className="w-4 h-4" />} label="Issues" />
-                <MobileTabBtn id="advanced" active={activeTab} onClick={setActiveTab} icon={<Beaker className="w-4 h-4" />} label="Advanced" />
               </div>
 
               <div className="p-4 md:p-6 lg:p-8">
@@ -196,7 +194,24 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Variants & cultivars – shown here so it's immediately discoverable */}
+                    {/* Scientific Classification moved from Advanced tab */}
+                    <div>
+                      <SectionHeader title="Scientific Classification" icon={<FlaskConical className="w-5 h-5" />} />
+                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <ClassRow label="Family" value={plant.taxonomy.family} />
+                        <ClassRow label="Scientific Name" value={plant.taxonomy.scientificName} italic />
+                        <ClassRow label="Common Name" value={plant.taxonomy.commonName} />
+                        <ClassRow label="Origin" value={plant.taxonomy.origin} />
+                        {plant.taxonomy.nativeRegion && (
+                          <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Native Habitat</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{plant.taxonomy.nativeRegion}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Variants & cultivars */}
                     {plant.variants && plant.variants.length > 0 && (
                       <div>
                         <SectionHeader title="Known Varieties & Cultivars" icon={<Dna className="w-5 h-5" />} />
@@ -411,7 +426,7 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Similar Plants – contextually fits here: "what else works in a similar setup?" */}
+                        {/* Similar Plants */}
                         {plant.relatedPlants && plant.relatedPlants.length > 0 && (
                           <div>
                             <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
@@ -474,39 +489,6 @@ export const PlantDetailPage = () => {
                         <p className="text-sm font-bold">No common problems documented yet.</p>
                       </div>
                     )}
-                  </motion.div>
-                )}
-
-                {/* ── ADVANCED ── */}
-                {activeTab === 'advanced' && (
-                  <motion.div key="advanced" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-7">
-
-                    {/* Scientific classification – the one thing genuinely unique to this tab */}
-                    <div>
-                      <SectionHeader title="Scientific Classification" icon={<FlaskConical className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
-                        <ClassRow label="Family" value={plant.taxonomy.family} />
-                        <ClassRow label="Scientific Name" value={plant.taxonomy.scientificName} italic />
-                        <ClassRow label="Common Name" value={plant.taxonomy.commonName} />
-                        <ClassRow label="Origin" value={plant.taxonomy.origin} />
-                        {plant.taxonomy.nativeRegion && (
-                          <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Native Habitat</p>
-                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{plant.taxonomy.nativeRegion}</p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Fertilisation approach – unique factual info not shown elsewhere */}
-                    <div>
-                      <SectionHeader title="Fertilisation Approach" icon={<Info className="w-5 h-5" />} />
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        <BooleanCard label="Root Tabs Beneficial?" value={plant.planting.soilTabs} trueText="Yes – place tabs near roots" falseText="Not necessary" />
-                        <BooleanCard label="Liquid Fertiliser?" value={plant.planting.liquidFertilizer} trueText="Yes – dose weekly" falseText="Optional / not required" />
-                      </div>
-                    </div>
-
                   </motion.div>
                 )}
 
@@ -597,7 +579,7 @@ const SidebarCard = ({ plant }: { plant: Plant }) => (
       </div>
     </div>
 
-    {/* Taxonomy – the classification bits not shown anywhere else on mobile */}
+    {/* Taxonomy */}
     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-1.5">
       <p className="text-[10px] uppercase font-black text-gray-400 tracking-wider mb-2">Classification</p>
       <div className="flex items-start justify-between gap-2">
