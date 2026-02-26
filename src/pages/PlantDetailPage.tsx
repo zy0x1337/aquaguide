@@ -3,7 +3,7 @@ import {
   ArrowLeft, Sun, Wind, Ruler, Layers, Thermometer, Droplets,
   Sprout, Scissors, AlertTriangle, Sparkles, Target, Leaf, Beaker,
   MapPin, CheckCircle, XCircle, Mountain, Fish, FlaskConical,
-  Clock, Lightbulb, Info, Waves
+  Clock, Lightbulb, Info, Waves, Dna
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -84,7 +84,6 @@ export const PlantDetailPage = () => {
 
         <ImageAttribution credit={plant.imageCredit} />
 
-        {/* Back button – absolute top-left */}
         <Link
           to="/plants"
           className="absolute top-4 left-4 z-20 inline-flex items-center gap-2 text-slate-200 hover:text-white transition-colors text-sm font-bold bg-black/30 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20 hover:bg-black/50"
@@ -93,7 +92,6 @@ export const PlantDetailPage = () => {
         </Link>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 pb-8 pt-16">
-          {/* Badges */}
           <div className="flex flex-wrap gap-2 mb-3">
             <span className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider border-2 ${difficultyStyles[plant.difficulty]}`}>
               {plant.difficulty}
@@ -106,7 +104,6 @@ export const PlantDetailPage = () => {
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-1 leading-tight">
             {plant.taxonomy.commonName}
           </h1>
@@ -114,7 +111,6 @@ export const PlantDetailPage = () => {
             {plant.taxonomy.scientificName}
           </p>
 
-          {/* Inline quick-stat pills */}
           <div className="flex flex-wrap gap-2">
             <HeroPill icon={<Sun className="w-3.5 h-3.5 text-amber-300" />} label={`${cap(plant.specs.light)} Light`} />
             <HeroPill icon={<Wind className="w-3.5 h-3.5 text-cyan-300" />} label={`CO₂: ${cap(plant.specs.co2)}`} />
@@ -125,17 +121,15 @@ export const PlantDetailPage = () => {
         </div>
       </motion.header>
 
-      {/* ── MAIN TWO-COLUMN LAYOUT ── */}
+      {/* ── MAIN ── */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
         <div className="lg:grid lg:grid-cols-[1fr_290px] lg:gap-8 lg:items-start">
 
           {/* ── LEFT COLUMN ── */}
           <div className="space-y-5">
 
-            {/* Fun Fact banner */}
             {plant.funFact && <FunFactBanner text={plant.funFact} />}
 
-            {/* Critical warning banner (above tabs) */}
             {plant.planting.notes && (
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
@@ -150,7 +144,7 @@ export const PlantDetailPage = () => {
               </motion.div>
             )}
 
-            {/* ── TAB NAVIGATION ── */}
+            {/* ── TAB CARD ── */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -168,7 +162,7 @@ export const PlantDetailPage = () => {
                 <TabBtn id="advanced" active={activeTab} onClick={setActiveTab} icon={<Beaker className="w-4 h-4" />}>Advanced</TabBtn>
               </div>
 
-              {/* Mobile tabs – icon + label, 5-col grid */}
+              {/* Mobile tabs */}
               <div className="sm:hidden grid grid-cols-5 border-b-2 border-slate-200 dark:border-slate-700">
                 <MobileTabBtn id="overview" active={activeTab} onClick={setActiveTab} icon={<Target className="w-4 h-4" />} label="Overview" />
                 <MobileTabBtn id="care" active={activeTab} onClick={setActiveTab} icon={<Leaf className="w-4 h-4" />} label="Care" />
@@ -177,13 +171,12 @@ export const PlantDetailPage = () => {
                 <MobileTabBtn id="advanced" active={activeTab} onClick={setActiveTab} icon={<Beaker className="w-4 h-4" />} label="Advanced" />
               </div>
 
-              {/* ── TAB CONTENT ── */}
               <div className="p-4 md:p-6 lg:p-8">
 
                 {/* ── OVERVIEW ── */}
                 {activeTab === 'overview' && (
                   <motion.div key="overview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-7">
-                    {/* Description */}
+
                     <div>
                       <SectionHeader title="About this Plant" icon={<Sparkles className="w-5 h-5" />} />
                       <div className="bg-gradient-to-br from-slate-50 to-emerald-50/40 dark:from-slate-900/50 dark:to-emerald-950/20 rounded-xl p-5 border-2 border-slate-200 dark:border-slate-700">
@@ -191,7 +184,6 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Specs grid */}
                     <div>
                       <SectionHeader title="Plant Specifications" icon={<Layers className="w-5 h-5" />} />
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -204,7 +196,20 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Water parameters – extended */}
+                    {/* Variants & cultivars – shown here so it's immediately discoverable */}
+                    {plant.variants && plant.variants.length > 0 && (
+                      <div>
+                        <SectionHeader title="Known Varieties & Cultivars" icon={<Dna className="w-5 h-5" />} />
+                        <div className="flex flex-wrap gap-2">
+                          {plant.variants.map((v, i) => (
+                            <span key={i} className="px-3 py-1.5 rounded-xl bg-violet-50 dark:bg-violet-950/30 border-2 border-violet-200 dark:border-violet-800 text-xs font-bold text-violet-800 dark:text-violet-300 italic">
+                              {v}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Thermometer className="w-5 h-5" />} />
                       <div className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-slate-200 dark:border-slate-700 space-y-5">
@@ -214,8 +219,7 @@ export const PlantDetailPage = () => {
                           max={plant.parameters.tempC.max}
                           ideal={plant.parameters.tempC.ideal}
                           unit="°C"
-                          scaleMin={10}
-                          scaleMax={32}
+                          scaleMin={10} scaleMax={32}
                           scaleLabels={['10°C', '20°C', '26°C', '32°C']}
                           colorClass="bg-gradient-to-r from-sky-400 to-rose-400"
                           badgeClass="bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800"
@@ -226,14 +230,11 @@ export const PlantDetailPage = () => {
                           max={plant.parameters.ph.max}
                           ideal={plant.parameters.ph.ideal}
                           unit=""
-                          scaleMin={5}
-                          scaleMax={9}
+                          scaleMin={5} scaleMax={9}
                           scaleLabels={['5.0', '6.5', '7.5', '9.0']}
                           colorClass="bg-gradient-to-r from-rose-400 via-amber-300 to-sky-400"
                           badgeClass="bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800"
                         />
-
-                        {/* KH / GH / Flow / Photoperiod row */}
                         {(plant.parameters.kh || plant.parameters.gh || plant.parameters.flow || plant.parameters.photoperiodHours) && (
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-200 dark:border-slate-700">
                             {plant.parameters.kh && (
@@ -259,17 +260,16 @@ export const PlantDetailPage = () => {
                 {activeTab === 'care' && (
                   <motion.div key="care" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-7">
 
-                    {/* Planting */}
                     <div>
                       <SectionHeader title="Planting & Propagation" icon={<Sprout className="w-5 h-5" />} />
                       <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 rounded-xl p-5 border-2 border-emerald-200 dark:border-emerald-800 space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <BooleanCard label="Substrate Required?" value={plant.planting.substrate} trueText="Yes – needs soil/gravel" falseText="No (Epiphyte / Floating)" />
-                          <BooleanCard label="Root Feeder?" value={plant.planting.soilTabs} trueText="Yes – use Root Tabs" falseText="No – Liquid Ferts ok" />
+                          <BooleanCard label="Substrate Required?" value={plant.planting.substrate} trueText="Yes – needs soil / gravel" falseText="No (Epiphyte / Floating)" />
+                          <BooleanCard label="Root Feeder?" value={plant.planting.soilTabs} trueText="Yes – use Root Tabs" falseText="No – liquid ferts sufficient" />
                         </div>
                         <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-md border-2 border-emerald-100 dark:border-emerald-900">
                           <h4 className="font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-2 mb-2 text-xs uppercase tracking-wide">
-                            <Scissors className="w-4 h-4" /> Propagation
+                            <Scissors className="w-4 h-4" /> Propagation Method
                           </h4>
                           <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">{plant.planting.propagation}</p>
                         </div>
@@ -292,22 +292,20 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Nutrients */}
                     {plant.nutrients && (
                       <div>
                         <SectionHeader title="Nutrient Requirements" icon={<Droplets className="w-5 h-5" />} />
                         <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-lg border-2 border-slate-200 dark:border-slate-700">
                           <div className="grid sm:grid-cols-2 gap-4">
-                            <NutrientBox label="Nitrogen (N)" desc="Blattmasse & Triebwachstum" level={plant.nutrients.nitrogen} colors={nutrientBadgeColors} />
-                            <NutrientBox label="Phosphate (P)" desc="Zellenergie & Blüte" level={plant.nutrients.phosphate} colors={nutrientBadgeColors} />
-                            <NutrientBox label="Potassium (K)" desc="Wasserhaushalt & Enzymaktivität" level={plant.nutrients.potassium} colors={nutrientBadgeColors} />
-                            <NutrientBox label="Iron (Fe)" desc="Chlorophyll & Blattfarbe" level={plant.nutrients.iron} colors={nutrientBadgeColors} />
+                            <NutrientBox label="Nitrogen (N)" desc="Leaf mass & shoot development" level={plant.nutrients.nitrogen} colors={nutrientBadgeColors} />
+                            <NutrientBox label="Phosphate (P)" desc="Cell energy & root growth" level={plant.nutrients.phosphate} colors={nutrientBadgeColors} />
+                            <NutrientBox label="Potassium (K)" desc="Water balance & enzyme activity" level={plant.nutrients.potassium} colors={nutrientBadgeColors} />
+                            <NutrientBox label="Iron (Fe)" desc="Chlorophyll synthesis & leaf colour" level={plant.nutrients.iron} colors={nutrientBadgeColors} />
                           </div>
                         </div>
                       </div>
                     )}
 
-                    {/* Pro Tips */}
                     {plant.proTips && plant.proTips.length > 0 && (
                       <div>
                         <SectionHeader title="Pro Tips" icon={<Lightbulb className="w-5 h-5" />} />
@@ -322,7 +320,6 @@ export const PlantDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Common Mistakes */}
                     {plant.commonMistakes && plant.commonMistakes.length > 0 && (
                       <div>
                         <SectionHeader title="Common Mistakes" icon={<XCircle className="w-5 h-5" />} />
@@ -344,7 +341,6 @@ export const PlantDetailPage = () => {
                   <motion.div key="aquascape" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-7">
                     {plant.aquascapeContext ? (
                       <>
-                        {/* Styles */}
                         {plant.aquascapeContext.styles.length > 0 && (
                           <div>
                             <SectionHeader title="Suitable Aquascape Styles" icon={<Mountain className="w-5 h-5" />} />
@@ -361,7 +357,6 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Role in tank */}
                         {plant.aquascapeContext.roleInTank && (
                           <div>
                             <SectionHeader title="Role in the Tank" icon={<Target className="w-5 h-5" />} />
@@ -371,13 +366,11 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Placement visualizer (inline) */}
                         <div>
                           <SectionHeader title="Placement Zones" icon={<Layers className="w-5 h-5" />} />
                           <PlacementVisualizer placements={plant.specs.placement} />
                         </div>
 
-                        {/* Substrate recs */}
                         {plant.aquascapeContext.substrateRecommendations && plant.aquascapeContext.substrateRecommendations.length > 0 && (
                           <div>
                             <SectionHeader title="Substrate Recommendations" icon={<Layers className="w-5 h-5" />} />
@@ -392,7 +385,6 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Companion fish */}
                         {plant.aquascapeContext.companionFish && plant.aquascapeContext.companionFish.length > 0 && (
                           <div>
                             <SectionHeader title="Good Tankmates" icon={<Fish className="w-5 h-5" />} />
@@ -406,7 +398,6 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Incompatible fish */}
                         {plant.aquascapeContext.incompatibleFish && plant.aquascapeContext.incompatibleFish.length > 0 && (
                           <div>
                             <SectionHeader title="Incompatible Fish" icon={<Fish className="w-5 h-5" />} />
@@ -416,6 +407,35 @@ export const PlantDetailPage = () => {
                                   <XCircle className="w-3 h-3" /> {fish}
                                 </span>
                               ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Similar Plants – contextually fits here: "what else works in a similar setup?" */}
+                        {plant.relatedPlants && plant.relatedPlants.length > 0 && (
+                          <div>
+                            <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                              {plant.relatedPlants.map(relSlug => {
+                                const rel = plantRepository.getBySlug(relSlug);
+                                return (
+                                  <Link
+                                    key={relSlug}
+                                    to={`/plants/${relSlug}`}
+                                    className="group rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden hover:border-emerald-400 dark:hover:border-emerald-600 transition-all shadow-md hover:shadow-lg"
+                                  >
+                                    {rel?.imageUrl && (
+                                      <div className="h-24 overflow-hidden">
+                                        <img src={rel.imageUrl} alt={rel.taxonomy.commonName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                      </div>
+                                    )}
+                                    <div className="p-2.5 bg-white dark:bg-slate-800">
+                                      <p className="text-xs font-black text-slate-800 dark:text-slate-100 truncate">{rel?.taxonomy.commonName ?? relSlug}</p>
+                                      <p className="text-[10px] text-slate-400 dark:text-slate-500 italic truncate">{rel?.taxonomy.scientificName ?? ''}</p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
                             </div>
                           </div>
                         )}
@@ -461,84 +481,40 @@ export const PlantDetailPage = () => {
                 {activeTab === 'advanced' && (
                   <motion.div key="advanced" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-7">
 
-                    {/* Scientific classification */}
+                    {/* Scientific classification – the one thing genuinely unique to this tab */}
                     <div>
                       <SectionHeader title="Scientific Classification" icon={<FlaskConical className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 border-2 border-slate-200 dark:border-slate-700 space-y-1">
+                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
                         <ClassRow label="Family" value={plant.taxonomy.family} />
-                        <ClassRow label="Scientific Name" value={plant.taxonomy.scientificName} />
+                        <ClassRow label="Scientific Name" value={plant.taxonomy.scientificName} italic />
                         <ClassRow label="Common Name" value={plant.taxonomy.commonName} />
                         <ClassRow label="Origin" value={plant.taxonomy.origin} />
                         {plant.taxonomy.nativeRegion && (
-                          <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
-                            <p className="text-xs font-black text-slate-400 uppercase tracking-wide mb-1">Native Habitat</p>
+                          <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Native Habitat</p>
                             <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{plant.taxonomy.nativeRegion}</p>
                           </div>
                         )}
                       </div>
                     </div>
 
-                    {/* Variants */}
-                    {plant.variants && plant.variants.length > 0 && (
-                      <div>
-                        <SectionHeader title="Known Variants & Cultivars" icon={<Sparkles className="w-5 h-5" />} />
-                        <div className="flex flex-wrap gap-2">
-                          {plant.variants.map((v, i) => (
-                            <span key={i} className="px-3 py-1.5 rounded-xl bg-violet-50 dark:bg-violet-950/30 border-2 border-violet-200 dark:border-violet-800 text-xs font-bold text-violet-800 dark:text-violet-300 italic">
-                              {v}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Technical details */}
+                    {/* Fertilisation approach – unique factual info not shown elsewhere */}
                     <div>
-                      <SectionHeader title="Technical Details" icon={<Info className="w-5 h-5" />} />
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <TechCard label="Growth Pattern" value={cap(plant.specs.type)} desc="How the plant grows and spreads" />
-                        <TechCard label="Placement Zones" value={plant.specs.placement.join(', ')} desc="Ideal positions in the aquarium" />
-                        <TechCard label="Height Range" value={`${plant.specs.heightCM.min}–${plant.specs.heightCM.max} cm`} desc="Expected size when fully grown" />
-                        <TechCard label="Growth Speed" value={cap(plant.specs.growthRate)} desc="Rate of vertical and lateral growth" />
+                      <SectionHeader title="Fertilisation Approach" icon={<Info className="w-5 h-5" />} />
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        <BooleanCard label="Root Tabs Beneficial?" value={plant.planting.soilTabs} trueText="Yes – place tabs near roots" falseText="Not necessary" />
+                        <BooleanCard label="Liquid Fertiliser?" value={plant.planting.liquidFertilizer} trueText="Yes – dose weekly" falseText="Optional / not required" />
                       </div>
                     </div>
 
-                    {/* Related plants – as cards */}
-                    {plant.relatedPlants && plant.relatedPlants.length > 0 && (
-                      <div>
-                        <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                          {plant.relatedPlants.map(relSlug => {
-                            const rel = plantRepository.getBySlug(relSlug);
-                            return (
-                              <Link
-                                key={relSlug}
-                                to={`/plants/${relSlug}`}
-                                className="group rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden hover:border-emerald-400 dark:hover:border-emerald-600 transition-all shadow-md hover:shadow-lg"
-                              >
-                                {rel?.imageUrl && (
-                                  <div className="h-24 overflow-hidden">
-                                    <img src={rel.imageUrl} alt={rel.taxonomy.commonName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                  </div>
-                                )}
-                                <div className="p-2.5 bg-white dark:bg-slate-800">
-                                  <p className="text-xs font-black text-slate-800 dark:text-slate-100 truncate">{rel?.taxonomy.commonName ?? relSlug}</p>
-                                  <p className="text-[10px] text-slate-400 dark:text-slate-500 italic truncate">{rel?.taxonomy.scientificName ?? ''}</p>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
                   </motion.div>
                 )}
 
-              </div>{/* end tab content */}
-            </motion.div>{/* end tab card */}
-          </div>{/* end left column */}
+              </div>
+            </motion.div>
+          </div>
 
-          {/* ── RIGHT COLUMN – STICKY SIDEBAR ── */}
+          {/* ── STICKY SIDEBAR ── */}
           <aside className="hidden lg:block">
             <div className="sticky top-4 space-y-4">
               <SidebarCard plant={plant} />
@@ -555,14 +531,12 @@ export const PlantDetailPage = () => {
 // SUB-COMPONENTS
 // ════════════════════════════════════════════════════════════
 
-/** Inline hero pill */
 const HeroPill = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-sm text-white text-xs font-bold border border-white/20">
     {icon}{label}
   </span>
 );
 
-/** Fun Fact animated banner */
 const FunFactBanner = ({ text }: { text: string }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.97 }}
@@ -584,10 +558,9 @@ const FunFactBanner = ({ text }: { text: string }) => (
   </motion.div>
 );
 
-/** Sticky sidebar quick-reference card */
 const SidebarCard = ({ plant }: { plant: Plant }) => (
   <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-lg">
-    {/* Origin */}
+    {/* Origin header */}
     <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
       <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl">
         <MapPin className="w-4 h-4 text-emerald-500" />
@@ -598,6 +571,7 @@ const SidebarCard = ({ plant }: { plant: Plant }) => (
       </div>
     </div>
 
+    {/* Core care rows */}
     <div className="space-y-0.5">
       <SidebarRow icon={<Target className="w-4 h-4 text-indigo-500" />} label="Difficulty" value={cap(plant.difficulty)} />
       <SidebarRow icon={<Sun className="w-4 h-4 text-amber-500" />} label="Light" value={cap(plant.specs.light)} />
@@ -611,7 +585,7 @@ const SidebarCard = ({ plant }: { plant: Plant }) => (
       )}
     </div>
 
-    {/* Placement pills */}
+    {/* Placement */}
     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
       <p className="text-[10px] uppercase font-black text-gray-400 tracking-wider mb-2">Placement</p>
       <div className="flex flex-wrap gap-1.5">
@@ -621,6 +595,25 @@ const SidebarCard = ({ plant }: { plant: Plant }) => (
           </span>
         ))}
       </div>
+    </div>
+
+    {/* Taxonomy – the classification bits not shown anywhere else on mobile */}
+    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-1.5">
+      <p className="text-[10px] uppercase font-black text-gray-400 tracking-wider mb-2">Classification</p>
+      <div className="flex items-start justify-between gap-2">
+        <span className="text-[11px] text-gray-400 font-semibold shrink-0">Family</span>
+        <span className="text-[11px] font-black text-gray-700 dark:text-gray-300 text-right">{plant.taxonomy.family}</span>
+      </div>
+      <div className="flex items-start justify-between gap-2">
+        <span className="text-[11px] text-gray-400 font-semibold shrink-0">Scientific</span>
+        <span className="text-[11px] font-black text-gray-700 dark:text-gray-300 italic text-right">{plant.taxonomy.scientificName}</span>
+      </div>
+      {plant.taxonomy.nativeRegion && (
+        <div className="pt-1.5">
+          <span className="text-[10px] text-gray-400 font-semibold block mb-0.5">Native habitat</span>
+          <span className="text-[11px] text-gray-600 dark:text-gray-400 leading-snug">{plant.taxonomy.nativeRegion}</span>
+        </div>
+      )}
     </div>
 
     {/* Aquascape styles */}
@@ -649,7 +642,6 @@ const SidebarRow = ({ icon, label, value }: { icon: React.ReactNode; label: stri
   </div>
 );
 
-/** Water parameter range bar with optional ideal marker */
 const ParamBar = ({
   label, min, max, ideal, unit, scaleMin, scaleMax, scaleLabels, colorClass, badgeClass
 }: {
@@ -671,10 +663,7 @@ const ParamBar = ({
         </span>
       </div>
       <div className="relative w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-visible">
-        <div
-          className={`absolute h-full rounded-full ${colorClass}`}
-          style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
-        />
+        <div className={`absolute h-full rounded-full ${colorClass}`} style={{ left: `${leftPct}%`, width: `${widthPct}%` }} />
         {idealPct !== null && (
           <div
             className="absolute top-1/2 -translate-y-1/2 w-2.5 h-4 rounded-sm bg-white dark:bg-slate-900 border-2 border-emerald-500 shadow-md z-10"
@@ -690,7 +679,6 @@ const ParamBar = ({
   );
 };
 
-/** Inline placement visualiser */
 const PlacementVisualizer = ({ placements }: { placements: string[] }) => {
   const zones = ['floating', 'background', 'midground', 'foreground', 'carpet', 'epiphyte'];
   return (
@@ -720,7 +708,6 @@ const PlacementVisualizer = ({ placements }: { placements: string[] }) => {
   );
 };
 
-/** Small param card for KH/GH/Flow/Photoperiod */
 const MiniParamCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
   <div className="bg-white dark:bg-slate-800 rounded-xl p-3 border-2 border-slate-200 dark:border-slate-700 shadow-sm">
     <div className="flex items-center gap-1.5 mb-1.5 text-slate-500 dark:text-slate-400">
@@ -731,7 +718,6 @@ const MiniParamCard = ({ icon, label, value }: { icon: React.ReactNode; label: s
   </div>
 );
 
-// shared section header
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
   <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2">
     <span className="text-emerald-600 dark:text-emerald-400">{icon}</span>
@@ -775,18 +761,10 @@ const NutrientBox = ({ label, desc, level, colors }: { label: string; desc: stri
   </div>
 );
 
-const ClassRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex items-center justify-between py-2.5 border-b border-slate-200 dark:border-slate-700 last:border-0">
-    <span className="text-sm font-bold text-slate-500 dark:text-slate-400">{label}</span>
-    <span className="text-sm font-black text-slate-900 dark:text-slate-100 capitalize text-right max-w-[200px]">{value}</span>
-  </div>
-);
-
-const TechCard = ({ label, value, desc }: { label: string; value: string; desc: string }) => (
-  <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border-2 border-slate-200 dark:border-slate-700 shadow-lg">
-    <div className="text-xs font-black text-slate-500 uppercase tracking-wide mb-1.5">{label}</div>
-    <div className="text-lg font-black text-slate-900 dark:text-slate-100 mb-1 capitalize">{value}</div>
-    <p className="text-xs text-slate-500 dark:text-slate-400">{desc}</p>
+const ClassRow = ({ label, value, italic }: { label: string; value: string; italic?: boolean }) => (
+  <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700 last:border-0 bg-white dark:bg-slate-800 first:rounded-t-xl">
+    <span className="text-sm font-bold text-slate-500 dark:text-slate-400 shrink-0">{label}</span>
+    <span className={`text-sm font-black text-slate-900 dark:text-slate-100 text-right max-w-[220px] ${italic ? 'italic' : ''}`}>{value}</span>
   </div>
 );
 
