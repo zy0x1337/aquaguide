@@ -3,7 +3,7 @@ import {
   ArrowLeft, Sun, Wind, Ruler, Layers, Thermometer, Droplets,
   Sprout, Scissors, AlertTriangle, Sparkles, Target, Leaf,
   MapPin, CheckCircle, XCircle, Mountain, Fish, FlaskConical,
-  Clock, Lightbulb, Waves, Dna
+  Clock, Lightbulb, Waves, Dna, ArrowRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -39,6 +39,12 @@ const difficultyStyles = {
   easy: 'bg-emerald-600 text-white border-emerald-700 shadow-lg',
   medium: 'bg-amber-600 text-white border-amber-700 shadow-lg',
   advanced: 'bg-rose-600 text-white border-rose-700 shadow-lg',
+};
+
+const difficultyStylesMini = {
+  easy: 'bg-emerald-500 text-white',
+  medium: 'bg-amber-500 text-white',
+  advanced: 'bg-rose-500 text-white',
 };
 
 const nutrientBadgeColors: Record<'low' | 'medium' | 'high', string> = {
@@ -426,29 +432,79 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Similar Plants */}
+                        {/* Similar Plants - Enhanced with better mini-cards */}
                         {plant.relatedPlants && plant.relatedPlants.length > 0 && (
                           <div>
                             <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                              {plant.relatedPlants.map(relSlug => {
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {plant.relatedPlants.map((relSlug, idx) => {
                                 const rel = plantRepository.getBySlug(relSlug);
+                                if (!rel) return null;
                                 return (
-                                  <Link
+                                  <motion.div
                                     key={relSlug}
-                                    to={`/plants/${relSlug}`}
-                                    className="group rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden hover:border-emerald-400 dark:hover:border-emerald-600 transition-all shadow-md hover:shadow-lg"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
                                   >
-                                    {rel?.imageUrl && (
-                                      <div className="h-24 overflow-hidden">
-                                        <img src={rel.imageUrl} alt={rel.taxonomy.commonName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                    <Link
+                                      to={`/plants/${relSlug}`}
+                                      className="group block rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden hover:border-emerald-400 dark:hover:border-emerald-600 transition-all duration-300 shadow-md hover:shadow-xl bg-white dark:bg-slate-800"
+                                    >
+                                      {/* Image */}
+                                      <div className="relative h-36 overflow-hidden bg-slate-100 dark:bg-slate-700">
+                                        {rel.imageUrl ? (
+                                          <img 
+                                            src={rel.imageUrl} 
+                                            alt={rel.taxonomy.commonName} 
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                          />
+                                        ) : (
+                                          <div className="w-full h-full flex items-center justify-center">
+                                            <Leaf className="w-12 h-12 text-slate-300 dark:text-slate-600" />
+                                          </div>
+                                        )}
+                                        {/* Difficulty Badge - positioned in top-right */}
+                                        <div className="absolute top-2 right-2">
+                                          <span className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${difficultyStylesMini[rel.difficulty]} shadow-lg`}>
+                                            {rel.difficulty}
+                                          </span>
+                                        </div>
                                       </div>
-                                    )}
-                                    <div className="p-2.5 bg-white dark:bg-slate-800">
-                                      <p className="text-xs font-black text-slate-800 dark:text-slate-100 truncate">{rel?.taxonomy.commonName ?? relSlug}</p>
-                                      <p className="text-[10px] text-slate-400 dark:text-slate-500 italic truncate">{rel?.taxonomy.scientificName ?? ''}</p>
-                                    </div>
-                                  </Link>
+                                      
+                                      {/* Content */}
+                                      <div className="p-3.5">
+                                        <h4 className="text-sm font-black text-slate-800 dark:text-slate-100 mb-1 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                          {rel.taxonomy.commonName}
+                                        </h4>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400 italic truncate mb-2.5">
+                                          {rel.taxonomy.scientificName}
+                                        </p>
+                                        
+                                        {/* Quick Info Pills */}
+                                        <div className="flex flex-wrap gap-1.5 mb-3">
+                                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                                            <Sun className="w-3 h-3" />
+                                            {cap(rel.specs.light)}
+                                          </span>
+                                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                                            <Wind className="w-3 h-3" />
+                                            {cap(rel.specs.co2)}
+                                          </span>
+                                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                                            <Ruler className="w-3 h-3" />
+                                            {rel.specs.heightCM.min}–{rel.specs.heightCM.max}cm
+                                          </span>
+                                        </div>
+
+                                        {/* View Details Link */}
+                                        <div className="flex items-center justify-between text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
+                                          <span className="text-xs font-black uppercase tracking-wide">View Details</span>
+                                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </div>
+                                      </div>
+                                    </Link>
+                                  </motion.div>
                                 );
                               })}
                             </div>
