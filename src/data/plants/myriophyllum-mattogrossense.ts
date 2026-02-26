@@ -15,14 +15,14 @@ export const myriophyllumMattogrossense: Plant = {
 
   difficulty: 'medium',
 
-  funFact: 'Myriophyllum mattogrossense kann unter optimalen Bedingungen bis zu 10 cm pro Woche wachsen – damit gehört es zu den schnellsten Aquarienpflanzen überhaupt.',
+  funFact: 'Myriophyllum mattogrossense can grow up to 10 cm per week under optimal conditions – making it one of the fastest aquarium plants ever.',
 
   taxonomy: {
     scientificName: 'Myriophyllum mattogrossense',
     commonName: 'Mato Grosso Milfoil',
     family: 'Haloragaceae',
     origin: 'South America',
-    nativeRegion: 'Seen, Flüsse und Sümpfe im Mato Grosso-Staat (Brasilien); wächst oft in offenen, gut belichteten Flachwasserbereichen'
+    nativeRegion: 'Lakes, rivers, and swamps in Mato Grosso state (Brazil); often grows in open, well-lit shallow water areas'
   },
 
   specs: {
@@ -47,10 +47,10 @@ export const myriophyllumMattogrossense: Plant = {
     substrate: true,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Stecklinge. Bewurzeln unter guten Bedingungen in 3–5 Tagen.',
-    notes: 'Regelmäßiges Stutzen essenziell! Wächst 5–10 cm pro Woche. Hervorragender Nitrat-Schwamm für Becken mit hohem Besatz.',
-    trimming: 'Tops alle 1–2 Wochen um 1/3 bis 1/2 kürzen. Abschnitte direkt wieder einpflanzen für sofortige Verdichtung. Seitentriebe durch Kürzen fördern.',
-    senescenceNotes: 'Untere Blätter vergilben und fallen bei schnell wachsenden Stängeln ab – normaler Prozess. Durch Nachpflanzen von Stecklingen immer wieder auffüllen.'
+    propagation: 'Cuttings. Root under good conditions in 3–5 days.',
+    notes: 'Regular trimming essential! Grows 5–10 cm per week. Excellent nitrate sponge for heavily stocked tanks.',
+    trimming: 'Trim tops by 1/3 to 1/2 every 1–2 weeks. Replant cut sections directly for immediate densification. Promote side shoots by trimming.',
+    senescenceNotes: 'Lower leaves yellow and fall on fast-growing stems – normal process. Keep replenishing by replanting cuttings.'
   },
 
   nutrients: {
@@ -62,39 +62,39 @@ export const myriophyllumMattogrossense: Plant = {
 
   commonProblems: [
     {
-      title: 'Leggy Wuchs',
-      desc: 'Lange Stängel mit wenigen Blättern und Seitentrieben.',
-      solution: 'CO₂ und Licht erhöhen. Tops regelmäßig stutzen, um Buschigkeit zu fördern. Mehr Kalium zugeben.'
+      title: 'Leggy Growth',
+      desc: 'Long stems with few leaves and side shoots.',
+      solution: 'Increase CO₂ and light. Trim tops regularly to promote bushiness. Add more potassium.'
     },
     {
-      title: 'Vergilbende untere Blätter',
-      desc: 'Untere Blätter werden gelb und fallen ab.',
-      solution: 'Normal bei Schnellwachsern. Nitrat- und Eisendüngung erhöhen. Regelmäßig stutzen.'
+      title: 'Yellowing Lower Leaves',
+      desc: 'Lower leaves turn yellow and fall off.',
+      solution: 'Normal for fast growers. Increase nitrate and iron fertilization. Trim regularly.'
     },
     {
-      title: 'Stagnierendes Spitzenwachstum',
-      desc: 'Neue Tops hören auf zu wachsen, älteres Wachstum in Ordnung.',
-      solution: 'CO₂-Sättigung erhöhen. Kalium- und Phosphatwerte prüfen. Wasserfluss verbessern.'
+      title: 'Stunted Tip Growth',
+      desc: 'New tops stop growing, older growth fine.',
+      solution: 'Increase CO₂ saturation. Check potassium and phosphate levels. Improve water flow.'
     }
   ],
 
   proTips: [
-    'Büschel aus 5–7 Stängeln dicht beieinander einpflanzen für sofort üppige Wirkung.',
-    'CO₂-Injektion auf 25–30 ppm einstellen – macht den größten Wachstumsunterschied.',
-    'Als Hintergrundfüller in High-Tech-Setups unschlagbar schnell und üppig.'
+    'Plant clusters of 5–7 stems close together for immediately lush effect.',
+    'Set CO₂ injection to 25–30 ppm – makes the biggest growth difference.',
+    'As background filler in high-tech setups, unbeatable fast and lush.'
   ],
 
   commonMistakes: [
-    'Ohne CO₂ verwenden – wächst dann dünn und verliert schnell untere Blätter.',
-    'Zu selten schneiden – wird "leggy" und beschattet andere Pflanzen.',
-    'Zu wenig Nährstoffe – hoher Verbraucher, der regelmäßige Volldüngung braucht.'
+    'Using without CO₂ – grows thin and quickly loses lower leaves.',
+    'Trimming too infrequently – becomes "leggy" and shades other plants.',
+    'Too few nutrients – high consumer requiring regular complete fertilization.'
   ],
 
   aquascapeContext: {
     styles: ['nature_aquarium', 'dutch', 'jungle'],
-    roleInTank: 'Schneller Hintergrundfüller für High-Tech-Setups. Erzeugt durch die federartigen Blätter Tiefe und Bewegung. Kontrast zu breitblättrigen Vordergrundpflanzen.',
+    roleInTank: 'Fast background filler for high-tech setups. Creates depth and movement through feathery leaves. Contrast to broad-leaved foreground plants.',
     companionFish: ['Cardinal Tetra', 'Rummy Nose Tetra', 'Altum Angelfish', 'Discus', 'SAE (Siamese Algae Eater)'],
-    incompatibleFish: ['Goldfish', 'Buenos Aires Tetra', 'Grosse Barben'],
+    incompatibleFish: ['Goldfish', 'Buenos Aires Tetra', 'Large Barbs'],
     substrateRecommendations: ['ADA Aqua Soil Amazonia', 'Tropica Soil', 'Power Sand + Aqua Soil (Layered)']
   },
 
@@ -104,5 +104,5 @@ export const myriophyllumMattogrossense: Plant = {
     'bacopa-monnieri'
   ],
 
-  description: 'Die am schnellsten wachsende Stängelpflanze überhaupt. Perfekt für dicht bepflanzte Tanks, die schnelle Hintergrundabdeckung benötigen. Feine, federartige Blätter erzeugen hervorragende Bewegung im Strömungsfluss und bieten Kontrast zu breitblättrigen Pflanzen. Starker Nährstoffverbraucher – hervorragend zur Nitratkontrolle in Becken mit hohem Besatz.'
+  description: 'The fastest-growing stem plant ever. Perfect for densely planted tanks needing quick background coverage. Fine, feathery leaves create excellent movement in current flow and provide contrast to broad-leaved plants. Heavy nutrient consumer – excellent for nitrate control in heavily stocked tanks.'
 };
