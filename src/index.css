@@ -50,296 +50,284 @@
     @apply rounded-full;
   }
 
-  /* ===================================== */
-  /* === OCEAN THEME - PREMIUM DESIGN === */
-  /* ===================================== */
-  /* Philosophy: "Deep Water Clarity" - Apple meets Aquarium */
+  /* ================================================= */
+  /* === FOREST AQUARIUM THEME - Cozy & Inviting === */
+  /* ================================================= */
+  /* Philosophy: "Warm Planted Tank" - Natural, calming, gemütlich */
   
-  /* Root & Body - Gradient Background */
+  /* Root & Body - Dark Forest Green Gradient */
   [data-theme="ocean"] {
-    background: linear-gradient(180deg, #0a1929 0%, #0d2438 100%);
-    color: #f0f9ff;
+    background: linear-gradient(180deg, #0a140d 0%, #0f1e13 50%, #1a2820 100%);
+    color: #e8f3e8;
   }
 
   [data-theme="ocean"] body {
-    background: linear-gradient(180deg, #0a1929 0%, #0d2438 100%);
-    color: #f0f9ff;
+    background: linear-gradient(180deg, #0a140d 0%, #0f1e13 50%, #1a2820 100%);
+    color: #e8f3e8;
   }
 
-  /* === BACKGROUNDS - Glassmorphism === */
+  /* === BACKGROUNDS - Subtle Glass Effect === */
   [data-theme="ocean"] .bg-white {
-    background: rgba(13, 36, 56, 0.6) !important;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(26, 77, 46, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
   }
   
   [data-theme="ocean"] .dark\:bg-gray-900 {
-    background: rgba(13, 36, 56, 0.6) !important;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(26, 77, 46, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
   }
 
   [data-theme="ocean"] .dark\:bg-slate-900 {
-    background: rgba(13, 36, 56, 0.6) !important;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(26, 77, 46, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
   }
   
   [data-theme="ocean"] .bg-gray-50 {
-    background: rgba(22, 56, 80, 0.4) !important;
+    background: rgba(45, 95, 63, 0.2) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-gray-800 {
-    background: rgba(22, 56, 80, 0.5) !important;
+    background: rgba(45, 95, 63, 0.3) !important;
   }
   
   [data-theme="ocean"] .bg-gray-100 {
-    background: rgba(22, 56, 80, 0.6) !important;
+    background: rgba(45, 95, 63, 0.35) !important;
   }
   
   [data-theme="ocean"] .bg-gray-900,
   [data-theme="ocean"] .dark\:bg-slate-900 {
-    background: rgba(10, 25, 41, 0.8) !important;
+    background: rgba(15, 30, 19, 0.6) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-gray-950,
   [data-theme="ocean"] .dark\:bg-slate-950 {
-    background: #0a1929 !important;
+    background: #0a140d !important;
   }
   
   [data-theme="ocean"] .bg-slate-50,
   [data-theme="ocean"] .dark\:bg-slate-800 {
-    background: rgba(22, 56, 80, 0.4) !important;
+    background: rgba(45, 95, 63, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-slate-100 {
-    background: rgba(22, 56, 80, 0.5) !important;
+    background: rgba(45, 95, 63, 0.3) !important;
   }
 
-  /* === TEXT - Crystal Clear with Glow === */
+  /* === TEXT - Warm & Readable === */
   [data-theme="ocean"] .text-gray-900,
   [data-theme="ocean"] .text-slate-900 {
-    color: #f0f9ff !important;
+    color: #f4f7f4 !important;
   }
   
   [data-theme="ocean"] .dark\:text-white,
   [data-theme="ocean"] .dark\:text-gray-100 {
-    color: #f0f9ff !important;
+    color: #e8f3e8 !important;
   }
   
   [data-theme="ocean"] .text-gray-600,
   [data-theme="ocean"] .text-gray-500,
   [data-theme="ocean"] .text-slate-600 {
-    color: #bae6fd !important;
+    color: #c9d6c9 !important;
   }
   
   [data-theme="ocean"] .dark\:text-gray-400,
   [data-theme="ocean"] .dark\:text-slate-400 {
-    color: #bae6fd !important;
+    color: #c9d6c9 !important;
   }
   
   [data-theme="ocean"] .text-gray-400 {
-    color: #67e8f9 !important;
+    color: #9fb79f !important;
   }
   
   [data-theme="ocean"] .dark\:text-gray-500 {
-    color: #67e8f9 !important;
+    color: #9fb79f !important;
   }
   
   [data-theme="ocean"] .text-gray-700,
   [data-theme="ocean"] .dark\:text-gray-300 {
-    color: #e0f2fe !important;
+    color: #e5ebe5 !important;
   }
 
-  /* === HEADINGS - Subtle Text Glow === */
-  [data-theme="ocean"] h1 {
-    text-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
-  }
-
-  [data-theme="ocean"] h2 {
-    text-shadow: 0 0 25px rgba(34, 211, 238, 0.18);
-  }
-
+  /* === HEADINGS - No glow, just clean === */
+  [data-theme="ocean"] h1,
+  [data-theme="ocean"] h2,
   [data-theme="ocean"] h3 {
-    text-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+    text-shadow: none;
   }
 
-  /* === BORDERS - Subtle Glowing Edges === */
+  /* === BORDERS - Subtle Green === */
   [data-theme="ocean"] .border-gray-200,
   [data-theme="ocean"] .border-slate-200,
   [data-theme="ocean"] .dark\:border-gray-800,
   [data-theme="ocean"] .dark\:border-slate-800 {
-    border-color: rgba(34, 211, 238, 0.15) !important;
+    border-color: rgba(79, 116, 82, 0.25) !important;
   }
   
   [data-theme="ocean"] .border-gray-300,
   [data-theme="ocean"] .border-slate-300 {
-    border-color: rgba(34, 211, 238, 0.25) !important;
+    border-color: rgba(79, 116, 82, 0.35) !important;
   }
   
   [data-theme="ocean"] .dark\:border-gray-700,
   [data-theme="ocean"] .dark\:border-slate-700 {
-    border-color: rgba(34, 211, 238, 0.2) !important;
+    border-color: rgba(79, 116, 82, 0.3) !important;
   }
 
-  /* === CORAL → TURQUOISE - Primary Actions === */
+  /* === CORAL → GOLD - Primary Actions === */
   [data-theme="ocean"] .bg-coral-50 {
-    background: rgba(34, 211, 238, 0.1) !important;
+    background: rgba(212, 175, 55, 0.1) !important;
   }
   
   [data-theme="ocean"] .bg-coral-100 {
-    background: rgba(34, 211, 238, 0.15) !important;
+    background: rgba(212, 175, 55, 0.15) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-coral-900 {
-    background: rgba(10, 25, 41, 0.9) !important;
+    background: rgba(15, 30, 19, 0.8) !important;
   }
   
-  /* Gradient Button with Glow */
+  /* Warm Gold Buttons - Subtle */
   [data-theme="ocean"] .bg-coral-500,
   [data-theme="ocean"] .dark\:bg-coral-600 {
-    background: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%) !important;
-    box-shadow: 
-      0 4px 20px rgba(34, 211, 238, 0.3),
-      0 0 40px rgba(34, 211, 238, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
   }
   
   [data-theme="ocean"] .bg-coral-600 {
-    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+    background: linear-gradient(135deg, #c9a961 0%, #b8954a 100%) !important;
   }
   
   [data-theme="ocean"] .bg-coral-700 {
-    background: #0d9488 !important;
+    background: #b8954a !important;
   }
   
-  /* Enhanced Hover - Bioluminescent Lift */
+  /* Subtle Hover - No flashy effects */
   [data-theme="ocean"] .hover\:bg-coral-700:hover,
   [data-theme="ocean"] .dark\:hover\:bg-coral-700:hover,
   [data-theme="ocean"] .bg-coral-500:hover {
-    background: linear-gradient(135deg, #5eead4 0%, #22d3ee 100%) !important;
-    box-shadow: 
-      0 6px 30px rgba(34, 211, 238, 0.4),
-      0 0 50px rgba(34, 211, 238, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #e5c758 0%, #d4af37 100%) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
   }
 
   [data-theme="ocean"] .text-coral-400,
   [data-theme="ocean"] .dark\:text-coral-400 {
-    color: #5eead4 !important;
+    color: #d4af37 !important;
   }
   
   [data-theme="ocean"] .text-coral-500 {
-    color: #22d3ee !important;
+    color: #c9a961 !important;
   }
   
   [data-theme="ocean"] .text-coral-600,
   [data-theme="ocean"] .dark\:text-coral-300 {
-    color: #14b8a6 !important;
+    color: #d4af37 !important;
   }
   
   [data-theme="ocean"] .text-coral-700 {
-    color: #0d9488 !important;
+    color: #c9a961 !important;
   }
   
-  /* Link Hover Glow */
+  /* Link Hover - Subtle */
   [data-theme="ocean"] .hover\:text-coral-700:hover,
   [data-theme="ocean"] .dark\:hover\:text-coral-300:hover {
-    color: #5eead4 !important;
-    text-shadow: 0 0 12px rgba(94, 234, 212, 0.5);
+    color: #e5c758 !important;
+    text-shadow: none;
   }
 
   [data-theme="ocean"] .border-coral-200,
   [data-theme="ocean"] .dark\:border-coral-800 {
-    border-color: rgba(34, 211, 238, 0.3) !important;
+    border-color: rgba(212, 175, 55, 0.3) !important;
   }
   
   [data-theme="ocean"] .border-coral-300,
   [data-theme="ocean"] .dark\:border-coral-700 {
-    border-color: rgba(34, 211, 238, 0.4) !important;
+    border-color: rgba(212, 175, 55, 0.4) !important;
   }
   
-  /* Border Hover Glow */
+  /* Border Hover - No glow */
   [data-theme="ocean"] .hover\:border-coral-300:hover,
   [data-theme="ocean"] .dark\:hover\:border-coral-700:hover {
-    border-color: rgba(94, 234, 212, 0.6) !important;
-    box-shadow: 0 0 20px rgba(94, 234, 212, 0.3);
+    border-color: rgba(212, 175, 55, 0.6) !important;
+    box-shadow: none;
   }
 
-  /* === SAPPHIRE → TEAL === */
+  /* === SAPPHIRE → MOSS GREEN === */
   [data-theme="ocean"] .bg-sapphire-100 {
-    background: rgba(20, 184, 166, 0.15) !important;
+    background: rgba(79, 116, 82, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-sapphire-500 {
-    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+    background: linear-gradient(135deg, #4f7452 0%, #3d5f3f 100%) !important;
   }
   
   [data-theme="ocean"] .text-sapphire-400,
   [data-theme="ocean"] .dark\:text-sapphire-400 {
-    color: #5eead4 !important;
+    color: #6b8e6b !important;
   }
   
   [data-theme="ocean"] .text-sapphire-500 {
-    color: #14b8a6 !important;
+    color: #4f7452 !important;
   }
   
   [data-theme="ocean"] .text-sapphire-600 {
-    color: #0d9488 !important;
+    color: #3d5f3f !important;
   }
 
-  /* === EMERALD - Plants === */
+  /* === EMERALD - Plants (Keep green but warmer) === */
   [data-theme="ocean"] .bg-emerald-50 {
-    background: rgba(94, 234, 212, 0.1) !important;
+    background: rgba(107, 142, 107, 0.15) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-emerald-900 {
-    background: rgba(15, 118, 110, 0.2) !important;
+    background: rgba(45, 74, 46, 0.3) !important;
   }
   
   [data-theme="ocean"] .bg-emerald-100 {
-    background: rgba(94, 234, 212, 0.15) !important;
+    background: rgba(107, 142, 107, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-emerald-500 {
-    background: linear-gradient(135deg, #5eead4 0%, #2dd4bf 100%) !important;
-    box-shadow: 0 4px 20px rgba(94, 234, 212, 0.3);
+    background: linear-gradient(135deg, #6b8e6b 0%, #4f7452 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   
   [data-theme="ocean"] .text-emerald-400,
   [data-theme="ocean"] .dark\:text-emerald-400 {
-    color: #5eead4 !important;
+    color: #86efac !important;
   }
   
   [data-theme="ocean"] .text-emerald-500 {
-    color: #2dd4bf !important;
+    color: #6b8e6b !important;
   }
   
   [data-theme="ocean"] .text-emerald-600 {
-    color: #14b8a6 !important;
+    color: #4f7452 !important;
   }
   
   [data-theme="ocean"] .border-emerald-300,
   [data-theme="ocean"] .dark\:border-emerald-700 {
-    border-color: rgba(94, 234, 212, 0.3) !important;
+    border-color: rgba(107, 142, 107, 0.3) !important;
   }
   
   [data-theme="ocean"] .hover\:border-emerald-300:hover,
   [data-theme="ocean"] .dark\:hover\:border-emerald-700:hover {
-    border-color: rgba(94, 234, 212, 0.5) !important;
-    box-shadow: 0 0 20px rgba(94, 234, 212, 0.3);
+    border-color: rgba(107, 142, 107, 0.5) !important;
+    box-shadow: none;
   }
 
-  /* === ROSE - Favorites === */
+  /* === ROSE - Favorites (Warmer tone) === */
   [data-theme="ocean"] .text-rose-500 {
-    color: #ff7f7f !important;
-    filter: drop-shadow(0 0 10px rgba(255, 127, 127, 0.4));
+    color: #fca5a5 !important;
+    filter: none;
   }
   
   [data-theme="ocean"] .bg-rose-50 {
-    background: rgba(255, 127, 127, 0.1) !important;
+    background: rgba(252, 165, 165, 0.1) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-rose-900 {
@@ -348,19 +336,19 @@
   
   [data-theme="ocean"] .border-rose-300,
   [data-theme="ocean"] .dark\:border-rose-700 {
-    border-color: rgba(255, 127, 127, 0.3) !important;
+    border-color: rgba(252, 165, 165, 0.3) !important;
   }
   
   [data-theme="ocean"] .hover\:border-rose-300:hover,
   [data-theme="ocean"] .dark\:hover\:border-rose-700:hover {
-    border-color: rgba(255, 127, 127, 0.5) !important;
-    box-shadow: 0 0 20px rgba(255, 127, 127, 0.3);
+    border-color: rgba(252, 165, 165, 0.5) !important;
+    box-shadow: none;
   }
 
-  /* === AMBER - Achievements === */
+  /* === AMBER - Keep warm === */
   [data-theme="ocean"] .text-amber-400 {
     color: #fbbf24 !important;
-    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4));
+    filter: none;
   }
   
   [data-theme="ocean"] .text-amber-500 {
@@ -375,165 +363,144 @@
   /* === RED - Delete/Danger === */
   [data-theme="ocean"] .bg-red-500 {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   
   [data-theme="ocean"] .hover\:bg-red-600:hover {
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-    box-shadow: 
-      0 6px 30px rgba(220, 38, 38, 0.4),
-      0 0 40px rgba(220, 38, 38, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* === GRADIENTS - Forest tones === */
+  [data-theme="ocean"] .from-indigo-600 { --tw-gradient-from: #4f7452 !important; }
+  [data-theme="ocean"] .via-purple-600 { --tw-gradient-via: #3d5f3f !important; }
+  [data-theme="ocean"] .to-blue-600 { --tw-gradient-to: #2d4a2e !important; }
+  [data-theme="ocean"] .from-coral-500 { --tw-gradient-from: #d4af37 !important; }
+  [data-theme="ocean"] .via-sapphire-500 { --tw-gradient-via: #4f7452 !important; }
+  [data-theme="ocean"] .to-emerald-500 { --tw-gradient-to: #6b8e6b !important; }
+
+  /* === NAVBAR - Subtle Glass === */
+  [data-theme="ocean"] header {
+    background: rgba(15, 30, 19, 0.6) !important;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    border-bottom: 1px solid rgba(79, 116, 82, 0.2) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* === CARDS - Clean Glass === */
+  [data-theme="ocean"] .card {
+    background: rgba(26, 77, 46, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    border: 1px solid rgba(79, 116, 82, 0.2) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  /* === CARD HOVER - Subtle lift === */
+  [data-theme="ocean"] .card-hover:hover {
+    background: rgba(45, 95, 63, 0.35) !important;
+    border-color: rgba(79, 116, 82, 0.35) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     transform: translateY(-2px);
   }
 
-  /* === GRADIENTS === */
-  [data-theme="ocean"] .from-indigo-600 { --tw-gradient-from: #22d3ee !important; }
-  [data-theme="ocean"] .via-purple-600 { --tw-gradient-via: #14b8a6 !important; }
-  [data-theme="ocean"] .to-blue-600 { --tw-gradient-to: #0d9488 !important; }
-  [data-theme="ocean"] .from-coral-500 { --tw-gradient-from: #22d3ee !important; }
-  [data-theme="ocean"] .via-sapphire-500 { --tw-gradient-via: #14b8a6 !important; }
-  [data-theme="ocean"] .to-emerald-500 { --tw-gradient-to: #5eead4 !important; }
-
-  /* === NAVBAR - Glassmorphism === */
-  [data-theme="ocean"] header {
-    background: rgba(10, 25, 41, 0.7) !important;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(34, 211, 238, 0.15) !important;
-    box-shadow: 
-      0 4px 30px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(94, 234, 212, 0.08);
-  }
-
-  /* === CARDS - Enhanced Glassmorphism === */
-  [data-theme="ocean"] .card {
-    background: rgba(13, 36, 56, 0.6) !important;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(34, 211, 238, 0.15) !important;
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(94, 234, 212, 0.08);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* === CARD HOVER - Bioluminescent Lift === */
-  [data-theme="ocean"] .card-hover:hover {
-    background: rgba(22, 56, 80, 0.7) !important;
-    border-color: rgba(34, 211, 238, 0.3) !important;
-    box-shadow: 
-      0 12px 40px rgba(0, 0, 0, 0.4),
-      0 0 40px rgba(34, 211, 238, 0.2),
-      inset 0 1px 0 rgba(94, 234, 212, 0.12);
-    transform: translateY(-4px) scale(1.02);
-  }
-
-  /* === IMAGES - Enhanced Contrast === */
+  /* === IMAGES - Natural === */
   [data-theme="ocean"] img {
-    filter: brightness(0.95) saturate(1.2) contrast(1.05);
+    filter: brightness(0.92) saturate(1.1) contrast(1.05);
     transition: filter 0.3s ease;
   }
 
   [data-theme="ocean"] img:hover {
-    filter: brightness(1) saturate(1.3) contrast(1.1);
+    filter: brightness(0.98) saturate(1.15) contrast(1.08);
   }
 
-  /* === SHADOWS - Multi-layer Glow === */
+  /* === SHADOWS - Warm & Subtle === */
   [data-theme="ocean"] .shadow-sm {
-    box-shadow: 
-      0 1px 3px rgba(0, 0, 0, 0.3),
-      0 0 10px rgba(34, 211, 238, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
   [data-theme="ocean"] .shadow-md {
-    box-shadow: 
-      0 4px 6px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(34, 211, 238, 0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 
   [data-theme="ocean"] .shadow-lg {
-    box-shadow: 
-      0 10px 25px rgba(0, 0, 0, 0.3),
-      0 0 30px rgba(34, 211, 238, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
   }
 
   [data-theme="ocean"] .shadow-xl {
-    box-shadow: 
-      0 20px 35px rgba(0, 0, 0, 0.35),
-      0 0 40px rgba(34, 211, 238, 0.25);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
   }
 
   [data-theme="ocean"] .shadow-2xl {
-    box-shadow: 
-      0 25px 50px rgba(0, 0, 0, 0.4),
-      0 0 60px rgba(34, 211, 238, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
   }
 
-  /* === SELECTION === */
+  /* === SELECTION - Gold === */
   [data-theme="ocean"] ::selection {
-    background: rgba(34, 211, 238, 0.3);
-    color: #f0f9ff;
-    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+    background: rgba(212, 175, 55, 0.3);
+    color: #f4f7f4;
+    text-shadow: none;
   }
 
-  /* === SCROLLBAR - Gradient with Glow === */
+  /* === SCROLLBAR - Moss Green === */
   [data-theme="ocean"] ::-webkit-scrollbar-track {
-    background: rgba(10, 25, 41, 0.5);
+    background: rgba(10, 20, 13, 0.6);
   }
 
   [data-theme="ocean"] ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #14b8a6 0%, #0d9488 100%);
+    background: linear-gradient(180deg, #4f7452 0%, #3d5f3f 100%);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(20, 184, 166, 0.5);
+    box-shadow: none;
   }
 
   [data-theme="ocean"] ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #22d3ee 0%, #14b8a6 100%);
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
+    background: linear-gradient(180deg, #6b8e6b 0%, #4f7452 100%);
+    box-shadow: none;
   }
 
-  /* === FOCUS STATES - Enhanced Glow Ring === */
+  /* === FOCUS STATES - Subtle === */
   [data-theme="ocean"] *:focus-visible {
-    outline: 2px solid rgba(34, 211, 238, 0.5);
+    outline: 2px solid rgba(212, 175, 55, 0.5);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.15);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
   }
 
-  /* === INPUTS - Glass Effect === */
+  /* === INPUTS - Glass === */
   [data-theme="ocean"] input,
   [data-theme="ocean"] textarea,
   [data-theme="ocean"] select {
-    background: rgba(13, 36, 56, 0.4) !important;
-    border-color: rgba(34, 211, 238, 0.2) !important;
-    color: #f0f9ff !important;
+    background: rgba(26, 77, 46, 0.2) !important;
+    border-color: rgba(79, 116, 82, 0.3) !important;
+    color: #e8f3e8 !important;
   }
 
   [data-theme="ocean"] input:focus,
   [data-theme="ocean"] textarea:focus,
   [data-theme="ocean"] select:focus {
-    background: rgba(22, 56, 80, 0.5) !important;
-    border-color: rgba(34, 211, 238, 0.5) !important;
-    box-shadow: 
-      0 0 0 3px rgba(34, 211, 238, 0.1),
-      0 0 20px rgba(34, 211, 238, 0.2);
+    background: rgba(45, 95, 63, 0.3) !important;
+    border-color: rgba(212, 175, 55, 0.4) !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
   }
 
   [data-theme="ocean"] input::placeholder,
   [data-theme="ocean"] textarea::placeholder {
-    color: rgba(103, 232, 249, 0.5) !important;
+    color: rgba(159, 183, 159, 0.5) !important;
   }
 
-  /* === HOVER TRANSITIONS - Smooth Lift === */
+  /* === HOVER TRANSITIONS - Smooth === */
   [data-theme="ocean"] button,
   [data-theme="ocean"] .btn-primary,
   [data-theme="ocean"] .btn-secondary {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
   }
 
   [data-theme="ocean"] button:hover:not(:disabled),
   [data-theme="ocean"] .btn-primary:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
+    transform: translateY(-1px);
+    filter: brightness(1.05);
   }
 
   [data-theme="ocean"] button:active,
@@ -541,9 +508,9 @@
     transform: translateY(0);
   }
 
-  /* === LINK HOVER - Glow Effect === */
+  /* === LINK HOVER - Clean === */
   [data-theme="ocean"] a:hover {
-    text-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
+    text-shadow: none;
   }
 }
 
