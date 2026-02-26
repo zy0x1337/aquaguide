@@ -14,14 +14,14 @@ export const anubiasBarteriNana: Plant = {
 
   difficulty: 'easy',
 
-  funFact: 'Anubias wächst so langsam, dass Algen auf den Blättern sich leichter festsetzen als bei anderen Pflanzen – ein sicheres Zeichen, dass zu wenig Wasserbewegung herrscht.',
+  funFact: 'Anubias grows so slowly that algae settle on the leaves more easily than on other plants – a sure sign that there is too little water movement.',
 
   taxonomy: {
     scientificName: 'Anubias barteri var. nana',
     commonName: 'Dwarf Anubias',
     family: 'Araceae',
     origin: 'West Africa (Cameroon)',
-    nativeRegion: 'Fließende und stehende Gewässer in Kamerun und Nigeria; bevorzugt beschattete Uferabschnitte mit starker Strömung'
+    nativeRegion: 'Flowing and standing waters in Cameroon and Nigeria; prefers shaded shore sections with strong currents'
   },
 
   specs: {
@@ -46,10 +46,10 @@ export const anubiasBarteriNana: Plant = {
     substrate: false,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Rhizome division. Divide older rhizomes with at least 2–3 Blättern pro Abschnitt. Befestigung an Holz oder Stein mit Angelschnur oder Pflanzkleber.',
-    notes: 'Epiphyt! Das Rhizom niemals im Substrat vergraben – es fault sonst. Am Holz oder Stein befestigen.',
-    trimming: 'Alte, vergilbte oder von Algen befallene Blätter direkt am Stiel abschneiden. Das Rhizom nicht kürzen, es sei denn zur Vermehrung.',
-    senescenceNotes: 'Sehr langlebig. Einzelne Blätter leben Monate bis Jahre. Natürlicher Blattabfall ist normal; solange neue Blätter wachsen, ist die Pflanze gesund.'
+    propagation: 'Rhizome division. Divide older rhizomes with at least 2–3 leaves per section. Attach to wood or stone with fishing line or plant glue.',
+    notes: 'Epiphyte! Never bury the rhizome in substrate – it will rot. Attach to wood or stone.',
+    trimming: 'Cut old, yellowed, or algae-covered leaves directly at the stem. Do not trim the rhizome unless for propagation.',
+    senescenceNotes: 'Very long-lived. Individual leaves live for months to years. Natural leaf shedding is normal; as long as new leaves are growing, the plant is healthy.'
   },
 
   nutrients: {
@@ -63,51 +63,51 @@ export const anubiasBarteriNana: Plant = {
 
   commonProblems: [
     {
-      title: 'Rhizom-Fäule',
-      desc: 'Blätter werden schwarz und matschig, das Rhizom wird weich und zersetzt sich.',
-      solution: 'Rhizom über dem Substrat belassen oder vollständig frei im Wasser. Wasserzirkulation verbessern. Befallene Abschnitte sofort entfernen.'
+      title: 'Rhizome Rot',
+      desc: 'Leaves turn black and mushy, rhizome becomes soft and decomposes.',
+      solution: 'Keep rhizome above substrate or completely free in water. Improve water circulation. Remove affected sections immediately.'
     },
     {
-      title: 'Algen auf Blättern',
-      desc: 'Grünfleckenalgen oder braune Kieselalgen setzen sich auf den langsam wachsenden Blättern fest.',
-      solution: 'Beleuchtungsdauer auf 6–8 Stunden reduzieren. Wasserfluss rund um die Pflanze erhöhen. Manuelle Entfernung mit weichem Tuch oder Bürste.'
+      title: 'Algae on Leaves',
+      desc: 'Green spot algae or brown diatoms settle on the slow-growing leaves.',
+      solution: 'Reduce lighting duration to 6–8 hours. Increase water flow around the plant. Manual removal with soft cloth or brush.'
     },
     {
-      title: 'Gelbe / braune Blätter',
-      desc: 'Ältere Blätter werden schrittweise gelb, braun und sterben ab.',
-      solution: 'Normaler Blattwechsel. Flüssigdünger (All-in-One) hinzufügen. Stabile Parameter halten (22–28 °C, pH 6–8).'
+      title: 'Yellow / Brown Leaves',
+      desc: 'Older leaves gradually turn yellow, brown, and die off.',
+      solution: 'Normal leaf turnover. Add liquid fertilizer (all-in-one). Maintain stable parameters (22–28 °C, pH 6–8).'
     },
     {
-      title: 'Kümmerliches Wachstum',
-      desc: 'Wochen- oder monatelang kein sichtbares Wachstum.',
-      solution: 'Flüssigdünger zugeben (All-in-One oder Makro-Mix). Wasserparameter prüfen. Beleuchtung auf 8–10 h erhöhen. Ausreichende Wasserzirkulation sicherstellen.'
+      title: 'Stunted Growth',
+      desc: 'No visible growth for weeks or months.',
+      solution: 'Add liquid fertilizer (all-in-one or macro mix). Check water parameters. Increase lighting to 8–10 hours. Ensure adequate water circulation.'
     },
     {
-      title: 'Schmelzende Blätter',
-      desc: 'Blätter werden durchsichtig, matschig und lösen sich auf.',
-      solution: 'Meist durch drastische Parameterwechsel. Langsam akklimatisieren. Stabile Temperatur (22–28 °C) und pH (6–8) sicherstellen. Sauerstoffversorgung verbessern.'
+      title: 'Melting Leaves',
+      desc: 'Leaves become transparent, mushy, and dissolve.',
+      solution: 'Usually caused by drastic parameter changes. Acclimate slowly. Ensure stable temperature (22–28 °C) and pH (6–8). Improve oxygen supply.'
     }
   ],
 
   proTips: [
-    'Mit Superkleber-Gel (Cyanoacrylat) direkt auf trockenem Holz befestigen – hält in Sekunden.',
-    'Unter schattigeren Bedingungen platzieren als andere Pflanzen, um Algen auf den Blättern zu minimieren.',
-    'Garnelen lieben Anubias – sie fressen Biofilm und Algen von den Blättern.',
-    'Wöchentliche Zugabe von flüssigem Eisendünger hält die Blätter dunkelgrün.'
+    'Attach with super glue gel (cyanoacrylate) directly on dry wood – holds in seconds.',
+    'Place under shadier conditions than other plants to minimize algae on leaves.',
+    'Shrimp love Anubias – they eat biofilm and algae off the leaves.',
+    'Weekly addition of liquid iron fertilizer keeps leaves dark green.'
   ],
 
   commonMistakes: [
-    'Rhizom im Substrat eingraben – führt unweigerlich zu Fäule.',
-    'Zu helles Licht verwenden – fördert Algen auf den langsam wachsenden Blättern.',
-    'Zu ungeduldig sein – Anubias braucht oft 4–6 Wochen zum Einwurzeln.'
+    'Burying rhizome in substrate – inevitably leads to rot.',
+    'Using too bright light – promotes algae on the slow-growing leaves.',
+    'Being too impatient – Anubias often needs 4–6 weeks to root in.'
   ],
 
   aquascapeContext: {
     styles: ['nature_aquarium', 'low_tech', 'biotope', 'jungle'],
-    roleInTank: 'Mittelgrund-Akzentpflanze oder Epiphyt auf Treibholz und Steinen. Ideal zur Strukturierung des Mittelgrundes.',
+    roleInTank: 'Midground accent plant or epiphyte on driftwood and stones. Ideal for structuring the midground.',
     companionFish: ['Neon Tetra', 'Cardinal Tetra', 'Ember Tetra', 'Cherry Shrimp', 'Amano Shrimp', 'Corydoras', 'Otocinclus'],
     incompatibleFish: ['Goldfish', 'Buenos Aires Tetra', 'Silver Dollar', 'Large Cichlids'],
-    substrateRecommendations: ['Kies (2–3 mm)', 'ADA Aqua Soil (für Begleitpflanzen)', 'Lavastein / Tonkugeln als Befestigungsmedium']
+    substrateRecommendations: ['Gravel (2–3 mm)', 'ADA Aqua Soil (for companion plants)', 'Lava rock / clay balls as attachment medium']
   },
 
   relatedPlants: [
