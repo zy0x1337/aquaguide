@@ -14,14 +14,14 @@ export const limnobiumLaevigatum: Plant = {
 
   difficulty: 'easy',
 
-  funFact: 'Die Unterseite der Blätter von Limnobium laevigatum enthält ein schwammartiges Gewebe (Aerenchym), das als natürlicher Auftrieb wirkt – ähnlich wie ein Schwimmring.',
+  funFact: 'The underside of Limnobium laevigatum leaves contains spongy tissue (aerenchyma) that acts as natural buoyancy – similar to a float ring.',
 
   taxonomy: {
     scientificName: 'Limnobium laevigatum',
     commonName: 'South American Frogbit',
     family: 'Hydrocharitaceae',
     origin: 'South America (Amazon Region)',
-    nativeRegion: 'Stehende und langsam fließende Gewässer des Amazonasbeckens; überwiegend in ruhigen Buchten und überschwemmten Waldgebieten'
+    nativeRegion: 'Standing and slow-flowing waters of the Amazon basin; predominantly in quiet bays and flooded forest areas'
   },
 
   specs: {
@@ -46,10 +46,10 @@ export const limnobiumLaevigatum: Plant = {
     substrate: false,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Ausläufer-Tochterpflanzen. Ableger abtrennen und eigenständig schwimmen lassen.',
-    notes: 'Freischwimmende Oberflächenpflanze. Lampenabstand einhalten (Verbrennungsgefahr). Hervorragend zur Beschattung hellerleuchteter Tanks und zur Algenkontrolle.',
-    trimming: 'Wöchentlich bis zu 50 % der Bedeckung entfernen. Überschüssige Pflanzen als Fischfutter oder für andere Aquarien verwenden.',
-    senescenceNotes: 'Ältere Blätter sinken ab und vergilben – einfach entfernen. Neue Ableger erscheinen ständig und ersetzen alte Blätter.'
+    propagation: 'Runner daughter plants. Separate offshoots and let them float independently.',
+    notes: 'Free-floating surface plant. Maintain distance from lamp (burn risk). Excellent for shading brightly lit tanks and algae control.',
+    trimming: 'Remove up to 50% of coverage weekly. Use excess plants as fish food or for other aquariums.',
+    senescenceNotes: 'Older leaves sink and yellow – simply remove. New offshoots constantly appear and replace old leaves.'
   },
 
   nutrients: {
@@ -61,55 +61,55 @@ export const limnobiumLaevigatum: Plant = {
 
   commonProblems: [
     {
-      title: 'Lampenverbrennungen',
-      desc: 'Blätter zeigen weiße/braune Flecken durch Kontakt mit der Lichtquelle.',
-      solution: '10–15 cm Abstand zur Lampe einhalten. Betroffene Blätter entfernen. Fotoperiode auf 8–10 h reduzieren.'
+      title: 'Light Burns',
+      desc: 'Leaves show white/brown spots from contact with light source.',
+      solution: 'Maintain 10–15 cm distance from lamp. Remove affected leaves. Reduce photoperiod to 8–10 hours.'
     },
     {
-      title: 'Überwuchs',
-      desc: 'Bedeckt die gesamte Oberfläche, blockiert Licht für Unterwasserpflanzen.',
-      solution: 'Regelmäßig ausdünnen (wöchentlich). Überschuss als Fischfutter nutzen. Mit Lichtpflanzen in der Tiefe kombinieren.'
+      title: 'Overgrowth',
+      desc: 'Covers entire surface, blocks light for underwater plants.',
+      solution: 'Thin out regularly (weekly). Use excess as fish food. Combine with light-loving plants in depth.'
     },
     {
-      title: 'Schneckenbefall',
-      desc: 'Schnecken sammeln sich auf der Blattunterseite.',
-      solution: 'Von Glaswänden fernhalten. Manuelle Entfernung. Assassin-Schnecken oder manuelles Quarantänisieren.'
+      title: 'Snail Infestation',
+      desc: 'Snails collect on leaf underside.',
+      solution: 'Keep away from glass walls. Manual removal. Assassin snails or manual quarantine.'
     },
     {
-      title: 'Vergilbende Blätter',
-      desc: 'Blätter verblassen und sinken ab.',
-      solution: 'Lichtintensität/-dauer erhöhen. Flüssigdünger zugeben. Nährstoffreichen Zustand des Wassers sicherstellen (Fischkot).'
+      title: 'Yellowing Leaves',
+      desc: 'Leaves fade and sink.',
+      solution: 'Increase light intensity/duration. Add liquid fertilizer. Ensure nutrient-rich water state (fish waste).'
     },
     {
-      title: 'Kleine Blätter',
-      desc: 'Winzige Blätter, langsame Ausbreitung.',
-      solution: 'Mehr Licht (hohe Intensität). Stabile warme Temps (24–28 °C). Flüssigdüngung.'
+      title: 'Small Leaves',
+      desc: 'Tiny leaves, slow spread.',
+      solution: 'More light (high intensity). Stable warm temps (24–28 °C). Liquid fertilization.'
     }
   ],
 
   proTips: [
-    'Als natürlicher Schattenspender für Labyrinthfische (Betta, Gurami) – sie lieben Schwimmpflanzen.',
-    'Die hängenden Wurzeln dienen Fischbrut als Schutz und Laichgrund.',
-    'In Kombination mit CO₂-injizierten Becken: Frogbit verhindert CO₂-Ausgasung an der Oberfläche.'
+    'As natural shade provider for labyrinth fish (Betta, Gourami) – they love floating plants.',
+    'Hanging roots serve as shelter and spawning ground for fish fry.',
+    'In combination with CO₂-injected tanks: Frogbit prevents CO₂ off-gassing at surface.'
   ],
 
   commonMistakes: [
-    'Zu nah an der Lampe belassen – verursacht Blattverbrennungen.',
-    'Nie stutzen – überwuchert den Tank und beschattet alles darunter.',
-    'In Becken mit starker Oberflächenbewegung einsetzen – mag keine Wellen oder Strömung.'
+    'Leaving too close to lamp – causes leaf burns.',
+    'Never trimming – overgrows tank and shades everything below.',
+    'Using in tanks with strong surface movement – dislikes waves or current.'
   ],
 
   aquascapeContext: {
     styles: ['biotope', 'jungle', 'low_tech', 'nature_aquarium'],
-    roleInTank: 'Oberflächenabdeckung für natürlichen Lichtfiltereffekt. Schutz für Fischbrut und labyrinthfischartige Oberflächenatmer.',
+    roleInTank: 'Surface coverage for natural light filter effect. Protection for fish fry and labyrinth fish surface breathers.',
     companionFish: ['Betta splendens', 'Pearl Gourami', 'Dwarf Gourami', 'Endler', 'Guppy', 'Cherry Shrimp'],
-    incompatibleFish: ['Fische die Schwimmpflanzen fressen (Goldfish, große Barben)'],
-    substrateRecommendations: ['Kein Substrat nötig – freischwimmend']
+    incompatibleFish: ['Fish that eat floating plants (Goldfish, large barbs)'],
+    substrateRecommendations: ['No substrate needed – free-floating']
   },
 
   relatedPlants: [
     'ceratophyllum-demersum'
   ],
 
-  description: 'Schnell wachsende Schwimmpflanze mit runden, glänzenden Blättern, die einen grünen Oberflächenteppich bilden. Ausgezeichneter Algenkämpfer (Nitat-Schwamm), bietet Schatten für Licht scheue Pflanzen und Schutz für Brut/Garnelen. Liebt hohes Licht – wöchentliches Stutzen um Überwuchs zu verhindern. Wurzeln erzeugen dramatischen Hängeeffekt und dienen als Laichsubstrat.'
+  description: 'Fast-growing floating plant with round, glossy leaves forming a green surface carpet. Excellent algae fighter (nitrate sponge), provides shade for light-shy plants and protection for fry/shrimp. Loves high light – trim weekly to prevent overgrowth. Roots create dramatic hanging effect and serve as spawning substrate.'
 };

@@ -14,14 +14,14 @@ export const aponogetonMadagascariensis: Plant = {
 
   difficulty: 'medium',
 
-  funFact: 'Die "Gitterblatt"-Blätter von Aponogeton madagascariensis bestehen fast nur aus dem Blattgerippe – das Blattgewebe dazwischen fehlt vollständig. Dieses Spitzenwerk ist einzigartig im Pflanzenreich.',
+  funFact: 'The "lace leaf" of Aponogeton madagascariensis consists almost entirely of leaf veins – the leaf tissue in between is completely absent. This lacework is unique in the plant kingdom.',
 
   taxonomy: {
     scientificName: 'Aponogeton madagascariensis',
     commonName: 'Madagascar Lace Plant',
     family: 'Aponogetonaceae',
     origin: 'Madagascar',
-    nativeRegion: 'Schnell fließende Flüsse und Bäche im Hochland Madagaskars; bevorzugt kühles, sauerstoffreiches, leicht saures Wasser'
+    nativeRegion: 'Fast-flowing rivers and streams in the highlands of Madagascar; prefers cool, oxygen-rich, slightly acidic water'
   },
 
   specs: {
@@ -46,10 +46,10 @@ export const aponogetonMadagascariensis: Plant = {
     substrate: true,
     soilTabs: true,
     liquidFertilizer: true,
-    propagation: 'Samen aus schwimmender Schote oder Knollenteilung. Blüten tauchen über die Wasseroberfläche auf.',
-    notes: 'Knolle waagerecht einpflanzen, falls die Orientierung unklar ist. Benötigt nährstoffreiches Substrat. Vollständig aquatisch – kein Emersed-Wachstum. Kühlere Temps (22–24 °C) sind optimal.',
-    trimming: 'Alte oder von Algen bewachsene Blätter direkt am Blattansatz entfernen. Blütenstand nach der Blüte abschneiden, wenn er keine Samen trägt.',
-    senescenceNotes: 'Geht nach mehreren Monaten Wachstum in eine natürliche Ruhephase (Dormanz): Blätter ziehen sich vollständig zurück. Knolle im Substrat belassen – neue Blätter erscheinen nach 2–8 Wochen.'
+    propagation: 'Seeds from floating pod or bulb division. Flowers emerge above the water surface.',
+    notes: 'Plant bulb horizontally if orientation is unclear. Requires nutrient-rich substrate. Completely aquatic – no emersed growth. Cooler temperatures (22–24 °C) are optimal.',
+    trimming: 'Remove old or algae-covered leaves directly at the leaf base. Cut off flower stalk after blooming if it bears no seeds.',
+    senescenceNotes: 'Goes into natural dormancy after several months of growth: leaves retract completely. Leave bulb in substrate – new leaves appear after 2–8 weeks.'
   },
 
   nutrients: {
@@ -61,50 +61,50 @@ export const aponogetonMadagascariensis: Plant = {
 
   commonProblems: [
     {
-      title: 'Blattschmelze',
-      desc: 'Blätter werden durchsichtig und zerfallen nach dem Einpflanzen.',
-      solution: 'Eingewöhnungsphase. Parameter stabilisieren. Nährstoffreiches Substrat verwenden. Geduld – neues Wachstum kommt aus der Knolle.'
+      title: 'Leaf Melting',
+      desc: 'Leaves become transparent and disintegrate after planting.',
+      solution: 'Acclimation phase. Stabilize parameters. Use nutrient-rich substrate. Patience – new growth comes from bulb.'
     },
     {
-      title: 'Ruhephase / Dormanz',
-      desc: 'Pflanze zieht sich nach Monaten vollständig zurück.',
-      solution: 'Natürlicher Lebenszyklus. Licht und Wasserwechsel reduzieren. Knolle treibt nach 2–8 Wochen Ruhe wieder aus.'
+      title: 'Dormancy Phase',
+      desc: 'Plant retracts completely after months.',
+      solution: 'Natural life cycle. Reduce light and water changes. Bulb will sprout again after 2–8 weeks of rest.'
     },
     {
-      title: 'Eisenmangel',
-      desc: 'Neue Blätter blass-gelb/weiß zwischen den Blattadern.',
-      solution: 'Eisendünger oder umfassenden Flüssigdünger zugeben. Cheliertes Eisen verwenden. CO₂ auf 20–30 ppm halten.'
+      title: 'Iron Deficiency',
+      desc: 'New leaves pale yellow/white between leaf veins.',
+      solution: 'Add iron fertilizer or comprehensive liquid fertilizer. Use chelated iron. Maintain CO₂ at 20–30 ppm.'
     },
     {
-      title: 'Algen im Gitterwerk',
-      desc: 'Grünpunktealgen im Maschenwerk des Blattes.',
-      solution: 'Wasserfluss durch die Blätter erhöhen. Fotoperiode auf 8 h reduzieren. Punktuelle Behandlung mit Glutaraldehyd.'
+      title: 'Algae in Lattice',
+      desc: 'Green spot algae in leaf mesh.',
+      solution: 'Increase water flow through leaves. Reduce photoperiod to 8 hours. Spot treatment with glutaraldehyde.'
     },
     {
-      title: 'Kümmerliches Wachstum',
-      desc: 'Kleine Blätter, langsame Entwicklung.',
-      solution: 'Licht auf mittel-hoch erhöhen. Wurzeltabs zugeben. CO₂-Injektion essenziell. Temperatur 22–26 °C.'
+      title: 'Stunted Growth',
+      desc: 'Small leaves, slow development.',
+      solution: 'Increase light to medium-high. Add root tabs. CO₂ injection essential. Temperature 22–26 °C.'
     }
   ],
 
   proTips: [
-    'Knolle niemals vollständig eingraben – der obere Bereich muss frei bleiben.',
-    'Kombination mit leichter CO₂-Injektion (15–20 ppm) reicht oft schon aus.',
-    'In der Ruhephase Knolle bei 18–20 °C lagern, um die Dormanz zu beschleunigen.'
+    'Never bury bulb completely – upper part must remain free.',
+    'Combination with light CO₂ injection (15–20 ppm) is often sufficient.',
+    'During dormancy, store bulb at 18–20 °C to accelerate dormancy.'
   ],
 
   commonMistakes: [
-    'Knolle zu tief eingraben – oberer Teil muss frei liegen.',
-    'Ruhephase als Tod interpretieren und Knolle wegwerfen.',
-    'Zu warmes Wasser dauerhaft – mag es kühler als die meisten tropischen Pflanzen.'
+    'Burying bulb too deep – upper part must be exposed.',
+    'Interpreting dormancy as death and discarding bulb.',
+    'Permanently too warm water – likes it cooler than most tropical plants.'
   ],
 
   aquascapeContext: {
     styles: ['nature_aquarium', 'biotope', 'dutch'],
-    roleInTank: 'Dramatischer Solist im Hintergrund. Das Gitterwerk-Blatt ist ein echter Hingucker und Gesprächsstarter im Aquarium.',
+    roleInTank: 'Dramatic soloist in background. The lattice leaf is a real eye-catcher and conversation starter in the aquarium.',
     companionFish: ['Neon Tetra', 'Cardinal Tetra', 'Rummy Nose Tetra', 'Small Corydoras', 'Amano Shrimp'],
     incompatibleFish: ['Goldfish', 'Large Cichlids', 'Buenos Aires Tetra'],
-    substrateRecommendations: ['ADA Aqua Soil Amazonia', 'JBL AquaBasis', 'Nährstoffboden unter feinem Kies']
+    substrateRecommendations: ['ADA Aqua Soil Amazonia', 'JBL AquaBasis', 'Nutrient soil under fine gravel']
   },
 
   relatedPlants: [
@@ -113,5 +113,5 @@ export const aponogetonMadagascariensis: Plant = {
     'microsorum-pteropus'
   ],
 
-  description: 'Die exotische Madagaskar-Spitzenpflanze mit einzigartigen gitterartigen Blättern, die feiner Spitzenarbeit ähneln. Vollständig aquatische Rosettenpflanze, die 30–65 cm erreicht – perfekter dramatischer Hintergrund oder Mittelpunkt. Benötigt stabile Bedingungen, mittel-hohes Licht und CO₂. Geht natürlich in Dormanz. Nährstoffanspruchsvolle Knollenpflanze aus Madagaskars fließenden Flüssen.'
+  description: 'The exotic Madagascar lace plant with unique lattice-like leaves resembling fine lacework. Completely aquatic rosette plant reaching 30–65 cm – perfect dramatic background or centerpiece. Requires stable conditions, medium-high light, and CO₂. Goes naturally into dormancy. Nutrient-demanding bulb plant from Madagascar\'s flowing rivers.'
 };
