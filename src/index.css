@@ -50,444 +50,517 @@
     @apply rounded-full;
   }
 
-  /* ================================================= */
-  /* === FOREST AQUARIUM THEME - Cozy & Inviting === */
-  /* ================================================= */
-  /* Philosophy: "Warm Planted Tank" - Natural, calming, gemütlich */
+  /* ======================================================= */
+  /* === NATURAL AQUARIUM THEME - Pastel & Realistic === */
+  /* ======================================================= */
+  /* Philosophy: "Home Aquarium" - Soft pastels inspired by planted tanks */
+  /* Colors: Jade Green, Sandy Beige, Driftwood Brown, Water Blue, Plant Green */
   
-  /* Root & Body - Dark Forest Green Gradient */
+  /* Root & Body - Soft Dark Gradient with Natural Tones */
   [data-theme="ocean"] {
-    background: linear-gradient(180deg, #0a140d 0%, #0f1e13 50%, #1a2820 100%);
-    color: #e8f3e8;
+    background: linear-gradient(135deg, #1a2520 0%, #1f2e28 50%, #243830 100%);
+    color: #e8ede8;
   }
 
   [data-theme="ocean"] body {
-    background: linear-gradient(180deg, #0a140d 0%, #0f1e13 50%, #1a2820 100%);
-    color: #e8f3e8;
+    background: linear-gradient(135deg, #1a2520 0%, #1f2e28 50%, #243830 100%);
+    color: #e8ede8;
   }
 
-  /* === BACKGROUNDS - Subtle Glass Effect === */
+  /* === BACKGROUNDS - Soft Pastel Glass === */
   [data-theme="ocean"] .bg-white {
-    background: rgba(26, 77, 46, 0.25) !important;
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    background: rgba(45, 60, 52, 0.35) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
   
   [data-theme="ocean"] .dark\:bg-gray-900 {
-    background: rgba(26, 77, 46, 0.25) !important;
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    background: rgba(45, 60, 52, 0.35) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
   [data-theme="ocean"] .dark\:bg-slate-900 {
-    background: rgba(26, 77, 46, 0.25) !important;
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    background: rgba(45, 60, 52, 0.35) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
   
   [data-theme="ocean"] .bg-gray-50 {
-    background: rgba(45, 95, 63, 0.2) !important;
+    background: rgba(112, 128, 120, 0.15) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-gray-800 {
-    background: rgba(45, 95, 63, 0.3) !important;
+    background: rgba(62, 80, 70, 0.35) !important;
   }
   
   [data-theme="ocean"] .bg-gray-100 {
-    background: rgba(45, 95, 63, 0.35) !important;
+    background: rgba(112, 128, 120, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-gray-900,
   [data-theme="ocean"] .dark\:bg-slate-900 {
-    background: rgba(15, 30, 19, 0.6) !important;
+    background: rgba(31, 46, 40, 0.5) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-gray-950,
   [data-theme="ocean"] .dark\:bg-slate-950 {
-    background: #0a140d !important;
+    background: #1a2520 !important;
   }
   
   [data-theme="ocean"] .bg-slate-50,
   [data-theme="ocean"] .dark\:bg-slate-800 {
-    background: rgba(45, 95, 63, 0.2) !important;
+    background: rgba(112, 128, 120, 0.15) !important;
   }
   
   [data-theme="ocean"] .bg-slate-100 {
-    background: rgba(45, 95, 63, 0.3) !important;
+    background: rgba(112, 128, 120, 0.2) !important;
   }
 
-  /* === TEXT - Warm & Readable === */
+  /* === TEXT - Soft Readable Pastels === */
   [data-theme="ocean"] .text-gray-900,
   [data-theme="ocean"] .text-slate-900 {
-    color: #f4f7f4 !important;
+    color: #f0f5f0 !important;
   }
   
   [data-theme="ocean"] .dark\:text-white,
   [data-theme="ocean"] .dark\:text-gray-100 {
-    color: #e8f3e8 !important;
+    color: #e8ede8 !important;
   }
   
   [data-theme="ocean"] .text-gray-600,
   [data-theme="ocean"] .text-gray-500,
   [data-theme="ocean"] .text-slate-600 {
-    color: #c9d6c9 !important;
+    color: #c4d4c8 !important;
   }
   
   [data-theme="ocean"] .dark\:text-gray-400,
   [data-theme="ocean"] .dark\:text-slate-400 {
-    color: #c9d6c9 !important;
+    color: #c4d4c8 !important;
   }
   
   [data-theme="ocean"] .text-gray-400 {
-    color: #9fb79f !important;
+    color: #a8baa8 !important;
   }
   
   [data-theme="ocean"] .dark\:text-gray-500 {
-    color: #9fb79f !important;
+    color: #a8baa8 !important;
   }
   
   [data-theme="ocean"] .text-gray-700,
   [data-theme="ocean"] .dark\:text-gray-300 {
-    color: #e5ebe5 !important;
+    color: #dce8dc !important;
   }
 
-  /* === HEADINGS - No glow, just clean === */
+  /* === HEADINGS - Clean, No Effects === */
   [data-theme="ocean"] h1,
   [data-theme="ocean"] h2,
   [data-theme="ocean"] h3 {
     text-shadow: none;
+    color: #e8f4e8 !important;
   }
 
-  /* === BORDERS - Subtle Green === */
+  /* === BORDERS - Soft Jade Green === */
   [data-theme="ocean"] .border-gray-200,
   [data-theme="ocean"] .border-slate-200,
   [data-theme="ocean"] .dark\:border-gray-800,
   [data-theme="ocean"] .dark\:border-slate-800 {
-    border-color: rgba(79, 116, 82, 0.25) !important;
+    border-color: rgba(136, 176, 152, 0.25) !important;
   }
   
   [data-theme="ocean"] .border-gray-300,
   [data-theme="ocean"] .border-slate-300 {
-    border-color: rgba(79, 116, 82, 0.35) !important;
+    border-color: rgba(136, 176, 152, 0.35) !important;
   }
   
   [data-theme="ocean"] .dark\:border-gray-700,
   [data-theme="ocean"] .dark\:border-slate-700 {
-    border-color: rgba(79, 116, 82, 0.3) !important;
+    border-color: rgba(136, 176, 152, 0.3) !important;
   }
 
-  /* === CORAL → GOLD - Primary Actions === */
+  /* === CORAL → PASTEL JADE/SANDY - Primary Actions === */
   [data-theme="ocean"] .bg-coral-50 {
-    background: rgba(212, 175, 55, 0.1) !important;
+    background: rgba(168, 203, 186, 0.15) !important;
   }
   
   [data-theme="ocean"] .bg-coral-100 {
-    background: rgba(212, 175, 55, 0.15) !important;
+    background: rgba(168, 203, 186, 0.2) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-coral-900 {
-    background: rgba(15, 30, 19, 0.8) !important;
+    background: rgba(31, 46, 40, 0.6) !important;
   }
   
-  /* Warm Gold Buttons - Subtle */
+  /* Soft Jade/Sandy Buttons */
   [data-theme="ocean"] .bg-coral-500,
   [data-theme="ocean"] .dark\:bg-coral-600 {
-    background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #88b098 0%, #a8cbba 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease;
   }
   
   [data-theme="ocean"] .bg-coral-600 {
-    background: linear-gradient(135deg, #c9a961 0%, #b8954a 100%) !important;
+    background: linear-gradient(135deg, #7aa088 0%, #88b098 100%) !important;
   }
   
   [data-theme="ocean"] .bg-coral-700 {
-    background: #b8954a !important;
+    background: #7aa088 !important;
   }
   
-  /* Subtle Hover - No flashy effects */
+  /* Gentle Hover */
   [data-theme="ocean"] .hover\:bg-coral-700:hover,
   [data-theme="ocean"] .dark\:hover\:bg-coral-700:hover,
   [data-theme="ocean"] .bg-coral-500:hover {
-    background: linear-gradient(135deg, #e5c758 0%, #d4af37 100%) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #9cc0ac 0%, #b8d8c8 100%) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transform: translateY(-1px);
   }
 
   [data-theme="ocean"] .text-coral-400,
   [data-theme="ocean"] .dark\:text-coral-400 {
-    color: #d4af37 !important;
+    color: #a8cbba !important;
   }
   
   [data-theme="ocean"] .text-coral-500 {
-    color: #c9a961 !important;
+    color: #88b098 !important;
   }
   
   [data-theme="ocean"] .text-coral-600,
   [data-theme="ocean"] .dark\:text-coral-300 {
-    color: #d4af37 !important;
+    color: #a8cbba !important;
   }
   
   [data-theme="ocean"] .text-coral-700 {
-    color: #c9a961 !important;
+    color: #88b098 !important;
   }
   
-  /* Link Hover - Subtle */
+  /* Link Hover */
   [data-theme="ocean"] .hover\:text-coral-700:hover,
   [data-theme="ocean"] .dark\:hover\:text-coral-300:hover {
-    color: #e5c758 !important;
+    color: #b8d8c8 !important;
     text-shadow: none;
   }
 
   [data-theme="ocean"] .border-coral-200,
   [data-theme="ocean"] .dark\:border-coral-800 {
-    border-color: rgba(212, 175, 55, 0.3) !important;
+    border-color: rgba(168, 203, 186, 0.3) !important;
   }
   
   [data-theme="ocean"] .border-coral-300,
   [data-theme="ocean"] .dark\:border-coral-700 {
-    border-color: rgba(212, 175, 55, 0.4) !important;
+    border-color: rgba(168, 203, 186, 0.4) !important;
   }
   
-  /* Border Hover - No glow */
   [data-theme="ocean"] .hover\:border-coral-300:hover,
   [data-theme="ocean"] .dark\:hover\:border-coral-700:hover {
-    border-color: rgba(212, 175, 55, 0.6) !important;
-    box-shadow: none;
+    border-color: rgba(168, 203, 186, 0.55) !important;
   }
 
-  /* === SAPPHIRE → MOSS GREEN === */
+  /* === SAPPHIRE → PASTEL WATER BLUE === */
   [data-theme="ocean"] .bg-sapphire-100 {
-    background: rgba(79, 116, 82, 0.2) !important;
+    background: rgba(152, 193, 217, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-sapphire-500 {
-    background: linear-gradient(135deg, #4f7452 0%, #3d5f3f 100%) !important;
+    background: linear-gradient(135deg, #98c1d9 0%, #b8d4e8 100%) !important;
   }
   
   [data-theme="ocean"] .text-sapphire-400,
   [data-theme="ocean"] .dark\:text-sapphire-400 {
-    color: #6b8e6b !important;
+    color: #b8d4e8 !important;
   }
   
   [data-theme="ocean"] .text-sapphire-500 {
-    color: #4f7452 !important;
+    color: #98c1d9 !important;
   }
   
   [data-theme="ocean"] .text-sapphire-600 {
-    color: #3d5f3f !important;
+    color: #7aa8c4 !important;
   }
 
-  /* === EMERALD - Plants (Keep green but warmer) === */
+  /* === EMERALD - Soft Plant Green === */
   [data-theme="ocean"] .bg-emerald-50 {
-    background: rgba(107, 142, 107, 0.15) !important;
+    background: rgba(168, 203, 186, 0.15) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-emerald-900 {
-    background: rgba(45, 74, 46, 0.3) !important;
+    background: rgba(88, 128, 108, 0.25) !important;
+  }
+  
+  [data-theme="ocean"] .dark\:bg-emerald-950\/30 {
+    background: rgba(88, 128, 108, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-emerald-100 {
-    background: rgba(107, 142, 107, 0.2) !important;
+    background: rgba(168, 203, 186, 0.2) !important;
   }
   
   [data-theme="ocean"] .bg-emerald-500 {
-    background: linear-gradient(135deg, #6b8e6b 0%, #4f7452 100%) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #a8cbba 0%, #88b098 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   }
   
   [data-theme="ocean"] .text-emerald-400,
   [data-theme="ocean"] .dark\:text-emerald-400 {
-    color: #86efac !important;
+    color: #b8d8c8 !important;
   }
   
   [data-theme="ocean"] .text-emerald-500 {
-    color: #6b8e6b !important;
+    color: #a8cbba !important;
   }
   
   [data-theme="ocean"] .text-emerald-600 {
-    color: #4f7452 !important;
+    color: #88b098 !important;
   }
   
+  [data-theme="ocean"] .dark\:text-emerald-300 {
+    color: #c8e8d8 !important;
+  }
+  
+  [data-theme="ocean"] .border-emerald-200,
   [data-theme="ocean"] .border-emerald-300,
-  [data-theme="ocean"] .dark\:border-emerald-700 {
-    border-color: rgba(107, 142, 107, 0.3) !important;
+  [data-theme="ocean"] .dark\:border-emerald-700,
+  [data-theme="ocean"] .dark\:border-emerald-800 {
+    border-color: rgba(168, 203, 186, 0.35) !important;
   }
   
   [data-theme="ocean"] .hover\:border-emerald-300:hover,
   [data-theme="ocean"] .dark\:hover\:border-emerald-700:hover {
-    border-color: rgba(107, 142, 107, 0.5) !important;
-    box-shadow: none;
+    border-color: rgba(168, 203, 186, 0.5) !important;
   }
 
-  /* === ROSE - Favorites (Warmer tone) === */
+  /* === ROSE - Soft Pink (for favorites) === */
   [data-theme="ocean"] .text-rose-500 {
-    color: #fca5a5 !important;
+    color: #f8b4b4 !important;
     filter: none;
   }
   
-  [data-theme="ocean"] .bg-rose-50 {
-    background: rgba(252, 165, 165, 0.1) !important;
+  [data-theme="ocean"] .text-rose-400,
+  [data-theme="ocean"] .dark\:text-rose-400 {
+    color: #f8b4b4 !important;
+  }
+  
+  [data-theme="ocean"] .bg-rose-50,
+  [data-theme="ocean"] .dark\:bg-rose-950\/30 {
+    background: rgba(248, 180, 180, 0.12) !important;
   }
   
   [data-theme="ocean"] .dark\:bg-rose-900 {
-    background: rgba(131, 24, 67, 0.3) !important;
+    background: rgba(180, 100, 100, 0.25) !important;
   }
   
+  [data-theme="ocean"] .border-rose-200,
   [data-theme="ocean"] .border-rose-300,
-  [data-theme="ocean"] .dark\:border-rose-700 {
-    border-color: rgba(252, 165, 165, 0.3) !important;
+  [data-theme="ocean"] .dark\:border-rose-700,
+  [data-theme="ocean"] .dark\:border-rose-800 {
+    border-color: rgba(248, 180, 180, 0.3) !important;
   }
   
   [data-theme="ocean"] .hover\:border-rose-300:hover,
   [data-theme="ocean"] .dark\:hover\:border-rose-700:hover {
-    border-color: rgba(252, 165, 165, 0.5) !important;
-    box-shadow: none;
+    border-color: rgba(248, 180, 180, 0.45) !important;
   }
 
-  /* === AMBER - Keep warm === */
-  [data-theme="ocean"] .text-amber-400 {
-    color: #fbbf24 !important;
+  /* === AMBER - Soft Sand/Substrate === */
+  [data-theme="ocean"] .text-amber-400,
+  [data-theme="ocean"] .dark\:text-amber-400 {
+    color: #e8c898 !important;
     filter: none;
   }
   
   [data-theme="ocean"] .text-amber-500 {
-    color: #f59e0b !important;
+    color: #d8b878 !important;
+  }
+  
+  [data-theme="ocean"] .bg-amber-50,
+  [data-theme="ocean"] .dark\:bg-amber-950\/20 {
+    background: rgba(232, 200, 152, 0.15) !important;
   }
   
   [data-theme="ocean"] .bg-amber-100,
   [data-theme="ocean"] .dark\:bg-amber-900 {
-    background: rgba(251, 191, 36, 0.15) !important;
+    background: rgba(232, 200, 152, 0.2) !important;
+  }
+  
+  [data-theme="ocean"] .border-amber-200,
+  [data-theme="ocean"] .dark\:border-amber-800 {
+    border-color: rgba(232, 200, 152, 0.3) !important;
   }
 
-  /* === RED - Delete/Danger === */
+  /* === VIOLET/INDIGO/PURPLE - Soft Pastels === */
+  [data-theme="ocean"] .bg-violet-50,
+  [data-theme="ocean"] .dark\:bg-violet-950\/30 {
+    background: rgba(200, 190, 220, 0.15) !important;
+  }
+  
+  [data-theme="ocean"] .border-violet-200,
+  [data-theme="ocean"] .dark\:border-violet-800 {
+    border-color: rgba(200, 190, 220, 0.3) !important;
+  }
+  
+  [data-theme="ocean"] .text-violet-300,
+  [data-theme="ocean"] .dark\:text-violet-300 {
+    color: #d8d0e8 !important;
+  }
+  
+  [data-theme="ocean"] .bg-indigo-50,
+  [data-theme="ocean"] .dark\:bg-indigo-950\/30 {
+    background: rgba(180, 200, 230, 0.15) !important;
+  }
+  
+  [data-theme="ocean"] .border-indigo-200,
+  [data-theme="ocean"] .dark\:border-indigo-800 {
+    border-color: rgba(180, 200, 230, 0.3) !important;
+  }
+
+  /* === CYAN/TEAL - Pastel Water === */
+  [data-theme="ocean"] .bg-cyan-50,
+  [data-theme="ocean"] .dark\:bg-cyan-950\/30 {
+    background: rgba(168, 220, 220, 0.15) !important;
+  }
+  
+  [data-theme="ocean"] .border-cyan-200,
+  [data-theme="ocean"] .dark\:border-cyan-800 {
+    border-color: rgba(168, 220, 220, 0.3) !important;
+  }
+  
+  [data-theme="ocean"] .text-cyan-400,
+  [data-theme="ocean"] .dark\:text-cyan-400 {
+    color: #a8dcdc !important;
+  }
+  
+  [data-theme="ocean"] .bg-teal-50 {
+    background: rgba(168, 220, 200, 0.15) !important;
+  }
+
+  /* === RED - Danger (slightly muted) === */
   [data-theme="ocean"] .bg-red-500 {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #e88888 0%, #d87878 100%) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   }
   
   [data-theme="ocean"] .hover\:bg-red-600:hover {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #f89898 0%, #e88888 100%) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transform: translateY(-1px);
   }
 
-  /* === GRADIENTS - Forest tones === */
-  [data-theme="ocean"] .from-indigo-600 { --tw-gradient-from: #4f7452 !important; }
-  [data-theme="ocean"] .via-purple-600 { --tw-gradient-via: #3d5f3f !important; }
-  [data-theme="ocean"] .to-blue-600 { --tw-gradient-to: #2d4a2e !important; }
-  [data-theme="ocean"] .from-coral-500 { --tw-gradient-from: #d4af37 !important; }
-  [data-theme="ocean"] .via-sapphire-500 { --tw-gradient-via: #4f7452 !important; }
-  [data-theme="ocean"] .to-emerald-500 { --tw-gradient-to: #6b8e6b !important; }
+  /* === GRADIENTS - Natural Aquarium === */
+  [data-theme="ocean"] .from-indigo-600 { --tw-gradient-from: #98c1d9 !important; }
+  [data-theme="ocean"] .via-purple-600 { --tw-gradient-via: #a8b8c8 !important; }
+  [data-theme="ocean"] .to-blue-600 { --tw-gradient-to: #88b0c8 !important; }
+  [data-theme="ocean"] .from-coral-500 { --tw-gradient-from: #88b098 !important; }
+  [data-theme="ocean"] .via-sapphire-500 { --tw-gradient-via: #98c1d9 !important; }
+  [data-theme="ocean"] .to-emerald-500 { --tw-gradient-to: #a8cbba !important; }
 
-  /* === NAVBAR - Subtle Glass === */
+  /* === NAVBAR - Soft Glass === */
   [data-theme="ocean"] header {
-    background: rgba(15, 30, 19, 0.6) !important;
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
-    border-bottom: 1px solid rgba(79, 116, 82, 0.2) !important;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    background: rgba(31, 46, 40, 0.7) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom: 1px solid rgba(136, 176, 152, 0.25) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   }
 
-  /* === CARDS - Clean Glass === */
+  /* === CARDS - Soft Pastel Glass === */
   [data-theme="ocean"] .card {
-    background: rgba(26, 77, 46, 0.25) !important;
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
-    border: 1px solid rgba(79, 116, 82, 0.2) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    background: rgba(45, 60, 52, 0.35) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(136, 176, 152, 0.25) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
   }
 
-  /* === CARD HOVER - Subtle lift === */
+  /* === CARD HOVER - Gentle === */
   [data-theme="ocean"] .card-hover:hover {
-    background: rgba(45, 95, 63, 0.35) !important;
-    border-color: rgba(79, 116, 82, 0.35) !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: rgba(62, 80, 70, 0.4) !important;
+    border-color: rgba(136, 176, 152, 0.35) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
   }
 
-  /* === IMAGES - Natural === */
+  /* === IMAGES - Natural Enhancement === */
   [data-theme="ocean"] img {
-    filter: brightness(0.92) saturate(1.1) contrast(1.05);
+    filter: brightness(0.95) saturate(1.15) contrast(1.05);
     transition: filter 0.3s ease;
   }
 
   [data-theme="ocean"] img:hover {
-    filter: brightness(0.98) saturate(1.15) contrast(1.08);
+    filter: brightness(1) saturate(1.2) contrast(1.08);
   }
 
-  /* === SHADOWS - Warm & Subtle === */
+  /* === SHADOWS - Soft & Natural === */
   [data-theme="ocean"] .shadow-sm {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 
   [data-theme="ocean"] .shadow-md {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
   }
 
   [data-theme="ocean"] .shadow-lg {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
 
   [data-theme="ocean"] .shadow-xl {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
   }
 
   [data-theme="ocean"] .shadow-2xl {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   }
 
-  /* === SELECTION - Gold === */
+  /* === SELECTION - Soft Jade === */
   [data-theme="ocean"] ::selection {
-    background: rgba(212, 175, 55, 0.3);
-    color: #f4f7f4;
+    background: rgba(168, 203, 186, 0.35);
+    color: #f0f5f0;
     text-shadow: none;
   }
 
-  /* === SCROLLBAR - Moss Green === */
+  /* === SCROLLBAR - Pastel Green === */
   [data-theme="ocean"] ::-webkit-scrollbar-track {
-    background: rgba(10, 20, 13, 0.6);
+    background: rgba(26, 37, 32, 0.6);
   }
 
   [data-theme="ocean"] ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #4f7452 0%, #3d5f3f 100%);
+    background: linear-gradient(180deg, #88b098 0%, #7aa088 100%);
     border-radius: 10px;
     box-shadow: none;
   }
 
   [data-theme="ocean"] ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #6b8e6b 0%, #4f7452 100%);
+    background: linear-gradient(180deg, #9cc0ac 0%, #88b098 100%);
     box-shadow: none;
   }
 
-  /* === FOCUS STATES - Subtle === */
+  /* === FOCUS STATES - Soft Jade === */
   [data-theme="ocean"] *:focus-visible {
-    outline: 2px solid rgba(212, 175, 55, 0.5);
+    outline: 2px solid rgba(168, 203, 186, 0.5);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 0 4px rgba(168, 203, 186, 0.15);
   }
 
-  /* === INPUTS - Glass === */
+  /* === INPUTS - Soft Glass === */
   [data-theme="ocean"] input,
   [data-theme="ocean"] textarea,
   [data-theme="ocean"] select {
-    background: rgba(26, 77, 46, 0.2) !important;
-    border-color: rgba(79, 116, 82, 0.3) !important;
-    color: #e8f3e8 !important;
+    background: rgba(45, 60, 52, 0.3) !important;
+    border-color: rgba(136, 176, 152, 0.3) !important;
+    color: #e8ede8 !important;
   }
 
   [data-theme="ocean"] input:focus,
   [data-theme="ocean"] textarea:focus,
   [data-theme="ocean"] select:focus {
-    background: rgba(45, 95, 63, 0.3) !important;
-    border-color: rgba(212, 175, 55, 0.4) !important;
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    background: rgba(62, 80, 70, 0.35) !important;
+    border-color: rgba(168, 203, 186, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(168, 203, 186, 0.15);
   }
 
   [data-theme="ocean"] input::placeholder,
   [data-theme="ocean"] textarea::placeholder {
-    color: rgba(159, 183, 159, 0.5) !important;
+    color: rgba(168, 186, 168, 0.5) !important;
   }
 
   /* === HOVER TRANSITIONS - Smooth === */
@@ -500,7 +573,7 @@
   [data-theme="ocean"] button:hover:not(:disabled),
   [data-theme="ocean"] .btn-primary:hover {
     transform: translateY(-1px);
-    filter: brightness(1.05);
+    filter: brightness(1.08);
   }
 
   [data-theme="ocean"] button:active,
