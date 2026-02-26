@@ -3,7 +3,7 @@ import {
   ArrowLeft, Sun, Wind, Ruler, Layers, Thermometer, Droplets,
   Sprout, Scissors, AlertTriangle, Sparkles, Target, Leaf,
   MapPin, CheckCircle, XCircle, Mountain, Fish, FlaskConical,
-  Clock, Lightbulb, Waves, Dna
+  Clock, Lightbulb, Waves, Dna, ArrowRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -12,7 +12,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 import { ImageAttribution } from '../components/ui/ImageAttribution';
 import type { Plant } from '../types/plant';
 
-// ─── helpers ────────────────────────────────────────────────────────────────
+// ─── helpers ────────────────────────────────────────────
 const cap = (s?: string) => (s ? s[0].toUpperCase() + s.slice(1) : '');
 
 const AQUASCAPE_STYLE_LABELS: Record<string, string> = {
@@ -41,6 +41,12 @@ const difficultyStyles = {
   advanced: 'bg-rose-600 text-white border-rose-700 shadow-lg',
 };
 
+const difficultyStylesMini = {
+  easy: 'bg-emerald-500 text-white',
+  medium: 'bg-amber-500 text-white',
+  advanced: 'bg-rose-500 text-white',
+};
+
 const nutrientBadgeColors: Record<'low' | 'medium' | 'high', string> = {
   low: 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
   medium: 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
@@ -49,7 +55,7 @@ const nutrientBadgeColors: Record<'low' | 'medium' | 'high', string> = {
 
 type Tab = 'overview' | 'care' | 'aquascape' | 'problems';
 
-// ─── page ────────────────────────────────────────────────────────────────────
+// ─── page ───────────────────────────────────────────────
 export const PlantDetailPage = () => {
   const { slug } = useParams();
   const plant = plantRepository.getBySlug(slug || '');
@@ -182,15 +188,16 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
+                    {/* UPDATED: Plant Specifications - cleaner, matching SpeciesDetailPage */}
                     <div>
                       <SectionHeader title="Plant Specifications" icon={<Layers className="w-5 h-5" />} />
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <SpecCard icon={<Layers className="w-5 h-5 text-indigo-500" />} label="Type" value={cap(plant.specs.type)} gradient="from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30" borderColor="border-indigo-200 dark:border-indigo-800" />
-                        <SpecCard icon={<Sun className="w-5 h-5 text-amber-500" />} label="Light" value={cap(plant.specs.light)} gradient="from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30" borderColor="border-amber-200 dark:border-amber-800" />
-                        <SpecCard icon={<Wind className="w-5 h-5 text-cyan-500" />} label="CO₂" value={cap(plant.specs.co2)} gradient="from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30" borderColor="border-cyan-200 dark:border-cyan-800" />
-                        <SpecCard icon={<Sprout className="w-5 h-5 text-emerald-500" />} label="Growth Rate" value={cap(plant.specs.growthRate)} gradient="from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30" borderColor="border-emerald-200 dark:border-emerald-800" />
-                        <SpecCard icon={<Ruler className="w-5 h-5 text-purple-500" />} label="Height" value={`${plant.specs.heightCM.min}–${plant.specs.heightCM.max} cm`} gradient="from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30" borderColor="border-purple-200 dark:border-purple-800" />
-                        <SpecCard icon={<Layers className="w-5 h-5 text-violet-500" />} label="Placement" value={plant.specs.placement.join(', ')} gradient="from-violet-50 to-indigo-50 dark:from-violet-950/30 dark:to-indigo-950/30" borderColor="border-violet-200 dark:border-violet-800" />
+                        <SpecCard icon={<Layers className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Type" value={cap(plant.specs.type)} />
+                        <SpecCard icon={<Sun className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Light" value={cap(plant.specs.light)} />
+                        <SpecCard icon={<Wind className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="CO₂" value={cap(plant.specs.co2)} />
+                        <SpecCard icon={<Sprout className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Growth Rate" value={cap(plant.specs.growthRate)} />
+                        <SpecCard icon={<Ruler className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Height" value={`${plant.specs.heightCM.min}–${plant.specs.heightCM.max} cm`} />
+                        <SpecCard icon={<Layers className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Placement" value={plant.specs.placement.join(', ')} />
                       </div>
                     </div>
 
@@ -225,45 +232,89 @@ export const PlantDetailPage = () => {
                       </div>
                     )}
 
+                    {/* UPDATED: Water Parameters - cleaner, matching SpeciesDetailPage */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Thermometer className="w-5 h-5" />} />
-                      <div className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-slate-200 dark:border-slate-700 space-y-5">
-                        <ParamBar
-                          label="Temperature"
-                          min={plant.parameters.tempC.min}
-                          max={plant.parameters.tempC.max}
-                          ideal={plant.parameters.tempC.ideal}
-                          unit="°C"
-                          scaleMin={10} scaleMax={32}
-                          scaleLabels={['10°C', '20°C', '26°C', '32°C']}
-                          colorClass="bg-gradient-to-r from-sky-400 to-rose-400"
-                          badgeClass="bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800"
-                        />
-                        <ParamBar
-                          label="pH Range"
-                          min={plant.parameters.ph.min}
-                          max={plant.parameters.ph.max}
-                          ideal={plant.parameters.ph.ideal}
-                          unit=""
-                          scaleMin={5} scaleMax={9}
-                          scaleLabels={['5.0', '6.5', '7.5', '9.0']}
-                          colorClass="bg-gradient-to-r from-rose-400 via-amber-300 to-sky-400"
-                          badgeClass="bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800"
-                        />
-                        {(plant.parameters.kh || plant.parameters.gh || plant.parameters.flow || plant.parameters.photoperiodHours) && (
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-200 dark:border-slate-700">
-                            {plant.parameters.kh && (
-                              <MiniParamCard icon={<Droplets className="w-4 h-4 text-blue-500" />} label="KH" value={`${plant.parameters.kh.min}–${plant.parameters.kh.max} °dKH`} />
-                            )}
-                            {plant.parameters.gh && (
-                              <MiniParamCard icon={<Droplets className="w-4 h-4 text-indigo-500" />} label="GH" value={`${plant.parameters.gh.min}–${plant.parameters.gh.max} °dGH`} />
-                            )}
-                            {plant.parameters.flow && (
-                              <MiniParamCard icon={<Waves className="w-4 h-4 text-cyan-500" />} label="Flow" value={cap(plant.parameters.flow)} />
-                            )}
-                            {plant.parameters.photoperiodHours && (
-                              <MiniParamCard icon={<Clock className="w-4 h-4 text-amber-500" />} label="Photoperiod" value={`${plant.parameters.photoperiodHours.min}–${plant.parameters.photoperiodHours.max} h`} />
-                            )}
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {/* Temperature Card */}
+                        <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Thermometer className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Temperature</div>
+                          </div>
+                          <div className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
+                            {plant.parameters.tempC.min}–{plant.parameters.tempC.max}°C
+                          </div>
+                          {plant.parameters.tempC.ideal && (
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              <span className="font-semibold">Ideal:</span> {plant.parameters.tempC.ideal}°C
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pH Card */}
+                        <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Droplets className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">pH Level</div>
+                          </div>
+                          <div className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
+                            {plant.parameters.ph.min}–{plant.parameters.ph.max}
+                          </div>
+                          {plant.parameters.ph.ideal && (
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              <span className="font-semibold">Ideal:</span> {plant.parameters.ph.ideal}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Flow Card - only if available */}
+                        {plant.parameters.flow && (
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Waves className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Water Flow</div>
+                            </div>
+                            <div className="text-lg font-bold text-gray-900 dark:text-gray-100 capitalize">{plant.parameters.flow}</div>
+                          </div>
+                        )}
+
+                        {/* Photoperiod Card - only if available */}
+                        {plant.parameters.photoperiodHours && (
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Clock className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Photoperiod</div>
+                            </div>
+                            <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                              {plant.parameters.photoperiodHours.min}–{plant.parameters.photoperiodHours.max} h
+                            </div>
+                          </div>
+                        )}
+
+                        {/* KH Card - only if available */}
+                        {plant.parameters.kh && (
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Droplets className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">KH</div>
+                            </div>
+                            <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                              {plant.parameters.kh.min}–{plant.parameters.kh.max} °dKH
+                            </div>
+                          </div>
+                        )}
+
+                        {/* GH Card - only if available */}
+                        {plant.parameters.gh && (
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Droplets className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                              <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">GH</div>
+                            </div>
+                            <div className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                              {plant.parameters.gh.min}–{plant.parameters.gh.max} °dGH
+                            </div>
                           </div>
                         )}
                       </div>
@@ -426,29 +477,79 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Similar Plants */}
+                        {/* Similar Plants - Enhanced with better mini-cards */}
                         {plant.relatedPlants && plant.relatedPlants.length > 0 && (
                           <div>
                             <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                              {plant.relatedPlants.map(relSlug => {
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {plant.relatedPlants.map((relSlug, idx) => {
                                 const rel = plantRepository.getBySlug(relSlug);
+                                if (!rel) return null;
                                 return (
-                                  <Link
+                                  <motion.div
                                     key={relSlug}
-                                    to={`/plants/${relSlug}`}
-                                    className="group rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden hover:border-emerald-400 dark:hover:border-emerald-600 transition-all shadow-md hover:shadow-lg"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
                                   >
-                                    {rel?.imageUrl && (
-                                      <div className="h-24 overflow-hidden">
-                                        <img src={rel.imageUrl} alt={rel.taxonomy.commonName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                    <Link
+                                      to={`/plants/${relSlug}`}
+                                      className="group block rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden hover:border-emerald-400 dark:hover:border-emerald-600 transition-all duration-300 shadow-md hover:shadow-xl bg-white dark:bg-slate-800"
+                                    >
+                                      {/* Image */}
+                                      <div className="relative h-36 overflow-hidden bg-slate-100 dark:bg-slate-700">
+                                        {rel.imageUrl ? (
+                                          <img 
+                                            src={rel.imageUrl} 
+                                            alt={rel.taxonomy.commonName} 
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                          />
+                                        ) : (
+                                          <div className="w-full h-full flex items-center justify-center">
+                                            <Leaf className="w-12 h-12 text-slate-300 dark:text-slate-600" />
+                                          </div>
+                                        )}
+                                        {/* Difficulty Badge - positioned in top-right */}
+                                        <div className="absolute top-2 right-2">
+                                          <span className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${difficultyStylesMini[rel.difficulty]} shadow-lg`}>
+                                            {rel.difficulty}
+                                          </span>
+                                        </div>
                                       </div>
-                                    )}
-                                    <div className="p-2.5 bg-white dark:bg-slate-800">
-                                      <p className="text-xs font-black text-slate-800 dark:text-slate-100 truncate">{rel?.taxonomy.commonName ?? relSlug}</p>
-                                      <p className="text-[10px] text-slate-400 dark:text-slate-500 italic truncate">{rel?.taxonomy.scientificName ?? ''}</p>
-                                    </div>
-                                  </Link>
+                                      
+                                      {/* Content */}
+                                      <div className="p-3.5">
+                                        <h4 className="text-sm font-black text-slate-800 dark:text-slate-100 mb-1 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                          {rel.taxonomy.commonName}
+                                        </h4>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400 italic truncate mb-2.5">
+                                          {rel.taxonomy.scientificName}
+                                        </p>
+                                        
+                                        {/* Quick Info Pills */}
+                                        <div className="flex flex-wrap gap-1.5 mb-3">
+                                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                                            <Sun className="w-3 h-3" />
+                                            {cap(rel.specs.light)}
+                                          </span>
+                                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                                            <Wind className="w-3 h-3" />
+                                            {cap(rel.specs.co2)}
+                                          </span>
+                                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                                            <Ruler className="w-3 h-3" />
+                                            {rel.specs.heightCM.min}–{rel.specs.heightCM.max}cm
+                                          </span>
+                                        </div>
+
+                                        {/* View Details Link */}
+                                        <div className="flex items-center justify-between text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
+                                          <span className="text-xs font-black uppercase tracking-wide">View Details</span>
+                                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </div>
+                                      </div>
+                                    </Link>
+                                  </motion.div>
                                 );
                               })}
                             </div>
@@ -509,9 +610,9 @@ export const PlantDetailPage = () => {
   );
 };
 
-// ════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 // SUB-COMPONENTS
-// ════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 
 const HeroPill = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-sm text-white text-xs font-bold border border-white/20">
@@ -624,43 +725,6 @@ const SidebarRow = ({ icon, label, value }: { icon: React.ReactNode; label: stri
   </div>
 );
 
-const ParamBar = ({
-  label, min, max, ideal, unit, scaleMin, scaleMax, scaleLabels, colorClass, badgeClass
-}: {
-  label: string; min: number; max: number; ideal?: number; unit: string;
-  scaleMin: number; scaleMax: number; scaleLabels: string[];
-  colorClass: string; badgeClass: string;
-}) => {
-  const scale = scaleMax - scaleMin;
-  const leftPct = ((min - scaleMin) / scale) * 100;
-  const widthPct = ((max - min) / scale) * 100;
-  const idealPct = ideal !== undefined ? ((ideal - scaleMin) / scale) * 100 : null;
-
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-2.5">
-        <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{label}</span>
-        <span className={`text-xs font-black px-3 py-1.5 rounded-full border-2 ${badgeClass}`}>
-          {min}–{max}{unit}{ideal !== undefined ? ` · ${ideal}${unit} ideal` : ''}
-        </span>
-      </div>
-      <div className="relative w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-visible">
-        <div className={`absolute h-full rounded-full ${colorClass}`} style={{ left: `${leftPct}%`, width: `${widthPct}%` }} />
-        {idealPct !== null && (
-          <div
-            className="absolute top-1/2 -translate-y-1/2 w-2.5 h-4 rounded-sm bg-white dark:bg-slate-900 border-2 border-emerald-500 shadow-md z-10"
-            style={{ left: `calc(${idealPct}% - 5px)` }}
-            title={`Ideal: ${ideal}${unit}`}
-          />
-        )}
-      </div>
-      <div className="flex justify-between text-[10px] text-slate-400 mt-1.5 font-semibold">
-        {scaleLabels.map(l => <span key={l}>{l}</span>)}
-      </div>
-    </div>
-  );
-};
-
 const PlacementVisualizer = ({ placements }: { placements: string[] }) => {
   const zones = ['floating', 'background', 'midground', 'foreground', 'carpet', 'epiphyte'];
   return (
@@ -690,16 +754,6 @@ const PlacementVisualizer = ({ placements }: { placements: string[] }) => {
   );
 };
 
-const MiniParamCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="bg-white dark:bg-slate-800 rounded-xl p-3 border-2 border-slate-200 dark:border-slate-700 shadow-sm">
-    <div className="flex items-center gap-1.5 mb-1.5 text-slate-500 dark:text-slate-400">
-      {icon}
-      <span className="text-[10px] font-black uppercase tracking-wide">{label}</span>
-    </div>
-    <div className="text-sm font-black text-slate-800 dark:text-slate-100">{value}</div>
-  </div>
-);
-
 const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
   <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2">
     <span className="text-emerald-600 dark:text-emerald-400">{icon}</span>
@@ -707,10 +761,14 @@ const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }
   </h3>
 );
 
-const SpecCard = ({ icon, label, value, gradient, borderColor }: { icon: React.ReactNode; label: string; value: string; gradient: string; borderColor: string }) => (
-  <div className={`bg-gradient-to-br ${gradient} rounded-xl p-4 border-2 ${borderColor} shadow-lg`}>
-    <div className="flex items-center gap-2 mb-2">{icon}<span className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wide">{label}</span></div>
-    <div className="text-lg font-black text-slate-900 dark:text-slate-100 capitalize">{value}</div>
+// UPDATED: SpecCard - cleaner, simpler design matching SpeciesDetailPage
+const SpecCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="flex items-center gap-2 mb-2">
+      {icon}
+      <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{label}</div>
+    </div>
+    <div className="text-lg font-bold text-gray-900 dark:text-gray-100 capitalize">{value}</div>
   </div>
 );
 
