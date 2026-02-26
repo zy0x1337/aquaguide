@@ -15,14 +15,14 @@ export const anubiasNanaPetite: Plant = {
 
   difficulty: 'easy',
 
-  funFact: 'Anubias Nana Petite ist eine Aquarium-Züchtung und kommt so in der Natur nicht vor – sie wurde durch selektive Kultur aus der Dwarf Anubias entwickelt.',
+  funFact: 'Anubias Nana Petite is an aquarium cultivar and does not exist in nature – it was developed through selective breeding from Dwarf Anubias.',
 
   taxonomy: {
     scientificName: "Anubias barteri var. nana 'Petite'",
     commonName: 'Anubias Nana Petite',
     family: 'Araceae',
     origin: 'Cultivar (originally West Africa)',
-    nativeRegion: 'Züchtung; Ausgangsart stammt aus beschatteten Fließgewässern Westafrikas'
+    nativeRegion: 'Cultivar; parent species originates from shaded flowing waters of West Africa'
   },
 
   specs: {
@@ -47,10 +47,10 @@ export const anubiasNanaPetite: Plant = {
     substrate: false,
     soilTabs: false,
     liquidFertilizer: true,
-    propagation: 'Rhizomteilung. Kleine Abschnitte mit 2–3 Blättern abschneiden. Mit Angelschnur an neuem Hardscape befestigen.',
-    notes: 'Ultra-Miniatur-Epiphyt. An Treibholz oder Stein mit Angelschnur oder Superkleber befestigen. Direktes helles Licht vermeiden, um Algen zu reduzieren. Das Rhizom MUSS freigelegt bleiben.',
-    trimming: 'Einzelne alte Blätter direkt am Stiel entfernen. Rhizom nicht kürzen außer zur Vermehrung.',
-    senescenceNotes: 'Sehr langlebig. Wächst extrem langsam – Geduld ist essenziell. Kein Wachstum über Wochen ist normal, solange keine Fäule sichtbar ist.'
+    propagation: 'Rhizome division. Cut small sections with 2–3 leaves. Attach to new hardscape with fishing line.',
+    notes: 'Ultra-miniature epiphyte. Attach to driftwood or stone with fishing line or super glue. Avoid direct bright light to reduce algae. The rhizome MUST remain exposed.',
+    trimming: 'Remove individual old leaves directly at the stem. Do not trim rhizome except for propagation.',
+    senescenceNotes: 'Very long-lived. Grows extremely slowly – patience is essential. No growth for weeks is normal as long as no rot is visible.'
   },
 
   nutrients: {
@@ -64,50 +64,50 @@ export const anubiasNanaPetite: Plant = {
 
   commonProblems: [
     {
-      title: 'Rhizom-Fäule',
-      desc: 'Rhizom wird schwarz/weich, Blätter schmelzen.',
-      solution: 'Rhizom niemals im Substrat eingraben. Gute Wasserzirkulation sicherstellen. Verfaulte Abschnitte sofort entfernen.'
+      title: 'Rhizome Rot',
+      desc: 'Rhizome turns black/soft, leaves melt.',
+      solution: 'Never bury rhizome in substrate. Ensure good water circulation. Remove rotted sections immediately.'
     },
     {
-      title: 'Algenbewuchs',
-      desc: 'Grünstaub- oder Fadenalgen auf den Blättern.',
-      solution: 'Lichtintensität/-dauer reduzieren. Wasserfluss erhöhen. Manuelle Behandlung mit weicher Bürste.'
+      title: 'Algae Growth',
+      desc: 'Green dust or hair algae on leaves.',
+      solution: 'Reduce light intensity/duration. Increase water flow. Manual treatment with soft brush.'
     },
     {
-      title: 'Kein neues Wachstum',
-      desc: 'Pflanze stabil, aber keine neuen Blätter.',
-      solution: 'Spurenelemente hinzufügen (Eisen/Zink). Nährstoffmangel prüfen. Wasserbewegung um die Pflanze verbessern.'
+      title: 'No New Growth',
+      desc: 'Plant stable but no new leaves.',
+      solution: 'Add trace elements (iron/zinc). Check for nutrient deficiency. Improve water movement around plant.'
     },
     {
-      title: 'Schmelzende Blätter',
-      desc: 'Blätter werden durchsichtig und lösen sich auf.',
-      solution: 'Langsam an neue Tankparameter akklimatisieren. Temperatur stabilisieren (22–26 °C optimal).'
+      title: 'Melting Leaves',
+      desc: 'Leaves become transparent and dissolve.',
+      solution: 'Slowly acclimate to new tank parameters. Stabilize temperature (22–26 °C optimal).'
     }
   ],
 
   proTips: [
-    'Ideal für Nano-Aquarien (5–20 L) und detailliertes Hardscape-Design.',
-    'Auf kleinen Steinen oder Treibholzästen befestigen, die als Deko-Element dienen.',
-    'Cherry Shrimps und Neocaridina-Garnelen lieben die kleinen Blätter als Schutzraum.'
+    'Ideal for nano aquariums (5–20 L) and detailed hardscape design.',
+    'Attach to small stones or driftwood branches that serve as decorative elements.',
+    'Cherry Shrimp and Neocaridina shrimp love the small leaves as shelter.'
   ],
 
   commonMistakes: [
-    'Rhizom eingraben – führt zu Fäule.',
-    'Mit zu viel Licht oder Dünger überwältigen – Petite braucht weniger als die meisten Pflanzen.',
-    'Direktes Tageslicht oder sehr helles Kunstlicht – fördert massiven Algenbewuchs.'
+    'Burying rhizome – leads to rot.',
+    'Overwhelming with too much light or fertilizer – Petite needs less than most plants.',
+    'Direct sunlight or very bright artificial light – promotes massive algae growth.'
   ],
 
   aquascapeContext: {
     styles: ['nature_aquarium', 'low_tech', 'iwagumi', 'biotope'],
-    roleInTank: 'Detailakzent im Vordergrund oder auf Hardscape. Perfekter Skalenbrecher in Nano-Scapes.',
+    roleInTank: 'Detail accent in foreground or on hardscape. Perfect scale-breaker in nano-scapes.',
     companionFish: ['Cherry Shrimp', 'Neocaridina sp.', 'Betta', 'Endlers Livebearer', 'Nano-Rasboras'],
     incompatibleFish: ['Goldfish', 'Large Cichlids', 'Silver Dollar'],
-    substrateRecommendations: ['Kies (1–2 mm)', 'Fluss-Sand', 'Lavastein als Befestigungsmedium']
+    substrateRecommendations: ['Gravel (1–2 mm)', 'River sand', 'Lava rock as attachment medium']
   },
 
   relatedPlants: [
     'anubias-barteri-var-nana'
   ],
 
-  description: 'Anubias Nana Petite ist die kleinste Anubias-Variante mit einer Gesamthöhe von nur 3–5 cm. Perfekt für Nano-Aquarien (5–20 L), Treibholz-Details und hochwertige Vordergrundgestaltung. Ultra-robust, überlebt wenig Licht ohne CO₂. Langsam wachsend mit minimalem Pflegeaufwand. Dunkelgrüne, runde Blätter mit dicker Textur. Ausschließlich Epiphyt – an Hartsubstrat befestigen (niemals im Substrat pflanzen). Ideal für Garnelen und Nano-Fische (Betta, Endler).'
+  description: 'Anubias Nana Petite is the smallest Anubias variety with a total height of only 3–5 cm. Perfect for nano aquariums (5–20 L), driftwood details, and premium foreground design. Ultra-robust, survives low light without CO₂. Slow-growing with minimal maintenance. Dark green, round leaves with thick texture. Exclusively epiphyte – attach to hardscape (never plant in substrate). Ideal for shrimp and nano fish (Betta, Endler).'
 };
