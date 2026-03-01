@@ -14,6 +14,7 @@ const HEADER_IMAGE_URL = 'https://cdn.pixabay.com/photo/2020/05/24/15/40/abstrac
 export const PlantsIndexPage = () => {
   const allPlants = plantRepository.getAll();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [shortcutKey, setShortcutKey] = useState('⌘K');
   
   const {
     searchTerm, setSearchTerm,
@@ -27,6 +28,13 @@ export const PlantsIndexPage = () => {
   } = usePlantSearch(allPlants);
 
   const [quickFilter, setQuickFilter] = useState<PlantFilterType>('all');
+
+  // Detect OS for shortcut hint
+  useEffect(() => {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0 || 
+                  navigator.userAgent.toUpperCase().indexOf('MAC') >= 0;
+    setShortcutKey(isMac ? '⌘K' : 'Ctrl+K');
+  }, []);
 
   // Keyboard shortcut to focus search input (Ctrl+K or Cmd+K)
   useEffect(() => {
@@ -167,7 +175,7 @@ export const PlantsIndexPage = () => {
                   )}
                   {/* Keyboard Shortcut Hint for Desktop */}
                   <div className="hidden sm:flex items-center gap-1 pr-3 text-slate-400 pointer-events-none select-none">
-                    <kbd className="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-xs font-mono font-bold">⌘K</kbd>
+                    <kbd className="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-xs font-mono font-bold">{shortcutKey}</kbd>
                   </div>
                 </div>
               </motion.div>
