@@ -53,6 +53,11 @@ import { sewelliaLineolata } from './sewellia-lineolata';
 import { hyphessobryconMegalopterus } from './hyphessobrycon-megalopterus';
 import { puntigrusTetrazona } from './puntigrus-tetrazona';
 import { pelvicachromispulcher } from './pelvicachromis-pulcher';
+import { trichogasterLeeri } from './trichogaster-leeri';
+import { melanotaeniaBoesemani } from './melanotaeniaboesemani';
+import { epiplatysAnnulatus } from './clown-kilifish';
+import { hemigrammusErythrozonus } from './hemmigrammus-erythrozonus';
+import { carnegiellaStrigata } from './marbled-hatchetfish';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -108,7 +113,12 @@ export const allSpecies: Species[] = [
   sewelliaLineolata,
   hyphessobryconMegalopterus,
   puntigrusTetrazona,
-  pelvicachromispulcher
+  pelvicachromispulcher,
+  trichogasterLeeri,
+  melanotaeniaBoesemani,
+  epiplatysAnnulatus,
+  hemigrammusErythrozonus,
+  carnegiellaStrigata
 ];
 
 export {
@@ -165,5 +175,10 @@ export {
   sewelliaLineolata,
   hyphessobryconMegalopterus,
   puntigrusTetrazona,
-  pelvicachromispulcher
+  pelvicachromispulcher,
+  trichogasterLeeri,
+  melanotaeniaBoesemani,
+  epiplatysAnnulatus,
+  hemigrammusErythrozonus,
+  carnegiellaStrigata
 };

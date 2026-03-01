@@ -24,6 +24,7 @@ export type Region =
   | 'Asia' 
   | 'Africa' 
   | 'Australia' 
+  | 'Oceania'
   | 'Europe';
 
 
