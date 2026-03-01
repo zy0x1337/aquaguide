@@ -37,7 +37,8 @@ const KnowledgeHubPage = () => {
       <div className="min-h-screen bg-white dark:bg-slate-950 pb-20">
         
         {/* Cleaner, Light/Dark Mode Responsive Header */}
-        <header className="relative pt-20 sm:pt-32 pb-16 sm:pb-24 px-6 overflow-hidden border-b border-slate-200 dark:border-slate-800">
+        {/* Adjusted padding top and bottom to reduce vertical height on desktop */}
+        <header className="relative pt-20 sm:pt-24 pb-12 sm:pb-16 px-6 overflow-hidden border-b border-slate-200 dark:border-slate-800">
           {/* Subtle gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-white to-purple-50/30 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950/20" />
           
@@ -58,7 +59,7 @@ const KnowledgeHubPage = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-6"
             >
               <Sparkles className="w-3.5 h-3.5" />
               Expert Knowledge Base
@@ -69,7 +70,7 @@ const KnowledgeHubPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-7xl font-black mb-6 tracking-tight text-slate-900 dark:text-white"
+              className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tight text-slate-900 dark:text-white"
             >
               Master Aquarium <br className="hidden md:block"/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500 dark:from-indigo-400 dark:to-purple-400">
@@ -82,7 +83,7 @@ const KnowledgeHubPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+              className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed"
             >
               Comprehensive guides on water chemistry, equipment, biology, and care. Learn from expert-written articles designed for all experience levels.
             </motion.p>
@@ -94,32 +95,32 @@ const KnowledgeHubPage = () => {
               transition={{ delay: 0.3 }}
               className="flex flex-wrap justify-center gap-4 md:gap-8"
             >
-              <div className="flex flex-col items-center p-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-3">
-                  <BookOpen className="w-6 h-6" />
+              <div className="flex flex-col items-center p-2 sm:p-4">
+                <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-2 sm:mb-3">
+                  <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white">{allKnowledgeArticles.length}</div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Articles</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{allKnowledgeArticles.length}</div>
+                <div className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">Articles</div>
               </div>
 
-              <div className="w-px h-16 bg-slate-200 dark:bg-slate-800 hidden sm:block self-center"></div>
+              <div className="w-px h-12 sm:h-16 bg-slate-200 dark:bg-slate-800 hidden sm:block self-center"></div>
 
-              <div className="flex flex-col items-center p-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 mb-3">
-                  <Clock className="w-6 h-6" />
+              <div className="flex flex-col items-center p-2 sm:p-4">
+                <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 mb-2 sm:mb-3">
+                  <Clock className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white">{totalReadingTime}m</div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Reading Time</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{totalReadingTime}m</div>
+                <div className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">Reading Time</div>
               </div>
 
-              <div className="w-px h-16 bg-slate-200 dark:bg-slate-800 hidden sm:block self-center"></div>
+              <div className="w-px h-12 sm:h-16 bg-slate-200 dark:bg-slate-800 hidden sm:block self-center"></div>
 
-              <div className="flex flex-col items-center p-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 mb-3">
-                  <Award className="w-6 h-6" />
+              <div className="flex flex-col items-center p-2 sm:p-4">
+                <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 mb-2 sm:mb-3">
+                  <Award className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white">7</div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Categories</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">7</div>
+                <div className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">Categories</div>
               </div>
             </motion.div>
           </div>

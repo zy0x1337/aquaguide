@@ -45,6 +45,8 @@ const SpeciesIndexPage = () => {
   const [biotopeSuggestions, setBiotopeSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
   // Lazy loading state
   const [displayCount, setDisplayCount] = useState(INITIAL_LOAD);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -80,6 +82,25 @@ const SpeciesIndexPage = () => {
       useExtendedSearch: true
     });
   }, []);
+
+  // Keyboard shortcut to focus search input (Ctrl+K or Cmd+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setSearchTerm('');
+      e.currentTarget.blur();
+    }
+  };
 
   const applyFilters = (species: Species): boolean => {
     if (filters.level && species.care.difficulty !== filters.level) return false;
@@ -546,26 +567,38 @@ const SpeciesIndexPage = () => {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="max-w-2xl"
               >
-                <div className="flex items-center bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border-2 border-gray-200 dark:border-gray-700">
+                <div className="flex items-center bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border-2 border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all">
                   <div className="pl-3 md:pl-4 text-gray-400">
                     <Search className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <input 
+                    ref={searchInputRef}
                     type="text" 
-                    placeholder="Search by name or region..." 
+                    placeholder="Search by name or region... (Press '/' to focus)" 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleSearchKeyDown}
                     className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-900 dark:text-gray-100 placeholder:text-gray-400 bg-transparent border-none focus:ring-0 outline-none font-medium"
+                    aria-label="Search species"
+                    autoFocus
                   />
                   {searchTerm && (
                     <button 
-                      onClick={() => setSearchTerm('')} 
+                      onClick={() => {
+                        setSearchTerm('');
+                        searchInputRef.current?.focus();
+                      }} 
                       className="mr-1.5 md:mr-2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" 
                       aria-label="Clear search"
+                      title="Clear search (Esc)"
                     >
                       <X className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                   )}
+                  {/* Keyboard Shortcut Hint for Desktop */}
+                  <div className="hidden sm:flex items-center gap-1 pr-3 text-gray-400 pointer-events-none select-none">
+                    <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono font-bold">⌘K</kbd>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

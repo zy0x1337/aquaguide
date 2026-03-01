@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Leaf, Search, Sprout, X, } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { plantRepository } from '../data/plants';
@@ -13,6 +13,9 @@ const HEADER_IMAGE_URL = 'https://cdn.pixabay.com/photo/2020/05/24/15/40/abstrac
 
 export const PlantsIndexPage = () => {
   const allPlants = plantRepository.getAll();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [shortcutKey, setShortcutKey] = useState('⌘K');
+  
   const {
     searchTerm, setSearchTerm,
     filterDifficulty: _filterDifficulty,
@@ -25,6 +28,25 @@ export const PlantsIndexPage = () => {
   } = usePlantSearch(allPlants);
 
   const [quickFilter, setQuickFilter] = useState<PlantFilterType>('all');
+
+  // Detect OS for shortcut hint
+  useEffect(() => {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0 || 
+                  navigator.userAgent.toUpperCase().indexOf('MAC') >= 0;
+    setShortcutKey(isMac ? '⌘K' : 'Ctrl+K');
+  }, []);
+
+  // Keyboard shortcut to focus search input (Ctrl+K or Cmd+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleQuickFilter = (filter: PlantFilterType) => {
     setQuickFilter(filter);
@@ -59,6 +81,13 @@ export const PlantsIndexPage = () => {
         setFilterHeight(null);
         setFilterType('rhizome');
         break;
+    }
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setSearchTerm('');
+      e.currentTarget.blur();
     }
   };
 
@@ -116,26 +145,38 @@ export const PlantsIndexPage = () => {
                 className="relative group max-w-2xl"
               >
                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                <div className="relative flex items-center bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border border-white/50">
+                <div className="relative flex items-center bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border border-white/50 focus-within:ring-2 focus-within:ring-emerald-500 focus-within:border-emerald-500 transition-all">
                   <div className="pl-3 md:pl-4 text-slate-400">
                     <Search className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <input 
+                    ref={searchInputRef}
                     type="text" 
-                    placeholder="Search plants..." 
+                    placeholder="Search plants... (Press '/' to focus)" 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleSearchKeyDown}
                     className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 bg-transparent border-none focus:ring-0 outline-none font-medium"
+                    aria-label="Search plants"
+                    autoFocus
                   />
                   {searchTerm && (
                     <button 
-                      onClick={() => setSearchTerm('')} 
+                      onClick={() => {
+                        setSearchTerm('');
+                        searchInputRef.current?.focus();
+                      }} 
                       className="mr-1.5 md:mr-2 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors" 
                       aria-label="Clear search"
+                      title="Clear search (Esc)"
                     >
                       <X className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                   )}
+                  {/* Keyboard Shortcut Hint for Desktop */}
+                  <div className="hidden sm:flex items-center gap-1 pr-3 text-slate-400 pointer-events-none select-none">
+                    <kbd className="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-xs font-mono font-bold">{shortcutKey}</kbd>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

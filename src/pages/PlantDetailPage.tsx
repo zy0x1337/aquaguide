@@ -53,7 +53,7 @@ const nutrientBadgeColors: Record<'low' | 'medium' | 'high', string> = {
   high: 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
 };
 
-type Tab = 'overview' | 'care' | 'aquascape' | 'problems' | 'gallery';
+type Tab = 'overview' | 'care' | 'aquascape' | 'problems';
 
 // ─── page ───────────────────────────────────────────────
 export const PlantDetailPage = () => {
@@ -85,15 +85,15 @@ export const PlantDetailPage = () => {
             onClick={() => setSelectedGalleryImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
               onClick={e => e.stopPropagation()}
             >
               <button 
                 onClick={() => setSelectedGalleryImage(null)}
-                className="absolute -top-12 right-0 text-white/70 hover:text-white p-2"
+                className="absolute -top-12 right-0 text-white/70 hover:text-white p-2 transition-colors"
               >
                 <XCircle className="w-8 h-8" />
               </button>
@@ -200,20 +200,14 @@ export const PlantDetailPage = () => {
                 <TabBtn id="problems" active={activeTab} onClick={setActiveTab} icon={<AlertTriangle className="w-4 h-4" />}>
                   Problems{hasProblems && <span className="ml-1.5 px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black">{plant.commonProblems!.length}</span>}
                 </TabBtn>
-                {hasGallery && (
-                  <TabBtn id="gallery" active={activeTab} onClick={setActiveTab} icon={<ImageIcon className="w-4 h-4" />}>
-                    Gallery<span className="ml-1.5 px-1.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-black">{plant.gallery!.length}</span>
-                  </TabBtn>
-                )}
               </div>
 
               {/* Mobile tabs */}
-              <div className={`sm:hidden grid ${hasGallery ? 'grid-cols-5' : 'grid-cols-4'} border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto`}>
+              <div className="sm:hidden grid grid-cols-4 border-b-2 border-slate-200 dark:border-slate-700">
                 <MobileTabBtn id="overview" active={activeTab} onClick={setActiveTab} icon={<Target className="w-4 h-4" />} label="Overview" />
                 <MobileTabBtn id="care" active={activeTab} onClick={setActiveTab} icon={<Leaf className="w-4 h-4" />} label="Care" />
                 <MobileTabBtn id="aquascape" active={activeTab} onClick={setActiveTab} icon={<Mountain className="w-4 h-4" />} label="Scape" />
                 <MobileTabBtn id="problems" active={activeTab} onClick={setActiveTab} icon={<AlertTriangle className="w-4 h-4" />} label="Issues" />
-                {hasGallery && <MobileTabBtn id="gallery" active={activeTab} onClick={setActiveTab} icon={<ImageIcon className="w-4 h-4" />} label="Gallery" />}
               </div>
 
               <div className="p-4 md:p-6 lg:p-8">
@@ -228,6 +222,34 @@ export const PlantDetailPage = () => {
                         <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">{plant.description}</p>
                       </div>
                     </div>
+
+                    {/* Image Gallery Integrated into Overview */}
+                    {hasGallery && (
+                      <div>
+                        <SectionHeader title="Gallery" icon={<ImageIcon className="w-5 h-5" />} />
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                          {plant.gallery!.map((imgUrl, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.05 }}
+                              className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer border-2 border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors shadow-sm hover:shadow-md group"
+                              onClick={() => setSelectedGalleryImage(imgUrl)}
+                            >
+                              <img 
+                                src={imgUrl} 
+                                alt={`${plant.taxonomy.commonName} gallery view ${idx + 1}`} 
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                                <ImageIcon className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md" />
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Plant Specifications */}
                     <div>
@@ -631,32 +653,6 @@ export const PlantDetailPage = () => {
                         <p className="text-sm font-bold">No common problems documented yet.</p>
                       </div>
                     )}
-                  </motion.div>
-                )}
-
-                {/* ── GALLERY ── */}
-                {activeTab === 'gallery' && hasGallery && (
-                  <motion.div key="gallery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                    <SectionHeader title="Image Gallery" icon={<ImageIcon className="w-5 h-5" />} />
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {plant.gallery!.map((imgUrl, idx) => (
-                        <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.05 }}
-                          className="relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors shadow-sm hover:shadow-md"
-                          onClick={() => setSelectedGalleryImage(imgUrl)}
-                        >
-                          <img 
-                            src={imgUrl} 
-                            alt={`${plant.taxonomy.commonName} gallery image ${idx + 1}`} 
-                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors" />
-                        </motion.div>
-                      ))}
-                    </div>
                   </motion.div>
                 )}
 
