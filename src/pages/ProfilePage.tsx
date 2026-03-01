@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star, Target, TrendingUp } from 'lucide-react';
+import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star, Target, TrendingUp, MessageSquare, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '../hooks/useFavorites';
 
@@ -38,6 +38,9 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const headerInputRef = useRef<HTMLInputElement>(null);
+
+  // Beta Feedback State
+  const [feedbackText, setFeedbackText] = useState('');
 
   // Favorites
   const { favorites, loading: favoritesLoading, toggleFavorite } = useFavorites(userId || user?.id);
@@ -357,6 +360,14 @@ const ProfilePage = () => {
     alert('Profile link copied to clipboard!');
   };
 
+  const handleSendFeedback = () => {
+    if (!feedbackText.trim()) return;
+    const subject = encodeURIComponent(`AquaGuide Beta Feedback from ${profile.displayName || 'User'}`);
+    const body = encodeURIComponent(feedbackText);
+    window.location.href = `mailto:zy0x1337@proton.me?subject=${subject}&body=${body}`;
+    setFeedbackText(''); // clear it after sending
+  };
+
   const tabs = [
     { id: 'overview', label: 'Overview', icon: User },
     { id: 'favorites', label: 'Favorites', icon: Heart, badge: favorites.length },
@@ -593,6 +604,36 @@ const ProfilePage = () => {
                 exit={{ opacity: 0, y: -20 }}
                 className="space-y-6"
               >
+                {/* Beta Feedback Form */}
+                {isOwnProfile && (
+                  <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 rounded-2xl border-2 border-indigo-100 dark:border-indigo-900/50 p-6 shadow-sm">
+                    <div className="flex items-center gap-2 mb-3">
+                      <MessageSquare className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                      <h3 className="text-lg font-black text-indigo-900 dark:text-indigo-300">Beta Feedback</h3>
+                    </div>
+                    <p className="text-sm text-indigo-700/80 dark:text-indigo-300/80 mb-4">
+                      Help us improve! Found a bug or have an idea? Write it below and it will open your email client to send directly to the developer.
+                    </p>
+                    <div className="flex gap-3">
+                      <textarea
+                        value={feedbackText}
+                        onChange={(e) => setFeedbackText(e.target.value)}
+                        placeholder="I really like the... but maybe you could add..."
+                        rows={2}
+                        className="flex-1 px-4 py-3 bg-white dark:bg-gray-800 border-2 border-indigo-100 dark:border-indigo-900/50 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all resize-none text-sm"
+                      />
+                      <button
+                        onClick={handleSendFeedback}
+                        disabled={!feedbackText.trim()}
+                        className="self-end px-4 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span className="hidden sm:inline">Send</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Quick Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Favorites Preview */}
