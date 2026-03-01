@@ -1,18 +1,38 @@
 import { Link } from 'react-router-dom';
 import { 
-  Zap, ChevronRight, ArrowRight,
+  Zap, ArrowRight,
   Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus,
-  Leaf, Map, Lightbulb
+  Leaf, Map, Lightbulb, Clock
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
 import { allSpecies, bettaSplendens, neonTetra, oscar, amanoShrimp } from '../data/species';
 import { useAuth } from '../contexts/AuthContext';
+import { allPlants } from '../data/plants';
+import { biotopes } from '../data/biotopes';
+import { allKnowledgeArticles } from '../data/knowledge';
 
 const HomePage = () => {
   const { user, profile } = useAuth();
+  
   const featuredSpecies = [bettaSplendens, neonTetra, oscar, amanoShrimp];
+  
+  // Dynamically pulled featured items
+  const featuredPlants = [
+    allPlants.find(p => p.slug === 'anubias-barteri-nana'),
+    allPlants.find(p => p.slug === 'bacopa-monnieri'),
+    allPlants.find(p => p.slug === 'microsorum-pteropus')
+  ].filter((p): p is (typeof allPlants)[number] => Boolean(p));
+
+  const featuredBiotopes = ['amazon', 'lake-malawi']
+    .map(id => biotopes.find(b => b.id === id))
+    .filter((b): b is (typeof biotopes)[number] => Boolean(b));
+  const displayBiotopes = featuredBiotopes.length === 2 ? featuredBiotopes : biotopes.slice(0, 2);
+
+  const featuredArticles = ['nitrogen-cycle', 'planted-tank-setup']
+    .map(slug => allKnowledgeArticles.find(a => a.slug === slug))
+    .filter((a): a is (typeof allKnowledgeArticles)[number] => Boolean(a));
 
   // Animation variants
   const fadeInUp = {
@@ -239,50 +259,160 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* EXPLORE MORE CARDS - Habitats, Plants, Knowledge */}
-        <section className="py-20 px-6 relative overflow-hidden">
+        {/* HOME TEASERS - Plants / Habitats / Knowledge */}
+        <section className="py-20 px-6 relative overflow-hidden bg-white dark:bg-slate-950">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="max-w-2xl"
-              >
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                  Mehr als nur Fische
-                </h2>
-                <p className="text-lg text-slate-600 dark:text-slate-400">
-                  Entdecke die ganze Welt der Aquaristik. Von authentischen Biotopen über detaillierte Pflanzenprofile bis hin zu essenziellem Fachwissen.
-                </p>
-              </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-3xl mx-auto mb-16"
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">
+                Mehr als nur Fische
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                Entdecke authentische Biotop-Setups, detaillierte Pflanzenprofile und lerne die wichtigsten Grundlagen in unserer Knowledge Base.
+              </p>
+            </motion.div>
+
+            {/* Plants Row */}
+            <div className="mb-20">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                    <Leaf className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Beliebte Pflanzen</h3>
+                </div>
+                <Link to="/plants" className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors shrink-0">
+                  Lexikon öffnen <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+                {featuredPlants.map((plant, i) => (
+                  <motion.div
+                    key={plant.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                  >
+                    <Link to={`/plants/${plant.slug}`} className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 hover:-translate-y-2 block aspect-square">
+                      <img src={plant.imageUrl} alt={plant.taxonomy.commonName} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/20 to-transparent" />
+                      <div className="absolute bottom-5 left-5 right-5">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                          {plant.taxonomy.family}
+                        </p>
+                        <h4 className="text-white font-bold text-xl mb-2 group-hover:text-emerald-300 transition-colors">{plant.taxonomy.commonName}</h4>
+                        <div className="flex items-center gap-3 text-xs text-slate-200">
+                          <span className="capitalize px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md">{plant.difficulty} Care</span>
+                          <span className="capitalize px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md">{plant.specs.growthRate} Growth</span>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <ExploreCard 
-                icon={<Map className="w-6 h-6" />}
-                title="Biotope & Habitate"
-                desc="Erfahre, wie du natürliche Lebensräume wie den Amazonas oder den Tanganjikasee perfekt im Aquarium nachbildest."
-                link="/biotopes"
-                image="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800"
-                color="indigo"
-              />
-              <ExploreCard 
-                icon={<Leaf className="w-6 h-6" />}
-                title="Pflanzen-Lexikon"
-                desc="Finde die perfekten Pflanzen für dein Setup. Mit Lichtbedarf, Wachstumsraten und genauen Dünge-Anforderungen."
-                link="/plants"
-                image="https://images.unsplash.com/photo-1622312683073-f14d7a861dcd?auto=format&fit=crop&q=80&w=800"
-                color="emerald"
-              />
-              <ExploreCard 
-                icon={<Lightbulb className="w-6 h-6" />}
-                title="Knowledge Base"
-                desc="Lerne alles über den Stickstoffkreislauf, Wasserchemie und Krankheitserkennung in unseren Guides."
-                link="/knowledge"
-                image="https://images.unsplash.com/photo-1544552866-d3ed42536fc6?auto=format&fit=crop&q=80&w=800"
-                color="amber"
-              />
+            {/* Biotopes & Knowledge Split Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+              
+              {/* Biotopes Column */}
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                      <Map className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Habitate</h3>
+                  </div>
+                  <Link to="/biotopes" className="text-amber-600 dark:text-amber-400 font-semibold hover:underline flex items-center gap-1">
+                    Entdecken <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                <div className="grid gap-6">
+                  {displayBiotopes.map((biotope, i) => (
+                    <motion.div
+                      key={biotope.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                    >
+                      <Link to={`/biotopes?habitat=${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border-2 border-slate-100 dark:border-slate-800 transition-all duration-300 h-56 block">
+                        <img 
+                          src={biotope.regions.includes('South America') ? 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800' : 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&q=80&w=800'} 
+                          alt={biotope.label} 
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent" />
+                        <div className="absolute bottom-6 left-6 right-6">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-md">
+                              {biotope.regions[0]}
+                            </span>
+                          </div>
+                          <h4 className="text-xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">{biotope.label}</h4>
+                          <p className="text-slate-300 text-sm line-clamp-1">{biotope.description}</p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Knowledge Column */}
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                      <Lightbulb className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Wissen</h3>
+                  </div>
+                  <Link to="/knowledge" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
+                    Alle Guides <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                <div className="grid gap-6">
+                  {featuredArticles.map((article, i) => (
+                    <motion.div
+                      key={article.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                    >
+                      <Link to={`/knowledge/${article.slug}`} className="group flex flex-row gap-5 p-4 rounded-3xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-200 dark:hover:border-indigo-500/40 transition-all duration-300 shadow-sm hover:shadow-lg h-56">
+                        <div className="w-2/5 sm:w-1/3 rounded-2xl overflow-hidden shrink-0 relative">
+                          <img src={article.visuals.headerImage} alt={article.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                          <div className="absolute top-2 left-2 px-2 py-1 rounded-md bg-slate-900/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
+                            {article.category}
+                          </div>
+                        </div>
+                        <div className="flex flex-col justify-center flex-1 py-1 pr-2">
+                          <div className="flex items-center gap-3 text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {article.readingTime} min</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+                            <span className="capitalize text-indigo-600 dark:text-indigo-400">{article.difficulty}</span>
+                          </div>
+                          <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug line-clamp-2">
+                            {article.title}
+                          </h4>
+                          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-3">
+                            {article.summary}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
@@ -473,70 +603,5 @@ const FeatureCard = ({
     <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${iconBg} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
   </motion.div>
 );
-
-const ExploreCard = ({ 
-  icon, 
-  title, 
-  desc, 
-  link, 
-  image,
-  color
-}: { 
-  icon: any; 
-  title: string; 
-  desc: string; 
-  link: string; 
-  image: string;
-  color: 'indigo' | 'emerald' | 'amber';
-}) => {
-  const colorMap = {
-    indigo: 'from-indigo-600/80 to-indigo-900/90 hover:from-indigo-500/80 hover:to-indigo-800/90',
-    emerald: 'from-emerald-600/80 to-emerald-900/90 hover:from-emerald-500/80 hover:to-emerald-800/90',
-    amber: 'from-amber-600/80 to-amber-900/90 hover:from-amber-500/80 hover:to-amber-800/90'
-  };
-
-  const iconColorMap = {
-    indigo: 'text-indigo-300',
-    emerald: 'text-emerald-300',
-    amber: 'text-amber-300'
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-    >
-      <Link 
-        to={link}
-        className="group block relative h-[320px] rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-      >
-        <img 
-          src={image} 
-          alt={title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className={`absolute inset-0 bg-gradient-to-t ${colorMap[color]} transition-colors duration-300`} />
-        
-        <div className="absolute inset-0 p-8 flex flex-col justify-end">
-          <div className={`mb-4 ${iconColorMap[color]} transform group-hover:scale-110 transition-transform duration-300 origin-left`}>
-            {icon}
-          </div>
-          <h3 className="text-2xl font-bold text-white mb-2">
-            {title}
-          </h3>
-          <p className="text-white/80 text-sm line-clamp-2 mb-4">
-            {desc}
-          </p>
-          <div className="flex items-center gap-2 text-white font-medium text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-            Entdecken
-            <ArrowRight className="w-4 h-4" />
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  );
-};
 
 export default HomePage;
