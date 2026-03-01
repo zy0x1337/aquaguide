@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { 
   Zap, ChevronRight, ArrowRight,
-  Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus
+  Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus,
+  Leaf, Map, Lightbulb
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
@@ -238,8 +239,56 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* FEATURES BENTO GRID */}
-        <section className="py-20 sm:py-32 px-6">
+        {/* EXPLORE MORE CARDS - Habitats, Plants, Knowledge */}
+        <section className="py-20 px-6 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="max-w-2xl"
+              >
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                  Mehr als nur Fische
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400">
+                  Entdecke die ganze Welt der Aquaristik. Von authentischen Biotopen über detaillierte Pflanzenprofile bis hin zu essenziellem Fachwissen.
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <ExploreCard 
+                icon={<Map className="w-6 h-6" />}
+                title="Biotope & Habitate"
+                desc="Erfahre, wie du natürliche Lebensräume wie den Amazonas oder den Tanganjikasee perfekt im Aquarium nachbildest."
+                link="/biotopes"
+                image="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800"
+                color="indigo"
+              />
+              <ExploreCard 
+                icon={<Leaf className="w-6 h-6" />}
+                title="Pflanzen-Lexikon"
+                desc="Finde die perfekten Pflanzen für dein Setup. Mit Lichtbedarf, Wachstumsraten und genauen Dünge-Anforderungen."
+                link="/plants"
+                image="https://images.unsplash.com/photo-1622312683073-f14d7a861dcd?auto=format&fit=crop&q=80&w=800"
+                color="emerald"
+              />
+              <ExploreCard 
+                icon={<Lightbulb className="w-6 h-6" />}
+                title="Knowledge Base"
+                desc="Lerne alles über den Stickstoffkreislauf, Wasserchemie und Krankheitserkennung in unseren Guides."
+                link="/knowledge"
+                image="https://images.unsplash.com/photo-1544552866-d3ed42536fc6?auto=format&fit=crop&q=80&w=800"
+                color="amber"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* FEATURES BENTO GRID (Core App Features) */}
+        <section className="py-20 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-200 dark:border-slate-800 px-6">
           <div className="max-w-7xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -286,7 +335,7 @@ const HomePage = () => {
         </section>
 
         {/* BOTTOM CTA / AUTH BANNER */}
-        <section className="relative py-20 sm:py-24 overflow-hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+        <section className="relative py-20 sm:py-24 overflow-hidden bg-white dark:bg-slate-950">
           {/* Subtle gradient shapes */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-[80px]" />
@@ -424,5 +473,70 @@ const FeatureCard = ({
     <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${iconBg} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
   </motion.div>
 );
+
+const ExploreCard = ({ 
+  icon, 
+  title, 
+  desc, 
+  link, 
+  image,
+  color
+}: { 
+  icon: any; 
+  title: string; 
+  desc: string; 
+  link: string; 
+  image: string;
+  color: 'indigo' | 'emerald' | 'amber';
+}) => {
+  const colorMap = {
+    indigo: 'from-indigo-600/80 to-indigo-900/90 hover:from-indigo-500/80 hover:to-indigo-800/90',
+    emerald: 'from-emerald-600/80 to-emerald-900/90 hover:from-emerald-500/80 hover:to-emerald-800/90',
+    amber: 'from-amber-600/80 to-amber-900/90 hover:from-amber-500/80 hover:to-amber-800/90'
+  };
+
+  const iconColorMap = {
+    indigo: 'text-indigo-300',
+    emerald: 'text-emerald-300',
+    amber: 'text-amber-300'
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
+      <Link 
+        to={link}
+        className="group block relative h-[320px] rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+      >
+        <img 
+          src={image} 
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className={`absolute inset-0 bg-gradient-to-t ${colorMap[color]} transition-colors duration-300`} />
+        
+        <div className="absolute inset-0 p-8 flex flex-col justify-end">
+          <div className={`mb-4 ${iconColorMap[color]} transform group-hover:scale-110 transition-transform duration-300 origin-left`}>
+            {icon}
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-2">
+            {title}
+          </h3>
+          <p className="text-white/80 text-sm line-clamp-2 mb-4">
+            {desc}
+          </p>
+          <div className="flex items-center gap-2 text-white font-medium text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+            Entdecken
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+};
 
 export default HomePage;
