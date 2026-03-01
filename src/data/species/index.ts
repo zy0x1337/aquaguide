@@ -60,6 +60,7 @@ import { hemigrammusErythrozonus } from './hemmigrammus-erythrozonus';
 import { carnegiellaStrigata } from './marbled-hatchetfish';
 import { trichogasterLalius } from './dwarf-gourami';
 import { trigonostigmaEspei } from './espei-rasbora';
+import { apistogrammaCacatuoides } from './apistogramma-cacatuoides';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -122,7 +123,8 @@ export const allSpecies: Species[] = [
   hemigrammusErythrozonus,
   carnegiellaStrigata,
   trichogasterLalius,
-  trigonostigmaEspei
+  trigonostigmaEspei,
+  apistogrammaCacatuoides
 ];
 
 export {
@@ -186,5 +188,6 @@ export {
   hemigrammusErythrozonus,
   carnegiellaStrigata,
   trichogasterLalius,
-  trigonostigmaEspei
+  trigonostigmaEspei,
+  apistogrammaCacatuoides
 };
