@@ -1,17 +1,17 @@
 import type { Species } from '../../types/species';
 
 export const anomalochromisThomasi: Species = {
-  id: 'cichlid-001',
+  id: 'anomalochromis-thomasi',
   slug: 'anomalochromis-thomasi',
-  imageUrl: '/images/species/anomalochromis-thomasi.jpg',
+  imageUrl: '/images/species/african-butterfly-cichlid.jpg',
   
   funFact: "The African Butterfly Cichlid is a gentle anomaly among cichlids, forming devoted pairs that calmly herd their fry around the tank like attentive parents.",
 
   imageCredit: {
-    photographer: 'Haplochromis (via Wikimedia Commons)',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Anomalochromis_thomasi.jpg',
-    license: 'CC BY-SA 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+    photographer: 'Klaus Rudloff (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Anomalochromis_thomasi_A.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
   },
   
   taxonomy: {
