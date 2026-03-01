@@ -270,10 +270,10 @@ const HomePage = () => {
               className="text-center max-w-3xl mx-auto mb-16"
             >
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">
-                Mehr als nur Fische
+                More than just fish
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                Entdecke authentische Biotop-Setups, detaillierte Pflanzenprofile und lerne die wichtigsten Grundlagen in unserer Knowledge Base.
+                Discover authentic biotope setups, detailed plant profiles, and master the basics in our knowledge base.
               </p>
             </motion.div>
 
@@ -284,10 +284,10 @@ const HomePage = () => {
                   <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                     <Leaf className="w-6 h-6" />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Beliebte Pflanzen</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Popular Plants</h3>
                 </div>
                 <Link to="/plants" className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors shrink-0">
-                  Lexikon öffnen <ArrowRight className="w-4 h-4" />
+                  Open Lexicon <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -354,10 +354,10 @@ const HomePage = () => {
                     <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                       <Map className="w-6 h-6" />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Habitate</h3>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Habitats</h3>
                   </div>
                   <Link to="/biotopes" className="text-amber-600 dark:text-amber-400 font-semibold hover:underline flex items-center gap-1">
-                    Entdecken <ArrowRight className="w-4 h-4" />
+                    Explore <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
                 <div className="grid gap-6">
@@ -398,10 +398,10 @@ const HomePage = () => {
                     <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                       <Lightbulb className="w-6 h-6" />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Wissen</h3>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Knowledge</h3>
                   </div>
                   <Link to="/knowledge" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
-                    Alle Guides <ArrowRight className="w-4 h-4" />
+                    All Guides <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
                 <div className="grid gap-6">
@@ -454,10 +454,10 @@ const HomePage = () => {
               className="text-center max-w-3xl mx-auto mb-16 sm:mb-20"
             >
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">
-                Dein digitaler Aquaristik-Assistent
+                Your Digital Aquarium Assistant
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                Alles, was du brauchst, um gesunde und stabile Ökosysteme zu erschaffen. Von der Artenrecherche bis zur Pflege.
+                Everything you need to create healthy and stable ecosystems. From species research to daily care.
               </p>
             </motion.div>
 
@@ -465,26 +465,26 @@ const HomePage = () => {
               <FeatureCard 
                 icon={<BookOpen className="w-7 h-7" />}
                 iconBg="from-indigo-500 to-purple-500"
-                title="Arten-Lexikon"
-                desc="Durchsuche unsere große Datenbank offline & blitzschnell. Entdecke detaillierte Profile für Fische und Pflanzen."
+                title="Species Lexicon"
+                desc="Search our large database offline & lightning fast. Discover detailed profiles for fish and plants."
                 link="/species"
-                linkText="Zum Lexikon"
+                linkText="Open Lexicon"
               />
               <FeatureCard 
                 icon={<Activity className="w-7 h-7" />}
                 iconBg="from-emerald-500 to-teal-500"
-                title="Kompatibilitäts-Check"
-                desc="Vermeide fatale Fehler. Prüfe sofort, welche Arten friedlich zusammenleben können und zusammen passen."
+                title="Compatibility Check"
+                desc="Avoid fatal mistakes. Check instantly which species can peacefully coexist in your tank."
                 link="/tank-builder"
-                linkText="Check starten"
+                linkText="Start Check"
               />
               <FeatureCard 
                 icon={<LayoutDashboard className="w-7 h-7" />}
                 iconBg="from-amber-500 to-orange-500"
-                title="Dein Dashboard (My Tanks)"
-                desc="Verwalte deine Aquarien, tracke die Wasserwerte und behalte den Überblick über deinen Besatz."
+                title="Your Dashboard"
+                desc="Manage your aquariums, track water parameters, and keep an overview of your livestock."
                 link="/my-tanks"
-                linkText="Zu meinen Becken"
+                linkText="Go to My Tanks"
               />
             </div>
           </div>
@@ -512,16 +512,16 @@ const HomePage = () => {
                     <UserPlus className="w-8 h-8" />
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-                    Bereit, dein Aquarium zu verbessern?
+                    Ready to improve your aquarium?
                   </h2>
                   <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-                    Erstelle jetzt deinen kostenlosen Account. Speichere deine Lieblingsarten, baue virtuelle Becken und tracke deine Wasserwerte.
+                    Create your free account now. Save your favorite species, build virtual tanks, and track your water parameters.
                   </p>
                   <Link 
                     to="/auth" 
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
                   >
-                    Jetzt kostenlos registrieren
+                    Register for free
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                 </>
@@ -531,24 +531,24 @@ const HomePage = () => {
                     <LayoutDashboard className="w-8 h-8" />
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-                    Hallo {profile?.username || user.email?.split('@')[0]}! 👋
+                    Hello {profile?.username || user.email?.split('@')[0]}! 👋
                   </h2>
                   <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-                    Willkommen zurück bei AquaGuide. Bereit, nach deinen Aquarien zu schauen oder neue Arten zu entdecken?
+                    Welcome back to AquaGuide. Ready to check on your tanks or discover new species?
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Link 
                       to="/my-tanks" 
                       className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
                     >
-                      Ab zu deinen Becken
+                      Go to your tanks
                       <ArrowRight className="w-5 h-5" />
                     </Link>
                     <Link 
                       to="/species" 
                       className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold rounded-xl transition-all shadow-sm border border-slate-200 dark:border-slate-700 w-full sm:w-auto"
                     >
-                      Neue Art suchen
+                      Find new species
                     </Link>
                   </div>
                 </>
