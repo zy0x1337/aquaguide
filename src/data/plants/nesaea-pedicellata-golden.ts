@@ -5,7 +5,7 @@ export const nesaeaPedicellataGolden: Plant = {
   slug: 'nesaea-pedicellata-golden',
   imageUrl: 'images/plants/nesaea-pedicellata-golden.jpg',
   imageCredit: {
-    photographer: '',
+    photographer: 'Just-One-More-Cast',
     sourceUrl: '',
     license: 'Copyright'
   },

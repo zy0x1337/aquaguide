@@ -5,7 +5,7 @@ export const rotalaSingaporeBloodRed: Plant = {
   slug: 'rotala-singapore-blood-red',
   imageUrl: 'images/plants/rotala-singapore-blood-red.jpg',
   imageCredit: {
-    photographer: '',
+    photographer: 'Just-One-More-Cast',
     sourceUrl: '',
     license: 'Copyright'
   },

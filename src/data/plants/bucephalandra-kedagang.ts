@@ -5,7 +5,7 @@ export const bucephalandraKedagang: Plant = {
   slug: 'bucephalandra-kedagang',
   imageUrl: 'images/plants/buce-kedagang.jpg',
   imageCredit: {
-    photographer: '',
+    photographer: 'Just-One-More-Cast',
     sourceUrl: '',
     license: 'Copyright'
   },
