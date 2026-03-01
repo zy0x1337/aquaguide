@@ -127,7 +127,7 @@ export type FoodType =
   | 'algae-wafers' | 'vegetables' | 'spirulina'
   | 'live-food' | 'frozen-food' | 'biofilm' | 'blanched-zucchini' | 'cyclops' 
   | 'crushed-flakes' | 'cichlid-pellets-large' | 'frozen-tilapia' | 'frozen-krill' 
-  | 'GlasGarten BacterAE' | 'aufwuchs' | 'live-snails-weekly' | 'frozen-whole-fish' | 'frozen-squid' | 'frozen-krill';
+  | 'GlasGarten BacterAE' | 'aufwuchs' | 'live-snails-weekly' | 'frozen-whole-fish' | 'frozen-squid' | 'snails';
 
 
 export interface Feeding {

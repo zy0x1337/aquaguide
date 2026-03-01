@@ -3,12 +3,15 @@ import type { Species } from '../../types/species';
 export const apistogrammaCacatuoides: Species = {
   id: 'apistogramma-cacatuoides',
   slug: 'cockatoo-dwarf-cichlid',
-  imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Apistogramma_cacatuoides.jpg/1200px-Apistogramma_cacatuoides.jpg',
+  imageUrl: '/images/species/apistogramma-cacatuoides.jpg',
+
   imageCredit: {
-    author: 'Wikimedia Commons',
-    url: 'https://commons.wikimedia.org/wiki/File:Apistogramma_cacatuoides.jpg',
-    platform: 'Wikimedia'
+    photographer: 'Britzke (via Wikimedia Commons)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Apistogramma_cacatuoides_(11120015446).jpg',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/',
   },
+  
   funFact: 'When breeding, the female turns bright yellow and takes full charge of defending the fry, often chasing away the much larger male!',
 
   taxonomy: {
@@ -54,7 +57,7 @@ export const apistogrammaCacatuoides: Species = {
   },
 
   behavior: {
-    tags: ['cichlid', 'territorial', 'bottom_dweller', 'parental-care', 'harem', 'substrate-sifter'],
+    tags: ['cichlid', 'territorial', 'bottom_dweller', 'parental-care', 'substrate-sifter'],
     minGroupSize: 2,
     description: 'Generally peaceful toward non-cichlids, but highly territorial around their chosen cave, especially during breeding. Best kept as a pair or a harem (1 male to multiple females).',
     compatibility: {

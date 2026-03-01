@@ -58,9 +58,8 @@ import { melanotaeniaBoesemani } from './melanotaeniaboesemani';
 import { epiplatysAnnulatus } from './clown-kilifish';
 import { hemigrammusErythrozonus } from './hemmigrammus-erythrozonus';
 import { carnegiellaStrigata } from './marbled-hatchetfish';
-import { trichogasterLalius } from './dwarf-gourami';
-import { trigonostigmaEspei } from './espei-rasbora';
 import { apistogrammaCacatuoides } from './apistogramma-cacatuoides';
+import { carinotetraodonTravancoricus } from './pea-puffer';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -122,9 +121,8 @@ export const allSpecies: Species[] = [
   epiplatysAnnulatus,
   hemigrammusErythrozonus,
   carnegiellaStrigata,
-  trichogasterLalius,
-  trigonostigmaEspei,
-  apistogrammaCacatuoides
+  apistogrammaCacatuoides,
+  carinotetraodonTravancoricus
 ];
 
 export {
@@ -187,7 +185,6 @@ export {
   epiplatysAnnulatus,
   hemigrammusErythrozonus,
   carnegiellaStrigata,
-  trichogasterLalius,
-  trigonostigmaEspei,
-  apistogrammaCacatuoides
+  apistogrammaCacatuoides,
+  carinotetraodonTravancoricus
 };
