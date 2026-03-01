@@ -8,6 +8,7 @@ export const rotalaSingaporeBloodRed: Plant = {
     photographer: 'Just-One-More-Cast',
     sourceUrl: '',
     license: 'Copyright'
+    licenseUrl: ''
   },
   difficulty: 'medium',
   funFact: 'Rotala "Blood Red Singapore" is widely considered the easiest Rotala variant to achieve a true, deep blood-red coloration without requiring extreme nitrate limitation.',

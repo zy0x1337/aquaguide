@@ -7,7 +7,8 @@ export const bucephalandraKedagang: Plant = {
   imageCredit: {
     photographer: 'Just-One-More-Cast',
     sourceUrl: '',
-    license: 'Copyright'
+    license: 'Copyright',
+    licenseUrl: ''
   },
   difficulty: 'easy',
   funFact: 'Bucephalandra species frequently bloom entirely submerged underwater. The "Kedagang" variety is famous for the tiny, iridescent metallic dots covering its dark, wavy leaves.',
