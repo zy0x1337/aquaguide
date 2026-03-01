@@ -5,9 +5,10 @@ import {
   Mountain, Box, Sparkles, Microscope, Egg, Utensils,
   Lightbulb, XCircle, CheckCircle, Info, Clock, 
   Calendar, DollarSign, TrendingUp, Target,
-  Wind, Wrench, CircleDot, Beaker, Pill, Apple
+  Wind, Wrench, CircleDot, Beaker, Pill, Apple,
+  Image as ImageIcon
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { allSpecies } from '../data/species';
 import { tagDescriptions } from '../data/glossary';
@@ -27,12 +28,14 @@ const SpeciesDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const data = allSpecies.find(s => s.slug === slug);
   const [activeTab, setActiveTab] = useState<'overview' | 'care' | 'habitat' | 'compatibility' | 'advanced'>('overview');
+  const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
 
   if (!data) return <NotFound />;
 
   const seoTitle = `${data.taxonomy.commonName} Care Guide`;
   const seoDesc = `Complete care guide for ${data.taxonomy.commonName}. Habitat, tank mates, breeding, and scientific background.`;
   const headerImageUrl = resolveHeaderImageUrl(data.imageUrl, data.slug);
+  const hasGallery = (data.gallery?.length ?? 0) > 0;
 
   // ==================== HELPERS ====================
   
@@ -221,6 +224,39 @@ const SpeciesDetailPage = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
       <SEOHead title={seoTitle} description={seoDesc} />
+
+      {/* ── Lightbox for Gallery ── */}
+      <AnimatePresence>
+        {selectedGalleryImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            onClick={() => setSelectedGalleryImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setSelectedGalleryImage(null)}
+                className="absolute -top-12 right-0 text-white/70 hover:text-white p-2 transition-colors"
+              >
+                <XCircle className="w-8 h-8" />
+              </button>
+              <img 
+                src={selectedGalleryImage} 
+                alt="Gallery full view" 
+                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ========== HERO SECTION ========== */}
       <motion.header 
@@ -463,6 +499,35 @@ const SpeciesDetailPage = () => {
                 {/* OVERVIEW TAB */}
                 {activeTab === 'overview' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+
+                    {/* Image Gallery Integrated into Overview */}
+                    {hasGallery && (
+                      <div>
+                        <SectionHeader title="Gallery" icon={<ImageIcon className="w-5 h-5" />} />
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                          {data.gallery!.map((imgUrl, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.05 }}
+                              className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors shadow-sm hover:shadow-md group"
+                              onClick={() => setSelectedGalleryImage(imgUrl)}
+                            >
+                              <img 
+                                src={imgUrl} 
+                                alt={`${data.taxonomy.commonName} gallery view ${idx + 1}`} 
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                                <ImageIcon className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md" />
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Parameters Grid - STREAMLINED COMPACT DESIGN */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Droplets className="w-5 h-5" />} />
