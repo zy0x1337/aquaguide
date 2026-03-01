@@ -12,6 +12,12 @@ export const phyllanthusFluitans: Plant = {
     licenseUrl: ''
   },
 
+  gallery: [
+  '/images/plants/phyllantus-fluitans2.webp',
+  '/images/plants/phyllantus-fluitans3.webp',
+  '/images/plants/phyllantus-fluitans4.webp'
+],
+
   difficulty: 'medium',
 
   funFact: 'Under high light and low nitrate conditions, both the leaves and the dangling root systems turn a vibrant, striking deep red color.',

@@ -3,7 +3,7 @@ import type { Plant } from '../../types/plant';
 export const lysimachiaParvifolia: Plant = {
   id: 'plant-samolus-red',
   slug: 'lysimachia-parvifolia',
-  imageUrl: '/images/plants/lysimachia-parvifolia.webp',
+  imageUrl: '/images/plants/lysimachia-parvifolia-samolus-red.webp',
 
   imageCredit: {
     photographer: 'Asher Eades',
