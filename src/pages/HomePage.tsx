@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { 
   Zap, ArrowRight,
   Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus,
-  Leaf, Map, Lightbulb, Clock
+  Leaf, Map, Lightbulb, Clock, Droplets, Ruler
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
@@ -10,7 +10,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 import { allSpecies, bettaSplendens, neonTetra, oscar, amanoShrimp } from '../data/species';
 import { useAuth } from '../contexts/AuthContext';
 import { allPlants } from '../data/plants';
-import { biotopes } from '../data/biotopes';
+import habitatsData from '../data/habitats.json';
 import { allKnowledgeArticles } from '../data/knowledge';
 
 const HomePage = () => {
@@ -25,10 +25,10 @@ const HomePage = () => {
     allPlants.find(p => p.slug === 'microsorum-pteropus')
   ].filter((p): p is (typeof allPlants)[number] => Boolean(p));
 
-  const featuredBiotopes = ['amazon', 'lake-malawi']
-    .map(id => biotopes.find(b => b.id === id))
-    .filter((b): b is (typeof biotopes)[number] => Boolean(b));
-  const displayBiotopes = featuredBiotopes.length === 2 ? featuredBiotopes : biotopes.slice(0, 2);
+  const featuredBiotopes = [
+    habitatsData.find(h => h.id === 'amazon-blackwater'),
+    habitatsData.find(h => h.id === 'lake-tanganyika-rocky')
+  ].filter(Boolean) as typeof habitatsData;
 
   const featuredArticles = ['nitrogen-cycle', 'planted-tank-setup']
     .map(slug => allKnowledgeArticles.find(a => a.slug === slug))
@@ -290,7 +290,7 @@ const HomePage = () => {
                   Lexikon öffnen <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 {featuredPlants.map((plant, i) => (
                   <motion.div
                     key={plant.id}
@@ -299,17 +299,43 @@ const HomePage = () => {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                   >
-                    <Link to={`/plants/${plant.slug}`} className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 hover:-translate-y-2 block aspect-square">
-                      <img src={plant.imageUrl} alt={plant.taxonomy.commonName} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/20 to-transparent" />
-                      <div className="absolute bottom-5 left-5 right-5">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                    <Link to={`/plants/${plant.slug}`} className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-500/40 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden p-2">
+                      <div className="relative h-40 sm:h-48 rounded-2xl overflow-hidden shrink-0 mb-4 bg-slate-100 dark:bg-slate-800">
+                        <img 
+                          src={plant.imageUrl} 
+                          alt={plant.taxonomy.commonName} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                        />
+                        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-slate-900/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
                           {plant.taxonomy.family}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col flex-grow px-3 pb-3">
+                        <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          {plant.taxonomy.commonName}
+                        </h4>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4">
+                          {plant.taxonomy.scientificName}
                         </p>
-                        <h4 className="text-white font-bold text-xl mb-2 group-hover:text-emerald-300 transition-colors">{plant.taxonomy.commonName}</h4>
-                        <div className="flex items-center gap-3 text-xs text-slate-200">
-                          <span className="capitalize px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md">{plant.difficulty} Care</span>
-                          <span className="capitalize px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md">{plant.specs.growthRate} Growth</span>
+                        
+                        <div className="grid grid-cols-2 gap-2 mt-auto">
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Shield className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="capitalize truncate">{plant.difficulty}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Ruler className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="truncate">{plant.specs.heightCM.max} cm</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Activity className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="capitalize truncate">{plant.specs.growthRate}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Droplets className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="capitalize truncate">{plant.parameters.ph.ideal || plant.parameters.ph.min} pH</span>
+                          </div>
                         </div>
                       </div>
                     </Link>
@@ -335,7 +361,7 @@ const HomePage = () => {
                   </Link>
                 </div>
                 <div className="grid gap-6">
-                  {displayBiotopes.map((biotope, i) => (
+                  {featuredBiotopes.map((biotope, i) => (
                     <motion.div
                       key={biotope.id}
                       initial={{ opacity: 0, x: -20 }}
@@ -343,21 +369,21 @@ const HomePage = () => {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1, duration: 0.5 }}
                     >
-                      <Link to={`/biotopes?habitat=${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border-2 border-slate-100 dark:border-slate-800 transition-all duration-300 h-56 block">
+                      <Link to={`/biotopes/${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border-2 border-slate-100 dark:border-slate-800 transition-all duration-300 h-56 block bg-slate-900">
                         <img 
-                          src={biotope.regions.includes('South America') ? 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800' : 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&q=80&w=800'} 
-                          alt={biotope.label} 
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                          src={biotope.imageUrl} 
+                          alt={biotope.title} 
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" 
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent" />
-                        <div className="absolute bottom-6 left-6 right-6">
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
+                        <div className="absolute bottom-5 left-5 right-5">
                           <div className="flex items-center gap-2 mb-2">
                             <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-md">
-                              {biotope.regions[0]}
+                              {biotope.conditions.waterType}
                             </span>
                           </div>
-                          <h4 className="text-xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">{biotope.label}</h4>
-                          <p className="text-slate-300 text-sm line-clamp-1">{biotope.description}</p>
+                          <h4 className="text-xl font-bold text-white mb-1 group-hover:text-amber-300 transition-colors leading-tight">{biotope.title}</h4>
+                          <p className="text-slate-300 text-xs sm:text-sm line-clamp-2 leading-relaxed">{biotope.subtitle || biotope.description}</p>
                         </div>
                       </Link>
                     </motion.div>
