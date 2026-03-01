@@ -3,11 +3,12 @@ import type { Plant } from '../../types/plant';
 export const nesaeaPedicellataGolden: Plant = {
   id: 'plant-nesaea-pedicellata-golden',
   slug: 'nesaea-pedicellata-golden',
-  imageUrl: 'images/plants/nesaea-pedicellata-golden.jpg',
+  imageUrl: '/images/plants/nesaea-pedicellata-golden.jpg',
   imageCredit: {
     photographer: 'Just-One-More-Cast',
     sourceUrl: '',
-    license: 'Copyright'
+    license: 'Copyright',
+    licenseUrl: ''
   },
   difficulty: 'advanced',
   funFact: 'Although commonly sold as Nesaea pedicellata, it is now scientifically classified as Ammannia pedicellata. The "Golden" variant is a highly sought-after mutation that displays bright yellow-green to golden leaves contrasting with striking pink/red stems.',
