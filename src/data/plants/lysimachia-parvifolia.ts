@@ -12,6 +12,10 @@ export const lysimachiaParvifolia: Plant = {
     licenseUrl: ''
   },
 
+  gallery: [
+  '/images/plants/lysimachia-parvifolia-samolus-red2.webp'
+],
+
   difficulty: 'medium',
 
   funFact: 'Although often sold under the name "Samolus parviflorus red", this plant is scientifically Lysimachia parvifolia. It is sometimes affectionately called "Red Baby Spinach" in the aquascaping community due to its unique leaf shape.',

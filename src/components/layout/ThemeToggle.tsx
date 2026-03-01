@@ -1,6 +1,7 @@
-import { Moon, Sun, Waves, ChevronDown } from 'lucide-react';
+import { Moon, Sun, ChevronDown } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useState, useEffect, useRef } from 'react';
+// import { Waves } from 'lucide-react'
 
 export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
@@ -27,7 +28,7 @@ export const ThemeToggle = () => {
   const themes = [
     { value: 'light' as const, label: 'Light', icon: Sun, color: 'text-amber-500' },
     { value: 'dark' as const, label: 'Dark', icon: Moon, color: 'text-indigo-400' },
-    { value: 'ocean' as const, label: 'Ocean', icon: Waves, color: 'text-cyan-400' },
+//  { value: 'ocean' as const, label: 'Ocean', icon: Waves, color: 'text-cyan-400' },
   ];
 
   const currentTheme = themes.find(t => t.value === theme) || themes[0];
