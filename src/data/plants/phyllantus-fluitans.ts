@@ -3,7 +3,7 @@ import type { Plant } from '../../types/plant';
 export const phyllanthusFluitans: Plant = {
   id: 'plant-red-root-floater',
   slug: 'phyllanthus-fluitans',
-  imageUrl: '/images/plants/phyllanthus-fluitans.webp',
+  imageUrl: '/images/plants/phyllantus-fluitans.webp',
 
   imageCredit: {
     photographer: 'Asher Eades',

@@ -8,6 +8,7 @@ import { hornwort } from './hornwort';
 import { aponogetonMadagascariensis } from './aponogeton-madagascariensis';
 import { limnobiumLaevigatum } from './limnobium-laevigatum';
 import { phyllanthusFluitans } from './phyllantus-fluitans';
+import { lysimachiaParvifolia } from './lysimachia-parvifolia';
 
 // 1. Array aller Pflanzen sammeln
 export const allPlants: Plant[] = [
@@ -19,7 +20,8 @@ export const allPlants: Plant[] = [
   hornwort,
   aponogetonMadagascariensis,
   limnobiumLaevigatum,
-  phyllanthusFluitans
+  phyllanthusFluitans,
+  lysimachiaParvifolia
 ];
 
 // 2. Repository Pattern (wie bei Species)
