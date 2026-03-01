@@ -44,6 +44,7 @@ const SpeciesIndexPage = () => {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [biotopeSuggestions, setBiotopeSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [shortcutKey, setShortcutKey] = useState('⌘K');
   
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -81,6 +82,13 @@ const SpeciesIndexPage = () => {
       ignoreLocation: true,
       useExtendedSearch: true
     });
+  }, []);
+
+  // Detect OS for shortcut hint
+  useEffect(() => {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0 || 
+                  navigator.userAgent.toUpperCase().indexOf('MAC') >= 0;
+    setShortcutKey(isMac ? '⌘K' : 'Ctrl+K');
   }, []);
 
   // Keyboard shortcut to focus search input (Ctrl+K or Cmd+K)
@@ -597,7 +605,7 @@ const SpeciesIndexPage = () => {
                   )}
                   {/* Keyboard Shortcut Hint for Desktop */}
                   <div className="hidden sm:flex items-center gap-1 pr-3 text-gray-400 pointer-events-none select-none">
-                    <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono font-bold">⌘K</kbd>
+                    <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono font-bold">{shortcutKey}</kbd>
                   </div>
                 </div>
               </motion.div>
