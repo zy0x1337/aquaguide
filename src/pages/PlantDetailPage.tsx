@@ -3,9 +3,9 @@ import {
   ArrowLeft, Sun, Wind, Ruler, Layers, Thermometer, Droplets,
   Sprout, Scissors, AlertTriangle, Sparkles, Target, Leaf,
   MapPin, CheckCircle, XCircle, Mountain, Fish, FlaskConical,
-  Clock, Lightbulb, Waves, Dna, ArrowRight
+  Clock, Lightbulb, Waves, Dna, ArrowRight, Image as ImageIcon
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { plantRepository } from '../data/plants';
 import { SEOHead } from '../components/seo/SEOHead';
@@ -53,17 +53,19 @@ const nutrientBadgeColors: Record<'low' | 'medium' | 'high', string> = {
   high: 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
 };
 
-type Tab = 'overview' | 'care' | 'aquascape' | 'problems';
+type Tab = 'overview' | 'care' | 'aquascape' | 'problems' | 'gallery';
 
 // ─── page ───────────────────────────────────────────────
 export const PlantDetailPage = () => {
   const { slug } = useParams();
   const plant = plantRepository.getBySlug(slug || '');
   const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
 
   if (!plant) return <NotFound />;
 
   const hasProblems = (plant.commonProblems?.length ?? 0) > 0;
+  const hasGallery = (plant.gallery?.length ?? 0) > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
@@ -71,6 +73,39 @@ export const PlantDetailPage = () => {
         title={`${plant.taxonomy.commonName} Care Guide`}
         description={`Learn how to grow ${plant.taxonomy.commonName} in your aquarium.`}
       />
+
+      {/* ── Lightbox for Gallery ── */}
+      <AnimatePresence>
+        {selectedGalleryImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            onClick={() => setSelectedGalleryImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setSelectedGalleryImage(null)}
+                className="absolute -top-12 right-0 text-white/70 hover:text-white p-2"
+              >
+                <XCircle className="w-8 h-8" />
+              </button>
+              <img 
+                src={selectedGalleryImage} 
+                alt="Gallery full view" 
+                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── HERO ── */}
       <motion.header
@@ -165,14 +200,20 @@ export const PlantDetailPage = () => {
                 <TabBtn id="problems" active={activeTab} onClick={setActiveTab} icon={<AlertTriangle className="w-4 h-4" />}>
                   Problems{hasProblems && <span className="ml-1.5 px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black">{plant.commonProblems!.length}</span>}
                 </TabBtn>
+                {hasGallery && (
+                  <TabBtn id="gallery" active={activeTab} onClick={setActiveTab} icon={<ImageIcon className="w-4 h-4" />}>
+                    Gallery<span className="ml-1.5 px-1.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-black">{plant.gallery!.length}</span>
+                  </TabBtn>
+                )}
               </div>
 
               {/* Mobile tabs */}
-              <div className="sm:hidden grid grid-cols-4 border-b-2 border-slate-200 dark:border-slate-700">
+              <div className={`sm:hidden grid ${hasGallery ? 'grid-cols-5' : 'grid-cols-4'} border-b-2 border-slate-200 dark:border-slate-700 overflow-x-auto`}>
                 <MobileTabBtn id="overview" active={activeTab} onClick={setActiveTab} icon={<Target className="w-4 h-4" />} label="Overview" />
                 <MobileTabBtn id="care" active={activeTab} onClick={setActiveTab} icon={<Leaf className="w-4 h-4" />} label="Care" />
                 <MobileTabBtn id="aquascape" active={activeTab} onClick={setActiveTab} icon={<Mountain className="w-4 h-4" />} label="Scape" />
                 <MobileTabBtn id="problems" active={activeTab} onClick={setActiveTab} icon={<AlertTriangle className="w-4 h-4" />} label="Issues" />
+                {hasGallery && <MobileTabBtn id="gallery" active={activeTab} onClick={setActiveTab} icon={<ImageIcon className="w-4 h-4" />} label="Gallery" />}
               </div>
 
               <div className="p-4 md:p-6 lg:p-8">
@@ -188,7 +229,7 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* UPDATED: Plant Specifications - cleaner, matching SpeciesDetailPage */}
+                    {/* Plant Specifications */}
                     <div>
                       <SectionHeader title="Plant Specifications" icon={<Layers className="w-5 h-5" />} />
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -201,7 +242,7 @@ export const PlantDetailPage = () => {
                       </div>
                     </div>
 
-                    {/* Scientific Classification moved from Advanced tab */}
+                    {/* Scientific Classification */}
                     <div>
                       <SectionHeader title="Scientific Classification" icon={<FlaskConical className="w-5 h-5" />} />
                       <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -232,7 +273,7 @@ export const PlantDetailPage = () => {
                       </div>
                     )}
 
-                    {/* UPDATED: Water Parameters - cleaner, matching SpeciesDetailPage */}
+                    {/* Water Parameters */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Thermometer className="w-5 h-5" />} />
                       <div className="grid sm:grid-cols-2 gap-3">
@@ -268,7 +309,7 @@ export const PlantDetailPage = () => {
                           )}
                         </div>
 
-                        {/* Flow Card - only if available */}
+                        {/* Flow Card */}
                         {plant.parameters.flow && (
                           <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
                             <div className="flex items-center gap-2 mb-2">
@@ -279,7 +320,7 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Photoperiod Card - only if available */}
+                        {/* Photoperiod Card */}
                         {plant.parameters.photoperiodHours && (
                           <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
                             <div className="flex items-center gap-2 mb-2">
@@ -292,7 +333,7 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* KH Card - only if available */}
+                        {/* KH Card */}
                         {plant.parameters.kh && (
                           <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
                             <div className="flex items-center gap-2 mb-2">
@@ -305,7 +346,7 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* GH Card - only if available */}
+                        {/* GH Card */}
                         {plant.parameters.gh && (
                           <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
                             <div className="flex items-center gap-2 mb-2">
@@ -477,7 +518,7 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Similar Plants - Enhanced with better mini-cards */}
+                        {/* Similar Plants */}
                         {plant.relatedPlants && plant.relatedPlants.length > 0 && (
                           <div>
                             <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
@@ -509,7 +550,7 @@ export const PlantDetailPage = () => {
                                             <Leaf className="w-12 h-12 text-slate-300 dark:text-slate-600" />
                                           </div>
                                         )}
-                                        {/* Difficulty Badge - positioned in top-right */}
+                                        {/* Difficulty Badge */}
                                         <div className="absolute top-2 right-2">
                                           <span className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${difficultyStylesMini[rel.difficulty]} shadow-lg`}>
                                             {rel.difficulty}
@@ -590,6 +631,32 @@ export const PlantDetailPage = () => {
                         <p className="text-sm font-bold">No common problems documented yet.</p>
                       </div>
                     )}
+                  </motion.div>
+                )}
+
+                {/* ── GALLERY ── */}
+                {activeTab === 'gallery' && hasGallery && (
+                  <motion.div key="gallery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+                    <SectionHeader title="Image Gallery" icon={<ImageIcon className="w-5 h-5" />} />
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {plant.gallery!.map((imgUrl, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.05 }}
+                          className="relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors shadow-sm hover:shadow-md"
+                          onClick={() => setSelectedGalleryImage(imgUrl)}
+                        >
+                          <img 
+                            src={imgUrl} 
+                            alt={`${plant.taxonomy.commonName} gallery image ${idx + 1}`} 
+                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors" />
+                        </motion.div>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
 
@@ -761,7 +828,6 @@ const SectionHeader = ({ title, icon }: { title: string; icon: React.ReactNode }
   </h3>
 );
 
-// UPDATED: SpecCard - cleaner, simpler design matching SpeciesDetailPage
 const SpecCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
   <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm">
     <div className="flex items-center gap-2 mb-2">
