@@ -299,7 +299,7 @@ const HomePage = () => {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                   >
-                    <Link to={`/plants/${plant.slug}`} className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-500/40 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden p-2">
+                    <Link to={`/plants/${plant.slug}`} className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-500/40 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden p-2">
                       <div className="relative h-40 sm:h-48 rounded-2xl overflow-hidden shrink-0 mb-4 bg-slate-100 dark:bg-slate-800">
                         <img 
                           src={plant.imageUrl} 
@@ -369,7 +369,7 @@ const HomePage = () => {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1, duration: 0.5 }}
                     >
-                      <Link to={`/biotopes/${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border-2 border-slate-100 dark:border-slate-800 transition-all duration-300 h-56 block bg-slate-900">
+                      <Link to={`/biotopes/${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 dark:border-slate-800 transition-all duration-300 h-56 block bg-slate-900">
                         <img 
                           src={biotope.imageUrl} 
                           alt={biotope.title} 
@@ -413,7 +413,7 @@ const HomePage = () => {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1, duration: 0.5 }}
                     >
-                      <Link to={`/knowledge/${article.slug}`} className="group flex flex-row gap-5 p-4 rounded-3xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-200 dark:hover:border-indigo-500/40 transition-all duration-300 shadow-sm hover:shadow-lg h-56">
+                      <Link to={`/knowledge/${article.slug}`} className="group flex flex-row gap-5 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-200 dark:hover:border-indigo-500/40 transition-all duration-300 shadow-sm hover:shadow-lg h-56">
                         <div className="w-2/5 sm:w-1/3 rounded-2xl overflow-hidden shrink-0 relative">
                           <img src={article.visuals.headerImage} alt={article.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                           <div className="absolute top-2 left-2 px-2 py-1 rounded-md bg-slate-900/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
@@ -463,24 +463,24 @@ const HomePage = () => {
 
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
               <FeatureCard 
-                icon={<BookOpen className="w-7 h-7" />}
-                iconBg="from-indigo-500 to-purple-500"
+                icon={<BookOpen className="w-6 h-6" />}
+                iconStyles="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
                 title="Species Lexicon"
                 desc="Search our large database offline & lightning fast. Discover detailed profiles for fish and plants."
                 link="/species"
                 linkText="Open Lexicon"
               />
               <FeatureCard 
-                icon={<Activity className="w-7 h-7" />}
-                iconBg="from-emerald-500 to-teal-500"
+                icon={<Activity className="w-6 h-6" />}
+                iconStyles="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
                 title="Compatibility Check"
                 desc="Avoid fatal mistakes. Check instantly which species can peacefully coexist in your tank."
                 link="/tank-builder"
                 linkText="Start Check"
               />
               <FeatureCard 
-                icon={<LayoutDashboard className="w-7 h-7" />}
-                iconBg="from-amber-500 to-orange-500"
+                icon={<LayoutDashboard className="w-6 h-6" />}
+                iconStyles="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
                 title="Your Dashboard"
                 desc="Manage your aquariums, track water parameters, and keep an overview of your livestock."
                 link="/my-tanks"
@@ -582,14 +582,14 @@ const StatCard = ({ number, label }: { number: string; label: string }) => (
 
 const FeatureCard = ({ 
   icon, 
-  iconBg,
+  iconStyles,
   title, 
   desc, 
   link, 
   linkText 
 }: { 
   icon: any; 
-  iconBg: string;
+  iconStyles: string;
   title: string; 
   desc: string; 
   link: string; 
@@ -600,16 +600,16 @@ const FeatureCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    whileHover={{ y: -8 }}
-    className="group relative bg-white dark:bg-slate-900/80 p-8 rounded-3xl border-2 border-slate-100 dark:border-slate-800 hover:border-indigo-100 dark:hover:border-indigo-500/30 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full"
+    whileHover={{ y: -5 }}
+    className="group relative bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
   >
     {/* Icon */}
-    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${iconBg} text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${iconStyles} mb-6 transition-transform duration-300 group-hover:scale-110`}>
       {icon}
     </div>
     
     {/* Content */}
-    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
       {title}
     </h3>
     <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed flex-grow">
@@ -619,14 +619,11 @@ const FeatureCard = ({
     {/* Link */}
     <Link 
       to={link} 
-      className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mt-auto"
+      className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 group-hover:gap-3 transition-all mt-auto"
     >
       {linkText} 
-      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      <ArrowRight className="w-4 h-4" />
     </Link>
-    
-    {/* Hover gradient effect */}
-    <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${iconBg} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
   </motion.div>
 );
 
