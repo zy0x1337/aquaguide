@@ -7,6 +7,7 @@ import {myriophyllumMattogrossense} from './myriophyllum-mattogrossense'
 import { hornwort } from './hornwort';
 import { aponogetonMadagascariensis } from './aponogeton-madagascariensis';
 import { limnobiumLaevigatum } from './limnobium-laevigatum';
+import { phyllanthusFluitans } from './phyllantus-fluitans';
 
 // 1. Array aller Pflanzen sammeln
 export const allPlants: Plant[] = [
@@ -17,7 +18,8 @@ export const allPlants: Plant[] = [
   myriophyllumMattogrossense,
   hornwort,
   aponogetonMadagascariensis,
-  limnobiumLaevigatum
+  limnobiumLaevigatum,
+  phyllanthusFluitans
 ];
 
 // 2. Repository Pattern (wie bei Species)
