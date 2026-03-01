@@ -3,11 +3,11 @@ import type { Plant } from '../../types/plant';
 export const rotalaSingaporeBloodRed: Plant = {
   id: 'plant-rotala-singapore-blood-red',
   slug: 'rotala-singapore-blood-red',
-  imageUrl: 'images/plants/rotala-singapore-blood-red.jpg',
+  imageUrl: '/images/plants/rotala-singapore-blood-red.jpg',
   imageCredit: {
     photographer: 'Just-One-More-Cast',
     sourceUrl: '',
-    license: 'Copyright'
+    license: 'Copyright',
     licenseUrl: ''
   },
   difficulty: 'medium',
