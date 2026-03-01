@@ -9,6 +9,9 @@ import { aponogetonMadagascariensis } from './aponogeton-madagascariensis';
 import { limnobiumLaevigatum } from './limnobium-laevigatum';
 import { phyllanthusFluitans } from './phyllantus-fluitans';
 import { lysimachiaParvifolia } from './lysimachia-parvifolia';
+import { nesaeaPedicellataGolden } from './nesaea-pedicellata-golden';
+import { rotalaSingaporeBloodRed } from './rotala-singapore-blood-red';
+import { bucephalandraKedagang } from './bucephalandra-kedagang';
 
 // 1. Array aller Pflanzen sammeln
 export const allPlants: Plant[] = [
@@ -21,7 +24,10 @@ export const allPlants: Plant[] = [
   aponogetonMadagascariensis,
   limnobiumLaevigatum,
   phyllanthusFluitans,
-  lysimachiaParvifolia
+  lysimachiaParvifolia,
+  nesaeaPedicellataGolden,
+  rotalaSingaporeBloodRed,
+  bucephalandraKedagang
 ];
 
 // 2. Repository Pattern (wie bei Species)
