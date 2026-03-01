@@ -1,15 +1,38 @@
 import { Link } from 'react-router-dom';
 import { 
-  Zap, ChevronRight, ArrowRight,
-  Search, Layers, Activity, Database, Shield, Gauge
+  Zap, ArrowRight,
+  Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus,
+  Leaf, Map, Lightbulb, Clock, Droplets, Ruler
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
 import { allSpecies, bettaSplendens, neonTetra, oscar, amanoShrimp } from '../data/species';
+import { useAuth } from '../contexts/AuthContext';
+import { allPlants } from '../data/plants';
+import habitatsData from '../data/habitats.json';
+import { allKnowledgeArticles } from '../data/knowledge';
 
 const HomePage = () => {
+  const { user, profile } = useAuth();
+  
   const featuredSpecies = [bettaSplendens, neonTetra, oscar, amanoShrimp];
+  
+  // Dynamically pulled featured items
+  const featuredPlants = [
+    allPlants.find(p => p.slug === 'anubias-barteri-nana'),
+    allPlants.find(p => p.slug === 'bacopa-monnieri'),
+    allPlants.find(p => p.slug === 'microsorum-pteropus')
+  ].filter((p): p is (typeof allPlants)[number] => Boolean(p));
+
+  const featuredBiotopes = [
+    habitatsData.find(h => h.id === 'amazon-blackwater'),
+    habitatsData.find(h => h.id === 'lake-tanganyika-rocky')
+  ].filter(Boolean) as typeof habitatsData;
+
+  const featuredArticles = ['nitrogen-cycle', 'planted-tank-setup']
+    .map(slug => allKnowledgeArticles.find(a => a.slug === slug))
+    .filter((a): a is (typeof allKnowledgeArticles)[number] => Boolean(a));
 
   // Animation variants
   const fadeInUp = {
@@ -40,7 +63,7 @@ const HomePage = () => {
           {/* Subtle gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-cyan-50/20 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950/20" />
           
-          {/* Animated gradient orbs - more subtle */}
+          {/* Animated gradient orbs */}
           <motion.div 
             animate={{ 
               scale: [1, 1.2, 1],
@@ -51,7 +74,7 @@ const HomePage = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-400/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"
+            className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-400/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"
           />
           <motion.div 
             animate={{ 
@@ -64,7 +87,7 @@ const HomePage = () => {
               ease: "easeInOut",
               delay: 2
             }}
-            className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3"
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 pointer-events-none"
           />
 
           <div className="max-w-7xl mx-auto relative z-10">
@@ -116,34 +139,45 @@ const HomePage = () => {
                   variants={fadeInUp}
                   className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3"
                 >
-                  {/* Sign In Button - Vercel Style */}
-                  <Link 
-                    to="/auth" 
-                    className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
-                  >
-                    {/* Shimmer effect */}
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
-                    <span className="relative flex items-center gap-2">
-                      Sign In
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </span>
-                  </Link>
+                  {/* Primary CTA: Auth-Aware */}
+                  {user ? (
+                    <Link 
+                      to="/my-tanks" 
+                      className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span className="relative flex items-center gap-2">
+                        My Tanks
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link 
+                      to="/auth" 
+                      className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
+                    >
+                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
+                      <span className="relative flex items-center gap-2">
+                        Sign In
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      </span>
+                    </Link>
+                  )}
                   
-                  {/* Tank Builder Button - Vercel Style */}
+                  {/* Secondary CTA */}
                   <Link 
                     to="/tank-builder" 
                     className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                   >
                     <Zap className="w-4 h-4 text-amber-500" />
                     Tank Builder
-                    <ArrowRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                   </Link>
                 </motion.div>
                 
                 {/* Trust indicators */}
                 <motion.div 
                   variants={fadeInUp}
-                  className="mt-12 flex items-center justify-center lg:justify-start gap-6 sm:gap-8 text-sm font-medium text-slate-500 dark:text-slate-500"
+                  className="mt-12 flex items-center justify-center lg:justify-start gap-6 sm:gap-8 text-sm font-medium text-slate-500 dark:text-slate-400"
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -160,7 +194,7 @@ const HomePage = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Visual Grid */}
+              {/* Visual Grid - The 4 Fishes */}
               <motion.div 
                 className="flex-1 w-full max-w-lg lg:max-w-xl"
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -214,10 +248,10 @@ const HomePage = () => {
         </section>
 
         {/* STATS BAR */}
-        <section className="py-12 px-6 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+        <section className="py-12 px-6 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 relative z-10">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <StatCard number={allSpecies.length.toString()} label="Species Documented" />
+              <StatCard number={`${allSpecies.length}+`} label="Species Documented" />
               <StatCard number="10+" label="Compatibility Checks" />
               <StatCard number="72" label="Data Points per Fish" />
               <StatCard number="100%" label="Free & Open" />
@@ -225,10 +259,193 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* FEATURES */}
-        <section className="py-20 sm:py-32 px-6">
+        {/* HOME TEASERS - Plants / Habitats / Knowledge */}
+        <section className="py-20 px-6 relative overflow-hidden bg-white dark:bg-slate-950">
           <div className="max-w-7xl mx-auto">
-            {/* Section header */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-3xl mx-auto mb-16"
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">
+                More than just fish
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                Discover authentic biotope setups, detailed plant profiles, and master the basics in our knowledge base.
+              </p>
+            </motion.div>
+
+            {/* Plants Row */}
+            <div className="mb-20">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                    <Leaf className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Popular Plants</h3>
+                </div>
+                <Link to="/plants" className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors shrink-0">
+                  Open Lexicon <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                {featuredPlants.map((plant, i) => (
+                  <motion.div
+                    key={plant.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                  >
+                    <Link to={`/plants/${plant.slug}`} className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-500/40 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden p-2">
+                      <div className="relative h-40 sm:h-48 rounded-2xl overflow-hidden shrink-0 mb-4 bg-slate-100 dark:bg-slate-800">
+                        <img 
+                          src={plant.imageUrl} 
+                          alt={plant.taxonomy.commonName} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                        />
+                        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-slate-900/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
+                          {plant.taxonomy.family}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col flex-grow px-3 pb-3">
+                        <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          {plant.taxonomy.commonName}
+                        </h4>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4">
+                          {plant.taxonomy.scientificName}
+                        </p>
+                        
+                        <div className="grid grid-cols-2 gap-2 mt-auto">
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Shield className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="capitalize truncate">{plant.difficulty}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Ruler className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="truncate">{plant.specs.heightCM.max} cm</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Activity className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="capitalize truncate">{plant.specs.growthRate}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+                            <Droplets className="w-3.5 h-3.5 text-emerald-500" />
+                            <span className="capitalize truncate">{plant.parameters.ph.ideal || plant.parameters.ph.min} pH</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Biotopes & Knowledge Split Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+              
+              {/* Biotopes Column */}
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                      <Map className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Habitats</h3>
+                  </div>
+                  <Link to="/biotopes" className="text-amber-600 dark:text-amber-400 font-semibold hover:underline flex items-center gap-1">
+                    Explore <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                <div className="grid gap-6">
+                  {featuredBiotopes.map((biotope, i) => (
+                    <motion.div
+                      key={biotope.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                    >
+                      <Link to={`/biotopes/${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 dark:border-slate-800 transition-all duration-300 h-56 block bg-slate-900">
+                        <img 
+                          src={biotope.imageUrl} 
+                          alt={biotope.title} 
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
+                        <div className="absolute bottom-5 left-5 right-5">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-md">
+                              {biotope.conditions.waterType}
+                            </span>
+                          </div>
+                          <h4 className="text-xl font-bold text-white mb-1 group-hover:text-amber-300 transition-colors leading-tight">{biotope.title}</h4>
+                          <p className="text-slate-300 text-xs sm:text-sm line-clamp-2 leading-relaxed">{biotope.subtitle || biotope.description}</p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Knowledge Column */}
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                      <Lightbulb className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Knowledge</h3>
+                  </div>
+                  <Link to="/knowledge" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
+                    All Guides <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                <div className="grid gap-6">
+                  {featuredArticles.map((article, i) => (
+                    <motion.div
+                      key={article.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                    >
+                      <Link to={`/knowledge/${article.slug}`} className="group flex flex-row gap-5 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-200 dark:hover:border-indigo-500/40 transition-all duration-300 shadow-sm hover:shadow-lg h-56">
+                        <div className="w-2/5 sm:w-1/3 rounded-2xl overflow-hidden shrink-0 relative">
+                          <img src={article.visuals.headerImage} alt={article.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                          <div className="absolute top-2 left-2 px-2 py-1 rounded-md bg-slate-900/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
+                            {article.category}
+                          </div>
+                        </div>
+                        <div className="flex flex-col justify-center flex-1 py-1 pr-2">
+                          <div className="flex items-center gap-3 text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {article.readingTime} min</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+                            <span className="capitalize text-indigo-600 dark:text-indigo-400">{article.difficulty}</span>
+                          </div>
+                          <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug line-clamp-2">
+                            {article.title}
+                          </h4>
+                          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-3">
+                            {article.summary}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* FEATURES BENTO GRID (Core App Features) */}
+        <section className="py-20 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-200 dark:border-slate-800 px-6">
+          <div className="max-w-7xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -237,105 +454,105 @@ const HomePage = () => {
               className="text-center max-w-3xl mx-auto mb-16 sm:mb-20"
             >
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">
-                Everything you need to succeed
+                Your Digital Aquarium Assistant
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                Professional-grade tools designed for both beginners and experienced aquarists.
+                Everything you need to create healthy and stable ecosystems. From species research to daily care.
               </p>
             </motion.div>
 
-            {/* Feature grid */}
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
               <FeatureCard 
-                icon={<Search className="w-7 h-7" />}
-                iconBg="from-indigo-500 to-purple-500"
-                title="Smart Filtering"
-                desc="Find compatible species by filtering temperature, pH, size, and behavior. Advanced search with real-time results."
+                icon={<BookOpen className="w-6 h-6" />}
+                iconStyles="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
+                title="Species Lexicon"
+                desc="Search our large database offline & lightning fast. Discover detailed profiles for fish and plants."
                 link="/species"
-                linkText="Search Species"
+                linkText="Open Lexicon"
               />
               <FeatureCard 
-                icon={<Activity className="w-7 h-7" />}
-                iconBg="from-emerald-500 to-teal-500"
-                title="Compatibility Engine"
-                desc="Our algorithm analyzes 10+ data points including behavior, parameters, and size ratios to prevent conflicts."
+                icon={<Activity className="w-6 h-6" />}
+                iconStyles="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
+                title="Compatibility Check"
+                desc="Avoid fatal mistakes. Check instantly which species can peacefully coexist in your tank."
                 link="/tank-builder"
-                linkText="Check Compatibility"
+                linkText="Start Check"
               />
               <FeatureCard 
-                icon={<Layers className="w-7 h-7" />}
-                iconBg="from-rose-500 to-orange-500"
-                title="Biotopes & Guides"
-                desc="Learn about natural habitats and recreate them with detailed biotope guides and authentic setups."
-                link="/biotopes"
-                linkText="Explore Biotopes"
+                icon={<LayoutDashboard className="w-6 h-6" />}
+                iconStyles="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
+                title="Your Dashboard"
+                desc="Manage your aquariums, track water parameters, and keep an overview of your livestock."
+                link="/my-tanks"
+                linkText="Go to My Tanks"
               />
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="relative py-20 sm:py-32 overflow-hidden">
-          {/* Background - Pure gradient, no external image */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950" />
-          
-          {/* Animated aquatic pattern overlay */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.3),transparent_50%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.2),transparent_40%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(168,85,247,0.2),transparent_40%)]" />
+        {/* BOTTOM CTA / AUTH BANNER */}
+        <section className="relative py-20 sm:py-24 overflow-hidden bg-white dark:bg-slate-950">
+          {/* Subtle gradient shapes */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-[80px]" />
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-[80px]" />
           </div>
-          
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-indigo-600/20 via-transparent to-transparent" />
 
-          <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
+          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
+              className="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-12 shadow-xl"
             >
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
-                Ready to build your
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
-                  perfect aquarium?
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-                Join hobbyists worldwide using AquaGuide to create healthy, thriving aquatic ecosystems.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link 
-                  to="/species" 
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-white hover:bg-slate-50 text-slate-900 font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20"
-                >
-                  Browse {allSpecies.length}+ Species
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link 
-                  to="/about" 
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-lg transition-all duration-200 border border-white/20 hover:border-white/30"
-                >
-                  Learn More
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-
-              {/* Social proof */}
-              <div className="mt-12 flex items-center justify-center gap-8 text-sm text-slate-400">
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    {[1,2,3].map(i => (
-                      <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 border-2 border-slate-900" />
-                    ))}
+              {!user ? (
+                <>
+                  <div className="mx-auto inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-6">
+                    <UserPlus className="w-8 h-8" />
                   </div>
-                  <span>Trusted by hobbyists</span>
-                </div>
-                <div className="hidden sm:block w-px h-4 bg-slate-700" />
-                <span className="hidden sm:inline">Open source & free forever</span>
-              </div>
+                  <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
+                    Ready to improve your aquarium?
+                  </h2>
+                  <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+                    Create your free account now. Save your favorite species, build virtual tanks, and track your water parameters.
+                  </p>
+                  <Link 
+                    to="/auth" 
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
+                  >
+                    Register for free
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div className="mx-auto inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mb-6">
+                    <LayoutDashboard className="w-8 h-8" />
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
+                    Hello {profile?.username || user.email?.split('@')[0]}! 👋
+                  </h2>
+                  <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+                    Welcome back to AquaGuide. Ready to check on your tanks or discover new species?
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Link 
+                      to="/my-tanks" 
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
+                    >
+                      Go to your tanks
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
+                    <Link 
+                      to="/species" 
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold rounded-xl transition-all shadow-sm border border-slate-200 dark:border-slate-700 w-full sm:w-auto"
+                    >
+                      Find new species
+                    </Link>
+                  </div>
+                </>
+              )}
             </motion.div>
           </div>
         </section>
@@ -354,10 +571,10 @@ const StatCard = ({ number, label }: { number: string; label: string }) => (
     transition={{ duration: 0.5 }}
     className="text-center"
   >
-    <div className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">
+    <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-2">
       {number}
     </div>
-    <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium">
+    <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium tracking-wide">
       {label}
     </div>
   </motion.div>
@@ -365,14 +582,14 @@ const StatCard = ({ number, label }: { number: string; label: string }) => (
 
 const FeatureCard = ({ 
   icon, 
-  iconBg,
+  iconStyles,
   title, 
   desc, 
   link, 
   linkText 
 }: { 
   icon: any; 
-  iconBg: string;
+  iconStyles: string;
   title: string; 
   desc: string; 
   link: string; 
@@ -383,33 +600,30 @@ const FeatureCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    whileHover={{ y: -8 }}
-    className="group relative bg-white dark:bg-slate-900 p-8 rounded-3xl border-2 border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 shadow-lg hover:shadow-2xl transition-all duration-300"
+    whileHover={{ y: -5 }}
+    className="group relative bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
   >
     {/* Icon */}
-    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${iconBg} text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${iconStyles} mb-6 transition-transform duration-300 group-hover:scale-110`}>
       {icon}
     </div>
     
     {/* Content */}
-    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
       {title}
     </h3>
-    <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+    <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed flex-grow">
       {desc}
     </p>
     
     {/* Link */}
     <Link 
       to={link} 
-      className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
+      className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 group-hover:gap-3 transition-all mt-auto"
     >
       {linkText} 
-      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      <ArrowRight className="w-4 h-4" />
     </Link>
-    
-    {/* Hover gradient effect */}
-    <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${iconBg} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
   </motion.div>
 );
 
