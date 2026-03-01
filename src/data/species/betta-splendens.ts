@@ -4,6 +4,11 @@ export const bettaSplendens: Species = {
   id: 'betta-001',
   slug: 'betta-splendens',
   imageUrl: '/images/species/betta-splendens.jpg',
+
+  gallery: [
+  '/images/species/betta-splendens2.jpg',
+  '/images/species/betta-splendens3.jpg',
+],
   
   funFact: "The Siamese Fighting Fish possesses a specialized labyrinth organ that allows it to breathe atmospheric air directly from the surface, an adaptation for surviving in oxygen-depleted water.",
 
