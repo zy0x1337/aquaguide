@@ -3,11 +3,11 @@ import type { Plant } from '../../types/plant';
 export const bucephalandraKedagang: Plant = {
   id: 'plant-bucephalandra-kedagang',
   slug: 'bucephalandra-kedagang',
-  imageUrl: 'https://images.unsplash.com/photo-1622313626248-2615e478ce13?auto=format&fit=crop&q=80&w=800',
+  imageUrl: 'images/plants/buce-kedagang.jpg',
   imageCredit: {
-    photographer: 'Aquascape enthusiasts',
-    sourceUrl: 'https://unsplash.com',
-    license: 'Unsplash License'
+    photographer: '',
+    sourceUrl: '',
+    license: 'Copyright'
   },
   difficulty: 'easy',
   funFact: 'Bucephalandra species frequently bloom entirely submerged underwater. The "Kedagang" variety is famous for the tiny, iridescent metallic dots covering its dark, wavy leaves.',

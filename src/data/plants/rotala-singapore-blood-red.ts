@@ -3,11 +3,11 @@ import type { Plant } from '../../types/plant';
 export const rotalaSingaporeBloodRed: Plant = {
   id: 'plant-rotala-singapore-blood-red',
   slug: 'rotala-singapore-blood-red',
-  imageUrl: 'https://images.unsplash.com/photo-1622313626248-2615e478ce13?auto=format&fit=crop&q=80&w=800',
+  imageUrl: 'images/plants/rotala-singapore-blood-red.jpg',
   imageCredit: {
-    photographer: 'Aquascape enthusiasts',
-    sourceUrl: 'https://unsplash.com',
-    license: 'Unsplash License'
+    photographer: '',
+    sourceUrl: '',
+    license: 'Copyright'
   },
   difficulty: 'medium',
   funFact: 'Rotala "Blood Red Singapore" is widely considered the easiest Rotala variant to achieve a true, deep blood-red coloration without requiring extreme nitrate limitation.',
@@ -78,7 +78,7 @@ export const rotalaSingaporeBloodRed: Plant = {
     'Assuming high iron alone will turn it red without providing adequate high-intensity lighting.'
   ],
   aquascapeContext: {
-    styles: ['nature_aquarium', 'dutch', 'high_tech'],
+    styles: ['nature_aquarium', 'dutch'],
     roleInTank: 'Background bush or midground focal point meant to provide a vibrant, deep red splash of color.',
     companionFish: ['Ember Tetra', 'Celestial Pearl Danio', 'Chili Rasbora', 'Amano Shrimp', 'Oto cats'],
     incompatibleFish: ['Cichlids that dig', 'Large plecos that might uproot delicate stems'],

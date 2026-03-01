@@ -3,13 +3,13 @@ import type { Plant } from '../../types/plant';
 export const nesaeaPedicellataGolden: Plant = {
   id: 'plant-nesaea-pedicellata-golden',
   slug: 'nesaea-pedicellata-golden',
-  imageUrl: 'https://images.unsplash.com/photo-1622313626248-2615e478ce13?auto=format&fit=crop&q=80&w=800',
+  imageUrl: 'images/plants/nesaea-pedicellata-golden.jpg',
   imageCredit: {
-    photographer: 'Aquascape enthusiasts',
-    sourceUrl: 'https://unsplash.com',
-    license: 'Unsplash License'
+    photographer: '',
+    sourceUrl: '',
+    license: 'Copyright'
   },
-  difficulty: 'expert',
+  difficulty: 'advanced',
   funFact: 'Although commonly sold as Nesaea pedicellata, it is now scientifically classified as Ammannia pedicellata. The "Golden" variant is a highly sought-after mutation that displays bright yellow-green to golden leaves contrasting with striking pink/red stems.',
   taxonomy: {
     scientificName: 'Ammannia pedicellata \'Golden\'',
@@ -78,7 +78,7 @@ export const nesaeaPedicellataGolden: Plant = {
     'Neglecting macro-nutrient (NPK) dosing, assuming only iron is needed for color.'
   ],
   aquascapeContext: {
-    styles: ['dutch', 'nature_aquarium', 'high_tech'],
+    styles: ['dutch', 'nature_aquarium'],
     roleInTank: 'Focal point or vibrant midground/background accent to break up green and red plant groupings.',
     companionFish: ['Neon Tetra', 'Harlequin Rasbora', 'Discus', 'Angelfish', 'Corydoras'],
     incompatibleFish: ['Silver Dollars', 'Large Cichlids', 'Goldfish (will eat or uproot the plant)'],
