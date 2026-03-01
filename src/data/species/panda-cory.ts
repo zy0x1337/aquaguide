@@ -4,21 +4,22 @@ export const pandaCory: Species = {
   id: 'cory-001',
   slug: 'panda-cory',
   imageUrl: '/images/species/panda-cory.jpg',
-  funFact: "Panda Corys are named after giant pandas because of their adorable black eye patches! But here's the magical part: they can breathe air through their intestines. Watch them zoom to the surface, gulp a bubble, and zip back down like tiny aquatic astronauts refueling their oxygen tanks. It's the cutest superpower in the aquarium world.",
+  
+  funFact: "Named for their striking resemblance to giant pandas, these catfish have three distinct black patches over their eyes, dorsal fin, and tail base. They possess a modified intestine that allows them to gulp atmospheric air at the surface, a vital adaptation for surviving in oxygen-poor water.",
 
   taxonomy: {
     scientificName: 'Corydoras panda',
     commonName: 'Panda Corydoras',
     family: 'Callichthyidae',
-    origin: 'Peru (Ucayali River system, Rio Lurin, high-altitude Andean tributaries)',
+    origin: 'Peru (Ucayali River system, Rio Lurin)',
     region: 'South America',
-    biotope: 'Crystal-clear, oxygen-rich mountain streams fed by Andean snowmelt. Cool water (19-22°C), moderate flow, sandy bottoms, dense vegetation margins',
+    biotope: 'Cool, clear mountain streams fed by Andean snowmelt with sandy substrates and moderate flow.',
   },
 
   visuals: {
     iconShape: 'depressed',
     adultSizeCM: 5,
-    color: 'Peach-pink to creamy-white body with THREE iconic black patches: adorable eye patches (like a panda mask!), a dorsal fin spot, and a tail peduncle spot. The contrast against their pale body makes them look like swimming pandas. Females fuller-bodied; males sleeker',
+    color: 'A peach-pink to creamy-white body featuring three distinct black patches: one covering the eyes like a mask, one on the dorsal fin, and one at the base of the tail.',
   },
 
   environment: {
@@ -48,50 +49,44 @@ export const pandaCory: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes: 'Pandas are shy sweethearts who need hiding spots but also love open sandy areas to play in. Think: planted perimeter, open center "dance floor." Use Java Fern, Anubias, and Cryptocoryne on rocks and driftwood. They adore moss (Java Moss, Christmas Moss) for secret hideaways. Floating plants help dim the lights because Pandas are surprisingly light-sensitive. Most importantly: soft sand for their delicate little whiskers (barbels). No gravel. Ever.',
-    hardscape: ['Smooth River Stones', 'Driftwood (Spider Wood, Mopani)', 'Terracotta Pots (fry shelters)', 'Oak or Almond Leaves (they love leaf litter!)'],
+    plantingNotes: 'Planted areas provide security, but open sandy spaces are essential for foraging. Floating plants help diffuse light for these shy fish. Sand is mandatory to protect their delicate barbels.',
+    hardscape: ['Smooth river stones', 'Driftwood', 'Terracotta pots', 'Leaf litter'],
   },
 
   behavior: {
     tags: ['shoaler', 'bottom_dweller', 'peaceful', 'diurnal', 'shy', 'scaleless', 'nano'],
     minGroupSize: 6,
-    description: 'If Bronze Corys are boisterous golden retrievers, Panda Corys are shy, sensitive house cats. They\'re adorably gentle, a bit skittish at first, but incredibly sweet once comfortable. You\'ll catch them doing the "Panda wiggle"—shimmying their whole body into the sand while hunting for snacks. They travel in little groups, always staying close to their buddies, occasionally breaking into synchronized swimming sessions that look like underwater ballet. When startled, they freeze with their eye patches wide open ("I\'m invisible!"). During dawn and dusk, they become surprisingly playful, zooming around the bottom like tiny race cars. The cutest moment? Watching six Pandas lined up in a row, all wiggling into the sand together like a choreographed dance troupe.',
+    description: 'A shy and sensitive species that is more timid than other Corydoras. They are social fish that need the security of a group to feel confident enough to venture out. They spend their day actively sifting through sand for food, occasionally darting to the surface to gulp air. When startled, they tend to freeze rather than flee.',
     
     compatibility: {
-      goodMates: ['Neon Tetras', 'Cardinal Tetras', 'Harlequin Rasboras', 'Ember Tetras', 'Celestial Pearl Danios', 'Otocinclus', 'Cherry Shrimp', 'Nerite Snails', 'Apistogramma (dwarf cichlids)', 'Peaceful Tetras'],
-      badMates: ['Goldfish (wrong temperature!)', 'Large Cichlids', 'Aggressive Barbs', 'Red Tail Sharks', 'Bettas (sometimes nippy)', 'Warm-water fish (Discus, Rams at 28°C)'],
-      notes: 'Pandas are coolwater fish—this is critical! They thrive at 22°C while most tropical fish prefer 25-26°C. Pair them with other cool-loving species (Hillstream Loaches, White Cloud Minnows, Dojo Loaches work in big tanks). Avoid mixing with warm-water species; Pandas suffer in anything over 24°C long-term.',
+      goodMates: ['Neon Tetras', 'Harlequin Rasboras', 'Ember Tetras', 'Celestial Pearl Danios', 'Otocinclus', 'Cherry Shrimp', 'Apistogramma'],
+      badMates: ['Goldfish', 'Large Cichlids', 'Discus', 'German Rams'],
+      notes: 'They are coolwater fish and should not be kept in standard tropical temperatures. They are ideal for unheated or temperate setups alongside other coolwater species.',
       
       rules: [
         {
           type: 'requires',
           condition: 'temperature <= 24°C',
-          reason: 'CRITICAL: Pandas are Andean coolwater fish. Temperatures over 24°C long-term stress them, shorten lifespan, and increase disease risk. They come from snowmelt streams at 19-22°C!',
+          reason: 'Native to high-altitude streams, they suffer stress and illness in standard tropical temperatures above 24°C.',
           severity: 'critical',
         },
         {
           type: 'avoid',
-          target: 'warm-water fish (Discus, German Rams, Sterbai Corys)',
-          reason: 'Temperature incompatibility. Warm-water fish need 26-28°C; Pandas suffer and die young above 24°C. Choose coolwater tankmates only',
+          target: 'warm-water fish',
+          reason: 'Temperature incompatibility makes them unsuitable tankmates for Discus or Rams.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'sand substrate',
-          reason: 'Gravel destroys their delicate barbels (whiskers), causing infection, starvation, and death. Sand allows natural foraging behavior',
+          reason: 'Gravel damages their sensitive barbels, leading to infection and inability to find food.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'group-size >= 6',
-          reason: 'Pandas are shy social fish that become stressed and hide constantly in small groups. They need friends to feel brave. 6 minimum, 10+ for confidence',
+          reason: 'They are a social species that becomes withdrawn and stressed in small numbers.',
           severity: 'high',
-        },
-        {
-          type: 'warning',
-          target: 'bettas',
-          reason: 'Hit or miss. Some Bettas coexist peacefully, others nip at Corys thinking they\'re competition. Monitor closely. Pandas are too slow to escape aggressive Bettas',
-          severity: 'medium',
         },
       ],
       
@@ -131,27 +126,22 @@ export const pandaCory: Species = {
     effort: 'low',
     cost: 'medium',
     specialRequirements: [
-      'Cool water (22°C ideal, 24°C max)—this is non-negotiable', 
-      'Sand substrate mandatory for barbel health', 
-      'Groups of 6+ required (shy fish need buddies)',
-      'Gentle current (moderate flow, not stagnant)',
+      'Cool water (22°C ideal)', 
+      'Sand substrate mandatory', 
+      'Groups of 6+',
+      'Gentle current',
     ],
 
     proTips: [
-      "Temperature is everything for Pandas. They're not tropical fish—they're coolwater mountain fish from Andean streams! Keep them at 22°C. At 26°C, they survive but suffer (shortened lifespan, weakened immune system, stress). This is why Pandas have a reputation for 'dying easily'—it's usually temperature stress.",
-      "Pandas are shy at first but blossom with patience. Give them 2-3 weeks to settle. Once comfortable, they'll zoom around, wiggle into sand, and even glass-surf during feeding time. Dimmer lighting helps them relax.",
-      "Feed sinking wafers at dusk. Pandas are crepuscular (most active dawn/dusk). Feeding when lights dim ensures they get food before faster midwater fish steal it. They're slow eaters who take their time.",
-      "Barbel health check: Long, intact whiskers = happy Panda. Short, stubby, or missing whiskers = RED ALERT. This means wrong substrate (gravel) or bacterial infection from dirty sand. Barbels don't grow back easily.",
-      "They love leaf litter! Add Indian Almond Leaves, Oak leaves, or Catappa leaves. Pandas sift through them looking for microfauna, and the tannins mimic their natural blackwater habitat. Plus it looks beautiful.",
-      "Pandas are derpy and adorable. You'll catch them doing the 'glass stare' (just... staring at you with their big panda eyes), the 'sand dive' (full-body wiggle into substrate), and the 'bubble dash' (zooming to surface for air). Each one has personality!",
+      "Temperature is the most critical factor; they thrive in cool water (22°C) and will deteriorate in the heat of a typical tropical tank.",
+      "Use sand to protect their barbels, which are essential for locating food.",
+      "Provide plenty of cover and dim lighting to help these shy fish feel secure."
     ],
 
     commonMistakes: [
-      "Keeping them too warm. This is the #1 Panda killer. They're sold alongside tropical fish, so people assume they want 25-26°C. Nope. Pandas are coolwater fish (22°C ideal). At 26°C+ they become lethargic, stop eating, and die within months. Always check temperature requirements!",
-      "Using gravel substrate. This is the #2 Panda killer. Gravel erodes their barbels, causing bacterial infections (barbel erosion, red blotch disease). Once barbels are damaged, Pandas can't find food efficiently and slowly starve. Only use soft sand.",
-      "Buying just 1-2 because 'they're expensive.' Pandas are social shoalers who become stressed, hide constantly, and lose color when kept in tiny groups. 6 is minimum. Save up and buy proper groups—it's worth it.",
-      "Mixing with warm-water fish. Don't pair Pandas with Discus, German Rams, or Sterbai Corys that need 26-28°C. The temperature compromise kills the Pandas. Choose coolwater tankmates: Neon Tetras, White Clouds, Hillstream Loaches.",
-      "Thinking they're 'delicate' or 'fragile.' Pandas aren't fragile—they're just specific. Give them cool water, sand, and friends, and they'll live 8-10+ years. Ignore those needs, and they die within months. It's not luck; it's care.",
+      "Keeping them in heated tropical tanks causes stress and shortens their lifespan.",
+      "Gravel substrate wears down their barbels, preventing them from foraging effectively.",
+      "Keeping them in small groups leads to constant hiding and poor health."
     ],
     
     feeding: {
@@ -170,7 +160,7 @@ export const pandaCory: Species = {
       waterChangePercentage: 25,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Pandas are more nitrate-sensitive than Bronzes. Keep nitrates <20ppm. Gentle substrate vacuuming weekly prevents bacterial buildup. Use cool dechlorinated water (match tank temp 22°C) to avoid temperature shock.',
+      notes: 'Perform water changes with cool water to match their preferred temperature range. They are sensitive to nitrates, so regular maintenance is necessary.',
     },
     
     equipment: {
@@ -192,21 +182,21 @@ export const pandaCory: Species = {
   health: {
     lifespanYears: 10,
     commonDiseases: ['barbel-erosion', 'red-blotch-disease', 'ich', 'columnaris', 'fungal-infections'],
-    sensitivities: ['High temperatures (>24°C)', 'Sharp substrate', 'High nitrates (>20ppm)', 'Salt (scaleless fish)', 'Copper medications', 'Temperature shocks'],
+    sensitivities: ['High temperatures', 'Sharp substrate', 'High nitrates', 'Salt', 'Copper medications'],
   },
 
   scientificContext: {
-    wildHabitat: "Panda Corys inhabit high-altitude tributaries of the Ucayali River system in Peru (Rio Lurin and nearby streams), particularly streams fed by Andean mountain snowmelt at elevations up to 3000 meters! These are crystal-clear, oxygen-rich, cool waters (19-22°C) flowing over sandy and fine gravel bottoms. The current is moderate (not raging, not stagnant), and the water is well-oxygenated from flow and altitude. During rainy season, snowmelt increases flow and drops temperature even further. These streams are nothing like the warm, slow-moving Amazon lowlands—Pandas are mountain fish, not tropical fish. This is why temperature is so critical in captivity.",
-    sexualDimorphism: "Females are noticeably plumper and wider when viewed from above, especially when gravid (carrying eggs). Males are sleeker, smaller, and more streamlined. The difference is subtle in juveniles but becomes obvious as they mature. During breeding season, females become comically round—like tiny aquatic blimps with panda faces.",
-    variants: ['Standard Panda (three black spots)', 'Longfin Panda (captive mutation - longer fins)', 'Albino/Leucistic Panda (extremely rare)'],
+    wildHabitat: "Inhabits clear, cool tributaries of the Ucayali River system in Peru. These high-altitude streams are fed by Andean snowmelt, resulting in well-oxygenated water with temperatures rarely exceeding 22°C. They are found over sandy substrates among leaf litter and aquatic vegetation. While they are common in the aquarium trade, their specific habitat requirements make them vulnerable to improper care.",
+    sexualDimorphism: "Females are significantly rounder and broader, especially when carrying eggs. Males are smaller and more streamlined.",
+    variants: ['Standard Panda', 'Longfin Panda', 'Albino Panda (rare)'],
   },
 
   breeding: {
     method: 'egg_layer',
     difficulty: 'beginner',
-    trigger: 'Breeding Pandas requires mimicking Andean rainy season: large (40-50%) water change with cool water (18-20°C)—yes, cooler than tank temp! This simulates mountain snowmelt flooding streams. Condition breeders with live/frozen foods (bloodworms, daphnia, brine shrimp) for 2-3 weeks prior. Spawning usually occurs 24-48 hours after cool water change. Males chase females in classic "T-position" courtship, following them around the tank persistently.',
-    fryCare: 'Females lay 50-150 adhesive eggs on glass, plants, smooth rocks, and even filter intakes. Eggs are light yellow and sticky. Important: Remove adults immediately after spawning—Pandas eat their own eggs enthusiastically. Eggs hatch in 3-5 days at 22°C (longer in cooler water). Fry are tiny and delicate. Feed microworms, infusoria, or powdered fry food for first week, then switch to baby brine shrimp. Growth is slower than Bronze Corys. Maintain pristine water (daily 10% changes) and cool temp (20-22°C). Fry develop panda markings at 4-6 weeks.',
-    notes: 'Panda breeding is slightly trickier than Bronze Corys due to their temperature sensitivity but still beginner-friendly. The key is the cool water temperature drop to trigger spawning. Fry are more delicate and require cooler water (20-22°C) consistently. Many breeders report that Pandas take 12+ months to reach breeding maturity vs 6-8 months for Bronzes, so patience is required.',
+    trigger: 'Simulate the rainy season with a large water change using water that is slightly cooler than the tank (18-20°C). Condition with high-protein foods.',
+    fryCare: 'Eggs are laid on glass or plant leaves. Fry are delicate and require microscopic foods like infusoria upon hatching, moving on to baby brine shrimp as they grow. Cool water temperatures are critical for fry development.',
+    notes: 'Breeding is straightforward if their temperature requirements are met, but fry are more sensitive than those of other Corydoras species.',
   },
   
   experienceData: {

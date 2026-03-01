@@ -4,21 +4,29 @@ export const rudd: Species = {
   id: 'coldwater-001',
   slug: 'rudd',
   imageUrl: '/images/species/rudd.jpg',
-  funFact: "Rudd (Rotfedern) are Europe's ultimate survivor fish—they've adapted to nearly every freshwater habitat from Spain to the Caspian Sea! They're one of the few fish that can tolerate EXTREME temperature swings: they survive frozen ponds at 2°C in winter AND scorching summer heatwaves at 28°C. Here's the wild part: their adult size is entirely determined by their environment—in small ponds with no predators they stay small (15-20cm), but in large lakes with pike they grow HUGE (40-50cm) as defense! It's like they have built-in size adaptation software. In crystal-clear water their fins glow brilliant red-orange (hence 'Rotfeder' = red feather), but in murky dirty water they lose all color and turn dull gray. They're living water quality indicators!",
+  
+  funFact: "Rudd are Europe's ultimate temperature survivors, capable of thriving in frozen ponds at 2°C and summer heatwaves at 28°C. Their adult size adapts to their environment, growing larger in lakes with predators. In clean water, their fins glow brilliant red-orange, making them living water quality indicators.",
+
+  imageCredit: {
+    photographer: 'Klaus Rudloff (via Wikimedia Commons)', // Placeholder if original link broken, or use original
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Scardinius_erythrophthalmus_(Linnaeus,_1758)_c_2.JPG',
+    license: 'CC BY-SA 3.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+  },
 
   taxonomy: {
     scientificName: 'Scardinius erythrophthalmus',
     commonName: 'Rudd',
     family: 'Cyprinidae',
-    origin: 'Europe (Pyrenees to Caspian Sea, Scandinavia to Greece) - native to Germany/Central Europe',
+    origin: 'Europe (Pyrenees to Caspian Sea, Scandinavia to Greece)',
     region: 'Europe',
-    biotope: 'Slow-moving rivers, lakes, ponds, canals, flooded meadows. Prefer vegetated shallow areas (0.5-2m depth) with dense aquatic plants. Tolerate wide range of conditions: clear to murky water, soft to hard water, cold to warm temperatures',
+    biotope: 'Slow-moving rivers, lakes, and ponds with dense vegetation. Tolerates a wide range of temperatures and conditions.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 25,
-    color: 'Silvery body with greenish-bronze back. Distinctive BRIGHT RED-ORANGE fins (pelvic, anal, and pectoral fins) in clean water—hence German name "Rotfeder" (red feather). Eye has golden-yellow iris with red spot above. Scales are larger and more reflective than similar species (roach). In dirty/murky water, red coloration fades to dull orange-gray. Juveniles have less intense fin colors. Wild variants: Golden Rudd (bright yellow-gold body, popular ornamental variant)',
+    color: 'Silvery body with a greenish-bronze back. The dorsal, anal, and pelvic fins are bright red-orange in healthy specimens. Eye features a golden iris with a red spot.',
   },
 
   environment: {
@@ -48,55 +56,49 @@ export const rudd: Species = {
 
   habitat: {
     planting: 'dense',
-    plantingNotes: 'Rudd are enthusiastic plant-eaters that will devour most soft aquatic plants! They need heavy planting but ONLY hardy, tough species survive. Recommended: Vallisneria (tough leaves), Water Lilies (Nymphaea - too tough to eat), Java Fern (leathery leaves), Anubias (very hard leaves), Potamogeton species (pondweeds - natural food). AVOID: Delicate stem plants, carpeting plants, Cabomba, soft-leaved species—they\'ll be stripped bare within days. Plant densely along edges but leave CENTER 60-70% open for swimming—Rudd are active open-water schoolers that need horizontal swimming space. Dark substrate (black sand or dark gravel) enhances their red fin coloration dramatically. Floating plants (Water Lettuce, Duckweed) provide shade and are natural food—Rudd love eating duckweed!',
-    hardscape: ['Driftwood (creates hiding spots)', 'Smooth river stones/boulders', 'Minimal hardscape—plants and swimming space priority'],
+    plantingNotes: 'Enthusiastic plant-eaters. Only tough, hard-leaved plants like Anubias, Java Fern, and Vallisneria will survive. Soft plants will be consumed rapidly. Dark substrate enhances their red fin coloration.',
+    hardscape: ['Driftwood', 'Smooth river stones'],
   },
 
   behavior: {
     tags: ['peaceful', 'shoaler', 'midwater', 'active', 'diurnal'],
     minGroupSize: 8,
-    description: 'Rudd are active, confident shoaling fish that form tight schools in open water—they\'re bold swimmers that explore the entire tank constantly. Unlike shy fish, properly-kept Rudd (groups of 8+) are visible all day, swimming in synchronized formations through midwater and surface. They\'re initially skittish (panic at sudden movements) but become incredibly tame within weeks—feeding-trained Rudd will eat from your hand! Behavior changes with seasons: In warm water (18-25°C) they\'re hyperactive, constantly chasing each other and feeding. In cool water (10-15°C) they slow down but remain active. Below 8°C they enter semi-dormancy and stop feeding entirely. They\'re peaceful toward all tankmates—zero aggression toward other fish. Their only "crime" is enthusiastic plant-eating and competitive feeding (they eat FAST and steal food from slower fish).',
+    description: 'Active, confident shoaling fish that need large groups to feel secure. They are peaceful but fast, competitive feeders. They require seasonal temperature fluctuations to thrive and breed. In winter, they enter a semi-dormant state and stop feeding.',
     
     compatibility: {
-      goodMates: ['Other European coldwater fish (Bitterling, Minnows, Gudgeon)', 'Goldfish (similar temps/requirements)', 'Weather Loaches (Misgurnus)', 'European catfish species', 'Koi (pond setups)', 'Native European snails'],
-      badMates: ['Tropical fish (temp incompatibility)', 'Aggressive species', 'Very small fish (intimidated by size/activity)', 'Delicate slow feeders (Rudd steal food)'],
-      notes: 'Rudd are COLDWATER fish (native European species) incompatible with most tropical aquarium fish due to temperature requirements. They need seasonal temperature fluctuations (cool winters 4-10°C, warm summers 18-25°C) for health and breeding. Best kept: 1) Species-only tank (just Rudd), 2) With other European coldwater species (Bitterling, Minnows, Gudgeon), 3) With Goldfish (similar care), or 4) In outdoor pond setups. They\'re perfectly peaceful but their size (20-25cm adults), active swimming, and fast competitive feeding intimidates/outcompetes smaller delicate fish. AVOID mixing with tropical community fish—Rudd suffer in constantly heated tanks (24°C+) and tropical fish die in unheated Rudd tanks (winter temps 4-10°C).',
+      goodMates: ['Goldfish', 'Weather Loaches', 'Bitterling', 'Minnows', 'Gudgeon'],
+      badMates: ['Tropical fish', 'Aggressive species', 'Very small fish', 'Delicate slow feeders'],
+      notes: 'A coldwater species incompatible with tropical setups. Best kept in a species-only tank or with other coldwater fish in an unheated aquarium or pond.',
       
       rules: [
         {
           type: 'requires',
           condition: 'seasonal temperature fluctuation (winter cooling)',
-          reason: 'CRITICAL: Rudd are temperate coldwater fish that NEED seasonal temperature cycles for health, breeding, and longevity. Constant warm temps (20°C+ year-round) prevent breeding, shorten lifespan, and cause stress. Winter cooling (4-10°C for 2-4 months) is mandatory. Indoor tanks need unheated room; outdoor ponds ideal',
+          reason: 'They are temperate fish that need a winter cooling period (4-10°C) for health and breeding. Constant warm temperatures shorten their lifespan.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'large horizontal swimming space (150cm+ length)',
-          reason: 'Rudd are active open-water schoolers (20-25cm adults) that need massive horizontal swimming space. Minimum 150cm tank length (450L+). Small tanks cause stress, stunted growth, and behavioral problems',
+          reason: 'Adults reach 20-25cm and are active swimmers requiring significant horizontal space.',
           severity: 'high',
         },
         {
           type: 'requires',
           condition: 'group size 8+ fish',
-          reason: 'Rudd are obligate shoaling fish with complex social structures. Groups under 8 become stressed, skittish, hide constantly, and show faded colors. Minimum 8 fish; 12-15 creates natural schooling behavior',
+          reason: 'Obligate shoalers that become stressed and skittish in smaller groups.',
           severity: 'high',
         },
         {
           type: 'avoid',
           target: 'tropical heated tanks',
-          reason: 'Rudd are coldwater fish (4-20°C natural range) incompatible with tropical setups (24-28°C). Constant heat causes stress, shortened lifespan, breeding failure, and susceptibility to disease',
+          reason: 'They suffer in constant tropical temperatures and require cooler winter periods.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'delicate plants',
-          reason: 'Rudd are enthusiastic herbivores that eat most soft aquatic plants. Only tough-leaved species (Vallisneria, Anubias, Java Fern, Water Lilies) survive. Expect constant plant damage',
-          severity: 'medium',
-        },
-        {
-          type: 'requires',
-          condition: 'excellent water quality and oxygenation',
-          reason: 'Rudd need clean, well-oxygenated water. In dirty/murky water their red fin coloration fades to dull gray (visible stress indicator). Strong filtration and aeration mandatory',
+          reason: 'They will consume most soft aquatic plants.',
           severity: 'medium',
         },
       ],
@@ -137,32 +139,25 @@ export const rudd: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'SEASONAL temperature fluctuation required (winter 4-10°C, summer 18-25°C)', 
-      'Large tank minimum 450L (150cm length)', 
-      'Unheated setup (coldwater species)',
-      'Groups of 8+ mandatory (shoaling fish)',
-      'Only hardy plants survive (plant-eaters)',
-      'Excellent oxygenation required',
+      'Seasonal temperature fluctuation required', 
+      'Large tank (450L+)', 
+      'Unheated setup', 
+      'Groups of 8+',
+      'Tough plants only',
+      'Excellent oxygenation',
     ],
 
     proTips: [
-      "Rudd are COLDWATER fish, NOT tropical! They're native European species that need seasonal temperature cycles. Don't heat the tank—room temperature (15-22°C) is perfect in summer. In winter, allow temps to drop naturally (4-10°C for 2-4 months). This mimics natural conditions, triggers breeding, and ensures long lifespan (15-20 years). Constant heat (24°C+) = shortened lifespan and no breeding.",
-      "Outdoor ponds are IDEAL for Rudd! They're pond fish masquerading as aquarium fish. In ponds they thrive with seasonal changes, grow larger, show brighter colors, breed naturally, and live 15-20 years. Indoor aquariums work but require: unheated room, large size (450L+), seasonal temp drops. If you have pond option = choose pond!",
-      "Size adaptation is REAL! Rudd adjust adult size to environment: Small ponds with no predators = 15-20cm adults. Large ponds/lakes with pike/predators = 30-40cm+ adults (predator defense). Indoor aquarium = typically 20-25cm. This flexibility makes them suitable for various setups but plan for 25cm adults minimum.",
-      "Red fins = water quality indicator! Bright red-orange fins = clean, well-oxygenated water. Faded orange-gray fins = dirty water, poor oxygen, stress. Use fin color as instant visual health check. If fins fade = test water immediately (ammonia, nitrite, nitrate, oxygen).",
-      "They LOVE eating plants! Rudd are 60% herbivores. Feed plant-based flakes, blanched vegetables (zucchini, peas, spinach), algae wafers. They'll graze constantly on any soft plants in tank. Provide Duckweed or Water Lettuce as renewable food—they'll eat it faster than it grows!",
-      "Winter = stop feeding! When temps drop below 8°C, Rudd enter semi-dormancy (like hibernation). Their metabolism nearly stops. Stop feeding entirely—uneaten food rots and poisons water. Resume feeding when temps rise above 12°C in spring. This is natural and healthy!",
-      "Golden Rudd variant is stunning! Wild-type has silver body + red fins. Golden Rudd has bright yellow-gold body + orange-red fins. They're selectively bred ornamental variety—same care as wild-type but more expensive (€8-15 vs €3-5). Gorgeous pond fish!",
+      "Do not use a heater; they are a coldwater species that thrives at room temperature or in a pond.",
+      "They require a winter cooling period for health and breeding. Allow temperatures to drop naturally in winter.",
+      "Stop feeding when temperatures drop below 8°C as their metabolism slows significantly."
     ],
 
     commonMistakes: [
-      "Keeping in heated tropical tank. #1 mistake! Rudd are coldwater fish (4-20°C natural) that suffer/die in constant tropical heat (24-28°C). They need seasonal cooling for health and breeding. Result: shortened lifespan (5 years vs normal 15-20), no breeding, chronic stress. Keep unheated!",
-      "Small tanks. 'I'll keep 5 Rudd in 200L!' NO. Adults reach 20-25cm and are hyperactive swimmers. They need HORIZONTAL space (150cm+ length). Small tanks = stress, stunted growth, constant glass-surfing, faded colors. Minimum 450L realistic.",
-      "Keeping alone or in pairs. Rudd are obligate shoalers that need groups of 8+ for psychological health. Small groups (2-4) become stressed, skittish, hide constantly, show dull colors. Minimum 8; 12-15 ideal for natural behavior.",
-      "Expecting plants to survive. 'I'll have beautiful planted Rudd tank!' Unlikely. Rudd eat most soft plants voraciously. Only ultra-hardy species (Vallisneria, Java Fern, Anubias) survive. Accept plant damage or go plant-free with driftwood.",
-      "No winter cooling. 'I'll keep room at 20°C year-round!' Rudd need seasonal temp drops (4-10°C winter) for natural rhythm, breeding readiness, and longevity. Constant temps prevent breeding and shorten lifespan. Allow natural seasonal fluctuation.",
-      "Mixing with slow delicate fish. Rudd are fast competitive feeders that swallow food in seconds. Slow feeders (Otos, dwarf cichlids) starve because Rudd steal everything. Keep with similarly fast/hardy species or alone.",
-      "Poor oxygenation. Rudd need HIGH oxygen levels. In warm water (20°C+) oxygen drops and Rudd gasp at surface. Use strong filtration + air stone especially in summer. Poor oxygen = faded colors and stress.",
+      "Keeping them in heated tropical tanks leads to a shortened lifespan and poor health.",
+      "Housing them in small tanks restricts their active swimming behavior.",
+      "Expecting delicate plants to survive; they will be eaten.",
+      "Failing to provide a winter cooling period prevents natural breeding cycles."
     ],
     
     feeding: {
@@ -181,7 +176,7 @@ export const rudd: Species = {
       waterChangePercentage: 30,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 30% water changes maintain quality. Rudd are hardy and tolerate parameter fluctuations but pristine water brings out red fin coloration. Strong filtration mandatory—Rudd produce moderate bioload and are active eaters (lots of waste). Air stone recommended especially in summer (warm water = low oxygen). Match new water temp to tank temp (important in winter when tank is cold). In winter (below 8°C), reduce water changes to biweekly—fish are dormant and produce minimal waste.',
+      notes: 'Clean, well-oxygenated water is essential for maintaining their bright red fin coloration. Reduce feeding and water changes during winter dormancy.',
     },
     
     equipment: {
@@ -203,21 +198,21 @@ export const rudd: Species = {
   health: {
     lifespanYears: 15,
     commonDiseases: ['ich', 'columnaris', 'fungal-infections', 'parasites'],
-    sensitivities: ['Low oxygen (gasp at surface)', 'Constant warm temps (stress)', 'Poor water quality (fin color fades)', 'Sudden temperature shocks'],
+    sensitivities: ['Low oxygen', 'Constant warm temps', 'Poor water quality'],
   },
 
   scientificContext: {
-    wildHabitat: "Rudd inhabit slow-moving freshwater across Europe: rivers, lakes, ponds, canals, flooded meadows, marsh areas. They prefer shallow vegetated zones (0.5-2m depth) with dense aquatic plants, but also inhabit open water. Found in nearly every European freshwater habitat from Pyrenees (Spain) to Caspian Sea (Russia), and from Scandinavia to Greece. Tolerant of wide conditions: soft to hard water, acidic to alkaline pH, cold winters (2-4°C under ice) to warm summers (25°C+). They school in open water feeding on insects, larvae, small crustaceans, plant matter. During breeding season (May-June), move into shallow weedy areas to spawn on aquatic plants.",
-    sexualDimorphism: "Difficult to sex outside breeding season. Males: Develop spawning tubercles (small white bumps) on head and body during breeding (May-June). Slimmer, more streamlined body. More vibrant red fin coloration. Females: Fuller, rounder body especially when gravid (carrying eggs). Less intense fin colors. Larger overall size. Juveniles impossible to sex—wait for maturity (2-3 years, 15cm+). Commercial sellers typically can't sex them—buy groups and let them pair naturally.",
-    variants: ['Wild-type Rudd (silver body, red fins)', 'Golden Rudd (yellow-gold body, orange-red fins - ornamental variant)', 'Regional color variations (depends on water clarity and diet)'],
+    wildHabitat: "Widespread across Europe in slow-moving freshwater bodies. They prefer shallow, vegetated areas but are highly adaptable to different conditions, including temperature extremes. They often hybridize with Roach (Rutilus rutilus) in the wild.",
+    sexualDimorphism: "Males develop white spawning tubercles on the head and body during the breeding season. Females have a fuller, rounder body shape.",
+    variants: ['Wild-type Rudd', 'Golden Rudd'],
   },
 
   breeding: {
     method: 'egg_scatterer',
     difficulty: 'medium',
-    trigger: 'Rudd breed readily in outdoor ponds with proper conditions but extremely difficult in indoor aquariums (space constraints). Breeding requirements: 1) Sexual maturity (2-3 years, 15-20cm length), 2) Winter cooling (4-10°C for 2-4 months)—absolutely mandatory!, 3) Spring warming (gradual temp rise to 18-20°C triggers spawning), 4) Dense fine-leaved plants (spawning substrate - Elodea, Cabomba, moss), 5) Large space (ponds ideal; aquariums 500L+ minimum). Males develop white spawning tubercles on head/body. Spawning occurs May-June in early morning—males chase females into dense plants, spawning occurs with violent thrashing ("spawning rush").',
-    fryCare: 'Females scatter 100,000+ sticky eggs onto fine-leaved plants (yes, over 100,000!). Eggs are tiny (1mm), translucent, adhesive. NO parental care—adults eat eggs if not removed/separated. Eggs hatch in 4-10 days depending on temp (18°C = 10 days; 22°C = 4 days). Fry are microscopic (3-4mm) and initially feed on infusoria/microscopic organisms. After 7-10 days, introduce newly-hatched brine shrimp. Growth is slow: 5cm at 1 year, 10cm at 2 years, 15cm+ at 3 years (breeding size). CHALLENGE: The sheer number of eggs/fry overwhelms most setups. Ponds with natural food sources (zooplankton) handle breeding better than aquariums. Indoor breeding success low due to space and food requirements.',
-    notes: 'Rudd breeding is nearly impossible in home aquariums due to: 1) Massive space needs (100,000+ eggs!), 2) High oxygen requirements for eggs (aquariums can\'t sustain), 3) Microscopic fry needing specialized foods. Breeding occurs spontaneously in outdoor ponds (500L+) with proper seasonal cycles. Most hobbyists observe spawning behavior (thrashing in plants) but fry survival is low unless pond is large with established zooplankton populations. Commercial breeding occurs in large outdoor ponds.',
+    trigger: 'Spawning is triggered by rising water temperatures in spring after a winter cooling period. They require dense planting to scatter their adhesive eggs.',
+    fryCare: 'Eggs hatch in 4-10 days. Fry are tiny and require infusoria initially. Breeding is most successful in outdoor ponds where natural food sources are abundant.',
+    notes: 'Breeding is rarely achieved in indoor aquariums due to space and temperature control requirements.',
   },
   
   experienceData: {

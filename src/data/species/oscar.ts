@@ -4,7 +4,8 @@ export const oscar: Species = {
   id: 'oscar',
   slug: 'oscar',
   imageUrl: '/images/species/oscar.jpg',
-  funFact: "Oscars are 'aquarium geniuses' with dog-level intelligence! They recognize owners within 1 week (swim to glass when you approach), learn feeding times (react to door opening/footsteps), eat from hand with long tongs, play with ping-pong balls/toys, and rearrange entire tank weekly moving rocks/plants with brute force! They have memory for routines, show excitement (wiggling/dancing when owner appears), and display moods (sulking when hungry). Here's the catch: they're waste monsters producing 20-30x normal bioload! A single Oscar = equivalent waste of 30 tetras! They're messy eaters scattering food everywhere, aggressive excavators creating constant muddy water, and need massive filtration (4-6x turnover/hour). They grow fast: 25cm in year 1, 35cm by year 3! CRITICAL: 450L minimum for single adult (many die in 200L tanks from stunting → liver failure). Personality-packed interactive pets if you can handle the commitment. From Amazon floodplains!",
+  
+  funFact: "Often called the 'river dog' of the aquarium, Oscars can recognize their owners and will excitedly 'wag' their bodies when approached, displaying a level of intelligence comparable to a pet dog.",
 
   imageCredit: {
     photographer: 'focusdanifocus on Pixabay',
@@ -15,17 +16,17 @@ export const oscar: Species = {
   
   taxonomy: {
     scientificName: 'Astronotus ocellatus',
-    commonName: 'Tiger Oscar / Velvet Cichlid / Oscar Fish',
+    commonName: 'Oscar',
     family: 'Cichlidae',
-    origin: 'South America (Amazon Basin - Peru, Brazil, Colombia, Venezuela, Ecuador - floodplain forests, slow rivers)',
+    origin: 'South America (Amazon Basin - Peru, Brazil, Colombia)',
     region: 'South America',
-    biotope: 'Flooded forests and blackwater river margins with slow current, muddy/sandy substrates, submerged logs/branches, warm soft acidic water',
+    biotope: 'Flooded forests and blackwater river margins with slow current and submerged wood.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 35,
-    color: 'Wild type: Spectacular dark olive-green to black base with bright orange-red tiger stripes creating marbled patterns across entire body! Distinctive false eye spot (ocellus) on tail base surrounded by orange ring (confuses predators - looks like eye). Velvety texture to scales. Juveniles (under 5cm) gray-brown with white/orange bands. Adults massively thick-bodied, powerful jaws. Variants: Albino (white/yellow with red eyes), Red Oscar (solid deep red), Tiger (classic orange/black), Leopard (spotted patterns)',
+    color: 'Wild types feature a dark olive-green base with vibrant orange-red tiger stripes. A distinctive false eye spot on the tail base confuses predators.',
   },
 
   environment: {
@@ -55,46 +56,43 @@ export const oscar: Species = {
 
   habitat: {
     planting: 'sparse',
-    plantingNotes:
-      'Oscars are aggressive excavators constantly uprooting plants! They dig to substrate, move decorations, and destroy fragile plants. Best approach: 1) Potted plants secured with large rocks (Amazon Sword, Vallisneria in terracotta pots buried in sand), 2) Hard-leaved attached plants (Anubias, Java Fern tied to driftwood - harder to destroy), 3) Minimal planting (they need open swimming space). Avoid delicate stem plants (destroyed within hours!). Watch them bulldoze entire tank weekly - redecorating behavior is normal. Provide muddy beach zones for natural digging.',
-    hardscape: ['Massive driftwood branches (60cm+ secured with silicone - creates territories/caves)', 'Large flat slate rocks (10kg+ smooth edges - spawning surfaces)', 'PVC pipes/caves (15cm+ diameter - hiding spots)', 'Smooth river rocks (tennis-ball size - they WILL move these!)'],
+    plantingNotes: 'Plants are often uprooted by digging. Use hardy species potted or attached to hardscape, and expect frequent redecorating.',
+    hardscape: ['Massive driftwood', 'Large flat slate', 'PVC pipes', 'Smooth river rocks'],
   },
 
   behavior: {
     tags: ['intelligent', 'predator', 'territorial'],
     minGroupSize: 1,
-    description:
-      'Oscars are personality-packed aquarium geniuses displaying dog-level intelligence and interactive behaviors! They recognize individual owners (swim excitedly to glass when you approach, ignore strangers), learn feeding routines (react to door opening, footsteps, specific times), and accept hand-feeding with long tongs after 1-2 weeks bonding. Watch them play with ping-pong balls or floating toys, pushing them around tank! They\'re aggressive excavators constantly rearranging tank: moving rocks, uprooting plants, digging caves, creating new layouts weekly. They display moods: excitement (wiggling/dancing), sulking (hiding when hungry), curiosity (investigating new objects). Oscars are messy eaters scattering food everywhere, aggressive toward smaller fish (anything mouth-sized = food!), and territorial defending caves/zones. They\'re predators with powerful jaws eating whole fish, crustaceans, insects. CRITICAL: Despite intelligence, they\'re aggressive and incompatible with most community fish.',
+    description: 'These large cichlids are renowned for their intelligence and dog-like personalities, often recognizing their owners and begging for food. They are powerful diggers that will constantly rearrange the substrate and decor. While interactive, they are predatory by nature and will consume any fish small enough to fit in their mouths. They require ample space not just for swimming, but to manage the significant territory they claim.',
     
     compatibility: {
-      goodMates: ['Large Common/Sailfin Plecos (30cm+ only - too big to swallow)', 'Giant Danios in large groups (fast swimmers avoiding predation)', 'Large Silver Dollars (15cm+ disc-shaped hard to eat)', 'Jack Dempsey Cichlids (similar size/aggression)', 'Another Oscar (ONLY in 900L+ tanks with stable bonded pair!)'],
-      badMates: ['All small/medium fish (eaten immediately)', 'Angelfish/Discus (killed)', 'Flowerhorns (hybrid vigor diseases)', 'Goldfish (fatty liver disease from diet)', 'Shrimp/snails (eaten)', 'Peaceful community fish', 'Nano species (instant prey)'],
-      notes:
-        'Oscars are best kept solo in species-only 450L+ tanks! They\'re predators: anything fitting in mouth (up to 8cm fish!) = food. Even "compatible" tankmates require massive tanks (600-900L+) and careful monitoring. Oscar pairs require 900L+ minimum and must be bonded from juveniles (introducing adults = death fights). Tankmates must be: 1) Too large to swallow (30cm+ plecos), 2) Too fast to catch (Giant Danios in groups), 3) Similar aggression level (Jack Dempseys). CRITICAL: Most Oscar tankmate failures occur from underestimating their predatory instincts and growth speed (tankmates fine at 10cm Oscar become prey at 25cm!). Safest approach: solo tank with human interaction as enrichment.',
+      goodMates: ['Large Plecos', 'Giant Danios', 'Large Silver Dollars', 'Jack Dempsey Cichlids'],
+      badMates: ['Small fish', 'Angelfish', 'Discus', 'Goldfish', 'Shrimp'],
+      notes: 'Best kept as a single specimen in a species-only tank due to their predatory nature and high waste production. Tankmates must be robust and large.',
       
       rules: [
         {
           type: 'requires',
           condition: '450L minimum for single adult Oscar',
-          reason: 'CRITICAL: Oscars grow to 35cm and produce 20-30x normal bioload! Smaller tanks (200-300L) cause: 1) Stunted growth → liver/kidney failure by year 2, 2) Constant ammonia/nitrite spikes, 3) Behavioral issues (aggression, glass surfing). Many die in undersized tanks. 450L (150x50x60cm) is absolute minimum - bigger is always better',
+          reason: 'Smaller tanks cause stunting, organ failure, and fatal ammonia spikes due to their massive bioload.',
           severity: 'critical',
         },
         {
           type: 'requires',
           condition: 'massive filtration 4-6x tank volume turnover/hour',
-          reason: 'Oscars are waste monsters (bioload 25.0!) and messy eaters. Without powerful filtration: ammonia reaches 1.0ppm+ constantly causing stress, disease, death. Need canister filter + sump OR dual canisters rated for 2-3x actual tank volume',
+          reason: 'They produce an enormous amount of waste; insufficient filtration leads to chronic water quality issues.',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'Oscar pairs without 900L+ tank',
-          reason: 'Oscar pairs are highly aggressive and territorial! Without 900L+ tank with multiple territories, they fight to death (even bonded pairs in small tanks). Most pair attempts fail. Only attempt in massive tanks with escape routes',
+          reason: 'Pairs become violently territorial without enough space to establish separate territories.',
           severity: 'critical',
         },
         {
           type: 'avoid',
           target: 'feeding live goldfish',
-          reason: 'Live goldfish (feeder fish) cause fatty liver disease in Oscars from high fat content and carry parasites/diseases. Many Oscars die from goldfish-only diets. Use quality pellets + frozen foods instead',
+          reason: 'Goldfish carry parasites and cause fatty liver disease due to high fat content.',
           severity: 'high',
         },
       ],
@@ -125,7 +123,7 @@ export const oscar: Species = {
     
     finNipping: {
       risk: 'high',
-      targets: ['all smaller fish - predatory behavior not fin nipping'],
+      targets: ['all smaller fish - predatory behavior'],
     },
   },
 
@@ -135,32 +133,23 @@ export const oscar: Species = {
     effort: 'high',
     cost: 'high',
     specialRequirements: [
-      '450L minimum tank (single adult)', 
-      'Massive filtration 4-6x turnover/hour (canister + sump)', 
-      '50% weekly water changes (waste production!)', 
-      'Secure lid with locks (powerful jumpers!)', 
-      'Fine sand substrate (1mm - belly protection)', 
-      'Backup air pump + battery (oxygen critical)', 
-      'Long feeding tongs (hand-feeding)',
+      '450L minimum tank', 
+      'Heavy filtration (canister + sump)', 
+      '50% weekly water changes', 
+      'Secure lid', 
+      'Fine sand substrate',
     ],
 
     proTips: [
-      "Filtration is everything! Oscars produce 20-30x normal bioload and are messy eaters scattering food. Without massive filtration, ammonia/nitrite spike constantly. Setup: 1) Large canister filter (rated 2-3x tank volume), 2) Sump filtration (adds water volume + bio-media), 3) Backup sponge filter (redundancy). Test water 2x weekly - ammonia/nitrite must stay 0ppm!",
-      "Hand-feeding builds incredible bonds! Use 30cm+ long tongs (never bare hands - powerful bite!) with NLS large pellets (6mm) or 2-3cm chunks frozen silversides/tilapia. Daily 10min sessions: approach slowly, offer food at tong tip, let Oscar learn routine. Within 1-2 weeks they'll swim excitedly when you approach. This is their best enrichment!",
-      "Plan tank upgrades from day one! Oscars grow fast: 2.5cm/month when young, 25cm in year 1, 35cm by year 3! Juveniles (5cm) seem fine in 200L but rapidly outgrow it. Budget: Start 450L OR buy juvenile knowing you'll upgrade to 600L+ within 18 months. Stunted Oscars develop liver failure.",
-      "Fine sand substrate (1mm silica sand) is mandatory! Oscars are aggressive diggers constantly excavating substrate. Gravel (even small pebbles) cuts bellies causing bacterial infections. Watch them bulldoze sand creating caves - this is natural behavior!",
-      "Diet variety = health! Staple: NLS Cichlid Formula large pellets (6mm) 2x daily. Supplements 3x weekly: frozen silversides, frozen tilapia chunks (2-3cm), frozen krill, live earthworms (farm-raised). Avoid: live goldfish (fatty liver disease!), mammalian meat (beef/chicken - can't digest), freeze-dried foods only (nutritionally poor).",
-      "Provide enrichment! Oscars are intelligent and get bored. Add: ping-pong balls (they push them around!), rearrangeable rocks (let them redecorate), mirror outside tank 5min daily (interactive behavior), varied feeding routines. Bored Oscars become aggressive/destructive.",
-      "Backup oxygen system is critical! Oscars are large fish with high oxygen needs. During power outage, they suffocate within hours. Keep battery-powered air pump + airstone ready. Test backup quarterly.",
+      "Invest in heavy-duty filtration (canister plus sump) as they produce massive amounts of waste.",
+      "They bond strongly with owners and can be hand-fed with tongs, providing excellent enrichment.",
+      "Plan for their adult size immediately; a 450L tank is the absolute minimum for a single adult."
     ],
 
     commonMistakes: [
-      "Small tanks (200-300L). Biggest killer! 60% of Oscars die in undersized tanks from: 1) Stunted growth → liver/kidney failure by year 2, 2) Chronic ammonia/nitrite exposure, 3) Stress from cramped space. Juvenile Oscars seem fine in 200L but rapidly outgrow it. 450L minimum for life!",
-      "Weak filtration. Oscars produce 20-30x normal waste + scatter food everywhere. Without massive filtration (4-6x turnover), ammonia reaches 1.0ppm+ constantly causing stress, hole-in-head disease, death. Single canister filter is not enough - need canister + sump OR dual canisters.",
-      "Live goldfish diet. 'Feeder goldfish' cause fatty liver disease from high fat content and carry parasites (Ichthyophthirius, flukes, worms). Oscars on goldfish-only diets develop liver failure within 1-2 years. Use NLS pellets + frozen silversides instead!",
-      "Oscar pairs in tanks under 900L. Even bonded pairs from juveniles become territorial in small tanks (under 900L) and fight to death. 90% of pair attempts fail. Solo Oscars or pairs in 1200L+ only.",
-      "No oxygen backup. Oscars are large fish with high oxygen demands. Power outages (filter stops = no surface agitation) = suffocation within 3-6 hours. Many die from single blackout. Keep battery air pump ready!",
-      "Gravel substrate. Oscars are aggressive diggers. Gravel (even 3-5mm) cuts their bellies when digging causing bacterial infections (30% of cases!). Use fine sand (1mm) only.",
+      "Keeping them in undersized tanks leads to stunting and organ failure.",
+      "Underestimating their bioload leads to rapid water quality deterioration.",
+      "Feeder goldfish cause fatty liver disease; use quality pellets and frozen foods instead."
     ],
     
     feeding: {
@@ -179,7 +168,7 @@ export const oscar: Species = {
       waterChangePercentage: 50,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'CRITICAL: Weekly 50% water changes mandatory! Oscars are waste monsters (bioload 25.0!) producing massive ammonia. Without huge water changes, nitrates climb to 80-100ppm+ causing hole-in-head disease. Vacuum substrate thoroughly (scattered food everywhere!). Test ammonia/nitrite/nitrate 2x weekly - must stay: ammonia 0ppm, nitrite 0ppm, nitrate under 40ppm. Clean canister filter monthly. Check backup oxygen system quarterly.',
+      notes: 'Large weekly water changes are mandatory to keep nitrate levels manageable given their high waste output.',
     },
     
     equipment: {
@@ -200,27 +189,22 @@ export const oscar: Species = {
 
   health: {
     lifespanYears: 15,
-    commonDiseases: ['hole-in-head-disease', 'ich', 'columnaris', 'fatty-liver-disease', 'fin-rot'],
-    sensitivities: ['Ammonia (over 0.25ppm causes stress)', 'Nitrate (over 40ppm causes HITH)', 'Fatty foods (goldfish diet)', 'Copper medications', 'Stunting from small tanks'],
+    commonDiseases: ['hole-in-head-disease', 'ich', 'columnaris', 'fatty-liver-disease'],
+    sensitivities: ['Ammonia spikes', 'High nitrates', 'Fatty foods', 'Copper medications', 'Stunting'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Astronotus ocellatus inhabits Amazon Basin floodplains and slow-moving blackwater rivers (Peru, Brazil, Colombia, Venezuela, Ecuador). Wild habitat: flooded forest margins and river edges during wet season (water rises 10-15 meters!), slow current or stagnant pools, muddy/sandy substrates with submerged logs/branches, soft acidic water (pH 6.0-7.0, GH 5-10), warm temps (25-28°C), dense vegetation and leaf litter. They\'re opportunistic predators eating: whole fish, insects (grasshoppers, beetles), crustaceans (crayfish, shrimp), fallen fruit (omnivorous!), aquatic snails. They display legendary parental care: both parents guard eggs/fry fiercely for 6+ weeks attacking much larger intruders!',
-    sexualDimorphism:
-      'Difficult to sex (subtle differences). Males: Slightly larger overall size, thicker/broader head and jaw structure, more prominent genital papilla (breeding tube - visible during spawning as pointed). Females: Slightly smaller, slimmer head/jaw, rounder body when gravid (carrying eggs - belly visibly swollen), blunt rounded genital papilla during spawning. Best method: venting (examining genital papilla shape during breeding season - pointed = male, rounded = female) or behavioral observation (males more territorial, females select spawning sites). Juveniles impossible to sex until 15cm+.',
-    variants: ['Tiger Oscar (wild-type orange/black)', 'Albino Oscar (white/yellow with red eyes)', 'Red Oscar (solid deep red)', 'Leopard Oscar (spotted patterns)', 'Longfin Tiger Oscar (extended fins)'],
+    wildHabitat: "Native to the Amazon Basin, Oscars inhabit floodplain forests and slow-moving rivers. They thrive in warm, soft, acidic waters with muddy substrates and plenty of submerged wood. They are opportunistic feeders, consuming small fish, insects, and crustaceans.",
+    sexualDimorphism: "Sexing is difficult. Males may have thicker lips and a more pointed dorsal fin, while females appear fuller when gravid. Venting is the most reliable method.",
+    variants: ['Tiger Oscar', 'Albino Oscar', 'Red Oscar', 'Leopard Oscar', 'Longfin Oscar'],
   },
 
   breeding: {
     method: 'substrate_spawner',
     difficulty: 'expert',
-    trigger:
-      'Oscar breeding requires massive tank (1200L+ minimum!), stable bonded pair (raised from juveniles together - introducing adults fails!), and pristine conditions. Triggers: 1) Increase temp to 28-29°C, 2) Massive water changes (50-70%) with slightly softer water (GH 5-8, pH 6.0-6.5), 3) Heavy feeding with high-protein foods (frozen silversides, earthworms) 2-3 weeks, 4) Provide large flat surfaces (30cm+ smooth slate rocks - spawning sites). Watch pair behavior: cleaning slate surface together, increased territorial aggression, color intensification.',
-    fryCare:
-      'Oscar spawning is spectacular: pair meticulously cleans flat slate for hours, then female lays 1000-3000 eggs in rows (male fertilizes immediately). Both parents fiercely guard eggs for 3 days attacking anything approaching (even owner!). Eggs hatch in 72 hours at 28°C. Parents move wrigglers (larvae) to pre-dug pits in substrate, continue guarding 4-6 weeks! Fry become free-swimming day 7-10. Parents protect fry for 6+ weeks (amazing parental care!). Fry need Artemia nauplii (baby brine shrimp) first 2 weeks, then micro-pellets. Growth fast: 5cm at 8 weeks. CRITICAL: Remove fry at 6 weeks or parents may eat them when next spawning cycle starts.',
-    notes:
-      'Oscar breeding is challenging but rewarding! Main issues: 1) Finding compatible pair (90% of pairings fail - fight to death!), 2) Massive tank requirement (1200L+ for pair + fry), 3) Parents become hyper-aggressive during spawning (may attack each other post-spawn if stressed). Best approach: Buy 6 juveniles (5cm), raise together in 600L+ tank, let natural pair form (takes 12-18 months), separate pair to breeding tank, remove non-paired individuals. Watch legendary parental care - both parents guard eggs/fry for 6+ weeks!',
+    trigger: 'Requires a very large tank and a bonded pair raised together. Spawning is triggered by high temperatures and large water changes with softer water.',
+    fryCare: 'Both parents meticulously care for the eggs and fry, digging pits to move the larvae. Fry grow quickly on baby brine shrimp and require separation once the parents begin a new breeding cycle.',
+    notes: 'Breeding is challenging due to the space requirements and potential aggression between partners.',
   },
   
   experienceData: {

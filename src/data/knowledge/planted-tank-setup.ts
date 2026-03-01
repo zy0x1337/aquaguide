@@ -129,7 +129,7 @@ export const plantedTankSetup: KnowledgeArticle = {
   },
   
   visuals: {
-    headerImage: 'https://images.unsplash.com/photo-1524704796725-9fc3044a58b2?w=1200&auto=format&fit=crop',
+    headerImage: 'images/knowledge/planted-tank-setup.jpg/',
     diagrams: [
       {
         id: 'hardscape-layout-diagram',

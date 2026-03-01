@@ -4,21 +4,22 @@ export const platy: Species = {
   id: 'platy-001',
   slug: 'platy',
   imageUrl: '/images/species/platy.jpeg',
-  funFact: "Platies are color-morphing champions selectively bred into hundreds of colors/patterns! Original wild fish were dull olive-gray, but decades of breeding created: MICKEY MOUSE (three black spots forming Mickey's silhouette on tail!), KOI (orange/white/black like koi carp), SUNSET (red/orange/yellow gradient), BLUE CORAL (neon blue), WAGTAIL (black fins with colored body), TUXEDO (half black/half color), PANDA (black/white), NEON (fluorescent colors). They come in every color imaginable - some morphs unrecognizable from wild ancestors! Here's the fun: they're effortless breeders producing 20-50 fry every 4-6 weeks with zero effort! Females can store sperm for 6+ months producing multiple broods from single mating. They're the ultimate beginner fish: peaceful, hardy, colorful, undemanding, breeding-machines. From Mexican spring-fed rivers with hard alkaline water!",
+  
+  funFact: "Platies are color-morphing champions, selectively bred into hundreds of varieties like the iconic 'Mickey Mouse' with its three tail spots. They are prolific livebearers; females can store sperm for up to six months, producing multiple broods from a single mating.",
 
   taxonomy: {
     scientificName: 'Xiphophorus maculatus',
-    commonName: 'Platy / Southern Platyfish / Moonfish',
+    commonName: 'Platy',
     family: 'Poeciliidae',
-    origin: 'Central America (Mexico, Guatemala, Honduras - spring-fed rivers and streams)',
+    origin: 'Central America (Mexico, Guatemala, Honduras - spring-fed rivers)',
     region: 'Central America',
-    biotope: 'Spring-fed clear rivers and canals with hard alkaline mineral-rich water, moderate vegetation, gentle current',
+    biotope: 'Spring-fed clear rivers and canals with hard alkaline water and moderate vegetation.',
   },
 
   visuals: {
     iconShape: 'fusiform',
     adultSizeCM: 6,
-    color: 'Incredibly variable! Wild type: Dull olive-gray/brown body with black spots. Bred morphs (hundreds!): Mickey Mouse (three black spots forming Mickey silhouette on tail base - iconic!), Koi (orange/white/black patches like koi carp), Sunset (red/orange/yellow gradient), Blue Coral (neon blue body), Wagtail (black fins with colored body - any color combo!), Tuxedo (half black/half color split), Panda (black/white), Neon (fluorescent GloFish variants), Red (solid red), Gold (solid yellow-gold), Dalmatian (white with black spots). Males slimmer, females rounder/deeper-bodied. Males have gonopodium (modified anal fin)',
+    color: 'Highly variable coloration from selective breeding, including varieties like Mickey Mouse, Koi, Sunset, and Wagtail. Males are slimmer with a gonopodium; females are rounder with a gravid spot.',
   },
 
   environment: {
@@ -48,40 +49,37 @@ export const platy: Species = {
 
   habitat: {
     planting: 'medium',
-    plantingNotes:
-      'Platies appreciate balanced planting: open swimming space center/front (active swimmers!) with moderate background/side planting for security and fry hiding spots. Best plants: Java Fern, Anubias (hard leaves), Vallisneria (tall background), Amazon Sword (broad leaves), floating plants (Water Sprite, Frogbit - essential for fry survival! babies hide here). Avoid over-planting (they need open swimming areas). Dense planting protects fry from adult cannibalism but adults prefer open water. Algae growth on plants/glass = natural grazing food (they love picking algae!).',
-    hardscape: ['Smooth river stones (create caves/territories)', 'Minimal driftwood (can lower pH - they prefer alkaline!)', 'Open swimming space center'],
+    plantingNotes: 'Appreciates open swimming space with planted borders for security. Floating plants are crucial for providing cover for fry, as adults will prey on their own young.',
+    hardscape: ['Smooth river stones', 'Minimal driftwood'],
   },
 
   behavior: {
     tags: ['peaceful', 'active', 'colorful', 'livebearer'],
     minGroupSize: 6,
-    description:
-      'Platies are peaceful, active, colorful livebearers perfect for community tanks! They\'re constantly swimming exploring all levels (middle/top zones), displaying vibrant colors, and interacting socially. Males display to each other (flaring fins, chasing) but rarely fight seriously. They\'re prolific breeders: females give birth to 20-50 free-swimming fry every 4-6 weeks with zero effort! Females can store sperm for 6+ months producing multiple broods from single mating (even pure female groups sometimes have fry!). Adults will eat their own fry if not separated (natural population control). Watch them constantly grazing algae from glass/plants. They\'re extremely hardy: tolerating parameter swings, beginner mistakes, diverse conditions. Peaceful toward all tankmates (one of safest community fish!).',
+    description: 'Active, peaceful livebearers ideal for community tanks. They are prolific breeders, often requiring population control. They constantly graze on algae and spend time in the upper and middle water layers.',
     
     compatibility: {
-      goodMates: ['Almost all peaceful community fish (tetras, rasboras, danios)', 'Other livebearers (Mollies, Guppies, Swordtails - can hybridize with Swordtails!)', 'Corydoras', 'Peaceful gouramis', 'Loaches', 'Larger shrimp (Amano - may eat small shrimp)', 'Snails'],
-      badMates: ['Aggressive cichlids', 'Large predatory fish', 'Goldfish (incompatible temps/parameters)', 'Bettas (may nip platy fins - usually OK but monitor)'],
-      notes:
-        'Platies are perfect for beginner community tanks! They\'re among the most peaceful fish: compatible with almost everything peaceful. They prefer hard alkaline water (like Mollies/Swordtails) but tolerate wide parameter ranges. WARNING: Can hybridize with Swordtails (same genus Xiphophorus) producing infertile hybrid offspring with health issues. Safe with larger shrimp (Amano) but may eat cherry shrimp (opportunistic). Adults eat their own fry - provide dense plants or separate fry for survival. Best in groups of 6+ with 1 male : 2-3 females ratio (spreads male harassment).',
+      goodMates: ['Peaceful community fish', 'Mollies', 'Guppies', 'Corydoras', 'Snails'],
+      badMates: ['Aggressive cichlids', 'Goldfish', 'Bettas'],
+      notes: 'Compatible with most peaceful species. Can hybridize with Swordtails, so keep separate for pure breeding.',
       
       rules: [
         {
           type: 'requires',
           condition: '1 male : 2-3 females ratio',
-          reason: 'Males constantly chase females for breeding. Single female = harassed to death from stress. Multiple females = harassment spread. Too many males = constant chasing/stress. This ratio prevents female exhaustion',
+          reason: 'Males constantly chase females; a single female will be harassed to exhaustion.',
           severity: 'high',
         },
         {
           type: 'warning',
           target: 'hybridization with Swordtails',
-          reason: 'Platies and Swordtails are same genus (Xiphophorus) and readily hybridize producing infertile offspring with health issues (deformed spines, short lifespans). Keep separate for pure breeding',
+          reason: 'They readily interbreed, producing infertile offspring with health issues.',
           severity: 'medium',
         },
         {
           type: 'warning',
           target: 'fry overpopulation',
-          reason: 'Platies are prolific: 20-50 fry every 4-6 weeks! Without population control, tank overruns with hundreds within months. Natural solution: adults eat most fry (OK!). Only save fry from first 1-2 broods',
+          reason: 'They breed prolifically, and a tank can quickly become overcrowded without population control.',
           severity: 'medium',
         },
       ],
@@ -122,33 +120,28 @@ export const platy: Species = {
     effort: 'low',
     cost: 'low',
     specialRequirements: [
-      'Hard alkaline water preferred (GH 10-30+, pH 7.0-8.5)', 
-      '1 male : 2-3 females ratio (prevents harassment)', 
-      'Moderate planting (fry hiding spots)', 
-      'Population control plan (prolific breeders!)',
+      'Hard alkaline water preferred', 
+      '1 male : 2-3 females ratio', 
+      'Moderate planting for fry hiding', 
+      'Population control plan',
     ],
 
     proTips: [
-      "Hard water preferred (like Mollies)! While Platies tolerate wider ranges than Mollies, they thrive in hard alkaline water (GH 10-30+, pH 7.0-8.5) from spring-fed Mexican rivers. In soft acidic water they're more disease-prone. Use crushed coral or Seachem Equilibrium to raise hardness. Test GH/pH before buying.",
-      "1 male : 2-3 females ratio prevents harassment! Males constantly chase females for breeding. Single female = stressed to death. Multiple females = harassment spread. Watch behavior - if one female constantly hiding, add more females.",
-      "Prepare for fry explosion! Platies are effortless breeders: 20-50 fry every 4-6 weeks with zero effort! Without control, tank overruns within months. Natural solution: Adults eat most fry (this is OK and natural population control!). Only save fry from first 1-2 broods. Don't feel guilty - this is nature.",
-      "Feed vegetable matter for vibrant colors! Platies are omnivores needing 50-60% plant material (algae, spirulina flakes, blanched zucchini/spinach). Vegetable-rich diet = brighter colors, better health, less aggression. Watch them graze algae from glass - adorable!",
-      "Hundreds of color morphs available! Popular: Mickey Mouse (three spots forming Mickey silhouette - iconic!), Koi (orange/white/black), Sunset (red/orange/yellow), Wagtail (black fins + colored body). Mix colors for stunning display! Note: Different morphs interbreed creating new unexpected patterns.",
-      "Extremely cold-tolerant! Platies thrive 18-28°C (64-82°F) - widest range of common fish! They're perfect for unheated tanks in warm climates or cooler community setups. This flexibility makes them ideal beginners fish.",
+      "They thrive in hard, alkaline water; use crushed coral to buffer pH if necessary.",
+      "Feed vegetable matter like spirulina to enhance coloration.",
+      "Have a plan for fry, as they breed continuously."
     ],
 
     commonMistakes: [
-      "Wrong male:female ratio. Too many males (or 1 male with 1 female) = constant harassment, stressed females. Single female chased to death. 1 male : 2-3 females spreads harassment and prevents female exhaustion.",
-      "Soft acidic water. While Platies tolerate wider ranges than Mollies, they prefer hard alkaline water (GH 10-30+, pH 7.0-8.5). In very soft water (GH under 8) they're more disease-prone (ich, fin rot). Raise hardness for best health.",
-      "No population control plan. Platies breed constantly: 20-50 fry every 4-6 weeks! Without intervention, tank overruns with hundreds within 6 months. Natural solution: Let adults eat most fry. Only save first 1-2 broods. This is natural.",
-      "Ignoring fry in pure female groups. Females can store sperm for 6+ months! Even pure female groups sometimes produce fry months after last male contact. Don't be surprised by 'virgin births' - stored sperm.",
-      "Mixing with Swordtails for breeding. Platies and Swordtails readily hybridize (same genus) producing infertile offspring with health issues (deformed spines). Keep separate if you want pure breeding lines.",
+      "Incorrect gender ratios lead to exhausted females.",
+      "Allowing overpopulation degrades water quality.",
+      "Mixing with Swordtails results in unwanted hybrids."
     ],
     
     feeding: {
       frequency: 'twice-daily',
-      primaryFoods: ['flakes', 'spirulina', 'algae-wafers', 'vegetables'],
-      supplements: ['bloodworms', 'brine-shrimp', 'daphnia'],
+      primaryFoods: ['flakes', 'spirulina', 'algae-wafers'],
+      supplements: ['bloodworms', 'brine-shrimp', 'vegetables'],
       vegetarian: false,
       liveFood: {
         required: false,
@@ -161,7 +154,7 @@ export const platy: Species = {
       waterChangePercentage: 25,
       waterChangeFrequency: 'weekly',
       vacuumingNeeded: true,
-      notes: 'Weekly 25% water changes. Platies are extremely hardy tolerating parameter swings better than most fish (perfect for beginners!). Keep nitrates under 40ppm. They prefer hard alkaline water (GH 10-30+, pH 7.0-8.5) - use crushed coral in filter or Seachem Equilibrium if tap water is soft. Very forgiving of maintenance lapses.',
+      notes: 'They are very hardy but produce significant waste; regular maintenance is beneficial.',
     },
     
     equipment: {
@@ -183,26 +176,21 @@ export const platy: Species = {
   health: {
     lifespanYears: 4,
     commonDiseases: ['ich', 'fin-rot', 'velvet', 'fungal-infections'],
-    sensitivities: ['Very soft water (prefer hard!)', 'Ammonia spikes', 'Sudden parameter swings'],
+    sensitivities: ['Very soft water', 'Ammonia spikes'],
   },
 
   scientificContext: {
-    wildHabitat:
-      'Xiphophorus maculatus inhabits spring-fed clear rivers and canals in Central America (Mexico - Rio Panuco/Rio Coatzacoalcos basins, Guatemala, Honduras). Wild habitat: shallow (20-100cm) clear spring-fed streams with hard alkaline mineral-rich water (GH 15-25+, pH 7.5-8.2), moderate aquatic vegetation, gentle to moderate current, sandy/gravel substrate, warm temps (20-26°C). They graze algae from rocks/plants and feed on aquatic insects, zooplankton. Wild fish are dull olive-gray with black spots (unrecognizable from colorful aquarium morphs!).',
-    sexualDimorphism:
-      'Easy to sex. Males: Slimmer, more streamlined bodies. Gonopodium (modified anal fin - long pointed tube for internal fertilization). Brighter colors, especially in breeding condition. Slightly smaller overall. Females: Fuller, rounder, much deeper-bodied especially when gravid (carrying developing fry - belly hugely swollen, dark gravid spot near vent visible through skin). Normal fan-shaped anal fin. Larger overall size. Juveniles (under 8 weeks) difficult to sex - wait for gonopodium development at 3-4 months.',
-    variants: ['Mickey Mouse (three black spots forming Mickey silhouette!)', 'Koi (orange/white/black)', 'Sunset (red/orange/yellow gradient)', 'Blue Coral (neon blue)', 'Wagtail (black fins + colored body)', 'Tuxedo (half black/half color)', 'Panda (black/white)', 'Neon/GloFish (fluorescent)', 'Hundreds more!'],
+    wildHabitat: "Native to spring-fed rivers in Mexico. They inhabit clear, hard, alkaline waters with moderate vegetation. Unlike the colorful aquarium morphs, wild specimens are relatively drab olive-green.",
+    sexualDimorphism: "Males possess a gonopodium and are slimmer. Females are larger with a rounded belly and a visible gravid spot when pregnant.",
+    variants: ['Mickey Mouse', 'Koi', 'Sunset', 'Wagtail', 'Tuxedo', 'Blue Coral'],
   },
 
   breeding: {
     method: 'livebearer',
     difficulty: 'beginner',
-    trigger:
-      'Platies are effortless breeders requiring no special conditions! They breed continuously in any tank with males and females present (hardest fish to prevent breeding!). Natural triggers: 1) Presence of males (gonopodium for internal fertilization), 2) Warm temps (24-26°C speeds gestation), 3) Good feeding (especially vegetable matter). Females can store sperm for 6+ months producing multiple broods from single mating! Gestation: 24-30 days (faster in warmer water).',
-    fryCare:
-      'Platies are livebearers giving birth to free-swimming fry (20-50 per brood every 4-6 weeks!). Watch gravid females: hugely swollen bellies, dark gravid spot, hiding behavior before birth. Birth occurs over hours - female releases fry one-by-one. CRITICAL: Adults (including mother!) eat their own fry immediately! For fry survival: 1) Provide dense plants especially floating plants (Java Moss, Water Sprite, Frogbit - fry hide here), 2) Separate gravid female to breeder box 1-2 days before birth (return mother after), 3) Raise fry in separate tank. Fry are large at birth (5-7mm) and accept crushed flakes immediately (no special foods needed!). Feed 2-3x daily. Growth is fast: 1.5cm at 6 weeks, 3cm at 3 months, sexually mature at 4 months. Separate sexes at 3 months to prevent juvenile breeding.',
-    notes:
-      'Platy breeding is too easy (main challenge: population control!). Females produce 20-50 fry every 4-6 weeks continuously. Without intervention, tank overruns with hundreds within 6 months. Natural solution: Adults eat most fry (this is natural population control - don\'t feel guilty!). Only save fry from first 1-2 broods. WARNING: Platies readily hybridize with Swordtails (same genus Xiphophorus) producing infertile hybrids with health issues. Also: Different platy color morphs interbreed creating unexpected new patterns (can be fun or mess up breeding lines!).',
+    trigger: 'Breeding requires no special triggers; it occurs readily in any mixed-gender tank. Females can store sperm for months.',
+    fryCare: 'Fry are born free-swimming and are large enough to accept crushed flakes immediately. Dense floating plants are necessary to protect them from being eaten by adults.',
+    notes: 'They are prolific breeders, and fry survival often depends on hiding spots within the tank.',
   },
   
   experienceData: {
