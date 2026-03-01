@@ -59,6 +59,7 @@ import { epiplatysAnnulatus } from './clown-kilifish';
 import { hemigrammusErythrozonus } from './hemmigrammus-erythrozonus';
 import { carnegiellaStrigata } from './marbled-hatchetfish';
 import { trichogasterLalius } from './dwarf-gourami';
+import { trigonostigmaEspei } from './espei-rasbora';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -120,7 +121,8 @@ export const allSpecies: Species[] = [
   epiplatysAnnulatus,
   hemigrammusErythrozonus,
   carnegiellaStrigata,
-  trichogasterLalius
+  trichogasterLalius,
+  trigonostigmaEspei
 ];
 
 export {
@@ -183,5 +185,6 @@ export {
   epiplatysAnnulatus,
   hemigrammusErythrozonus,
   carnegiellaStrigata,
-  trichogasterLalius
+  trichogasterLalius,
+  trigonostigmaEspei
 };
