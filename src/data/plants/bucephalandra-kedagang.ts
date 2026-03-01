@@ -3,7 +3,7 @@ import type { Plant } from '../../types/plant';
 export const bucephalandraKedagang: Plant = {
   id: 'plant-bucephalandra-kedagang',
   slug: 'bucephalandra-kedagang',
-  imageUrl: 'images/plants/buce-kedagang.jpg',
+  imageUrl: '/images/plants/buce-kedagang.jpg',
   imageCredit: {
     photographer: 'Just-One-More-Cast',
     sourceUrl: '',
