@@ -3,7 +3,7 @@ import type { Plant } from '../../types/plant';
 export const nesaeaPedicellataGolden: Plant = {
   id: 'plant-nesaea-pedicellata-golden',
   slug: 'nesaea-pedicellata-golden',
-  imageUrl: 'images/plants/nesaea-pedicellata-golden.jpg',
+  imageUrl: '/images/plants/nesaea-pedicellata-golden.jpg',
   imageCredit: {
     photographer: 'Just-One-More-Cast',
     sourceUrl: '',
