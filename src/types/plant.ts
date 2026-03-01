@@ -99,4 +99,7 @@ export interface Plant {
   };
 
   description: string;
+  
+  /** Optional image gallery for the plant */
+  gallery?: string[];
 }
