@@ -2,6 +2,109 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/zy0x1337/aquaguide/compare/v1.0.3...v1.0.2) (2026-03-02)
+
+
+### Features
+
+* add Axolotl (Ambystoma mexicanum) species profile ([e49962d](https://github.com/zy0x1337/aquaguide/commit/e49962dc803b6908ea1a7502c3948ee341a2115a))
+* add Axolotl to species index ([2776eb1](https://github.com/zy0x1337/aquaguide/commit/2776eb1952e905d6eb93aa66889532db05f2ed98))
+* add dynamic sitemap generator as inline Vite plugin ([61381cc](https://github.com/zy0x1337/aquaguide/commit/61381ccb861fd3d4c4fb93e1b1ec77669d14a5fe))
+* add gallery field to Species type ([77d0a5d](https://github.com/zy0x1337/aquaguide/commit/77d0a5d98f1fabbd6cdb575bbda6573f7899c93f))
+* add Pterophyllum scalare (Freshwater Angelfish) species profile ([186f06a](https://github.com/zy0x1337/aquaguide/commit/186f06a55e069ac153ed78720b9619b5ef22d9ac))
+* add Pterophyllum scalare to species index ([54893f3](https://github.com/zy0x1337/aquaguide/commit/54893f329daa39e0ccf9b52d5ea3aca2fd2bf6f8))
+* add Tetraodon mbu (Giant Pufferfish) species profile ([406c283](https://github.com/zy0x1337/aquaguide/commit/406c283354792d6ca26919568bd77c9dd0685571))
+* add Tetraodon mbu to species index ([e44d9a5](https://github.com/zy0x1337/aquaguide/commit/e44d9a58ab6e8c83e9eed0625f3fa9720fee966b))
+* expand homepage with habitats, knowledge, and plants sections ([95464b7](https://github.com/zy0x1337/aquaguide/commit/95464b7923c548dac1285575bc2841819589621f))
+* **home:** Replace static placeholders with dynamic data teasers (Plants, Habitats, Knowledge) ([4fd8e9b](https://github.com/zy0x1337/aquaguide/commit/4fd8e9bada692a5a75b25bc17472fdbfaef85f25))
+* implement image gallery in SpeciesDetailPage ([0c43380](https://github.com/zy0x1337/aquaguide/commit/0c433804557bc06f9f684db7f8a1ac9ed7441bf1))
+* make achievements fully functional & dynamic ([e5b43f0](https://github.com/zy0x1337/aquaguide/commit/e5b43f06be6b4a1c3f81d39a2c1ac7d01a0adfb1))
+* Ocean Theme als drittes Theme hinzugefügt ([a04f346](https://github.com/zy0x1337/aquaguide/commit/a04f346d41258d5b80342282335c0fec70e14341))
+* Ocean Theme implementiert mit CSS Variables ([412b7f4](https://github.com/zy0x1337/aquaguide/commit/412b7f444c0b403d9229ce39cb615042537218bc)), closes [#0F52](https://github.com/zy0x1337/aquaguide/issues/0F52) [#FF7F50](https://github.com/zy0x1337/aquaguide/issues/FF7F50) [#40E0D0](https://github.com/zy0x1337/aquaguide/issues/40E0D0) [#50C878](https://github.com/zy0x1337/aquaguide/issues/50C878) [#008080](https://github.com/zy0x1337/aquaguide/issues/008080)
+* **plants:** add bucephalandra kedagang plant data ([0720c3c](https://github.com/zy0x1337/aquaguide/commit/0720c3c1bb3c36d7f87d785367017369cebf9c98))
+* **plants:** add keyboard navigation for search ([cf064ca](https://github.com/zy0x1337/aquaguide/commit/cf064ca9040b145a2e7f5dc79f0381c858fb6aa6))
+* **plants:** add nesaea golden, rotala sg blood red & buce kedagang to index ([ccccc73](https://github.com/zy0x1337/aquaguide/commit/ccccc732c6d203aebf2d2eaa796202d803a54a4b))
+* **plants:** add nesaea pedicellata golden plant data ([21eab2b](https://github.com/zy0x1337/aquaguide/commit/21eab2b13c465c04f0f7d34a8f978f238821c00a))
+* **plants:** add rotala singapore blood red plant data ([286c4ca](https://github.com/zy0x1337/aquaguide/commit/286c4ca12ff5ce9f4a411ce91a2fb9ba7cdba0d7))
+* **plants:** display correct shortcut hint based on OS ([ba1c570](https://github.com/zy0x1337/aquaguide/commit/ba1c570c6f29bcbb0b4347295b678d535eb0b00a))
+* **plants:** implement conditionally rendered Image Gallery tab ([e07f116](https://github.com/zy0x1337/aquaguide/commit/e07f11677ed4e2fef93a1acd793cf9b605f8ae4f))
+* **plants:** Phase 1 – extend Plant type & enrich all plant data files ([45bce79](https://github.com/zy0x1337/aquaguide/commit/45bce79a0f6ad2a1ed1fc8d92301441deb534d00))
+* **plants:** Phase 2+3+4 – full PlantDetailPage redesign ([224be91](https://github.com/zy0x1337/aquaguide/commit/224be91911896ce0367673914109471087079ef2))
+* Premium Ocean Theme - Apple-level Design ✨ ([f7648b5](https://github.com/zy0x1337/aquaguide/commit/f7648b58266f9804256cdf2eb02c4f06e9609286))
+* **profile:** add beta feedback form to profile overview ([9721703](https://github.com/zy0x1337/aquaguide/commit/9721703bb525c650d0b08da7a3db1a7ea30861f5))
+* redesign homepage with auth integration and bento grid ([5f27602](https://github.com/zy0x1337/aquaguide/commit/5f27602d9fbdda03979d47516bc08453af77c463))
+* **species:** add apistogramma cacatuoides ([e816ac3](https://github.com/zy0x1337/aquaguide/commit/e816ac3bc73bc0d5e96c65fc3fe16cac658b5cec))
+* **species:** add dwarf gourami ([7013a9e](https://github.com/zy0x1337/aquaguide/commit/7013a9e474ecc11dd4664297f01ce0a1962ed87a))
+* **species:** add espei rasbora ([153e1dc](https://github.com/zy0x1337/aquaguide/commit/153e1dcd2d4c557f7dd5085966744a185b4558f8))
+* **species:** add keyboard navigation for search ([d3d3ecc](https://github.com/zy0x1337/aquaguide/commit/d3d3eccc500da2a7bfa2c65435a1c671b73fc417))
+* **species:** display correct shortcut hint based on OS ([50281b1](https://github.com/zy0x1337/aquaguide/commit/50281b15831705c76a9899d49de3753aa89be296))
+* Tank Profile Basis-Komponenten erstellt ([1ca7701](https://github.com/zy0x1337/aquaguide/commit/1ca770119081fc2453f5d38d154d3dd88117775f))
+* Tank Profile Types für User-Galerie erstellt ([8316b8c](https://github.com/zy0x1337/aquaguide/commit/8316b8c160b6c159ae562b2a333d69dc6890171d))
+* TankImageUpload Komponente mit Drag & Drop ([f3174c5](https://github.com/zy0x1337/aquaguide/commit/f3174c5e4859721241ba7693dcf13177f7db84b2))
+* Theme Dropdown mit 3 Themes (Light/Dark/Ocean) ([d470c56](https://github.com/zy0x1337/aquaguide/commit/d470c565499d3bdc579c23b0d131230b4521d861))
+* **types:** add gallery property to Plant interface ([c0c31c1](https://github.com/zy0x1337/aquaguide/commit/c0c31c160f70c569e9462116f89ccde04aff8b28))
+
+
+### Bug Fixes
+
+* correct image path to absolute url ([7bcae60](https://github.com/zy0x1337/aquaguide/commit/7bcae6045d7ca6baf1bf4debd7f1dbeefb377b1f))
+* correct image path to absolute url for buce ([63a5228](https://github.com/zy0x1337/aquaguide/commit/63a5228d98eeaa327af2b1535b0534485fbdf92d))
+* correct image path to absolute url for nesaea ([493eea1](https://github.com/zy0x1337/aquaguide/commit/493eea14928361aee5a8f8072670eaebfa374b92))
+* Dark Mode Background = Navbar Background (gray-900) ([a78fb79](https://github.com/zy0x1337/aquaguide/commit/a78fb795cbc83809a607c9292c303bc9a9e10d17)), closes [#111827](https://github.com/zy0x1337/aquaguide/issues/111827)
+* Dark Mode Background korrigiert (slate-900) ([61f6821](https://github.com/zy0x1337/aquaguide/commit/61f682114151d6c19f56af15f30e029ddd523cd4)), closes [#0f172](https://github.com/zy0x1337/aquaguide/issues/0f172) [#0A0F14](https://github.com/zy0x1337/aquaguide/issues/0A0F14)
+* Dark Mode Background wiederhergestellt ([#0](https://github.com/zy0x1337/aquaguide/issues/0)A0F14) ([cb68f71](https://github.com/zy0x1337/aquaguide/commit/cb68f71419916df68fef1d637e6e8b343b5544e8)), closes [#0A0F14](https://github.com/zy0x1337/aquaguide/issues/0A0F14) [#0A0F14](https://github.com/zy0x1337/aquaguide/issues/0A0F14)
+* Dark Mode wiederhergestellt - darkMode config gefixt ([a1d3826](https://github.com/zy0x1337/aquaguide/commit/a1d3826a0db32d43f3b298dbb7b4bc3139677cf0))
+* ensure React loads before contexts, dedupe React instances in build ([40bbae2](https://github.com/zy0x1337/aquaguide/commit/40bbae24f66f6cab8239f1d79e6eed73f903c5c5))
+* escape apostrophes in tetraodon-mbu description ([2760017](https://github.com/zy0x1337/aquaguide/commit/2760017d7b15e987637a0decfb5678b09dd313d5))
+* Light/Dark Themes komplett wiederhergestellt ([56b6921](https://github.com/zy0x1337/aquaguide/commit/56b69211f92d1c3787c8ff35d8771ad9d52976f0))
+* Region-Filter mit flexiblem Layout und mehrzeiligem Text ([dcb1e3a](https://github.com/zy0x1337/aquaguide/commit/dcb1e3a8adc0a32e1d82c04069f08a6ba9c23c64))
+* Region-Filter-Überlauf in der Filterbar beheben ([33b030c](https://github.com/zy0x1337/aquaguide/commit/33b030cfdce5cacdb686f271b7adc79733e90246))
+* Replace Sign In button with slimmer purple gradient version ([47c482b](https://github.com/zy0x1337/aquaguide/commit/47c482be12a44f54a911ed6ed75dac8213248e68))
+* restore rewrites + git config, add headers properly ([c0cea00](https://github.com/zy0x1337/aquaguide/commit/c0cea0082c497b0a90733e144248355857fe1a9a))
+* sitemap generation as prebuild script, writes to public/ for reliable Vercel deployment ([669dbf0](https://github.com/zy0x1337/aquaguide/commit/669dbf07c29d64c69c9d8c0c359c7d27a8782b00))
+* Überlappung von Favorite und Compare Button behoben ([741c461](https://github.com/zy0x1337/aquaguide/commit/741c461ef63d8eab6257860a375d3f359b28b604))
+* Update Sign In button to slimmer purple gradient style ([8907cec](https://github.com/zy0x1337/aquaguide/commit/8907cec7c8245ad4450765f8d44c21ca2d458588))
+
+
+### Performance Improvements
+
+* lazy load all pages, fix static/dynamic supabase import, add manualChunks ([1afd621](https://github.com/zy0x1337/aquaguide/commit/1afd62102b8923d38e2af032fa45ef22231c0ac4))
+* lighthouse optimizations - CSP headers, font preload, remove Unsplash tracking ([2f40b75](https://github.com/zy0x1337/aquaguide/commit/2f40b75592bf5bcccbf21042d8026b92aa7313a7))
+
+
+### Reverts
+
+* CreateTankProfileModal.tsx gelöscht ([fdbdfa3](https://github.com/zy0x1337/aquaguide/commit/fdbdfa3a72c9a0e569e18e9271c61903c5d3a984))
+* Tank Profile Feature entfernt - wird später implementiert ([1105382](https://github.com/zy0x1337/aquaguide/commit/110538275bbcd3245d000ae52318ab6a4d82de41))
+* TankImageUpload.tsx gelöscht ([f42628d](https://github.com/zy0x1337/aquaguide/commit/f42628dd63cbc9fe81b1f257043d47c544d601ce))
+* tankProfile index.ts gelöscht ([9c17286](https://github.com/zy0x1337/aquaguide/commit/9c172863562057d8c32eec55fa37fc9807372120))
+* tankProfile README.md gelöscht - Feature komplett entfernt ([c40194a](https://github.com/zy0x1337/aquaguide/commit/c40194ab632f0e8974feff3cb07518a0c0c4d160))
+* tankProfile.ts Types gelöscht ([3bc13a5](https://github.com/zy0x1337/aquaguide/commit/3bc13a5627d10331400ae6d4502a6a039ef14c05))
+* TankProfileCard.tsx gelöscht ([7edd099](https://github.com/zy0x1337/aquaguide/commit/7edd099feeb61c289a447ff69bd565883b25ff84))
+* TankProfileGallery.tsx gelöscht ([d6f017e](https://github.com/zy0x1337/aquaguide/commit/d6f017e01f005a484c0d5b6ea49e3054a9c02ec3))
+
+
+### Chores
+
+* **release:** 1.0.1 ([085c4e5](https://github.com/zy0x1337/aquaguide/commit/085c4e5774108db66b36d026f684f84a87a930c7))
+* remove unused vitest.config.ts (vitest not installed) ([0b16575](https://github.com/zy0x1337/aquaguide/commit/0b165759b28a550496ac219549c69b0be623f22f))
+
+
+### Documentation
+
+* Tank Profile Feature Dokumentation & Exports ([f968021](https://github.com/zy0x1337/aquaguide/commit/f9680212497829e9579e3b3fada57726d8e9560b))
+
+
+### Code Refactoring
+
+* FavoriteButton Design an Website-Theme angepasst ([682bcda](https://github.com/zy0x1337/aquaguide/commit/682bcda114e3bb800697b24207f41c8d365d928a))
+* **home:** Redesign Feature Cards for a cleaner look ([46d7778](https://github.com/zy0x1337/aquaguide/commit/46d7778ff46137973881eb34c4073bba9d9966aa))
+* **home:** Translate German UI texts back to English ([0775810](https://github.com/zy0x1337/aquaguide/commit/07758107a3f9e347e5c97ca638b2a8630317e9ea))
+* **knowledge:** Redesign header and cards for a cleaner look ([ef11926](https://github.com/zy0x1337/aquaguide/commit/ef11926bf36a3e2474cd66a93dc18f2a2d4d053b))
+* **plants:** integrate gallery into Overview tab ([75013ef](https://github.com/zy0x1337/aquaguide/commit/75013efca909a13abb4161aec1eba33f3548a059))
+* **plants:** restructure Advanced tab + sidebar taxonomy + EN nutrient descs ([125f97d](https://github.com/zy0x1337/aquaguide/commit/125f97d645d49f51061c1c89048ce6c4fb3dff4f))
+* ProfilePage UI/UX komplett überarbeitet ([5b2eadc](https://github.com/zy0x1337/aquaguide/commit/5b2eadc792cf1ca9b6dbc3fc14479e8cc1d0a4f8))
+
 ### [1.0.1](https://github.com/zy0x1337/aquaguide/compare/v1.0.3...v1.0.1) (2026-02-24)
 
 
