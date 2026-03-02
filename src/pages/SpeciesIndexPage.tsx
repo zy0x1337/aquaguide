@@ -1,4 +1,5 @@
 import { useState, useMemo, Suspense, lazy, useRef, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint,
   X, Thermometer, TestTube, Sparkles, TrendingUp, Loader2, ArrowUpDown, Check,
@@ -29,15 +30,15 @@ const LOAD_MORE_INCREMENT = 12;
 type SortOption = 'default' | 'name-asc' | 'name-desc' | 'size-asc' | 'size-desc' | 'difficulty-asc' | 'difficulty-desc' | 'tank-asc' | 'tank-desc';
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: 'default',         label: 'Default'           },
-  { value: 'name-asc',        label: 'Name (A \u2192 Z)'  },
-  { value: 'name-desc',       label: 'Name (Z \u2192 A)'  },
-  { value: 'size-asc',        label: 'Size (Small first)' },
-  { value: 'size-desc',       label: 'Size (Large first)' },
-  { value: 'difficulty-asc',  label: 'Easiest first'      },
-  { value: 'difficulty-desc', label: 'Hardest first'      },
-  { value: 'tank-asc',        label: 'Tank (Small first)' },
-  { value: 'tank-desc',       label: 'Tank (Large first)' },
+  { value: 'default',         label: 'Default'            },
+  { value: 'name-asc',        label: 'Name (A \u2192 Z)'   },
+  { value: 'name-desc',       label: 'Name (Z \u2192 A)'   },
+  { value: 'size-asc',        label: 'Size (Small first)'  },
+  { value: 'size-desc',       label: 'Size (Large first)'  },
+  { value: 'difficulty-asc',  label: 'Easiest first'       },
+  { value: 'difficulty-desc', label: 'Hardest first'       },
+  { value: 'tank-asc',        label: 'Tank (Small first)'  },
+  { value: 'tank-desc',       label: 'Tank (Large first)'  },
 ];
 
 const SortIcon = ({ value, className = 'w-3.5 h-3.5' }: { value: SortOption; className?: string }) => {
@@ -73,7 +74,11 @@ interface Filters {
   behaviorTags: EthologyTag[];
 }
 
+const VALID_REGIONS: Region[] = ['South America', 'Asia', 'Africa', 'Central America'];
+
 const SpeciesIndexPage = () => {
+  const [searchParams] = useSearchParams();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [biotopeSuggestions, setBiotopeSuggestions] = useState<any[]>([]);
@@ -88,20 +93,23 @@ const SpeciesIndexPage = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const [filters, setFilters] = useState<Filters>({
-    level: null,
-    region: null,
-    tankSize: null,
-    biotope: '',
-    type: null,
-    tempMin: 15,
-    tempMax: 30,
-    phMin: 5.0,
-    phMax: 9.0,
-    maxBodySize: 100,
-    diet: 'all',
-    temperament: 'all',
-    behaviorTags: []
+  const [filters, setFilters] = useState<Filters>(() => {
+    const urlRegion = searchParams.get('region') as Region | null;
+    return {
+      level: null,
+      region: urlRegion && VALID_REGIONS.includes(urlRegion) ? urlRegion : null,
+      tankSize: null,
+      biotope: '',
+      type: null,
+      tempMin: 15,
+      tempMax: 30,
+      phMin: 5.0,
+      phMax: 9.0,
+      maxBodySize: 100,
+      diet: 'all',
+      temperament: 'all',
+      behaviorTags: [],
+    };
   });
 
   const fuse = useMemo(() => new Fuse(allSpecies, {
@@ -267,11 +275,11 @@ const SpeciesIndexPage = () => {
   };
 
   const activeFilters = [
-    filters.level      && { key: 'difficulty',  label: 'Level',       value: filters.level,       clear: () => setFilters({ ...filters, level: null }) },
-    filters.region     && { key: 'region',      label: 'Region',      value: filters.region,      clear: () => setFilters({ ...filters, region: null }) },
+    filters.level      && { key: 'difficulty',  label: 'Level',       value: filters.level,            clear: () => setFilters({ ...filters, level: null }) },
+    filters.region     && { key: 'region',      label: 'Region',      value: filters.region,           clear: () => setFilters({ ...filters, region: null }) },
     filters.tankSize   && { key: 'tank',        label: 'Tank',        value: `\u2264${filters.tankSize}L`, clear: () => setFilters({ ...filters, tankSize: null }) },
-    filters.biotope    && { key: 'biotope',     label: 'Biotope',     value: filters.biotope,     clear: () => setFilters({ ...filters, biotope: '' }) },
-    filters.type       && { key: 'category',    label: 'Type',        value: filters.type,        clear: () => setFilters({ ...filters, type: null }) },
+    filters.biotope    && { key: 'biotope',     label: 'Biotope',     value: filters.biotope,          clear: () => setFilters({ ...filters, biotope: '' }) },
+    filters.type       && { key: 'category',    label: 'Type',        value: filters.type,             clear: () => setFilters({ ...filters, type: null }) },
     filters.diet !== 'all'        && { key: 'diet',        label: 'Diet',        value: filters.diet,        clear: () => setFilters({ ...filters, diet: 'all' }) },
     filters.temperament !== 'all' && { key: 'temperament', label: 'Temperament', value: filters.temperament, clear: () => setFilters({ ...filters, temperament: 'all' }) },
   ].filter(Boolean);
@@ -434,13 +442,18 @@ const SpeciesIndexPage = () => {
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 md:px-4 py-1.5 md:py-2 mb-4 md:mb-5 text-white/90 text-xs md:text-sm font-semibold shadow-lg">
                 <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4" />
                 <span>{allSpecies.length} Species</span>
+                {filters.region && (
+                  <span className="flex items-center gap-1 pl-2 border-l border-white/30">
+                    <span className="text-indigo-300">{filters.region}</span>
+                  </span>
+                )}
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 md:mb-4 tracking-tight leading-[1.1]">Species Database</h1>
               <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 md:mb-8 leading-relaxed max-w-2xl">Discover detailed care guides and habitat requirements for freshwater fish and invertebrates.</p>
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.2 }} className="max-w-2xl">
                 <div className="flex items-center bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-1.5 md:p-2 shadow-2xl border-2 border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all">
                   <div className="pl-3 md:pl-4 text-gray-400"><Search className="w-5 h-5 md:w-6 md:h-6" /></div>
-                  <input ref={searchInputRef} type="text" placeholder="Search by name or region..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={handleSearchKeyDown} className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-900 dark:text-gray-100 placeholder:text-gray-400 bg-transparent border-none focus:ring-0 outline-none font-medium" aria-label="Search species" autoFocus />
+                  <input ref={searchInputRef} type="text" placeholder="Search by name or region..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={handleSearchKeyDown} className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-900 dark:text-gray-100 placeholder:text-gray-400 bg-transparent border-none focus:ring-0 outline-none font-medium" aria-label="Search species" />
                   {searchTerm && (
                     <button onClick={() => { setSearchTerm(''); searchInputRef.current?.focus(); }} className="mr-1.5 md:mr-2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" aria-label="Clear search">
                       <X className="w-4 h-4 md:w-5 md:h-5" />
@@ -458,7 +471,6 @@ const SpeciesIndexPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-4 md:-mt-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
 
-            {/* Desktop Filter Sidebar */}
             <aside className="hidden lg:block lg:col-span-1">
               <div className="bg-white dark:bg-gray-800 p-5 md:p-6 rounded-xl md:rounded-2xl shadow-lg border-2 border-gray-200 dark:border-gray-700 sticky top-24">
                 <div className="flex items-center justify-between mb-5 pb-4 border-b-2 border-gray-200 dark:border-gray-700">
@@ -483,7 +495,6 @@ const SpeciesIndexPage = () => {
 
             <MobileFilterButton onClick={() => setIsMobileDrawerOpen(true)} activeFiltersCount={activeFilterCount} />
 
-            {/* Main Content */}
             <div className="lg:col-span-3 space-y-4 md:space-y-6">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border-2 border-gray-200 dark:border-gray-700 p-3 md:p-5">
                 {activeFilters.length > 0 && (
@@ -492,9 +503,7 @@ const SpeciesIndexPage = () => {
                   </div>
                 )}
 
-                {/* ── Results row: always a single horizontal row on all screen sizes ── */}
                 <div className="flex items-center justify-between gap-2">
-                  {/* Left: species count */}
                   <div className="flex items-center gap-2 md:gap-3 min-w-0">
                     <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 shrink-0">Found</span>
                     <span className="px-2.5 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg md:rounded-xl font-black text-sm md:text-lg shadow-lg shrink-0">
@@ -503,50 +512,20 @@ const SpeciesIndexPage = () => {
                     <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 hidden sm:inline shrink-0">Species</span>
                   </div>
 
-                  {/* Right: Sort + Clear */}
                   <div className="flex items-center gap-2 shrink-0">
-                    {/* Sort By Dropdown */}
                     <div className="relative" ref={sortMenuRef}>
-                      <button
-                        onClick={() => setShowSortMenu(prev => !prev)}
-                        className={cn(
-                          "flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold border-2 transition-all shadow-sm hover:shadow-md",
-                          sortBy !== 'default'
-                            ? "bg-indigo-600 text-white border-indigo-700"
-                            : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        )}
-                        aria-label="Sort species"
-                      >
+                      <button onClick={() => setShowSortMenu(prev => !prev)} className={cn("flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold border-2 transition-all shadow-sm hover:shadow-md", sortBy !== 'default' ? "bg-indigo-600 text-white border-indigo-700" : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600")} aria-label="Sort species">
                         <SortIcon value={sortBy} className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
                         <span className="hidden sm:inline whitespace-nowrap">{activeSortLabel}</span>
                         <span className="sm:hidden">Sort</span>
                       </button>
-
                       <AnimatePresence>
                         {showSortMenu && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: -8 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: -8 }}
-                            transition={{ duration: 0.15 }}
-                            className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl z-50 overflow-hidden"
-                          >
+                          <motion.div initial={{ opacity: 0, scale: 0.95, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: -8 }} transition={{ duration: 0.15 }} className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl z-50 overflow-hidden">
                             <div className="p-1.5">
                               {SORT_OPTIONS.map((option) => (
-                                <button
-                                  key={option.value}
-                                  onClick={() => { setSortBy(option.value); setShowSortMenu(false); }}
-                                  className={cn(
-                                    "w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-                                    sortBy === option.value
-                                      ? "bg-indigo-600 text-white"
-                                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                  )}
-                                >
-                                  <span className="flex items-center gap-2.5">
-                                    <SortIcon value={option.value} className="w-4 h-4 flex-shrink-0" />
-                                    <span>{option.label}</span>
-                                  </span>
+                                <button key={option.value} onClick={() => { setSortBy(option.value); setShowSortMenu(false); }} className={cn("w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all", sortBy === option.value ? "bg-indigo-600 text-white" : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700")}>
+                                  <span className="flex items-center gap-2.5"><SortIcon value={option.value} className="w-4 h-4 flex-shrink-0" /><span>{option.label}</span></span>
                                   {sortBy === option.value && <Check className="w-4 h-4 flex-shrink-0" />}
                                 </button>
                               ))}
@@ -556,12 +535,8 @@ const SpeciesIndexPage = () => {
                       </AnimatePresence>
                     </div>
 
-                    {/* Clear Filters – icon-only on mobile, full label on sm+ */}
                     {hasActiveFilters && (
-                      <button
-                        onClick={resetFilters}
-                        className="flex items-center gap-1 md:gap-2 px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-2 border-rose-200 dark:border-rose-800 transition-all shadow-sm hover:shadow-md"
-                      >
+                      <button onClick={resetFilters} className="flex items-center gap-1 md:gap-2 px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-2 border-rose-200 dark:border-rose-800 transition-all shadow-sm hover:shadow-md">
                         <X className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
                         <span className="hidden sm:inline whitespace-nowrap">Clear Filters</span>
                       </button>
