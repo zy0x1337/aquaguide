@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { 
+import {
   Zap, ArrowRight,
   Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus,
-  Leaf, Map, Lightbulb, Clock, Droplets, Ruler
+  Leaf, Map, Lightbulb, Clock, Droplets, Ruler,
+  Fish, Sprout, Globe2, MapPin
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
@@ -12,89 +13,114 @@ import { useAuth } from '../contexts/AuthContext';
 import { allPlants } from '../data/plants';
 import habitatsData from '../data/habitats.json';
 import { allKnowledgeArticles } from '../data/knowledge';
+import type { Region } from '../types/species';
+
+// ─── Region config ───────────────────────────────────────────────────────────
+const REGION_CONFIG: Array<{
+  region: Region;
+  subtitle: string;
+  biotopeId: string | null;
+  gradient: string;
+  border: string;
+}> = [
+  {
+    region: 'South America',
+    subtitle: 'Amazon \u00b7 Orinoco \u00b7 Pantanal',
+    biotopeId: 'amazon-blackwater',
+    gradient: 'from-emerald-600 to-teal-700',
+    border: 'hover:border-emerald-400/60',
+  },
+  {
+    region: 'Asia',
+    subtitle: 'Mekong \u00b7 Ganges \u00b7 Borneo',
+    biotopeId: null,
+    gradient: 'from-orange-500 to-amber-600',
+    border: 'hover:border-orange-400/60',
+  },
+  {
+    region: 'Africa',
+    subtitle: 'Rift Lakes \u00b7 Congo \u00b7 Niger',
+    biotopeId: 'lake-tanganyika-rocky',
+    gradient: 'from-amber-500 to-yellow-600',
+    border: 'hover:border-amber-400/60',
+  },
+  {
+    region: 'Central America',
+    subtitle: 'Yucat\u00e1n \u00b7 Caribbean',
+    biotopeId: null,
+    gradient: 'from-cyan-500 to-blue-600',
+    border: 'hover:border-cyan-400/60',
+  },
+];
 
 const HomePage = () => {
   const { user, profile } = useAuth();
-  
+
   const featuredSpecies = [bettaSplendens, neonTetra, oscar, amanoShrimp];
-  
-  // Dynamically pulled featured items
+
   const featuredPlants = [
     allPlants.find(p => p.slug === 'anubias-barteri-nana'),
     allPlants.find(p => p.slug === 'bacopa-monnieri'),
-    allPlants.find(p => p.slug === 'microsorum-pteropus')
+    allPlants.find(p => p.slug === 'microsorum-pteropus'),
   ].filter((p): p is (typeof allPlants)[number] => Boolean(p));
 
   const featuredBiotopes = [
     habitatsData.find(h => h.id === 'amazon-blackwater'),
-    habitatsData.find(h => h.id === 'lake-tanganyika-rocky')
+    habitatsData.find(h => h.id === 'lake-tanganyika-rocky'),
   ].filter(Boolean) as typeof habitatsData;
 
   const featuredArticles = ['nitrogen-cycle', 'planted-tank-setup']
     .map(slug => allKnowledgeArticles.find(a => a.slug === slug))
     .filter((a): a is (typeof allKnowledgeArticles)[number] => Boolean(a));
 
-  // Animation variants
+  // Region cards: find biotope image where available
+  const regionCards = REGION_CONFIG.map(cfg => ({
+    ...cfg,
+    count: allSpecies.filter(s => s.taxonomy.region === cfg.region).length,
+    imageUrl: cfg.biotopeId
+      ? (habitatsData.find(h => h.id === cfg.biotopeId) as any)?.imageUrl
+      : undefined,
+  }));
+
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   };
 
   const stagger = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+    animate: { transition: { staggerChildren: 0.1 } },
   };
 
   return (
     <PageTransition>
-      <SEOHead 
+      <SEOHead
         title="AquaGuide - Professional Aquarium Database"
         description="Science-based aquarium planning with detailed species profiles, water parameter filtering, and compatibility analysis."
       />
-      
+
       <div className="min-h-screen bg-white dark:bg-slate-950">
-        
-        {/* HERO SECTION */}
+
+        {/* ── HERO ───────────────────────────────────────────────────────── */}
         <section className="relative pt-20 sm:pt-32 pb-16 sm:pb-24 px-6 overflow-hidden">
-          {/* Subtle gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-cyan-50/20 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950/20" />
-          
-          {/* Animated gradient orbs */}
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.2, 0.3]
-            }}
-            transition={{ 
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.2, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-400/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"
           />
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.3, 0.2]
-            }}
-            transition={{ 
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2
-            }}
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.3, 0.2] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
             className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 pointer-events-none"
           />
 
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-              
+
               {/* Text Content */}
-              <motion.div 
+              <motion.div
                 className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none"
                 initial="initial"
                 animate="animate"
@@ -106,8 +132,8 @@ const HomePage = () => {
                     v1.0.1 Beta
                   </span>
                 </motion.div>
-                
-                <motion.h1 
+
+                <motion.h1
                   variants={fadeInUp}
                   className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.05]"
                 >
@@ -116,8 +142,7 @@ const HomePage = () => {
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-cyan-500">
                       favorite Fish
                     </span>
-                    {/* Animated underline */}
-                    <motion.div 
+                    <motion.div
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ delay: 0.8, duration: 0.8 }}
@@ -125,8 +150,8 @@ const HomePage = () => {
                     />
                   </span>
                 </motion.h1>
-                
-                <motion.p 
+
+                <motion.p
                   variants={fadeInUp}
                   className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed"
                 >
@@ -135,47 +160,50 @@ const HomePage = () => {
                   check compatibility, and plan your perfect tank.
                 </motion.p>
 
-                <motion.div 
+                <motion.div
                   variants={fadeInUp}
                   className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3"
                 >
-                  {/* Primary CTA: Auth-Aware */}
                   {user ? (
-                    <Link 
-                      to="/my-tanks" 
+                    <Link
+                      to="/my-tanks"
                       className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md overflow-hidden"
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       <span className="relative flex items-center gap-2">
-                        My Tanks
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                        My Tanks <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                       </span>
                     </Link>
                   ) : (
-                    <Link 
-                      to="/auth" 
+                    <Link
+                      to="/auth"
                       className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden"
                     >
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 dark:via-black/10 to-transparent" />
                       <span className="relative flex items-center gap-2">
-                        Sign In
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                        Sign In <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                       </span>
                     </Link>
                   )}
-                  
-                  {/* Secondary CTA */}
-                  <Link 
-                    to="/tank-builder" 
+
+                  <Link
+                    to="/tank-builder"
                     className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                   >
                     <Zap className="w-4 h-4 text-amber-500" />
                     Tank Builder
                   </Link>
+
+                  <Link
+                    to="/species"
+                    className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 font-semibold rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-indigo-200 dark:border-indigo-800 hover:border-indigo-300"
+                  >
+                    <Fish className="w-4 h-4" />
+                    Browse Species
+                  </Link>
                 </motion.div>
-                
-                {/* Trust indicators */}
-                <motion.div 
+
+                <motion.div
                   variants={fadeInUp}
                   className="mt-12 flex items-center justify-center lg:justify-start gap-6 sm:gap-8 text-sm font-medium text-slate-500 dark:text-slate-400"
                 >
@@ -195,7 +223,7 @@ const HomePage = () => {
               </motion.div>
 
               {/* Visual Grid - The 4 Fishes */}
-              <motion.div 
+              <motion.div
                 className="flex-1 w-full max-w-lg lg:max-w-xl"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -210,30 +238,26 @@ const HomePage = () => {
                       transition={{ delay: 0.4 + idx * 0.1, duration: 0.6 }}
                       className={idx % 2 !== 0 ? 'translate-y-8' : ''}
                     >
-                      <Link 
+                      <Link
                         to={`/species/${fish.slug}`}
                         className="group relative overflow-hidden rounded-2xl sm:rounded-3xl aspect-[4/3] block shadow-lg hover:shadow-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 transition-all duration-500 hover:-translate-y-2"
                       >
-                        <img 
-                          src={fish.imageUrl} 
+                        <img
+                          src={fish.imageUrl}
                           alt={fish.taxonomy.commonName}
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
-                        
-                        {/* Info overlay */}
                         <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
                           <div className="transform transition-transform duration-300 group-hover:translate-y-0 translate-y-2">
-                            <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-300 mb-1">
-                              {fish.taxonomy.family}
-                            </p>
+                            <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-300 mb-1">{fish.taxonomy.family}</p>
                             <h3 className="text-white font-bold text-base sm:text-lg leading-tight mb-2 group-hover:text-indigo-200 transition-colors">
                               {fish.taxonomy.commonName}
                             </h3>
                             <div className="flex items-center gap-2 text-xs text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                               <Gauge className="w-3 h-3" />
                               <span>{fish.visuals.adultSizeCM}cm</span>
-                              <span className="text-slate-500">•</span>
+                              <span className="text-slate-500">\u2022</span>
                               <span className="capitalize">{fish.care.difficulty}</span>
                             </div>
                           </div>
@@ -243,26 +267,94 @@ const HomePage = () => {
                   ))}
                 </div>
               </motion.div>
+
             </div>
           </div>
         </section>
 
-        {/* STATS BAR */}
-        <section className="py-12 px-6 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 relative z-10">
+        {/* ── QUICK PATHS ─────────────────────────────────────────────────── */}
+        <section className="py-10 sm:py-12 px-6 bg-slate-50 dark:bg-slate-900/40 border-y border-slate-200 dark:border-slate-800">
+          <div className="max-w-7xl mx-auto">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-5"
+            >
+              Where would you like to start?
+            </motion.p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              {[
+                {
+                  icon: <Sprout className="w-5 h-5" />,
+                  iconBg: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400',
+                  title: 'New to Aquariums?',
+                  desc: 'Start with our beginner guides and learn the basics.',
+                  link: '/knowledge',
+                  linkLabel: 'Open Knowledge Base',
+                  accent: 'hover:border-emerald-300 dark:hover:border-emerald-700',
+                },
+                {
+                  icon: <Zap className="w-5 h-5" />,
+                  iconBg: 'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400',
+                  title: 'Plan Your Tank',
+                  desc: 'Use the Tank Builder to check compatibility.',
+                  link: '/tank-builder',
+                  linkLabel: 'Open Tank Builder',
+                  accent: 'hover:border-amber-300 dark:hover:border-amber-700',
+                },
+                {
+                  icon: <Fish className="w-5 h-5" />,
+                  iconBg: 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400',
+                  title: 'Browse Species',
+                  desc: `Explore all ${allSpecies.length}+ documented species.`,
+                  link: '/species',
+                  linkLabel: 'Open Species Database',
+                  accent: 'hover:border-indigo-300 dark:hover:border-indigo-700',
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                >
+                  <Link
+                    to={item.link}
+                    className={`group flex items-center gap-4 p-4 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 ${item.accent} transition-all duration-200 shadow-sm hover:shadow-md`}
+                  >
+                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${item.iconBg} transition-transform duration-300 group-hover:scale-110`}>
+                      {item.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-bold text-slate-900 dark:text-white text-sm sm:text-base leading-tight">{item.title}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-snug hidden sm:block">{item.desc}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 ml-auto shrink-0 group-hover:translate-x-0.5 transition-all" />
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── STATS BAR ───────────────────────────────────────────────────── */}
+        <section className="py-12 px-6 bg-white dark:bg-slate-950 relative z-10">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <StatCard number={`${allSpecies.length}+`} label="Species Documented" />
-              <StatCard number="10+" label="Compatibility Checks" />
-              <StatCard number="72" label="Data Points per Fish" />
-              <StatCard number="100%" label="Free & Open" />
+              <StatCard number={`${allSpecies.length}+`}          label="Species Documented"   />
+              <StatCard number={`${allPlants.length}+`}           label="Aquarium Plants"       />
+              <StatCard number={`${allKnowledgeArticles.length}+`} label="Knowledge Articles"   />
+              <StatCard number="100%"                             label="Free &amp; Open"           />
             </div>
           </div>
         </section>
 
-        {/* HOME TEASERS - Plants / Habitats / Knowledge */}
-        <section className="py-20 px-6 relative overflow-hidden bg-white dark:bg-slate-950">
+        {/* ── HOME TEASERS ─────────────────────────────────────────────────── */}
+        <section className="py-20 px-6 relative overflow-hidden bg-slate-50 dark:bg-slate-900/30 border-y border-slate-200 dark:border-slate-800">
           <div className="max-w-7xl mx-auto">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -301,24 +393,14 @@ const HomePage = () => {
                   >
                     <Link to={`/plants/${plant.slug}`} className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-500/40 transition-all duration-300 shadow-sm hover:shadow-lg overflow-hidden p-2">
                       <div className="relative h-40 sm:h-48 rounded-2xl overflow-hidden shrink-0 mb-4 bg-slate-100 dark:bg-slate-800">
-                        <img 
-                          src={plant.imageUrl} 
-                          alt={plant.taxonomy.commonName} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                        />
+                        <img src={plant.imageUrl} alt={plant.taxonomy.commonName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                         <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-slate-900/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider border border-white/10">
                           {plant.taxonomy.family}
                         </div>
                       </div>
-                      
                       <div className="flex flex-col flex-grow px-3 pb-3">
-                        <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                          {plant.taxonomy.commonName}
-                        </h4>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4">
-                          {plant.taxonomy.scientificName}
-                        </p>
-                        
+                        <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{plant.taxonomy.commonName}</h4>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4">{plant.taxonomy.scientificName}</p>
                         <div className="grid grid-cols-2 gap-2 mt-auto">
                           <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
                             <Shield className="w-3.5 h-3.5 text-emerald-500" />
@@ -346,7 +428,7 @@ const HomePage = () => {
 
             {/* Biotopes & Knowledge Split Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-              
+
               {/* Biotopes Column */}
               <div>
                 <div className="flex items-center justify-between mb-8">
@@ -370,11 +452,7 @@ const HomePage = () => {
                       transition={{ delay: i * 0.1, duration: 0.5 }}
                     >
                       <Link to={`/biotopes/${biotope.id}`} className="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 dark:border-slate-800 transition-all duration-300 h-56 block bg-slate-900">
-                        <img 
-                          src={biotope.imageUrl} 
-                          alt={biotope.title} 
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" 
-                        />
+                        <img src={biotope.imageUrl} alt={biotope.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
                         <div className="absolute bottom-5 left-5 right-5">
                           <div className="flex items-center gap-2 mb-2">
@@ -443,10 +521,91 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* FEATURES BENTO GRID (Core App Features) */}
+        {/* ── EXPLORE BY REGION ───────────────────────────────────────────── */}
+        <section className="py-20 px-6 bg-white dark:bg-slate-950">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10"
+            >
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                    <Globe2 className="w-6 h-6" />
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">Explore by Region</h2>
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 max-w-md">
+                  Discover species from their natural habitats around the world.
+                </p>
+              </div>
+              <Link
+                to="/species"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shrink-0"
+              >
+                All Regions <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+              {regionCards.map((rc, i) => (
+                <motion.div
+                  key={rc.region}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                >
+                  <Link
+                    to="/species"
+                    className={`group relative h-52 sm:h-64 rounded-2xl sm:rounded-3xl overflow-hidden block border-2 border-transparent ${rc.border} transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1`}
+                  >
+                    {/* Background: image if available, gradient fallback */}
+                    {rc.imageUrl ? (
+                      <img
+                        src={rc.imageUrl}
+                        alt={rc.region}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className={`absolute inset-0 bg-gradient-to-br ${rc.gradient}`} />
+                    )}
+
+                    {/* Dark overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/50 to-slate-900/10" />
+
+                    {/* Content */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
+                      <div className="flex items-center gap-1.5 mb-2">
+                        <MapPin className="w-3 h-3 text-white/60" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">
+                          {rc.count} species
+                        </span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-black text-white leading-tight mb-1 group-hover:text-indigo-200 transition-colors">
+                        {rc.region}
+                      </h3>
+                      <p className="text-[11px] sm:text-xs text-white/60 leading-snug">{rc.subtitle}</p>
+                    </div>
+
+                    {/* Hover arrow */}
+                    <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <ArrowRight className="w-4 h-4 text-white" />
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── FEATURES BENTO GRID ─────────────────────────────────────────── */}
         <section className="py-20 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-200 dark:border-slate-800 px-6">
           <div className="max-w-7xl mx-auto">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -462,7 +621,7 @@ const HomePage = () => {
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-              <FeatureCard 
+              <FeatureCard
                 icon={<BookOpen className="w-6 h-6" />}
                 iconStyles="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
                 title="Species Lexicon"
@@ -470,7 +629,7 @@ const HomePage = () => {
                 link="/species"
                 linkText="Open Lexicon"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<Activity className="w-6 h-6" />}
                 iconStyles="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
                 title="Compatibility Check"
@@ -478,7 +637,7 @@ const HomePage = () => {
                 link="/tank-builder"
                 linkText="Start Check"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<LayoutDashboard className="w-6 h-6" />}
                 iconStyles="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
                 title="Your Dashboard"
@@ -490,9 +649,8 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* BOTTOM CTA / AUTH BANNER */}
+        {/* ── BOTTOM CTA ──────────────────────────────────────────────────── */}
         <section className="relative py-20 sm:py-24 overflow-hidden bg-white dark:bg-slate-950">
-          {/* Subtle gradient shapes */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-[80px]" />
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-[80px]" />
@@ -517,12 +675,11 @@ const HomePage = () => {
                   <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
                     Create your free account now. Save your favorite species, build virtual tanks, and track your water parameters.
                   </p>
-                  <Link 
-                    to="/auth" 
+                  <Link
+                    to="/auth"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
                   >
-                    Register for free
-                    <ArrowRight className="w-5 h-5" />
+                    Register for free <ArrowRight className="w-5 h-5" />
                   </Link>
                 </>
               ) : (
@@ -531,21 +688,20 @@ const HomePage = () => {
                     <LayoutDashboard className="w-8 h-8" />
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-                    Hello {profile?.username || user.email?.split('@')[0]}! 👋
+                    Hello {profile?.username || user.email?.split('@')[0]}!
                   </h2>
                   <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
                     Welcome back to AquaGuide. Ready to check on your tanks or discover new species?
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Link 
-                      to="/my-tanks" 
+                    <Link
+                      to="/my-tanks"
                       className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
                     >
-                      Go to your tanks
-                      <ArrowRight className="w-5 h-5" />
+                      Go to your tanks <ArrowRight className="w-5 h-5" />
                     </Link>
-                    <Link 
-                      to="/species" 
+                    <Link
+                      to="/species"
                       className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold rounded-xl transition-all shadow-sm border border-slate-200 dark:border-slate-700 w-full sm:w-auto"
                     >
                       Find new species
@@ -562,37 +718,39 @@ const HomePage = () => {
   );
 };
 
-// Components
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
 const StatCard = ({ number, label }: { number: string; label: string }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     whileInView={{ opacity: 1, scale: 1 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5 }}
     className="text-center"
   >
-    <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-2">
-      {number}
-    </div>
+    <div
+      className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-2"
+      dangerouslySetInnerHTML={{ __html: number }}
+    />
     <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium tracking-wide">
       {label}
     </div>
   </motion.div>
 );
 
-const FeatureCard = ({ 
-  icon, 
+const FeatureCard = ({
+  icon,
   iconStyles,
-  title, 
-  desc, 
-  link, 
-  linkText 
-}: { 
-  icon: any; 
+  title,
+  desc,
+  link,
+  linkText,
+}: {
+  icon: React.ReactNode;
   iconStyles: string;
-  title: string; 
-  desc: string; 
-  link: string; 
+  title: string;
+  desc: string;
+  link: string;
   linkText: string;
 }) => (
   <motion.div
@@ -603,26 +761,18 @@ const FeatureCard = ({
     whileHover={{ y: -5 }}
     className="group relative bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
   >
-    {/* Icon */}
     <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${iconStyles} mb-6 transition-transform duration-300 group-hover:scale-110`}>
       {icon}
     </div>
-    
-    {/* Content */}
     <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
       {title}
     </h3>
-    <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed flex-grow">
-      {desc}
-    </p>
-    
-    {/* Link */}
-    <Link 
-      to={link} 
+    <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed flex-grow">{desc}</p>
+    <Link
+      to={link}
       className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 group-hover:gap-3 transition-all mt-auto"
     >
-      {linkText} 
-      <ArrowRight className="w-4 h-4" />
+      {linkText} <ArrowRight className="w-4 h-4" />
     </Link>
   </motion.div>
 );
