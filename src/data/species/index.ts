@@ -68,6 +68,8 @@ import { apistogrammaAgassizii } from './apistogramma-agassizii';
 import { botiaStriata } from './zebra-loach';
 import { chaetostomaMilesi } from './rubber-lip-pleco';
 import { pseudomugilGertrudae } from './spotted-blue-eye';
+import { stiphodonAtropurpureus } from './neon-blue-goby';
+import { aphaniusFasciatus } from './aphanius-fasciatus';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -138,7 +140,9 @@ export const allSpecies: Species[] = [
   apistogrammaAgassizii,
   botiaStriata,
   chaetostomaMilesi,
-  pseudomugilGertrudae
+  pseudomugilGertrudae,
+  stiphodonAtropurpureus,
+  aphaniusFasciatus
 ];
 
 export {
@@ -210,5 +214,7 @@ export {
   apistogrammaAgassizii,
   botiaStriata,
   chaetostomaMilesi,
-  pseudomugilGertrudae
+  pseudomugilGertrudae,
+  stiphodonAtropurpureus,
+  aphaniusFasciatus
 };
