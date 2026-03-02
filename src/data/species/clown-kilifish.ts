@@ -12,7 +12,7 @@ export const epiplatysAnnulatus: Species = {
     licenseUrl: 'https://creativecommons.org/licenses/by/2.0/'
   },
 
-  funFact: "The Clown Killifish is a miniature wonder, barely reaching 4cm. Males possess a tail fin that mimics the head of a larger fish—a false eye spot that confuses predators. They are 'non-annual' killifish, meaning their eggs develop in water without a dry period, making them significantly easier to breed than many other killifish species.",
+  funFact: "The Clown Killifish is a miniature wonder, barely reaching 4cm. Males possess a tail fin that mimics the head of a larger fish, a false eye spot that confuses predators. They are 'non-annual' killifish, meaning their eggs develop in water without a dry period, making them significantly easier to breed than many other killifish species.",
 
   taxonomy: {
     scientificName: 'Epiplatys annulatus',
