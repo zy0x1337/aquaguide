@@ -60,6 +60,14 @@ import { hemigrammusErythrozonus } from './hemmigrammus-erythrozonus';
 import { carnegiellaStrigata } from './marbled-hatchetfish';
 import { apistogrammaCacatuoides } from './apistogramma-cacatuoides';
 import { carinotetraodonTravancoricus } from './pea-puffer';
+import { pethiaPadamya } from './pethia-padamya';
+import { poeciliaReticulata } from './guppy';
+import { hyphessobryconHerbertaxelrodi } from './black-neon-tetra';
+import { hyphessobryconPulchripinnis } from './lemon-tetra';
+import { apistogrammaAgassizii } from './apistogramma-agassizii';
+import { botiaStriata } from './zebra-loach';
+import { chaetostomaMilesi } from './rubber-lip-pleco';
+import { pseudomugilGertrudae } from './spotted-blue-eye';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -122,7 +130,15 @@ export const allSpecies: Species[] = [
   hemigrammusErythrozonus,
   carnegiellaStrigata,
   apistogrammaCacatuoides,
-  carinotetraodonTravancoricus
+  carinotetraodonTravancoricus,
+  pethiaPadamya,
+  poeciliaReticulata,
+  hyphessobryconHerbertaxelrodi,
+  hyphessobryconPulchripinnis,
+  apistogrammaAgassizii,
+  botiaStriata,
+  chaetostomaMilesi,
+  pseudomugilGertrudae
 ];
 
 export {
@@ -186,5 +202,13 @@ export {
   hemigrammusErythrozonus,
   carnegiellaStrigata,
   apistogrammaCacatuoides,
-  carinotetraodonTravancoricus
+  carinotetraodonTravancoricus,
+  pethiaPadamya,
+  poeciliaReticulata,
+  hyphessobryconHerbertaxelrodi,
+  hyphessobryconPulchripinnis,
+  apistogrammaAgassizii,
+  botiaStriata,
+  chaetostomaMilesi,
+  pseudomugilGertrudae
 };

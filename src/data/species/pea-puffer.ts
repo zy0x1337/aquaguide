@@ -66,7 +66,7 @@ export const carinotetraodonTravancoricus: Species = {
     description: 'A tiny but feisty fish with a distinct personality. Males are territorial and can be aggressive towards each other and other tankmates. They are curious hunters that constantly search for snails and other small invertebrates. They have a beak that grows continuously and must be worn down by eating hard-shelled prey.',
     
     compatibility: {
-      goodMates: ['Amano Shrimp (adults only)', 'Nerite Snails (may still be nipped)', 'Fast peaceful fish (in large tanks)', 'Other dwarf puffers (females only)', 'Best kept alone'],
+      goodMates: ['Amano Shrimp', 'Nerite Snails (may still be nipped)', 'Fast peaceful fish', 'Other dwarf puffers (females only)', 'Best kept alone'],
       badMates: ['Long-finned fish', 'Slow-moving fish', 'Small shrimp', 'Snails (intended as food)', 'Other male dwarf puffers'],
       notes: 'Ideally kept in a species-only tank. They are fin nippers and will harass slow-moving or long-finned fish. In a community tank, they often bully tankmates or get outcompeted for food.',
       

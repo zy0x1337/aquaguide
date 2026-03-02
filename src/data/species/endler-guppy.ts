@@ -1,7 +1,7 @@
 import type { Species } from '../../types/species';
 
 export const endlerGuppy: Species = {
-  id: 'guppy-001',
+  id: 'endler-guppy-001',
   slug: 'endler-guppy',
   imageUrl: '/images/species/endler-guppy.jpg',
   

@@ -68,6 +68,7 @@ export type EthologyTag =
   | 'hierarchy'
   | 'substrate-sifter'
   | 'intelligent'
+  | 'brackish'
   | 'hillstream';
 
 
