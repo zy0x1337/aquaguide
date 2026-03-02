@@ -1,5 +1,5 @@
 import { useState, useMemo, Suspense, lazy, useRef, useEffect, useCallback } from 'react';
-import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Thermometer, TestTube, Sparkles, TrendingUp, Loader2 } from 'lucide-react';
+import { Search, SlidersHorizontal, Fish, Globe2, Activity, Box, Droplets, PawPrint, X, Thermometer, TestTube, Sparkles, TrendingUp, Loader2, ArrowUpDown, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { allSpecies } from '../data/species';
@@ -20,8 +20,24 @@ const SpeciesCard = lazy(() => import('../components/species/SpeciesCard').then(
 const HEADER_IMAGE_URL = 'https://images.unsplash.com/photo-1573472420143-0c68f179bdc7?q=80&w=2094&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 // Pagination settings
-const INITIAL_LOAD = 24; // First page load
-const LOAD_MORE_INCREMENT = 12; // Load 12 more on each scroll
+const INITIAL_LOAD = 24;
+const LOAD_MORE_INCREMENT = 12;
+
+type SortOption = 'default' | 'name-asc' | 'name-desc' | 'size-asc' | 'size-desc' | 'difficulty-asc' | 'difficulty-desc' | 'tank-asc' | 'tank-desc';
+
+const SORT_OPTIONS: { value: SortOption; label: string; emoji: string }[] = [
+  { value: 'default',          label: 'Default',          emoji: '✨' },
+  { value: 'name-asc',         label: 'Name (A → Z)',      emoji: '🔤' },
+  { value: 'name-desc',        label: 'Name (Z → A)',      emoji: '🔤' },
+  { value: 'size-asc',         label: 'Size (Small first)', emoji: '📏' },
+  { value: 'size-desc',        label: 'Size (Large first)', emoji: '📏' },
+  { value: 'difficulty-asc',   label: 'Easiest first',     emoji: '🌱' },
+  { value: 'difficulty-desc',  label: 'Hardest first',     emoji: '🔥' },
+  { value: 'tank-asc',         label: 'Tank (Small first)', emoji: '🪣' },
+  { value: 'tank-desc',        label: 'Tank (Large first)', emoji: '🏊' },
+];
+
+const DIFFICULTY_ORDER: Record<string, number> = { beginner: 0, medium: 1, expert: 2 };
 
 interface Filters {
   level: Difficulty | null;
@@ -45,7 +61,10 @@ const SpeciesIndexPage = () => {
   const [biotopeSuggestions, setBiotopeSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [shortcutKey, setShortcutKey] = useState('⌘K');
-  
+  const [sortBy, setSortBy] = useState<SortOption>('default');
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const sortMenuRef = useRef<HTMLDivElement>(null);
+
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Lazy loading state
@@ -103,6 +122,17 @@ const SpeciesIndexPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Close sort menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sortMenuRef.current && !sortMenuRef.current.contains(e.target as Node)) {
+        setShowSortMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
       setSearchTerm('');
@@ -127,7 +157,6 @@ const SpeciesIndexPage = () => {
       if (filters.type === 'fish' && isShrimp) return false;
     }
 
-    // Advanced filters (always applied now)
     if (species.environment.tempC.min > filters.tempMax || species.environment.tempC.max < filters.tempMin) return false;
     if (species.environment.ph.min > filters.phMax || species.environment.ph.max < filters.phMin) return false;
     if (species.visuals.adultSizeCM > filters.maxBodySize) return false;
@@ -144,6 +173,32 @@ const SpeciesIndexPage = () => {
     }
     
     return true;
+  };
+
+  const applySorting = (species: Species[]): Species[] => {
+    if (sortBy === 'default') return species;
+    return [...species].sort((a, b) => {
+      switch (sortBy) {
+        case 'name-asc':
+          return a.taxonomy.commonName.localeCompare(b.taxonomy.commonName);
+        case 'name-desc':
+          return b.taxonomy.commonName.localeCompare(a.taxonomy.commonName);
+        case 'size-asc':
+          return a.visuals.adultSizeCM - b.visuals.adultSizeCM;
+        case 'size-desc':
+          return b.visuals.adultSizeCM - a.visuals.adultSizeCM;
+        case 'difficulty-asc':
+          return (DIFFICULTY_ORDER[a.care.difficulty] ?? 1) - (DIFFICULTY_ORDER[b.care.difficulty] ?? 1);
+        case 'difficulty-desc':
+          return (DIFFICULTY_ORDER[b.care.difficulty] ?? 1) - (DIFFICULTY_ORDER[a.care.difficulty] ?? 1);
+        case 'tank-asc':
+          return a.environment.minTankSizeLiters - b.environment.minTankSizeLiters;
+        case 'tank-desc':
+          return b.environment.minTankSizeLiters - a.environment.minTankSizeLiters;
+        default:
+          return 0;
+      }
+    });
   };
 
   const activeFilterCount = useMemo(() => {
@@ -173,35 +228,30 @@ const SpeciesIndexPage = () => {
     const uniqueSpecies = Array.from(
       new Map(filtered.map(s => [s.id, s])).values()
     );
-    
-    return uniqueSpecies;
-  }, [searchTerm, filters, fuse]);
 
-  // Reset display count when filters change
+    return applySorting(uniqueSpecies);
+  }, [searchTerm, filters, fuse, sortBy]);
+
+  // Reset display count when filters/sort change
   useEffect(() => {
     setDisplayCount(INITIAL_LOAD);
   }, [filteredSpecies]);
 
-  // Get the species to display (with lazy loading)
   const displayedSpecies = useMemo(() => {
     return filteredSpecies.slice(0, displayCount);
   }, [filteredSpecies, displayCount]);
 
   const hasMore = displayCount < filteredSpecies.length;
 
-  // Load more handler
   const loadMore = useCallback(() => {
     if (!hasMore || isLoadingMore) return;
-    
     setIsLoadingMore(true);
-    // Simulate loading delay for smooth UX
     setTimeout(() => {
       setDisplayCount(prev => Math.min(prev + LOAD_MORE_INCREMENT, filteredSpecies.length));
       setIsLoadingMore(false);
     }, 300);
   }, [hasMore, isLoadingMore, filteredSpecies.length]);
 
-  // Intersection Observer for infinite scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -213,15 +263,8 @@ const SpeciesIndexPage = () => {
     );
 
     const currentRef = loadMoreRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
+    if (currentRef) observer.observe(currentRef);
+    return () => { if (currentRef) observer.unobserve(currentRef); };
   }, [hasMore, isLoadingMore, loadMore]);
 
   const resetFilters = () => {
@@ -241,6 +284,7 @@ const SpeciesIndexPage = () => {
       behaviorTags: []
     });
     setSearchTerm('');
+    setSortBy('default');
     setDisplayCount(INITIAL_LOAD);
   };
 
@@ -272,21 +316,16 @@ const SpeciesIndexPage = () => {
 
   const hasActiveFilters = activeFilters.length > 0 || searchTerm;
   const regions: Region[] = ['South America', 'Asia', 'Africa', 'Central America'];
+  const activeSortLabel = SORT_OPTIONS.find(o => o.value === sortBy)?.label ?? 'Sort';
 
-  // Helper to format region names with line breaks
   const formatRegionLabel = (region: string) => {
     if (region.includes(' ')) {
       const parts = region.split(' ');
-      return (
-        <>
-          {parts[0]}<br />{parts.slice(1).join(' ')}
-        </>
-      );
+      return (<>{parts[0]}<br />{parts.slice(1).join(' ')}</>);
     }
     return region;
   };
 
-  // Unified Filter Content
   const FilterContent = () => (
     <div className="space-y-6">
       {/* BASIC FILTERS */}
@@ -603,7 +642,6 @@ const SpeciesIndexPage = () => {
                       <X className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                   )}
-                  {/* Keyboard Shortcut Hint for Desktop */}
                   <div className="hidden sm:flex items-center gap-1 pr-3 text-gray-400 pointer-events-none select-none">
                     <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono font-bold">{shortcutKey}</kbd>
                   </div>
@@ -686,14 +724,70 @@ const SpeciesIndexPage = () => {
                     <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 hidden sm:inline">Species</span>
                   </div>
                   
-                  {hasActiveFilters && (
-                    <button 
-                      onClick={resetFilters} 
-                      className="text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all flex items-center gap-1.5 md:gap-2 border-2 border-rose-200 dark:border-rose-800 shadow-sm hover:shadow-md self-start sm:self-auto"
-                    >
-                      <X className="w-3.5 h-3.5 md:w-4 md:h-4" /> Clear Filters
-                    </button>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {/* Sort By Dropdown */}
+                    <div className="relative" ref={sortMenuRef}>
+                      <button
+                        onClick={() => setShowSortMenu(prev => !prev)}
+                        className={cn(
+                          "flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold border-2 transition-all shadow-sm hover:shadow-md",
+                          sortBy !== 'default'
+                            ? "bg-indigo-600 text-white border-indigo-700 shadow-indigo-200 dark:shadow-indigo-900"
+                            : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        )}
+                        aria-label="Sort species"
+                      >
+                        <ArrowUpDown className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <span className="hidden sm:inline">{activeSortLabel}</span>
+                        <span className="sm:hidden">Sort</span>
+                      </button>
+
+                      <AnimatePresence>
+                        {showSortMenu && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: -8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: -8 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl z-50 overflow-hidden"
+                          >
+                            <div className="p-1.5">
+                              {SORT_OPTIONS.map((option) => (
+                                <button
+                                  key={option.value}
+                                  onClick={() => {
+                                    setSortBy(option.value);
+                                    setShowSortMenu(false);
+                                  }}
+                                  className={cn(
+                                    "w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                                    sortBy === option.value
+                                      ? "bg-indigo-600 text-white"
+                                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                  )}
+                                >
+                                  <span className="flex items-center gap-2">
+                                    <span>{option.emoji}</span>
+                                    <span>{option.label}</span>
+                                  </span>
+                                  {sortBy === option.value && <Check className="w-4 h-4 flex-shrink-0" />}
+                                </button>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {hasActiveFilters && (
+                      <button 
+                        onClick={resetFilters} 
+                        className="text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all flex items-center gap-1.5 md:gap-2 border-2 border-rose-200 dark:border-rose-800 shadow-sm hover:shadow-md self-start sm:self-auto"
+                      >
+                        <X className="w-3.5 h-3.5 md:w-4 md:h-4" /> Clear Filters
+                      </button>
+                    )}
+                  </div>
                 </div>
               </motion.div>
 
@@ -720,7 +814,6 @@ const SpeciesIndexPage = () => {
                     </motion.div>
                   </Suspense>
 
-                  {/* Load More Trigger & Indicator */}
                   {hasMore && (
                     <div ref={loadMoreRef} className="py-8 flex justify-center">
                       {isLoadingMore && (
@@ -732,7 +825,6 @@ const SpeciesIndexPage = () => {
                     </div>
                   )}
 
-                  {/* Showing X of Y indicator */}
                   {displayedSpecies.length > 0 && (
                     <div className="text-center text-sm text-gray-500 dark:text-gray-400 py-4">
                       Showing {displayedSpecies.length} of {filteredSpecies.length} species
