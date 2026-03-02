@@ -70,6 +70,8 @@ import { chaetostomaMilesi } from './rubber-lip-pleco';
 import { pseudomugilGertrudae } from './spotted-blue-eye';
 import { stiphodonAtropurpureus } from './neon-blue-goby';
 import { aphaniusFasciatus } from './aphanius-fasciatus';
+import { dichotomyctereNigroviridis } from './spotted-green-puffer';
+import { bedotiaGeayi } from './red-tailed-silverside';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -142,7 +144,9 @@ export const allSpecies: Species[] = [
   chaetostomaMilesi,
   pseudomugilGertrudae,
   stiphodonAtropurpureus,
-  aphaniusFasciatus
+  aphaniusFasciatus,
+  dichotomyctereNigroviridis,
+  bedotiaGeayi
 ];
 
 export {
@@ -216,5 +220,7 @@ export {
   chaetostomaMilesi,
   pseudomugilGertrudae,
   stiphodonAtropurpureus,
-  aphaniusFasciatus
+  aphaniusFasciatus,
+  dichotomyctereNigroviridis,
+  bedotiaGeayi
 };
