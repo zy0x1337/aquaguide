@@ -491,28 +491,34 @@ const SpeciesIndexPage = () => {
                     {activeFilters.map((filter: any) => <FilterBadge key={filter.key} label={filter.label} value={filter.value} onRemove={filter.clear} />)}
                   </div>
                 )}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400">Found</span>
-                    <span className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg md:rounded-xl font-black text-base md:text-lg shadow-lg">{filteredSpecies.length}</span>
-                    <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 hidden sm:inline">Species</span>
+
+                {/* ── Results row: always a single horizontal row on all screen sizes ── */}
+                <div className="flex items-center justify-between gap-2">
+                  {/* Left: species count */}
+                  <div className="flex items-center gap-2 md:gap-3 min-w-0">
+                    <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 shrink-0">Found</span>
+                    <span className="px-2.5 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-lg md:rounded-xl font-black text-sm md:text-lg shadow-lg shrink-0">
+                      {filteredSpecies.length}
+                    </span>
+                    <span className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-400 hidden sm:inline shrink-0">Species</span>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* Right: Sort + Clear */}
+                  <div className="flex items-center gap-2 shrink-0">
                     {/* Sort By Dropdown */}
                     <div className="relative" ref={sortMenuRef}>
                       <button
                         onClick={() => setShowSortMenu(prev => !prev)}
                         className={cn(
-                          "flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold border-2 transition-all shadow-sm hover:shadow-md",
+                          "flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold border-2 transition-all shadow-sm hover:shadow-md",
                           sortBy !== 'default'
                             ? "bg-indigo-600 text-white border-indigo-700"
                             : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
                         )}
                         aria-label="Sort species"
                       >
-                        <SortIcon value={sortBy} className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                        <span className="hidden sm:inline">{activeSortLabel}</span>
+                        <SortIcon value={sortBy} className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
+                        <span className="hidden sm:inline whitespace-nowrap">{activeSortLabel}</span>
                         <span className="sm:hidden">Sort</span>
                       </button>
 
@@ -550,9 +556,14 @@ const SpeciesIndexPage = () => {
                       </AnimatePresence>
                     </div>
 
+                    {/* Clear Filters – icon-only on mobile, full label on sm+ */}
                     {hasActiveFilters && (
-                      <button onClick={resetFilters} className="text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all flex items-center gap-1.5 md:gap-2 border-2 border-rose-200 dark:border-rose-800 shadow-sm hover:shadow-md self-start sm:self-auto">
-                        <X className="w-3.5 h-3.5 md:w-4 md:h-4" /> Clear Filters
+                      <button
+                        onClick={resetFilters}
+                        className="flex items-center gap-1 md:gap-2 px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-2 border-rose-200 dark:border-rose-800 transition-all shadow-sm hover:shadow-md"
+                      >
+                        <X className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0" />
+                        <span className="hidden sm:inline whitespace-nowrap">Clear Filters</span>
                       </button>
                     )}
                   </div>
