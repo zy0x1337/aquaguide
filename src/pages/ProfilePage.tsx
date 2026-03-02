@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star, Target, TrendingUp, MessageSquare, Send } from 'lucide-react';
+import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star, Target, TrendingUp, MessageSquare, Send, LayoutGrid } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '../hooks/useFavorites';
 
@@ -48,6 +48,9 @@ const ProfilePage = () => {
   const [plantsData, setPlantsData] = useState<Record<string, PlantData>>({});
   const [dataLoading, setDataLoading] = useState(true);
 
+  // Stats / Progress
+  const [userTanksCount, setUserTanksCount] = useState(0);
+
   const favSpecies = favorites.filter((f) => f.item_type === 'species');
   const favPlants = favorites.filter((f) => f.item_type === 'plant');
 
@@ -63,7 +66,7 @@ const ProfilePage = () => {
     favoriteSpecies: '',
   });
 
-  // Achievements (calculated from user data)
+  // Achievements (calculated dynamically from fetched user data)
   const achievements = [
     { 
       id: 'collector', 
@@ -88,7 +91,7 @@ const ProfilePage = () => {
     { 
       id: 'explorer', 
       name: 'Explorer', 
-      description: 'Favorite 5+ different species',
+      description: 'Favorite 5+ different fish',
       icon: Fish,
       unlocked: favSpecies.length >= 5,
       progress: Math.min(favSpecies.length, 5),
@@ -106,6 +109,46 @@ const ProfilePage = () => {
       color: 'emerald'
     },
     { 
+      id: 'aquascaper', 
+      name: 'Aquascaper', 
+      description: 'Create your first tank',
+      icon: Droplets,
+      unlocked: userTanksCount >= 1,
+      progress: Math.min(userTanksCount, 1),
+      max: 1,
+      color: 'cyan'
+    },
+    { 
+      id: 'mts', 
+      name: 'Multi-Tank Syndrome', 
+      description: 'Manage 3+ tanks',
+      icon: LayoutGrid,
+      unlocked: userTanksCount >= 3,
+      progress: Math.min(userTanksCount, 3),
+      max: 3,
+      color: 'indigo'
+    },
+    {
+      id: 'photographer',
+      name: 'Photographer',
+      description: 'Upload a profile picture',
+      icon: Camera,
+      unlocked: !!avatarUrl,
+      progress: avatarUrl ? 1 : 0,
+      max: 1,
+      color: 'fuchsia'
+    },
+    {
+      id: 'social',
+      name: 'Social Butterfly',
+      description: 'Complete your bio & location',
+      icon: Globe,
+      unlocked: !!(profile.bio && profile.bio !== 'Aquarium enthusiast and fish keeper' && profile.location),
+      progress: (profile.bio && profile.bio !== 'Aquarium enthusiast and fish keeper' ? 1 : 0) + (profile.location ? 1 : 0),
+      max: 2,
+      color: 'blue'
+    },
+    { 
       id: 'veteran', 
       name: 'Veteran', 
       description: 'Member for 1+ year',
@@ -121,9 +164,8 @@ const ProfilePage = () => {
 
   // Activity feed (mock data - would come from backend)
   const recentActivity = [
-    { type: 'favorite', item: 'Neon Tetra', timestamp: '2 hours ago', icon: Heart },
-    { type: 'favorite', item: 'Java Fern', timestamp: '1 day ago', icon: Leaf },
-    { type: 'profile', item: 'Updated profile', timestamp: '3 days ago', icon: Edit2 },
+    { type: 'favorite', item: 'Added favorites', timestamp: 'Recently', icon: Heart },
+    { type: 'profile', item: 'Updated profile', timestamp: 'Recently', icon: Edit2 },
   ];
 
   // Load profile data
@@ -204,7 +246,17 @@ const ProfilePage = () => {
       if (profileError) throw profileError;
 
       // Get user email
-      const { data: userData, error: userError } = await supabase.auth.admin.getUserById(targetUserId);
+      const { data: userData } = await supabase.auth.admin.getUserById(targetUserId);
+      
+      // Get user tanks count for achievements
+      const { count: tanksCount } = await supabase
+        .from('tanks')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', targetUserId);
+        
+      if (tanksCount !== null) {
+        setUserTanksCount(tanksCount);
+      }
       
       if (profileData) {
         setAvatarUrl(profileData.avatar_url);
