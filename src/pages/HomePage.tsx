@@ -4,9 +4,9 @@ import {
   Zap, ArrowRight,
   Database, Shield, Gauge, BookOpen, Activity, LayoutDashboard, UserPlus,
   Leaf, Map, Lightbulb, Clock, Droplets, Ruler,
-  Fish, Sprout, Globe2, MapPin, Box, Thermometer
+  Fish, Sprout, Globe2, MapPin, Box, Thermometer, Star
 } from 'lucide-react';
-import { motion, useMotionValue, animate, useInView } from 'framer-motion';
+import { motion, animate, useInView } from 'framer-motion';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
 import { allSpecies, bettaSplendens, neonTetra, oscar, amanoShrimp } from '../data/species';
@@ -55,6 +55,9 @@ const HomePage = () => {
 
   const featuredSpecies = [bettaSplendens, neonTetra, oscar, amanoShrimp];
 
+  // Last 8 species added to the database (assume array-order = insertion order)
+  const recentSpecies = [...allSpecies].slice(-8).reverse();
+
   const featuredPlants = [
     allPlants.find(p => p.slug === 'anubias-barteri-nana'),
     allPlants.find(p => p.slug === 'bacopa-monnieri'),
@@ -78,7 +81,6 @@ const HomePage = () => {
       : undefined,
   }));
 
-  // Species of the Week
   const spotlightSpecies = bettaSplendens;
 
   const fadeInUp = {
@@ -106,6 +108,7 @@ const HomePage = () => {
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
+              {/* Text (full-width on mobile, half on lg) */}
               <motion.div className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none" initial="initial" animate="animate" variants={stagger}>
                 <motion.div variants={fadeInUp}>
                   <span className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 dark:from-indigo-500/20 dark:to-cyan-500/20 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-8 border border-indigo-200/50 dark:border-indigo-500/30">
@@ -153,7 +156,13 @@ const HomePage = () => {
                 </motion.div>
               </motion.div>
 
-              <motion.div className="flex-1 w-full max-w-lg lg:max-w-xl" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
+              {/* Fish Grid — hidden on mobile, visible md+ */}
+              <motion.div
+                className="hidden md:block flex-1 w-full max-w-lg lg:max-w-xl"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <div className="grid grid-cols-2 gap-4 sm:gap-6">
                   {featuredSpecies.map((fish, idx) => (
                     <motion.div key={fish.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + idx * 0.1, duration: 0.6 }} className={idx % 2 !== 0 ? 'translate-y-8' : ''}>
@@ -188,8 +197,8 @@ const HomePage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {[
                 { icon: <Sprout className="w-5 h-5" />, iconBg: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400', title: 'New to Aquariums?', desc: 'Start with our beginner guides and learn the basics.', link: '/knowledge', accent: 'hover:border-emerald-300 dark:hover:border-emerald-700' },
-                { icon: <Zap className="w-5 h-5" />, iconBg: 'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400', title: 'Plan Your Tank', desc: 'Use the Tank Builder to check compatibility.', link: '/tank-builder', accent: 'hover:border-amber-300 dark:hover:border-amber-700' },
-                { icon: <Fish className="w-5 h-5" />, iconBg: 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400', title: 'Browse Species', desc: `Explore all ${allSpecies.length}+ documented species.`, link: '/species', accent: 'hover:border-indigo-300 dark:hover:border-indigo-700' },
+                { icon: <Zap className="w-5 h-5" />,    iconBg: 'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400',     title: 'Plan Your Tank',    desc: 'Use the Tank Builder to check compatibility.',           link: '/tank-builder', accent: 'hover:border-amber-300 dark:hover:border-amber-700' },
+                { icon: <Fish className="w-5 h-5" />,   iconBg: 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400', title: 'Browse Species',    desc: `Explore all ${allSpecies.length}+ documented species.`,  link: '/species',      accent: 'hover:border-indigo-300 dark:hover:border-indigo-700' },
               ].map((item, i) => (
                 <motion.div key={item.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}>
                   <Link to={item.link} className={`group flex items-center gap-4 p-4 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 ${item.accent} transition-all duration-200 shadow-sm hover:shadow-md`}>
@@ -199,6 +208,53 @@ const HomePage = () => {
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-snug hidden sm:block">{item.desc}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 ml-auto shrink-0 group-hover:translate-x-0.5 transition-all" />
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── RECENTLY ADDED ─────────────────────────────────────────────── */}
+        <section className="py-10 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800/60">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold border border-indigo-200 dark:border-indigo-800">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> New
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Recently Added</h3>
+              </div>
+              <Link to="/species" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                All Species <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Horizontal scroll strip — no scrollbar */}
+            <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 -mx-6 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
+              {recentSpecies.map((s, i) => (
+                <motion.div
+                  key={s.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04, duration: 0.4 }}
+                  className="shrink-0 snap-start"
+                >
+                  <Link to={`/species/${s.slug}`} className="group block w-28 sm:w-32">
+                    <div className="aspect-square rounded-xl overflow-hidden mb-2 border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800">
+                      <img
+                        src={s.imageUrl}
+                        alt={s.taxonomy.commonName}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      {s.taxonomy.commonName}
+                    </p>
+                    <p className="text-[10px] text-slate-400 italic truncate mt-0.5">
+                      {s.taxonomy.scientificName}
+                    </p>
                   </Link>
                 </motion.div>
               ))}
@@ -221,67 +277,33 @@ const HomePage = () => {
         {/* ── SPECIES OF THE WEEK ───────────────────────────────────────── */}
         <section className="py-16 sm:py-20 px-6 bg-white dark:bg-slate-950">
           <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 block mb-1">
-                    Featured Species
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-                    Species of the Week
-                  </h2>
+                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 block mb-1">Featured Species</span>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Species of the Week</h2>
                 </div>
                 <Link to="/species" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   All Species <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
 
-              <Link
-                to={`/species/${spotlightSpecies.slug}`}
-                className="group block bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-800 hover:border-indigo-600/50"
-              >
+              <Link to={`/species/${spotlightSpecies.slug}`} className="group block bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-800 hover:border-indigo-600/50">
                 <div className="flex flex-col md:flex-row md:h-80">
-
-                  {/* Image */}
                   <div className="relative w-full md:w-5/12 h-56 md:h-auto overflow-hidden shrink-0">
-                    <img
-                      src={spotlightSpecies.imageUrl}
-                      alt={spotlightSpecies.taxonomy.commonName}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    <img src={spotlightSpecies.imageUrl} alt={spotlightSpecies.taxonomy.commonName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-slate-900/60 hidden md:block" />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/80 md:hidden" />
                   </div>
-
-                  {/* Content */}
                   <div className="flex-1 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
                     <div className="flex flex-wrap items-center gap-2 mb-4">
-                      <span className="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider rounded-lg border border-indigo-500/30 capitalize">
-                        {spotlightSpecies.care.difficulty}
-                      </span>
-                      <span className="px-2.5 py-1 bg-white/10 text-white/70 text-xs font-bold uppercase tracking-wider rounded-lg">
-                        {spotlightSpecies.taxonomy.region}
-                      </span>
-                      <span className="px-2.5 py-1 bg-white/10 text-white/70 text-xs font-bold uppercase tracking-wider rounded-lg">
-                        {spotlightSpecies.taxonomy.family}
-                      </span>
+                      <span className="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider rounded-lg border border-indigo-500/30 capitalize">{spotlightSpecies.care.difficulty}</span>
+                      <span className="px-2.5 py-1 bg-white/10 text-white/70 text-xs font-bold uppercase tracking-wider rounded-lg">{spotlightSpecies.taxonomy.region}</span>
+                      <span className="px-2.5 py-1 bg-white/10 text-white/70 text-xs font-bold uppercase tracking-wider rounded-lg">{spotlightSpecies.taxonomy.family}</span>
                     </div>
-
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-1 group-hover:text-indigo-200 transition-colors leading-tight">
-                      {spotlightSpecies.taxonomy.commonName}
-                    </h3>
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-1 group-hover:text-indigo-200 transition-colors leading-tight">{spotlightSpecies.taxonomy.commonName}</h3>
                     <p className="text-sm text-white/40 italic mb-5">{spotlightSpecies.taxonomy.scientificName}</p>
-
-                    <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-6 line-clamp-2">
-                      {spotlightSpecies.behavior.description}
-                    </p>
-
-                    {/* Stats pills */}
+                    <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-6 line-clamp-2">{spotlightSpecies.behavior.description}</p>
                     <div className="flex flex-wrap gap-2 mb-7">
                       {[
                         { icon: <Ruler       className="w-3.5 h-3.5" />, label: `${spotlightSpecies.visuals.adultSizeCM} cm` },
@@ -289,12 +311,11 @@ const HomePage = () => {
                         { icon: <Thermometer className="w-3.5 h-3.5" />, label: `${spotlightSpecies.environment.tempC.min}\u2013${spotlightSpecies.environment.tempC.max}\u00b0C` },
                         { icon: <Droplets    className="w-3.5 h-3.5" />, label: `pH ${spotlightSpecies.environment.ph.min}\u2013${spotlightSpecies.environment.ph.max}` },
                       ].map((s, i) => (
-                        <span key={i} className="inline-flex items-center gap-1.5 text-xs text-white/60 bg-white/8 border border-white/10 px-3 py-1.5 rounded-lg">
+                        <span key={i} className="inline-flex items-center gap-1.5 text-xs text-white/60 bg-white/[0.08] border border-white/10 px-3 py-1.5 rounded-lg">
                           {s.icon} {s.label}
                         </span>
                       ))}
                     </div>
-
                     <div className="inline-flex items-center gap-2 text-sm font-bold text-indigo-400 group-hover:text-indigo-300 group-hover:gap-3 transition-all">
                       View Full Profile <ArrowRight className="w-4 h-4" />
                     </div>
@@ -313,7 +334,7 @@ const HomePage = () => {
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">Discover authentic biotope setups, detailed plant profiles, and master the basics in our knowledge base.</p>
             </motion.div>
 
-            {/* Plants Row */}
+            {/* Plants */}
             <div className="mb-20">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                 <div className="flex items-center gap-3">
@@ -428,7 +449,11 @@ const HomePage = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
               {regionCards.map((rc, i) => (
                 <motion.div key={rc.region} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
-                  <Link to="/species" className={`group relative h-52 sm:h-64 rounded-2xl sm:rounded-3xl overflow-hidden block border-2 border-transparent ${rc.border} transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1`}>
+                  {/* Deep-link to species page pre-filtered by region */}
+                  <Link
+                    to={`/species?region=${encodeURIComponent(rc.region)}`}
+                    className={`group relative h-52 sm:h-64 rounded-2xl sm:rounded-3xl overflow-hidden block border-2 border-transparent ${rc.border} transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1`}
+                  >
                     {rc.imageUrl
                       ? <img src={rc.imageUrl} alt={rc.region} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       : <div className={`absolute inset-0 bg-gradient-to-br ${rc.gradient}`} />
@@ -449,7 +474,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* ── FEATURES BENTO GRID ───────────────────────────────────────── */}
+        {/* ── FEATURES ───────────────────────────────────────────────────── */}
         <section className="py-20 bg-slate-50 dark:bg-slate-900/30 border-y border-slate-200 dark:border-slate-800 px-6">
           <div className="max-w-7xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
@@ -514,9 +539,7 @@ const StatCard = ({ value, suffix = '', label }: { value: number; suffix?: strin
     <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-2">
       <AnimatedNumber value={value} suffix={suffix} />
     </div>
-    <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium tracking-wide">
-      {label}
-    </div>
+    <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium tracking-wide">{label}</div>
   </motion.div>
 );
 
