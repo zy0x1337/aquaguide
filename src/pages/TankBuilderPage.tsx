@@ -32,13 +32,11 @@ export const TankBuilderPage = () => {
   const [showPresets, setShowPresets] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'equipment' | 'suggestions'>('overview');
-
-  // Tank 3D View
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [showGrid, setShowGrid] = useState(false);
   const [showTankView, setShowTankView] = useState(true);
 
-  // Species detail slide-over
+  // Species detail slide-over – works from browser cards AND tank item cards
   const [detailItem, setDetailItem] = useState<TankItem | null>(null);
 
   const [filters, setFilters] = useState({
@@ -132,10 +130,8 @@ export const TankBuilderPage = () => {
     const blob = new Blob([text], { type: 'text/plain' });
     const url  = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `aquaguide-${tankConfig.name.replace(/\s+/g, '-').toLowerCase()}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = `aquaguide-${tankConfig.name.replace(/\s+/g, '-').toLowerCase()}.txt`;
+    a.click(); URL.revokeObjectURL(url);
   };
 
   const clearAll = () => {
@@ -149,16 +145,16 @@ export const TankBuilderPage = () => {
   const allCompatibilityIssues: { severity: 'critical' | 'warning' | 'info'; message: string; solution?: string }[] = [
     ...compatibilityIssues,
     ...(stats.criticalWarnings || []).map(msg => ({ severity: 'critical' as const, message: msg })),
-    ...(stats.warnings || []).map(msg => ({ severity: 'warning' as const, message: msg }))
+    ...(stats.warnings        || []).map(msg => ({ severity: 'warning'  as const, message: msg }))
   ].sort((a, b) => ({ critical: 0, warning: 1, info: 2 }[a.severity] - { critical: 0, warning: 1, info: 2 }[b.severity]));
 
-  const fishItems      = items.filter(i => i.type === 'fish');
-  const setupProgress  = [
-    { label: 'Tank size set',   done: tankConfig.volume > 0 },
+  const fishItems     = items.filter(i => i.type === 'fish');
+  const setupProgress = [
+    { label: 'Tank size set',    done: tankConfig.volume > 0 },
     { label: 'Substrate chosen', done: !!tankConfig.substrate },
-    { label: 'Filter added',    done: tankConfig.hasFilter },
-    { label: 'Heater added',    done: tankConfig.hasHeater },
-    { label: 'Fish added',      done: fishItems.length > 0 },
+    { label: 'Filter added',     done: tankConfig.hasFilter },
+    { label: 'Heater added',     done: tankConfig.hasHeater },
+    { label: 'Fish added',       done: fishItems.length > 0 },
   ];
   const progressPercentage = (setupProgress.filter(s => s.done).length / setupProgress.length) * 100;
 
@@ -166,7 +162,7 @@ export const TankBuilderPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-20">
       <SEOHead title="Tank Builder - Smart Aquarium Planner" description="Plan your aquarium with intelligent compatibility checks, equipment recommendations, and shopping lists." />
 
-      {/* Species Detail Slide-Over */}
+      {/* Species / Plant detail slide-over – triggered from both browser grid and tank item list */}
       <SpeciesDetailSlideOver item={detailItem} onClose={() => setDetailItem(null)} />
 
       {/* Header */}
@@ -179,7 +175,7 @@ export const TankBuilderPage = () => {
               </div>
               <div>
                 <h1 className="font-black text-base sm:text-lg text-slate-900 dark:text-white">{tankConfig.name}</h1>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{tankConfig.volume}L \u2022 {items.length} items \u2022 {progressPercentage.toFixed(0)}% complete</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{tankConfig.volume}L &bull; {items.length} items &bull; {progressPercentage.toFixed(0)}% complete</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -243,11 +239,17 @@ export const TankBuilderPage = () => {
                   <div className="space-y-3">
                     <label className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                       <input type="checkbox" checked={tankConfig.hasFilter || false} onChange={e => setTankConfig({ ...tankConfig, hasFilter: e.target.checked })} className="w-5 h-5 rounded text-indigo-600" />
-                      <div className="flex-1"><div className="flex items-center gap-2"><Wind className="w-4 h-4 text-indigo-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Filter</span></div><span className="text-xs text-slate-500">{stats.filterRate} L/h recommended</span></div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2"><Wind className="w-4 h-4 text-indigo-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Filter</span></div>
+                        <span className="text-xs text-slate-500">{stats.filterRate} L/h recommended</span>
+                      </div>
                     </label>
                     <label className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                       <input type="checkbox" checked={tankConfig.hasHeater || false} onChange={e => setTankConfig({ ...tankConfig, hasHeater: e.target.checked })} className="w-5 h-5 rounded text-indigo-600" />
-                      <div className="flex-1"><div className="flex items-center gap-2"><Zap className="w-4 h-4 text-amber-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Heater</span></div><span className="text-xs text-slate-500">{stats.heaterWattage}W for this tank</span></div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2"><Zap className="w-4 h-4 text-amber-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Heater</span></div>
+                        <span className="text-xs text-slate-500">{stats.heaterWattage}W for this tank</span>
+                      </div>
                     </label>
                     <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                       <label className="text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 block">Substrate Type</label>
@@ -267,7 +269,7 @@ export const TankBuilderPage = () => {
                     ) : suggestions.slice(0, 5).map(s => (
                       <div key={s.id} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
                         <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full mb-2 inline-block ${
-                          s.priority === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                          s.priority === 'high'   ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
                           s.priority === 'medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
                           'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
                         }`}>{s.priority}</span>
@@ -314,8 +316,7 @@ export const TankBuilderPage = () => {
             {/* Compatibility Warnings */}
             {allCompatibilityIssues.length > 0 && (
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20 border-2 border-red-300 dark:border-red-800 rounded-2xl p-5 shadow-lg"
-              >
+                className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20 border-2 border-red-300 dark:border-red-800 rounded-2xl p-5 shadow-lg">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0">
                     <AlertTriangle className="w-5 h-5 text-white" />
@@ -335,7 +336,7 @@ export const TankBuilderPage = () => {
                             }`}>{issue.severity}</span>
                             <div>
                               <p className="text-sm font-semibold text-red-800 dark:text-red-200">{issue.message}</p>
-                              {issue.solution && <p className="text-xs text-red-600 dark:text-red-400 mt-1">\uD83D\uDCA1 {issue.solution}</p>}
+                              {issue.solution && <p className="text-xs text-red-600 dark:text-red-400 mt-1">&#x1F4A1; {issue.solution}</p>}
                             </div>
                           </div>
                         </div>
@@ -378,7 +379,7 @@ export const TankBuilderPage = () => {
                           if (fish.environment.minTankSizeLiters > tankConfig.volume)
                             itemWarnings.push(`Needs minimum ${fish.environment.minTankSizeLiters}L tank`);
                           if (fish.behavior.minGroupSize && (item.count || 1) < fish.behavior.minGroupSize)
-                            itemSuggestions.push(`Schooling fish \u2013 increase to ${fish.behavior.minGroupSize}+ for natural behavior`);
+                            itemSuggestions.push(`Schooling fish – increase to ${fish.behavior.minGroupSize}+ for natural behavior`);
                         }
                         return (
                           <TankItemCard
@@ -399,7 +400,16 @@ export const TankBuilderPage = () => {
               </div>
             </div>
 
-            <AssetBrowser onAddItem={addItem} tankVolume={tankConfig.volume} filters={filters} onFiltersChange={setFilters} showAdvancedFilters={showAdvancedFilters} onToggleAdvancedFilters={() => setShowAdvancedFilters(!showAdvancedFilters)} />
+            {/* Asset Browser */}
+            <AssetBrowser
+              onAddItem={addItem}
+              onViewDetails={setDetailItem}
+              tankVolume={tankConfig.volume}
+              filters={filters}
+              onFiltersChange={setFilters}
+              showAdvancedFilters={showAdvancedFilters}
+              onToggleAdvancedFilters={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            />
           </div>
         </div>
       </main>
@@ -492,7 +502,7 @@ const generateShoppingList = (items: TankItem[], config: TankConfig, stats: any,
     g.forEach((count, name) => { text += `[ ] ${count}x ${name}\n`; });
   }
   text += `\n\uD83D\uDFE2 PLANTS & DECOR\n-----------------------------------------\n`;
-  plants.forEach(i => { text += `[ ] ${(i.data as Plant).taxonomy.commonName}\n`; });
+  plants.forEach(i   => { text += `[ ] ${(i.data as Plant).taxonomy.commonName}\n`; });
   hardscape.forEach(i => { text += `[ ] ${(i.data as any).name}\n`; });
   text += `\n\uD83D\uDCA1 TOP RECOMMENDATIONS\n-----------------------------------------\n`;
   suggestions.slice(0, 3).forEach(s => { text += `\u2022 ${s.title}: ${s.description}\n`; });
