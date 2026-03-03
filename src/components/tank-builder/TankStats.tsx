@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Layers, Thermometer, Droplets, Gauge, Fan, Lightbulb, ChefHat, Info } from 'lucide-react';
+import { Thermometer, Droplets, Gauge, Fan, Lightbulb, ChefHat, Info } from 'lucide-react';
 import { TankItem, TankConfig } from '../../types/builder';
 import { Species } from '../../types/species';
 import { calculateTankStats } from '../../utils/tank-calculations';
@@ -18,143 +18,177 @@ export const TankStats = ({ items, tankConfig }: TankStatsProps) => {
 
   let tempRange = '', phRange = '';
   const fishItems = items.filter(i => i.type === 'fish');
-  
+
   if (fishItems.length > 0) {
     const temps = fishItems.map(item => { const species = item.data as Species; return { min: species.environment.tempC.min, max: species.environment.tempC.max }; });
     const phs = fishItems.map(item => { const species = item.data as Species; return { min: species.environment.ph.min, max: species.environment.ph.max }; });
-    const tempMin = Math.max(...temps.map(t => t.min)); const tempMax = Math.min(...temps.map(t => t.max));
-    const phMin = Math.max(...phs.map(p => p.min)); const phMax = Math.min(...phs.map(p => p.max));
-    
-    if (tempMin <= tempMax) tempRange = `${tempMin}-${tempMax}°C`;
-    else tempRange = '⚠️ Conflict';
-    
-    if (phMin <= phMax) phRange = `${phMin.toFixed(1)}-${phMax.toFixed(1)}`;
-    else phRange = '⚠️ Conflict';
+    const tempMin = Math.max(...temps.map(t => t.min));
+    const tempMax = Math.min(...temps.map(t => t.max));
+    const phMin = Math.max(...phs.map(p => p.min));
+    const phMax = Math.min(...phs.map(p => p.max));
+
+    tempRange = tempMin <= tempMax ? `${tempMin}-${tempMax}°C` : '⚠️ Conflict';
+    phRange = phMin <= phMax ? `${phMin.toFixed(1)}-${phMax.toFixed(1)}` : '⚠️ Conflict';
   }
 
-  const bioloadColor = stats.stockingPercentage > 100 ? 'text-rose-600' : stats.stockingPercentage > 85 ? 'text-amber-600' : 'text-emerald-600';
-  const progressColor = stats.stockingPercentage > 100 ? 'bg-rose-500' : stats.stockingPercentage > 85 ? 'bg-amber-500' : 'bg-emerald-500';
+  const bioloadColor = stats.stockingPercentage > 100
+    ? 'text-rose-600'
+    : stats.stockingPercentage > 85
+    ? 'text-amber-600'
+    : 'text-emerald-600';
+
+  const progressColor = stats.stockingPercentage > 100
+    ? 'bg-rose-500'
+    : stats.stockingPercentage > 85
+    ? 'bg-amber-500'
+    : 'bg-emerald-500';
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6">
-      <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-        <Layers className="w-5 h-5 mr-2 text-indigo-600" /> Tank Analytics
-      </h3>
+    <div className="space-y-4">
 
       {/* Primary Stats */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <StatBox label="Volume" value={`${tankConfig.volume}L`} subtext={`${tankConfig.length}×${tankConfig.width}×${tankConfig.height}cm`} />
-        <StatBox label="Inhabitants" value={totalFish.toString()} subtext={`${totalPlants} plants • ${totalHardscape} rocks`} />
+      <div className="grid grid-cols-2 gap-3">
+        <StatBox
+          label="Volume"
+          value={`${tankConfig.volume}L`}
+          subtext={`${tankConfig.length}×${tankConfig.width}×${tankConfig.height}cm`}
+        />
+        <StatBox
+          label="Inhabitants"
+          value={totalFish.toString()}
+          subtext={`${totalPlants} plants • ${totalHardscape} decor`}
+        />
       </div>
 
-      {/* Bioload Section */}
-      <div className="mb-6">
+      {/* Bioload */}
+      <div>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-bold text-slate-700 flex items-center gap-2">
-            <Gauge className="w-4 h-4 text-slate-500" /> Bioload / Stocking
+          <span className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+            <Gauge className="w-3.5 h-3.5 text-slate-500" /> Bioload / Stocking
           </span>
-          <span className={`font-bold text-sm ${bioloadColor}`}>{Math.min(100, stats.stockingPercentage)}%</span>
+          <span className={`font-black text-lg ${bioloadColor}`}>
+            {Math.min(100, stats.stockingPercentage)}%
+          </span>
         </div>
-        <div className="w-full h-4 bg-slate-100 rounded-full overflow-hidden shadow-inner border border-slate-200">
-          <motion.div 
-            initial={{ width: 0 }} 
-            animate={{ width: `${Math.min(100, stats.stockingPercentage)}%` }} 
+        <div className="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.min(100, stats.stockingPercentage)}%` }}
             transition={{ type: 'spring', stiffness: 50 }}
-            className={`h-full ${progressColor}`} 
+            className={`h-full ${progressColor}`}
           />
         </div>
-        <div className="flex items-start gap-2 mt-2">
+        <div className="flex items-start gap-1.5 mt-2">
           <Info className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
-          <p className="text-xs text-slate-500 leading-tight">
-             {stats.stockingPercentage < 50 ? 'Lightly stocked. Ideal for beginners and stable parameters.' : 
-              stats.stockingPercentage < 85 ? 'Optimally stocked. Requires regular maintenance schedule.' : 
-              'Heavily stocked! Only recommended for experienced keepers with over-filtration.'}
+          <p className="text-xs text-slate-500 dark:text-slate-400 leading-tight">
+            {stats.stockingPercentage < 50
+              ? 'Lightly stocked. Ideal for beginners and stable parameters.'
+              : stats.stockingPercentage < 85
+              ? 'Optimally stocked. Regular maintenance required.'
+              : 'Heavily stocked! Only for experienced keepers with over-filtration.'}
           </p>
         </div>
       </div>
 
-      {/* Parameters */}
+      {/* Water Parameters */}
       {(tempRange || phRange) && (
-        <div className="grid grid-cols-2 gap-3 mb-6 p-3 bg-slate-50 rounded-xl border border-slate-100">
+        <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
           {tempRange && (
             <div className="flex flex-col">
-              <span className="text-xs text-slate-500 flex items-center gap-1"><Thermometer className="w-3 h-3" /> Temp</span>
-              <span className={`font-bold text-sm ${tempRange.includes('Conflict') ? 'text-rose-600' : 'text-slate-700'}`}>{tempRange}</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 mb-1 uppercase tracking-wide font-semibold">
+                <Thermometer className="w-3 h-3" /> Temp
+              </span>
+              <span className={`font-black text-sm ${
+                tempRange.includes('Conflict') ? 'text-rose-600' : 'text-slate-900 dark:text-white'
+              }`}>
+                {tempRange}
+              </span>
             </div>
           )}
           {phRange && (
             <div className="flex flex-col">
-              <span className="text-xs text-slate-500 flex items-center gap-1"><Droplets className="w-3 h-3" /> pH</span>
-              <span className={`font-bold text-sm ${phRange.includes('Conflict') ? 'text-rose-600' : 'text-slate-700'}`}>{phRange}</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 mb-1 uppercase tracking-wide font-semibold">
+                <Droplets className="w-3 h-3" /> pH
+              </span>
+              <span className={`font-black text-sm ${
+                phRange.includes('Conflict') ? 'text-rose-600' : 'text-slate-900 dark:text-white'
+              }`}>
+                {phRange}
+              </span>
             </div>
           )}
         </div>
       )}
 
-      {/* Hardware Recommendations */}
-      <div className="border-t border-slate-200 pt-4 mb-6">
-        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Recommended Hardware</h4>
-        <div className="space-y-3">
-          <HardwareItem 
-            icon={<Fan className="w-4 h-4 text-blue-500" />} 
-            label="Filter Flow Rate" 
-            value={`${stats.filterRate} L/h`} 
-            desc="Min. turnover for this bioload" 
+      {/* Recommended Hardware */}
+      <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
+        <h4 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
+          Recommended Hardware
+        </h4>
+        <div className="space-y-2.5">
+          <HardwareItem
+            icon={<Fan className="w-3.5 h-3.5 text-blue-500" />}
+            label="Filter Flow"
+            value={`${stats.filterRate} L/h`}
+            desc="Min. turnover for bioload"
           />
-          <HardwareItem 
-            icon={<Thermometer className="w-4 h-4 text-rose-500" />} 
-            label="Heater Power" 
-            value={`${stats.heaterWattage} Watts`} 
-            desc="To maintain stable temp" 
+          <HardwareItem
+            icon={<Thermometer className="w-3.5 h-3.5 text-rose-500" />}
+            label="Heater"
+            value={`${stats.heaterWattage}W`}
+            desc="For stable temperature"
           />
-          <HardwareItem 
-            icon={<Lightbulb className="w-4 h-4 text-amber-500" />} 
-            label="Lighting" 
-            value={`${stats.lightingLumens}+ Lumens`} 
-            desc={totalPlants > 0 ? "For plant growth" : "For viewing"} 
+          <HardwareItem
+            icon={<Lightbulb className="w-3.5 h-3.5 text-amber-500" />}
+            label="Lighting"
+            value={`${stats.lightingLumens}+ lm`}
+            desc={totalPlants > 0 ? 'For plant growth' : 'For viewing'}
           />
         </div>
       </div>
 
-      {/* Feeding Advice */}
+      {/* Feeding Schedule */}
       {stats.feedingAdvice.length > 0 && (
-         <div className="border-t border-slate-200 pt-4">
-            <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-               <ChefHat className="w-4 h-4" /> Feeding Schedule
-            </h4>
-            <ul className="space-y-2">
-               {stats.feedingAdvice.map((advice, idx) => (
-                  <li key={idx} className="text-xs text-slate-600 bg-slate-50 px-2 py-1.5 rounded-md border-l-2 border-indigo-400">
-                     {advice}
-                  </li>
-               ))}
-            </ul>
-         </div>
+        <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
+          <h4 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <ChefHat className="w-3.5 h-3.5" /> Feeding Schedule
+          </h4>
+          <ul className="space-y-1.5">
+            {stats.feedingAdvice.map((advice, idx) => (
+              <li
+                key={idx}
+                className="text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2.5 py-1.5 rounded-lg border-l-2 border-indigo-400"
+              >
+                {advice}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
 };
 
 const StatBox = ({ label, value, subtext }: { label: string; value: string; subtext: string }) => (
-  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-    <div className="text-xs text-slate-500 font-medium mb-1">{label}</div>
-    <div className="text-xl font-bold text-slate-800">{value}</div>
-    <div className="text-[10px] text-slate-400 truncate">{subtext}</div>
+  <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+    <div className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide mb-1">{label}</div>
+    <div className="text-xl font-black text-slate-900 dark:text-white">{value}</div>
+    <div className="text-[10px] text-slate-400 dark:text-slate-500 truncate mt-0.5">{subtext}</div>
   </div>
 );
 
 const HardwareItem = ({ icon, label, value, desc }: { icon: React.ReactNode; label: string; value: string; desc: string }) => (
-  <div className="flex items-center justify-between group">
-    <div className="flex items-center gap-3">
-      <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 shadow-sm flex items-center justify-center group-hover:border-indigo-300 transition-colors">
+  <div className="flex items-center justify-between">
+    <div className="flex items-center gap-2.5">
+      <div className="w-7 h-7 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center">
         {icon}
       </div>
       <div>
-        <div className="text-xs font-bold text-slate-700">{label}</div>
-        <div className="text-[10px] text-slate-400">{desc}</div>
+        <div className="text-xs font-bold text-slate-700 dark:text-slate-300">{label}</div>
+        <div className="text-[10px] text-slate-400 dark:text-slate-500">{desc}</div>
       </div>
     </div>
-    <div className="font-mono text-sm font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">
+    <div className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 px-2 py-1 rounded-md">
       {value}
     </div>
   </div>
