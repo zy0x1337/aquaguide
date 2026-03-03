@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Download, Share2, Settings, Lightbulb, Plus, AlertTriangle, Zap, Droplets, Wind, Package, Eye, Check } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Download, Share2, Settings, Lightbulb, Plus, AlertTriangle, Zap, Droplets, Wind, Package, Eye, Check, Save, Loader2, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankItemCard } from '../components/tank-builder/TankItemCard';
@@ -11,6 +12,8 @@ import { AssetBrowser } from '../components/tank-builder/AssetBrowser';
 import { calculateTankStats } from '../utils/tank-calculations';
 import { generateSmartSuggestions, checkCompatibility } from '../utils/smart-suggestions';
 import { copyToClipboard, decodeTankFromURL } from '../utils/tank-share';
+import { createTank, addInhabitant } from '../lib/supabase/tanks';
+import { supabase } from '../lib/supabase';
 import { PRESET_TANKS } from '../data/builder';
 import { TANK_PRESETS } from '../data/presets';
 import { TankConfig, TankItem, HardscapeItem, SmartSuggestion } from '../types/builder';
@@ -18,13 +21,12 @@ import { Species } from '../types/species';
 import { Plant } from '../types/plant';
 
 const AUTOSAVE_KEY = 'tankBuilder_autosave';
+type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 export const TankBuilderPage = () => {
+  const navigate = useNavigate();
   const [tankConfig, setTankConfig] = useState<TankConfig>({
-    ...PRESET_TANKS[2],
-    substrate: 'gravel',
-    hasFilter: false,
-    hasHeater: false
+    ...PRESET_TANKS[2], substrate: 'gravel', hasFilter: false, hasHeater: false
   });
   const [customDimensions, setCustomDimensions] = useState({ length: 60, width: 30, height: 30 });
   const [items, setItems] = useState<TankItem[]>([]);
@@ -37,6 +39,7 @@ export const TankBuilderPage = () => {
   const [showGrid, setShowGrid] = useState(false);
   const [showTankView, setShowTankView] = useState(true);
   const [detailItem, setDetailItem] = useState<TankItem | null>(null);
+  const [saveState, setSaveState] = useState<SaveState>('idle');
 
   const [filters, setFilters] = useState({
     tempMin: 20, tempMax: 28, phMin: 6.0, phMax: 8.0, maxSize: 15,
@@ -57,7 +60,7 @@ export const TankBuilderPage = () => {
       try {
         const data = JSON.parse(saved);
         if (data.tankConfig) setTankConfig(data.tankConfig);
-        if (data.items)      setItems(data.items);
+        if (data.items) setItems(data.items);
         if (data.customDimensions) setCustomDimensions(data.customDimensions);
       } catch (e) { console.error('Failed to load autosave', e); }
     }
@@ -106,14 +109,71 @@ export const TankBuilderPage = () => {
     if (detailItem?.id === id) setDetailItem(null);
   };
 
-  const updateCount  = (id: string, delta: number) =>
+  const updateCount    = (id: string, delta: number) =>
     setItems(prev => prev.map(i => i.id === id && i.type === 'fish' ? { ...i, count: Math.max(1, (i.count || 1) + delta) } : i));
-  const updateNotes  = (id: string, notes: string) =>
+  const updateNotes    = (id: string, notes: string) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, notes } : i));
-  const toggleLock   = (id: string) =>
+  const toggleLock     = (id: string) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, locked: !i.locked } : i));
   const updatePosition = (id: string, x: number, y: number) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, position: { ...i.position, x, y } } : i));
+
+  // ─── Save to My Tanks ────────────────────────────────────────────────────────
+  const handleSaveToMyTanks = async () => {
+    setSaveState('saving');
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate('/login?redirect=/tank-builder');
+        setSaveState('idle');
+        return;
+      }
+
+      const midTemp = stats.tempRange
+        ? Math.round((stats.tempRange.min + stats.tempRange.max) / 2)
+        : 25;
+      const midPh = stats.phRange
+        ? Math.round(((stats.phRange.min + stats.phRange.max) / 2) * 10) / 10
+        : 7.0;
+
+      const newTank = await createTank({
+        name: tankConfig.name,
+        type: 'freshwater',
+        volumeLiters: tankConfig.volume,
+        substrate: tankConfig.substrate,
+        inhabitants: { fish: [], plants: [] },
+        parameters: { tempC: midTemp, ph: midPh, ammonia: 0, nitrite: 0, nitrate: 0 },
+      });
+
+      // Group fish by species ID, sum counts
+      const fishMap = new Map<string, { name: string; count: number }>();
+      items.filter(i => i.type === 'fish').forEach(item => {
+        const s = item.data as Species;
+        const ex = fishMap.get(s.id);
+        fishMap.set(s.id, ex
+          ? { name: s.taxonomy.commonName, count: ex.count + (item.count || 1) }
+          : { name: s.taxonomy.commonName, count: item.count || 1 });
+      });
+
+      await Promise.all([
+        ...[...fishMap.entries()].map(([id, { name, count }]) =>
+          addInhabitant(newTank.id, id, name, 'fish', count)
+        ),
+        ...items.filter(i => i.type === 'plant').map(item => {
+          const p = item.data as Plant;
+          const plantId = ('id' in p && p.id) ? p.id : p.taxonomy.commonName.toLowerCase().replace(/\s+/g, '-');
+          return addInhabitant(newTank.id, plantId, p.taxonomy.commonName, 'plant', 1);
+        }),
+      ]);
+
+      setSaveState('saved');
+      setTimeout(() => navigate(`/my-tanks/${newTank.id}`), 900);
+    } catch (err) {
+      console.error('Save to My Tanks failed:', err);
+      setSaveState('error');
+      setTimeout(() => setSaveState('idle'), 3000);
+    }
+  };
 
   const handleExport = () => {
     const text = generateShoppingList(items, tankConfig, stats, suggestions);
@@ -125,7 +185,9 @@ export const TankBuilderPage = () => {
   };
 
   const clearAll = () => {
-    if (confirm('Clear all items from your tank? This cannot be undone.')) { setItems([]); setSelectedItem(null); setDetailItem(null); }
+    if (confirm('Clear all items from your tank? This cannot be undone.')) {
+      setItems([]); setSelectedItem(null); setDetailItem(null);
+    }
   };
 
   const stats = calculateTankStats(items, tankConfig);
@@ -138,7 +200,7 @@ export const TankBuilderPage = () => {
     ...(stats.warnings        || []).map(msg => ({ severity: 'warning'  as const, message: msg }))
   ].sort((a, b) => ({ critical: 0, warning: 1, info: 2 }[a.severity] - { critical: 0, warning: 1, info: 2 }[b.severity]));
 
-  const fishItems     = items.filter(i => i.type === 'fish');
+  const fishItems = items.filter(i => i.type === 'fish');
   const setupProgress = [
     { label: 'Tank size set',    done: tankConfig.volume > 0 },
     { label: 'Substrate chosen', done: !!tankConfig.substrate },
@@ -154,19 +216,28 @@ export const TankBuilderPage = () => {
     phRange:   stats.phRange
   };
 
+  const saveLabel = saveState === 'saving' ? 'Saving…'
+    : saveState === 'saved'  ? 'Saved!'
+    : saveState === 'error'  ? 'Error'
+    : 'Save to My Tanks';
+
+  const saveIcon = saveState === 'saving' ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+    : saveState === 'saved'  ? <Check className="w-3.5 h-3.5" />
+    : saveState === 'error'  ? <X className="w-3.5 h-3.5" />
+    : <Save className="w-3.5 h-3.5" />;
+
+  const saveBtnClass = saveState === 'saved'
+    ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
+    : saveState === 'error'
+    ? 'bg-red-500 hover:bg-red-600 text-white'
+    : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25';
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-20">
-      <SEOHead title="Tank Builder - Smart Aquarium Planner" description="Plan your aquarium with intelligent compatibility checks, equipment recommendations, and shopping lists." />
+      <SEOHead title="Tank Builder – Smart Aquarium Planner" description="Plan your aquarium with intelligent compatibility checks, equipment recommendations, and shopping lists." />
 
-      {/* Modals & overlays */}
       <SpeciesDetailSlideOver item={detailItem} onClose={() => setDetailItem(null)} />
-      <SharePreviewModal
-        open={showShare}
-        tankConfig={tankConfig}
-        items={items}
-        stats={previewStats}
-        onClose={() => setShowShare(false)}
-      />
+      <SharePreviewModal open={showShare} tankConfig={tankConfig} items={items} stats={previewStats} onClose={() => setShowShare(false)} />
 
       {/* Header */}
       <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 shadow-lg">
@@ -182,17 +253,28 @@ export const TankBuilderPage = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => setShowSetup(true)} className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+              <button onClick={() => setShowSetup(true)}
+                className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
                 <Settings className="w-3.5 h-3.5" /><span className="hidden sm:inline">Setup</span>
               </button>
-              <button onClick={() => setShowPresets(true)} className="px-3 py-2 text-xs font-bold bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 rounded-lg transition-colors shadow-lg flex items-center gap-1.5">
+              <button onClick={() => setShowPresets(true)}
+                className="px-3 py-2 text-xs font-bold bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 rounded-lg transition-colors shadow-lg flex items-center gap-1.5">
                 <Package className="w-3.5 h-3.5" /><span className="hidden sm:inline">Templates</span>
               </button>
-              {/* Share – now opens preview modal */}
-              <button onClick={() => setShowShare(true)} className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+              <button onClick={() => setShowShare(true)}
+                className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
                 <Share2 className="w-3.5 h-3.5" /><span className="hidden sm:inline">Share</span>
               </button>
-              <button onClick={handleExport} className="px-3 py-2 text-xs font-bold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+              {/* Save to My Tanks */}
+              <button
+                onClick={handleSaveToMyTanks}
+                disabled={saveState === 'saving' || saveState === 'saved'}
+                className={`px-3 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 disabled:opacity-70 disabled:cursor-not-allowed ${saveBtnClass}`}
+              >
+                {saveIcon}<span className="hidden sm:inline">{saveLabel}</span>
+              </button>
+              <button onClick={handleExport}
+                className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
                 <Download className="w-3.5 h-3.5" /><span className="hidden sm:inline">Export</span>
               </button>
             </div>
@@ -404,8 +486,11 @@ export const TankBuilderPage = () => {
       {/* Setup Modal */}
       <AnimatePresence>
         {showSetup && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4" onClick={() => setShowSetup(false)}>
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} onClick={e => e.stopPropagation()} className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setShowSetup(false)}>
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={e => e.stopPropagation()} className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
               <div className="bg-gradient-to-r from-indigo-500 to-purple-500 p-6">
                 <h2 className="text-2xl font-black text-white">Tank Setup</h2>
                 <p className="text-indigo-100 text-sm mt-1">Configure your aquarium</p>
@@ -413,7 +498,9 @@ export const TankBuilderPage = () => {
               <div className="p-6 space-y-5">
                 <div>
                   <label className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 block">Tank Name</label>
-                  <input type="text" value={tankConfig.name} onChange={e => setTankConfig({ ...tankConfig, name: e.target.value })} className="w-full px-4 py-3 border-2 border-slate-200 dark:border-slate-700 rounded-xl font-semibold focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="My Awesome Tank" />
+                  <input type="text" value={tankConfig.name} onChange={e => setTankConfig({ ...tankConfig, name: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-slate-200 dark:border-slate-700 rounded-xl font-semibold focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all"
+                    placeholder="My Awesome Tank" />
                 </div>
                 <div>
                   <label className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 block">Dimensions (cm)</label>
@@ -421,7 +508,9 @@ export const TankBuilderPage = () => {
                     {(['length', 'width', 'height'] as const).map(dim => (
                       <div key={dim}>
                         <label className="text-xs font-bold text-slate-500 uppercase mb-1 block">{dim}</label>
-                        <input type="number" value={customDimensions[dim]} onChange={e => setCustomDimensions({ ...customDimensions, [dim]: +e.target.value })} className="w-full px-3 py-2 text-center text-lg font-black border-2 border-slate-200 rounded-xl bg-slate-50 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all" />
+                        <input type="number" value={customDimensions[dim]}
+                          onChange={e => setCustomDimensions({ ...customDimensions, [dim]: +e.target.value })}
+                          className="w-full px-3 py-2 text-center text-lg font-black border-2 border-slate-200 rounded-xl bg-slate-50 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all" />
                       </div>
                     ))}
                   </div>
@@ -440,8 +529,11 @@ export const TankBuilderPage = () => {
       {/* Preset Modal */}
       <AnimatePresence>
         {showPresets && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4" onClick={() => setShowPresets(false)}>
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} onClick={e => e.stopPropagation()} className="bg-white dark:bg-slate-900 rounded-3xl max-w-5xl w-full max-h-[85vh] overflow-hidden shadow-2xl flex flex-col">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setShowPresets(false)}>
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={e => e.stopPropagation()} className="bg-white dark:bg-slate-900 rounded-3xl max-w-5xl w-full max-h-[85vh] overflow-hidden shadow-2xl flex flex-col">
               <div className="bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-6">
                 <h2 className="text-2xl font-black text-white">Load Template</h2>
                 <p className="text-indigo-100 text-sm mt-1">Start with a professionally designed setup</p>
@@ -449,7 +541,8 @@ export const TankBuilderPage = () => {
               <div className="overflow-y-auto p-6 flex-1">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {TANK_PRESETS.map(preset => (
-                    <motion.button key={preset.id} onClick={() => loadPreset(preset.id)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="text-left bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 border-2 border-slate-200 dark:border-slate-700 p-5 rounded-2xl hover:border-indigo-500 hover:shadow-xl transition-all">
+                    <motion.button key={preset.id} onClick={() => loadPreset(preset.id)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                      className="text-left bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 border-2 border-slate-200 dark:border-slate-700 p-5 rounded-2xl hover:border-indigo-500 hover:shadow-xl transition-all">
                       <div className="flex justify-between items-start mb-3">
                         <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${preset.difficulty === 'beginner' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{preset.difficulty}</span>
                         <div className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-full"><span className="text-xs font-black text-indigo-600 dark:text-indigo-400">{preset.tankConfig.volume}L</span></div>
