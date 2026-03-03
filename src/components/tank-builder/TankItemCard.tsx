@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, Plus, Minus, AlertTriangle, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Trash2, Plus, Minus, AlertTriangle, Info, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TankItem } from '../../types/builder';
 import { Species } from '../../types/species';
@@ -10,25 +10,27 @@ interface TankItemCardProps {
   onRemove: (id: string) => void;
   onUpdateCount: (id: string, delta: number) => void;
   onUpdateNotes: (id: string, notes: string) => void;
+  onViewDetails?: (item: TankItem) => void;
   warnings?: string[];
   suggestions?: string[];
 }
 
-export const TankItemCard = ({ 
-  item, 
-  onRemove, 
+export const TankItemCard = ({
+  item,
+  onRemove,
   onUpdateCount,
   onUpdateNotes,
+  onViewDetails,
   warnings = [],
   suggestions = []
 }: TankItemCardProps) => {
   const [expanded, setExpanded] = useState(false);
   const [editingNotes, setEditingNotes] = useState(false);
-  
-  const isFish = item.type === 'fish';
+
+  const isFish  = item.type === 'fish';
   const isPlant = item.type === 'plant';
   const data = item.data as Species | Plant;
-  
+
   const getItemDetails = () => {
     if (isFish) {
       const fish = data as Species;
@@ -36,7 +38,7 @@ export const TankItemCard = ({
         name: fish.taxonomy.commonName,
         scientificName: fish.taxonomy.scientificName,
         image: fish.imageUrl,
-        params: `${fish.environment.tempC.min}-${fish.environment.tempC.max}°C | pH ${fish.environment.ph.min}-${fish.environment.ph.max}`,
+        params: `${fish.environment.tempC.min}–${fish.environment.tempC.max}°C | pH ${fish.environment.ph.min}–${fish.environment.ph.max}`,
         minTank: fish.environment.minTankSizeLiters,
         tags: fish.behavior.tags || []
       };
@@ -56,7 +58,7 @@ export const TankItemCard = ({
   const details = getItemDetails();
   if (!details) return null;
 
-  const hasIssues = warnings.length > 0;
+  const hasIssues     = warnings.length > 0;
   const hasSuggestions = suggestions.length > 0;
 
   return (
@@ -66,8 +68,8 @@ export const TankItemCard = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -20 }}
       className={`bg-white dark:bg-stone-900 rounded-xl border-2 transition-all ${
-        hasIssues 
-          ? 'border-red-300 dark:border-red-800' 
+        hasIssues
+          ? 'border-red-300 dark:border-red-800'
           : 'border-slate-200 dark:border-stone-800 hover:border-indigo-300 dark:hover:border-indigo-700'
       }`}
     >
@@ -75,8 +77,8 @@ export const TankItemCard = ({
       <div className="p-4 flex items-center gap-4">
         {/* Image */}
         <div className="relative flex-shrink-0">
-          <img 
-            src={details.image} 
+          <img
+            src={details.image}
             alt={details.name}
             className="w-16 h-16 rounded-lg object-cover border border-slate-200 dark:border-stone-700"
           />
@@ -91,26 +93,22 @@ export const TankItemCard = ({
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-slate-900 dark:text-white truncate">
-                {details.name}
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 italic truncate">
-                {details.scientificName}
-              </p>
+              <h3 className="font-bold text-slate-900 dark:text-white truncate">{details.name}</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 italic truncate">{details.scientificName}</p>
             </div>
-            
+
             {/* Count Controls (Fish only) */}
             {isFish && (
               <div className="flex items-center gap-1 bg-slate-100 dark:bg-stone-800 rounded-lg px-2 py-1">
-                <button 
+                <button
                   onClick={() => onUpdateCount(item.id, -1)}
                   className="p-0.5 hover:bg-slate-200 dark:hover:bg-stone-700 rounded transition-colors"
                   disabled={(item.count || 1) <= 1}
                 >
                   <Minus className="w-3 h-3" />
                 </button>
-                <span className="font-mono font-bold text-sm px-2">{item.count || 1}x</span>
-                <button 
+                <span className="font-mono font-bold text-sm px-2">{item.count || 1}×</span>
+                <button
                   onClick={() => onUpdateCount(item.id, 1)}
                   className="p-0.5 hover:bg-slate-200 dark:hover:bg-stone-700 rounded transition-colors"
                 >
@@ -132,7 +130,7 @@ export const TankItemCard = ({
             )}
             {Array.isArray(details.tags) && details.tags.slice(0, 2).map((tag, idx) => (
               <span key={idx} className="text-xs bg-slate-100 dark:bg-stone-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full capitalize">
-                {typeof tag === 'string' ? tag.replace('_', ' ') : tag}
+                {typeof tag === 'string' ? tag.replace(/_/g, ' ') : tag}
               </span>
             ))}
           </div>
@@ -140,6 +138,15 @@ export const TankItemCard = ({
 
         {/* Actions */}
         <div className="flex flex-col gap-1">
+          {onViewDetails && (
+            <button
+              onClick={() => onViewDetails(item)}
+              className="p-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors text-indigo-500 dark:text-indigo-400"
+              title="View full details"
+            >
+              <ExternalLink className="w-4 h-4" />
+            </button>
+          )}
           <button
             onClick={() => setExpanded(!expanded)}
             className="p-2 hover:bg-slate-100 dark:hover:bg-stone-800 rounded-lg transition-colors text-slate-600 dark:text-slate-400"
@@ -168,46 +175,39 @@ export const TankItemCard = ({
             className="overflow-hidden"
           >
             <div className="px-4 pb-4 pt-2 border-t border-slate-100 dark:border-stone-800 space-y-3">
-              
-              {/* Warnings */}
+
               {hasIssues && (
                 <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                   <h4 className="text-xs font-bold uppercase text-red-700 dark:text-red-400 mb-2 flex items-center gap-1">
                     <AlertTriangle className="w-3 h-3" /> Issues
                   </h4>
                   <ul className="space-y-1">
-                    {warnings.map((warning, idx) => (
-                      <li key={idx} className="text-xs text-red-700 dark:text-red-300 flex items-start gap-2">
-                        <span className="mt-0.5">•</span>
-                        <span>{warning}</span>
+                    {warnings.map((w, i) => (
+                      <li key={i} className="text-xs text-red-700 dark:text-red-300 flex items-start gap-2">
+                        <span className="mt-0.5">•</span><span>{w}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Suggestions */}
               {hasSuggestions && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                   <h4 className="text-xs font-bold uppercase text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-1">
                     <Info className="w-3 h-3" /> Tips
                   </h4>
                   <ul className="space-y-1">
-                    {suggestions.map((suggestion, idx) => (
-                      <li key={idx} className="text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
-                        <span className="mt-0.5">•</span>
-                        <span>{suggestion}</span>
+                    {suggestions.map((s, i) => (
+                      <li key={i} className="text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
+                        <span className="mt-0.5">•</span><span>{s}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Notes */}
               <div>
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 block">
-                  Personal Notes
-                </label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 block">Personal Notes</label>
                 {editingNotes ? (
                   <textarea
                     value={item.notes || ''}
@@ -219,7 +219,7 @@ export const TankItemCard = ({
                     autoFocus
                   />
                 ) : (
-                  <div 
+                  <div
                     onClick={() => setEditingNotes(true)}
                     className="text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-stone-800 rounded-lg p-2 cursor-text hover:bg-slate-100 dark:hover:bg-stone-700 transition-colors min-h-[2.5rem]"
                   >
