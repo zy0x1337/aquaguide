@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Download, Share2, Check, Settings, Lightbulb, Plus, AlertTriangle, Zap, Droplets, Wind, Package, Eye } from 'lucide-react';
+import { Download, Share2, Settings, Lightbulb, Plus, AlertTriangle, Zap, Droplets, Wind, Package, Eye, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankItemCard } from '../components/tank-builder/TankItemCard';
 import { TankStats } from '../components/tank-builder/TankStats';
 import { Tank3DView } from '../components/tank-builder/Tank3DView';
 import { SpeciesDetailSlideOver } from '../components/tank-builder/SpeciesDetailSlideOver';
+import { SharePreviewModal } from '../components/tank-builder/SharePreviewModal';
 import { AssetBrowser } from '../components/tank-builder/AssetBrowser';
 import { calculateTankStats } from '../utils/tank-calculations';
 import { generateSmartSuggestions, checkCompatibility } from '../utils/smart-suggestions';
-import { generateShareURL, copyToClipboard, decodeTankFromURL } from '../utils/tank-share';
+import { copyToClipboard, decodeTankFromURL } from '../utils/tank-share';
 import { PRESET_TANKS } from '../data/builder';
 import { TANK_PRESETS } from '../data/presets';
 import { TankConfig, TankItem, HardscapeItem, SmartSuggestion } from '../types/builder';
@@ -27,16 +28,14 @@ export const TankBuilderPage = () => {
   });
   const [customDimensions, setCustomDimensions] = useState({ length: 60, width: 30, height: 30 });
   const [items, setItems] = useState<TankItem[]>([]);
-  const [copySuccess, setCopySuccess] = useState(false);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [showPresets, setShowPresets] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'equipment' | 'suggestions'>('overview');
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [showGrid, setShowGrid] = useState(false);
   const [showTankView, setShowTankView] = useState(true);
-
-  // Species detail slide-over – works from browser cards AND tank item cards
   const [detailItem, setDetailItem] = useState<TankItem | null>(null);
 
   const [filters, setFilters] = useState({
@@ -58,7 +57,7 @@ export const TankBuilderPage = () => {
       try {
         const data = JSON.parse(saved);
         if (data.tankConfig) setTankConfig(data.tankConfig);
-        if (data.items) setItems(data.items);
+        if (data.items)      setItems(data.items);
         if (data.customDimensions) setCustomDimensions(data.customDimensions);
       } catch (e) { console.error('Failed to load autosave', e); }
     }
@@ -85,7 +84,7 @@ export const TankBuilderPage = () => {
   };
 
   const addItem = (data: Species | Plant | HardscapeItem, type: 'fish' | 'plant' | 'hardscape') => {
-    let itemId = 'id' in data ? data.id : (data as HardscapeItem).name;
+    const itemId = 'id' in data ? data.id : (data as HardscapeItem).name;
     let defaultCount = 1;
     if (type === 'fish') {
       const fish = data as Species;
@@ -107,23 +106,14 @@ export const TankBuilderPage = () => {
     if (detailItem?.id === id) setDetailItem(null);
   };
 
-  const updateCount = (id: string, delta: number) =>
+  const updateCount  = (id: string, delta: number) =>
     setItems(prev => prev.map(i => i.id === id && i.type === 'fish' ? { ...i, count: Math.max(1, (i.count || 1) + delta) } : i));
-
-  const updateNotes = (id: string, notes: string) =>
+  const updateNotes  = (id: string, notes: string) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, notes } : i));
-
-  const toggleLock = (id: string) =>
+  const toggleLock   = (id: string) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, locked: !i.locked } : i));
-
   const updatePosition = (id: string, x: number, y: number) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, position: { ...i.position, x, y } } : i));
-
-  const handleShare = async () => {
-    const url = generateShareURL(tankConfig, items);
-    const success = await copyToClipboard(url);
-    if (success) { setCopySuccess(true); window.history.replaceState({}, '', url); setTimeout(() => setCopySuccess(false), 2000); }
-  };
 
   const handleExport = () => {
     const text = generateShoppingList(items, tankConfig, stats, suggestions);
@@ -158,12 +148,25 @@ export const TankBuilderPage = () => {
   ];
   const progressPercentage = (setupProgress.filter(s => s.done).length / setupProgress.length) * 100;
 
+  const previewStats = {
+    stockingPercentage: stats.stockingPercentage || 0,
+    tempRange: stats.tempRange,
+    phRange:   stats.phRange
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-20">
       <SEOHead title="Tank Builder - Smart Aquarium Planner" description="Plan your aquarium with intelligent compatibility checks, equipment recommendations, and shopping lists." />
 
-      {/* Species / Plant detail slide-over – triggered from both browser grid and tank item list */}
+      {/* Modals & overlays */}
       <SpeciesDetailSlideOver item={detailItem} onClose={() => setDetailItem(null)} />
+      <SharePreviewModal
+        open={showShare}
+        tankConfig={tankConfig}
+        items={items}
+        stats={previewStats}
+        onClose={() => setShowShare(false)}
+      />
 
       {/* Header */}
       <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 shadow-lg">
@@ -185,9 +188,9 @@ export const TankBuilderPage = () => {
               <button onClick={() => setShowPresets(true)} className="px-3 py-2 text-xs font-bold bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 rounded-lg transition-colors shadow-lg flex items-center gap-1.5">
                 <Package className="w-3.5 h-3.5" /><span className="hidden sm:inline">Templates</span>
               </button>
-              <button onClick={handleShare} className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
-                {copySuccess ? <Check className="w-3.5 h-3.5" /> : <Share2 className="w-3.5 h-3.5" />}
-                <span className="hidden sm:inline">{copySuccess ? 'Copied!' : 'Share'}</span>
+              {/* Share – now opens preview modal */}
+              <button onClick={() => setShowShare(true)} className="px-3 py-2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+                <Share2 className="w-3.5 h-3.5" /><span className="hidden sm:inline">Share</span>
               </button>
               <button onClick={handleExport} className="px-3 py-2 text-xs font-bold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
                 <Download className="w-3.5 h-3.5" /><span className="hidden sm:inline">Export</span>
@@ -202,7 +205,6 @@ export const TankBuilderPage = () => {
 
           {/* LEFT SIDEBAR */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Setup Progress */}
             <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-2xl border-2 border-indigo-200 dark:border-indigo-800 p-5 shadow-xl">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-black text-slate-900 dark:text-white text-sm">Setup Progress</h3>
@@ -223,7 +225,6 @@ export const TankBuilderPage = () => {
               </div>
             </div>
 
-            {/* Tabs */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
               <div className="flex border-b border-slate-200 dark:border-slate-800">
                 {(['overview', 'equipment', 'suggestions'] as const).map(tab => (
@@ -239,17 +240,11 @@ export const TankBuilderPage = () => {
                   <div className="space-y-3">
                     <label className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                       <input type="checkbox" checked={tankConfig.hasFilter || false} onChange={e => setTankConfig({ ...tankConfig, hasFilter: e.target.checked })} className="w-5 h-5 rounded text-indigo-600" />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2"><Wind className="w-4 h-4 text-indigo-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Filter</span></div>
-                        <span className="text-xs text-slate-500">{stats.filterRate} L/h recommended</span>
-                      </div>
+                      <div className="flex-1"><div className="flex items-center gap-2"><Wind className="w-4 h-4 text-indigo-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Filter</span></div><span className="text-xs text-slate-500">{stats.filterRate} L/h recommended</span></div>
                     </label>
                     <label className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                       <input type="checkbox" checked={tankConfig.hasHeater || false} onChange={e => setTankConfig({ ...tankConfig, hasHeater: e.target.checked })} className="w-5 h-5 rounded text-indigo-600" />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2"><Zap className="w-4 h-4 text-amber-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Heater</span></div>
-                        <span className="text-xs text-slate-500">{stats.heaterWattage}W for this tank</span>
-                      </div>
+                      <div className="flex-1"><div className="flex items-center gap-2"><Zap className="w-4 h-4 text-amber-600" /><span className="font-bold text-sm text-slate-900 dark:text-white">Heater</span></div><span className="text-xs text-slate-500">{stats.heaterWattage}W for this tank</span></div>
                     </label>
                     <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                       <label className="text-xs font-bold text-slate-600 dark:text-slate-400 mb-2 block">Substrate Type</label>
@@ -264,19 +259,20 @@ export const TankBuilderPage = () => {
                 )}
                 {activeTab === 'suggestions' && (
                   <div className="space-y-3">
-                    {suggestions.length === 0 ? (
-                      <div className="text-center py-8"><Lightbulb className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-2" /><p className="text-xs text-slate-500 dark:text-slate-400">Add fish to get smart suggestions</p></div>
-                    ) : suggestions.slice(0, 5).map(s => (
-                      <div key={s.id} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
-                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full mb-2 inline-block ${
-                          s.priority === 'high'   ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
-                          s.priority === 'medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
-                          'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
-                        }`}>{s.priority}</span>
-                        <h4 className="text-xs font-bold text-slate-900 dark:text-white mb-1">{s.title}</h4>
-                        <p className="text-xs text-slate-600 dark:text-slate-400">{s.description}</p>
-                      </div>
-                    ))}
+                    {suggestions.length === 0
+                      ? <div className="text-center py-8"><Lightbulb className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-2" /><p className="text-xs text-slate-500 dark:text-slate-400">Add fish to get smart suggestions</p></div>
+                      : suggestions.slice(0, 5).map(s => (
+                        <div key={s.id} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
+                          <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full mb-2 inline-block ${
+                            s.priority === 'high'   ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                            s.priority === 'medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
+                            'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
+                          }`}>{s.priority}</span>
+                          <h4 className="text-xs font-bold text-slate-900 dark:text-white mb-1">{s.title}</h4>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">{s.description}</p>
+                        </div>
+                      ))
+                    }
                   </div>
                 )}
               </div>
@@ -285,8 +281,6 @@ export const TankBuilderPage = () => {
 
           {/* MAIN CONTENT */}
           <div className="lg:col-span-2 space-y-6">
-
-            {/* Tank 3D View */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
               <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
                 <h2 className="font-black text-slate-900 dark:text-white flex items-center gap-2">
@@ -306,14 +300,13 @@ export const TankBuilderPage = () => {
               </div>
               <AnimatePresence>
                 {showTankView && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: 'easeInOut' }} className="overflow-hidden">
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
                     <Tank3DView items={items} tankConfig={tankConfig} showGrid={showGrid} onRemoveItem={removeItem} onToggleLock={toggleLock} onUpdatePosition={updatePosition} onUpdateCount={updateCount} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Compatibility Warnings */}
             {allCompatibilityIssues.length > 0 && (
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
                 className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20 border-2 border-red-300 dark:border-red-800 rounded-2xl p-5 shadow-lg">
@@ -347,7 +340,6 @@ export const TankBuilderPage = () => {
               </motion.div>
             )}
 
-            {/* Current Tank – Item List */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
               <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
                 <h2 className="font-black text-slate-900 dark:text-white flex items-center gap-2">
@@ -383,14 +375,10 @@ export const TankBuilderPage = () => {
                         }
                         return (
                           <TankItemCard
-                            key={item.id}
-                            item={item}
-                            onRemove={removeItem}
-                            onUpdateCount={updateCount}
-                            onUpdateNotes={updateNotes}
-                            onViewDetails={setDetailItem}
-                            warnings={itemWarnings}
-                            suggestions={itemSuggestions}
+                            key={item.id} item={item}
+                            onRemove={removeItem} onUpdateCount={updateCount}
+                            onUpdateNotes={updateNotes} onViewDetails={setDetailItem}
+                            warnings={itemWarnings} suggestions={itemSuggestions}
                           />
                         );
                       })}
@@ -400,7 +388,6 @@ export const TankBuilderPage = () => {
               </div>
             </div>
 
-            {/* Asset Browser */}
             <AssetBrowser
               onAddItem={addItem}
               onViewDetails={setDetailItem}
@@ -469,11 +456,9 @@ export const TankBuilderPage = () => {
                       </div>
                       <h3 className="font-black text-slate-900 dark:text-white mb-2 text-lg">{preset.name}</h3>
                       <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">{preset.description}</p>
-                      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
-                        <div className="flex gap-4 text-xs">
-                          <div><span className="text-slate-500 block">Fish</span><span className="font-bold text-slate-900 dark:text-white">{preset.items.filter(i => i.type === 'fish').length}</span></div>
-                          <div><span className="text-slate-500 block">Plants</span><span className="font-bold text-slate-900 dark:text-white">{preset.items.filter(i => i.type === 'plant').length}</span></div>
-                        </div>
+                      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex gap-4 text-xs">
+                        <div><span className="text-slate-500 block">Fish</span><span className="font-bold text-slate-900 dark:text-white">{preset.items.filter(i => i.type === 'fish').length}</span></div>
+                        <div><span className="text-slate-500 block">Plants</span><span className="font-bold text-slate-900 dark:text-white">{preset.items.filter(i => i.type === 'plant').length}</span></div>
                       </div>
                     </motion.button>
                   ))}
@@ -496,7 +481,8 @@ const generateShoppingList = (items: TankItem[], config: TankConfig, stats: any,
   if (!config.hasFilter) text += `[ ] Filter (${stats.filterRate} L/h)\n`;
   if (!config.hasHeater) text += `[ ] Heater (${stats.heaterWattage}W)\n`;
   text += `[ ] Water Test Kit\n\n\uD83D\uDFE1 LIVESTOCK\n-----------------------------------------\n`;
-  if (fish.length === 0) { text += 'No fish selected.\n'; } else {
+  if (fish.length === 0) text += 'No fish selected.\n';
+  else {
     const g = new Map<string, number>();
     fish.forEach(i => { const s = i.data as Species; g.set(s.taxonomy.commonName, (g.get(s.taxonomy.commonName) || 0) + (i.count || 1)); });
     g.forEach((count, name) => { text += `[ ] ${count}x ${name}\n`; });
