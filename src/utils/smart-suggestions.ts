@@ -29,16 +29,15 @@ export const generateSmartSuggestions = (
   if (!tankConfig.hasHeater && fishItems.length > 0) {
     const needsHeater = fishItems.some(item => {
       const fish = item.data as Species;
-      return fish.environment.tempC.min > 20; // Tropical fish
+      return fish.environment.tempC.min > 20;
     });
-    
     if (needsHeater) {
-      const watts = Math.ceil(tankConfig.volume * 0.8); // ~1W per liter
+      const watts = Math.ceil(tankConfig.volume * 0.8);
       suggestions.push({
         id: 'heater-needed',
         type: 'equipment',
         title: 'Heater Required',
-        description: `Your tropical fish need a ${watts}W heater to maintain 24-26°C`,
+        description: `Your tropical fish need a ${watts}W heater to maintain 24-26\u00b0C`,
         priority: 'high',
         reason: 'Tropical species cannot survive in cold water'
       });
@@ -52,7 +51,7 @@ export const generateSmartSuggestions = (
   });
 
   if (fishItems.length > 0 && !hasBottomDwellers) {
-    const suitableCleanup = allSpecies.filter(s => 
+    const suitableCleanup = allSpecies.filter(s =>
       s.behavior.tags?.includes('bottom_dweller') &&
       s.environment.minTankSizeLiters <= tankConfig.volume
     ).slice(0, 3);
@@ -112,13 +111,12 @@ export const generateSmartSuggestions = (
     });
   }
 
-  // Substrate warning for Corydoras
+  // Substrate warning for Corydoras (single source of truth)
   if (tankConfig.substrate === 'gravel') {
     const hasCorydoras = fishItems.some(item => {
       const fish = item.data as Species;
       return fish.taxonomy.scientificName.toLowerCase().includes('corydoras');
     });
-
     if (hasCorydoras) {
       suggestions.push({
         id: 'substrate-warning',
@@ -134,7 +132,7 @@ export const generateSmartSuggestions = (
   // Centerpiece fish suggestion
   const hasCenterpiece = fishItems.some(item => {
     const fish = item.data as Species;
-    return fish.visuals.adultSizeCM > 6; // Larger fish
+    return fish.visuals.adultSizeCM > 6;
   });
 
   if (fishItems.length >= 2 && !hasCenterpiece && tankConfig.volume >= 54) {
@@ -155,7 +153,10 @@ export const generateSmartSuggestions = (
 };
 
 /**
- * Check compatibility between all items and generate issues
+ * Check compatibility between all items and generate issues.
+ * Note: aggression/fin-nipping/size-mismatch logic lives in
+ * tank-calculations.ts detectTerritorialConflicts() and is surfaced
+ * via stats.criticalWarnings / stats.warnings in the UI layer.
  */
 export const checkCompatibility = (
   items: TankItem[],
@@ -166,74 +167,107 @@ export const checkCompatibility = (
 
   if (fishItems.length === 0) return [];
 
-  // Temperature overlap
+  // ── 1. WATER TYPE (freshwater / saltwater / brackish) ─────────────────────
+  const waterTypes = new Set(
+    fishItems.map(item => {
+      const s = item.data as Species;
+      return (s.environment as Record<string, unknown>)['type'] as string | undefined;
+    }).filter(Boolean)
+  );
+
+  if (waterTypes.has('freshwater') && waterTypes.has('saltwater')) {
+    issues.push({
+      severity: 'critical',
+      message: '\uD83C\uDF0A Freshwater and saltwater species cannot share a tank',
+      solution: 'Choose species with the same water type (freshwater or saltwater)'
+    });
+  } else if (
+    waterTypes.has('brackish') &&
+    (waterTypes.has('freshwater') || waterTypes.has('saltwater'))
+  ) {
+    issues.push({
+      severity: 'warning',
+      message: '\u26A0\uFE0F Brackish species mixed with non-brackish – check salinity needs',
+      solution: 'Ensure all species tolerate the same salinity range'
+    });
+  }
+
+  // ── 2. TEMPERATURE OVERLAP ────────────────────────────────────────────────
   const temps = fishItems.map(item => {
     const s = item.data as Species;
     return { name: s.taxonomy.commonName, min: s.environment.tempC.min, max: s.environment.tempC.max };
   });
-  
   const overallTempMin = Math.max(...temps.map(t => t.min));
   const overallTempMax = Math.min(...temps.map(t => t.max));
-  
+
   if (overallTempMin > overallTempMax) {
     issues.push({
       severity: 'critical',
-      message: '🌡️ Incompatible temperature requirements',
+      message: '\uD83C\uDF21\uFE0F Incompatible temperature requirements',
       solution: 'Remove fish with conflicting temperature needs or choose similar species'
     });
   } else if (overallTempMax - overallTempMin < 2) {
     issues.push({
       severity: 'warning',
-      message: `⚠️ Narrow temperature range: ${overallTempMin}-${overallTempMax}°C`,
+      message: `\u26A0\uFE0F Narrow temperature range: ${overallTempMin}\u2013${overallTempMax}\u00b0C`,
       solution: 'Monitor temperature closely with a reliable thermometer'
     });
   }
 
-  // pH overlap
+  // ── 3. pH OVERLAP ─────────────────────────────────────────────────────────
   const phs = fishItems.map(item => {
     const s = item.data as Species;
     return { name: s.taxonomy.commonName, min: s.environment.ph.min, max: s.environment.ph.max };
   });
-  
   const overallPhMin = Math.max(...phs.map(p => p.min));
   const overallPhMax = Math.min(...phs.map(p => p.max));
-  
+
   if (overallPhMin > overallPhMax) {
     issues.push({
       severity: 'critical',
-      message: '💧 Incompatible pH requirements',
+      message: '\uD83D\uDCA7 Incompatible pH requirements',
       solution: 'Choose fish with overlapping pH ranges'
     });
   }
 
-  // Tank size check
+  // ── 4. MINIMUM TANK SIZE ──────────────────────────────────────────────────
   fishItems.forEach(item => {
     const s = item.data as Species;
     if (s.environment.minTankSizeLiters > tankConfig.volume) {
       issues.push({
         severity: 'critical',
-        message: `📏 ${s.taxonomy.commonName} needs minimum ${s.environment.minTankSizeLiters}L (you have ${tankConfig.volume}L)`,
+        message: `\uD83D\uDCCF ${s.taxonomy.commonName} needs minimum ${s.environment.minTankSizeLiters}L (you have ${tankConfig.volume}L)`,
         solution: 'Remove this fish or upgrade to a larger tank'
       });
     }
   });
 
-  // Aggression check
-  const hasAggressive = fishItems.some(item => {
+  // ── 5. SWIM ZONE CROWDING ─────────────────────────────────────────────────
+  const zoneCounts = { surface: 0, mid: 0, bottom: 0 };
+  fishItems.forEach(item => {
     const s = item.data as Species;
-    return s.behavior.tags?.includes('territorial') || s.behavior.tags?.includes('semi-aggressive');
+    const count = item.count || 1;
+    const tags = s.behavior.tags || [];
+    if (tags.includes('surface_dweller') || tags.includes('surface')) {
+      zoneCounts.surface += count;
+    } else if (tags.includes('bottom_dweller')) {
+      zoneCounts.bottom += count;
+    } else {
+      zoneCounts.mid += count;
+    }
   });
 
-  const hasPeaceful = fishItems.some(item => {
-    const s = item.data as Species;
-    return !s.behavior.tags?.includes('territorial') && !s.behavior.tags?.includes('semi-aggressive');
-  });
-
-  if (hasAggressive && hasPeaceful) {
-    issues.push({
-      severity: 'warning',
-      message: '⚔️ Mixing aggressive and peaceful species',
-      solution: 'Provide plenty of hiding spots and monitor for bullying'
+  const totalFishCount = Object.values(zoneCounts).reduce((a, b) => a + b, 0);
+  if (totalFishCount >= 4) {
+    (Object.entries(zoneCounts) as [string, number][]).forEach(([zone, count]) => {
+      const pct = (count / totalFishCount) * 100;
+      if (pct > 65) {
+        issues.push({
+          severity: 'warning',
+          message: `\uD83C\uDFCA ${Math.round(pct)}% of fish occupy the ${zone} zone`,
+          solution: `Add species from other swim zones to use the full water column`
+        });
+      }
     });
   }
 
