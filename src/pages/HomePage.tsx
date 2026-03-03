@@ -112,7 +112,7 @@ const HomePage = () => {
               <motion.div className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none" initial="initial" animate="animate" variants={stagger}>
                 <motion.div variants={fadeInUp}>
                   <span className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 dark:from-indigo-500/20 dark:to-cyan-500/20 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-8 border border-indigo-200/50 dark:border-indigo-500/30">
-                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> v1.0.1 Beta
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" /> v1.0.4 Beta
                   </span>
                 </motion.div>
 
