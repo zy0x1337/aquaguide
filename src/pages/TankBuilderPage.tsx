@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Download, Share2, Check, Settings, Lightbulb, Plus, X, AlertTriangle, Zap, Droplets, Wind, Package } from 'lucide-react';
+import { Download, Share2, Check, Settings, Lightbulb, Plus, AlertTriangle, Zap, Droplets, Wind, Package, Eye } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEOHead } from '../components/seo/SEOHead';
 import { TankItemCard } from '../components/tank-builder/TankItemCard';
 import { TankStats } from '../components/tank-builder/TankStats';
+import { Tank3DView } from '../components/tank-builder/Tank3DView';
 import { AssetBrowser } from '../components/tank-builder/AssetBrowser';
 import { calculateTankStats } from '../utils/tank-calculations';
 import { generateSmartSuggestions, checkCompatibility } from '../utils/smart-suggestions';
@@ -30,6 +31,11 @@ export const TankBuilderPage = () => {
   const [showPresets, setShowPresets] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'equipment' | 'suggestions'>('overview');
+
+  // Tank 3D View state
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [showGrid, setShowGrid] = useState(false);
+  const [showTankView, setShowTankView] = useState(true);
 
   const [filters, setFilters] = useState({
     tempMin: 20,
@@ -92,7 +98,6 @@ export const TankBuilderPage = () => {
   const loadPreset = (presetId: string) => {
     const preset = TANK_PRESETS.find(p => p.id === presetId);
     if (!preset) return;
-
     setTankConfig({ ...preset.tankConfig, substrate: 'sand', hasFilter: false, hasHeater: false });
     const loadedItems: TankItem[] = preset.items.map((item, idx) => ({
       ...item,
@@ -118,29 +123,43 @@ export const TankBuilderPage = () => {
       id: `${type}-${itemId}-${Date.now()}`,
       type,
       data,
-      position: { x: 50, y: 50, z: 50 },
+      position: { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60, z: 40 + Math.random() * 30 },
       count: type === 'fish' ? defaultCount : undefined,
       locked: false,
       notes: '',
-      visuals: { rotation: 0, flipX: false, swayDelay: 0, floatSpeed: 3 }
+      visuals: { rotation: 0, flipX: false, swayDelay: Math.random() * 2, floatSpeed: 2 + Math.random() * 2 }
     };
-    setItems([...items, newItem]);
+    setItems(prev => [...prev, newItem]);
   };
 
-  const removeItem = (id: string) => setItems(items.filter(item => item.id !== id));
+  const removeItem = (id: string) => {
+    setItems(prev => prev.filter(item => item.id !== id));
+    if (selectedItem === id) setSelectedItem(null);
+  };
 
   const updateCount = (id: string, delta: number) => {
-    setItems(items.map(item => {
+    setItems(prev => prev.map(item => {
       if (item.id === id && item.type === 'fish') {
-        const newCount = Math.max(1, (item.count || 1) + delta);
-        return { ...item, count: newCount };
+        return { ...item, count: Math.max(1, (item.count || 1) + delta) };
       }
       return item;
     }));
   };
 
   const updateNotes = (id: string, notes: string) => {
-    setItems(items.map(item => item.id === id ? { ...item, notes } : item));
+    setItems(prev => prev.map(item => item.id === id ? { ...item, notes } : item));
+  };
+
+  const toggleLock = (id: string) => {
+    setItems(prev => prev.map(item =>
+      item.id === id ? { ...item, locked: !item.locked } : item
+    ));
+  };
+
+  const updatePosition = (id: string, x: number, y: number) => {
+    setItems(prev => prev.map(item =>
+      item.id === id ? { ...item, position: { ...item.position, x, y } } : item
+    ));
   };
 
   const handleShare = async () => {
@@ -167,6 +186,7 @@ export const TankBuilderPage = () => {
   const clearAll = () => {
     if (confirm('Clear all items from your tank? This cannot be undone.')) {
       setItems([]);
+      setSelectedItem(null);
     }
   };
 
@@ -300,7 +320,6 @@ export const TankBuilderPage = () => {
               </div>
 
               <div className="p-5">
-                {/* Overview: delegated entirely to TankStats */}
                 {activeTab === 'overview' && (
                   <TankStats items={items} tankConfig={tankConfig} />
                 )}
@@ -388,6 +407,60 @@ export const TankBuilderPage = () => {
           {/* MAIN CONTENT */}
           <div className="lg:col-span-2 space-y-6">
 
+            {/* Tank 3D View */}
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+              <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-black text-slate-900 dark:text-white flex items-center gap-2">
+                    <Eye className="w-5 h-5 text-indigo-600" />
+                    Tank View
+                    <span className="text-xs font-normal text-slate-400 hidden sm:inline">drag items to reposition</span>
+                  </h2>
+                  <div className="flex items-center gap-3">
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={showGrid}
+                        onChange={(e) => setShowGrid(e.target.checked)}
+                        className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"
+                      />
+                      Grid
+                    </label>
+                    <button
+                      onClick={() => setShowTankView(v => !v)}
+                      className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200 transition-colors"
+                    >
+                      {showTankView ? 'Hide' : 'Show'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {showTankView && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <Tank3DView
+                      items={items}
+                      tankConfig={tankConfig}
+                      showGrid={showGrid}
+                      onRemoveItem={removeItem}
+                      onToggleLock={toggleLock}
+                      onUpdatePosition={updatePosition}
+                      onUpdateCount={updateCount}
+                      selectedItem={selectedItem}
+                      setSelectedItem={setSelectedItem}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {/* Compatibility Warnings */}
             {compatibilityIssues.length > 0 && (
               <motion.div
@@ -416,7 +489,7 @@ export const TankBuilderPage = () => {
               </motion.div>
             )}
 
-            {/* Current Tank */}
+            {/* Current Tank – Item List */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
               <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                 <div className="flex items-center justify-between">
@@ -458,7 +531,7 @@ export const TankBuilderPage = () => {
                             itemWarnings.push(`Needs minimum ${fish.environment.minTankSizeLiters}L tank`);
                           }
                           if (fish.behavior.minGroupSize && (item.count || 1) < fish.behavior.minGroupSize) {
-                            itemSuggestions.push(`Schooling fish - increase to ${fish.behavior.minGroupSize}+ for natural behavior`);
+                            itemSuggestions.push(`Schooling fish – increase to ${fish.behavior.minGroupSize}+ for natural behavior`);
                           }
                         }
 
@@ -543,7 +616,6 @@ export const TankBuilderPage = () => {
                       <label className="text-xs font-bold text-slate-500 uppercase mb-1 block">Width</label>
                       <input
                         type="number"
-
                         value={customDimensions.width}
                         onChange={e => setCustomDimensions({ ...customDimensions, width: +e.target.value })}
                         className="w-full px-3 py-2 text-center text-lg font-black border-2 border-slate-200 rounded-xl bg-slate-50 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all"
@@ -667,7 +739,6 @@ const generateShoppingList = (
   const fish = items.filter(i => i.type === 'fish');
   const plants = items.filter(i => i.type === 'plant');
   const hardscape = items.filter(i => i.type === 'hardscape');
-
   const today = new Date().toLocaleDateString('en-US', { dateStyle: 'full' });
 
   let text = `
@@ -686,54 +757,37 @@ Substrate:    ${config.substrate || 'Not specified'}
 -----------------------------------------
 `;
 
-  if (!config.hasFilter) {
-    text += `[ ] Filter (${stats.filterRate} L/h) - Essential\n`;
-  }
-  if (!config.hasHeater) {
-    text += `[ ] Heater (${stats.heaterWattage}W) - For tropical fish\n`;
-  }
+  if (!config.hasFilter) text += `[ ] Filter (${stats.filterRate} L/h) - Essential\n`;
+  if (!config.hasHeater) text += `[ ] Heater (${stats.heaterWattage}W) - For tropical fish\n`;
   text += `[ ] Water Test Kit - Track cycling\n`;
 
   text += `\n🟡 MEDIUM PRIORITY (Livestock)\n-----------------------------------------\n`;
-
   if (fish.length === 0) {
-    text += "No fish selected.\n";
+    text += 'No fish selected.\n';
   } else {
     const fishGroups = new Map<string, number>();
     fish.forEach(item => {
       const s = item.data as Species;
-      const current = fishGroups.get(s.taxonomy.commonName) || 0;
-      fishGroups.set(s.taxonomy.commonName, current + (item.count || 1));
+      fishGroups.set(s.taxonomy.commonName, (fishGroups.get(s.taxonomy.commonName) || 0) + (item.count || 1));
     });
-    fishGroups.forEach((count, name) => {
-      text += `[ ] ${count}x ${name}\n`;
-    });
+    fishGroups.forEach((count, name) => { text += `[ ] ${count}x ${name}\n`; });
   }
 
   text += `\n🟢 LOW PRIORITY (Plants & Decor)\n-----------------------------------------\n`;
-
   if (plants.length > 0) {
     const plantCounts = new Map<string, number>();
     plants.forEach(item => {
       const p = item.data as Plant;
       plantCounts.set(p.taxonomy.commonName, (plantCounts.get(p.taxonomy.commonName) || 0) + 1);
     });
-    plantCounts.forEach((count, name) => {
-      text += `[ ] ${count}x ${name}\n`;
-    });
+    plantCounts.forEach((count, name) => { text += `[ ] ${count}x ${name}\n`; });
   }
-
   if (hardscape.length > 0) {
-    hardscape.forEach(item => {
-      const h = item.data as any;
-      text += `[ ] 1x ${h.name}\n`;
-    });
+    hardscape.forEach(item => { text += `[ ] 1x ${(item.data as any).name}\n`; });
   }
 
   text += `\n💡 RECOMMENDATIONS\n-----------------------------------------\n`;
-  suggestions.slice(0, 3).forEach(s => {
-    text += `• ${s.title}: ${s.description}\n`;
-  });
+  suggestions.slice(0, 3).forEach(s => { text += `• ${s.title}: ${s.description}\n`; });
 
   text += `\n📊 SYSTEM SUMMARY\n-----------------------------------------\n`;
   text += `Stocking: ${stats.stockingPercentage}% ${stats.stockingPercentage > 100 ? '(OVERSTOCKED!)' : '(Safe)'}\n`;
