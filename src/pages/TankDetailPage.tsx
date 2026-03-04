@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock } from 'lucide-react';
+import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { TankConfig, TankItem } from '../types/builder';
@@ -14,7 +14,7 @@ import MaintenanceTimeline from '../components/tanks/MaintenanceTimeline';
 import ReminderPanel from '../components/notifications/ReminderPanel';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
-import { getTankById, updateTank, addInhabitant, removeInhabitant, publishTank, unpublishTank } from '../lib/supabase/tanks';
+import { getTankById, updateTank, addInhabitant, removeInhabitant, publishTank, unpublishTank, setFeaturedOnProfile } from '../lib/supabase/tanks';
 import {
   getParameterReadings, addParameterReading, deleteParameterReading,
   getMaintenanceLogs, addMaintenanceLog, deleteMaintenanceLog,
@@ -33,6 +33,7 @@ const TankDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'parameters' | 'maintenance' | 'reminders'>('overview');
   const [isPublishing, setIsPublishing] = useState(false);
+  const [isFeaturing, setIsFeaturing] = useState(false);
 
   const [isInhabitantModalOpen, setIsInhabitantModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -67,12 +68,16 @@ const TankDetailPage = () => {
     } catch { toast.error('Failed to load history', 'Some data may be incomplete.'); }
   };
 
-  // ─── Share my Tank (publish / unpublish) ────────────────────────────────────
+  // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────
   const handleTogglePublic = async () => {
     if (!tank || !id) return;
     setIsPublishing(true);
     try {
       if (tank.isPublic) {
+        // If unpublishing a featured tank, also remove the feature flag
+        if (tank.isFeaturedOnProfile) {
+          await setFeaturedOnProfile(id, false);
+        }
         const updated = await unpublishTank(id);
         setTank(updated);
         toast.success('Tank is now private', 'The public link has been deactivated.');
@@ -90,7 +95,31 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Copy public link (already public) ──────────────────────────────────────
+  // ─── Feature on profile toggle ─────────────────────────────────────────────────────
+  const handleToggleFeatured = async () => {
+    if (!tank || !id) return;
+    // Must be public first
+    if (!tank.isPublic) {
+      toast.error('Tank must be public', 'Share the tank first, then pin it to your profile.');
+      return;
+    }
+    setIsFeaturing(true);
+    try {
+      const updated = await setFeaturedOnProfile(id, !tank.isFeaturedOnProfile);
+      setTank(updated);
+      if (updated.isFeaturedOnProfile) {
+        toast.success('Pinned to profile! 📌', 'This tank now shows on your public profile.');
+      } else {
+        toast.success('Unpinned from profile', 'Tank removed from your public profile.');
+      }
+    } catch {
+      toast.error('Failed to update profile pin', 'Please try again.');
+    } finally {
+      setIsFeaturing(false);
+    }
+  };
+
+  // ─── Copy public link (already public) ──────────────────────────────────────────────
   const handleCopyLink = async () => {
     if (!tank?.publicSlug) return;
     const url = `${window.location.origin}/tanks/${tank.publicSlug}`;
@@ -98,7 +127,7 @@ const TankDetailPage = () => {
     toast.success('Link copied!', url);
   };
 
-  // ─── Edit in Builder ─────────────────────────────────────────────────────────
+  // ─── Edit in Builder ──────────────────────────────────────────────────────────────
   const handleEditInBuilder = () => {
     if (!tank) return;
     const existing = localStorage.getItem(BUILDER_AUTOSAVE_KEY);
@@ -251,6 +280,11 @@ const TankDetailPage = () => {
                     <Globe className="w-3 h-3" />Public
                   </span>
                 )}
+                {tank.isFeaturedOnProfile && (
+                  <span className="flex items-center gap-1 bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold px-2.5 py-1 rounded-full">
+                    <BookmarkCheck className="w-3 h-3" />On Profile
+                  </span>
+                )}
               </div>
               <div className="flex flex-wrap items-center gap-2 ml-11 text-sm text-indigo-100">
                 <span className="font-semibold">{tank.volumeLiters}L</span><span>•</span>
@@ -278,6 +312,22 @@ const TankDetailPage = () => {
                 <button onClick={handleCopyLink}
                   className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit">
                   <Share2 className="w-4 h-4" />Copy Link
+                </button>
+              )}
+
+              {/* Pin to profile (only when public) */}
+              {tank.isPublic && (
+                <button onClick={handleToggleFeatured} disabled={isFeaturing}
+                  className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-60 ${
+                    tank.isFeaturedOnProfile
+                      ? 'bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/40 hover:border-amber-300/60 text-white'
+                      : 'bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white'
+                  }`}
+                  title={tank.isFeaturedOnProfile ? 'Remove from public profile' : 'Pin this tank to your public profile'}
+                >
+                  {tank.isFeaturedOnProfile
+                    ? <><BookmarkCheck className="w-4 h-4" />On Profile</>
+                    : <><Bookmark className="w-4 h-4" />Pin to Profile</>}
                 </button>
               )}
 
@@ -347,7 +397,7 @@ const TankDetailPage = () => {
   );
 };
 
-// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────
+// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────────
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const substrateLabel = (s?: string) => ({ sand: 'Sand', gravel: 'Gravel', soil: 'Aqua Soil', bare: 'Bare Bottom' } as any)[s || ''] || 'Not specified';
   const lightingLabel  = (l?: string) => ({ low: 'Low (10–30 PAR)', medium: 'Medium (30–50 PAR)', high: 'High (50+ PAR)' } as any)[l || ''] || 'Not specified';
@@ -431,7 +481,7 @@ const RemindersTab = ({ tankId, tankName }: { tankId: string; tankName: string }
   </motion.div>
 );
 
-// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────
+// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────────────
 const CleanStatCard = ({ icon, label, value }: any) => (
   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
     <div className="flex items-center gap-2 mb-2"><div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">{icon}</div><span className="text-xs font-semibold text-white/70 uppercase tracking-wider">{label}</span></div>
