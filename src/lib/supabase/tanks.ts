@@ -12,6 +12,7 @@ interface SupabaseTank {
   parameters: Tank['parameters'];
   is_public: boolean;
   public_slug: string | null;
+  is_featured_on_profile: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -39,6 +40,7 @@ const toTank = (data: SupabaseTank, inhabitants: SupabaseTankInhabitant[] = []):
   parameters: data.parameters,
   isPublic: data.is_public,
   publicSlug: data.public_slug ?? undefined,
+  isFeaturedOnProfile: data.is_featured_on_profile ?? false,
   inhabitants: {
     fish: inhabitants
       .filter(i => i.species_type === 'fish')
@@ -58,6 +60,30 @@ export const getUserTanks = async (): Promise<Tank[]> => {
   const { data: tanksData, error: tanksError } = await supabase
     .from('tanks').select('*').eq('user_id', user.id).order('created_at', { ascending: false });
   if (tanksError) throw new Error('Failed to fetch tanks');
+  if (!tanksData || tanksData.length === 0) return [];
+
+  const tankIds = tanksData.map(t => t.id);
+  const { data: inhabitantsData } = await supabase
+    .from('tank_inhabitants').select('*').in('tank_id', tankIds);
+
+  const byTank = new Map<string, SupabaseTankInhabitant[]>();
+  (inhabitantsData || []).forEach(i => {
+    byTank.set(i.tank_id, [...(byTank.get(i.tank_id) || []), i]);
+  });
+
+  return tanksData.map(t => toTank(t, byTank.get(t.id) || []));
+};
+
+/** Public read – fetches featured tanks for a given user_id. No auth required. */
+export const getFeaturedTanksForUser = async (userId: string): Promise<Tank[]> => {
+  const { data: tanksData, error } = await supabase
+    .from('tanks')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('is_featured_on_profile', true)
+    .eq('is_public', true)
+    .order('created_at', { ascending: false });
+  if (error) throw new Error('Failed to fetch featured tanks');
   if (!tanksData || tanksData.length === 0) return [];
 
   const tankIds = tanksData.map(t => t.id);
@@ -104,7 +130,6 @@ export const publishTank = async (id: string): Promise<Tank> => {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  // Fetch current name for slug generation
   const { data: current } = await supabase
     .from('tanks').select('name, public_slug').eq('id', id).eq('user_id', user.id).single();
   if (!current) throw new Error('Tank not found');
@@ -140,6 +165,23 @@ export const unpublishTank = async (id: string): Promise<Tank> => {
     .eq('id', id).eq('user_id', user.id)
     .select().single();
   if (error) throw new Error('Failed to unpublish tank');
+
+  const { data: inhabitantsData } = await supabase
+    .from('tank_inhabitants').select('*').eq('tank_id', id);
+  return toTank(data, inhabitantsData || []);
+};
+
+/** Toggles whether a tank is pinned to the owner's public profile. */
+export const setFeaturedOnProfile = async (id: string, featured: boolean): Promise<Tank> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const { data, error } = await supabase
+    .from('tanks')
+    .update({ is_featured_on_profile: featured })
+    .eq('id', id).eq('user_id', user.id)
+    .select().single();
+  if (error) throw new Error('Failed to update featured status');
 
   const { data: inhabitantsData } = await supabase
     .from('tank_inhabitants').select('*').eq('tank_id', id);
