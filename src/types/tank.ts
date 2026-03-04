@@ -33,6 +33,8 @@ export interface Tank {
   isPublic?: boolean;
   /** URL-safe slug for the public tank profile, e.g. "nemos-tank-a3f9" */
   publicSlug?: string;
+  /** Whether this tank is pinned to the user's public profile page */
+  isFeaturedOnProfile?: boolean;
   createdAt: string;
   updatedAt: string;
 }
