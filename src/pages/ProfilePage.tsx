@@ -4,9 +4,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star, Target, TrendingUp, MessageSquare, Send, LayoutGrid } from 'lucide-react';
+import { User, Calendar, Award, Fish, Droplets, Camera, Edit2, Save, X, Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star, Target, TrendingUp, MessageSquare, Send, LayoutGrid, Waves, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '../hooks/useFavorites';
+import { getFeaturedTanksForUser } from '../lib/supabase/tanks';
+import type { Tank } from '../types/tank';
 
 interface SpeciesData {
   slug: string;
@@ -41,6 +43,10 @@ const ProfilePage = () => {
 
   // Beta Feedback State
   const [feedbackText, setFeedbackText] = useState('');
+
+  // Featured Tanks
+  const [featuredTanks, setFeaturedTanks] = useState<Tank[]>([]);
+  const [tanksLoading, setTanksLoading] = useState(false);
 
   // Favorites
   const { favorites, loading: favoritesLoading, toggleFavorite } = useFavorites(userId || user?.id);
@@ -178,44 +184,43 @@ const ProfilePage = () => {
     fetchFavoriteDetails();
   }, [favorites]);
 
+  // Load featured tanks
+  useEffect(() => {
+    const targetUserId = userId || user?.id;
+    if (!targetUserId) return;
+    setTanksLoading(true);
+    getFeaturedTanksForUser(targetUserId)
+      .then(setFeaturedTanks)
+      .catch(console.error)
+      .finally(() => setTanksLoading(false));
+  }, [userId, user]);
+
   const fetchFavoriteDetails = async () => {
     setDataLoading(true);
 
     try {
-      // Fetch species details
       if (favSpecies.length > 0) {
         const { data: species } = await supabase
           .from('species')
           .select('slug, common_name, scientific_name, image_url')
-          .in(
-            'slug',
-            favSpecies.map((f) => f.item_slug)
-          );
+          .in('slug', favSpecies.map((f) => f.item_slug));
 
         if (species) {
           const speciesMap: Record<string, SpeciesData> = {};
-          species.forEach((s) => {
-            speciesMap[s.slug] = s;
-          });
+          species.forEach((s) => { speciesMap[s.slug] = s; });
           setSpeciesData(speciesMap);
         }
       }
 
-      // Fetch plant details
       if (favPlants.length > 0) {
         const { data: plants } = await supabase
           .from('plants')
           .select('slug, common_name, scientific_name, image_url')
-          .in(
-            'slug',
-            favPlants.map((f) => f.item_slug)
-          );
+          .in('slug', favPlants.map((f) => f.item_slug));
 
         if (plants) {
           const plantsMap: Record<string, PlantData> = {};
-          plants.forEach((p) => {
-            plantsMap[p.slug] = p;
-          });
+          plants.forEach((p) => { plantsMap[p.slug] = p; });
           setPlantsData(plantsMap);
         }
       }
@@ -236,7 +241,6 @@ const ProfilePage = () => {
     }
 
     try {
-      // Get profile data
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('avatar_url, header_url, display_name, bio, location, website, favorite_species')
@@ -245,18 +249,14 @@ const ProfilePage = () => {
 
       if (profileError) throw profileError;
 
-      // Get user email
       const { data: userData } = await supabase.auth.admin.getUserById(targetUserId);
       
-      // Get user tanks count for achievements
       const { count: tanksCount } = await supabase
         .from('tanks')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', targetUserId);
         
-      if (tanksCount !== null) {
-        setUserTanksCount(tanksCount);
-      }
+      if (tanksCount !== null) setUserTanksCount(tanksCount);
       
       if (profileData) {
         setAvatarUrl(profileData.avatar_url);
@@ -291,7 +291,6 @@ const ProfilePage = () => {
 
   const handleSave = async () => {
     if (!user || !isOwnProfile) return;
-
     try {
       const { error } = await supabase
         .from('profiles')
@@ -303,9 +302,7 @@ const ProfilePage = () => {
           favorite_species: profile.favoriteSpecies,
         })
         .eq('id', user.id);
-
       if (error) throw error;
-
       setIsEditing(false);
     } catch (error) {
       console.error('Error saving profile:', error);
@@ -315,43 +312,22 @@ const ProfilePage = () => {
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!isOwnProfile) return;
-    
     const file = event.target.files?.[0];
     if (!file || !user) return;
-
-    if (file.size > 2 * 1024 * 1024) {
-      alert('File size must be less than 2MB');
-      return;
-    }
-
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file');
-      return;
-    }
-
+    if (file.size > 2 * 1024 * 1024) { alert('File size must be less than 2MB'); return; }
+    if (!file.type.startsWith('image/')) { alert('Please upload an image file'); return; }
     setUploading(true);
-
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      
       reader.onload = async () => {
         const base64String = reader.result as string;
-
-        const { error } = await supabase
-          .from('profiles')
-          .update({ avatar_url: base64String })
-          .eq('id', user.id);
-
+        const { error } = await supabase.from('profiles').update({ avatar_url: base64String }).eq('id', user.id);
         if (error) throw error;
-
         setAvatarUrl(base64String);
         window.dispatchEvent(new Event('avatar-updated'));
       };
-
-      reader.onerror = () => {
-        throw new Error('Failed to read file');
-      };
+      reader.onerror = () => { throw new Error('Failed to read file'); };
     } catch (error) {
       console.error('Error uploading avatar:', error);
       alert('Failed to upload avatar. Please try again.');
@@ -362,42 +338,21 @@ const ProfilePage = () => {
 
   const handleHeaderUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!isOwnProfile) return;
-    
     const file = event.target.files?.[0];
     if (!file || !user) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File size must be less than 5MB');
-      return;
-    }
-
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file');
-      return;
-    }
-
+    if (file.size > 5 * 1024 * 1024) { alert('File size must be less than 5MB'); return; }
+    if (!file.type.startsWith('image/')) { alert('Please upload an image file'); return; }
     setUploadingHeader(true);
-
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      
       reader.onload = async () => {
         const base64String = reader.result as string;
-
-        const { error } = await supabase
-          .from('profiles')
-          .update({ header_url: base64String })
-          .eq('id', user.id);
-
+        const { error } = await supabase.from('profiles').update({ header_url: base64String }).eq('id', user.id);
         if (error) throw error;
-
         setHeaderUrl(base64String);
       };
-
-      reader.onerror = () => {
-        throw new Error('Failed to read file');
-      };
+      reader.onerror = () => { throw new Error('Failed to read file'); };
     } catch (error) {
       console.error('Error uploading header:', error);
       alert('Failed to upload header. Please try again.');
@@ -417,7 +372,7 @@ const ProfilePage = () => {
     const subject = encodeURIComponent(`AquaGuide Beta Feedback from ${profile.displayName || 'User'}`);
     const body = encodeURIComponent(feedbackText);
     window.location.href = `mailto:zy0x1337@proton.me?subject=${subject}&body=${body}`;
-    setFeedbackText(''); // clear it after sending
+    setFeedbackText('');
   };
 
   const tabs = [
@@ -426,6 +381,18 @@ const ProfilePage = () => {
     { id: 'achievements', label: 'Achievements', icon: Trophy, badge: unlockedCount },
     { id: 'activity', label: 'Activity', icon: TrendingUp },
   ] as const;
+
+  const tankTypeLabel = (type: Tank['type']) => {
+    if (type === 'freshwater') return 'Freshwater';
+    if (type === 'saltwater') return 'Saltwater';
+    return 'Brackish';
+  };
+
+  const tankTypeColor = (type: Tank['type']) => {
+    if (type === 'freshwater') return 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300';
+    if (type === 'saltwater') return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300';
+    return 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300';
+  };
 
   if (loading) {
     return (
@@ -450,19 +417,9 @@ const ProfilePage = () => {
           <div className="max-w-6xl mx-auto">
             {/* Cover Image */}
             <div className="relative h-48 sm:h-64 group">
-              <input
-                ref={headerInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleHeaderUpload}
-                className="hidden"
-              />
+              <input ref={headerInputRef} type="file" accept="image/*" onChange={handleHeaderUpload} className="hidden" />
               {headerUrl ? (
-                <img
-                  src={headerUrl}
-                  alt="Header"
-                  className="w-full h-full object-cover"
-                />
+                <img src={headerUrl} alt="Header" className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-coral-500 via-sapphire-500 to-emerald-500" />
               )}
@@ -472,11 +429,7 @@ const ProfilePage = () => {
                   disabled={uploadingHeader}
                   className="absolute bottom-4 right-4 z-10 p-2.5 bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-900 backdrop-blur-sm rounded-xl text-gray-700 dark:text-gray-300 transition-all opacity-0 group-hover:opacity-100 shadow-lg"
                 >
-                  {uploadingHeader ? (
-                    <Upload className="w-4 h-4 animate-pulse" strokeWidth={2.5} />
-                  ) : (
-                    <Camera className="w-4 h-4" strokeWidth={2.5} />
-                  )}
+                  {uploadingHeader ? <Upload className="w-4 h-4 animate-pulse" strokeWidth={2.5} /> : <Camera className="w-4 h-4" strokeWidth={2.5} />}
                 </button>
               )}
             </div>
@@ -487,20 +440,10 @@ const ProfilePage = () => {
                 {/* Avatar */}
                 <div className="relative group z-20">
                   {isOwnProfile && (
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarUpload}
-                      className="hidden"
-                    />
+                    <input ref={fileInputRef} type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" />
                   )}
                   {avatarUrl ? (
-                    <img
-                      src={avatarUrl}
-                      alt="Avatar"
-                      className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl shadow-2xl border-4 border-white dark:border-gray-900 object-cover"
-                    />
+                    <img src={avatarUrl} alt="Avatar" className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl shadow-2xl border-4 border-white dark:border-gray-900 object-cover" />
                   ) : (
                     <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-br from-coral-500 to-sapphire-500 flex items-center justify-center text-white text-3xl font-black shadow-2xl border-4 border-white dark:border-gray-900">
                       {getUserInitials()}
@@ -512,23 +455,15 @@ const ProfilePage = () => {
                       disabled={uploading}
                       className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity disabled:cursor-not-allowed"
                     >
-                      {uploading ? (
-                        <Upload className="w-7 h-7 text-white animate-pulse" strokeWidth={2.5} />
-                      ) : (
-                        <Camera className="w-7 h-7 text-white" strokeWidth={2.5} />
-                      )}
+                      {uploading ? <Upload className="w-7 h-7 text-white animate-pulse" strokeWidth={2.5} /> : <Camera className="w-7 h-7 text-white" strokeWidth={2.5} />}
                     </button>
                   )}
                 </div>
 
                 {/* Name & Bio */}
                 <div className="flex-1 min-w-0">
-                  <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mb-1">
-                    {profile.displayName}
-                  </h1>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-                    {profile.bio}
-                  </p>
+                  <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mb-1">{profile.displayName}</h1>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{profile.bio}</p>
                   <div className="flex flex-wrap items-center gap-3 text-xs">
                     {profile.location && (
                       <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
@@ -537,12 +472,7 @@ const ProfilePage = () => {
                       </div>
                     )}
                     {profile.website && (
-                      <a
-                        href={profile.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-coral-600 dark:text-coral-400 hover:underline"
-                      >
+                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-coral-600 dark:text-coral-400 hover:underline">
                         {profile.website.replace(/^https?:\/\//, '')}
                       </a>
                     )}
@@ -559,29 +489,10 @@ const ProfilePage = () => {
                       Share
                     </button>
                     <button
-                      onClick={() => {
-                        if (isEditing) {
-                          handleSave();
-                        }
-                        setIsEditing(!isEditing);
-                      }}
-                      className={`px-4 py-2 font-bold rounded-xl transition-all text-sm flex items-center gap-2 ${
-                        isEditing
-                          ? 'bg-coral-600 hover:bg-coral-700 text-white'
-                          : 'bg-coral-600 hover:bg-coral-700 text-white'
-                      }`}
+                      onClick={() => { if (isEditing) { handleSave(); } setIsEditing(!isEditing); }}
+                      className="px-4 py-2 bg-coral-600 hover:bg-coral-700 text-white font-bold rounded-xl transition-all text-sm flex items-center gap-2"
                     >
-                      {isEditing ? (
-                        <>
-                          <Save className="w-4 h-4" strokeWidth={2.5} />
-                          Save
-                        </>
-                      ) : (
-                        <>
-                          <Edit2 className="w-4 h-4" strokeWidth={2.5} />
-                          Edit
-                        </>
-                      )}
+                      {isEditing ? <><Save className="w-4 h-4" strokeWidth={2.5} />Save</> : <><Edit2 className="w-4 h-4" strokeWidth={2.5} />Edit</>}
                     </button>
                   </div>
                 )}
@@ -589,19 +500,12 @@ const ProfilePage = () => {
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 pb-6">
-                {stats.map((stat) => {
-                  const Icon = stat.icon;
-                  return (
-                    <div key={stat.label} className="text-center">
-                      <div className="text-2xl font-black text-gray-900 dark:text-white mb-1">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                        {stat.label}
-                      </div>
-                    </div>
-                  );
-                })}
+                {stats.map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <div className="text-2xl font-black text-gray-900 dark:text-white mb-1">{stat.value}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{stat.label}</div>
+                  </div>
+                ))}
               </div>
 
               {/* Tabs */}
@@ -613,28 +517,20 @@ const ProfilePage = () => {
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id as TabType)}
                       className={`relative flex items-center gap-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
-                        activeTab === tab.id
-                          ? 'text-coral-600 dark:text-coral-400'
-                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                        activeTab === tab.id ? 'text-coral-600 dark:text-coral-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                       }`}
                     >
                       <Icon className="w-4 h-4" strokeWidth={2.5} />
                       <span>{tab.label}</span>
                       {tab.badge !== undefined && tab.badge > 0 && (
                         <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                          activeTab === tab.id
-                            ? 'bg-coral-100 dark:bg-coral-900/30 text-coral-700 dark:text-coral-300'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                          activeTab === tab.id ? 'bg-coral-100 dark:bg-coral-900/30 text-coral-700 dark:text-coral-300' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
                         }`}>
                           {tab.badge}
                         </span>
                       )}
                       {activeTab === tab.id && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-coral-600 dark:bg-coral-400"
-                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        />
+                        <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-coral-600 dark:bg-coral-400" transition={{ type: 'spring', stiffness: 500, damping: 30 }} />
                       )}
                     </button>
                   );
@@ -647,16 +543,12 @@ const ProfilePage = () => {
         {/* Content */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <AnimatePresence mode="wait">
-            {/* Overview Tab */}
+
+            {/* ── Overview Tab ── */}
             {activeTab === 'overview' && (
-              <motion.div
-                key="overview"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="space-y-6"
-              >
-                {/* Beta Feedback Form */}
+              <motion.div key="overview" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
+
+                {/* Beta Feedback */}
                 {isOwnProfile && (
                   <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 rounded-2xl border-2 border-indigo-100 dark:border-indigo-900/50 p-6 shadow-sm">
                     <div className="flex items-center gap-2 mb-3">
@@ -686,7 +578,98 @@ const ProfilePage = () => {
                   </div>
                 )}
 
-                {/* Quick Stats */}
+                {/* ── My Tanks Section ── */}
+                {(featuredTanks.length > 0 || tanksLoading) && (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <Waves className="w-5 h-5 text-cyan-500" strokeWidth={2.5} />
+                        <h3 className="text-lg font-black text-gray-900 dark:text-white">My Tanks</h3>
+                        {featuredTanks.length > 0 && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300">
+                            {featuredTanks.length}
+                          </span>
+                        )}
+                      </div>
+                      {isOwnProfile && (
+                        <Link to="/my-tanks" className="text-sm font-bold text-coral-600 dark:text-coral-400 hover:underline flex items-center gap-1">
+                          View All
+                        </Link>
+                      )}
+                    </div>
+
+                    {tanksLoading ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {[1, 2].map(i => <div key={i} className="h-32 bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse" />)}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {featuredTanks.map((tank) => (
+                          <Link
+                            key={tank.id}
+                            to={tank.publicSlug ? `/tanks/${tank.publicSlug}` : `/my-tanks/${tank.id}`}
+                            className="group block bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/20 dark:to-blue-950/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-4 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all hover:shadow-md"
+                          >
+                            <div className="flex items-start justify-between mb-3">
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-black text-gray-900 dark:text-white truncate text-sm group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors">
+                                  {tank.name}
+                                </h4>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{tank.volumeLiters}L</p>
+                              </div>
+                              <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-cyan-500 transition-colors flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                            </div>
+
+                            <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold mb-3 ${tankTypeColor(tank.type)}`}>
+                              {tankTypeLabel(tank.type)}
+                            </span>
+
+                            <div className="flex items-center gap-3 text-xs text-gray-600 dark:text-gray-400">
+                              {(tank.inhabitants?.fish?.length ?? 0) > 0 && (
+                                <span className="flex items-center gap-1">
+                                  <Fish className="w-3 h-3" strokeWidth={2.5} />
+                                  {tank.inhabitants!.fish.reduce((sum, i) => sum + i.quantity, 0)}
+                                </span>
+                              )}
+                              {(tank.inhabitants?.plants?.length ?? 0) > 0 && (
+                                <span className="flex items-center gap-1">
+                                  <Leaf className="w-3 h-3" strokeWidth={2.5} />
+                                  {tank.inhabitants!.plants.reduce((sum, i) => sum + i.quantity, 0)}
+                                </span>
+                              )}
+                              {tank.parameters?.ph && (
+                                <span className="flex items-center gap-1">
+                                  <Droplets className="w-3 h-3" strokeWidth={2.5} />
+                                  pH {tank.parameters.ph}
+                                </span>
+                              )}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Empty state: own profile, no featured tanks */}
+                {isOwnProfile && !tanksLoading && featuredTanks.length === 0 && (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center">
+                    <Waves className="w-10 h-10 text-gray-300 dark:text-gray-700 mx-auto mb-3" strokeWidth={1.5} />
+                    <h3 className="text-base font-bold text-gray-700 dark:text-gray-300 mb-1">No public tanks yet</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      Open a tank, enable <strong>Show in public profile</strong>, then make it public to display it here.
+                    </p>
+                    <Link
+                      to="/my-tanks"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl transition-all text-sm"
+                    >
+                      <Waves className="w-4 h-4" strokeWidth={2.5} />
+                      Go to My Tanks
+                    </Link>
+                  </div>
+                )}
+
+                {/* Quick Stats grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Favorites Preview */}
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
@@ -695,12 +678,7 @@ const ProfilePage = () => {
                         <Heart className="w-5 h-5 text-rose-500" fill="currentColor" />
                         <h3 className="text-lg font-black text-gray-900 dark:text-white">Recent Favorites</h3>
                       </div>
-                      <button
-                        onClick={() => setActiveTab('favorites')}
-                        className="text-sm font-bold text-coral-600 dark:text-coral-400 hover:underline"
-                      >
-                        View All
-                      </button>
+                      <button onClick={() => setActiveTab('favorites')} className="text-sm font-bold text-coral-600 dark:text-coral-400 hover:underline">View All</button>
                     </div>
                     <div className="space-y-2">
                       {favorites.slice(0, 3).map((fav) => {
@@ -713,13 +691,10 @@ const ProfilePage = () => {
                             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                           >
                             <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden flex-shrink-0">
-                              {data.image_url ? (
-                                <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" />
-                              ) : (
-                                <div className="w-full h-full flex items-center justify-center">
-                                  {fav.item_type === 'species' ? <Fish className="w-5 h-5 text-gray-400" /> : <Leaf className="w-5 h-5 text-gray-400" />}
-                                </div>
-                              )}
+                              {data.image_url
+                                ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" />
+                                : <div className="w-full h-full flex items-center justify-center">{fav.item_type === 'species' ? <Fish className="w-5 h-5 text-gray-400" /> : <Leaf className="w-5 h-5 text-gray-400" />}</div>
+                              }
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-bold text-gray-900 dark:text-white truncate">{data.common_name}</div>
@@ -728,11 +703,7 @@ const ProfilePage = () => {
                           </Link>
                         );
                       })}
-                      {favorites.length === 0 && (
-                        <div className="text-center py-8 text-sm text-gray-500 dark:text-gray-400">
-                          No favorites yet
-                        </div>
-                      )}
+                      {favorites.length === 0 && <div className="text-center py-8 text-sm text-gray-500 dark:text-gray-400">No favorites yet</div>}
                     </div>
                   </div>
 
@@ -743,12 +714,7 @@ const ProfilePage = () => {
                         <Trophy className="w-5 h-5 text-amber-500" />
                         <h3 className="text-lg font-black text-gray-900 dark:text-white">Achievements</h3>
                       </div>
-                      <button
-                        onClick={() => setActiveTab('achievements')}
-                        className="text-sm font-bold text-coral-600 dark:text-coral-400 hover:underline"
-                      >
-                        View All
-                      </button>
+                      <button onClick={() => setActiveTab('achievements')} className="text-sm font-bold text-coral-600 dark:text-coral-400 hover:underline">View All</button>
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       {achievements.slice(0, 3).map((achievement) => {
@@ -762,12 +728,8 @@ const ProfilePage = () => {
                                 : 'bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 opacity-50'
                             }`}
                           >
-                            <Icon className={`w-6 h-6 mb-1 ${
-                              achievement.unlocked ? `text-${achievement.color}-600 dark:text-${achievement.color}-400` : 'text-gray-400'
-                            }`} strokeWidth={2.5} />
-                            <div className={`text-[10px] font-bold text-center ${
-                              achievement.unlocked ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'
-                            }`}>
+                            <Icon className={`w-6 h-6 mb-1 ${achievement.unlocked ? `text-${achievement.color}-600 dark:text-${achievement.color}-400` : 'text-gray-400'}`} strokeWidth={2.5} />
+                            <div className={`text-[10px] font-bold text-center ${achievement.unlocked ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
                               {achievement.name.split(' ')[0]}
                             </div>
                           </div>
@@ -777,48 +739,27 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
-                {/* Profile Details (Edit Mode) */}
+                {/* Edit Mode */}
                 {isEditing && (
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
                     <h3 className="text-lg font-black text-gray-900 dark:text-white mb-4">Edit Profile</h3>
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Display Name</label>
-                        <input
-                          type="text"
-                          value={profile.displayName}
-                          onChange={(e) => setProfile({ ...profile, displayName: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all"
-                        />
+                        <input type="text" value={profile.displayName} onChange={(e) => setProfile({ ...profile, displayName: e.target.value })} className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all" />
                       </div>
                       <div>
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Bio</label>
-                        <textarea
-                          value={profile.bio}
-                          onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                          rows={3}
-                          className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all resize-none"
-                        />
+                        <textarea value={profile.bio} onChange={(e) => setProfile({ ...profile, bio: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all resize-none" />
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Location</label>
-                          <input
-                            type="text"
-                            value={profile.location}
-                            onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all"
-                          />
+                          <input type="text" value={profile.location} onChange={(e) => setProfile({ ...profile, location: e.target.value })} className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all" />
                         </div>
                         <div>
                           <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Website</label>
-                          <input
-                            type="url"
-                            value={profile.website}
-                            onChange={(e) => setProfile({ ...profile, website: e.target.value })}
-                            placeholder="https://example.com"
-                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all"
-                          />
+                          <input type="url" value={profile.website} onChange={(e) => setProfile({ ...profile, website: e.target.value })} placeholder="https://example.com" className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-coral-500 focus:border-coral-500 outline-none transition-all" />
                         </div>
                       </div>
                     </div>
@@ -827,16 +768,9 @@ const ProfilePage = () => {
               </motion.div>
             )}
 
-            {/* Favorites Tab */}
+            {/* ── Favorites Tab ── */}
             {activeTab === 'favorites' && (
-              <motion.div
-                key="favorites"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="space-y-6"
-              >
-                {/* Species */}
+              <motion.div key="favorites" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
                 {favSpecies.length > 0 && (
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
                     <div className="flex items-center gap-2 mb-4">
@@ -849,18 +783,9 @@ const ProfilePage = () => {
                         if (!data) return null;
                         return (
                           <div key={fav.id} className="relative group">
-                            <Link
-                              to={`/species/${data.slug}`}
-                              className="block bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-coral-300 dark:hover:border-coral-700 overflow-hidden transition-all"
-                            >
+                            <Link to={`/species/${data.slug}`} className="block bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-coral-300 dark:hover:border-coral-700 overflow-hidden transition-all">
                               <div className="aspect-square bg-gray-100 dark:bg-gray-700">
-                                {data.image_url ? (
-                                  <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center">
-                                    <Fish className="w-8 h-8 text-gray-300 dark:text-gray-600" />
-                                  </div>
-                                )}
+                                {data.image_url ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><Fish className="w-8 h-8 text-gray-300 dark:text-gray-600" /></div>}
                               </div>
                               <div className="p-2">
                                 <div className="text-xs font-bold text-gray-900 dark:text-white truncate">{data.common_name}</div>
@@ -868,13 +793,7 @@ const ProfilePage = () => {
                               </div>
                             </Link>
                             {isOwnProfile && isEditing && (
-                              <button
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  toggleFavorite('species', fav.item_slug);
-                                }}
-                                className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
-                              >
+                              <button onClick={(e) => { e.preventDefault(); toggleFavorite('species', fav.item_slug); }} className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100">
                                 <Trash2 className="w-3 h-3" strokeWidth={2.5} />
                               </button>
                             )}
@@ -885,7 +804,6 @@ const ProfilePage = () => {
                   </div>
                 )}
 
-                {/* Plants */}
                 {favPlants.length > 0 && (
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
                     <div className="flex items-center gap-2 mb-4">
@@ -898,18 +816,9 @@ const ProfilePage = () => {
                         if (!data) return null;
                         return (
                           <div key={fav.id} className="relative group">
-                            <Link
-                              to={`/plants/${data.slug}`}
-                              className="block bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-700 overflow-hidden transition-all"
-                            >
+                            <Link to={`/plants/${data.slug}`} className="block bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-700 overflow-hidden transition-all">
                               <div className="aspect-square bg-gray-100 dark:bg-gray-700">
-                                {data.image_url ? (
-                                  <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center">
-                                    <Leaf className="w-8 h-8 text-gray-300 dark:text-gray-600" />
-                                  </div>
-                                )}
+                                {data.image_url ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><Leaf className="w-8 h-8 text-gray-300 dark:text-gray-600" /></div>}
                               </div>
                               <div className="p-2">
                                 <div className="text-xs font-bold text-gray-900 dark:text-white truncate">{data.common_name}</div>
@@ -917,13 +826,7 @@ const ProfilePage = () => {
                               </div>
                             </Link>
                             {isOwnProfile && isEditing && (
-                              <button
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  toggleFavorite('plant', fav.item_slug);
-                                }}
-                                className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
-                              >
+                              <button onClick={(e) => { e.preventDefault(); toggleFavorite('plant', fav.item_slug); }} className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100">
                                 <Trash2 className="w-3 h-3" strokeWidth={2.5} />
                               </button>
                             )}
@@ -938,28 +841,19 @@ const ProfilePage = () => {
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-12 text-center">
                     <Heart className="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-4" />
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">No Favorites Yet</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Start exploring species and plants to add them to your favorites!
-                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Start exploring species and plants to add them to your favorites!</p>
                   </div>
                 )}
               </motion.div>
             )}
 
-            {/* Achievements Tab */}
+            {/* ── Achievements Tab ── */}
             {activeTab === 'achievements' && (
-              <motion.div
-                key="achievements"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
+              <motion.div key="achievements" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
                 <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
                   <div className="flex items-center gap-2 mb-6">
                     <Trophy className="w-6 h-6 text-amber-500" />
-                    <h3 className="text-xl font-black text-gray-900 dark:text-white">
-                      Achievements ({unlockedCount}/{achievements.length})
-                    </h3>
+                    <h3 className="text-xl font-black text-gray-900 dark:text-white">Achievements ({unlockedCount}/{achievements.length})</h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {achievements.map((achievement) => {
@@ -975,14 +869,8 @@ const ProfilePage = () => {
                           }`}
                         >
                           <div className="flex items-start gap-3">
-                            <div className={`p-3 rounded-xl ${
-                              achievement.unlocked
-                                ? `bg-${achievement.color}-100 dark:bg-${achievement.color}-900/30`
-                                : 'bg-gray-100 dark:bg-gray-700'
-                            }`}>
-                              <Icon className={`w-6 h-6 ${
-                                achievement.unlocked ? `text-${achievement.color}-600 dark:text-${achievement.color}-400` : 'text-gray-400'
-                              }`} strokeWidth={2.5} />
+                            <div className={`p-3 rounded-xl ${achievement.unlocked ? `bg-${achievement.color}-100 dark:bg-${achievement.color}-900/30` : 'bg-gray-100 dark:bg-gray-700'}`}>
+                              <Icon className={`w-6 h-6 ${achievement.unlocked ? `text-${achievement.color}-600 dark:text-${achievement.color}-400` : 'text-gray-400'}`} strokeWidth={2.5} />
                             </div>
                             <div className="flex-1">
                               <div className="flex items-start justify-between mb-1">
@@ -990,22 +878,15 @@ const ProfilePage = () => {
                                 {achievement.unlocked && <Star className="w-5 h-5 text-amber-400" fill="currentColor" />}
                               </div>
                               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{achievement.description}</p>
-                              {/* Progress Bar */}
                               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
                                 <motion.div
                                   initial={{ width: 0 }}
                                   animate={{ width: `${percentage}%` }}
                                   transition={{ duration: 0.5, delay: 0.2 }}
-                                  className={`h-full ${
-                                    achievement.unlocked
-                                      ? `bg-${achievement.color}-500`
-                                      : 'bg-gray-400 dark:bg-gray-600'
-                                  }`}
+                                  className={`h-full ${achievement.unlocked ? `bg-${achievement.color}-500` : 'bg-gray-400 dark:bg-gray-600'}`}
                                 />
                               </div>
-                              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                {achievement.progress}/{achievement.max}
-                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{achievement.progress}/{achievement.max}</div>
                             </div>
                           </div>
                         </div>
@@ -1016,14 +897,9 @@ const ProfilePage = () => {
               </motion.div>
             )}
 
-            {/* Activity Tab */}
+            {/* ── Activity Tab ── */}
             {activeTab === 'activity' && (
-              <motion.div
-                key="activity"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
+              <motion.div key="activity" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
                 <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
                   <div className="flex items-center gap-2 mb-6">
                     <TrendingUp className="w-6 h-6 text-coral-500" />
@@ -1048,6 +924,7 @@ const ProfilePage = () => {
                 </div>
               </motion.div>
             )}
+
           </AnimatePresence>
         </div>
       </div>
