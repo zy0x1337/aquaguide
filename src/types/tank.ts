@@ -1,29 +1,13 @@
-export interface Tank {
-  id: string;
-  name: string;
-  type: string; // 'freshwater' | 'saltwater' | 'brackish'
-  volumeLiters: number;
-  createdAt: string;
-  updatedAt: string;
-  substrate?: string; // 'sand' | 'gravel' | 'soil' | 'bare'
-  lighting?: string; // 'low' | 'medium' | 'high'
-  parameters: WaterParameters;
-  inhabitants?: {
-    fish: TankInhabitant[];
-    plants: TankInhabitant[];
-  };
-}
-
-export interface WaterParameters {
-  tempC: number;
+export interface TankParameters {
   ph: number;
+  tempC: number;
   ammonia: number;
   nitrite: number;
   nitrate: number;
-  gh?: number; // General Hardness (°dGH)
-  kh?: number; // Carbonate Hardness (°dKH)
-  tds?: number; // Total Dissolved Solids (ppm)
-  salinity?: number; // For saltwater tanks (ppt)
+  gh?: number;
+  kh?: number;
+  tds?: number;
+  salinity?: number;
 }
 
 export interface TankInhabitant {
@@ -31,4 +15,24 @@ export interface TankInhabitant {
   speciesName: string;
   quantity: number;
   addedAt: string;
+}
+
+export interface Tank {
+  id: string;
+  name: string;
+  type: 'freshwater' | 'saltwater' | 'brackish';
+  volumeLiters: number;
+  substrate?: string;
+  lighting?: string;
+  parameters: TankParameters;
+  inhabitants?: {
+    fish: TankInhabitant[];
+    plants: TankInhabitant[];
+  };
+  /** Whether the tank is publicly accessible via publicSlug */
+  isPublic?: boolean;
+  /** URL-safe slug for the public tank profile, e.g. "nemos-tank-a3f9" */
+  publicSlug?: string;
+  createdAt: string;
+  updatedAt: string;
 }
