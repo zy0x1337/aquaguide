@@ -5,35 +5,36 @@ import { Link } from 'react-router-dom';
 import {
   getReminders,
   completeReminder,
+  checkDueReminders,
   requestNotificationPermission,
   isNotificationSupported,
   type Reminder,
 } from '../../lib/notifications';
 
 const TYPE_CFG = {
-  water_change:    { emoji: '💧', label: 'Water Change',      urgentBg: 'bg-cyan-50    dark:bg-cyan-950/30',    urgentBorder: 'border-cyan-200    dark:border-cyan-800'    },
-  parameter_check: { emoji: '🧪', label: 'Check Parameters',  urgentBg: 'bg-indigo-50  dark:bg-indigo-950/30',  urgentBorder: 'border-indigo-200  dark:border-indigo-800'  },
-  filter_clean:    { emoji: '🔧', label: 'Clean Filter',       urgentBg: 'bg-amber-50   dark:bg-amber-950/30',   urgentBorder: 'border-amber-200   dark:border-amber-800'   },
+  water_change:    { emoji: '💧', label: 'Water Change',     urgentBg: 'bg-cyan-50   dark:bg-cyan-950/30',   urgentBorder: 'border-cyan-200   dark:border-cyan-800'   },
+  parameter_check: { emoji: '🧪', label: 'Check Parameters', urgentBg: 'bg-indigo-50 dark:bg-indigo-950/30', urgentBorder: 'border-indigo-200 dark:border-indigo-800' },
+  filter_clean:    { emoji: '🔧', label: 'Clean Filter',     urgentBg: 'bg-amber-50  dark:bg-amber-950/30',  urgentBorder: 'border-amber-200  dark:border-amber-800'  },
 } as const;
 
 const timeLabel = (iso: string): { text: string; overdue: boolean; soon: boolean } => {
-  const diff = new Date(iso).getTime() - Date.now();
+  const diff    = new Date(iso).getTime() - Date.now();
   const overdue = diff < 0;
-  const soon    = !overdue && diff < 3_600_000; // within 1h
+  const soon    = !overdue && diff < 3_600_000;
   let text: string;
   if (overdue) {
     const d = Math.ceil(Math.abs(diff) / 86_400_000);
     text = d <= 1 ? 'Overdue today' : `${d}d overdue`;
   } else {
     const mins = Math.round(diff / 60_000);
-    if (mins < 60)         text = `in ${mins} min`;
-    else if (mins < 1440)  text = `in ${Math.round(mins / 60)} h`;
-    else                   text = `in ${Math.round(mins / 1440)} d`;
+    if (mins < 60)        text = `in ${mins} min`;
+    else if (mins < 1440) text = `in ${Math.round(mins / 60)} h`;
+    else                  text = `in ${Math.round(mins / 1440)} d`;
   }
   return { text, overdue, soon };
 };
 
-const BADGE_THRESHOLD = 3_600_000 * 24; // treat reminders due within 24h as "urgent" for badge
+const BADGE_WITHIN_MS = 86_400_000; // badge for reminders due within 24 h
 
 export default function NotificationBell({ compact = false }: { compact?: boolean }) {
   const [open,       setOpen]       = useState(false);
@@ -46,27 +47,40 @@ export default function NotificationBell({ compact = false }: { compact?: boolea
     if ('Notification' in window) setPermission(Notification.permission);
   }, []);
 
+  // On open: reload state AND check if any reminders are now due
+  const handleOpen = useCallback(() => {
+    setOpen(o => {
+      const next = !o;
+      if (next) {
+        reload();
+        checkDueReminders().then(reload); // fire pending ones, then refresh list
+      }
+      return next;
+    });
+  }, [reload]);
+
   useEffect(() => {
     reload();
     const id = setInterval(reload, 60_000);
-    // Sync when another tab modifies localStorage
-    const onStorage = (e: StorageEvent) => { if (e.key === 'aquaguide_reminders_v2') reload(); };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'aquaguide_reminders_v2') reload();
+    };
     window.addEventListener('storage', onStorage);
     return () => { clearInterval(id); window.removeEventListener('storage', onStorage); };
   }, [reload]);
 
-  // Close on outside click
   useEffect(() => {
+    if (!open) return;
     const handler = (e: MouseEvent) => {
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) setOpen(false);
     };
-    if (open) document.addEventListener('mousedown', handler);
+    document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
   const active   = reminders.filter(r => r.enabled);
   const now      = Date.now();
-  const badgeNum = active.filter(r => new Date(r.nextDate).getTime() <= now + BADGE_THRESHOLD).length;
+  const badgeNum = active.filter(r => new Date(r.nextDate).getTime() <= now + BADGE_WITHIN_MS).length;
 
   const handleDone = (r: Reminder) => {
     completeReminder(r.tankId, r.type);
@@ -76,14 +90,13 @@ export default function NotificationBell({ compact = false }: { compact?: boolea
   const handleEnableNotifs = async () => {
     const p = await requestNotificationPermission();
     setPermission(p);
+    if (p === 'granted') checkDueReminders().then(reload);
   };
 
-  // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div ref={panelRef} className="relative">
-      {/* Bell button */}
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={handleOpen}
         aria-label="Reminders"
         className={`relative ${
           compact ? 'p-1.5' : 'p-2'
@@ -109,7 +122,6 @@ export default function NotificationBell({ compact = false }: { compact?: boolea
         </AnimatePresence>
       </button>
 
-      {/* Dropdown panel */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -132,7 +144,7 @@ export default function NotificationBell({ compact = false }: { compact?: boolea
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="p-1 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                className="p-1 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -189,7 +201,9 @@ export default function NotificationBell({ compact = false }: { compact?: boolea
                             overdue ? 'text-red-700 dark:text-red-400' : 'text-gray-900 dark:text-white'
                           }`}>{r.tankName}</p>
                           <p className={`text-[10px] font-semibold ${
-                            overdue ? 'text-red-500 dark:text-red-400' : soon ? 'text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'
+                            overdue  ? 'text-red-500 dark:text-red-400'
+                            : soon   ? 'text-amber-600 dark:text-amber-400'
+                            : 'text-gray-500 dark:text-gray-400'
                           }`}>
                             {cfg.label} · {tl}
                           </p>
