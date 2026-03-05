@@ -1,5 +1,4 @@
 // AquaGuide Notification System
-// localStorage-based (device-local) – syncs across tabs via storage event.
 
 export interface Reminder {
   id: string;
@@ -58,11 +57,19 @@ export function updateReminderDate(reminderId: string, nextDate: string): void {
   saveReminders(getReminders().map(r => r.id === reminderId ? { ...r, nextDate } : r));
 }
 
+/** Update both nextDate and/or frequency in one call */
+export function updateReminder(
+  reminderId: string,
+  updates: Partial<Pick<Reminder, 'nextDate' | 'frequency'>>,
+): void {
+  saveReminders(getReminders().map(r => r.id === reminderId ? { ...r, ...updates } : r));
+}
+
 export function deleteReminder(reminderId: string): void {
   saveReminders(getReminders().filter(r => r.id !== reminderId));
 }
 
-// ── Reschedule ─────────────────────────────────────────────────────────────────
+// ── Reschedule ──────────────────────────────────────────────────────────────
 
 export function completeReminder(tankId: string, type: Reminder['type']): void {
   const reminder = getReminders().find(r => r.tankId === tankId && r.type === type);
@@ -73,7 +80,7 @@ export function completeReminder(tankId: string, type: Reminder['type']): void {
   saveReminders(getReminders().map(r => r.id === reminder.id ? { ...r, nextDate: next.toISOString() } : r));
 }
 
-// ── Browser permission ──────────────────────────────────────────────────────────
+// ── Permissions ──────────────────────────────────────────────────────────────
 
 export function isNotificationSupported(): boolean {
   return 'Notification' in window;
@@ -85,12 +92,6 @@ export async function requestNotificationPermission(): Promise<NotificationPermi
 }
 
 // ── sendNotification ──────────────────────────────────────────────────────────────
-//
-// Chrome blocks new Notification() from the main thread when a SW with a push
-// handler is registered. We must ALWAYS go through ServiceWorkerRegistration.
-// serviceWorker.ready resolves as soon as the SW is in "activated" state, which
-// is nearly instant thanks to skipWaiting + clients.claim in sw.js.
-//
 export async function sendNotification(
   title: string,
   body: string,
@@ -101,32 +102,30 @@ export async function sendNotification(
 
   const options: NotificationOptions = {
     body,
-    icon:              '/icon-192.png',
-    badge:             '/icon-192.png',
-    tag:               tag ?? `aquaguide-${Date.now()}`,
-    // @ts-expect-error – data is valid in SW notification options
-    data:              { url },
+    icon:               '/icon-192.png',
+    badge:              '/icon-192.png',
+    tag:                tag ?? `aquaguide-${Date.now()}`,
+    // @ts-expect-error – valid in SW context
+    data:               { url },
     requireInteraction: true,
-    vibrate:           [200, 100, 200],
+    vibrate:            [200, 100, 200],
   };
 
-  // ① Try via SW registration – works even when tab is backgrounded
   if ('serviceWorker' in navigator) {
     try {
-      const reg = await navigator.serviceWorker.ready; // resolves quickly (skipWaiting)
+      const reg = await navigator.serviceWorker.ready;
       await reg.showNotification(title, options);
       return;
     } catch (swErr) {
-      console.warn('[Notifications] SW showNotification failed, using fallback:', swErr);
+      console.warn('[Notifications] SW showNotification failed:', swErr);
     }
   }
 
-  // ② Fallback: main-thread Notification (browsers without SW support)
   try {
     new Notification(title, { body, icon: '/icon-192.png', tag: options.tag });
   } catch (err) {
     console.error('[Notifications] Notification() failed:', err);
-    throw err; // let caller know so it doesn’t mark the reminder as fired
+    throw err;
   }
 }
 
@@ -145,29 +144,23 @@ function markFired(key: string): void {
   sessionStorage.setItem(FIRED_KEY, JSON.stringify([...s]));
 }
 
-// Async so we can await sendNotification and only reschedule on success.
 export async function checkDueReminders(): Promise<void> {
   if (Notification.permission !== 'granted') return;
 
-  const now   = Date.now();
-  const fired = getFired();
+  const now    = Date.now();
+  const fired  = getFired();
   const active = getReminders().filter(r => r.enabled);
 
   for (const r of active) {
-    const due = new Date(r.nextDate).getTime();
+    const due     = new Date(r.nextDate).getTime();
     const fireKey = `${r.id}::${r.nextDate}`;
 
-    // Fire if overdue and not yet fired this session.
-    // No arbitrary time-window – sessionStorage dedup prevents spam.
     if (due <= now && !fired.has(fireKey)) {
       try {
         await sendNotification(r.title, r.message, `/my-tanks`, r.id);
-        // Only mark fired + reschedule AFTER successful delivery
         markFired(fireKey);
         completeReminder(r.tankId, r.type);
-      } catch {
-        // sendNotification threw – don’t mark as fired so next tick retries
-      }
+      } catch { /* retry next tick */ }
     }
   }
 }
@@ -178,18 +171,12 @@ let _interval: ReturnType<typeof setInterval> | null = null;
 
 export function startReminderSystem(): void {
   if (_interval) return;
-
-  // Check immediately, then every 60 s
   checkDueReminders();
   _interval = setInterval(checkDueReminders, 60_000);
-
-  // Re-check once the SW is fully active (catches the first-load race condition
-  // where controller is null when checkDueReminders first runs)
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(() => {
-      // Only retry if nothing was successfully fired yet this session
-      checkDueReminders();
-    }).catch(() => {/* ignore */});
+    navigator.serviceWorker.ready
+      .then(() => checkDueReminders())
+      .catch(() => {});
   }
 }
 
