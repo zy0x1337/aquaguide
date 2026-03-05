@@ -9,7 +9,7 @@ import {
   Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star,
   Target, TrendingUp, MessageSquare, Send, LayoutGrid, Waves,
   ExternalLink, Lock, CheckCircle2, Zap, Award,
-  FlaskConical, BookOpen, Share2, MapPin, Link2, Sparkles
+  FlaskConical, BookOpen, Share2, MapPin, Link2, Sparkles, LogIn
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '../hooks/useFavorites';
@@ -37,8 +37,7 @@ interface Achievement {
   color: string;
 }
 
-// ─── Per-level gradient definitions ──────────────────────────────────────────
-// Each entry: [gradientFrom, gradientTo, textColor, borderColor]
+// ─── Per-level gradient definitions ───────────────────────────────────────────
 const LEVEL_GRADIENTS: Record<string, [string, string, string, string]> = {
   slate:   ['#64748b', '#475569', '#ffffff', 'rgba(100,116,139,0.4)'],
   blue:    ['#3b82f6', '#2563eb', '#ffffff', 'rgba(59,130,246,0.4)'],
@@ -56,13 +55,11 @@ const LEVEL_GRADIENTS: Record<string, [string, string, string, string]> = {
 // ─── Level badge ──────────────────────────────────────────────────────────────
 const LevelBadge = ({ info, size = 'md' }: { info: LevelInfo; size?: 'sm' | 'md' | 'lg' }) => {
   const [from, to, textColor, borderColor] = LEVEL_GRADIENTS[info.color] ?? LEVEL_GRADIENTS.slate;
-
   const sizeClasses = {
     sm: { wrap: 'text-[11px] px-2.5 py-1 gap-1.5',   emoji: 'text-sm',   lvl: 'text-[11px]', sep: 'h-3', title: 'text-[11px]' },
     md: { wrap: 'text-xs   px-3   py-1.5 gap-2',       emoji: 'text-sm',   lvl: 'text-xs',     sep: 'h-3', title: 'text-xs'     },
     lg: { wrap: 'text-sm   px-4   py-2   gap-2.5',     emoji: 'text-base', lvl: 'text-sm',     sep: 'h-4', title: 'text-sm'     },
   }[size];
-
   return (
     <span
       className={`relative inline-flex items-center rounded-full font-bold overflow-hidden select-none ${sizeClasses.wrap}`}
@@ -73,22 +70,11 @@ const LevelBadge = ({ info, size = 'md' }: { info: LevelInfo; size?: 'sm' | 'md'
         boxShadow: `0 1px 6px ${borderColor}`,
       }}
     >
-      {/* Shine overlay */}
-      <span
-        className="pointer-events-none absolute inset-0 rounded-full"
-        style={{ background: 'linear-gradient(160deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 55%)' }}
-      />
-
-      {/* Emoji */}
+      <span className="pointer-events-none absolute inset-0 rounded-full"
+        style={{ background: 'linear-gradient(160deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 55%)' }} />
       <span className={`relative ${sizeClasses.emoji} leading-none`}>{info.emoji}</span>
-
-      {/* Lv. number – slightly bolder */}
       <span className={`relative font-black tracking-tight ${sizeClasses.lvl}`}>Lv.{info.level}</span>
-
-      {/* Divider */}
       <span className={`relative w-px ${sizeClasses.sep} bg-white/30`} />
-
-      {/* Title */}
       <span className={`relative font-semibold opacity-95 ${sizeClasses.title}`}>{info.title}</span>
     </span>
   );
@@ -119,6 +105,30 @@ const XPBar = ({ info }: { info: LevelInfo }) => {
   );
 };
 
+// ─── Guest CTA banner ─────────────────────────────────────────────────────────
+const GuestBanner = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30 border border-cyan-200 dark:border-cyan-800/60 rounded-2xl p-5"
+  >
+    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+      <Lock className="w-5 h-5 text-cyan-600 dark:text-cyan-400" strokeWidth={2.5} />
+    </div>
+    <div className="flex-1 text-center sm:text-left">
+      <p className="text-sm font-bold text-gray-900 dark:text-white">Log in to see the full profile</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Favorites, achievements and activity are only visible to logged-in users.</p>
+    </div>
+    <Link
+      to="/login"
+      className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl text-sm transition-all"
+    >
+      <LogIn className="w-4 h-4" />
+      Log in
+    </Link>
+  </motion.div>
+);
+
 // ─── Achievement card ─────────────────────────────────────────────────────────
 const AchievementCard = ({ a }: { a: Achievement }) => {
   const Icon = a.icon;
@@ -137,7 +147,6 @@ const AchievementCard = ({ a }: { a: Achievement }) => {
   };
   const s = a.unlocked ? (colorStyles[a.color] ?? colorStyles.slate) : colorStyles.slate;
   const pct = Math.round((a.progress / a.max) * 100);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -146,34 +155,20 @@ const AchievementCard = ({ a }: { a: Achievement }) => {
         a.unlocked ? s.card : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700'
       }`}
     >
-      {a.unlocked && (
-        <span className="absolute top-3 right-3">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-        </span>
-      )}
+      {a.unlocked && <span className="absolute top-3 right-3"><CheckCircle2 className="w-4 h-4 text-emerald-500" /></span>}
       <div className="flex items-start gap-3">
         <div className={`p-2.5 rounded-xl flex-shrink-0 ${a.unlocked ? s.icon : 'bg-gray-100 dark:bg-gray-700 text-gray-400'}`}>
           {a.unlocked ? <Icon className="w-5 h-5" strokeWidth={2} /> : <Lock className="w-5 h-5" />}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <h4 className={`font-bold text-sm ${a.unlocked ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
-              {a.name}
-            </h4>
-            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${a.unlocked ? s.pill : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
-              +{a.xpReward} XP
-            </span>
+            <h4 className={`font-bold text-sm ${a.unlocked ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>{a.name}</h4>
+            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${a.unlocked ? s.pill : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>+{a.xpReward} XP</span>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-            {a.unlocked ? a.description : (a.hint ?? a.description)}
-          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">{a.unlocked ? a.description : (a.hint ?? a.description)}</p>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${pct}%` }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className={`h-full rounded-full ${a.unlocked ? s.bar : 'bg-gray-400 dark:bg-gray-600'}`}
-            />
+            <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.6, delay: 0.1 }}
+              className={`h-full rounded-full ${a.unlocked ? s.bar : 'bg-gray-400 dark:bg-gray-600'}`} />
           </div>
           <p className="text-[10px] text-gray-400 mt-1">{a.progress} / {a.max}</p>
         </div>
@@ -216,9 +211,11 @@ const ProfilePage = () => {
     displayName: '', bio: '', location: '', website: '', favoriteSpecies: '',
   });
 
-  const isOwnProfile = !!user && (!userId || userId === user.id);
-  const favSpecies   = favorites.filter(f => f.item_type === 'species');
-  const favPlants    = favorites.filter(f => f.item_type === 'plant');
+  const isOwnProfile  = !!user && (!userId || userId === user.id);
+  // A guest is viewing someone else's profile (not logged in at all)
+  const isGuestView   = !user && !!userId;
+  const favSpecies    = favorites.filter(f => f.item_type === 'species');
+  const favPlants     = favorites.filter(f => f.item_type === 'plant');
 
   const achievements = useMemo<Achievement[]>(() => [
     { id: 'first_fav',     name: 'First Favorite',       category: 'collection', color: 'rose',    icon: Heart,        xpReward: 10, description: 'Save your first favorite species or plant.',    unlocked: favorites.length >= 1,   progress: Math.min(favorites.length, 1),   max: 1  },
@@ -278,7 +275,7 @@ const ProfilePage = () => {
     { id: 'activity',     label: 'Activity',     icon: TrendingUp },
   ] as const;
 
-  useEffect(() => { loadProfile(); }, [userId, user]);     // eslint-disable-line
+  useEffect(() => { loadProfile(); }, [userId, user]);       // eslint-disable-line
   useEffect(() => { fetchFavoriteDetails(); }, [favorites]); // eslint-disable-line
   useEffect(() => {
     if (!targetUserId) return;
@@ -480,24 +477,24 @@ const ProfilePage = () => {
                       {isEditing ? <><Save className="w-4 h-4" />Save</> : <><Edit2 className="w-4 h-4" />Edit</>}
                     </button>
                   )}
+                  {isGuestView && (
+                    <Link to="/login"
+                      className="flex items-center gap-1.5 px-3 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl transition-all text-sm">
+                      <LogIn className="w-4 h-4" />Log in
+                    </Link>
+                  )}
                 </div>
               </div>
 
               {/* Name / Level / Bio / Meta */}
               <div className="mb-4">
                 <div className="flex flex-wrap items-center gap-2.5 mb-1.5">
-                  <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white leading-tight">
-                    {profile.displayName}
-                  </h1>
+                  <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white leading-tight">{profile.displayName}</h1>
                   <LevelBadge info={levelInfo} size="sm" />
                 </div>
-                {profile.bio && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 leading-relaxed max-w-2xl">{profile.bio}</p>
-                )}
+                {profile.bio && <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 leading-relaxed max-w-2xl">{profile.bio}</p>}
                 <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                  {profile.location && (
-                    <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{profile.location}</span>
-                  )}
+                  {profile.location && <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{profile.location}</span>}
                   {profile.website && (
                     <a href={profile.website} target="_blank" rel="noopener noreferrer"
                       className="flex items-center gap-1 text-cyan-600 dark:text-cyan-400 hover:underline">
@@ -524,39 +521,85 @@ const ProfilePage = () => {
                 })}
               </div>
 
-              {/* Tabs */}
-              <div className="flex gap-0 overflow-x-auto no-scrollbar">
-                {tabs.map(tab => {
-                  const Icon = tab.icon;
-                  const active = activeTab === tab.id;
-                  return (
-                    <button key={tab.id} onClick={() => setActiveTab(tab.id as TabType)}
-                      className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
-                        active ? 'text-cyan-600 dark:text-cyan-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                      }`}>
-                      <Icon className="w-4 h-4" strokeWidth={2.5} />
-                      {tab.label}
-                      {'badge' in tab && (tab as any).badge > 0 && (
-                        <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-                          active ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300' : 'bg-gray-100 dark:bg-gray-800 text-gray-500'
-                        }`}>{(tab as any).badge}</span>
-                      )}
-                      {active && (
-                        <motion.div layoutId="activeProfileTab"
-                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400"
-                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+              {/* Tabs – hidden for guests */}
+              {!isGuestView && (
+                <div className="flex gap-0 overflow-x-auto no-scrollbar">
+                  {tabs.map(tab => {
+                    const Icon = tab.icon;
+                    const active = activeTab === tab.id;
+                    return (
+                      <button key={tab.id} onClick={() => setActiveTab(tab.id as TabType)}
+                        className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-bold whitespace-nowrap transition-colors ${
+                          active ? 'text-cyan-600 dark:text-cyan-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                        }`}>
+                        <Icon className="w-4 h-4" strokeWidth={2.5} />
+                        {tab.label}
+                        {'badge' in tab && (tab as any).badge > 0 && (
+                          <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                            active ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300' : 'bg-gray-100 dark:bg-gray-800 text-gray-500'
+                          }`}>{(tab as any).badge}</span>
+                        )}
+                        {active && (
+                          <motion.div layoutId="activeProfileTab"
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600 dark:bg-cyan-400"
+                            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Tab content */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+
+          {/* ── Guest view: show banner + public tanks only ── */}
+          {isGuestView ? (
+            <div className="space-y-5">
+              <GuestBanner />
+
+              {/* Still show featured (public) tanks since those are readable */}
+              {(featuredTanks.length > 0 || tanksLoading) && (
+                <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Waves className="w-5 h-5 text-cyan-500" strokeWidth={2.5} />
+                    <h3 className="font-black text-gray-900 dark:text-white">Featured Tanks</h3>
+                    {featuredTanks.length > 0 && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300">{featuredTanks.length}</span>}
+                  </div>
+                  {tanksLoading
+                    ? <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">{[1,2].map(i => <div key={i} className="h-28 bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse" />)}</div>
+                    : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {featuredTanks.map(tank => (
+                          <Link key={tank.id} to={tank.publicSlug ? `/tanks/${tank.publicSlug}` : '#'}
+                            className="group block bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/20 dark:to-blue-950/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-4 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all hover:shadow-md">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-black text-gray-900 dark:text-white truncate text-sm group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors">{tank.name}</h4>
+                                <p className="text-xs text-gray-500 mt-0.5">{tank.volumeLiters}L</p>
+                              </div>
+                              <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-cyan-500 transition-colors flex-shrink-0" strokeWidth={2.5} />
+                            </div>
+                            <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold mb-2 ${tankTypeColor(tank.type)}`}>
+                              {tank.type.charAt(0).toUpperCase() + tank.type.slice(1)}
+                            </span>
+                            <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                              {(tank.inhabitants?.fish?.length ?? 0) > 0 && <span className="flex items-center gap-1"><Fish className="w-3 h-3" />{tank.inhabitants!.fish.reduce((s,i)=>s+i.quantity,0)}</span>}
+                              {(tank.inhabitants?.plants?.length ?? 0) > 0 && <span className="flex items-center gap-1"><Leaf className="w-3 h-3" />{tank.inhabitants!.plants.reduce((s,i)=>s+i.quantity,0)}</span>}
+                              {tank.parameters?.ph && <span className="flex items-center gap-1"><Droplets className="w-3 h-3" />pH {tank.parameters.ph}</span>}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                  }
+                </div>
+              )}
+            </div>
+          ) : (
+
           <AnimatePresence mode="wait">
 
             {/* ════ OVERVIEW ════════════════════════════════════════════ */}
@@ -771,10 +814,7 @@ const ProfilePage = () => {
                             <Link to={`/species/${data.slug}`}
                               className="block bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-cyan-300 dark:hover:border-cyan-700 overflow-hidden transition-all">
                               <div className="aspect-square bg-gray-100 dark:bg-gray-700">
-                                {data.image_url
-                                  ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" />
-                                  : <div className="w-full h-full flex items-center justify-center"><Fish className="w-8 h-8 text-gray-300" /></div>
-                                }
+                                {data.image_url ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><Fish className="w-8 h-8 text-gray-300" /></div>}
                               </div>
                               <div className="p-2">
                                 <div className="text-xs font-bold text-gray-900 dark:text-white truncate">{data.common_name}</div>
@@ -793,7 +833,6 @@ const ProfilePage = () => {
                     </div>
                   </div>
                 )}
-
                 {favPlants.length > 0 && (
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
                     <div className="flex items-center gap-2 mb-4">
@@ -809,10 +848,7 @@ const ProfilePage = () => {
                             <Link to={`/plants/${data.slug}`}
                               className="block bg-gray-50 dark:bg-gray-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-700 overflow-hidden transition-all">
                               <div className="aspect-square bg-gray-100 dark:bg-gray-700">
-                                {data.image_url
-                                  ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" />
-                                  : <div className="w-full h-full flex items-center justify-center"><Leaf className="w-8 h-8 text-gray-300" /></div>
-                                }
+                                {data.image_url ? <img src={data.image_url} alt={data.common_name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><Leaf className="w-8 h-8 text-gray-300" /></div>}
                               </div>
                               <div className="p-2">
                                 <div className="text-xs font-bold text-gray-900 dark:text-white truncate">{data.common_name}</div>
@@ -831,7 +867,6 @@ const ProfilePage = () => {
                     </div>
                   </div>
                 )}
-
                 {favorites.length === 0 && (
                   <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-12 text-center">
                     <Heart className="w-10 h-10 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
@@ -866,7 +901,6 @@ const ProfilePage = () => {
                       className="h-full bg-amber-500 rounded-full" />
                   </div>
                 </div>
-
                 <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
                   {achievementCategories.map(cat => (
                     <button key={cat} onClick={() => setAchFilter(cat)}
@@ -878,7 +912,6 @@ const ProfilePage = () => {
                     </button>
                   ))}
                 </div>
-
                 {filteredAchievements.some(a => a.unlocked) && (
                   <div>
                     <h4 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
@@ -889,7 +922,6 @@ const ProfilePage = () => {
                     </div>
                   </div>
                 )}
-
                 {filteredAchievements.some(a => !a.unlocked) && (
                   <div>
                     <h4 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
@@ -940,6 +972,7 @@ const ProfilePage = () => {
             )}
 
           </AnimatePresence>
+          )}
         </div>
       </div>
     </PageTransition>
