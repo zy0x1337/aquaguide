@@ -15,7 +15,8 @@ export interface Reminder {
   enabled: boolean;
 }
 
-const STORAGE_KEY = 'aquaguide_reminders_v2';
+const STORAGE_KEY    = 'aquaguide_reminders_v2';
+const VAPID_USED_KEY = 'aquaguide_vapid_used'; // tracks which VAPID key was used for current sub
 
 // ── localStorage helpers ───────────────────────────────────────────────────
 
@@ -84,12 +85,9 @@ export function completeReminder(tankId: string, type: Reminder['type']): void {
 
 // ── Supabase sync ─────────────────────────────────────────────────────────────
 
-/** Upsert all reminders into reminder_schedules so the Edge Function can read them. */
 async function syncRemindersToSupabase(reminders: Reminder[]): Promise<void> {
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return;
-
-  if (reminders.length === 0) return;
+  if (!user || reminders.length === 0) return;
 
   await supabase.from('reminder_schedules').upsert(
     reminders.map(r => ({
@@ -120,7 +118,11 @@ function urlBase64ToUint8Array(b64: string): Uint8Array {
 
 /**
  * Subscribe the current browser to Web Push and save the subscription
- * to the push_subscriptions table so the Edge Function can reach this device.
+ * to push_subscriptions so the Edge Function can reach this device.
+ *
+ * If the VAPID key changed since the last subscription (e.g. first run after
+ * adding VITE_VAPID_PUBLIC_KEY), the old subscription is discarded and a fresh
+ * one is created with the correct key.
  */
 export async function registerPushSubscription(): Promise<void> {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
@@ -135,15 +137,23 @@ export async function registerPushSubscription(): Promise<void> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    const reg = await navigator.serviceWorker.ready;
+    const reg        = await navigator.serviceWorker.ready;
+    const usedBefore = localStorage.getItem(VAPID_USED_KEY);
+    let   sub        = await reg.pushManager.getSubscription();
 
-    // Reuse existing subscription if VAPID key matches, otherwise re-subscribe
-    let sub = await reg.pushManager.getSubscription();
+    // VAPID key changed (or first time with VAPID) – old sub is unusable, replace it
+    if (sub && usedBefore !== vapidKey) {
+      console.log('[Push] VAPID key changed – re-subscribing…');
+      await sub.unsubscribe();
+      sub = null;
+    }
+
     if (!sub) {
       sub = await reg.pushManager.subscribe({
         userVisibleOnly:      true,
         applicationServerKey: urlBase64ToUint8Array(vapidKey),
       });
+      localStorage.setItem(VAPID_USED_KEY, vapidKey);
     }
 
     const json = sub.toJSON() as {
@@ -160,8 +170,8 @@ export async function registerPushSubscription(): Promise<void> {
       updated_at: new Date().toISOString(),
     }, { onConflict: 'endpoint' });
 
-    if (error) console.error('[Push] upsert error:', error);
-    else console.log('[Push] subscription saved to Supabase ✓');
+    if (error) console.error('[Push] upsert error:', error.message);
+    else       console.log('[Push] subscription saved to Supabase ✓');
   } catch (e) {
     console.error('[Push] registerPushSubscription failed:', e);
   }
@@ -173,15 +183,10 @@ export function isNotificationSupported(): boolean {
   return 'Notification' in window;
 }
 
-/**
- * Request browser notification permission.
- * If granted, automatically registers the Web Push subscription in Supabase.
- */
 export async function requestNotificationPermission(): Promise<NotificationPermission> {
   if (!isNotificationSupported()) return 'denied';
   const result = await Notification.requestPermission();
   if (result === 'granted') {
-    // Register + persist push subscription so Edge Function can reach this device
     registerPushSubscription().catch(() => {});
   }
   return result;
@@ -215,7 +220,6 @@ export async function sendNotification(
       return;
     } catch { /* fall through */ }
   }
-
   new Notification(title, { body, icon: '/icon-192.png', tag: options.tag });
 }
 
@@ -234,11 +238,9 @@ function markFired(k: string) {
 
 export async function checkDueReminders(): Promise<void> {
   if (Notification.permission !== 'granted') return;
-
   const now    = Date.now();
   const fired  = getFired();
   const active = getReminders().filter(r => r.enabled);
-
   for (const r of active) {
     const due     = new Date(r.nextDate).getTime();
     const fireKey = `${r.id}::${r.nextDate}`;
@@ -261,10 +263,8 @@ export function startReminderSystem(): void {
   checkDueReminders();
   _interval = setInterval(checkDueReminders, 60_000);
 
-  // Ensure push subscription is registered in DB on every app start
   if (Notification.permission === 'granted') {
     registerPushSubscription().catch(() => {});
-    // Also sync current localStorage reminders to DB (catches missed syncs)
     syncRemindersToSupabase(getReminders()).catch(() => {});
   }
 
