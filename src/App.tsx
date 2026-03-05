@@ -9,6 +9,7 @@ import { ToastProvider } from './contexts/ToastContext';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
 import { startReminderSystem } from './lib/notifications';
+import { usePushSubscription } from './hooks/usePushSubscription';
 import { Loader2 } from 'lucide-react';
 
 import NotFoundPage from './pages/NotFoundPage';
@@ -59,6 +60,9 @@ const PageLoader = () => (
 function App() {
   useEffect(() => { startReminderSystem(); }, []);
 
+  // Subscribe to Web Push + mirror reminders to Supabase for background delivery
+  usePushSubscription();
+
   return (
     <ErrorBoundary>
       <ToastProvider>
@@ -95,17 +99,17 @@ function App() {
               {/* Public tank profiles – no auth required */}
               <Route path="/tanks/:slug" element={<PublicTankPage />} />
 
-              <Route path="/dashboard"   element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-              <Route path="/my-tanks"    element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
+              <Route path="/dashboard"    element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+              <Route path="/my-tanks"     element={<ProtectedRoute><MyTanksPage /></ProtectedRoute>} />
               <Route path="/my-tanks/:id" element={<ProtectedRoute><TankDetailPage /></ProtectedRoute>} />
 
               <Route path="/tank-builder" element={<TankBuilderPage />} />
 
               <Route path="/compare" element={<ComparisonPage />} />
 
-              <Route path="/settings"       element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-              <Route path="/favorites"      element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
-              <Route path="/profile"        element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="/settings"        element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+              <Route path="/favorites"       element={<ProtectedRoute><FavoritesPage /></ProtectedRoute>} />
+              <Route path="/profile"         element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="/profile/:userId" element={<ProfilePage />} />
 
               <Route path="/admin"         element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
