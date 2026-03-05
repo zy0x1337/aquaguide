@@ -15,7 +15,7 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { useAuth } from '../lib/supabase/auth';
+import { useAuth } from '../contexts/AuthContext';   // ✔ correct path
 import { supabase } from '../lib/supabase';
 import { getReminders } from '../lib/notifications';
 
