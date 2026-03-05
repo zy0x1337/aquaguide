@@ -15,6 +15,7 @@ import {
 // ── Config ────────────────────────────────────────────────────────────────
 
 const PRESETS: { label: string; days: number }[] = [
+  { label: 'Today',    days: 0  },
   { label: 'Tomorrow', days: 1  },
   { label: '+ 3 days', days: 3  },
   { label: '+ 1 week', days: 7  },
@@ -73,7 +74,8 @@ function DateEditor({
   onSave: (nextDate: string, frequency: Reminder['frequency']) => void;
   onClose: () => void;
 }) {
-  const initialDays = Math.max(1, daysUntil(reminder.nextDate));
+  // Allow 0 (today) – clamp only below 0
+  const initialDays = Math.max(0, daysUntil(reminder.nextDate));
   const initialHour = new Date(reminder.nextDate).getHours() || 10;
 
   const [days,      setDays]      = useState(initialDays);
@@ -158,7 +160,9 @@ function DateEditor({
             <Clock className="w-3.5 h-3.5 text-indigo-500" />
             <span>
               <span className="font-bold text-gray-900 dark:text-white">
-                {preview.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' })}
+                {days === 0
+                  ? 'Today'
+                  : preview.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' })}
               </span>
               {' · '}
               {String(hour).padStart(2, '0')}:00
@@ -190,9 +194,9 @@ function DateEditor({
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function ReminderPanel({ tankId, tankName }: { tankId: string; tankName: string }) {
-  const [reminders,    setReminders]    = useState<Reminder[]>([]);
+  const [reminders,     setReminders]     = useState<Reminder[]>([]);
   const [hasPermission, setHasPermission] = useState(false);
-  const [editingId,    setEditingId]    = useState<string | null>(null);
+  const [editingId,     setEditingId]     = useState<string | null>(null);
 
   const load = () => {
     const rs = getTankReminders(tankId);
@@ -278,9 +282,9 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
       {/* Reminder cards */}
       <div className="divide-y divide-gray-100 dark:divide-gray-800">
         {reminders.map((r) => {
-          const cfg      = TYPE_CFG[r.type];
+          const cfg       = TYPE_CFG[r.type];
           const isEditing = editingId === r.id;
-          const overdue  = r.enabled && new Date(r.nextDate).getTime() < Date.now();
+          const overdue   = r.enabled && new Date(r.nextDate).getTime() < Date.now();
           const freqLabel = FREQUENCIES.find(f => f.value === r.frequency)?.label;
 
           return (
@@ -299,7 +303,7 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-black text-gray-900 dark:text-white truncate">
-                    {r.type === 'water_change'    ? 'Water Change'
+                    {r.type === 'water_change'     ? 'Water Change'
                      : r.type === 'parameter_check' ? 'Check Parameters'
                      : 'Clean Filter'}
                   </p>
