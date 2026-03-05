@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck } from 'lucide-react';
+import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck, Camera } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { TankConfig, TankItem } from '../types/builder';
@@ -12,6 +12,7 @@ import AddMaintenanceModal from '../components/tanks/AddMaintenanceModal';
 import ParameterChart from '../components/tanks/ParameterChart';
 import MaintenanceTimeline from '../components/tanks/MaintenanceTimeline';
 import ReminderPanel from '../components/notifications/ReminderPanel';
+import { TankShareModal } from '../components/tanks/TankShareModal';
 import { allSpecies } from '../data/species';
 import { allPlants } from '../data/plants';
 import { getTankById, updateTank, addInhabitant, removeInhabitant, publishTank, unpublishTank, setFeaturedOnProfile } from '../lib/supabase/tanks';
@@ -34,6 +35,7 @@ const TankDetailPage = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'parameters' | 'maintenance' | 'reminders'>('overview');
   const [isPublishing, setIsPublishing] = useState(false);
   const [isFeaturing, setIsFeaturing] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const [isInhabitantModalOpen, setIsInhabitantModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -74,10 +76,7 @@ const TankDetailPage = () => {
     setIsPublishing(true);
     try {
       if (tank.isPublic) {
-        // If unpublishing a featured tank, also remove the feature flag
-        if (tank.isFeaturedOnProfile) {
-          await setFeaturedOnProfile(id, false);
-        }
+        if (tank.isFeaturedOnProfile) await setFeaturedOnProfile(id, false);
         const updated = await unpublishTank(id);
         setTank(updated);
         toast.success('Tank is now private', 'The public link has been deactivated.');
@@ -98,7 +97,6 @@ const TankDetailPage = () => {
   // ─── Feature on profile toggle ─────────────────────────────────────────────────────
   const handleToggleFeatured = async () => {
     if (!tank || !id) return;
-    // Must be public first
     if (!tank.isPublic) {
       toast.error('Tank must be public', 'Share the tank first, then pin it to your profile.');
       return;
@@ -119,7 +117,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Copy public link (already public) ──────────────────────────────────────────────
+  // ─── Copy public link ──────────────────────────────────────────────────────────────
   const handleCopyLink = async () => {
     if (!tank?.publicSlug) return;
     const url = `${window.location.origin}/tanks/${tank.publicSlug}`;
@@ -295,7 +293,7 @@ const TankDetailPage = () => {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              {/* Share my Tank */}
+              {/* Share my Tank – toggle public / private */}
               <button onClick={handleTogglePublic} disabled={isPublishing}
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-60 ${
                   tank.isPublic
@@ -315,7 +313,16 @@ const TankDetailPage = () => {
                 </button>
               )}
 
-              {/* Pin to profile – always visible, disabled when tank is not public yet */}
+              {/* Share Image – OG-image with exact water values (always visible) */}
+              <button
+                onClick={() => setIsShareModalOpen(true)}
+                className="flex items-center gap-2 bg-teal-400/20 hover:bg-teal-400/30 border border-teal-300/40 hover:border-teal-300/70 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit"
+                title="Generate a shareable image with your exact water parameters"
+              >
+                <Camera className="w-4 h-4" />Share Image
+              </button>
+
+              {/* Pin to profile – always visible, disabled when not public */}
               <button onClick={handleToggleFeatured} disabled={isFeaturing || !tank.isPublic}
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-50 disabled:cursor-not-allowed ${
                   tank.isFeaturedOnProfile
@@ -397,6 +404,7 @@ const TankDetailPage = () => {
       <EditTankModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} onSubmit={handleEditTank} tank={tank} />
       <AddParameterModal isOpen={isParameterModalOpen} onClose={() => setIsParameterModalOpen(false)} onSubmit={handleAddParameterReading} tankType={tank.type} />
       <AddMaintenanceModal isOpen={isMaintenanceModalOpen} onClose={() => setIsMaintenanceModalOpen(false)} onSubmit={handleAddMaintenanceLog} />
+      <TankShareModal open={isShareModalOpen} tank={tank} onClose={() => setIsShareModalOpen(false)} />
     </div>
   );
 };
