@@ -1,5 +1,5 @@
-// Simple Notification System for AquaGuide
-// Checks reminders every minute and sends browser notifications
+// AquaGuide Notification System
+// localStorage-based (device-local) – syncs across tabs via storage event.
 
 export interface Reminder {
   id: string;
@@ -8,208 +8,182 @@ export interface Reminder {
   type: 'water_change' | 'parameter_check' | 'filter_clean';
   title: string;
   message: string;
-  nextDate: string; // ISO string for easy storage
+  nextDate: string;   // ISO string
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly';
   enabled: boolean;
 }
 
 const STORAGE_KEY = 'aquaguide_reminders_v2';
 
-// Get all reminders from localStorage
+// ── CRUD ─────────────────────────────────────────────────────────────────────
+
 export function getReminders(): Reminder[] {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
+    const s = localStorage.getItem(STORAGE_KEY);
+    return s ? JSON.parse(s) : [];
+  } catch { return []; }
 }
 
-// Save reminders to localStorage
 export function saveReminders(reminders: Reminder[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders));
+  // Let other tabs know
+  window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }));
 }
 
-// Get reminders for a specific tank
 export function getTankReminders(tankId: string): Reminder[] {
   return getReminders().filter(r => r.tankId === tankId);
 }
 
-// Create default reminders for a new tank
 export function createDefaultReminders(tankId: string, tankName: string): void {
-  const existing = getTankReminders(tankId);
-  if (existing.length > 0) return; // Already exists
+  if (getTankReminders(tankId).length > 0) return;
 
-  const now = new Date();
-  const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-  nextWeek.setHours(10, 0, 0, 0); // 10 AM
+  const now  = new Date();
+  const in7d = new Date(now.getTime() + 7  * 86_400_000);
+  const in30d = new Date(now.getTime() + 30 * 86_400_000);
+  in7d.setHours(10, 0, 0, 0);
+  in30d.setHours(10, 0, 0, 0);
 
   const defaults: Reminder[] = [
-    {
-      id: `${tankId}-water-change`,
-      tankId,
-      tankName,
-      type: 'water_change',
-      title: `💧 Water Change - ${tankName}`,
-      message: `Time for a water change in ${tankName}`,
-      nextDate: nextWeek.toISOString(),
-      frequency: 'weekly',
-      enabled: false,
-    },
-    {
-      id: `${tankId}-param-check`,
-      tankId,
-      tankName,
-      type: 'parameter_check',
-      title: `🧪 Check Parameters - ${tankName}`,
-      message: `Test water parameters in ${tankName}`,
-      nextDate: nextWeek.toISOString(),
-      frequency: 'weekly',
-      enabled: false,
-    },
-    {
-      id: `${tankId}-filter-clean`,
-      tankId,
-      tankName,
-      type: 'filter_clean',
-      title: `🔧 Clean Filter - ${tankName}`,
-      message: `Time to clean the filter in ${tankName}`,
-      nextDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-      frequency: 'monthly',
-      enabled: false,
-    },
+    { id: `${tankId}-water-change`, tankId, tankName, type: 'water_change',    title: `💧 Water Change – ${tankName}`,      message: `Time for a water change in ${tankName}`,      nextDate: in7d.toISOString(),  frequency: 'weekly',  enabled: false },
+    { id: `${tankId}-param-check`,  tankId, tankName, type: 'parameter_check', title: `🧪 Check Parameters – ${tankName}`,  message: `Test water parameters in ${tankName}`,        nextDate: in7d.toISOString(),  frequency: 'weekly',  enabled: false },
+    { id: `${tankId}-filter-clean`, tankId, tankName, type: 'filter_clean',    title: `🔧 Clean Filter – ${tankName}`,      message: `Time to clean the filter in ${tankName}`,    nextDate: in30d.toISOString(), frequency: 'monthly', enabled: false },
   ];
 
-  const all = getReminders();
-  saveReminders([...all, ...defaults]);
+  saveReminders([...getReminders(), ...defaults]);
 }
 
-// Toggle reminder on/off
 export function toggleReminder(reminderId: string, enabled: boolean): void {
-  const reminders = getReminders();
-  const updated = reminders.map(r =>
-    r.id === reminderId ? { ...r, enabled } : r
-  );
-  saveReminders(updated);
+  saveReminders(getReminders().map(r => r.id === reminderId ? { ...r, enabled } : r));
 }
 
-// Update reminder next date
 export function updateReminderDate(reminderId: string, nextDate: string): void {
-  const reminders = getReminders();
-  const updated = reminders.map(r =>
-    r.id === reminderId ? { ...r, nextDate } : r
-  );
-  saveReminders(updated);
+  saveReminders(getReminders().map(r => r.id === reminderId ? { ...r, nextDate } : r));
 }
 
-// Complete a reminder (reschedule to next occurrence)
+export function deleteReminder(reminderId: string): void {
+  saveReminders(getReminders().filter(r => r.id !== reminderId));
+}
+
+// ── Complete (reschedule) ─────────────────────────────────────────────────────
+
 export function completeReminder(tankId: string, type: Reminder['type']): void {
-  const reminders = getReminders();
-  const reminder = reminders.find(r => r.tankId === tankId && r.type === type);
-  
+  const reminder = getReminders().find(r => r.tankId === tankId && r.type === type);
   if (!reminder || !reminder.enabled) return;
 
-  // Calculate next date based on frequency
-  const now = new Date();
-  const daysToAdd = {
-    daily: 1,
-    weekly: 7,
-    biweekly: 14,
-    monthly: 30,
-  }[reminder.frequency];
+  const daysMap: Record<Reminder['frequency'], number> = { daily: 1, weekly: 7, biweekly: 14, monthly: 30 };
+  const next = new Date(Date.now() + daysMap[reminder.frequency] * 86_400_000);
+  next.setHours(10, 0, 0, 0);
 
-  const nextDate = new Date(now.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
-  
-  const updated = reminders.map(r =>
-    r.id === reminder.id ? { ...r, nextDate: nextDate.toISOString() } : r
-  );
-  
-  saveReminders(updated);
-  console.log(`✅ Rescheduled ${reminder.title} to ${nextDate.toLocaleString()}`);
+  saveReminders(getReminders().map(r => r.id === reminder.id ? { ...r, nextDate: next.toISOString() } : r));
 }
 
-// Delete a reminder
-export function deleteReminder(reminderId: string): void {
-  const reminders = getReminders().filter(r => r.id !== reminderId);
-  saveReminders(reminders);
-}
+// ── Browser notifications ─────────────────────────────────────────────────────
 
-// Request notification permission
-export async function requestNotificationPermission(): Promise<NotificationPermission> {
-  if (!('Notification' in window)) {
-    return 'denied';
-  }
-  return await Notification.requestPermission();
-}
-
-// Check if notifications are supported
 export function isNotificationSupported(): boolean {
   return 'Notification' in window;
 }
 
-// Send a notification
-export async function sendNotification(title: string, body: string): Promise<void> {
+export async function requestNotificationPermission(): Promise<NotificationPermission> {
+  if (!isNotificationSupported()) return 'denied';
+  return Notification.requestPermission();
+}
+
+/**
+ * Show a native browser notification.
+ * Prefers Service Worker (works when tab is backgrounded);
+ * falls back to new Notification() if SW not ready yet.
+ */
+export async function sendNotification(
+  title: string,
+  body: string,
+  url = '/my-tanks',
+  tag?: string,
+): Promise<void> {
   if (Notification.permission !== 'granted') return;
 
-  try {
-    const registration = await navigator.serviceWorker.ready;
-    await registration.showNotification(title, {
+  // Try via SW (survives backgrounded tab on desktop/Android)
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'SHOW_NOTIFICATION',
+      title,
       body,
-      icon: '/icon-192.png',
-      badge: '/icon-192.png',
-      tag: `reminder-${Date.now()}`,
-      requireInteraction: true,
-      vibrate: [200, 100, 200],
+      url,
+      tag: tag ?? `aquaguide-${Date.now()}`,
     });
-  } catch (error) {
-    console.error('Failed to send notification:', error);
-    // Fallback to regular notification
-    new Notification(title, { body, icon: '/icon-192.png' });
+    return;
+  }
+
+  // SW not controlling yet (first load / iOS) – use SW registration if available
+  if ('serviceWorker' in navigator) {
+    try {
+      const reg = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise<never>((_, reject) => setTimeout(() => reject(new Error('SW timeout')), 3_000)),
+      ]);
+      await reg.showNotification(title, {
+        body,
+        icon: '/icon-192.png',
+        badge: '/icon-192.png',
+        tag: tag ?? `aquaguide-${Date.now()}`,
+        data: { url },
+        requireInteraction: true,
+        vibrate: [200, 100, 200],
+      });
+      return;
+    } catch (_) { /* fall through */ }
+  }
+
+  // Final fallback: plain Notification API
+  try {
+    new Notification(title, { body, icon: '/icon-192.png', tag: tag ?? `aquaguide-${Date.now()}` });
+  } catch (err) {
+    console.error('[Notifications] sendNotification failed:', err);
   }
 }
 
-// Check for due reminders and send notifications
+// ── Reminder checker (called every 60 s by startReminderSystem) ───────────────
+
+const FIRED_KEY = 'aquaguide_fired_notifications';
+
+function getFired(): Set<string> {
+  try { return new Set(JSON.parse(sessionStorage.getItem(FIRED_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+
+function markFired(id: string): void {
+  const fired = getFired();
+  fired.add(id);
+  sessionStorage.setItem(FIRED_KEY, JSON.stringify([...fired]));
+}
+
 export function checkDueReminders(): void {
   if (Notification.permission !== 'granted') return;
 
-  const reminders = getReminders().filter(r => r.enabled);
-  const now = Date.now();
+  const now   = Date.now();
+  const fired = getFired();
+  const active = getReminders().filter(r => r.enabled);
 
-  reminders.forEach(reminder => {
-    const dueDate = new Date(reminder.nextDate).getTime();
-    
-    // If reminder is due (within last hour to avoid spam)
-    if (dueDate <= now && dueDate > now - 60 * 60 * 1000) {
-      sendNotification(reminder.title, reminder.message);
-      console.log(`🔔 Sent notification: ${reminder.title}`);
-      
-      // Auto-reschedule after notification
-      completeReminder(reminder.tankId, reminder.type);
+  for (const r of active) {
+    const due = new Date(r.nextDate).getTime();
+    // Fire if overdue by at most 1 hour (avoids firing old reminders on first load)
+    if (due <= now && due > now - 3_600_000 && !fired.has(r.id + r.nextDate)) {
+      sendNotification(r.title, r.message, `/my-tanks`, r.id);
+      markFired(r.id + r.nextDate);
+      completeReminder(r.tankId, r.type);
     }
-  });
+  }
 }
 
-// Start the reminder checker (call once on app load)
-let checkInterval: number | null = null;
+// ── System lifecycle ──────────────────────────────────────────────────────────
+
+let _interval: ReturnType<typeof setInterval> | null = null;
 
 export function startReminderSystem(): void {
-  if (checkInterval) return; // Already running
-
-  // Check immediately
+  if (_interval) return;
   checkDueReminders();
-
-  // Then check every minute
-  checkInterval = window.setInterval(() => {
-    checkDueReminders();
-  }, 60 * 1000);
-
-  console.log('✅ Reminder system started');
+  _interval = setInterval(checkDueReminders, 60_000);
 }
 
 export function stopReminderSystem(): void {
-  if (checkInterval) {
-    window.clearInterval(checkInterval);
-    checkInterval = null;
-    console.log('⏹️ Reminder system stopped');
-  }
+  if (_interval) { clearInterval(_interval); _interval = null; }
 }
