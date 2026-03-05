@@ -1,0 +1,7 @@
+# Edge Function config for send-push-reminders
+#
+# verify_jwt = false lets pg_cron call this function using the public anon key
+# without needing a full service-role JWT.
+# The function itself uses SUPABASE_SERVICE_ROLE_KEY (auto-injected) internally.
+[functions.send-push-reminders]
+verify_jwt = false

@@ -4,8 +4,6 @@
 -- ───────────────────────────────────────────────────────────────────
 
 -- 1. Push Subscriptions
---    One row per browser/device per user.
---    Created by the frontend after Notification.requestPermission() = granted.
 CREATE TABLE IF NOT EXISTS push_subscriptions (
   id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     UUID        REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
@@ -24,12 +22,9 @@ CREATE POLICY "Users manage own push subscriptions"
   USING  (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- 2. Reminder Schedules
---    Server-side mirror of localStorage reminders.
---    Synced from the frontend so the Edge Function can read them
---    even when every browser tab is closed.
+-- 2. Reminder Schedules (server-side mirror of localStorage reminders)
 CREATE TABLE IF NOT EXISTS reminder_schedules (
-  id          TEXT        PRIMARY KEY,   -- same id as localStorage: "<tankId>-water-change" etc.
+  id          TEXT        PRIMARY KEY,
   user_id     UUID        REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
   tank_id     TEXT        NOT NULL,
   tank_name   TEXT        NOT NULL,
@@ -49,13 +44,13 @@ CREATE POLICY "Users manage own reminder schedules"
   USING  (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- Edge Function also needs to read these (service role bypasses RLS automatically).
-
 -- 3. pg_cron: call Edge Function every 5 minutes
---    Requires pg_cron + pg_net extensions (enabled by default in Supabase).
 --
---    BEFORE running this block, set your service role key once:
---      ALTER DATABASE postgres SET "app.service_role_key" = '<your_service_role_key>';
+-- The Edge Function is deployed with verify_jwt = false (see config.toml).
+-- The anon key below is the public/publishable key – already in the frontend
+-- bundle, so putting it here adds zero security risk.
+--
+-- Requires pg_cron + pg_net extensions (both on by default in Supabase).
 --
 SELECT cron.schedule(
   'aquaguide-send-push-reminders',
@@ -65,7 +60,7 @@ SELECT cron.schedule(
       url     := 'https://plyiyuctfphxtvzyqttz.supabase.co/functions/v1/send-push-reminders',
       headers := jsonb_build_object(
         'Content-Type',  'application/json',
-        'Authorization', 'Bearer ' || current_setting('app.service_role_key', true)
+        'Authorization', 'Bearer sb_publishable_TBiJDamJ_bJY8Y-KzX4gGg_UFxqMCFv'
       ),
       body    := '{}'::jsonb
     );
