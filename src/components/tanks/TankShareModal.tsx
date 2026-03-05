@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Download, Share2, Check, Loader2, FileText, Image } from 'lucide-react';
 import { Tank } from '../../types/tank';
 import { generateTankDetailImage, generateTankTextSummary } from '../../utils/tank-detail-canvas';
+import { copyToClipboard } from '../../utils/tank-share';
 
 interface Props {
   open: boolean;
@@ -22,7 +23,6 @@ type ActionState = 'idle' | 'done';
 export const TankShareModal = ({ open, tank, onClose }: Props) => {
   const [dataUrl, setDataUrl]           = useState<string | null>(null);
   const [loading, setLoading]           = useState(false);
-  const [copyImgState, setCopyImgState] = useState<ActionState>('idle');
   const [copyTxtState, setCopyTxtState] = useState<ActionState>('idle');
   const [canShare, setCanShare]         = useState(false);
 
@@ -59,7 +59,7 @@ export const TankShareModal = ({ open, tank, onClose }: Props) => {
 
   const handleCopyText = async () => {
     const text = generateTankTextSummary(tank);
-    try { await navigator.clipboard.writeText(text); } catch { prompt('Copy this:', text); }
+    await copyToClipboard(text); // reuses existing utility with execCommand fallback
     setCopyTxtState('done');
     setTimeout(() => setCopyTxtState('idle'), 2200);
   };
@@ -128,7 +128,7 @@ export const TankShareModal = ({ open, tank, onClose }: Props) => {
                   {loading && (
                     <div className="flex flex-col items-center gap-3 text-slate-400">
                       <Loader2 className="w-10 h-10 animate-spin text-teal-500" />
-                      <span className="text-sm font-semibold">Generating preview…</span>
+                      <span className="text-sm font-semibold">Generating preview\u2026</span>
                     </div>
                   )}
                   {dataUrl && !loading && (
@@ -136,14 +136,12 @@ export const TankShareModal = ({ open, tank, onClose }: Props) => {
                   )}
                 </div>
 
-                {/* Hint */}
                 <p className="mt-3 text-center text-xs text-slate-400 dark:text-slate-500">
-                  Shows your real measured values – ideal for getting help online
+                  Shows your real measured values \u2013 ideal for getting help online
                 </p>
 
                 {/* Action buttons */}
                 <div className="mt-4 grid grid-cols-3 gap-3">
-                  {/* Download PNG */}
                   <button
                     onClick={handleDownload}
                     disabled={!dataUrl}
@@ -153,7 +151,6 @@ export const TankShareModal = ({ open, tank, onClose }: Props) => {
                     Download PNG
                   </button>
 
-                  {/* Copy as Text (Reddit) */}
                   <button
                     onClick={handleCopyText}
                     className={`flex flex-col items-center gap-2 py-4 rounded-2xl font-bold text-sm transition-all ${
@@ -166,7 +163,6 @@ export const TankShareModal = ({ open, tank, onClose }: Props) => {
                     {copyTxtState === 'done' ? 'Copied!' : 'Copy Text'}
                   </button>
 
-                  {/* Web Share / fallback */}
                   <button
                     onClick={handleWebShare}
                     className="flex flex-col items-center gap-2 py-4 rounded-2xl font-bold text-sm bg-gradient-to-br from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white transition-all shadow-lg shadow-cyan-500/25"

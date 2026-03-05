@@ -7,6 +7,7 @@
  */
 
 import { Tank } from '../types/tank';
+import { roundRect } from './canvas-helpers';
 
 const W = 1200;
 const H = 630;
@@ -18,23 +19,6 @@ interface ParamCard {
   value: string;
   status: StatusColor;
   statusLabel: string;
-}
-
-function roundRect(
-  ctx: CanvasRenderingContext2D,
-  x: number, y: number, w: number, h: number, r: number
-) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
 }
 
 function paramStatus(label: string, val: number): { color: StatusColor; text: string } {
@@ -72,7 +56,7 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
 
   // ─── Background ────────────────────────────────────────────────────────────
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0,   '#0f172a'); // slate-900
+  bg.addColorStop(0,   '#0f172a');
   bg.addColorStop(0.6, '#0d1525');
   bg.addColorStop(1,   '#050d1a');
   ctx.fillStyle = bg;
@@ -107,31 +91,25 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
 
   // ─── Logo badge ──────────────────────────────────────────────────────────────
   const logoGrad = ctx.createLinearGradient(52, 40, 96, 84);
-  logoGrad.addColorStop(0, '#14b8a6'); // teal
-  logoGrad.addColorStop(1, '#06b6d4'); // cyan
+  logoGrad.addColorStop(0, '#14b8a6');
+  logoGrad.addColorStop(1, '#06b6d4');
   roundRect(ctx, 52, 40, 44, 44, 12);
-  ctx.fillStyle = logoGrad;
-  ctx.fill();
+  ctx.fillStyle = logoGrad; ctx.fill();
   ctx.font = 'bold 26px sans-serif';
-  ctx.fillStyle = '#fff';
-  ctx.textAlign = 'center';
+  ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
   ctx.fillText('A', 74, 72);
 
   ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, sans-serif';
-  ctx.fillStyle = '#94a3b8';
-  ctx.textAlign = 'left';
+  ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left';
   ctx.fillText('AquaGuide', 108, 69);
 
-  // "My Tank" label top-right
+  // "My Tank" badge top-right
   roundRect(ctx, W - 200, 36, 148, 36, 18);
-  ctx.fillStyle = 'rgba(20,184,166,0.18)';
-  ctx.fill();
+  ctx.fillStyle = 'rgba(20,184,166,0.18)'; ctx.fill();
   roundRect(ctx, W - 200, 36, 148, 36, 18);
-  ctx.strokeStyle = 'rgba(20,184,166,0.4)';
-  ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.strokeStyle = 'rgba(20,184,166,0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
   ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, sans-serif';
-  ctx.fillStyle = '#5eead4';
-  ctx.textAlign = 'center';
+  ctx.fillStyle = '#5eead4'; ctx.textAlign = 'center';
   ctx.fillText('My Tank', W - 126, 59);
 
   // ─── Tank name + sub-line ───────────────────────────────────────────────────
@@ -139,8 +117,7 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
   nameGrad.addColorStop(0, '#ffffff');
   nameGrad.addColorStop(1, '#99f6e4');
   ctx.font = 'bold 64px -apple-system, BlinkMacSystemFont, sans-serif';
-  ctx.fillStyle = nameGrad;
-  ctx.textAlign = 'left';
+  ctx.fillStyle = nameGrad; ctx.textAlign = 'left';
   const displayName = tank.name.length > 28 ? tank.name.slice(0, 28) + '\u2026' : tank.name;
   ctx.fillText(displayName, 56, 160);
 
@@ -160,19 +137,16 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
   subDots.forEach(([color, label]) => {
     ctx.beginPath(); ctx.arc(dotX + 7, 192, 7, 0, Math.PI * 2);
     ctx.fillStyle = color; ctx.fill();
-    ctx.fillStyle = '#94a3b8';
-    ctx.textAlign = 'left';
+    ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left';
     ctx.fillText(label, dotX + 20, 200);
     dotX += ctx.measureText(label).width + 48;
   });
 
   // ─── WATER PARAMETERS section ─────────────────────────────────────────────
   ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, sans-serif';
-  ctx.fillStyle = 'rgba(148,163,184,0.6)';
-  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(148,163,184,0.6)'; ctx.textAlign = 'left';
   ctx.fillText('WATER PARAMETERS', 56, 238);
 
-  // Build param cards from the tank's actual values
   const p = tank.parameters;
   const rawCards: Array<{ label: string; rawVal: number; display: string }> = [
     { label: 'pH',      rawVal: p.ph,      display: String(p.ph) },
@@ -180,9 +154,9 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
     { label: 'Ammonia', rawVal: p.ammonia, display: `${p.ammonia} ppm` },
     { label: 'Nitrite', rawVal: p.nitrite, display: `${p.nitrite} ppm` },
     { label: 'Nitrate', rawVal: p.nitrate, display: `${p.nitrate} ppm` },
-    ...(p.gh   ? [{ label: 'GH',      rawVal: p.gh,   display: `${p.gh}\u00b0dGH` }]   : []),
-    ...(p.kh   ? [{ label: 'KH',      rawVal: p.kh,   display: `${p.kh}\u00b0dKH` }]   : []),
-    ...(p.tds  ? [{ label: 'TDS',     rawVal: p.tds,  display: `${p.tds} ppm` }]        : []),
+    ...(p.gh  ? [{ label: 'GH',  rawVal: p.gh,  display: `${p.gh}\u00b0dGH`  }] : []),
+    ...(p.kh  ? [{ label: 'KH',  rawVal: p.kh,  display: `${p.kh}\u00b0dKH`  }] : []),
+    ...(p.tds ? [{ label: 'TDS', rawVal: p.tds, display: `${p.tds} ppm`      }] : []),
   ];
 
   const cards: ParamCard[] = rawCards.map(c => {
@@ -190,85 +164,49 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
     return { label: c.label, value: c.display, status: color, statusLabel: text };
   });
 
-  // Up to 5 cards fit in one row
   const MAX_CARDS = Math.min(cards.length, 6);
-  const cardW   = Math.min(190, (W - 112 - (MAX_CARDS - 1) * 16) / MAX_CARDS);
-  const cardH   = 120;
-  const cardY   = 250;
-  let   cx      = 56;
+  const cardW     = Math.min(190, (W - 112 - (MAX_CARDS - 1) * 16) / MAX_CARDS);
+  const cardH     = 120;
+  const cardY     = 250;
+  let   cx        = 56;
 
-  cards.slice(0, MAX_CARDS).forEach(card => {
-    // Card bg
-    roundRect(ctx, cx, cardY, cardW, cardH, 14);
-    ctx.fillStyle = 'rgba(255,255,255,0.05)';
-    ctx.fill();
-    roundRect(ctx, cx, cardY, cardW, cardH, 14);
-    ctx.strokeStyle = `${card.status}55`;
-    ctx.lineWidth = 1.5; ctx.stroke();
+  const drawParamCard = (card: ParamCard, cx: number, cy: number) => {
+    roundRect(ctx, cx, cy, cardW, cardH, 14);
+    ctx.fillStyle = 'rgba(255,255,255,0.05)'; ctx.fill();
+    roundRect(ctx, cx, cy, cardW, cardH, 14);
+    ctx.strokeStyle = `${card.status}55`; ctx.lineWidth = 1.5; ctx.stroke();
 
-    // Status dot + label
-    ctx.beginPath(); ctx.arc(cx + 16, cardY + 22, 6, 0, Math.PI * 2);
+    ctx.beginPath(); ctx.arc(cx + 16, cy + 22, 6, 0, Math.PI * 2);
     ctx.fillStyle = card.status; ctx.fill();
     ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.textAlign = 'left';
-    ctx.fillText(card.label, cx + 28, cardY + 27);
+    ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left';
+    ctx.fillText(card.label, cx + 28, cy + 27);
 
-    // Value (big)
     ctx.font = `bold 34px -apple-system, BlinkMacSystemFont, sans-serif`;
     ctx.fillStyle = '#f1f5f9';
-    ctx.fillText(card.value, cx + 14, cardY + 76);
+    ctx.fillText(card.value, cx + 14, cy + 76);
 
-    // Status pill
     const sw = ctx.measureText(card.statusLabel).width + 18;
-    roundRect(ctx, cx + 14, cardY + 88, sw, 22, 11);
+    roundRect(ctx, cx + 14, cy + 88, sw, 22, 11);
     ctx.fillStyle = `${card.status}22`; ctx.fill();
     ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
     ctx.fillStyle = card.status;
-    ctx.textAlign = 'left';
-    ctx.fillText(card.statusLabel, cx + 23, cardY + 103);
+    ctx.fillText(card.statusLabel, cx + 23, cy + 103);
+  };
 
-    cx += cardW + 16;
-  });
+  cards.slice(0, MAX_CARDS).forEach(card => { drawParamCard(card, cx, cardY); cx += cardW + 16; });
 
-  // If more than 6 params, draw second row (GH, KH, TDS, Salinity)
   if (cards.length > 6) {
-    const extra = cards.slice(6);
     cx = 56;
     const row2Y = cardY + cardH + 12;
-    extra.forEach(card => {
-      roundRect(ctx, cx, row2Y, cardW, cardH, 14);
-      ctx.fillStyle = 'rgba(255,255,255,0.05)'; ctx.fill();
-      roundRect(ctx, cx, row2Y, cardW, cardH, 14);
-      ctx.strokeStyle = `${card.status}55`; ctx.lineWidth = 1.5; ctx.stroke();
-
-      ctx.beginPath(); ctx.arc(cx + 16, row2Y + 22, 6, 0, Math.PI * 2);
-      ctx.fillStyle = card.status; ctx.fill();
-      ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left';
-      ctx.fillText(card.label, cx + 28, row2Y + 27);
-
-      ctx.font = `bold 34px -apple-system, BlinkMacSystemFont, sans-serif`;
-      ctx.fillStyle = '#f1f5f9';
-      ctx.fillText(card.value, cx + 14, row2Y + 76);
-
-      const sw = ctx.measureText(card.statusLabel).width + 18;
-      roundRect(ctx, cx + 14, row2Y + 88, sw, 22, 11);
-      ctx.fillStyle = `${card.status}22`; ctx.fill();
-      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillStyle = card.status;
-      ctx.fillText(card.statusLabel, cx + 23, row2Y + 103);
-
-      cx += cardW + 16;
-    });
+    cards.slice(6).forEach(card => { drawParamCard(card, cx, row2Y); cx += cardW + 16; });
   }
 
   // ─── INHABITANTS ────────────────────────────────────────────────────────────
   const inhY = cards.length > 6 ? cardY + cardH * 2 + 32 : cardY + cardH + 24;
   if (inhY < H - 80) {
     ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.fillStyle = 'rgba(148,163,184,0.6)';
-    ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(148,163,184,0.6)'; ctx.textAlign = 'left';
     ctx.fillText('INHABITANTS', 56, inhY);
 
     const FISH_COLORS = ['#6366f1','#14b8a6','#06b6d4','#10b981','#f59e0b','#ec4899','#8b5cf6','#f97316'];
@@ -280,11 +218,10 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
     ];
 
     allInhabitants.slice(0, 8).forEach((inh, idx) => {
-      const label = `${inh.count}× ${inh.name.length > 16 ? inh.name.slice(0, 16) + '\u2026' : inh.name}`;
+      const label = `${inh.count}\u00d7 ${inh.name.length > 16 ? inh.name.slice(0, 16) + '\u2026' : inh.name}`;
       const color = inh.type === 'plant' ? '#10b981' : FISH_COLORS[idx % FISH_COLORS.length];
       ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
       const tw = ctx.measureText(label).width + 36;
-
       if (tagX + tw > W - 56) return;
 
       roundRect(ctx, tagX, tagY2, tw, 34, 17);
@@ -292,16 +229,12 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
       roundRect(ctx, tagX, tagY2, tw, 34, 17);
       ctx.strokeStyle = color + '55'; ctx.lineWidth = 1.5; ctx.stroke();
 
-      // emoji
-      ctx.font = '15px sans-serif';
-      ctx.textAlign = 'center';
+      ctx.font = '15px sans-serif'; ctx.textAlign = 'center';
       ctx.fillText(inh.type === 'plant' ? '\uD83C\uDF3F' : '\uD83D\uDC1F', tagX + 16, tagY2 + 22);
 
       ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillStyle = '#e2e8f0';
-      ctx.textAlign = 'left';
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
       ctx.fillText(label, tagX + 28, tagY2 + 23);
-
       tagX += tw + 10;
     });
 
@@ -312,30 +245,25 @@ export async function generateTankDetailImage(tank: Tank): Promise<string> {
     }
   }
 
-  // ─── Bottom: URL watermark ───────────────────────────────────────────────────
-  const publicUrl = tank.publicSlug
-    ? `aquaguide.app/tanks/${tank.publicSlug}`
-    : 'aquaguide.app';
+  // ─── Bottom watermark ─────────────────────────────────────────────────────────
+  const publicUrl = tank.publicSlug ? `aquaguide.app/tanks/${tank.publicSlug}` : 'aquaguide.app';
 
   ctx.beginPath();
   ctx.moveTo(56, H - 50); ctx.lineTo(W - 56, H - 50);
   ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1; ctx.stroke();
 
   ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
-  ctx.fillStyle = 'rgba(20,184,166,0.65)';
-  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(20,184,166,0.65)'; ctx.textAlign = 'right';
   ctx.fillText(publicUrl, W - 56, H - 26);
 
-  ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
-  ctx.fillStyle = 'rgba(148,163,184,0.35)';
-  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(148,163,184,0.35)'; ctx.textAlign = 'left';
   ctx.fillText('Track your aquarium with AquaGuide', 56, H - 26);
 
   return canvas.toDataURL('image/png');
 }
 
 /**
- * Generates a Reddit / forum-friendly plain-text representation of the tank.
+ * Reddit / forum-friendly plain-text representation of the tank.
  */
 export function generateTankTextSummary(tank: Tank): string {
   const p = tank.parameters;
@@ -343,21 +271,21 @@ export function generateTankTextSummary(tank: Tank): string {
   const totalPlants = (tank.inhabitants?.plants || []).reduce((s, p2) => s + p2.quantity, 0);
 
   const lines: string[] = [
-    `**${tank.name}** – ${tank.volumeLiters}L ${tank.type ?? 'Freshwater'}`,
+    `**${tank.name}** \u2013 ${tank.volumeLiters}L ${tank.type ?? 'Freshwater'}`,
     '',
     '**Water Parameters**',
-    `pH: ${p.ph} | Temp: ${p.tempC}°C | Ammonia: ${p.ammonia} ppm | Nitrite: ${p.nitrite} ppm | Nitrate: ${p.nitrate} ppm`,
-    ...(p.gh   ? [`GH: ${p.gh}°dGH`]      : []),
-    ...(p.kh   ? [`KH: ${p.kh}°dKH`]      : []),
-    ...(p.tds  ? [`TDS: ${p.tds} ppm`]     : []),
+    `pH: ${p.ph} | Temp: ${p.tempC}\u00b0C | Ammonia: ${p.ammonia} ppm | Nitrite: ${p.nitrite} ppm | Nitrate: ${p.nitrate} ppm`,
+    ...(p.gh  ? [`GH: ${p.gh}\u00b0dGH`]    : []),
+    ...(p.kh  ? [`KH: ${p.kh}\u00b0dKH`]    : []),
+    ...(p.tds ? [`TDS: ${p.tds} ppm`]       : []),
     '',
     `**Inhabitants** (${totalFish} fish, ${totalPlants} plants)`,
-    ...(tank.inhabitants?.fish   || []).map(f => `- ${f.quantity}× ${f.speciesName}`),
-    ...(tank.inhabitants?.plants || []).map(p2 => `- ${p2.quantity}× ${p2.speciesName}`),
+    ...(tank.inhabitants?.fish   || []).map(f => `- ${f.quantity}\u00d7 ${f.speciesName}`),
+    ...(tank.inhabitants?.plants || []).map(p2 => `- ${p2.quantity}\u00d7 ${p2.speciesName}`),
     '',
     tank.publicSlug
       ? `Tank profile: ${window.location.origin}/tanks/${tank.publicSlug}`
-      : 'Tracked with AquaGuide – aquaguide.app',
+      : 'Tracked with AquaGuide \u2013 aquaguide.app',
   ];
   return lines.join('\n');
 }
