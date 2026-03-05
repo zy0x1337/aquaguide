@@ -315,21 +315,25 @@ const TankDetailPage = () => {
                 </button>
               )}
 
-              {/* Pin to profile (only when public) */}
-              {tank.isPublic && (
-                <button onClick={handleToggleFeatured} disabled={isFeaturing}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-60 ${
-                    tank.isFeaturedOnProfile
-                      ? 'bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/40 hover:border-amber-300/60 text-white'
-                      : 'bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white'
-                  }`}
-                  title={tank.isFeaturedOnProfile ? 'Remove from public profile' : 'Pin this tank to your public profile'}
-                >
-                  {tank.isFeaturedOnProfile
-                    ? <><BookmarkCheck className="w-4 h-4" />On Profile</>
-                    : <><Bookmark className="w-4 h-4" />Pin to Profile</>}
-                </button>
-              )}
+              {/* Pin to profile – always visible, disabled when tank is not public yet */}
+              <button onClick={handleToggleFeatured} disabled={isFeaturing || !tank.isPublic}
+                className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-50 disabled:cursor-not-allowed ${
+                  tank.isFeaturedOnProfile
+                    ? 'bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/40 hover:border-amber-300/60 text-white'
+                    : 'bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white'
+                }`}
+                title={
+                  !tank.isPublic
+                    ? 'Share your tank first to enable pinning'
+                    : tank.isFeaturedOnProfile
+                      ? 'Remove from public profile'
+                      : 'Pin this tank to your public profile'
+                }
+              >
+                {tank.isFeaturedOnProfile
+                  ? <><BookmarkCheck className="w-4 h-4" />On Profile</>
+                  : <><Bookmark className="w-4 h-4" />Pin to Profile</>}
+              </button>
 
               {/* Edit in Builder */}
               <button onClick={handleEditInBuilder}
