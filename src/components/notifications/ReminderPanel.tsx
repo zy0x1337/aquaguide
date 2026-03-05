@@ -23,13 +23,14 @@ const PRESETS: { label: string; days: number }[] = [
   { label: '+ 1 month',days: 30 },
 ];
 
-const HOURS = [7, 8, 9, 10, 12, 14, 17, 18, 20];
+const HOURS   = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+const MINUTES = [0, 15, 30, 45];
 
 const FREQUENCIES: { value: Reminder['frequency']; label: string }[] = [
-  { value: 'daily',    label: 'Daily'      },
-  { value: 'weekly',   label: 'Weekly'     },
-  { value: 'biweekly', label: 'Every 2 w'  },
-  { value: 'monthly',  label: 'Monthly'    },
+  { value: 'daily',    label: 'Daily'     },
+  { value: 'weekly',   label: 'Weekly'    },
+  { value: 'biweekly', label: 'Every 2 w' },
+  { value: 'monthly',  label: 'Monthly'   },
 ];
 
 const TYPE_CFG: Record<Reminder['type'], { emoji: string; color: string; bg: string; border: string }> = {
@@ -39,6 +40,8 @@ const TYPE_CFG: Record<Reminder['type'], { emoji: string; color: string; bg: str
 };
 
 // ── Helpers ────────────────────────────────────────────────────────────────
+
+const pad = (n: number) => String(n).padStart(2, '0');
 
 const fmt = (iso: string) =>
   new Date(iso).toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' }) +
@@ -50,15 +53,22 @@ const timeAgo = (iso: string) => {
   if (diff < 0) return '⚠️ überfällig';
   const d = Math.floor(diff / 86_400_000);
   const h = Math.floor((diff % 86_400_000) / 3_600_000);
+  const m = Math.floor((diff % 3_600_000) / 60_000);
   if (d > 0) return `in ${d}d ${h}h`;
-  return `in ${h}h`;
+  if (h > 0) return `in ${h}h ${m}m`;
+  return `in ${m}m`;
 };
 
-const buildDate = (daysFromNow: number, hour: number): Date => {
+const buildDate = (daysFromNow: number, hour: number, minute: number): Date => {
   const d = new Date(Date.now() + daysFromNow * 86_400_000);
-  d.setHours(hour, 0, 0, 0);
+  d.setHours(hour, minute, 0, 0);
   return d;
 };
+
+/** Snap minutes to nearest 15-minute slot */
+const snapMinute = (m: number) => MINUTES.reduce((prev, cur) =>
+  Math.abs(cur - m) < Math.abs(prev - m) ? cur : prev
+);
 
 const daysUntil = (iso: string) =>
   Math.round((new Date(iso).getTime() - Date.now()) / 86_400_000);
@@ -74,15 +84,17 @@ function DateEditor({
   onSave: (nextDate: string, frequency: Reminder['frequency']) => void;
   onClose: () => void;
 }) {
-  // Allow 0 (today) – clamp only below 0
-  const initialDays = Math.max(0, daysUntil(reminder.nextDate));
-  const initialHour = new Date(reminder.nextDate).getHours() || 10;
-
-  const [days,      setDays]      = useState(initialDays);
-  const [hour,      setHour]      = useState(initialHour);
+  const d0   = new Date(reminder.nextDate);
+  const [days,      setDays]      = useState(Math.max(0, daysUntil(reminder.nextDate)));
+  const [hour,      setHour]      = useState(d0.getHours() || 10);
+  const [minute,    setMinute]    = useState(snapMinute(d0.getMinutes()));
   const [frequency, setFrequency] = useState<Reminder['frequency']>(reminder.frequency);
 
-  const preview = buildDate(days, hour);
+  const preview = buildDate(days, hour, minute);
+
+  const chipBase   = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all';
+  const chipActive = 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30';
+  const chipIdle   = 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500';
 
   return (
     <motion.div
@@ -99,36 +111,34 @@ function DateEditor({
           <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">When</p>
           <div className="flex flex-wrap gap-1.5">
             {PRESETS.map(p => (
-              <button
-                key={p.days}
-                onClick={() => setDays(p.days)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  days === p.days
-                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500'
-                }`}
-              >
+              <button key={p.days} onClick={() => setDays(p.days)}
+                className={`${chipBase} ${days === p.days ? chipActive : chipIdle}`}>
                 {p.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* ── Time ── */}
+        {/* ── Time: hour row + minute row ── */}
         <div>
           <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Time</p>
-          <div className="flex flex-wrap gap-1.5">
+
+          {/* Hours – scrollable on small screens */}
+          <div className="flex flex-wrap gap-1.5 mb-2">
             {HOURS.map(h => (
-              <button
-                key={h}
-                onClick={() => setHour(h)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  hour === h
-                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500'
-                }`}
-              >
-                {String(h).padStart(2, '0')}:00
+              <button key={h} onClick={() => setHour(h)}
+                className={`${chipBase} ${hour === h ? chipActive : chipIdle}`}>
+                {pad(h)}
+              </button>
+            ))}
+          </div>
+
+          {/* Minutes */}
+          <div className="flex gap-1.5">
+            {MINUTES.map(m => (
+              <button key={m} onClick={() => setMinute(m)}
+                className={`${chipBase} ${minute === m ? chipActive : chipIdle}`}>
+                :{pad(m)}
               </button>
             ))}
           </div>
@@ -139,15 +149,8 @@ function DateEditor({
           <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Repeat</p>
           <div className="flex flex-wrap gap-1.5">
             {FREQUENCIES.map(f => (
-              <button
-                key={f.value}
-                onClick={() => setFrequency(f.value)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  frequency === f.value
-                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500'
-                }`}
-              >
+              <button key={f.value} onClick={() => setFrequency(f.value)}
+                className={`${chipBase} ${frequency === f.value ? chipActive : chipIdle}`}>
                 {f.label}
               </button>
             ))}
@@ -160,27 +163,19 @@ function DateEditor({
             <Clock className="w-3.5 h-3.5 text-indigo-500" />
             <span>
               <span className="font-bold text-gray-900 dark:text-white">
-                {days === 0
-                  ? 'Today'
-                  : preview.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' })}
+                {days === 0 ? 'Today' : preview.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' })}
               </span>
-              {' · '}
-              {String(hour).padStart(2, '0')}:00
-              {' · '}
-              {FREQUENCIES.find(f => f.value === frequency)?.label}
+              {' · '}{pad(hour)}:{pad(minute)}
+              {' · '}{FREQUENCIES.find(f => f.value === frequency)?.label}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={onClose}
-              className="px-3 py-1.5 text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-            >
+            <button onClick={onClose}
+              className="px-3 py-1.5 text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
               Cancel
             </button>
-            <button
-              onClick={() => onSave(preview.toISOString(), frequency)}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition-all shadow-sm"
-            >
+            <button onClick={() => onSave(preview.toISOString(), frequency)}
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition-all shadow-sm">
               <Check className="w-3.5 h-3.5" strokeWidth={3} />
               Save
             </button>
@@ -292,7 +287,6 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
               <div className={`flex items-center gap-3 px-5 py-4 transition-colors ${
                 r.enabled ? '' : 'opacity-60'
               }`}>
-
                 {/* Emoji badge */}
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 border ${
                   r.enabled ? `${cfg.bg} ${cfg.border}` : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
@@ -307,7 +301,6 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
                      : r.type === 'parameter_check' ? 'Check Parameters'
                      : 'Clean Filter'}
                   </p>
-
                   {r.enabled ? (
                     <button
                       onClick={() => setEditingId(isEditing ? null : r.id)}
@@ -341,9 +334,7 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
                         : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
                   >
-                    {r.enabled
-                      ? <Bell className="w-4 h-4" strokeWidth={2.5} />
-                      : <BellOff className="w-4 h-4" strokeWidth={2.5} />}
+                    {r.enabled ? <Bell className="w-4 h-4" strokeWidth={2.5} /> : <BellOff className="w-4 h-4" strokeWidth={2.5} />}
                   </button>
                   <button
                     onClick={() => handleDelete(r.id)}
@@ -355,7 +346,6 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
                 </div>
               </div>
 
-              {/* Date editor */}
               <AnimatePresence>
                 {isEditing && r.enabled && (
                   <DateEditor
@@ -370,7 +360,6 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
         })}
       </div>
 
-      {/* Footer info */}
       {hasPermission && reminders.some(r => r.enabled) && (
         <div className="px-5 py-3 bg-indigo-50/60 dark:bg-indigo-950/20 border-t border-indigo-100 dark:border-indigo-900">
           <p className="text-xs text-indigo-700 dark:text-indigo-400">
