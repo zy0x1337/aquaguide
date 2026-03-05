@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Bell, BellOff, Clock, Trash2, Check, ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { Bell, BellOff, Clock, Trash2, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTankReminders,
@@ -12,19 +12,20 @@ import {
   type Reminder,
 } from '../../lib/notifications';
 
-// ── Config ────────────────────────────────────────────────────────────────
+// ── Constants ─────────────────────────────────────────────────────────────
 
-const PRESETS: { label: string; days: number }[] = [
-  { label: 'Today',    days: 0  },
-  { label: 'Tomorrow', days: 1  },
-  { label: '+ 3 days', days: 3  },
-  { label: '+ 1 week', days: 7  },
-  { label: '+ 2 weeks',days: 14 },
-  { label: '+ 1 month',days: 30 },
-];
+const ITEM_H = 44; // px per drum item
 
-const HOURS   = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-const MINUTES = [0, 15, 30, 45];
+// 90-day date list, generated once at module load
+const _base = new Date(); _base.setHours(0, 0, 0, 0);
+const DATE_OPTIONS: Date[] = Array.from({ length: 90 }, (_, i) => {
+  const d = new Date(_base);
+  d.setDate(d.getDate() + i);
+  return d;
+});
+
+const HOURS   = Array.from({ length: 24 }, (_, i) => i);          // 0–23
+const MINUTES = Array.from({ length: 12 }, (_, i) => i * 5);       // 0,5,10–55
 
 const FREQUENCIES: { value: Reminder['frequency']; label: string }[] = [
   { value: 'daily',    label: 'Daily'     },
@@ -39,9 +40,16 @@ const TYPE_CFG: Record<Reminder['type'], { emoji: string; color: string; bg: str
   filter_clean:    { emoji: '🔧', color: 'text-amber-700 dark:text-amber-300',  bg: 'bg-amber-50 dark:bg-amber-950/40',  border: 'border-amber-200 dark:border-amber-800'  },
 };
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────
 
 const pad = (n: number) => String(n).padStart(2, '0');
+
+const dateLabelShort = (d: Date): string => {
+  const diff = Math.round((d.getTime() - _base.getTime()) / 86_400_000);
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  return d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' });
+};
 
 const fmt = (iso: string) =>
   new Date(iso).toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' }) +
@@ -50,7 +58,7 @@ const fmt = (iso: string) =>
 
 const timeAgo = (iso: string) => {
   const diff = new Date(iso).getTime() - Date.now();
-  if (diff < 0) return '⚠️ überfällig';
+  if (diff < 0) return '⚠️ overdue';
   const d = Math.floor(diff / 86_400_000);
   const h = Math.floor((diff % 86_400_000) / 3_600_000);
   const m = Math.floor((diff % 3_600_000) / 60_000);
@@ -59,21 +67,106 @@ const timeAgo = (iso: string) => {
   return `in ${m}m`;
 };
 
-const buildDate = (daysFromNow: number, hour: number, minute: number): Date => {
-  const d = new Date(Date.now() + daysFromNow * 86_400_000);
-  d.setHours(hour, minute, 0, 0);
-  return d;
-};
+// ── Drum Wheel ─────────────────────────────────────────────────────────────
 
-/** Snap minutes to nearest 15-minute slot */
-const snapMinute = (m: number) => MINUTES.reduce((prev, cur) =>
-  Math.abs(cur - m) < Math.abs(prev - m) ? cur : prev
-);
+function Wheel<T>({
+  items,
+  selectedIndex,
+  onSelect,
+  label,
+  className = '',
+}: {
+  items: T[];
+  selectedIndex: number;
+  onSelect: (index: number) => void;
+  label: (item: T) => string;
+  className?: string;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const timerRef  = useRef<ReturnType<typeof setTimeout>>();
+  const ignoreRef = useRef(false); // suppress echo after programmatic scroll
 
-const daysUntil = (iso: string) =>
-  Math.round((new Date(iso).getTime() - Date.now()) / 86_400_000);
+  // Mount: jump to initial position instantly
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = selectedIndex * ITEM_H;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-// ── Date editor sub-component ──────────────────────────────────────────────
+  // External selection change → smooth scroll
+  const prevIdx = useRef(selectedIndex);
+  useEffect(() => {
+    if (prevIdx.current === selectedIndex) return;
+    prevIdx.current = selectedIndex;
+    const el = scrollRef.current;
+    if (!el) return;
+    ignoreRef.current = true;
+    el.scrollTo({ top: selectedIndex * ITEM_H, behavior: 'smooth' });
+    setTimeout(() => { ignoreRef.current = false; }, 400);
+  }, [selectedIndex]);
+
+  const handleScroll = useCallback(() => {
+    if (ignoreRef.current) return;
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const idx = Math.round(el.scrollTop / ITEM_H);
+      const clamped = Math.min(Math.max(idx, 0), items.length - 1);
+      onSelect(clamped);
+    }, 120);
+  }, [items.length, onSelect]);
+
+  return (
+    <div className={`relative overflow-hidden ${className}`} style={{ height: ITEM_H * 5 }}>
+      {/* Selection highlight – sits behind the scroll layer */}
+      <div
+        className="absolute inset-x-1 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 pointer-events-none"
+        style={{ top: ITEM_H * 2, height: ITEM_H, zIndex: 0 }}
+      />
+
+      {/* Scrollable content */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="relative h-full overflow-y-scroll"
+        style={{
+          scrollSnapType: 'y mandatory',
+          scrollbarWidth: 'none',
+          // @ts-expect-error
+          msOverflowStyle: 'none',
+          zIndex: 1,
+        }}
+      >
+        <div style={{ height: ITEM_H * 2 }} />
+        {items.map((item, i) => (
+          <div
+            key={i}
+            style={{ height: ITEM_H, scrollSnapAlign: 'center' }}
+            className={`flex items-center justify-center select-none cursor-pointer transition-colors text-sm ${
+              i === selectedIndex
+                ? 'font-black text-indigo-700 dark:text-indigo-300'
+                : 'font-medium text-gray-400 dark:text-gray-500'
+            }`}
+            onClick={() => {
+              scrollRef.current?.scrollTo({ top: i * ITEM_H, behavior: 'smooth' });
+              onSelect(i);
+            }}
+          >
+            {label(item)}
+          </div>
+        ))}
+        <div style={{ height: ITEM_H * 2 }} />
+      </div>
+
+      {/* Fade overlays */}
+      <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: ITEM_H * 2, zIndex: 2, background: 'linear-gradient(to bottom, var(--wheel-bg, #fff) 30%, transparent)' }} />
+      <div className="absolute inset-x-0 bottom-0 pointer-events-none" style={{ height: ITEM_H * 2, zIndex: 2, background: 'linear-gradient(to top, var(--wheel-bg, #fff) 30%, transparent)' }} />
+    </div>
+  );
+}
+
+// ── DateEditor ─────────────────────────────────────────────────────────────
 
 function DateEditor({
   reminder,
@@ -84,67 +177,87 @@ function DateEditor({
   onSave: (nextDate: string, frequency: Reminder['frequency']) => void;
   onClose: () => void;
 }) {
-  const d0   = new Date(reminder.nextDate);
-  const [days,      setDays]      = useState(Math.max(0, daysUntil(reminder.nextDate)));
-  const [hour,      setHour]      = useState(d0.getHours() || 10);
-  const [minute,    setMinute]    = useState(snapMinute(d0.getMinutes()));
+  const next = new Date(reminder.nextDate);
+  const nextMidnight = new Date(next.getFullYear(), next.getMonth(), next.getDate());
+
+  const initDateIdx = Math.max(0, Math.min(
+    Math.round((nextMidnight.getTime() - _base.getTime()) / 86_400_000),
+    DATE_OPTIONS.length - 1,
+  ));
+  const initHourIdx   = next.getHours(); // hours array: index === value
+  const initMinIdx    = MINUTES.reduce((best, m, i) =>
+    Math.abs(m - next.getMinutes()) < Math.abs(MINUTES[best] - next.getMinutes()) ? i : best, 0);
+
+  const [dateIdx,   setDateIdx]   = useState(initDateIdx);
+  const [hourIdx,   setHourIdx]   = useState(initHourIdx);
+  const [minIdx,    setMinIdx]    = useState(initMinIdx);
   const [frequency, setFrequency] = useState<Reminder['frequency']>(reminder.frequency);
 
-  const preview = buildDate(days, hour, minute);
+  const preview = useMemo(() => {
+    const d = new Date(DATE_OPTIONS[dateIdx]);
+    d.setHours(HOURS[hourIdx], MINUTES[minIdx], 0, 0);
+    return d;
+  }, [dateIdx, hourIdx, minIdx]);
 
   const chipBase   = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all';
-  const chipActive = 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30';
-  const chipIdle   = 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500';
+  const chipActive = 'bg-indigo-600 text-white shadow-sm';
+  const chipIdle   = 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-indigo-400';
 
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
       exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.22 }}
       className="overflow-hidden"
     >
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-4 bg-gray-50/80 dark:bg-gray-800/50">
+      <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-4 bg-gray-50/80 dark:bg-gray-800/60">
 
-        {/* ── When ── */}
-        <div>
-          <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">When</p>
-          <div className="flex flex-wrap gap-1.5">
-            {PRESETS.map(p => (
-              <button key={p.days} onClick={() => setDays(p.days)}
-                className={`${chipBase} ${days === p.days ? chipActive : chipIdle}`}>
-                {p.label}
-              </button>
-            ))}
+        {/* ── Drum wheels ── */}
+        <div
+          className="flex items-stretch rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden"
+          style={{ '--wheel-bg': 'var(--tw-bg)' } as React.CSSProperties}
+        >
+          {/* Date wheel – wider */}
+          <div className="flex-[2] [--wheel-bg:theme(colors.white)] dark:[--wheel-bg:theme(colors.gray.800)]">
+            <Wheel
+              items={DATE_OPTIONS}
+              selectedIndex={dateIdx}
+              onSelect={setDateIdx}
+              label={dateLabelShort}
+            />
+          </div>
+
+          {/* Divider */}
+          <div className="w-px bg-gray-100 dark:bg-gray-700 self-stretch" />
+
+          {/* Hour wheel */}
+          <div className="flex-1 [--wheel-bg:theme(colors.white)] dark:[--wheel-bg:theme(colors.gray.800)]">
+            <Wheel
+              items={HOURS}
+              selectedIndex={hourIdx}
+              onSelect={setHourIdx}
+              label={h => pad(h)}
+            />
+          </div>
+
+          {/* Colon */}
+          <div className="flex items-center justify-center px-1 text-lg font-black text-gray-400 dark:text-gray-500 select-none flex-shrink-0">
+            :
+          </div>
+
+          {/* Minute wheel */}
+          <div className="flex-1 [--wheel-bg:theme(colors.white)] dark:[--wheel-bg:theme(colors.gray.800)]">
+            <Wheel
+              items={MINUTES}
+              selectedIndex={minIdx}
+              onSelect={setMinIdx}
+              label={m => pad(m)}
+            />
           </div>
         </div>
 
-        {/* ── Time: hour row + minute row ── */}
-        <div>
-          <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Time</p>
-
-          {/* Hours – scrollable on small screens */}
-          <div className="flex flex-wrap gap-1.5 mb-2">
-            {HOURS.map(h => (
-              <button key={h} onClick={() => setHour(h)}
-                className={`${chipBase} ${hour === h ? chipActive : chipIdle}`}>
-                {pad(h)}
-              </button>
-            ))}
-          </div>
-
-          {/* Minutes */}
-          <div className="flex gap-1.5">
-            {MINUTES.map(m => (
-              <button key={m} onClick={() => setMinute(m)}
-                className={`${chipBase} ${minute === m ? chipActive : chipIdle}`}>
-                :{pad(m)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Repeat ── */}
+        {/* ── Frequency ── */}
         <div>
           <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Repeat</p>
           <div className="flex flex-wrap gap-1.5">
@@ -157,27 +270,26 @@ function DateEditor({
           </div>
         </div>
 
-        {/* ── Preview + Save ── */}
-        <div className="flex items-center justify-between pt-1">
-          <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+        {/* ── Preview + OK ── */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
             <Clock className="w-3.5 h-3.5 text-indigo-500" />
-            <span>
-              <span className="font-bold text-gray-900 dark:text-white">
-                {days === 0 ? 'Today' : preview.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short' })}
-              </span>
-              {' · '}{pad(hour)}:{pad(minute)}
-              {' · '}{FREQUENCIES.find(f => f.value === frequency)?.label}
+            <span className="font-bold text-gray-800 dark:text-gray-200">
+              {dateLabelShort(DATE_OPTIONS[dateIdx])}
             </span>
+            <span>{pad(HOURS[hourIdx])}:{pad(MINUTES[minIdx])}</span>
+            <span className="opacity-60">· {FREQUENCIES.find(f => f.value === frequency)?.label}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2">
             <button onClick={onClose}
-              className="px-3 py-1.5 text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+              className="px-3 py-1.5 text-xs font-bold text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
               Cancel
             </button>
-            <button onClick={() => onSave(preview.toISOString(), frequency)}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition-all shadow-sm">
-              <Check className="w-3.5 h-3.5" strokeWidth={3} />
-              Save
+            <button
+              onClick={() => onSave(preview.toISOString(), frequency)}
+              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-sm font-black rounded-xl transition-all shadow-sm shadow-indigo-500/30"
+            >
+              OK
             </button>
           </div>
         </div>
@@ -186,7 +298,7 @@ function DateEditor({
   );
 }
 
-// ── Main component ─────────────────────────────────────────────────────────────
+// ── Main Component ─────────────────────────────────────────────────────────────
 
 export default function ReminderPanel({ tankId, tankName }: { tankId: string; tankName: string }) {
   const [reminders,     setReminders]     = useState<Reminder[]>([]);
@@ -224,11 +336,6 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
     setEditingId(null);
   };
 
-  const handleDelete = (reminderId: string) => {
-    deleteReminder(reminderId);
-    load();
-  };
-
   if (!isNotificationSupported()) {
     return (
       <div className="bg-amber-50 dark:bg-amber-950/30 border-2 border-amber-200 dark:border-amber-800 rounded-xl p-6 text-center">
@@ -262,19 +369,15 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
         </div>
         {!hasPermission && (
           <button
-            onClick={async () => {
-              const p = await requestNotificationPermission();
-              setHasPermission(p === 'granted');
-            }}
+            onClick={async () => { const p = await requestNotificationPermission(); setHasPermission(p === 'granted'); }}
             className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:shadow-lg transition-all"
           >
-            <Bell className="w-4 h-4" />
-            Enable
+            <Bell className="w-4 h-4" /> Enable
           </button>
         )}
       </div>
 
-      {/* Reminder cards */}
+      {/* Cards */}
       <div className="divide-y divide-gray-100 dark:divide-gray-800">
         {reminders.map((r) => {
           const cfg       = TYPE_CFG[r.type];
@@ -284,38 +387,26 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
 
           return (
             <div key={r.id}>
-              <div className={`flex items-center gap-3 px-5 py-4 transition-colors ${
-                r.enabled ? '' : 'opacity-60'
-              }`}>
-                {/* Emoji badge */}
+              <div className={`flex items-center gap-3 px-5 py-4 ${r.enabled ? '' : 'opacity-60'}`}>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 border ${
                   r.enabled ? `${cfg.bg} ${cfg.border}` : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-                }`}>
-                  {cfg.emoji}
-                </div>
+                }`}>{cfg.emoji}</div>
 
-                {/* Info */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-black text-gray-900 dark:text-white truncate">
-                    {r.type === 'water_change'     ? 'Water Change'
-                     : r.type === 'parameter_check' ? 'Check Parameters'
-                     : 'Clean Filter'}
+                    {r.type === 'water_change' ? 'Water Change' : r.type === 'parameter_check' ? 'Check Parameters' : 'Clean Filter'}
                   </p>
                   {r.enabled ? (
                     <button
                       onClick={() => setEditingId(isEditing ? null : r.id)}
                       className={`flex items-center gap-1.5 mt-0.5 text-xs transition-colors ${
-                        overdue
-                          ? 'text-red-600 dark:text-red-400 font-bold'
-                          : 'text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'
+                        overdue ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'
                       }`}
                     >
                       <Clock className="w-3 h-3" />
                       <span>{fmt(r.nextDate)}</span>
-                      <span className="opacity-70">({timeAgo(r.nextDate)})</span>
-                      <span className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-[10px] font-bold text-gray-500 dark:text-gray-400">
-                        {freqLabel}
-                      </span>
+                      <span className="opacity-60">({timeAgo(r.nextDate)})</span>
+                      <span className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-[10px] font-bold text-gray-500 dark:text-gray-400">{freqLabel}</span>
                       <ChevronDown className={`w-3 h-3 transition-transform ${isEditing ? 'rotate-180' : ''}`} />
                     </button>
                   ) : (
@@ -323,23 +414,18 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
                   )}
                 </div>
 
-                {/* Actions */}
                 <div className="flex items-center gap-1.5 flex-shrink-0">
                   <button
                     onClick={() => handleToggle(r.id, !r.enabled)}
-                    title={r.enabled ? 'Disable' : 'Enable'}
                     className={`p-2 rounded-xl transition-all ${
-                      r.enabled
-                        ? `${cfg.bg} ${cfg.color} ${cfg.border} border hover:opacity-80`
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      r.enabled ? `${cfg.bg} ${cfg.color} ${cfg.border} border hover:opacity-80` : 'bg-gray-100 dark:bg-gray-800 text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
                   >
                     {r.enabled ? <Bell className="w-4 h-4" strokeWidth={2.5} /> : <BellOff className="w-4 h-4" strokeWidth={2.5} />}
                   </button>
                   <button
-                    onClick={() => handleDelete(r.id)}
+                    onClick={() => { deleteReminder(r.id); load(); }}
                     className="p-2 rounded-xl text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
-                    title="Delete"
                   >
                     <Trash2 className="w-4 h-4" strokeWidth={2.5} />
                   </button>
