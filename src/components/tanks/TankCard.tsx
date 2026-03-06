@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Fish, Droplets, Thermometer, Trash2, Edit, ChevronRight, Sparkles, Leaf, Activity } from 'lucide-react';
 import { Tank } from '../../types/tank';
 import { motion } from 'framer-motion';
+import { useSettings } from '../../hooks/useSettings';
+import { formatVolume, formatTemp } from '../../utils/unitConversion';
 
 interface TankCardProps {
   tank: Tank;
@@ -9,6 +11,7 @@ interface TankCardProps {
 }
 
 const TankCard = ({ tank, onDelete }: TankCardProps) => {
+  const { settings } = useSettings();
   const totalFish = tank.inhabitants?.fish.reduce((sum, f) => sum + f.quantity, 0) || 0;
   const totalPlants = tank.inhabitants?.plants.reduce((sum, p) => sum + p.quantity, 0) || 0;
 
@@ -21,7 +24,7 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
-      {/* Clean Header */}
+      {/* Clean Header - WITH UNIT CONVERSION */}
       <div className="relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-850 p-4 sm:p-5 border-b border-slate-200 dark:border-slate-700">
         {/* Subtle accent line */}
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
@@ -31,7 +34,7 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
             <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 truncate">{tank.name}</h3>
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
               <Droplets className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-              <span>{tank.volumeLiters}L</span>
+              <span>{formatVolume(tank.volumeLiters, settings.unitSystem)}</span>
               <span>•</span>
               <span className="capitalize truncate">{tank.type}</span>
             </div>
@@ -63,11 +66,11 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
           </div>
         </div>
 
-        {/* Quick Stats with cleaner design */}
+        {/* Quick Stats with cleaner design - WITH UNIT CONVERSION */}
         <div className="grid grid-cols-3 gap-2">
           <CleanStatBadge icon={<Fish className="w-3 h-3 sm:w-3.5 sm:h-3.5" />} value={totalFish} label="Fish" color="blue" />
           <CleanStatBadge icon={<Leaf className="w-3 h-3 sm:w-3.5 sm:h-3.5" />} value={totalPlants} label="Plants" color="emerald" />
-          <CleanStatBadge icon={<Thermometer className="w-3 h-3 sm:w-3.5 sm:h-3.5" />} value={`${tank.parameters.tempC}°C`} label="Temp" color="orange" />
+          <CleanStatBadge icon={<Thermometer className="w-3 h-3 sm:w-3.5 sm:h-3.5" />} value={formatTemp(tank.parameters.tempC, settings.tempUnit)} label="Temp" color="orange" />
         </div>
       </div>
 

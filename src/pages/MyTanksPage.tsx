@@ -8,6 +8,8 @@ import { Tank } from '../types/tank';
 import { SEOHead } from '../components/seo/SEOHead';
 import { getUserTanks, createTank, deleteTank } from '../lib/supabase/tanks';
 import { useToast } from '../contexts/ToastContext';
+import { useSettings } from '../hooks/useSettings';
+import { formatVolume } from '../utils/unitConversion';
 
 const MyTanksPage = () => {
   const [tanks, setTanks] = useState<Tank[]>([]);
@@ -15,6 +17,7 @@ const MyTanksPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
+  const { settings } = useSettings();
 
   useEffect(() => {
     localStorage.removeItem('aquaguide_tanks'); // Migration cleanup
@@ -164,7 +167,7 @@ const MyTanksPage = () => {
             </div>
           </div>
 
-          {/* Stats Bar - Only if tanks exist - Mobile Optimized */}
+          {/* Stats Bar - WITH UNIT CONVERSION */}
           {tanks.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -175,7 +178,7 @@ const MyTanksPage = () => {
               <StatItem icon={<LayoutGrid className="w-4 h-4" />} label="Tanks" value={tanks.length} />
               <StatItem icon={<Sparkles className="w-4 h-4" />} label="Species" value={totalFishSpecies} />
               <StatItem icon={<Fish className="w-4 h-4" />} label="Fish" value={totalFish} />
-              <StatItem icon={<Droplets className="w-4 h-4" />} label="Volume" value={`${totalVolume}L`} />
+              <StatItem icon={<Droplets className="w-4 h-4" />} label="Volume" value={formatVolume(totalVolume, settings.unitSystem)} />
             </motion.div>
           )}
         </div>
