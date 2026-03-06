@@ -13,6 +13,7 @@ interface SpeciesCardProps {
 
 export const SpeciesCard = ({ data }: SpeciesCardProps) => {
   const { settings } = useSettings();
+  const isCompact = settings.cardsDensity === 'compact';
 
   return (
     <div className="relative group">
@@ -28,7 +29,10 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
         aria-label={`View details for ${data.taxonomy.commonName}`}
       >
         {/* Image Container with Zoom Effect */}
-        <div className="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <div className={cn(
+          "relative overflow-hidden bg-gray-100 dark:bg-gray-800",
+          isCompact ? "h-32" : "h-48"
+        )}>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
           
           <img 
@@ -39,49 +43,65 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
           />
           
           {/* Difficulty Badge */}
-          <div className={cn(
-            "absolute top-3 right-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide backdrop-blur-md shadow-sm border border-white/10",
-            data.care.difficulty === 'beginner' && "bg-emerald-500/90 text-white",
-            data.care.difficulty === 'medium' && "bg-amber-500/90 text-white",
-            data.care.difficulty === 'expert' && "bg-rose-500/90 text-white"
-          )}>
-            {data.care.difficulty}
-          </div>
+          {settings.showDifficultyBadges && (
+            <div className={cn(
+              "absolute top-3 right-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide backdrop-blur-md shadow-sm border border-white/10",
+              data.care.difficulty === 'beginner' && "bg-emerald-500/90 text-white",
+              data.care.difficulty === 'medium' && "bg-amber-500/90 text-white",
+              data.care.difficulty === 'expert' && "bg-rose-500/90 text-white"
+            )}>
+              {data.care.difficulty}
+            </div>
+          )}
         </div>
         
         {/* Content */}
-        <div className="p-5 flex flex-col flex-grow">
+        <div className={cn(
+          "flex flex-col flex-grow",
+          isCompact ? "p-3" : "p-5"
+        )}>
           <div className="mb-auto">
-            <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1 group-hover:text-coral-600 dark:group-hover:text-coral-400 transition-colors line-clamp-1">
+            <h3 className={cn(
+              "font-bold text-gray-900 dark:text-white mb-1 group-hover:text-coral-600 dark:group-hover:text-coral-400 transition-colors line-clamp-1",
+              isCompact ? "text-sm" : "text-lg"
+            )}>
               {data.taxonomy.commonName}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 italic font-medium">
-              {data.taxonomy.scientificName}
-            </p>
+            {settings.showScientificNames && (
+              <p className={cn(
+                "text-gray-500 dark:text-gray-400 italic font-medium",
+                isCompact ? "text-[10px]" : "text-xs"
+              )}>
+                {data.taxonomy.scientificName}
+              </p>
+            )}
           </div>
           
           {/* Info Grid - 4 Stats with Icons */}
-          <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 text-xs text-gray-600 dark:text-gray-400">
+          <div className={cn(
+            "grid grid-cols-2 gap-2 text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800",
+            isCompact ? "mt-2 pt-2 text-[10px]" : "mt-4 pt-4 text-xs"
+          )}>
             <div className="flex items-center gap-1.5">
-              <Box className="w-3.5 h-3.5 text-coral-500 dark:text-coral-400 flex-shrink-0" />
+              <Box className={cn("text-coral-500 dark:text-coral-400 flex-shrink-0", isCompact ? "w-3 h-3" : "w-3.5 h-3.5")} />
               <span className="font-semibold">{formatVolume(data.environment.minTankSizeLiters, settings.unitSystem)}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Globe2 className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
+              <Globe2 className={cn("text-emerald-500 dark:text-emerald-400 flex-shrink-0", isCompact ? "w-3 h-3" : "w-3.5 h-3.5")} />
               <span className="font-semibold truncate">{data.taxonomy.region}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Droplets className="w-3.5 h-3.5 text-sapphire-500 dark:text-sapphire-400 flex-shrink-0" />
+              <Droplets className={cn("text-sapphire-500 dark:text-sapphire-400 flex-shrink-0", isCompact ? "w-3 h-3" : "w-3.5 h-3.5")} />
               <span className="font-semibold">pH {data.environment.ph.ideal}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Thermometer className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400 flex-shrink-0" />
+              <Thermometer className={cn("text-rose-500 dark:text-rose-400 flex-shrink-0", isCompact ? "w-3 h-3" : "w-3.5 h-3.5")} />
               <span className="font-semibold">{data.environment.tempC.ideal ? formatTemp(data.environment.tempC.ideal, settings.tempUnit) : `${data.environment.tempC.min}°C`}</span>
             </div>
           </div>
 
           {/* Behavior Tags (Chips) - Below Stats */}
-          {data.behavior.tags.length > 0 && (
+          {!isCompact && data.behavior.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-gray-200 dark:border-gray-800">
               {data.behavior.tags.slice(0, 3).map(tag => (
                 <span 

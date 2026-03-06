@@ -12,6 +12,7 @@ interface PlantCardProps {
 
 export const PlantCard = ({ data }: PlantCardProps) => {
   const { settings } = useSettings();
+  const isCompact = settings.cardsDensity === 'compact';
   
   const fallbackImage = "https://images.unsplash.com/photo-1520302669765-227891896796?auto=format&fit=crop&q=80&w=800";
   let imageSrc = data.imageUrl || fallbackImage;
@@ -54,94 +55,141 @@ export const PlantCard = ({ data }: PlantCardProps) => {
         )}
       >
         {/* Hero Image + Difficulty Badge */}
-        <div className="aspect-[4/3] w-full relative overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <div className={cn(
+          "w-full relative overflow-hidden bg-gray-100 dark:bg-gray-800",
+          isCompact ? "aspect-[4/2.5]" : "aspect-[4/3]"
+        )}>
           <img 
             src={imageSrc} 
             alt={data.taxonomy.commonName} 
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
             loading="lazy" 
           />
-          <div className="absolute top-2 right-2">
-            <span className={cn(
-              "px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider",
-              "backdrop-blur-md shadow-sm border",
-              difficultyColors[data.difficulty]
-            )}>
-              {data.difficulty}
-            </span>
-          </div>
+          {settings.showDifficultyBadges && (
+            <div className="absolute top-2 right-2">
+              <span className={cn(
+                "px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider",
+                "backdrop-blur-md shadow-sm border",
+                difficultyColors[data.difficulty]
+              )}>
+                {data.difficulty}
+              </span>
+            </div>
+          )}
         </div>
 
-        <div className="p-3 md:p-4 flex-1 flex flex-col">
+        <div className={cn(
+          "flex-1 flex flex-col",
+          isCompact ? "p-2" : "p-3 md:p-4"
+        )}>
           {/* Title */}
-          <div className="mb-2">
-            <h3 className="font-bold text-gray-900 dark:text-white leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 text-sm md:text-base">
+          <div className={cn(isCompact ? "mb-1" : "mb-2")}>
+            <h3 className={cn(
+              "font-bold text-gray-900 dark:text-white leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1",
+              isCompact ? "text-xs" : "text-sm md:text-base"
+            )}>
               {data.taxonomy.commonName}
             </h3>
-            <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 italic truncate font-serif mt-0.5">
-              {data.taxonomy.scientificName}
-            </p>
+            {settings.showScientificNames && (
+              <p className={cn(
+                "text-gray-500 dark:text-gray-400 italic truncate font-serif mt-0.5",
+                isCompact ? "text-[9px]" : "text-[10px] md:text-xs"
+              )}>
+                {data.taxonomy.scientificName}
+              </p>
+            )}
           </div>
 
           {/* TYPE */}
-          <div className="mb-3 pt-1 border-t border-gray-200 dark:border-gray-800">
-            <div className="flex items-center gap-1.5">
-              <div className={cn("p-1 rounded shrink-0", typeInfo.bgLight, typeInfo.bgDark)}>
-                <typeInfo.icon className={cn("w-3.5 h-3.5", typeInfo.color)} />
+          {!isCompact && (
+            <div className="mb-3 pt-1 border-t border-gray-200 dark:border-gray-800">
+              <div className="flex items-center gap-1.5">
+                <div className={cn("p-1 rounded shrink-0", typeInfo.bgLight, typeInfo.bgDark)}>
+                  <typeInfo.icon className={cn("w-3.5 h-3.5", typeInfo.color)} />
+                </div>
+                <span className="text-[10px] md:text-xs font-bold uppercase text-gray-700 dark:text-gray-200">
+                  {data.specs.type}
+                </span>
               </div>
-              <span className="text-[10px] md:text-xs font-bold uppercase text-gray-700 dark:text-gray-200">
-                {data.specs.type}
-              </span>
             </div>
-          </div>
+          )}
 
           {/* STATS GRID */}
-          <div className="grid grid-cols-2 gap-2 mb-3 pt-2 border-t border-gray-200 dark:border-gray-800">
+          <div className={cn(
+            "grid grid-cols-2 gap-2 border-t border-gray-200 dark:border-gray-800",
+            isCompact ? "mb-1 pt-1" : "mb-3 pt-2"
+          )}>
             <div className="flex items-center gap-1.5">
-              <div className="p-1 bg-amber-50 dark:bg-amber-900/20 rounded text-amber-500 dark:text-amber-400 shrink-0">
-                <Sun className="w-3 h-3" />
+              <div className={cn(
+                "p-1 bg-amber-50 dark:bg-amber-900/20 rounded text-amber-500 dark:text-amber-400 shrink-0",
+                isCompact && "p-0.5"
+              )}>
+                <Sun className={cn(isCompact ? "w-2.5 h-2.5" : "w-3 h-3")} />
               </div>
-              <span className="text-[9px] md:text-xs font-medium text-gray-600 dark:text-gray-400 capitalize truncate">
+              <span className={cn(
+                "font-medium text-gray-600 dark:text-gray-400 capitalize truncate",
+                isCompact ? "text-[8px]" : "text-[9px] md:text-xs"
+              )}>
                 {data.specs.light} Light
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="p-1 bg-sapphire-50 dark:bg-sapphire-900/20 rounded text-sapphire-500 dark:text-sapphire-400 shrink-0">
-                <Wind className="w-3 h-3" />
+              <div className={cn(
+                "p-1 bg-sapphire-50 dark:bg-sapphire-900/20 rounded text-sapphire-500 dark:text-sapphire-400 shrink-0",
+                isCompact && "p-0.5"
+              )}>
+                <Wind className={cn(isCompact ? "w-2.5 h-2.5" : "w-3 h-3")} />
               </div>
-              <span className="text-[9px] md:text-xs font-medium text-gray-600 dark:text-gray-400 capitalize truncate">
+              <span className={cn(
+                "font-medium text-gray-600 dark:text-gray-400 capitalize truncate",
+                isCompact ? "text-[8px]" : "text-[9px] md:text-xs"
+              )}>
                 {data.specs.co2} CO2
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="p-1 bg-emerald-50 dark:bg-emerald-900/20 rounded text-emerald-500 dark:text-emerald-400 shrink-0">
-                <Ruler className="w-3 h-3" />
+              <div className={cn(
+                "p-1 bg-emerald-50 dark:bg-emerald-900/20 rounded text-emerald-500 dark:text-emerald-400 shrink-0",
+                isCompact && "p-0.5"
+              )}>
+                <Ruler className={cn(isCompact ? "w-2.5 h-2.5" : "w-3 h-3")} />
               </div>
-              <span className="text-[9px] md:text-xs font-medium text-gray-600 dark:text-gray-400 truncate">
+              <span className={cn(
+                "font-medium text-gray-600 dark:text-gray-400 truncate",
+                isCompact ? "text-[8px]" : "text-[9px] md:text-xs"
+              )}>
                 {formatLength(data.specs.heightCM.max, settings.unitSystem)}
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="p-1 bg-emerald-50 dark:bg-emerald-900/20 rounded text-emerald-500 dark:text-emerald-400 shrink-0">
-                <Zap className="w-3 h-3" />
+              <div className={cn(
+                "p-1 bg-emerald-50 dark:bg-emerald-900/20 rounded text-emerald-500 dark:text-emerald-400 shrink-0",
+                isCompact && "p-0.5"
+              )}>
+                <Zap className={cn(isCompact ? "w-2.5 h-2.5" : "w-3 h-3")} />
               </div>
-              <span className="text-[9px] md:text-xs font-medium text-gray-600 dark:text-gray-400 capitalize truncate">
+              <span className={cn(
+                "font-medium text-gray-600 dark:text-gray-400 capitalize truncate",
+                isCompact ? "text-[8px]" : "text-[9px] md:text-xs"
+              )}>
                 {data.specs.growthRate}
               </span>
             </div>
           </div>
 
           {/* Placement Chips */}
-          <div className="flex flex-wrap gap-1.5 pt-1 border-t border-gray-200 dark:border-gray-800">
-            {data.specs.placement.slice(0, 2).map(tag => (
-              <span 
-                key={tag} 
-                className="px-2 py-0.5 rounded-full text-[8px] font-bold uppercase border bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          {!isCompact && (
+            <div className="flex flex-wrap gap-1.5 pt-1 border-t border-gray-200 dark:border-gray-800">
+              {data.specs.placement.slice(0, 2).map(tag => (
+                <span 
+                  key={tag} 
+                  className="px-2 py-0.5 rounded-full text-[8px] font-bold uppercase border bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </Link>
 
