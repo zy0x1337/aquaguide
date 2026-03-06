@@ -4,7 +4,7 @@ import { Search, Fish, Leaf, BookOpen, Activity, Map, X, ArrowRight } from 'luci
 import { allSpecies } from '../../data/species';
 import { allPlants } from '../../data/plants';
 import { allKnowledgeArticles } from '../../data/knowledge';
-import { allDiseases } from '../../data/diseases';
+import { diseaseRepository } from '../../data/diseases';
 import habitatsData from '../../data/habitats.json';
 
 interface SearchResult {
@@ -73,7 +73,7 @@ export const GlobalSearch = () => {
     });
 
     // Diseases
-    allDiseases.forEach(d => {
+    diseaseRepository.getAll().forEach(d => {
       results.push({
         id: d.id,
         title: d.name,
