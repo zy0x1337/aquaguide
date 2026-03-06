@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      // injectManifest = vite-plugin-pwa injects the precache manifest into
+      // OUR custom sw.js instead of generating a new one. This preserves the
+      // push / notificationclick handlers we wrote.
+      strategies: 'injectManifest',
+      srcDir: 'public',
+      filename: 'sw.js',
       registerType: 'autoUpdate',
       includeAssets: ['icon-192.png', 'icon-512.png'],
       manifest: {
@@ -41,57 +47,15 @@ export default defineConfig({
           },
         ],
       },
-      workbox: {
+      injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'gstatic-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'images-cache',
-              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'supabase-api-cache',
-              networkTimeoutSeconds: 10,
-              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 5 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-        ],
-        cleanupOutdatedCaches: true,
-        skipWaiting: true,
-        clientsClaim: true,
       },
       devOptions: { enabled: true, type: 'module' },
     }),
   ],
 
   resolve: {
-    // Dedupe React to prevent multiple instances
     dedupe: ['react', 'react-dom', 'react-router-dom'],
   },
 
@@ -99,42 +63,29 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // ── Vendor: React core (FIRST - must load before everything) ──
           if (id.includes('node_modules/react/') ||
               id.includes('node_modules/react-dom/') ||
               id.includes('node_modules/scheduler/')) {
             return 'vendor-react';
           }
-          
-          // ── React ecosystem (depends on react core) ──
           if (id.includes('node_modules/react-router-dom/') ||
               id.includes('node_modules/react-helmet-async/')) {
             return 'vendor-react-eco';
           }
-          
-          // ── Vendor: Supabase ──
           if (id.includes('node_modules/@supabase/')) {
             return 'vendor-supabase';
           }
-          
-          // ── Vendor: Animation / UI ──
           if (id.includes('node_modules/framer-motion/')) {
             return 'vendor-framer';
           }
-          
-          // ── Vendor: Charts ──
           if (id.includes('node_modules/recharts/') ||
               id.includes('node_modules/d3-') ||
               id.includes('node_modules/victory-')) {
             return 'vendor-charts';
           }
-          
-          // ── Vendor: Icons ──
           if (id.includes('node_modules/lucide-react/')) {
             return 'vendor-icons';
           }
-          
-          // ── Vendor: Misc utils ──
           if (id.includes('node_modules/')) {
             return 'vendor-misc';
           }
