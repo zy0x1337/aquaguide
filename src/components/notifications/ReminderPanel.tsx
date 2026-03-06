@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Bell, BellOff, Clock, Trash2, ChevronDown } from 'lucide-react';
+import { Bell, BellOff, Clock, Trash2, ChevronDown, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTankReminders,
@@ -9,14 +9,14 @@ import {
   deleteReminder,
   requestNotificationPermission,
   isNotificationSupported,
+  completeReminder,
   type Reminder,
 } from '../../lib/notifications';
 
 // ── Constants ─────────────────────────────────────────────────────────────
 
-const ITEM_H = 44; // px per drum item
+const ITEM_H = 44;
 
-// 90-day date list, generated once at module load
 const _base = new Date(); _base.setHours(0, 0, 0, 0);
 const DATE_OPTIONS: Date[] = Array.from({ length: 90 }, (_, i) => {
   const d = new Date(_base);
@@ -24,8 +24,8 @@ const DATE_OPTIONS: Date[] = Array.from({ length: 90 }, (_, i) => {
   return d;
 });
 
-const HOURS   = Array.from({ length: 24 }, (_, i) => i);          // 0–23
-const MINUTES = Array.from({ length: 12 }, (_, i) => i * 5);       // 0,5,10–55
+const HOURS   = Array.from({ length: 24 }, (_, i) => i);
+const MINUTES = Array.from({ length: 12 }, (_, i) => i * 5);
 
 const FREQUENCIES: { value: Reminder['frequency']; label: string }[] = [
   { value: 'daily',    label: 'Daily'     },
@@ -84,16 +84,14 @@ function Wheel<T>({
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const timerRef  = useRef<ReturnType<typeof setTimeout>>();
-  const ignoreRef = useRef(false); // suppress echo after programmatic scroll
+  const ignoreRef = useRef(false);
 
-  // Mount: jump to initial position instantly
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = selectedIndex * ITEM_H;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // External selection change → smooth scroll
   const prevIdx = useRef(selectedIndex);
   useEffect(() => {
     if (prevIdx.current === selectedIndex) return;
@@ -119,13 +117,11 @@ function Wheel<T>({
 
   return (
     <div className={`relative overflow-hidden ${className}`} style={{ height: ITEM_H * 5 }}>
-      {/* Selection highlight – sits behind the scroll layer */}
       <div
         className="absolute inset-x-1 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 pointer-events-none"
         style={{ top: ITEM_H * 2, height: ITEM_H, zIndex: 0 }}
       />
 
-      {/* Scrollable content */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -159,7 +155,6 @@ function Wheel<T>({
         <div style={{ height: ITEM_H * 2 }} />
       </div>
 
-      {/* Fade overlays */}
       <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: ITEM_H * 2, zIndex: 2, background: 'linear-gradient(to bottom, var(--wheel-bg, #fff) 30%, transparent)' }} />
       <div className="absolute inset-x-0 bottom-0 pointer-events-none" style={{ height: ITEM_H * 2, zIndex: 2, background: 'linear-gradient(to top, var(--wheel-bg, #fff) 30%, transparent)' }} />
     </div>
@@ -184,7 +179,7 @@ function DateEditor({
     Math.round((nextMidnight.getTime() - _base.getTime()) / 86_400_000),
     DATE_OPTIONS.length - 1,
   ));
-  const initHourIdx   = next.getHours(); // hours array: index === value
+  const initHourIdx   = next.getHours();
   const initMinIdx    = MINUTES.reduce((best, m, i) =>
     Math.abs(m - next.getMinutes()) < Math.abs(MINUTES[best] - next.getMinutes()) ? i : best, 0);
 
@@ -213,12 +208,10 @@ function DateEditor({
     >
       <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-4 bg-gray-50/80 dark:bg-gray-800/60">
 
-        {/* ── Drum wheels ── */}
         <div
           className="flex items-stretch rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden"
           style={{ '--wheel-bg': 'var(--tw-bg)' } as React.CSSProperties}
         >
-          {/* Date wheel – wider */}
           <div className="flex-[2] [--wheel-bg:theme(colors.white)] dark:[--wheel-bg:theme(colors.gray.800)]">
             <Wheel
               items={DATE_OPTIONS}
@@ -228,10 +221,8 @@ function DateEditor({
             />
           </div>
 
-          {/* Divider */}
           <div className="w-px bg-gray-100 dark:bg-gray-700 self-stretch" />
 
-          {/* Hour wheel */}
           <div className="flex-1 [--wheel-bg:theme(colors.white)] dark:[--wheel-bg:theme(colors.gray.800)]">
             <Wheel
               items={HOURS}
@@ -241,12 +232,10 @@ function DateEditor({
             />
           </div>
 
-          {/* Colon */}
           <div className="flex items-center justify-center px-1 text-lg font-black text-gray-400 dark:text-gray-500 select-none flex-shrink-0">
             :
           </div>
 
-          {/* Minute wheel */}
           <div className="flex-1 [--wheel-bg:theme(colors.white)] dark:[--wheel-bg:theme(colors.gray.800)]">
             <Wheel
               items={MINUTES}
@@ -257,7 +246,6 @@ function DateEditor({
           </div>
         </div>
 
-        {/* ── Frequency ── */}
         <div>
           <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Repeat</p>
           <div className="flex flex-wrap gap-1.5">
@@ -270,7 +258,6 @@ function DateEditor({
           </div>
         </div>
 
-        {/* ── Preview + OK ── */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
             <Clock className="w-3.5 h-3.5 text-indigo-500" />
@@ -300,7 +287,15 @@ function DateEditor({
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 
-export default function ReminderPanel({ tankId, tankName }: { tankId: string; tankName: string }) {
+export default function ReminderPanel({
+  tankId,
+  tankName,
+  onBadgeChange,
+}: {
+  tankId: string;
+  tankName: string;
+  onBadgeChange?: (count: number) => void;
+}) {
   const [reminders,     setReminders]     = useState<Reminder[]>([]);
   const [hasPermission, setHasPermission] = useState(false);
   const [editingId,     setEditingId]     = useState<string | null>(null);
@@ -313,6 +308,10 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
     } else {
       setReminders(rs);
     }
+    // Update badge
+    const now = Date.now();
+    const overdueCount = getTankReminders(tankId).filter(r => r.enabled && new Date(r.nextDate).getTime() < now).length;
+    onBadgeChange?.(overdueCount);
   };
 
   useEffect(() => {
@@ -334,6 +333,13 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
     updateReminder(reminderId, { nextDate, frequency });
     load();
     setEditingId(null);
+  };
+
+  const handleComplete = (reminderId: string) => {
+    const r = reminders.find(x => x.id === reminderId);
+    if (!r) return;
+    completeReminder(tankId, r.type);
+    load();
   };
 
   if (!isNotificationSupported()) {
@@ -369,7 +375,7 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
         </div>
         {!hasPermission && (
           <button
-            onClick={async () => { const p = await requestNotificationPermission(); setHasPermission(p === 'granted'); }}
+            onClick={async () => { const p = await requestNotificationPermission(); setHasPermission(p === 'granted'); load(); }}
             className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:shadow-lg transition-all"
           >
             <Bell className="w-4 h-4" /> Enable
@@ -387,15 +393,26 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
 
           return (
             <div key={r.id}>
-              <div className={`flex items-center gap-3 px-5 py-4 ${r.enabled ? '' : 'opacity-60'}`}>
+              <div className={`flex items-center gap-3 px-5 py-4 transition-colors ${
+                overdue
+                  ? 'bg-red-50/60 dark:bg-red-950/20'
+                  : r.enabled ? '' : 'opacity-60'
+              }`}>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 border ${
                   r.enabled ? `${cfg.bg} ${cfg.border}` : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
                 }`}>{cfg.emoji}</div>
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-black text-gray-900 dark:text-white truncate">
-                    {r.type === 'water_change' ? 'Water Change' : r.type === 'parameter_check' ? 'Check Parameters' : 'Clean Filter'}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-black text-gray-900 dark:text-white truncate">
+                      {r.type === 'water_change' ? 'Water Change' : r.type === 'parameter_check' ? 'Check Parameters' : 'Clean Filter'}
+                    </p>
+                    {overdue && (
+                      <span className="px-2 py-0.5 bg-red-600 text-white text-[10px] font-black rounded-full uppercase tracking-wide">
+                        Overdue
+                      </span>
+                    )}
+                  </div>
                   {r.enabled ? (
                     <button
                       onClick={() => setEditingId(isEditing ? null : r.id)}
@@ -415,6 +432,15 @@ export default function ReminderPanel({ tankId, tankName }: { tankId: string; ta
                 </div>
 
                 <div className="flex items-center gap-1.5 flex-shrink-0">
+                  {r.enabled && (
+                    <button
+                      onClick={() => handleComplete(r.id)}
+                      className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all"
+                      title="Mark as done"
+                    >
+                      <Check className="w-4 h-4" strokeWidth={2.5} />
+                    </button>
+                  )}
                   <button
                     onClick={() => handleToggle(r.id, !r.enabled)}
                     className={`p-2 rounded-xl transition-all ${

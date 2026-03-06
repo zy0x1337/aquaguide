@@ -21,7 +21,7 @@ import {
   getMaintenanceLogs, addMaintenanceLog, deleteMaintenanceLog,
   ParameterReading, MaintenanceLog,
 } from '../lib/supabase/tankHistory';
-import { completeReminder } from '../lib/notifications';
+import { completeReminder, getTankReminders } from '../lib/notifications';
 import { useToast } from '../contexts/ToastContext';
 
 const BUILDER_AUTOSAVE_KEY = 'tankBuilder_autosave';
@@ -45,10 +45,11 @@ const TankDetailPage = () => {
 
   const [parameterReadings, setParameterReadings] = useState<ParameterReading[]>([]);
   const [maintenanceLogs, setMaintenanceLogs] = useState<MaintenanceLog[]>([]);
+  const [remindersBadge, setRemindersBadge] = useState(0);
 
   useEffect(() => {
     if (!id) return;
-    loadTank(); loadHistory();
+    loadTank(); loadHistory(); loadReminderBadge();
   }, [id]);
 
   const loadTank = async () => {
@@ -68,6 +69,14 @@ const TankDetailPage = () => {
       const [readings, logs] = await Promise.all([getParameterReadings(id, 30), getMaintenanceLogs(id, 50)]);
       setParameterReadings(readings); setMaintenanceLogs(logs);
     } catch { toast.error('Failed to load history', 'Some data may be incomplete.'); }
+  };
+
+  const loadReminderBadge = () => {
+    if (!id) return;
+    const reminders = getTankReminders(id);
+    const now = Date.now();
+    const overdueCount = reminders.filter(r => r.enabled && new Date(r.nextDate).getTime() < now).length;
+    setRemindersBadge(overdueCount);
   };
 
   // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────
@@ -206,6 +215,7 @@ const TankDetailPage = () => {
       }});
       await loadTank(); await loadHistory(); setIsParameterModalOpen(false);
       completeReminder(id, 'parameter_check');
+      loadReminderBadge();
       toast.success('Parameters logged!', 'Water parameters have been updated.');
     } catch { toast.error('Failed to log parameters', 'Please try again.'); }
   };
@@ -221,6 +231,7 @@ const TankDetailPage = () => {
       await addMaintenanceLog(id, log); await loadHistory(); setIsMaintenanceModalOpen(false);
       if (log.type === 'water_change') completeReminder(id, 'water_change');
       else if (log.type === 'filter_cleaning') completeReminder(id, 'filter_clean');
+      loadReminderBadge();
       toast.success('Maintenance logged!', `${log.title} has been recorded.`);
     } catch { toast.error('Failed to log maintenance', 'Please try again.'); }
   };
@@ -371,7 +382,7 @@ const TankDetailPage = () => {
             <CleanTabButton active={activeTab === 'overview'}    onClick={() => setActiveTab('overview')}    icon={<Sparkles className="w-4 h-4" />} label="Overview" />
             <CleanTabButton active={activeTab === 'parameters'}  onClick={() => setActiveTab('parameters')}  icon={<Activity className="w-4 h-4" />} label="Parameters"  badge={parameterReadings.length} />
             <CleanTabButton active={activeTab === 'maintenance'} onClick={() => setActiveTab('maintenance')} icon={<Wrench className="w-4 h-4" />}   label="Maintenance" badge={maintenanceLogs.length} />
-            <CleanTabButton active={activeTab === 'reminders'}   onClick={() => setActiveTab('reminders')}   icon={<Bell className="w-4 h-4" />}     label="Reminders" />
+            <CleanTabButton active={activeTab === 'reminders'}   onClick={() => setActiveTab('reminders')}   icon={<Bell className="w-4 h-4" />}     label="Reminders" badge={remindersBadge} badgeColor="red" />
           </div>
         </div>
       </div>
@@ -395,7 +406,7 @@ const TankDetailPage = () => {
               onDeleteLog={handleDeleteMaintenanceLog} />
           )}
           {activeTab === 'reminders' && (
-            <RemindersTab key="reminders" tankId={id!} tankName={tank.name} />
+            <RemindersTab key="reminders" tankId={id!} tankName={tank.name} onBadgeChange={setRemindersBadge} />
           )}
         </AnimatePresence>
       </main>
@@ -486,10 +497,10 @@ const MaintenanceTab = ({ logs, onAddLog, onDeleteLog }: any) => (
   </motion.div>
 );
 
-const RemindersTab = ({ tankId, tankName }: { tankId: string; tankName: string }) => (
+const RemindersTab = ({ tankId, tankName, onBadgeChange }: { tankId: string; tankName: string; onBadgeChange: (count: number) => void }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="space-y-6">
     <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><Bell className="w-6 h-6 md:w-7 md:h-7 text-indigo-600" />Reminders</h2>
-    <ReminderPanel tankId={tankId} tankName={tankName} />
+    <ReminderPanel tankId={tankId} tankName={tankName} onBadgeChange={onBadgeChange} />
   </motion.div>
 );
 
@@ -501,10 +512,16 @@ const CleanStatCard = ({ icon, label, value }: any) => (
   </div>
 );
 
-const CleanTabButton = ({ active, onClick, icon, label, badge }: any) => (
+const CleanTabButton = ({ active, onClick, icon, label, badge, badgeColor }: any) => (
   <button onClick={onClick} className={`relative flex items-center gap-2 px-4 md:px-5 py-3 md:py-4 font-semibold transition-all whitespace-nowrap ${ active ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'}`}>
     {icon}<span className="text-sm md:text-base">{label}</span>
-    {badge !== undefined && badge > 0 && <span className="ml-1 px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-full">{badge}</span>}
+    {badge !== undefined && badge > 0 && (
+      <span className={`ml-1 px-2 py-0.5 text-xs font-bold rounded-full ${
+        badgeColor === 'red'
+          ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300'
+          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+      }`}>{badge}</span>
+    )}
     {active && <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 dark:bg-indigo-400" transition={{ type: 'spring', stiffness: 500, damping: 30 }} />}
   </button>
 );
