@@ -135,8 +135,8 @@ const MyTanksPage = () => {
           {/* Top Bar */}
           <div className="flex items-center justify-between py-4 sm:py-6 gap-3">
             <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
-              <div className="p-2 sm:p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg flex-shrink-0">
-                <Droplets className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <div className="p-2 sm:p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 flex-shrink-0">
+                <Droplets className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-slate-400" />
               </div>
               <div className="min-w-0 flex-1">
                 <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white truncate">My Tanks</h1>
@@ -154,11 +154,12 @@ const MyTanksPage = () => {
               </Link>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 sm:px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all"
+                className="group/btn relative flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-4 sm:px-5 py-2.5 rounded-xl transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden text-sm"
               >
-                <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Add Tank</span>
-                <span className="sm:hidden">Add</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                <Plus className="w-4 h-4 relative z-10" />
+                <span className="hidden sm:inline relative z-10">Add Tank</span>
+                <span className="sm:hidden relative z-10">Add</span>
               </button>
             </div>
           </div>
@@ -204,10 +205,11 @@ const MyTanksPage = () => {
               </p>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
+                className="group/btn relative inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden text-sm sm:text-base"
               >
-                <Plus className="w-5 h-5" />
-                Add Your First Tank
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                <Plus className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Add Your First Tank</span>
               </button>
             </div>
           </motion.div>

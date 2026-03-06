@@ -79,7 +79,7 @@ const TankDetailPage = () => {
     setRemindersBadge(overdueCount);
   };
 
-  // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────────
+  // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────────────────────────────────────
   const handleTogglePublic = async () => {
     if (!tank || !id) return;
     setIsPublishing(true);
@@ -103,7 +103,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Feature on profile toggle ──────────────────────────────────────────────────────────
+  // ─── Feature on profile toggle ──────────────────────────────────────────────────────────────────────────────────────
   const handleToggleFeatured = async () => {
     if (!tank || !id) return;
     if (!tank.isPublic) {
@@ -126,7 +126,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Copy public link ────────────────────────────────────────────────────────────────────
+  // ─── Copy public link ───────────────────────────────────────────────────────────────────────────────────────────────
   const handleCopyLink = async () => {
     if (!tank?.publicSlug) return;
     const url = `${window.location.origin}/tanks/${tank.publicSlug}`;
@@ -134,7 +134,7 @@ const TankDetailPage = () => {
     toast.success('Link copied!', url);
   };
 
-  // ─── Edit in Builder ─────────────────────────────────────────────────────────────────────
+  // ─── Edit in Builder ────────────────────────────────────────────────────────────────────────────────────────────────
   const handleEditInBuilder = () => {
     if (!tank) return;
     const existing = localStorage.getItem(BUILDER_AUTOSAVE_KEY);
@@ -246,7 +246,7 @@ const TankDetailPage = () => {
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
         <div className="relative">
           <div className="w-16 h-16 border-4 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
-          <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-indigo-600 dark:text-indigo-400 animate-pulse" />
+          <Sparkles className="w-6 h-6 text-indigo-600 dark:text-indigo-400 animate-pulse" />
         </div>
         <p className="text-slate-700 dark:text-slate-300 font-semibold">Loading tank...</p>
       </motion.div>
@@ -291,8 +291,8 @@ const TankDetailPage = () => {
           {/* Main Header Section */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 py-6 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-start gap-4">
-              <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
-                <Droplets className="w-7 h-7 text-white" />
+              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                <Droplets className="w-7 h-7 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-1">
@@ -372,9 +372,11 @@ const TankDetailPage = () => {
                 onClick={() => setIsEditModalOpen(true)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg hover:shadow-xl transition-all"
+                className="group/btn relative flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-4 py-2 rounded-lg transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden text-sm"
               >
-                <Edit className="w-4 h-4" />Edit
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                <Edit className="w-4 h-4 relative z-10" />
+                <span className="relative z-10">Edit</span>
               </motion.button>
             </div>
           </div>
@@ -434,7 +436,7 @@ const TankDetailPage = () => {
   );
 };
 
-// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// ─── TAB COMPONENTS ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const substrateLabel = (s?: string) => ({ sand: 'Sand', gravel: 'Gravel', soil: 'Aqua Soil', bare: 'Bare Bottom' } as any)[s || ''] || 'Not specified';
   const lightingLabel  = (l?: string) => ({ low: 'Low (10–30 PAR)', medium: 'Medium (30–50 PAR)', high: 'High (50+ PAR)' } as any)[l || ''] || 'Not specified';
@@ -518,7 +520,7 @@ const RemindersTab = ({ tankId, tankName, onBadgeChange }: { tankId: string; tan
   </motion.div>
 );
 
-// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// ─── UTILITY COMPONENTS ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const QuickStatColored = ({ icon, label, value, color }: any) => {
   const colorClasses = {
     orange: { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-orange-200 dark:border-orange-900', icon: 'text-orange-600 dark:text-orange-400', text: 'text-orange-700 dark:text-orange-300' },

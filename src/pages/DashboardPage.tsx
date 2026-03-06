@@ -159,8 +159,8 @@ const DashboardPage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-transparent pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
-              <BarChart3 className="w-6 h-6 text-white" />
+            <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <BarChart3 className="w-6 h-6 text-slate-600 dark:text-slate-400" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
@@ -220,8 +220,8 @@ const DashboardPage = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
-                <BarChart3 className="w-6 h-6 text-white" />
+              <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                <BarChart3 className="w-6 h-6 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
