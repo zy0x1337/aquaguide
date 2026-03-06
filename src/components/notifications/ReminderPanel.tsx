@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Bell, BellOff, Clock, Trash2, ChevronDown, Check, Timer, Plus, Edit3, Droplets, Flask, Wrench, Zap } from 'lucide-react';
+import { Bell, BellOff, Clock, Trash2, ChevronDown, Check, Timer, Plus, Edit3, Droplets, Beaker, Wrench, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTankReminders,
@@ -37,7 +37,7 @@ const FREQUENCIES: { value: Reminder['frequency']; label: string }[] = [
 
 const TYPE_CFG: Record<Reminder['type'], { Icon: any; color: string; bg: string; border: string }> = {
   water_change:    { Icon: Droplets, color: 'text-cyan-700 dark:text-cyan-300',   bg: 'bg-cyan-50 dark:bg-cyan-950/40',   border: 'border-cyan-200 dark:border-cyan-800'   },
-  parameter_check: { Icon: Flask, color: 'text-violet-700 dark:text-violet-300', bg: 'bg-violet-50 dark:bg-violet-950/40', border: 'border-violet-200 dark:border-violet-800' },
+  parameter_check: { Icon: Beaker, color: 'text-violet-700 dark:text-violet-300', bg: 'bg-violet-50 dark:bg-violet-950/40', border: 'border-violet-200 dark:border-violet-800' },
   filter_clean:    { Icon: Wrench, color: 'text-amber-700 dark:text-amber-300',  bg: 'bg-amber-50 dark:bg-amber-950/40',  border: 'border-amber-200 dark:border-amber-800'  },
   custom:          { Icon: Zap, color: 'text-indigo-700 dark:text-indigo-300',  bg: 'bg-indigo-50 dark:bg-indigo-950/40',  border: 'border-indigo-200 dark:border-indigo-800'  },
 };
