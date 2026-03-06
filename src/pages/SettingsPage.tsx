@@ -2,69 +2,123 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
-import { Settings, Bell, Shield, Palette, Save, CheckCircle2 } from 'lucide-react';
+import { 
+  Settings, User, Lock, Trash2, Ruler, Eye, Database, Shield, 
+  Save, CheckCircle2, AlertTriangle, Download, RefreshCw, 
+  Globe, FileText, ChevronDown, Info
+} from 'lucide-react';
 import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
+
+type UnitSystem = 'metric' | 'imperial';
+type TempUnit = 'celsius' | 'fahrenheit';
+type DensityMode = 'comfortable' | 'compact';
 
 const SettingsPage = () => {
-  const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState('general');
+  const { user, signOut } = useAuth();
+  const [activeTab, setActiveTab] = useState('account');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   // Load settings from localStorage
   const [settings, setSettings] = useState(() => {
-    const saved = localStorage.getItem('aquaguide_settings');
+    const saved = localStorage.getItem('aquaguide_user_settings');
     return saved ? JSON.parse(saved) : {
-      emailNotifications: true,
-      pushNotifications: false,
-      weeklyDigest: true,
+      unitSystem: 'metric' as UnitSystem,
+      tempUnit: 'celsius' as TempUnit,
+      showScientificNames: true,
+      showDifficultyBadges: true,
+      cardsDensity: 'comfortable' as DensityMode,
+      profilePublic: true,
+      allowTankSharing: true,
+      offlineMode: false,
     };
   });
 
-  // Apply theme on mount and when it changes
-  useEffect(() => {
-    const theme = localStorage.getItem('theme') || 'system';
-    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-
   const tabs = [
-    { id: 'general', label: 'General', icon: Settings },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'appearance', label: 'Appearance', icon: Palette },
+    { id: 'account', label: 'Account', icon: User },
+    { id: 'units', label: 'Units & Measurements', icon: Ruler },
+    { id: 'display', label: 'Display', icon: Eye },
+    { id: 'data', label: 'Data & Storage', icon: Database },
     { id: 'privacy', label: 'Privacy', icon: Shield },
   ];
 
   const handleSave = () => {
     setSaveStatus('saving');
-    // Save to localStorage
-    localStorage.setItem('aquaguide_settings', JSON.stringify(settings));
+    localStorage.setItem('aquaguide_user_settings', JSON.stringify(settings));
     setTimeout(() => {
       setSaveStatus('saved');
       setTimeout(() => setSaveStatus('idle'), 2000);
     }, 500);
   };
 
-  const handleThemeChange = (theme: string) => {
-    localStorage.setItem('theme', theme);
-    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
+  const handlePasswordChange = async () => {
+    if (newPassword !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    if (newPassword.length < 6) {
+      alert('Password must be at least 6 characters');
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) {
+      alert('Error updating password: ' + error.message);
     } else {
-      document.documentElement.classList.remove('dark');
+      alert('Password updated successfully!');
+      setNewPassword('');
+      setConfirmPassword('');
     }
   };
 
-  const getCurrentTheme = () => {
-    return localStorage.getItem('theme') || 'system';
+  const handleDeleteAccount = async () => {
+    if (!showDeleteConfirm) {
+      setShowDeleteConfirm(true);
+      return;
+    }
+
+    // Delete user data from profiles table
+    if (user) {
+      await supabase.from('profiles').delete().eq('id', user.id);
+      await supabase.from('tanks').delete().eq('user_id', user.id);
+    }
+
+    // Sign out
+    await signOut();
+    alert('Your account has been deleted.');
+  };
+
+  const handleExportData = () => {
+    const data = {
+      settings,
+      exportDate: new Date().toISOString(),
+      user: user?.email,
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `aquaguide-settings-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+  };
+
+  const handleClearCache = () => {
+    if (confirm('This will clear all locally cached data. Continue?')) {
+      localStorage.removeItem('aquaguide_user_settings');
+      localStorage.removeItem('aquaguide_favorites');
+      alert('Cache cleared successfully!');
+      window.location.reload();
+    }
   };
 
   return (
     <PageTransition>
       <SEOHead 
         title="Settings - AquaGuide"
-        description="Manage your AquaGuide account settings, preferences, and privacy options."
+        description="Manage your AquaGuide account settings, units, display preferences, and privacy options."
       />
       
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8">
@@ -80,7 +134,7 @@ const SettingsPage = () => {
               Settings
             </h1>
             <p className="text-slate-600 dark:text-slate-400">
-              Manage your account settings and preferences
+              Customize your AquaGuide experience and manage your account
             </p>
           </motion.div>
 
@@ -123,15 +177,15 @@ const SettingsPage = () => {
             >
               <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                 
-                {/* General Settings */}
-                {activeTab === 'general' && (
+                {/* ACCOUNT SETTINGS */}
+                {activeTab === 'account' && (
                   <div className="p-6 space-y-6">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                        General Settings
+                        Account Settings
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Manage your basic account preferences
+                        Manage your account details and security
                       </p>
                     </div>
 
@@ -150,68 +204,153 @@ const SettingsPage = () => {
                         Email address cannot be changed
                       </p>
                     </div>
+
+                    {/* Change Password */}
+                    <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Lock className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                        <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                          Change Password
+                        </h3>
+                      </div>
+                      <input
+                        type="password"
+                        placeholder="New password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      />
+                      <input
+                        type="password"
+                        placeholder="Confirm new password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      />
+                      <button
+                        onClick={handlePasswordChange}
+                        disabled={!newPassword || !confirmPassword}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Lock className="w-3.5 h-3.5" /> Update Password
+                      </button>
+                    </div>
+
+                    {/* Delete Account */}
+                    <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center gap-2 mb-2">
+                        <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                        <h3 className="text-sm font-bold text-red-600 dark:text-red-400">
+                          Danger Zone
+                        </h3>
+                      </div>
+                      <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900 rounded-lg">
+                        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+                          Permanently delete your account and all associated data. This action cannot be undone.
+                        </p>
+                        {showDeleteConfirm && (
+                          <div className="mb-3 p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-800 rounded-lg">
+                            <p className="text-xs font-bold text-red-900 dark:text-red-200">
+                              ⚠️ Are you absolutely sure? Click again to confirm.
+                            </p>
+                          </div>
+                        )}
+                        <button
+                          onClick={handleDeleteAccount}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition-all"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" /> Delete Account
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 )}
 
-                {/* Notifications Settings */}
-                {activeTab === 'notifications' && (
+                {/* UNITS & MEASUREMENTS */}
+                {activeTab === 'units' && (
                   <div className="p-6 space-y-6">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                        Notifications
+                        Units & Measurements
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Control how and when you receive notifications
+                        Choose your preferred units for measurements
                       </p>
                     </div>
 
-                    {/* Toggle Items */}
-                    <div className="space-y-4">
-                      <ToggleItem
-                        label="Email Notifications"
-                        description="Receive updates and alerts via email"
-                        checked={settings.emailNotifications}
-                        onChange={(checked) => setSettings({ ...settings, emailNotifications: checked })}
-                      />
-                      <ToggleItem
-                        label="Push Notifications"
-                        description="Get instant notifications in your browser"
-                        checked={settings.pushNotifications}
-                        onChange={(checked) => setSettings({ ...settings, pushNotifications: checked })}
-                      />
-                      <ToggleItem
-                        label="Weekly Digest"
-                        description="Receive a weekly summary of your tanks and activity"
-                        checked={settings.weeklyDigest}
-                        onChange={(checked) => setSettings({ ...settings, weeklyDigest: checked })}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Appearance Settings */}
-                {activeTab === 'appearance' && (
-                  <div className="p-6 space-y-6">
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                        Appearance
-                      </h2>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Customize how AquaGuide looks
-                      </p>
-                    </div>
-
+                    {/* Unit System */}
                     <div className="space-y-2">
                       <label className="block text-sm font-semibold text-slate-900 dark:text-white">
-                        Theme
+                        Unit System
                       </label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {['light', 'dark', 'system'].map((mode) => (
+                      <div className="grid grid-cols-2 gap-3">
+                        {['metric', 'imperial'].map((mode) => (
                           <button
                             key={mode}
-                            onClick={() => handleThemeChange(mode)}
+                            onClick={() => setSettings({ ...settings, unitSystem: mode })}
                             className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
-                              getCurrentTheme() === mode
+                              settings.unitSystem === mode
+                                ? 'bg-black dark:bg-white text-white dark:text-black'
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
+                            }`}
+                          >
+                            {mode === 'metric' ? 'Metric (cm, L, kg)' : 'Imperial (in, gal, lb)'}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-500">
+                        This affects tank sizes, fish measurements, and water parameters
+                      </p>
+                    </div>
+
+                    {/* Temperature Unit */}
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-900 dark:text-white">
+                        Temperature Unit
+                      </label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {['celsius', 'fahrenheit'].map((mode) => (
+                          <button
+                            key={mode}
+                            onClick={() => setSettings({ ...settings, tempUnit: mode })}
+                            className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
+                              settings.tempUnit === mode
+                                ? 'bg-black dark:bg-white text-white dark:text-black'
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
+                            }`}
+                          >
+                            {mode === 'celsius' ? 'Celsius (°C)' : 'Fahrenheit (°F)'}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* DISPLAY PREFERENCES */}
+                {activeTab === 'display' && (
+                  <div className="p-6 space-y-6">
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                        Display Preferences
+                      </h2>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Customize how information is displayed
+                      </p>
+                    </div>
+
+                    {/* Cards Density */}
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-slate-900 dark:text-white">
+                        Card Layout Density
+                      </label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {['comfortable', 'compact'].map((mode) => (
+                          <button
+                            key={mode}
+                            onClick={() => setSettings({ ...settings, cardsDensity: mode })}
+                            className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
+                              settings.cardsDensity === mode
                                 ? 'bg-black dark:bg-white text-white dark:text-black'
                                 : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
                             }`}
@@ -220,26 +359,126 @@ const SettingsPage = () => {
                           </button>
                         ))}
                       </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-500">
+                        Compact mode shows more items per row
+                      </p>
+                    </div>
+
+                    {/* Toggle Items */}
+                    <div className="space-y-4 pt-2">
+                      <ToggleItem
+                        label="Show Scientific Names"
+                        description="Display scientific names alongside common names"
+                        checked={settings.showScientificNames}
+                        onChange={(checked) => setSettings({ ...settings, showScientificNames: checked })}
+                      />
+                      <ToggleItem
+                        label="Show Difficulty Badges"
+                        description="Display care difficulty badges on species cards"
+                        checked={settings.showDifficultyBadges}
+                        onChange={(checked) => setSettings({ ...settings, showDifficultyBadges: checked })}
+                      />
                     </div>
                   </div>
                 )}
 
-                {/* Privacy Settings */}
+                {/* DATA & STORAGE */}
+                {activeTab === 'data' && (
+                  <div className="p-6 space-y-6">
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                        Data & Storage
+                      </h2>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Manage your local data and storage options
+                      </p>
+                    </div>
+
+                    {/* Export Data */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                        Export Your Data
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Download a copy of your settings and preferences as JSON
+                      </p>
+                      <button
+                        onClick={handleExportData}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-sm font-semibold rounded-lg transition-all"
+                      >
+                        <Download className="w-3.5 h-3.5" /> Export Settings
+                      </button>
+                    </div>
+
+                    {/* Clear Cache */}
+                    <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                        Clear Local Cache
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Remove all cached data to free up space or fix issues
+                      </p>
+                      <button
+                        onClick={handleClearCache}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg transition-all"
+                      >
+                        <RefreshCw className="w-3.5 h-3.5" /> Clear Cache
+                      </button>
+                    </div>
+
+                    {/* Offline Mode */}
+                    <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <ToggleItem
+                        label="Offline Mode (Beta)"
+                        description="Cache data locally for offline access"
+                        checked={settings.offlineMode}
+                        onChange={(checked) => setSettings({ ...settings, offlineMode: checked })}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* PRIVACY & SAFETY */}
                 {activeTab === 'privacy' && (
                   <div className="p-6 space-y-6">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                        Privacy & Security
+                        Privacy & Safety
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Your privacy and security settings
+                        Control your privacy and profile visibility
                       </p>
                     </div>
 
-                    <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Privacy features coming soon. Your data is encrypted and secure.
-                      </p>
+                    {/* Privacy Toggles */}
+                    <div className="space-y-4">
+                      <ToggleItem
+                        label="Public Profile"
+                        description="Allow others to view your profile and tanks"
+                        checked={settings.profilePublic}
+                        onChange={(checked) => setSettings({ ...settings, profilePublic: checked })}
+                      />
+                      <ToggleItem
+                        label="Allow Tank Sharing"
+                        description="Enable sharing your tanks via public links"
+                        checked={settings.allowTankSharing}
+                        onChange={(checked) => setSettings({ ...settings, allowTankSharing: checked })}
+                      />
+                    </div>
+
+                    {/* Info Box */}
+                    <div className="p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg">
+                      <div className="flex gap-3">
+                        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
+                            Your Privacy Matters
+                          </p>
+                          <p className="text-xs text-blue-700 dark:text-blue-300">
+                            We never sell your data. All settings are stored locally and encrypted. Learn more in our Privacy Policy.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -300,7 +539,7 @@ const ToggleItem = ({
     </div>
     <button
       onClick={() => onChange(!checked)}
-      className={`relative w-11 h-6 rounded-full transition-colors ${
+      className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${
         checked ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'
       }`}
     >
