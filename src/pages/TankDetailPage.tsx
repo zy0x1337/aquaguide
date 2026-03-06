@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck, Camera, Waves } from 'lucide-react';
+import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck, Camera, Waves, Settings as SettingsIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { TankConfig, TankItem } from '../types/builder';
@@ -23,6 +23,7 @@ import {
 } from '../lib/supabase/tankHistory';
 import { completeReminder, getTankReminders } from '../lib/notifications';
 import { useToast } from '../contexts/ToastContext';
+import { useSettings } from '../hooks/useSettings';
 
 const BUILDER_AUTOSAVE_KEY = 'tankBuilder_autosave';
 
@@ -30,6 +31,7 @@ const TankDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const toast = useToast();
+  const { settings } = useSettings();
   const [tank, setTank] = useState<Tank | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'parameters' | 'maintenance' | 'reminders'>('overview');
@@ -82,6 +84,17 @@ const TankDetailPage = () => {
   // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────────────────────────────────────
   const handleTogglePublic = async () => {
     if (!tank || !id) return;
+
+    // 🔒 Privacy Check: Respect allowTankSharing setting
+    if (!tank.isPublic && !settings.allowTankSharing) {
+      toast.error(
+        'Tank sharing is disabled',
+        'Enable "Allow Tank Sharing" in Settings → Privacy to share tanks.',
+        'warning'
+      );
+      return;
+    }
+
     setIsPublishing(true);
     try {
       if (tank.isPublic) {
@@ -270,6 +283,9 @@ const TankDetailPage = () => {
 
   const publicUrl = tank.publicSlug ? `${window.location.origin}/tanks/${tank.publicSlug}` : null;
 
+  // 🔒 Privacy warning display
+  const showPrivacyWarning = !settings.allowTankSharing && !tank.isPublic;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/20 to-purple-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <SEOHead title={`${tank.name} – My Tanks`} description={`Manage ${tank.name}, a ${tank.volumeLiters}L ${tank.type} aquarium.`} />
@@ -287,6 +303,34 @@ const TankDetailPage = () => {
               <ArrowLeft className="w-4 h-4" />Back to My Tanks
             </Link>
           </div>
+
+          {/* 🔒 Privacy Warning Banner */}
+          {showPrivacyWarning && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="mb-4 bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 rounded-lg p-4"
+            >
+              <div className="flex gap-3 items-start">
+                <Lock className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-bold text-sm text-amber-900 dark:text-amber-200 mb-1">
+                    Tank Sharing Disabled
+                  </h3>
+                  <p className="text-xs text-amber-800 dark:text-amber-300 mb-2">
+                    You've disabled tank sharing in your privacy settings. Enable it to share this tank publicly.
+                  </p>
+                  <Link 
+                    to="/settings"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-200 transition-colors"
+                  >
+                    <SettingsIcon className="w-3.5 h-3.5" />
+                    Go to Privacy Settings
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           {/* Main Header Section */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 py-6 border-t border-slate-200 dark:border-slate-800">
@@ -330,10 +374,11 @@ const TankDetailPage = () => {
             <div className="flex items-center gap-2 flex-wrap">
               <motion.button 
                 onClick={handleTogglePublic} 
-                disabled={isPublishing}
+                disabled={isPublishing || (!tank.isPublic && !settings.allowTankSharing)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 rounded-lg font-semibold text-sm transition-all disabled:opacity-60 shadow-sm hover:shadow text-slate-700 dark:text-slate-200"
+                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 rounded-lg font-semibold text-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-sm hover:shadow text-slate-700 dark:text-slate-200"
+                title={!settings.allowTankSharing && !tank.isPublic ? 'Enable sharing in Privacy Settings' : ''}
               >
                 {tank.isPublic ? <><Lock className="w-4 h-4" />Make Private</> : <><Share2 className="w-4 h-4" />Share</>}
               </motion.button>
