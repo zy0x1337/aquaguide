@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Loader2, ArrowRight, Fish, Droplets, Activity, Hammer, BarChart3 } from 'lucide-react';
+import { Plus, Loader2, ArrowRight, Fish, Droplets, Activity, Hammer, BarChart3, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import DashboardStats from '../components/dashboard/DashboardStats';
 import TankHealthList from '../components/dashboard/TankHealthList';
@@ -106,24 +106,40 @@ const DashboardPage = () => {
   };
 
   if (isLoading) return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
-        <Loader2 className="w-12 h-12 text-slate-400 dark:text-slate-600 animate-spin mx-auto mb-3" />
-        <p className="text-slate-600 dark:text-slate-400 font-medium text-sm">Loading dashboard...</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-indigo-50/20 to-purple-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }} 
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="text-center"
+      >
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
+          <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-indigo-600 dark:text-indigo-400 animate-pulse" />
+        </div>
+        <p className="text-slate-700 dark:text-slate-300 font-semibold">Loading dashboard...</p>
+        <p className="text-slate-500 dark:text-slate-500 text-sm mt-1">Preparing your aquarium insights</p>
       </motion.div>
     </div>
   );
 
   if (error) return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-md mx-auto px-4">
-        <div className="w-14 h-14 bg-red-50 dark:bg-red-950/20 rounded-lg mx-auto mb-3 flex items-center justify-center border border-red-100 dark:border-red-900">
-          <Fish className="w-7 h-7 text-red-600 dark:text-red-400" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-red-50/20 to-slate-50 dark:from-slate-950 dark:via-red-950/10 dark:to-slate-950">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        className="text-center max-w-md mx-auto px-4"
+      >
+        <div className="w-20 h-20 bg-gradient-to-br from-red-50 to-rose-100 dark:from-red-950/30 dark:to-rose-950/20 rounded-2xl mx-auto mb-4 flex items-center justify-center border border-red-200 dark:border-red-900 shadow-lg">
+          <Fish className="w-9 h-9 text-red-600 dark:text-red-400" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Error Loading Dashboard</h2>
-        <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">{error}</p>
-        <button onClick={loadDashboardData} className="bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
-          Retry
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Oops!</h2>
+        <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">{error}</p>
+        <button 
+          onClick={loadDashboardData} 
+          className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+        >
+          Try Again
         </button>
       </motion.div>
     </div>
@@ -131,41 +147,54 @@ const DashboardPage = () => {
 
   // ─── Empty State ─────────────────────────────────────────────────────────────────
   if (stats && stats.totalTanks === 0) return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <SEOHead title="Dashboard" description="Your aquarium dashboard – monitor tank health and track activities." />
 
-      <motion.header initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <motion.header 
+        initial={{ opacity: 0, y: -20 }} 
+        animate={{ opacity: 1, y: 0 }}
+        className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-transparent pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center gap-3">
-            <BarChart3 className="w-7 h-7 text-slate-900 dark:text-white" />
+            <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
+              <BarChart3 className="w-6 h-6 text-white" />
+            </div>
             <div>
               <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Analytics · Overview</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">Analytics • Overview</p>
             </div>
           </div>
         </div>
       </motion.header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="text-center py-20">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ delay: 0.1 }}
+          className="text-center py-12"
+        >
           <div className="max-w-md mx-auto">
-            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-lg mx-auto mb-4 flex items-center justify-center border border-slate-200 dark:border-slate-700">
-              <Droplets className="w-8 h-8 text-slate-400 dark:text-slate-500" />
+            <div className="relative w-24 h-24 mx-auto mb-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-950/40 dark:to-purple-950/40 rounded-2xl blur-2xl" />
+              <div className="relative w-24 h-24 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50 rounded-2xl flex items-center justify-center border border-indigo-200 dark:border-indigo-900 shadow-xl">
+                <Droplets className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
+              </div>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">No Tanks Yet</h2>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mb-8 leading-relaxed">
-              Add your first tank to start tracking parameters, maintenance, and health metrics.
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">No Tanks Yet</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+              Start your aquarium journey! Add your first tank to track parameters, maintenance, and health metrics.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link to="/my-tanks"
-                className="inline-flex items-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
-                <Plus className="w-4 h-4" />Add First Tank
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all">
+                <Plus className="w-5 h-5" />Add First Tank
               </Link>
               <Link to="/tank-builder"
-                className="inline-flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
-                <Hammer className="w-4 h-4" />Tank Builder
+                className="inline-flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-700 px-8 py-4 rounded-xl font-bold transition-all">
+                <Hammer className="w-5 h-5" />Tank Builder
               </Link>
             </div>
           </div>
@@ -176,40 +205,46 @@ const DashboardPage = () => {
 
   // ─── Main Dashboard ──────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/20 to-purple-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <SEOHead title="Dashboard" description="Your aquarium dashboard – monitor tank health and track activities." />
 
-      <motion.header initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <motion.header 
+        initial={{ opacity: 0, y: -20 }} 
+        animate={{ opacity: 1, y: 0 }}
+        className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-transparent pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex items-center gap-3">
-              <BarChart3 className="w-7 h-7 text-slate-900 dark:text-white" />
+              <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
               <div>
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
-                <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Analytics · Overview</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm">Analytics • Overview</p>
               </div>
             </div>
             {stats && (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-6 px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+                <div className="flex items-center gap-6 px-5 py-3 bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg">
                   <div className="text-center">
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">Tanks</p>
-                    <p className="text-xl font-bold text-slate-900 dark:text-white">{stats.totalTanks}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wide mb-0.5">Tanks</p>
+                    <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{stats.totalTanks}</p>
                   </div>
-                  <div className="w-px h-8 bg-slate-200 dark:bg-slate-700" />
+                  <div className="w-px h-10 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-600 to-transparent" />
                   <div className="text-center">
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">Fish</p>
-                    <p className="text-xl font-bold text-slate-900 dark:text-white">{stats.totalFish}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wide mb-0.5">Fish</p>
+                    <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">{stats.totalFish}</p>
                   </div>
-                  <div className="w-px h-8 bg-slate-200 dark:bg-slate-700" />
+                  <div className="w-px h-10 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-600 to-transparent" />
                   <div className="text-center">
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">Health</p>
-                    <p className="text-xl font-bold text-slate-900 dark:text-white">{stats.avgHealthScore}%</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wide mb-0.5">Health</p>
+                    <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">{stats.avgHealthScore}%</p>
                   </div>
                 </div>
                 <Link to="/my-tanks"
-                  className="flex items-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
+                  className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all">
                   View All
                   <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -234,15 +269,21 @@ const DashboardPage = () => {
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Tank Health</h2>
-              <Link to="/my-tanks" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium text-sm flex items-center gap-1 transition-colors">
-                Details<ArrowRight className="w-3.5 h-3.5" />
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Activity className="w-5 h-5 text-indigo-600" />
+                Tank Health
+              </h2>
+              <Link to="/my-tanks" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold text-sm flex items-center gap-1 transition-colors">
+                View All<ArrowRight className="w-4 h-4" />
               </Link>
             </div>
             <TankHealthList healthScores={healthScores} />
           </div>
           <div className="space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent Activity</h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-purple-600" />
+              Recent Activity
+            </h2>
             <RecentActivityFeed activities={recentActivity} />
           </div>
         </div>
