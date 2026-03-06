@@ -425,18 +425,12 @@ const SettingsPage = () => {
                         Privacy & Safety
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Control your privacy and profile visibility
+                        Control your tank profile visibility
                       </p>
                     </div>
 
                     {/* Privacy Toggles */}
                     <div className="space-y-4">
-                      <ToggleItem
-                        label="Public Profile"
-                        description="Allow others to view your profile and tanks"
-                        checked={settings.profilePublic}
-                        onChange={(checked) => updateSetting('profilePublic', checked)}
-                      />
                       <ToggleItem
                         label="Allow Tank Sharing"
                         description="Enable sharing your tanks via public links"
