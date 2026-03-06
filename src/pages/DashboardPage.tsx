@@ -137,9 +137,10 @@ const DashboardPage = () => {
         <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">{error}</p>
         <button 
           onClick={loadDashboardData} 
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+          className="group/btn relative inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-xl transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden"
         >
-          Try Again
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+          <span className="relative z-10">Try Again</span>
         </button>
       </motion.div>
     </div>
@@ -189,8 +190,10 @@ const DashboardPage = () => {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link to="/my-tanks"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all">
-                <Plus className="w-5 h-5" />Add First Tank
+                className="group/btn relative inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-8 py-4 rounded-xl transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                <Plus className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Add First Tank</span>
               </Link>
               <Link to="/tank-builder"
                 className="inline-flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-700 px-8 py-4 rounded-xl font-bold transition-all">
@@ -244,9 +247,10 @@ const DashboardPage = () => {
                   </div>
                 </div>
                 <Link to="/my-tanks"
-                  className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all">
-                  View All
-                  <ArrowRight className="w-4 h-4" />
+                  className="group/btn relative flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-5 py-3 rounded-xl transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                  <span className="relative z-10">View All</span>
+                  <ArrowRight className="w-4 h-4 relative z-10" />
                 </Link>
               </div>
             )}
