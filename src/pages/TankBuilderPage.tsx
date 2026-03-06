@@ -19,12 +19,15 @@ import { TANK_PRESETS } from '../data/presets';
 import { TankConfig, TankItem, HardscapeItem, SmartSuggestion } from '../types/builder';
 import { Species } from '../types/species';
 import { Plant } from '../types/plant';
+import { useSettings } from '../hooks/useSettings';
+import { formatVolume, formatLength, formatTankDimensions, formatTempRange } from '../utils/unitConversion';
 
 const AUTOSAVE_KEY = 'tankBuilder_autosave';
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 export const TankBuilderPage = () => {
   const navigate = useNavigate();
+  const { settings } = useSettings();
   const [tankConfig, setTankConfig] = useState<TankConfig>({
     ...PRESET_TANKS[2], substrate: 'gravel', hasFilter: false, hasHeater: false
   });
@@ -118,7 +121,7 @@ export const TankBuilderPage = () => {
   const updatePosition = (id: string, x: number, y: number) =>
     setItems(prev => prev.map(i => i.id === id ? { ...i, position: { ...i.position, x, y } } : i));
 
-  // ─── Save to My Tanks ────────────────────────────────────────────────────────
+  // ─── Save to My Tanks ────────────────────────────────────────────────
   const handleSaveToMyTanks = async () => {
     setSaveState('saving');
     try {
@@ -176,7 +179,7 @@ export const TankBuilderPage = () => {
   };
 
   const handleExport = () => {
-    const text = generateShoppingList(items, tankConfig, stats, suggestions);
+    const text = generateShoppingList(items, tankConfig, stats, suggestions, settings);
     const blob = new Blob([text], { type: 'text/plain' });
     const url  = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -232,6 +235,8 @@ export const TankBuilderPage = () => {
     ? 'bg-red-500 hover:bg-red-600 text-white'
     : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25';
 
+  const dimensionUnit = settings.unitSystem === 'metric' ? 'cm' : 'in';
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pb-20">
       <SEOHead title="Tank Builder – Smart Aquarium Planner" description="Plan your aquarium with intelligent compatibility checks, equipment recommendations, and shopping lists." />
@@ -239,7 +244,7 @@ export const TankBuilderPage = () => {
       <SpeciesDetailSlideOver item={detailItem} onClose={() => setDetailItem(null)} />
       <SharePreviewModal open={showShare} tankConfig={tankConfig} items={items} stats={previewStats} onClose={() => setShowShare(false)} />
 
-      {/* Header */}
+      {/* Header - WITH UNIT CONVERSION */}
       <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="h-16 flex items-center justify-between">
@@ -249,7 +254,7 @@ export const TankBuilderPage = () => {
               </div>
               <div>
                 <h1 className="font-black text-base sm:text-lg text-slate-900 dark:text-white">{tankConfig.name}</h1>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{tankConfig.volume}L &bull; {items.length} items &bull; {progressPercentage.toFixed(0)}% complete</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{formatVolume(tankConfig.volume, settings.unitSystem)} • {items.length} items • {progressPercentage.toFixed(0)}% complete</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -451,7 +456,7 @@ export const TankBuilderPage = () => {
                         if (item.type === 'fish') {
                           const fish = item.data as Species;
                           if (fish.environment.minTankSizeLiters > tankConfig.volume)
-                            itemWarnings.push(`Needs minimum ${fish.environment.minTankSizeLiters}L tank`);
+                            itemWarnings.push(`Needs minimum ${formatVolume(fish.environment.minTankSizeLiters, settings.unitSystem)} tank`);
                           if (fish.behavior.minGroupSize && (item.count || 1) < fish.behavior.minGroupSize)
                             itemSuggestions.push(`Schooling fish – increase to ${fish.behavior.minGroupSize}+ for natural behavior`);
                         }
@@ -483,7 +488,7 @@ export const TankBuilderPage = () => {
         </div>
       </main>
 
-      {/* Setup Modal */}
+      {/* Setup Modal - WITH UNIT CONVERSION */}
       <AnimatePresence>
         {showSetup && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -503,7 +508,7 @@ export const TankBuilderPage = () => {
                     placeholder="My Awesome Tank" />
                 </div>
                 <div>
-                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 block">Dimensions (cm)</label>
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 block">Dimensions ({dimensionUnit})</label>
                   <div className="grid grid-cols-3 gap-3">
                     {(['length', 'width', 'height'] as const).map(dim => (
                       <div key={dim}>
@@ -514,7 +519,7 @@ export const TankBuilderPage = () => {
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-slate-500 mt-2 text-center">Volume: <span className="font-bold text-indigo-600">{Math.round((customDimensions.length * customDimensions.width * customDimensions.height) / 1000)}L</span></p>
+                  <p className="text-xs text-slate-500 mt-2 text-center">Volume: <span className="font-bold text-indigo-600">{formatVolume(Math.round((customDimensions.length * customDimensions.width * customDimensions.height) / 1000), settings.unitSystem)}</span></p>
                 </div>
                 <div className="flex gap-3 pt-4">
                   <button onClick={() => setShowSetup(false)} className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl transition-colors">Cancel</button>
@@ -526,7 +531,7 @@ export const TankBuilderPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Preset Modal */}
+      {/* Preset Modal - WITH UNIT CONVERSION */}
       <AnimatePresence>
         {showPresets && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -545,7 +550,7 @@ export const TankBuilderPage = () => {
                       className="text-left bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 border-2 border-slate-200 dark:border-slate-700 p-5 rounded-2xl hover:border-indigo-500 hover:shadow-xl transition-all">
                       <div className="flex justify-between items-start mb-3">
                         <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${preset.difficulty === 'beginner' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{preset.difficulty}</span>
-                        <div className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-full"><span className="text-xs font-black text-indigo-600 dark:text-indigo-400">{preset.tankConfig.volume}L</span></div>
+                        <div className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-full"><span className="text-xs font-black text-indigo-600 dark:text-indigo-400">{formatVolume(preset.tankConfig.volume, settings.unitSystem)}</span></div>
                       </div>
                       <h3 className="font-black text-slate-900 dark:text-white mb-2 text-lg">{preset.name}</h3>
                       <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">{preset.description}</p>
@@ -565,12 +570,12 @@ export const TankBuilderPage = () => {
   );
 };
 
-const generateShoppingList = (items: TankItem[], config: TankConfig, stats: any, suggestions: SmartSuggestion[]): string => {
+const generateShoppingList = (items: TankItem[], config: TankConfig, stats: any, suggestions: SmartSuggestion[], settings: any): string => {
   const fish      = items.filter(i => i.type === 'fish');
   const plants    = items.filter(i => i.type === 'plant');
   const hardscape = items.filter(i => i.type === 'hardscape');
   const today = new Date().toLocaleDateString('en-US', { dateStyle: 'full' });
-  let text = `\n\uD83D\uDC20 AQUAGUIDE TANK PLAN\n=========================================\nDate: ${today}\nTank: ${config.name}\n\n\uD83D\uDCD0 TANK SPECIFICATIONS\n-----------------------------------------\nVolume: ${config.volume}L | ${config.length}\u00d7${config.width}\u00d7${config.height}cm | Substrate: ${config.substrate || 'N/A'}\n\n\uD83D\uDD34 HIGH PRIORITY\n-----------------------------------------\n`;
+  let text = `\n\uD83D\uDC20 AQUAGUIDE TANK PLAN\n=========================================\nDate: ${today}\nTank: ${config.name}\n\n\uD83D\uDCD0 TANK SPECIFICATIONS\n-----------------------------------------\nVolume: ${formatVolume(config.volume, settings.unitSystem)} | ${formatTankDimensions(config.length, config.width, config.height, settings.unitSystem)} | Substrate: ${config.substrate || 'N/A'}\n\n\uD83D\uDD34 HIGH PRIORITY\n-----------------------------------------\n`;
   if (!config.hasFilter) text += `[ ] Filter (${stats.filterRate} L/h)\n`;
   if (!config.hasHeater) text += `[ ] Heater (${stats.heaterWattage}W)\n`;
   text += `[ ] Water Test Kit\n\n\uD83D\uDFE1 LIVESTOCK\n-----------------------------------------\n`;
@@ -585,7 +590,7 @@ const generateShoppingList = (items: TankItem[], config: TankConfig, stats: any,
   hardscape.forEach(i => { text += `[ ] ${(i.data as any).name}\n`; });
   text += `\n\uD83D\uDCA1 TOP RECOMMENDATIONS\n-----------------------------------------\n`;
   suggestions.slice(0, 3).forEach(s => { text += `\u2022 ${s.title}: ${s.description}\n`; });
-  text += `\n\uD83D\uDCCA STATS\n-----------------------------------------\nStocking: ${stats.stockingPercentage}% | Temp: ${stats.tempRange?.min}-${stats.tempRange?.max}\u00b0C | pH: ${stats.phRange?.min}-${stats.phRange?.max}\n\nGenerated by AquaGuide\nhttps://aquaguide.app/tank-builder\n`;
+  text += `\n\uD83D\uDCCA STATS\n-----------------------------------------\nStocking: ${stats.stockingPercentage}% | Temp: ${stats.tempRange ? formatTempRange(stats.tempRange.min, stats.tempRange.max, settings.tempUnit) : 'N/A'} | pH: ${stats.phRange?.min}-${stats.phRange?.max}\n\nGenerated by AquaGuide\nhttps://aquaguide.app/tank-builder\n`;
   return text;
 };
 
