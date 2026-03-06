@@ -1,41 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useSettings } from '../hooks/useSettings';
 import { PageTransition } from '../components/layout/PageTransition';
 import { SEOHead } from '../components/seo/SEOHead';
 import { 
   Settings, User, Lock, Trash2, Ruler, Eye, Database, Shield, 
-  Save, CheckCircle2, AlertTriangle, Download, RefreshCw, 
-  Globe, FileText, ChevronDown, Info
+  Save, CheckCircle2, AlertTriangle, Download, RefreshCw, Info
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 
-type UnitSystem = 'metric' | 'imperial';
-type TempUnit = 'celsius' | 'fahrenheit';
-type DensityMode = 'comfortable' | 'compact';
-
 const SettingsPage = () => {
   const { user, signOut } = useAuth();
+  const { settings, updateSetting } = useSettings();
   const [activeTab, setActiveTab] = useState('account');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  // Load settings from localStorage
-  const [settings, setSettings] = useState(() => {
-    const saved = localStorage.getItem('aquaguide_user_settings');
-    return saved ? JSON.parse(saved) : {
-      unitSystem: 'metric' as UnitSystem,
-      tempUnit: 'celsius' as TempUnit,
-      showScientificNames: true,
-      showDifficultyBadges: true,
-      cardsDensity: 'comfortable' as DensityMode,
-      profilePublic: true,
-      allowTankSharing: true,
-      offlineMode: false,
-    };
-  });
 
   const tabs = [
     { id: 'account', label: 'Account', icon: User },
@@ -47,7 +29,7 @@ const SettingsPage = () => {
 
   const handleSave = () => {
     setSaveStatus('saving');
-    localStorage.setItem('aquaguide_user_settings', JSON.stringify(settings));
+    // Settings are auto-saved via useSettings hook
     setTimeout(() => {
       setSaveStatus('saved');
       setTimeout(() => setSaveStatus('idle'), 2000);
@@ -80,13 +62,11 @@ const SettingsPage = () => {
       return;
     }
 
-    // Delete user data from profiles table
     if (user) {
       await supabase.from('profiles').delete().eq('id', user.id);
       await supabase.from('tanks').delete().eq('user_id', user.id);
     }
 
-    // Sign out
     await signOut();
     alert('Your account has been deleted.');
   };
@@ -107,8 +87,7 @@ const SettingsPage = () => {
 
   const handleClearCache = () => {
     if (confirm('This will clear all locally cached data. Continue?')) {
-      localStorage.removeItem('aquaguide_user_settings');
-      localStorage.removeItem('aquaguide_favorites');
+      localStorage.clear();
       alert('Cache cleared successfully!');
       window.location.reload();
     }
@@ -287,7 +266,7 @@ const SettingsPage = () => {
                         {['metric', 'imperial'].map((mode) => (
                           <button
                             key={mode}
-                            onClick={() => setSettings({ ...settings, unitSystem: mode })}
+                            onClick={() => updateSetting('unitSystem', mode as 'metric' | 'imperial')}
                             className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
                               settings.unitSystem === mode
                                 ? 'bg-black dark:bg-white text-white dark:text-black'
@@ -312,7 +291,7 @@ const SettingsPage = () => {
                         {['celsius', 'fahrenheit'].map((mode) => (
                           <button
                             key={mode}
-                            onClick={() => setSettings({ ...settings, tempUnit: mode })}
+                            onClick={() => updateSetting('tempUnit', mode as 'celsius' | 'fahrenheit')}
                             className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
                               settings.tempUnit === mode
                                 ? 'bg-black dark:bg-white text-white dark:text-black'
@@ -348,7 +327,7 @@ const SettingsPage = () => {
                         {['comfortable', 'compact'].map((mode) => (
                           <button
                             key={mode}
-                            onClick={() => setSettings({ ...settings, cardsDensity: mode })}
+                            onClick={() => updateSetting('cardsDensity', mode as 'comfortable' | 'compact')}
                             className={`px-4 py-3 rounded-lg text-sm font-semibold capitalize transition-all ${
                               settings.cardsDensity === mode
                                 ? 'bg-black dark:bg-white text-white dark:text-black'
@@ -370,13 +349,13 @@ const SettingsPage = () => {
                         label="Show Scientific Names"
                         description="Display scientific names alongside common names"
                         checked={settings.showScientificNames}
-                        onChange={(checked) => setSettings({ ...settings, showScientificNames: checked })}
+                        onChange={(checked) => updateSetting('showScientificNames', checked)}
                       />
                       <ToggleItem
                         label="Show Difficulty Badges"
                         description="Display care difficulty badges on species cards"
                         checked={settings.showDifficultyBadges}
-                        onChange={(checked) => setSettings({ ...settings, showDifficultyBadges: checked })}
+                        onChange={(checked) => updateSetting('showDifficultyBadges', checked)}
                       />
                     </div>
                   </div>
@@ -432,7 +411,7 @@ const SettingsPage = () => {
                         label="Offline Mode (Beta)"
                         description="Cache data locally for offline access"
                         checked={settings.offlineMode}
-                        onChange={(checked) => setSettings({ ...settings, offlineMode: checked })}
+                        onChange={(checked) => updateSetting('offlineMode', checked)}
                       />
                     </div>
                   </div>
@@ -456,13 +435,13 @@ const SettingsPage = () => {
                         label="Public Profile"
                         description="Allow others to view your profile and tanks"
                         checked={settings.profilePublic}
-                        onChange={(checked) => setSettings({ ...settings, profilePublic: checked })}
+                        onChange={(checked) => updateSetting('profilePublic', checked)}
                       />
                       <ToggleItem
                         label="Allow Tank Sharing"
                         description="Enable sharing your tanks via public links"
                         checked={settings.allowTankSharing}
-                        onChange={(checked) => setSettings({ ...settings, allowTankSharing: checked })}
+                        onChange={(checked) => updateSetting('allowTankSharing', checked)}
                       />
                     </div>
 
@@ -490,7 +469,7 @@ const SettingsPage = () => {
                       {saveStatus === 'saved' && (
                         <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
                           <CheckCircle2 className="w-4 h-4" strokeWidth={2.5} />
-                          Changes saved
+                          Changes saved automatically
                         </div>
                       )}
                     </div>
