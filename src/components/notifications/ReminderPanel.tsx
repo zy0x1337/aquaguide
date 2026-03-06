@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Bell, BellOff, Clock, Trash2, ChevronDown, Check, Timer, Plus, Edit3 } from 'lucide-react';
+import { Bell, BellOff, Clock, Trash2, ChevronDown, Check, Timer, Plus, Edit3, Droplets, Flask, Wrench, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTankReminders,
@@ -35,11 +35,11 @@ const FREQUENCIES: { value: Reminder['frequency']; label: string }[] = [
   { value: 'monthly',  label: 'Monthly'   },
 ];
 
-const TYPE_CFG: Record<Reminder['type'], { emoji: string; color: string; bg: string; border: string }> = {
-  water_change:    { emoji: '💧', color: 'text-cyan-700 dark:text-cyan-300',   bg: 'bg-cyan-50 dark:bg-cyan-950/40',   border: 'border-cyan-200 dark:border-cyan-800'   },
-  parameter_check: { emoji: '🧪', color: 'text-violet-700 dark:text-violet-300', bg: 'bg-violet-50 dark:bg-violet-950/40', border: 'border-violet-200 dark:border-violet-800' },
-  filter_clean:    { emoji: '🔧', color: 'text-amber-700 dark:text-amber-300',  bg: 'bg-amber-50 dark:bg-amber-950/40',  border: 'border-amber-200 dark:border-amber-800'  },
-  custom:          { emoji: '⚡', color: 'text-indigo-700 dark:text-indigo-300',  bg: 'bg-indigo-50 dark:bg-indigo-950/40',  border: 'border-indigo-200 dark:border-indigo-800'  },
+const TYPE_CFG: Record<Reminder['type'], { Icon: any; color: string; bg: string; border: string }> = {
+  water_change:    { Icon: Droplets, color: 'text-cyan-700 dark:text-cyan-300',   bg: 'bg-cyan-50 dark:bg-cyan-950/40',   border: 'border-cyan-200 dark:border-cyan-800'   },
+  parameter_check: { Icon: Flask, color: 'text-violet-700 dark:text-violet-300', bg: 'bg-violet-50 dark:bg-violet-950/40', border: 'border-violet-200 dark:border-violet-800' },
+  filter_clean:    { Icon: Wrench, color: 'text-amber-700 dark:text-amber-300',  bg: 'bg-amber-50 dark:bg-amber-950/40',  border: 'border-amber-200 dark:border-amber-800'  },
+  custom:          { Icon: Zap, color: 'text-indigo-700 dark:text-indigo-300',  bg: 'bg-indigo-50 dark:bg-indigo-950/40',  border: 'border-indigo-200 dark:border-indigo-800'  },
 };
 
 const DEFAULT_REMINDER_TYPES: Reminder['type'][] = ['water_change', 'parameter_check', 'filter_clean'];
@@ -539,7 +539,7 @@ export default function ReminderPanel({
 
   if (!isNotificationSupported()) {
     return (
-      <div className="bg-amber-50 dark:bg-amber-950/30 border-2 border-amber-200 dark:border-amber-800 rounded-xl p-6 text-center">
+      <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl p-6 text-center">
         <BellOff className="w-10 h-10 text-amber-600 dark:text-amber-400 mx-auto mb-3" />
         <h3 className="font-bold text-amber-900 dark:text-amber-300 mb-1">Notifications Not Supported</h3>
         <p className="text-sm text-amber-700 dark:text-amber-400">Try Chrome, Firefox, or Edge.</p>
@@ -552,17 +552,17 @@ export default function ReminderPanel({
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden"
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-sm">
-              <Bell className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 rounded-lg flex items-center justify-center">
+              <Bell className="w-4.5 h-4.5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <h2 className="text-lg font-black text-gray-900 dark:text-white">Reminders</h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">Reminders</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {hasPermission
                   ? `${reminders.filter(r => r.enabled).length} of ${reminders.length} active`
                   : 'Notifications disabled'}
@@ -573,14 +573,14 @@ export default function ReminderPanel({
             {!hasPermission && (
               <button
                 onClick={async () => { const p = await requestNotificationPermission(); setHasPermission(p === 'granted'); load(); }}
-                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:shadow-lg transition-all"
+                className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all"
               >
                 <Bell className="w-4 h-4" /> Enable
               </button>
             )}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all"
               title="Create custom reminder"
             >
               <Plus className="w-4 h-4" /> New
@@ -589,7 +589,7 @@ export default function ReminderPanel({
         </div>
 
         {/* Cards */}
-        <div className="divide-y divide-gray-100 dark:divide-gray-800">
+        <div className="divide-y divide-slate-100 dark:divide-slate-800">
           {reminders.map((r) => {
             const cfg       = TYPE_CFG[r.type];
             const isEditing = editingId === r.id;
@@ -612,17 +612,19 @@ export default function ReminderPanel({
                     ? 'bg-red-50/60 dark:bg-red-950/20'
                     : r.enabled ? '' : 'opacity-60'
                 }`}>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 border ${
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 border ${
                     r.enabled ? `${cfg.bg} ${cfg.border}` : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-                  }`}>{cfg.emoji}</div>
+                  }`}>
+                    <cfg.Icon className={`w-4.5 h-4.5 ${r.enabled ? cfg.color : 'text-gray-400 dark:text-gray-500'}`} />
+                  </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-black text-gray-900 dark:text-white truncate">
+                      <p className="text-sm font-bold text-slate-900 dark:text-white truncate">
                         {displayTitle}
                       </p>
                       {overdue && (
-                        <span className="px-2 py-0.5 bg-red-600 text-white text-[10px] font-black rounded-full uppercase tracking-wide">
+                        <span className="px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wide">
                           Overdue
                         </span>
                       )}
@@ -631,17 +633,17 @@ export default function ReminderPanel({
                       <button
                         onClick={() => setEditingId(isEditing ? null : r.id)}
                         className={`flex items-center gap-1.5 mt-0.5 text-xs transition-colors ${
-                          overdue ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400'
+                          overdue ? 'text-red-600 dark:text-red-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400'
                         }`}
                       >
                         <Clock className="w-3 h-3" />
                         <span>{fmt(r.nextDate)}</span>
                         <span className="opacity-60">({timeAgo(r.nextDate)})</span>
-                        <span className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-[10px] font-bold text-gray-500 dark:text-gray-400">{freqLabel}</span>
+                        <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-[10px] font-bold text-slate-500 dark:text-slate-400">{freqLabel}</span>
                         <ChevronDown className={`w-3 h-3 transition-transform ${isEditing ? 'rotate-180' : ''}`} />
                       </button>
                     ) : (
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{freqLabel} · tap bell to enable</p>
+                      <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{freqLabel} · tap bell to enable</p>
                     )}
                   </div>
 
@@ -649,7 +651,7 @@ export default function ReminderPanel({
                     {r.enabled && (
                       <button
                         onClick={() => handleComplete(r.id)}
-                        className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all"
+                        className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all"
                         title="Mark as done"
                       >
                         <Check className="w-4 h-4" strokeWidth={2.5} />
@@ -657,7 +659,7 @@ export default function ReminderPanel({
                     )}
                     <button
                       onClick={() => handleToggle(r.id, !r.enabled)}
-                      className={`p-2 rounded-xl transition-all ${
+                      className={`p-2 rounded-lg transition-all ${
                         r.enabled ? `${cfg.bg} ${cfg.color} ${cfg.border} border hover:opacity-80` : 'bg-gray-100 dark:bg-gray-800 text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                       }`}
                     >
@@ -666,7 +668,7 @@ export default function ReminderPanel({
                     {!isDefaultReminder && (
                       <button
                         onClick={() => handleDelete(r.id)}
-                        className="p-2 rounded-xl text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
+                        className="p-2 rounded-lg text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
                         title="Delete reminder"
                       >
                         <Trash2 className="w-4 h-4" strokeWidth={2.5} />
@@ -692,8 +694,9 @@ export default function ReminderPanel({
 
         {hasPermission && reminders.some(r => r.enabled) && (
           <div className="px-5 py-3 bg-indigo-50/60 dark:bg-indigo-950/20 border-t border-indigo-100 dark:border-indigo-900">
-            <p className="text-xs text-indigo-700 dark:text-indigo-400">
-              🔔 Notifications arrive even when AquaGuide is closed (PWA installed).
+            <p className="text-xs text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+              <Bell className="w-3.5 h-3.5" />
+              Notifications arrive even when AquaGuide is closed (PWA installed)
             </p>
           </div>
         )}
