@@ -24,6 +24,9 @@ const TYPE_CONFIG = {
   habitat: { icon: Map, label: 'Habitats', color: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
 };
 
+// Detect OS for keyboard shortcut
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+
 export const GlobalSearch = () => {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -164,7 +167,7 @@ export const GlobalSearch = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Global keyboard shortcut (Cmd+K / Ctrl+K)
+  // Global keyboard shortcut (Cmd+K on Mac / Ctrl+K on Windows/Linux)
   useEffect(() => {
     const handleGlobalShortcut = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -219,7 +222,7 @@ export const GlobalSearch = () => {
             </button>
           )}
           <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded">
-            ⌘K
+            {isMac ? '⌘K' : 'Ctrl+K'}
           </kbd>
         </div>
       </div>
