@@ -326,43 +326,56 @@ const TankDetailPage = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* More Prominent Action Buttons */}
             <div className="flex items-center gap-2 flex-wrap">
-              <button onClick={handleTogglePublic} disabled={isPublishing}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-60 ${
-                  tank.isPublic
-                    ? 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
-                    : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
-                }`}
+              <motion.button 
+                onClick={handleTogglePublic} 
+                disabled={isPublishing}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 rounded-lg font-semibold text-sm transition-all disabled:opacity-60 shadow-sm hover:shadow text-slate-700 dark:text-slate-200"
               >
                 {tank.isPublic ? <><Lock className="w-4 h-4" />Make Private</> : <><Share2 className="w-4 h-4" />Share</>}
-              </button>
+              </motion.button>
 
               {tank.isPublic && (
-                <button onClick={handleToggleFeatured} disabled={isFeaturing}
-                  className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-60"
+                <motion.button 
+                  onClick={handleToggleFeatured} 
+                  disabled={isFeaturing}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-2 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-60 shadow-sm hover:shadow"
                 >
                   {tank.isFeaturedOnProfile ? <><BookmarkCheck className="w-4 h-4" />Unpin</> : <><Bookmark className="w-4 h-4" />Pin</>}
-                </button>
+                </motion.button>
               )}
 
-              <button onClick={() => setIsShareModalOpen(true)}
-                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-semibold text-sm transition-all"
+              <motion.button 
+                onClick={() => setIsShareModalOpen(true)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg font-semibold text-sm transition-all shadow-sm hover:shadow"
               >
                 <Camera className="w-4 h-4" />Image
-              </button>
+              </motion.button>
 
-              <button onClick={handleEditInBuilder}
-                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-semibold text-sm transition-all"
+              <motion.button 
+                onClick={handleEditInBuilder}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg font-semibold text-sm transition-all shadow-sm hover:shadow"
               >
                 <Hammer className="w-4 h-4" />Builder
-              </button>
+              </motion.button>
 
-              <button onClick={() => setIsEditModalOpen(true)}
+              <motion.button 
+                onClick={() => setIsEditModalOpen(true)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg hover:shadow-xl transition-all"
               >
                 <Edit className="w-4 h-4" />Edit
-              </button>
+              </motion.button>
             </div>
           </div>
 
@@ -421,7 +434,7 @@ const TankDetailPage = () => {
   );
 };
 
-// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────
+// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const substrateLabel = (s?: string) => ({ sand: 'Sand', gravel: 'Gravel', soil: 'Aqua Soil', bare: 'Bare Bottom' } as any)[s || ''] || 'Not specified';
   const lightingLabel  = (l?: string) => ({ low: 'Low (10–30 PAR)', medium: 'Medium (30–50 PAR)', high: 'High (50+ PAR)' } as any)[l || ''] || 'Not specified';
@@ -505,7 +518,7 @@ const RemindersTab = ({ tankId, tankName, onBadgeChange }: { tankId: string; tan
   </motion.div>
 );
 
-// ─── UTILITY COMPONENTS ─────────────────────────────────────────────────────────
+// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const QuickStat = ({ icon, label, value, status }: any) => (
   <div className="flex items-center gap-3">
     <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">{icon}</div>
