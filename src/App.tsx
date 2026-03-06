@@ -9,7 +9,6 @@ import { ToastProvider } from './contexts/ToastContext';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 import NotificationPermissionBanner from './components/notifications/NotificationPermissionBanner';
 import { startReminderSystem } from './lib/notifications';
-import { usePushSubscription } from './hooks/usePushSubscription';
 import { Loader2 } from 'lucide-react';
 
 import NotFoundPage from './pages/NotFoundPage';
@@ -60,9 +59,6 @@ const PageLoader = () => (
 function App() {
   useEffect(() => { startReminderSystem(); }, []);
 
-  // Subscribe to Web Push + mirror reminders to Supabase for background delivery
-  usePushSubscription();
-
   return (
     <ErrorBoundary>
       <ToastProvider>
@@ -96,7 +92,6 @@ function App() {
               <Route path="/knowledge"       element={<KnowledgeHubPage />} />
               <Route path="/knowledge/:slug" element={<KnowledgeDetailPage />} />
 
-              {/* Public tank profiles – no auth required */}
               <Route path="/tanks/:slug" element={<PublicTankPage />} />
 
               <Route path="/dashboard"    element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />

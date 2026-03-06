@@ -16,7 +16,7 @@ export interface Reminder {
 }
 
 const STORAGE_KEY    = 'aquaguide_reminders_v2';
-const VAPID_USED_KEY = 'aquaguide_vapid_used'; // tracks which VAPID key was used for current sub
+const VAPID_USED_KEY = 'aquaguide_vapid_used';
 
 // ── localStorage helpers ───────────────────────────────────────────────────
 
@@ -29,8 +29,7 @@ export function getReminders(): Reminder[] {
 
 export function saveReminders(reminders: Reminder[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders));
-  window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }));
-  // Fire-and-forget sync to Supabase so Edge Function has fresh data
+  // Sync to Supabase so Edge Function has fresh data
   syncRemindersToSupabase(reminders).catch(() => {});
 }
 
@@ -83,7 +82,7 @@ export function completeReminder(tankId: string, type: Reminder['type']): void {
   saveReminders(getReminders().map(r => r.id === reminder.id ? { ...r, nextDate: next.toISOString() } : r));
 }
 
-// ── Supabase sync ─────────────────────────────────────────────────────────────
+// ── Supabase sync ─────────────────────────────────────────────────────────
 
 async function syncRemindersToSupabase(reminders: Reminder[]): Promise<void> {
   const { data: { user } } = await supabase.auth.getUser();
@@ -107,7 +106,7 @@ async function syncRemindersToSupabase(reminders: Reminder[]): Promise<void> {
   );
 }
 
-// ── Web Push subscription ──────────────────────────────────────────────────────────
+// ── Web Push subscription ──────────────────────────────────────────────────
 
 function urlBase64ToUint8Array(b64: string): Uint8Array {
   const padding = '='.repeat((4 - (b64.length % 4)) % 4);
@@ -116,14 +115,6 @@ function urlBase64ToUint8Array(b64: string): Uint8Array {
   return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
 }
 
-/**
- * Subscribe the current browser to Web Push and save the subscription
- * to push_subscriptions so the Edge Function can reach this device.
- *
- * If the VAPID key changed since the last subscription (e.g. first run after
- * adding VITE_VAPID_PUBLIC_KEY), the old subscription is discarded and a fresh
- * one is created with the correct key.
- */
 export async function registerPushSubscription(): Promise<void> {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
 
@@ -141,7 +132,6 @@ export async function registerPushSubscription(): Promise<void> {
     const usedBefore = localStorage.getItem(VAPID_USED_KEY);
     let   sub        = await reg.pushManager.getSubscription();
 
-    // VAPID key changed (or first time with VAPID) – old sub is unusable, replace it
     if (sub && usedBefore !== vapidKey) {
       console.log('[Push] VAPID key changed – re-subscribing…');
       await sub.unsubscribe();
@@ -156,10 +146,7 @@ export async function registerPushSubscription(): Promise<void> {
       localStorage.setItem(VAPID_USED_KEY, vapidKey);
     }
 
-    const json = sub.toJSON() as {
-      endpoint: string;
-      keys: { p256dh: string; auth: string };
-    };
+    const json = sub.toJSON() as { endpoint: string; keys: { p256dh: string; auth: string } };
 
     const { error } = await supabase.from('push_subscriptions').upsert({
       user_id:    user.id,
@@ -177,7 +164,7 @@ export async function registerPushSubscription(): Promise<void> {
   }
 }
 
-// ── Permissions ───────────────────────────────────────────────────────────────
+// ── Permissions ───────────────────────────────────────────────────────────
 
 export function isNotificationSupported(): boolean {
   return 'Notification' in window;
@@ -192,7 +179,7 @@ export async function requestNotificationPermission(): Promise<NotificationPermi
   return result;
 }
 
-// ── sendNotification ──────────────────────────────────────────────────────────────
+// ── sendNotification ──────────────────────────────────────────────────────
 
 export async function sendNotification(
   title: string,
@@ -223,7 +210,7 @@ export async function sendNotification(
   new Notification(title, { body, icon: '/icon-192.png', tag: options.tag });
 }
 
-// ── checkDueReminders ─────────────────────────────────────────────────────────────
+// ── checkDueReminders ─────────────────────────────────────────────────────
 
 const FIRED_KEY = 'aquaguide_fired_v2';
 
@@ -254,22 +241,18 @@ export async function checkDueReminders(): Promise<void> {
   }
 }
 
-// ── System lifecycle ──────────────────────────────────────────────────────────
+// ── System lifecycle ──────────────────────────────────────────────────────
 
 let _interval: ReturnType<typeof setInterval> | null = null;
 
 export function startReminderSystem(): void {
   if (_interval) return;
-  checkDueReminders();
+  // Interval-based fallback for when app is open
   _interval = setInterval(checkDueReminders, 60_000);
 
   if (Notification.permission === 'granted') {
     registerPushSubscription().catch(() => {});
     syncRemindersToSupabase(getReminders()).catch(() => {});
-  }
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(() => checkDueReminders()).catch(() => {});
   }
 }
 
