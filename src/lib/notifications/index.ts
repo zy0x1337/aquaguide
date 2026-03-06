@@ -7,7 +7,7 @@ export interface Reminder {
   id: string;
   tankId: string;
   tankName: string;
-  type: 'water_change' | 'parameter_check' | 'filter_clean';
+  type: 'water_change' | 'parameter_check' | 'filter_clean' | 'custom';
   title: string;
   message: string;
   nextDate: string;
@@ -54,6 +54,21 @@ export function createDefaultReminders(tankId: string, tankName: string): void {
   ]);
 }
 
+export function createCustomReminder(
+  tankId: string,
+  tankName: string,
+  title: string,
+  nextDate: string,
+  frequency: Reminder['frequency'],
+): void {
+  const id = `${tankId}-custom-${Date.now()}`;
+  const message = `Custom reminder for ${tankName}`;
+  saveReminders([
+    ...getReminders(),
+    { id, tankId, tankName, type: 'custom', title, message, nextDate, frequency, enabled: true },
+  ]);
+}
+
 export function toggleReminder(reminderId: string, enabled: boolean): void {
   saveReminders(getReminders().map(r => r.id === reminderId ? { ...r, enabled } : r));
 }
@@ -64,7 +79,7 @@ export function updateReminderDate(reminderId: string, nextDate: string): void {
 
 export function updateReminder(
   reminderId: string,
-  updates: Partial<Pick<Reminder, 'nextDate' | 'frequency'>>,
+  updates: Partial<Pick<Reminder, 'nextDate' | 'frequency' | 'title'>>,
 ): void {
   saveReminders(getReminders().map(r => r.id === reminderId ? { ...r, ...updates } : r));
 }
@@ -235,7 +250,7 @@ export async function checkDueReminders(): Promise<void> {
       try {
         await sendNotification(r.title, r.message, '/my-tanks', r.id);
         markFired(fireKey);
-        completeReminder(r.tankId, r.type);
+        if (r.type !== 'custom') completeReminder(r.tankId, r.type);
       } catch { /* retry next tick */ }
     }
   }
