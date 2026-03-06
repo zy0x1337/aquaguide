@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { plantRepository } from '../data/plants';
 import { SEOHead } from '../components/seo/SEOHead';
 import { ImageAttribution } from '../components/ui/ImageAttribution';
+import { useSettings } from '../hooks/useSettings';
+import { formatLength, formatTempRange, formatTemp } from '../utils/unitConversion';
 import type { Plant } from '../types/plant';
 
 // ─── helpers ────────────────────────────────────────────
@@ -59,6 +61,7 @@ type Tab = 'overview' | 'care' | 'aquascape' | 'problems';
 export const PlantDetailPage = () => {
   const { slug } = useParams();
   const plant = plantRepository.getBySlug(slug || '');
+  const { settings } = useSettings();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
 
@@ -156,8 +159,8 @@ export const PlantDetailPage = () => {
             <HeroPill icon={<Sun className="w-3.5 h-3.5 text-amber-300" />} label={`${cap(plant.specs.light)} Light`} />
             <HeroPill icon={<Wind className="w-3.5 h-3.5 text-cyan-300" />} label={`CO₂: ${cap(plant.specs.co2)}`} />
             <HeroPill icon={<Sprout className="w-3.5 h-3.5 text-emerald-300" />} label={`${cap(plant.specs.growthRate)} Growth`} />
-            <HeroPill icon={<Ruler className="w-3.5 h-3.5 text-violet-300" />} label={`${plant.specs.heightCM.min}–${plant.specs.heightCM.max} cm`} />
-            <HeroPill icon={<Thermometer className="w-3.5 h-3.5 text-rose-300" />} label={`${plant.parameters.tempC.min}–${plant.parameters.tempC.max} °C`} />
+            <HeroPill icon={<Ruler className="w-3.5 h-3.5 text-violet-300" />} label={`${formatLength(plant.specs.heightCM.min, settings.unitSystem)}–${formatLength(plant.specs.heightCM.max, settings.unitSystem)}`} />
+            <HeroPill icon={<Thermometer className="w-3.5 h-3.5 text-rose-300" />} label={formatTempRange(plant.parameters.tempC.min, plant.parameters.tempC.max, settings.tempUnit)} />
           </div>
         </div>
       </motion.header>
@@ -251,7 +254,7 @@ export const PlantDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Plant Specifications */}
+                    {/* Plant Specifications - WITH UNIT CONVERSION */}
                     <div>
                       <SectionHeader title="Plant Specifications" icon={<Layers className="w-5 h-5" />} />
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -259,7 +262,7 @@ export const PlantDetailPage = () => {
                         <SpecCard icon={<Sun className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Light" value={cap(plant.specs.light)} />
                         <SpecCard icon={<Wind className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="CO₂" value={cap(plant.specs.co2)} />
                         <SpecCard icon={<Sprout className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Growth Rate" value={cap(plant.specs.growthRate)} />
-                        <SpecCard icon={<Ruler className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Height" value={`${plant.specs.heightCM.min}–${plant.specs.heightCM.max} cm`} />
+                        <SpecCard icon={<Ruler className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Height" value={`${formatLength(plant.specs.heightCM.min, settings.unitSystem)}–${formatLength(plant.specs.heightCM.max, settings.unitSystem)}`} />
                         <SpecCard icon={<Layers className="w-4 h-4 text-gray-600 dark:text-gray-400" />} label="Placement" value={plant.specs.placement.join(', ')} />
                       </div>
                     </div>
@@ -295,7 +298,7 @@ export const PlantDetailPage = () => {
                       </div>
                     )}
 
-                    {/* Water Parameters */}
+                    {/* Water Parameters - WITH UNIT CONVERSION */}
                     <div>
                       <SectionHeader title="Water Parameters" icon={<Thermometer className="w-5 h-5" />} />
                       <div className="grid sm:grid-cols-2 gap-3">
@@ -306,11 +309,11 @@ export const PlantDetailPage = () => {
                             <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Temperature</div>
                           </div>
                           <div className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
-                            {plant.parameters.tempC.min}–{plant.parameters.tempC.max}°C
+                            {formatTempRange(plant.parameters.tempC.min, plant.parameters.tempC.max, settings.tempUnit)}
                           </div>
                           {plant.parameters.tempC.ideal && (
                             <div className="text-xs text-gray-600 dark:text-gray-400">
-                              <span className="font-semibold">Ideal:</span> {plant.parameters.tempC.ideal}°C
+                              <span className="font-semibold">Ideal:</span> {formatTemp(plant.parameters.tempC.ideal, settings.tempUnit)}
                             </div>
                           )}
                         </div>
@@ -540,7 +543,7 @@ export const PlantDetailPage = () => {
                           </div>
                         )}
 
-                        {/* Similar Plants */}
+                        {/* Similar Plants - WITH UNIT CONVERSION */}
                         {plant.relatedPlants && plant.relatedPlants.length > 0 && (
                           <div>
                             <SectionHeader title="Similar Plants" icon={<Leaf className="w-5 h-5" />} />
@@ -589,7 +592,7 @@ export const PlantDetailPage = () => {
                                           {rel.taxonomy.scientificName}
                                         </p>
                                         
-                                        {/* Quick Info Pills */}
+                                        {/* Quick Info Pills with Unit Conversion */}
                                         <div className="flex flex-wrap gap-1.5 mb-3">
                                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
                                             <Sun className="w-3 h-3" />
@@ -601,7 +604,7 @@ export const PlantDetailPage = () => {
                                           </span>
                                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-400">
                                             <Ruler className="w-3 h-3" />
-                                            {rel.specs.heightCM.min}–{rel.specs.heightCM.max}cm
+                                            {formatLength(rel.specs.heightCM.min, settings.unitSystem)}–{formatLength(rel.specs.heightCM.max, settings.unitSystem)}
                                           </span>
                                         </div>
 
@@ -660,10 +663,10 @@ export const PlantDetailPage = () => {
             </motion.div>
           </div>
 
-          {/* ── STICKY SIDEBAR ── */}
+          {/* ── STICKY SIDEBAR - WITH UNIT CONVERSION ── */}
           <aside className="hidden lg:block">
             <div className="sticky top-4 space-y-4">
-              <SidebarCard plant={plant} />
+              <SidebarCard plant={plant} settings={settings} />
             </div>
           </aside>
 
@@ -704,7 +707,7 @@ const FunFactBanner = ({ text }: { text: string }) => (
   </motion.div>
 );
 
-const SidebarCard = ({ plant }: { plant: Plant }) => (
+const SidebarCard = ({ plant, settings }: { plant: Plant; settings: any }) => (
   <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-200 dark:border-gray-700 shadow-lg">
     {/* Origin header */}
     <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
@@ -717,14 +720,14 @@ const SidebarCard = ({ plant }: { plant: Plant }) => (
       </div>
     </div>
 
-    {/* Core care rows */}
+    {/* Core care rows - WITH UNIT CONVERSION */}
     <div className="space-y-0.5">
       <SidebarRow icon={<Target className="w-4 h-4 text-indigo-500" />} label="Difficulty" value={cap(plant.difficulty)} />
       <SidebarRow icon={<Sun className="w-4 h-4 text-amber-500" />} label="Light" value={cap(plant.specs.light)} />
       <SidebarRow icon={<Wind className="w-4 h-4 text-cyan-500" />} label="CO₂" value={cap(plant.specs.co2)} />
       <SidebarRow icon={<Sprout className="w-4 h-4 text-emerald-500" />} label="Growth" value={cap(plant.specs.growthRate)} />
-      <SidebarRow icon={<Ruler className="w-4 h-4 text-purple-500" />} label="Height" value={`${plant.specs.heightCM.min}–${plant.specs.heightCM.max} cm`} />
-      <SidebarRow icon={<Thermometer className="w-4 h-4 text-rose-500" />} label="Temp" value={`${plant.parameters.tempC.min}–${plant.parameters.tempC.max} °C${plant.parameters.tempC.ideal ? ` (${plant.parameters.tempC.ideal} °C ideal)` : ''}`} />
+      <SidebarRow icon={<Ruler className="w-4 h-4 text-purple-500" />} label="Height" value={`${formatLength(plant.specs.heightCM.min, settings.unitSystem)}–${formatLength(plant.specs.heightCM.max, settings.unitSystem)}`} />
+      <SidebarRow icon={<Thermometer className="w-4 h-4 text-rose-500" />} label="Temp" value={`${formatTempRange(plant.parameters.tempC.min, plant.parameters.tempC.max, settings.tempUnit)}${plant.parameters.tempC.ideal ? ` (${formatTemp(plant.parameters.tempC.ideal, settings.tempUnit)} ideal)` : ''}`} />
       <SidebarRow icon={<Droplets className="w-4 h-4 text-blue-500" />} label="pH" value={`${plant.parameters.ph.min}–${plant.parameters.ph.max}${plant.parameters.ph.ideal ? ` (${plant.parameters.ph.ideal} ideal)` : ''}`} />
       {plant.parameters.flow && (
         <SidebarRow icon={<Waves className="w-4 h-4 text-teal-500" />} label="Flow" value={cap(plant.parameters.flow)} />
