@@ -123,7 +123,7 @@ const MyTanksPage = () => {
         description="Manage your aquarium collection - add, edit, and monitor your tanks."
       />
 
-      {/* Clean Modern Header */}
+      {/* Clean Modern Header - Mobile Optimized */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -133,18 +133,18 @@ const MyTanksPage = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           {/* Top Bar */}
-          <div className="flex items-center justify-between py-6">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
-                <Droplets className="w-6 h-6 text-white" />
+          <div className="flex items-center justify-between py-4 sm:py-6 gap-3">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+              <div className="p-2 sm:p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg flex-shrink-0">
+                <Droplets className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">My Tanks</h1>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{tanks.length} {tanks.length === 1 ? 'aquarium' : 'aquariums'} in your collection</p>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white truncate">My Tanks</h1>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 truncate">{tanks.length} {tanks.length === 1 ? 'aquarium' : 'aquariums'} in your collection</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <Link
                 to="/dashboard"
                 className="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white font-semibold text-sm transition-all rounded-lg shadow-sm hover:shadow"
@@ -154,21 +154,22 @@ const MyTanksPage = () => {
               </Link>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all"
+                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 sm:px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all"
               >
                 <Plus className="w-4 h-4" />
-                Add Tank
+                <span className="hidden sm:inline">Add Tank</span>
+                <span className="sm:hidden">Add</span>
               </button>
             </div>
           </div>
 
-          {/* Stats Bar - Only if tanks exist */}
+          {/* Stats Bar - Only if tanks exist - Mobile Optimized */}
           {tanks.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="flex items-center gap-8 py-5 border-t border-slate-200 dark:border-slate-800"
+              className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-8 py-4 sm:py-5 border-t border-slate-200 dark:border-slate-800"
             >
               <StatItem icon={<LayoutGrid className="w-4 h-4" />} label="Tanks" value={tanks.length} />
               <StatItem icon={<Sparkles className="w-4 h-4" />} label="Species" value={totalFishSpecies} />
@@ -180,30 +181,30 @@ const MyTanksPage = () => {
       </motion.header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {tanks.length === 0 ? (
           // Enhanced Empty State
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-center py-20"
+            className="text-center py-12 sm:py-20"
           >
-            <div className="max-w-md mx-auto">
-              <div className="relative w-28 h-28 mx-auto mb-6">
+            <div className="max-w-md mx-auto px-4">
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-200 to-purple-200 dark:from-indigo-900/40 dark:to-purple-900/40 rounded-3xl blur-2xl" />
-                <div className="relative w-28 h-28 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50 rounded-3xl flex items-center justify-center border border-indigo-200 dark:border-indigo-900 shadow-2xl">
-                  <Fish className="w-12 h-12 text-indigo-600 dark:text-indigo-400" />
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/50 dark:to-purple-950/50 rounded-3xl flex items-center justify-center border border-indigo-200 dark:border-indigo-900 shadow-2xl">
+                  <Fish className="w-10 h-10 sm:w-12 sm:h-12 text-indigo-600 dark:text-indigo-400" />
                 </div>
               </div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">No Tanks Yet</h2>
-              <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">No Tanks Yet</h2>
+              <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed text-sm sm:text-base">
                 Start your aquarium journey by adding your first tank.
                 Track inhabitants, water parameters, and maintenance schedules.
               </p>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
               >
                 <Plus className="w-5 h-5" />
                 Add Your First Tank
@@ -211,12 +212,12 @@ const MyTanksPage = () => {
             </div>
           </motion.div>
         ) : (
-          // Tank Grid
+          // Tank Grid - Mobile Optimized
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           >
             {tanks.map((tank, index) => (
               <motion.div
@@ -252,13 +253,13 @@ const StatItem = ({
   label: string; 
   value: string | number;
 }) => (
-  <div className="flex items-center gap-3">
-    <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">
+  <div className="flex items-center gap-2 sm:gap-3">
+    <div className="p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400 flex-shrink-0">
       {icon}
     </div>
-    <div>
-      <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">{label}</p>
-      <p className="text-lg font-bold text-slate-900 dark:text-white">{value}</p>
+    <div className="min-w-0">
+      <p className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide truncate">{label}</p>
+      <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">{value}</p>
     </div>
   </div>
 );

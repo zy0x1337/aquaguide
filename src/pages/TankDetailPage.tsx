@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck, Camera } from 'lucide-react';
+import { ArrowLeft, Plus, Droplets, Thermometer, Fish as FishIcon, Leaf, Trash2, AlertTriangle, CheckCircle, Edit, Activity, Wrench, Mountain, Lightbulb, Bell, Sparkles, Hammer, Share2, Globe, Lock, Bookmark, BookmarkCheck, Camera, Waves } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tank } from '../types/tank';
 import { TankConfig, TankItem } from '../types/builder';
@@ -79,7 +79,7 @@ const TankDetailPage = () => {
     setRemindersBadge(overdueCount);
   };
 
-  // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────
+  // ─── Share my Tank (publish / unpublish) ────────────────────────────────────────────────
   const handleTogglePublic = async () => {
     if (!tank || !id) return;
     setIsPublishing(true);
@@ -103,7 +103,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Feature on profile toggle ─────────────────────────────────────────────────
+  // ─── Feature on profile toggle ──────────────────────────────────────────────────────────
   const handleToggleFeatured = async () => {
     if (!tank || !id) return;
     if (!tank.isPublic) {
@@ -126,7 +126,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Copy public link ──────────────────────────────────────────────────────────
+  // ─── Copy public link ────────────────────────────────────────────────────────────────────
   const handleCopyLink = async () => {
     if (!tank?.publicSlug) return;
     const url = `${window.location.origin}/tanks/${tank.publicSlug}`;
@@ -134,7 +134,7 @@ const TankDetailPage = () => {
     toast.success('Link copied!', url);
   };
 
-  // ─── Edit in Builder ─────────────────────────────────────────────────────────
+  // ─── Edit in Builder ─────────────────────────────────────────────────────────────────────
   const handleEditInBuilder = () => {
     if (!tank) return;
     const existing = localStorage.getItem(BUILDER_AUTOSAVE_KEY);
@@ -379,12 +379,12 @@ const TankDetailPage = () => {
             </div>
           </div>
 
-          {/* Quick Stats */}
-          <div className="flex items-center gap-8 py-5 border-t border-slate-200 dark:border-slate-800">
-            <QuickStat icon={<Thermometer className="w-4 h-4" />} label="Temp" value={`${tank.parameters.tempC}°C`} />
-            <QuickStat icon={<Droplets className="w-4 h-4" />} label="pH" value={tank.parameters.ph} />
-            <QuickStat icon={<Activity className="w-4 h-4" />} label="Ammonia" value={`${tank.parameters.ammonia}ppm`} status={tank.parameters.ammonia > 0 ? 'danger' : 'good'} />
-            <QuickStat icon={<Activity className="w-4 h-4" />} label="Nitrite" value={`${tank.parameters.nitrite}ppm`} status={tank.parameters.nitrite > 0 ? 'danger' : 'good'} />
+          {/* Quick Stats: Temp, pH, GH, KH with matching TankCard colors */}
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-8 py-5 border-t border-slate-200 dark:border-slate-800">
+            <QuickStatColored icon={<Thermometer className="w-4 h-4" />} label="Temperature" value={`${tank.parameters.tempC}°C`} color="orange" />
+            <QuickStatColored icon={<Droplets className="w-4 h-4" />} label="pH" value={tank.parameters.ph} color="blue" />
+            <QuickStatColored icon={<Waves className="w-4 h-4" />} label="GH" value={tank.parameters.gh ? `${tank.parameters.gh}°` : 'N/A'} color="cyan" />
+            <QuickStatColored icon={<Waves className="w-4 h-4" />} label="KH" value={tank.parameters.kh ? `${tank.parameters.kh}°` : 'N/A'} color="teal" />
           </div>
         </div>
       </motion.header>
@@ -434,7 +434,7 @@ const TankDetailPage = () => {
   );
 };
 
-// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const substrateLabel = (s?: string) => ({ sand: 'Sand', gravel: 'Gravel', soil: 'Aqua Soil', bare: 'Bare Bottom' } as any)[s || ''] || 'Not specified';
   const lightingLabel  = (l?: string) => ({ low: 'Low (10–30 PAR)', medium: 'Medium (30–50 PAR)', high: 'High (50+ PAR)' } as any)[l || ''] || 'Not specified';
@@ -518,20 +518,25 @@ const RemindersTab = ({ tankId, tankName, onBadgeChange }: { tankId: string; tan
   </motion.div>
 );
 
-// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-const QuickStat = ({ icon, label, value, status }: any) => (
-  <div className="flex items-center gap-3">
-    <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">{icon}</div>
-    <div>
-      <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">{label}</p>
-      <p className={`text-lg font-bold ${
-        status === 'danger' ? 'text-red-600 dark:text-red-400' :
-        status === 'warning' ? 'text-amber-600 dark:text-amber-400' :
-        'text-slate-900 dark:text-white'
-      }`}>{value}</p>
+// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+const QuickStatColored = ({ icon, label, value, color }: any) => {
+  const colorClasses = {
+    orange: { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-orange-200 dark:border-orange-900', icon: 'text-orange-600 dark:text-orange-400', text: 'text-orange-700 dark:text-orange-300' },
+    blue: { bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-blue-200 dark:border-blue-900', icon: 'text-blue-600 dark:text-blue-400', text: 'text-blue-700 dark:text-blue-300' },
+    cyan: { bg: 'bg-cyan-50 dark:bg-cyan-950/30', border: 'border-cyan-200 dark:border-cyan-900', icon: 'text-cyan-600 dark:text-cyan-400', text: 'text-cyan-700 dark:text-cyan-300' },
+    teal: { bg: 'bg-teal-50 dark:bg-teal-950/30', border: 'border-teal-200 dark:border-teal-900', icon: 'text-teal-600 dark:text-teal-400', text: 'text-teal-700 dark:text-teal-300' },
+  }[color];
+
+  return (
+    <div className={`flex items-center gap-3 ${colorClasses.bg} border ${colorClasses.border} rounded-lg px-3 py-2.5`}>
+      <div className={`p-1.5 bg-white/60 dark:bg-slate-800/60 rounded-lg ${colorClasses.icon}`}>{icon}</div>
+      <div>
+        <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">{label}</p>
+        <p className={`text-base font-black ${colorClasses.text}`}>{value}</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const CleanTabButton = ({ active, onClick, icon, label, badge, badgeColor }: any) => (
   <button onClick={onClick} className={`relative flex items-center gap-2 px-4 md:px-5 py-3 md:py-4 font-semibold transition-all whitespace-nowrap ${ active ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'}`}>
