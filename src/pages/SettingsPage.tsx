@@ -18,6 +18,7 @@ const SettingsPage = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [exporting, setExporting] = useState(false);
 
   const tabs = [
     { id: 'account', label: 'Account', icon: User },
@@ -71,18 +72,58 @@ const SettingsPage = () => {
     alert('Your account has been deleted.');
   };
 
-  const handleExportData = () => {
-    const data = {
-      settings,
-      exportDate: new Date().toISOString(),
-      user: user?.email,
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `aquaguide-settings-${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
+  const handleExportAllData = async () => {
+    if (!user) return;
+    
+    setExporting(true);
+    
+    try {
+      // Fetch all user data from Supabase
+      const [profileRes, tanksRes, favoritesRes] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('tanks').select('*').eq('user_id', user.id),
+        supabase.from('favorites').select('*').eq('user_id', user.id),
+      ]);
+
+      // Compile comprehensive export
+      const exportData = {
+        metadata: {
+          exportDate: new Date().toISOString(),
+          version: '1.0',
+          userId: user.id,
+        },
+        account: {
+          email: user.email,
+          createdAt: user.created_at,
+        },
+        profile: profileRes.data || {},
+        tanks: tanksRes.data || [],
+        favorites: favoritesRes.data || [],
+        settings: settings,
+        statistics: {
+          totalTanks: tanksRes.data?.length || 0,
+          totalFavorites: favoritesRes.data?.length || 0,
+        },
+      };
+
+      // Create and download file
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+        type: 'application/json' 
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `aquaguide-data-export-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      alert('✅ Your data has been exported successfully!');
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('❌ Failed to export data. Please try again.');
+    } finally {
+      setExporting(false);
+    }
   };
 
   const handleClearCache = () => {
@@ -369,23 +410,25 @@ const SettingsPage = () => {
                         Data & Storage
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Manage your local data and storage options
+                        Export your data and manage local storage
                       </p>
                     </div>
 
-                    {/* Export Data */}
+                    {/* Export All Data */}
                     <div className="space-y-3">
                       <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                        Export Your Data
+                        Export All Your Data
                       </h3>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Download a copy of your settings and preferences as JSON
+                        Download a complete backup including profile, tanks, favorites, and settings in JSON format
                       </p>
                       <button
-                        onClick={handleExportData}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-sm font-semibold rounded-lg transition-all"
+                        onClick={handleExportAllData}
+                        disabled={exporting}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-sm font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <Download className="w-3.5 h-3.5" /> Export Settings
+                        <Download className="w-3.5 h-3.5" /> 
+                        {exporting ? 'Exporting...' : 'Export Data'}
                       </button>
                     </div>
 
@@ -404,16 +447,6 @@ const SettingsPage = () => {
                         <RefreshCw className="w-3.5 h-3.5" /> Clear Cache
                       </button>
                     </div>
-
-                    {/* Offline Mode */}
-                    <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
-                      <ToggleItem
-                        label="Offline Mode (Beta)"
-                        description="Cache data locally for offline access"
-                        checked={settings.offlineMode}
-                        onChange={(checked) => updateSetting('offlineMode', checked)}
-                      />
-                    </div>
                   </div>
                 )}
 
@@ -425,7 +458,7 @@ const SettingsPage = () => {
                         Privacy & Safety
                       </h2>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Control your tank profile visibility
+                        Control how you share your tanks
                       </p>
                     </div>
 
