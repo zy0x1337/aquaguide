@@ -131,9 +131,11 @@ const HomePage = () => {
 
                 <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
                   {user ? (
-                    <Link to="/my-tanks" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all shadow-sm hover:shadow-md overflow-hidden">
-                      <LayoutDashboard className="w-4 h-4" />
-                      My Tanks <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    <Link to="/my-tanks" className="group/btn relative w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-lg transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                      <LayoutDashboard className="w-4 h-4 relative z-10" />
+                      <span className="relative z-10">My Tanks</span>
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform relative z-10" />
                     </Link>
                   ) : (
                     <Link to="/auth" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-black dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-black font-semibold rounded-lg transition-all shadow-sm hover:shadow-md border border-black dark:border-white overflow-hidden">
@@ -512,7 +514,11 @@ const HomePage = () => {
                   <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">Hello {profile?.username || user.email?.split('@')[0]}!</h2>
                   <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">Welcome back to AquaGuide. Ready to check on your tanks or discover new species?</p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Link to="/my-tanks" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg w-full sm:w-auto">Go to your tanks <ArrowRight className="w-5 h-5" /></Link>
+                    <Link to="/my-tanks" className="group/btn relative inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-8 py-4 rounded-xl transition-all border border-slate-800 dark:border-slate-700 shadow-lg hover:shadow-xl overflow-hidden w-full sm:w-auto">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
+                      <span className="relative z-10">Go to your tanks</span>
+                      <ArrowRight className="w-5 h-5 relative z-10" />
+                    </Link>
                     <Link to="/species" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold rounded-xl transition-all shadow-sm border border-slate-200 dark:border-slate-700 w-full sm:w-auto">Find new species</Link>
                   </div>
                 </>
