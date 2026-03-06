@@ -123,85 +123,64 @@ const MyTanksPage = () => {
         description="Manage your aquarium collection - add, edit, and monitor your tanks."
       />
 
-      {/* Enhanced Header with Glassmorphism */}
+      {/* Clean Modern Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative bg-gradient-to-br from-indigo-600 via-indigo-500 to-purple-600 text-white py-12 overflow-hidden"
+        className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800"
       >
-        {/* Animated background shapes */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-400/20 rounded-full blur-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-transparent pointer-events-none" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 z-10">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 shadow-lg">
-                  <Droplets className="w-7 h-7" />
-                </div>
-                <h1 className="text-4xl font-black drop-shadow-lg">My Tanks</h1>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+          {/* Top Bar */}
+          <div className="flex items-center justify-between py-6">
+            <div className="flex items-center gap-4">
+              <div className="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
+                <Droplets className="w-6 h-6 text-white" />
               </div>
-              <p className="text-indigo-100 ml-16 font-medium">Manage your aquarium collection</p>
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">My Tanks</h1>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{tanks.length} {tanks.length === 1 ? 'aquarium' : 'aquariums'} in your collection</p>
+              </div>
             </div>
             
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
-                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-5 py-3 rounded-xl font-bold transition-all border border-white/30 shadow-lg hover:shadow-xl"
+                className="hidden sm:flex items-center gap-2 px-4 py-2.5 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-semibold text-sm transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <BarChart3 className="w-5 h-5" />
-                <span className="hidden sm:inline">Dashboard</span>
+                <BarChart3 className="w-4 h-4" />
+                Dashboard
               </Link>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-4 h-4" />
                 Add Tank
               </button>
             </div>
           </div>
 
-          {/* Enhanced Stats with Glassmorphism */}
+          {/* Stats Bar - Only if tanks exist */}
           {tanks.length > 0 && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 ml-16"
+              transition={{ delay: 0.1 }}
+              className="flex items-center gap-8 py-5 border-t border-slate-200 dark:border-slate-800"
             >
-              <EnhancedStatCard
-                icon={<LayoutGrid className="w-5 h-5" />}
-                label="Total Tanks"
-                value={tanks.length}
-                gradient="from-blue-500 to-cyan-500"
-              />
-              <EnhancedStatCard
-                icon={<Sparkles className="w-5 h-5" />}
-                label="Fish Species"
-                value={totalFishSpecies}
-                gradient="from-purple-500 to-pink-500"
-              />
-              <EnhancedStatCard
-                icon={<Fish className="w-5 h-5" />}
-                label="Total Fish"
-                value={totalFish}
-                gradient="from-emerald-500 to-teal-500"
-              />
-              <EnhancedStatCard
-                icon={<Droplets className="w-5 h-5" />}
-                label="Total Volume"
-                value={`${totalVolume}L`}
-                gradient="from-cyan-500 to-blue-500"
-              />
+              <StatItem icon={<LayoutGrid className="w-4 h-4" />} label="Tanks" value={tanks.length} />
+              <StatItem icon={<Sparkles className="w-4 h-4" />} label="Species" value={totalFishSpecies} />
+              <StatItem icon={<Fish className="w-4 h-4" />} label="Fish" value={totalFish} />
+              <StatItem icon={<Droplets className="w-4 h-4" />} label="Volume" value={`${totalVolume}L`} />
             </motion.div>
           )}
         </div>
       </motion.header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {tanks.length === 0 ? (
           // Enhanced Empty State
           <motion.div
@@ -263,37 +242,25 @@ const MyTanksPage = () => {
   );
 };
 
-// Enhanced Stat Card with Gradient
-const EnhancedStatCard = ({ 
+// Clean Stat Item Component
+const StatItem = ({ 
   icon, 
   label, 
-  value,
-  gradient
+  value
 }: { 
   icon: React.ReactNode; 
   label: string; 
   value: string | number;
-  gradient: string;
 }) => (
-  <motion.div 
-    whileHover={{ scale: 1.05, y: -4 }}
-    className="relative bg-white/20 backdrop-blur-md rounded-xl p-4 border border-white/30 shadow-lg overflow-hidden group"
-  >
-    <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
-    <div className="relative">
-      <div className="flex items-center gap-2 mb-2">
-        <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}>
-          <div className="text-white">{icon}</div>
-        </div>
-      </div>
-      <div className="text-xs font-bold text-white/80 uppercase tracking-wider mb-1">
-        {label}
-      </div>
-      <div className="text-3xl font-black text-white drop-shadow-lg">
-        {value}
-      </div>
+  <div className="flex items-center gap-3">
+    <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">
+      {icon}
     </div>
-  </motion.div>
+    <div>
+      <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">{label}</p>
+      <p className="text-lg font-bold text-slate-900 dark:text-white">{value}</p>
+    </div>
+  </div>
 );
 
 export default MyTanksPage;

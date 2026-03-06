@@ -242,9 +242,12 @@ const TankDetailPage = () => {
   };
 
   if (isLoading || !tank) return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-indigo-50/20 to-purple-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-        <div className="w-16 h-16 border-4 border-indigo-600 dark:border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
+          <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-indigo-600 dark:text-indigo-400 animate-pulse" />
+        </div>
         <p className="text-slate-700 dark:text-slate-300 font-semibold">Loading tank...</p>
       </motion.div>
     </div>
@@ -268,111 +271,115 @@ const TankDetailPage = () => {
   const publicUrl = tank.publicSlug ? `${window.location.origin}/tanks/${tank.publicSlug}` : null;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/20 to-purple-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <SEOHead title={`${tank.name} – My Tanks`} description={`Manage ${tank.name}, a ${tank.volumeLiters}L ${tank.type} aquarium.`} />
 
+      {/* Clean Modern Header */}
       <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <Link to="/my-tanks"
-            className="inline-flex items-center text-white/90 hover:text-white mb-6 transition-colors text-sm font-semibold gap-1 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg">
-            <ArrowLeft className="w-4 h-4" />Back to My Tanks
-          </Link>
+        className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-transparent pointer-events-none" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+          {/* Back Button */}
+          <div className="py-4">
+            <Link to="/my-tanks"
+              className="inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-semibold gap-1.5">
+              <ArrowLeft className="w-4 h-4" />Back to My Tanks
+            </Link>
+          </div>
 
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <Droplets className="w-8 h-8" />
-                <h1 className="text-3xl md:text-4xl font-bold">{tank.name}</h1>
-                {tank.isPublic && (
-                  <span className="flex items-center gap-1 bg-emerald-400/20 border border-emerald-300/40 text-emerald-200 text-xs font-bold px-2.5 py-1 rounded-full">
-                    <Globe className="w-3 h-3" />Public
-                  </span>
-                )}
-                {tank.isFeaturedOnProfile && (
-                  <span className="flex items-center gap-1 bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-bold px-2.5 py-1 rounded-full">
-                    <BookmarkCheck className="w-3 h-3" />On Profile
-                  </span>
-                )}
+          {/* Main Header Section */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 py-6 border-t border-slate-200 dark:border-slate-800">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
+                <Droplets className="w-7 h-7 text-white" />
               </div>
-              <div className="flex flex-wrap items-center gap-2 ml-11 text-sm text-indigo-100">
-                <span className="font-semibold">{tank.volumeLiters}L</span><span>•</span>
-                <span className="font-semibold capitalize">{tank.type}</span><span>•</span>
-                <span className="font-semibold">{totalFish} fish</span><span>•</span>
-                <span className="font-semibold">{totalPlants} plants</span>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{tank.name}</h1>
+                  {tank.isPublic && (
+                    <span className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full">
+                      <Globe className="w-3 h-3" />Public
+                    </span>
+                  )}
+                  {tank.isFeaturedOnProfile && (
+                    <span className="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 text-amber-700 dark:text-amber-400 text-xs font-bold px-2.5 py-1 rounded-full">
+                      <BookmarkCheck className="w-3 h-3" />Pinned
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+                  <span className="flex items-center gap-1.5 font-semibold">
+                    <Droplets className="w-4 h-4" />{tank.volumeLiters}L
+                  </span>
+                  <span>•</span>
+                  <span className="capitalize font-semibold">{tank.type}</span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1.5">
+                    <FishIcon className="w-4 h-4" />{totalFish} fish
+                  </span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1.5">
+                    <Leaf className="w-4 h-4" />{totalPlants} plants
+                  </span>
+                </div>
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={handleTogglePublic} disabled={isPublishing}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-60 ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-60 ${
                   tank.isPublic
-                    ? 'bg-emerald-400/20 hover:bg-red-400/20 border border-emerald-300/40 hover:border-red-300/40 text-white'
-                    : 'bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white'
+                    ? 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
+                    : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
                 }`}
-                title={tank.isPublic ? 'Make private' : 'Share my Tank – create a public link'}
               >
-                {tank.isPublic ? <><Globe className="w-4 h-4" />Public</> : <><Share2 className="w-4 h-4" />Share my Tank</>}
+                {tank.isPublic ? <><Lock className="w-4 h-4" />Make Private</> : <><Share2 className="w-4 h-4" />Share</>}
               </button>
 
-              {tank.isPublic && publicUrl && (
-                <button onClick={handleCopyLink}
-                  className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit">
-                  <Share2 className="w-4 h-4" />Copy Link
+              {tank.isPublic && (
+                <button onClick={handleToggleFeatured} disabled={isFeaturing}
+                  className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-semibold text-sm transition-all disabled:opacity-60"
+                >
+                  {tank.isFeaturedOnProfile ? <><BookmarkCheck className="w-4 h-4" />Unpin</> : <><Bookmark className="w-4 h-4" />Pin</>}
                 </button>
               )}
 
-              <button
-                onClick={() => setIsShareModalOpen(true)}
-                className="flex items-center gap-2 bg-teal-400/20 hover:bg-teal-400/30 border border-teal-300/40 hover:border-teal-300/70 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit"
-                title="Generate a shareable image with your exact water parameters"
+              <button onClick={() => setIsShareModalOpen(true)}
+                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-semibold text-sm transition-all"
               >
-                <Camera className="w-4 h-4" />Share Image
-              </button>
-
-              <button onClick={handleToggleFeatured} disabled={isFeaturing || !tank.isPublic}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-50 disabled:cursor-not-allowed ${
-                  tank.isFeaturedOnProfile
-                    ? 'bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/40 hover:border-amber-300/60 text-white'
-                    : 'bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white'
-                }`}
-                title={
-                  !tank.isPublic
-                    ? 'Share your tank first to enable pinning'
-                    : tank.isFeaturedOnProfile
-                      ? 'Remove from public profile'
-                      : 'Pin this tank to your public profile'
-                }
-              >
-                {tank.isFeaturedOnProfile
-                  ? <><BookmarkCheck className="w-4 h-4" />On Profile</>
-                  : <><Bookmark className="w-4 h-4" />Pin to Profile</>}
+                <Camera className="w-4 h-4" />Image
               </button>
 
               <button onClick={handleEditInBuilder}
-                className="flex items-center gap-2 bg-teal-400/20 hover:bg-teal-400/30 border border-teal-300/40 hover:border-teal-300/70 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit">
-                <Hammer className="w-4 h-4" />Edit in Builder
+                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg font-semibold text-sm transition-all"
+              >
+                <Hammer className="w-4 h-4" />Builder
               </button>
 
               <button onClick={() => setIsEditModalOpen(true)}
-                className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-4 py-3 rounded-xl font-semibold text-sm shadow-sm hover:shadow transition-all w-fit">
-                <Edit className="w-4 h-4" />Edit Tank
+                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg hover:shadow-xl transition-all"
+              >
+                <Edit className="w-4 h-4" />Edit
               </button>
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 ml-11">
-            <CleanStatCard icon={<Thermometer className="w-5 h-5 text-orange-600" />} label="Temperature" value={`${tank.parameters.tempC}°C`} />
-            <CleanStatCard icon={<Droplets className="w-5 h-5 text-blue-600" />}      label="pH Level"   value={tank.parameters.ph} />
-            <CleanStatCard icon={<FishIcon className="w-5 h-5 text-purple-600" />}    label="Total Fish"  value={totalFish} />
-            <CleanStatCard icon={<Leaf className="w-5 h-5 text-emerald-600" />}       label="Total Plants" value={totalPlants} />
+          {/* Quick Stats */}
+          <div className="flex items-center gap-8 py-5 border-t border-slate-200 dark:border-slate-800">
+            <QuickStat icon={<Thermometer className="w-4 h-4" />} label="Temp" value={`${tank.parameters.tempC}°C`} />
+            <QuickStat icon={<Droplets className="w-4 h-4" />} label="pH" value={tank.parameters.ph} />
+            <QuickStat icon={<Activity className="w-4 h-4" />} label="Ammonia" value={`${tank.parameters.ammonia}ppm`} status={tank.parameters.ammonia > 0 ? 'danger' : 'good'} />
+            <QuickStat icon={<Activity className="w-4 h-4" />} label="Nitrite" value={`${tank.parameters.nitrite}ppm`} status={tank.parameters.nitrite > 0 ? 'danger' : 'good'} />
           </div>
         </div>
       </motion.header>
 
-      <div className="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+      {/* Tabs */}
+      <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-2 md:gap-4 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide">
             <CleanTabButton active={activeTab === 'overview'}    onClick={() => setActiveTab('overview')}    icon={<Sparkles className="w-4 h-4" />} label="Overview" />
             <CleanTabButton active={activeTab === 'parameters'}  onClick={() => setActiveTab('parameters')}  icon={<Activity className="w-4 h-4" />} label="Parameters"  badge={parameterReadings.length} />
             <CleanTabButton active={activeTab === 'maintenance'} onClick={() => setActiveTab('maintenance')} icon={<Wrench className="w-4 h-4" />}   label="Maintenance" badge={maintenanceLogs.length} />
@@ -381,7 +388,7 @@ const TankDetailPage = () => {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <AnimatePresence mode="wait">
           {activeTab === 'overview' && (
             <OverviewTab key="overview" tank={tank} compatibilityWarnings={compatibilityWarnings}
@@ -499,10 +506,17 @@ const RemindersTab = ({ tankId, tankName, onBadgeChange }: { tankId: string; tan
 );
 
 // ─── UTILITY COMPONENTS ─────────────────────────────────────────────────────────
-const CleanStatCard = ({ icon, label, value }: any) => (
-  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-    <div className="flex items-center gap-2 mb-2"><div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">{icon}</div><span className="text-xs font-semibold text-white/70 uppercase tracking-wider">{label}</span></div>
-    <div className="text-2xl font-bold text-white">{value}</div>
+const QuickStat = ({ icon, label, value, status }: any) => (
+  <div className="flex items-center gap-3">
+    <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">{icon}</div>
+    <div>
+      <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">{label}</p>
+      <p className={`text-lg font-bold ${
+        status === 'danger' ? 'text-red-600 dark:text-red-400' :
+        status === 'warning' ? 'text-amber-600 dark:text-amber-400' :
+        'text-slate-900 dark:text-white'
+      }`}>{value}</p>
+    </div>
   </div>
 );
 
