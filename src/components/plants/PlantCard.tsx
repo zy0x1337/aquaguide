@@ -3,12 +3,16 @@ import { Sun, Wind, Ruler, Layers, Zap, Sprout, Droplets, Globe } from 'lucide-r
 import type { Plant } from '../../types/plant';
 import { cn } from '../../lib/utils';
 import { FavoriteButton } from '../favorites/FavoriteButton';
+import { useSettings } from '../../hooks/useSettings';
+import { formatLength } from '../../utils/unitConversion';
 
 interface PlantCardProps {
   data: Plant;
 }
 
 export const PlantCard = ({ data }: PlantCardProps) => {
+  const { settings } = useSettings();
+  
   const fallbackImage = "https://images.unsplash.com/photo-1520302669765-227891896796?auto=format&fit=crop&q=80&w=800";
   let imageSrc = data.imageUrl || fallbackImage;
   if (imageSrc.startsWith('images/')) imageSrc = `/${imageSrc}`;
@@ -114,7 +118,7 @@ export const PlantCard = ({ data }: PlantCardProps) => {
                 <Ruler className="w-3 h-3" />
               </div>
               <span className="text-[9px] md:text-xs font-medium text-gray-600 dark:text-gray-400 truncate">
-                {data.specs.heightCM.max} cm
+                {formatLength(data.specs.heightCM.max, settings.unitSystem)}
               </span>
             </div>
             <div className="flex items-center gap-1.5">

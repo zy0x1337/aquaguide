@@ -4,12 +4,16 @@ import { cn } from '../../lib/utils';
 import { Species } from '../../types/species';
 import { CompareButton } from '../comparison/CompareButton';
 import { FavoriteButton } from '../favorites/FavoriteButton';
+import { useSettings } from '../../hooks/useSettings';
+import { formatVolume, formatTemp } from '../../utils/unitConversion';
 
 interface SpeciesCardProps {
   data: Species;
 }
 
 export const SpeciesCard = ({ data }: SpeciesCardProps) => {
+  const { settings } = useSettings();
+
   return (
     <div className="relative group">
       <Link 
@@ -60,7 +64,7 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
           <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 text-xs text-gray-600 dark:text-gray-400">
             <div className="flex items-center gap-1.5">
               <Box className="w-3.5 h-3.5 text-coral-500 dark:text-coral-400 flex-shrink-0" />
-              <span className="font-semibold">{data.environment.minTankSizeLiters}L</span>
+              <span className="font-semibold">{formatVolume(data.environment.minTankSizeLiters, settings.unitSystem)}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Globe2 className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
@@ -72,7 +76,7 @@ export const SpeciesCard = ({ data }: SpeciesCardProps) => {
             </div>
             <div className="flex items-center gap-1.5">
               <Thermometer className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400 flex-shrink-0" />
-              <span className="font-semibold">{data.environment.tempC.ideal}°C</span>
+              <span className="font-semibold">{data.environment.tempC.ideal ? formatTemp(data.environment.tempC.ideal, settings.tempUnit) : `${data.environment.tempC.min}°C`}</span>
             </div>
           </div>
 
