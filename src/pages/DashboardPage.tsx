@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Loader2, ArrowRight, Fish, Sparkles, Droplets, Activity, Hammer } from 'lucide-react';
+import { Plus, Loader2, ArrowRight, Fish, Droplets, Activity, Hammer, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import DashboardStats from '../components/dashboard/DashboardStats';
 import TankHealthList from '../components/dashboard/TankHealthList';
@@ -107,10 +107,9 @@ const DashboardPage = () => {
 
   if (isLoading) return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-        <Loader2 className="w-16 h-16 text-indigo-600 dark:text-indigo-400 animate-spin mx-auto mb-4" />
-        <p className="text-slate-700 dark:text-slate-300 font-semibold">Loading dashboard...</p>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Fetching your aquarium data</p>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
+        <Loader2 className="w-12 h-12 text-slate-400 dark:text-slate-600 animate-spin mx-auto mb-3" />
+        <p className="text-slate-600 dark:text-slate-400 font-medium text-sm">Loading dashboard...</p>
       </motion.div>
     </div>
   );
@@ -118,109 +117,109 @@ const DashboardPage = () => {
   if (error) return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-md mx-auto px-4">
-        <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-xl mx-auto mb-4 flex items-center justify-center">
-          <Fish className="w-8 h-8 text-red-600 dark:text-red-400" />
+        <div className="w-14 h-14 bg-red-50 dark:bg-red-950/20 rounded-lg mx-auto mb-3 flex items-center justify-center border border-red-100 dark:border-red-900">
+          <Fish className="w-7 h-7 text-red-600 dark:text-red-400" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Oops!</h2>
-        <p className="text-slate-600 dark:text-slate-400 mb-6">{error}</p>
-        <button onClick={loadDashboardData} className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold shadow-sm hover:shadow transition-all">
-          Try Again
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Error Loading Dashboard</h2>
+        <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">{error}</p>
+        <button onClick={loadDashboardData} className="bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
+          Retry
         </button>
       </motion.div>
     </div>
   );
 
-  // ─── Empty State ─────────────────────────────────────────────────────────────
+  // ─── Empty State ─────────────────────────────────────────────────────────────────
   if (stats && stats.totalTanks === 0) return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <SEOHead title="Dashboard" description="Your aquarium dashboard – monitor tank health and track activities." />
 
-      <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-3 mb-2">
-            <Activity className="w-8 h-8" />
-            <h1 className="text-4xl font-bold">Dashboard</h1>
+      <motion.header initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+        className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          <div className="flex items-center gap-3">
+            <BarChart3 className="w-7 h-7 text-slate-900 dark:text-white" />
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
+              <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Analytics · Overview</p>
+            </div>
           </div>
-          <p className="text-indigo-100 ml-11">Your aquarium analytics at a glance</p>
         </div>
       </motion.header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="text-center py-20">
           <div className="max-w-md mx-auto">
-            <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-2xl mx-auto mb-6 flex items-center justify-center">
-              <Fish className="w-12 h-12 text-indigo-600 dark:text-indigo-400" />
+            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-lg mx-auto mb-4 flex items-center justify-center border border-slate-200 dark:border-slate-700">
+              <Droplets className="w-8 h-8 text-slate-400 dark:text-slate-500" />
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">No Tanks Yet</h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-              Add your first tank to start tracking water parameters, maintenance schedules, and health metrics.
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">No Tanks Yet</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-8 leading-relaxed">
+              Add your first tank to start tracking parameters, maintenance, and health metrics.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link to="/my-tanks"
-                className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-semibold shadow-sm hover:shadow transition-all">
-                <Plus className="w-5 h-5" />Add Your First Tank
+                className="inline-flex items-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
+                <Plus className="w-4 h-4" />Add First Tank
               </Link>
               <Link to="/tank-builder"
-                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-8 py-4 rounded-xl font-semibold shadow-sm hover:shadow transition-all">
-                <Hammer className="w-5 h-5" />Plan in Builder
+                className="inline-flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
+                <Hammer className="w-4 h-4" />Tank Builder
               </Link>
             </div>
-            <p className="mt-4 text-xs text-slate-400 dark:text-slate-500">
-              Already have a plan? Build it first in the Tank Builder, then save it directly to My Tanks.
-            </p>
           </div>
         </motion.div>
       </main>
     </div>
   );
 
-  // ─── Main Dashboard ────────────────────────────────────────────────────────
+  // ─── Main Dashboard ──────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <SEOHead title="Dashboard" description="Your aquarium dashboard – monitor tank health and track activities." />
 
-      <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <Activity className="w-8 h-8" />
-                <h1 className="text-4xl font-bold">Dashboard</h1>
+      <motion.header initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+        className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <BarChart3 className="w-7 h-7 text-slate-900 dark:text-white" />
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
+                <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Analytics · Overview</p>
               </div>
-              <p className="text-indigo-100 ml-11">Your aquarium analytics at a glance</p>
-              {stats && (
-                <div className="flex flex-wrap gap-2 mt-4 ml-11">
-                  <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 text-sm font-semibold">
-                    <span className="text-white/70">Tanks: </span><span>{stats.totalTanks}</span>
+            </div>
+            {stats && (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-6 px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+                  <div className="text-center">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">Tanks</p>
+                    <p className="text-xl font-bold text-slate-900 dark:text-white">{stats.totalTanks}</p>
                   </div>
-                  <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 text-sm font-semibold">
-                    <span className="text-white/70">Fish: </span><span>{stats.totalFish}</span>
+                  <div className="w-px h-8 bg-slate-200 dark:bg-slate-700" />
+                  <div className="text-center">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">Fish</p>
+                    <p className="text-xl font-bold text-slate-900 dark:text-white">{stats.totalFish}</p>
                   </div>
-                  <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/20 text-sm font-semibold">
-                    <span className="text-white/70">Avg Health: </span><span>{stats.avgHealthScore}%</span>
+                  <div className="w-px h-8 bg-slate-200 dark:bg-slate-700" />
+                  <div className="text-center">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">Health</p>
+                    <p className="text-xl font-bold text-slate-900 dark:text-white">{stats.avgHealthScore}%</p>
                   </div>
                 </div>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              <Link to="/tank-builder"
-                className="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-5 py-3 rounded-xl font-semibold transition-all border border-white/30 w-fit">
-                <Hammer className="w-4 h-4" />Tank Builder
-              </Link>
-              <Link to="/my-tanks"
-                className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-6 py-3 rounded-xl font-semibold transition-all shadow-sm hover:shadow w-fit">
-                View All Tanks
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
+                <Link to="/my-tanks"
+                  className="flex items-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
+                  View All
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </motion.header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
         {stats && <DashboardStats stats={stats} />}
 
         <QuickActions
@@ -232,22 +231,18 @@ const DashboardPage = () => {
 
         {alerts.length > 0 && <AlertsPanel alerts={alerts} />}
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-indigo-600" />Tank Health
-              </h2>
-              <Link to="/my-tanks" className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 font-semibold text-sm flex items-center gap-1 transition-colors">
-                View Details<ArrowRight className="w-4 h-4" />
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Tank Health</h2>
+              <Link to="/my-tanks" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium text-sm flex items-center gap-1 transition-colors">
+                Details<ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
             <TankHealthList healthScores={healthScores} />
           </div>
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Activity className="w-6 h-6 text-purple-600" />Recent Activity
-            </h2>
+          <div className="space-y-4">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent Activity</h2>
             <RecentActivityFeed activities={recentActivity} />
           </div>
         </div>
