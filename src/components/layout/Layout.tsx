@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Droplets, Stethoscope, Info, Fish, Leaf, BoxSelect, Home, Scale, LogOut, User, Crown, Waves, BookOpen, ArrowRight, Settings, LayoutDashboard, ChevronDown, Heart } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { GlobalSearch } from '../search/GlobalSearch';
 import { useComparison } from '../../contexts/ComparisonContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
@@ -132,7 +133,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
           <div className="flex justify-between items-center h-16">
             
             {/* LEFT: LOGO */}
-            <Link to="/" className="flex items-center gap-2.5 group">
+            <Link to="/" className="flex items-center gap-2.5 group shrink-0">
               <div className="w-9 h-9 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-300 group-hover:scale-105">
                 <Droplets className="w-5 h-5 text-white" strokeWidth={2.5} />
               </div>
@@ -141,30 +142,35 @@ export const Layout: React.FC<Props> = ({ children }) => {
               </span>
             </Link>
 
-            {/* CENTER: MAIN NAVIGATION (Desktop) */}
-            <div className="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-              {navItems.map(item => {
-                const Icon = item.icon;
-                const active = isActive(item.path);
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 whitespace-nowrap ${
-                      active 
-                        ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' 
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-700/60'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" strokeWidth={2.5} />
-                    {item.label}
-                  </Link>
-                );
-              })}
+            {/* CENTER: GLOBAL SEARCH (Desktop) */}
+            <div className="hidden lg:block flex-1 max-w-2xl mx-6">
+              <GlobalSearch />
             </div>
 
             {/* RIGHT: ACTIONS */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 shrink-0">
+              {/* Main Nav Icons (Desktop - compact when search present) */}
+              <div className="hidden xl:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                {navItems.slice(0, 6).map(item => {
+                  const Icon = item.icon;
+                  const active = isActive(item.path);
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 whitespace-nowrap ${
+                        active 
+                          ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-700/60'
+                      }`}
+                      title={item.label}
+                    >
+                      <Icon className="w-4 h-4" strokeWidth={2.5} />
+                    </Link>
+                  );
+                })}
+              </div>
+
               {/* Compare Button */}
               {comparedSpecies.length > 0 && (
                 <Link
@@ -179,7 +185,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </Link>
               )}
 
-              {/* Tank Builder (Desktop) - Vercel Style */}
+              {/* Tank Builder (Desktop) */}
               <Link
                 to="/tank-builder"
                 className={`hidden lg:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
@@ -192,7 +198,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 Builder
               </Link>
 
-              {/* Admin Link (Desktop) - Vercel Style */}
+              {/* Admin Link (Desktop) */}
               {isAdmin && (
                 <Link
                   to="/admin"
@@ -207,11 +213,10 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 </Link>
               )}
 
-              {/* Auth (Desktop) - Slimmer Purple Gradient */}
+              {/* Auth (Desktop) */}
               <div className="hidden md:flex items-center gap-3">
                 {user ? (
                   <div className="relative" ref={dropdownRef}>
-                    {/* User Avatar Button with Dropdown */}
                     <button
                       onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                       className="group relative flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
@@ -222,10 +227,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
                       }`} strokeWidth={2.5} />
                     </button>
 
-                    {/* Dropdown Menu */}
                     {profileDropdownOpen && (
                       <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                        {/* User Info Header */}
                         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                           <div className="flex items-center gap-3">
                             <AvatarDisplay size="lg" />
@@ -240,64 +243,32 @@ export const Layout: React.FC<Props> = ({ children }) => {
                           </div>
                         </div>
 
-                        {/* Menu Items */}
                         <div className="py-2">
-                          <Link
-                            to="/dashboard"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                          >
-                            <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
-                            Dashboard
+                          <Link to="/dashboard" onClick={() => setProfileDropdownOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} /> Dashboard
                           </Link>
-                          <Link
-                            to="/favorites"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                          >
-                            <Heart className="w-4 h-4" strokeWidth={2.5} />
-                            Favorites
+                          <Link to="/favorites" onClick={() => setProfileDropdownOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <Heart className="w-4 h-4" strokeWidth={2.5} /> Favorites
                           </Link>
-                          <Link
-                            to="/settings"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                          >
-                            <Settings className="w-4 h-4" strokeWidth={2.5} />
-                            Settings
+                          <Link to="/settings" onClick={() => setProfileDropdownOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <Settings className="w-4 h-4" strokeWidth={2.5} /> Settings
                           </Link>
-                          <Link
-                            to="/profile"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                          >
-                            <User className="w-4 h-4" strokeWidth={2.5} />
-                            Profile
+                          <Link to="/profile" onClick={() => setProfileDropdownOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <User className="w-4 h-4" strokeWidth={2.5} /> Profile
                           </Link>
                         </div>
 
-                        {/* Sign Out */}
                         <div className="border-t border-slate-200 dark:border-slate-800 py-2">
-                          <button
-                            onClick={handleSignOut}
-                            className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
-                          >
-                            <LogOut className="w-4 h-4" strokeWidth={2.5} />
-                            Sign Out
+                          <button onClick={handleSignOut} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
+                            <LogOut className="w-4 h-4" strokeWidth={2.5} /> Sign Out
                           </button>
                         </div>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <Link
-                    to="/auth"
-                    className="group relative inline-flex items-center gap-1.5 px-1.5 py-1.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white hover:border-transparent overflow-hidden"
-                  >
-                    <span className="relative flex items-center gap-1.5">
-                      Login
-                      <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-                    </span>
+                  <Link to="/auth" className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md border border-black dark:border-white hover:border-transparent overflow-hidden">
+                    <span className="relative flex items-center gap-1.5">Sign In <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} /></span>
                   </Link>
                 )}
               </div>
@@ -307,17 +278,15 @@ export const Layout: React.FC<Props> = ({ children }) => {
               <ThemeToggle />
 
               {/* Mobile Menu Toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6 text-slate-700 dark:text-slate-300" strokeWidth={2.5} />
-                ) : (
-                  <Menu className="w-6 h-6 text-slate-700 dark:text-slate-300" strokeWidth={2.5} />
-                )}
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                {mobileMenuOpen ? <X className="w-6 h-6 text-slate-700 dark:text-slate-300" strokeWidth={2.5} /> : <Menu className="w-6 h-6 text-slate-700 dark:text-slate-300" strokeWidth={2.5} />}
               </button>
             </div>
+          </div>
+
+          {/* MOBILE: SEARCH ROW */}
+          <div className="lg:hidden pb-3 border-t border-slate-200 dark:border-slate-800 pt-3">
+            <GlobalSearch />
           </div>
 
           {/* MOBILE MENU */}
@@ -327,7 +296,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
               <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 {user ? (
                   <div className="space-y-2">
-                    {/* User Info */}
                     <div className="flex items-center gap-3 px-2">
                       <AvatarDisplay size="lg" />
                       <div className="flex-1 min-w-0">
@@ -336,93 +304,40 @@ export const Layout: React.FC<Props> = ({ children }) => {
                       </div>
                     </div>
                     
-                    {/* Quick Links */}
                     <div className="space-y-1">
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                      >
-                        <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} />
-                        Dashboard
+                      <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <LayoutDashboard className="w-4 h-4" strokeWidth={2.5} /> Dashboard
                       </Link>
-                      <Link
-                        to="/favorites"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                      >
-                        <Heart className="w-4 h-4" strokeWidth={2.5} />
-                        Favorites
+                      <Link to="/favorites" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <Heart className="w-4 h-4" strokeWidth={2.5} /> Favorites
                       </Link>
-                      <Link
-                        to="/settings"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                      >
-                        <Settings className="w-4 h-4" strokeWidth={2.5} />
-                        Settings
+                      <Link to="/settings" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <Settings className="w-4 h-4" strokeWidth={2.5} /> Settings
                       </Link>
-                      <Link
-                        to="/profile"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                      >
-                        <User className="w-4 h-4" strokeWidth={2.5} />
-                        Profile
+                      <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <User className="w-4 h-4" strokeWidth={2.5} /> Profile
                       </Link>
-                      <button
-                        onClick={() => {
-                          signOut();
-                          setMobileMenuOpen(false);
-                        }}
-                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" strokeWidth={2.5} />
-                        Sign Out
+                      <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg transition-colors">
+                        <LogOut className="w-4 h-4" strokeWidth={2.5} /> Sign Out
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <Link
-                    to="/auth"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white rounded-lg text-sm font-medium transition-all shadow-sm"
-                  >
-                    <span className="flex items-center gap-2">
-                      Sign In
-                      <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-                    </span>
+                  <Link to="/auth" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center gap-2 w-full py-2.5 bg-black dark:bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-indigo-600 dark:hover:from-purple-500 dark:hover:to-indigo-500 text-white dark:text-black dark:hover:text-white rounded-lg text-sm font-medium transition-all shadow-sm">
+                    <span className="flex items-center gap-2">Sign In <ArrowRight className="w-4 h-4" strokeWidth={2.5} /></span>
                   </Link>
                 )}
               </div>
 
               {/* Special Actions (Mobile) */}
               <div className="space-y-2 mb-4">
-                <Link
-                  to="/tank-builder"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${
-                    isActive('/tank-builder')
-                      ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm'
-                      : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
-                  }`}
-                >
-                  <BoxSelect className="w-5 h-5" strokeWidth={2.5} />
-                  Tank Builder
+                <Link to="/tank-builder" onClick={() => setMobileMenuOpen(false)} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${ isActive('/tank-builder') ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600' }`}>
+                  <BoxSelect className="w-5 h-5" strokeWidth={2.5} /> Tank Builder
                 </Link>
 
                 {isAdmin && (
-                  <Link
-                    to="/admin"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${
-                      isActive('/admin')
-                        ? 'bg-amber-500 text-white shadow-sm'
-                        : 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900 border border-amber-200 dark:border-amber-800'
-                    }`}
-                  >
-                    <Crown className="w-5 h-5" strokeWidth={2.5} />
-                    Admin Panel
+                  <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-all ${ isActive('/admin') ? 'bg-amber-500 text-white shadow-sm' : 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900 border border-amber-200 dark:border-amber-800' }`}>
+                    <Crown className="w-5 h-5" strokeWidth={2.5} /> Admin Panel
                   </Link>
                 )}
               </div>
@@ -433,18 +348,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
                   const Icon = item.icon;
                   const active = isActive(item.path);
                   return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all ${
-                        active
-                          ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
-                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <Icon className="w-5 h-5" strokeWidth={2.5} />
-                      {item.label}
+                    <Link key={item.path} to={item.path} onClick={() => setMobileMenuOpen(false)} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all ${ active ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800' }`}>
+                      <Icon className="w-5 h-5" strokeWidth={2.5} /> {item.label}
                     </Link>
                   );
                 })}
@@ -454,9 +359,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
         </nav>
       </header>
 
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
 
       {/* FOOTER */}
       <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-auto transition-colors duration-200">
