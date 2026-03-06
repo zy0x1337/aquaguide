@@ -4,6 +4,7 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 import { useState } from 'react';
 import { useAuth } from '../../lib/supabase/auth';
 import NotificationBell from '../notifications/NotificationBell';
+import { GlobalSearch } from '../search/GlobalSearch';
 
 export const Navbar = () => {
   const location = useLocation();
@@ -36,7 +37,7 @@ export const Navbar = () => {
       <nav className="hidden md:flex fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 h-16 items-center justify-between px-6 transition-all duration-300 shadow-sm">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
+        <Link to="/" className="flex items-center gap-2.5 group shrink-0">
           <div className="w-9 h-9 bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 rounded-xl flex items-center justify-center shadow-lg shadow-coral-500/20 dark:shadow-coral-400/20 group-hover:shadow-coral-500/40 dark:group-hover:shadow-coral-400/40 transition-all duration-300 group-hover:scale-105">
             <Droplets className="w-5 h-5 text-white" strokeWidth={2.5} />
           </div>
@@ -45,29 +46,34 @@ export const Navbar = () => {
           </span>
         </Link>
 
-        {/* Center links */}
-        <div className="flex items-center gap-1 bg-gray-100/80 dark:bg-gray-800/80 px-1.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          {navLinks.slice(0, 6).map(link => {
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
-                  isActive(link.path)
-                    ? 'bg-white dark:bg-gray-700 text-coral-600 dark:text-coral-400 shadow-sm'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/60 dark:hover:bg-gray-700/60'
-                }`}
-              >
-                <Icon className="w-4 h-4" strokeWidth={2.5} />
-                {link.label}
-              </Link>
-            );
-          })}
+        {/* Global Search - Center */}
+        <div className="flex-1 max-w-2xl mx-6">
+          <GlobalSearch />
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3 shrink-0">
+          {/* Center links - compact for desktop with search */}
+          <div className="flex items-center gap-1 bg-gray-100/80 dark:bg-gray-800/80 px-1.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+            {navLinks.slice(0, 6).map(link => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
+                    isActive(link.path)
+                      ? 'bg-white dark:bg-gray-700 text-coral-600 dark:text-coral-400 shadow-sm'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/60 dark:hover:bg-gray-700/60'
+                  }`}
+                  title={link.label}
+                >
+                  <Icon className="w-4 h-4" strokeWidth={2.5} />
+                </Link>
+              );
+            })}
+          </div>
+
           {/* Notification bell – only for logged-in users */}
           {user && <NotificationBell />}
 
@@ -100,36 +106,43 @@ export const Navbar = () => {
       </nav>
 
       {/* ── MOBILE TOP BAR ──────────────────────────────────────────────── */}
-      <nav className="md:hidden fixed top-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 h-14 flex items-center px-4 justify-between transition-all duration-300 shadow-sm">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 rounded-lg flex items-center justify-center shadow-md">
-            <Droplets className="w-4 h-4 text-white" strokeWidth={2.5} />
+      <nav className="md:hidden fixed top-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 transition-all duration-300 shadow-sm">
+        {/* Logo row */}
+        <div className="h-14 flex items-center px-4 justify-between">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 rounded-lg flex items-center justify-center shadow-md">
+              <Droplets className="w-4 h-4 text-white" strokeWidth={2.5} />
+            </div>
+            <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white">
+              Aqua<span className="text-coral-600 dark:text-coral-400">Guide</span>
+            </span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            {user && <NotificationBell compact />}
+
+            {user ? (
+              <Link
+                to="/dashboard"
+                className="w-8 h-8 rounded-full bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 flex items-center justify-center text-white text-xs font-bold shadow-sm border-2 border-white dark:border-gray-900"
+              >
+                {getUserInitials()}
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                className="flex items-center gap-1 px-2.5 py-1.5 bg-black dark:bg-white text-white dark:text-black text-xs font-bold rounded-lg"
+              >
+                Sign In
+              </Link>
+            )}
+            <ThemeToggle />
           </div>
-          <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white">
-            Aqua<span className="text-coral-600 dark:text-coral-400">Guide</span>
-          </span>
-        </Link>
+        </div>
 
-        <div className="flex items-center gap-2">
-          {/* Bell on mobile too */}
-          {user && <NotificationBell compact />}
-
-          {user ? (
-            <Link
-              to="/dashboard"
-              className="w-8 h-8 rounded-full bg-gradient-to-br from-coral-600 to-coral-500 dark:from-coral-500 dark:to-coral-400 flex items-center justify-center text-white text-xs font-bold shadow-sm border-2 border-white dark:border-gray-900"
-            >
-              {getUserInitials()}
-            </Link>
-          ) : (
-            <Link
-              to="/auth"
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-black dark:bg-white text-white dark:text-black text-xs font-bold rounded-lg"
-            >
-              Sign In
-            </Link>
-          )}
-          <ThemeToggle />
+        {/* Search row */}
+        <div className="px-4 pb-3">
+          <GlobalSearch />
         </div>
       </nav>
 
