@@ -58,6 +58,18 @@ export const Layout: React.FC<Props> = ({ children }) => {
     return () => window.removeEventListener('avatar-updated', handleAvatarUpdate);
   }, [user]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -288,10 +300,21 @@ export const Layout: React.FC<Props> = ({ children }) => {
           <div className="lg:hidden pb-3 border-t border-slate-200 dark:border-slate-800 pt-3">
             <GlobalSearch />
           </div>
+        </nav>
+      </header>
 
-          {/* MOBILE MENU */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden py-4 border-t border-slate-200 dark:border-slate-800 animate-in slide-in-from-top-2 duration-200">
+      {/* MOBILE DRAWER OVERLAY */}
+      {mobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Drawer */}
+          <div className="fixed top-[calc(4rem+3.75rem)] bottom-0 left-0 right-0 bg-white dark:bg-slate-900 z-40 lg:hidden overflow-y-auto overscroll-contain">
+            <div className="px-4 py-4">
               {/* Auth (Mobile) */}
               <div className="mb-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 {user ? (
@@ -343,7 +366,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
               </div>
 
               {/* Main Nav (Mobile) */}
-              <div className="space-y-1">
+              <div className="space-y-1 pb-6">
                 {navItems.map(item => {
                   const Icon = item.icon;
                   const active = isActive(item.path);
@@ -355,9 +378,9 @@ export const Layout: React.FC<Props> = ({ children }) => {
                 })}
               </div>
             </div>
-          )}
-        </nav>
-      </header>
+          </div>
+        </>
+      )}
 
       <main className="flex-1">{children}</main>
 
