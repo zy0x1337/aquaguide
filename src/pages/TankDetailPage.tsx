@@ -103,7 +103,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Feature on profile toggle ─────────────────────────────────────────────────────
+  // ─── Feature on profile toggle ─────────────────────────────────────────────────
   const handleToggleFeatured = async () => {
     if (!tank || !id) return;
     if (!tank.isPublic) {
@@ -126,7 +126,7 @@ const TankDetailPage = () => {
     }
   };
 
-  // ─── Copy public link ──────────────────────────────────────────────────────────────
+  // ─── Copy public link ──────────────────────────────────────────────────────────
   const handleCopyLink = async () => {
     if (!tank?.publicSlug) return;
     const url = `${window.location.origin}/tanks/${tank.publicSlug}`;
@@ -134,7 +134,7 @@ const TankDetailPage = () => {
     toast.success('Link copied!', url);
   };
 
-  // ─── Edit in Builder ──────────────────────────────────────────────────────────────
+  // ─── Edit in Builder ─────────────────────────────────────────────────────────
   const handleEditInBuilder = () => {
     if (!tank) return;
     const existing = localStorage.getItem(BUILDER_AUTOSAVE_KEY);
@@ -304,7 +304,6 @@ const TankDetailPage = () => {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              {/* Share my Tank – toggle public / private */}
               <button onClick={handleTogglePublic} disabled={isPublishing}
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-60 ${
                   tank.isPublic
@@ -316,7 +315,6 @@ const TankDetailPage = () => {
                 {tank.isPublic ? <><Globe className="w-4 h-4" />Public</> : <><Share2 className="w-4 h-4" />Share my Tank</>}
               </button>
 
-              {/* Copy link (only when public) */}
               {tank.isPublic && publicUrl && (
                 <button onClick={handleCopyLink}
                   className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit">
@@ -324,7 +322,6 @@ const TankDetailPage = () => {
                 </button>
               )}
 
-              {/* Share Image – OG-image with exact water values (always visible) */}
               <button
                 onClick={() => setIsShareModalOpen(true)}
                 className="flex items-center gap-2 bg-teal-400/20 hover:bg-teal-400/30 border border-teal-300/40 hover:border-teal-300/70 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit"
@@ -333,7 +330,6 @@ const TankDetailPage = () => {
                 <Camera className="w-4 h-4" />Share Image
               </button>
 
-              {/* Pin to profile – always visible, disabled when not public */}
               <button onClick={handleToggleFeatured} disabled={isFeaturing || !tank.isPublic}
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit disabled:opacity-50 disabled:cursor-not-allowed ${
                   tank.isFeaturedOnProfile
@@ -353,13 +349,11 @@ const TankDetailPage = () => {
                   : <><Bookmark className="w-4 h-4" />Pin to Profile</>}
               </button>
 
-              {/* Edit in Builder */}
               <button onClick={handleEditInBuilder}
                 className="flex items-center gap-2 bg-teal-400/20 hover:bg-teal-400/30 border border-teal-300/40 hover:border-teal-300/70 text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all w-fit">
                 <Hammer className="w-4 h-4" />Edit in Builder
               </button>
 
-              {/* Edit Tank */}
               <button onClick={() => setIsEditModalOpen(true)}
                 className="flex items-center gap-2 bg-white hover:bg-white/95 text-indigo-600 px-4 py-3 rounded-xl font-semibold text-sm shadow-sm hover:shadow transition-all w-fit">
                 <Edit className="w-4 h-4" />Edit Tank
@@ -420,22 +414,22 @@ const TankDetailPage = () => {
   );
 };
 
-// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────────
+// ─── TAB COMPONENTS ──────────────────────────────────────────────────────────
 const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRemoveInhabitant }: any) => {
   const substrateLabel = (s?: string) => ({ sand: 'Sand', gravel: 'Gravel', soil: 'Aqua Soil', bare: 'Bare Bottom' } as any)[s || ''] || 'Not specified';
   const lightingLabel  = (l?: string) => ({ low: 'Low (10–30 PAR)', medium: 'Medium (30–50 PAR)', high: 'High (50+ PAR)' } as any)[l || ''] || 'Not specified';
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="space-y-6 md:space-y-8">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="space-y-5">
       {compatibilityWarnings.length > 0 && (
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-          className="bg-amber-50 dark:bg-amber-950/30 border-l-4 border-amber-500 rounded-lg p-5 md:p-6">
-          <div className="flex gap-3 md:gap-4">
-            <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+          className="bg-amber-50 dark:bg-amber-950/30 border-l-4 border-amber-500 rounded-lg p-4">
+          <div className="flex gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0" />
             <div className="flex-1">
-              <h3 className="font-bold text-amber-900 dark:text-amber-300 mb-2">Compatibility Warnings</h3>
-              <ul className="space-y-1.5">
+              <h3 className="font-bold text-sm text-amber-900 dark:text-amber-300 mb-1.5">Compatibility Warnings</h3>
+              <ul className="space-y-1">
                 {compatibilityWarnings.map((w: string, i: number) => (
-                  <li key={i} className="text-sm text-amber-800 dark:text-amber-200 flex items-start gap-2">
+                  <li key={i} className="text-xs text-amber-800 dark:text-amber-200 flex items-start gap-1.5">
                     <span className="text-amber-500 mt-0.5">•</span><span>{w}</span>
                   </li>
                 ))}
@@ -445,34 +439,34 @@ const OverviewTab = ({ tank, compatibilityWarnings, onAddFish, onAddPlant, onRem
         </motion.div>
       )}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-        className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 md:p-6">
-        <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-5 md:mb-6 flex items-center gap-2">
-          <Mountain className="w-6 h-6 text-indigo-600" />Tank Setup
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
+        <h2 className="text-base font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+          <Mountain className="w-5 h-5 text-indigo-600" />Tank Setup
         </h2>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <CleanSetupCard icon={<Mountain className="w-6 h-6 text-amber-600" />}   label="Substrate" value={substrateLabel(tank.substrate)} isEmpty={!tank.substrate} />
-          <CleanSetupCard icon={<Lightbulb className="w-6 h-6 text-yellow-600" />} label="Lighting"  value={lightingLabel(tank.lighting)}   isEmpty={!tank.lighting} />
+        <div className="grid sm:grid-cols-2 gap-3">
+          <CompactSetupCard icon={<Mountain className="w-5 h-5 text-amber-600" />}   label="Substrate" value={substrateLabel(tank.substrate)} isEmpty={!tank.substrate} />
+          <CompactSetupCard icon={<Lightbulb className="w-5 h-5 text-yellow-600" />} label="Lighting"  value={lightingLabel(tank.lighting)}   isEmpty={!tank.lighting} />
         </div>
       </motion.div>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 md:p-6">
-        <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-5 md:mb-6 flex items-center gap-2">
-          <Activity className="w-6 h-6 text-blue-600" />Current Water Parameters
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
+        <h2 className="text-base font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+          <Activity className="w-5 h-5 text-blue-600" />Water Parameters
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          <CleanParamCard label="pH"          value={tank.parameters.ph}              status={tank.parameters.ph >= 6.5 && tank.parameters.ph <= 7.5 ? 'good' : 'warning'} />
-          <CleanParamCard label="Temperature" value={`${tank.parameters.tempC}°C`}    status="good" />
-          <CleanParamCard label="Ammonia"     value={`${tank.parameters.ammonia} ppm`} status={tank.parameters.ammonia > 0 ? 'danger' : 'good'} />
-          <CleanParamCard label="Nitrite"     value={`${tank.parameters.nitrite} ppm`} status={tank.parameters.nitrite > 0 ? 'danger' : 'good'} />
-          <CleanParamCard label="Nitrate"     value={`${tank.parameters.nitrate} ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
-          {(tank.parameters.gh   ?? 0) > 0 && <CleanParamCard label="GH"       value={`${tank.parameters.gh}°dGH`}    status="good" />}
-          {(tank.parameters.kh   ?? 0) > 0 && <CleanParamCard label="KH"       value={`${tank.parameters.kh}°dKH`}    status="good" />}
-          {(tank.parameters.tds  ?? 0) > 0 && <CleanParamCard label="TDS"      value={`${tank.parameters.tds} ppm`}   status="good" />}
-          {(tank.parameters.salinity ?? 0) > 0 && <CleanParamCard label="Salinity" value={`${tank.parameters.salinity} ppt`} status="good" />}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
+          <CompactParamCard label="pH"          value={tank.parameters.ph}              status={tank.parameters.ph >= 6.5 && tank.parameters.ph <= 7.5 ? 'good' : 'warning'} />
+          <CompactParamCard label="Temp"        value={`${tank.parameters.tempC}°C`}    status="good" />
+          <CompactParamCard label="Ammonia"     value={`${tank.parameters.ammonia}ppm`} status={tank.parameters.ammonia > 0 ? 'danger' : 'good'} />
+          <CompactParamCard label="Nitrite"     value={`${tank.parameters.nitrite}ppm`} status={tank.parameters.nitrite > 0 ? 'danger' : 'good'} />
+          <CompactParamCard label="Nitrate"     value={`${tank.parameters.nitrate}ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
+          {(tank.parameters.gh   ?? 0) > 0 && <CompactParamCard label="GH"       value={`${tank.parameters.gh}°`}    status="good" />}
+          {(tank.parameters.kh   ?? 0) > 0 && <CompactParamCard label="KH"       value={`${tank.parameters.kh}°`}    status="good" />}
+          {(tank.parameters.tds  ?? 0) > 0 && <CompactParamCard label="TDS"      value={`${tank.parameters.tds}ppm`}   status="good" />}
+          {(tank.parameters.salinity ?? 0) > 0 && <CompactParamCard label="Salinity" value={`${tank.parameters.salinity}ppt`} status="good" />}
         </div>
       </motion.div>
-      <InhabitantsSection title="Fish"   icon={<FishIcon className="w-6 h-6 text-indigo-600" />} inhabitants={tank.inhabitants?.fish   || []} speciesData={allSpecies} linkPrefix="/species" onAdd={onAddFish}  onRemove={(sid: string) => onRemoveInhabitant(sid, 'fish')}  emptyMessage="No fish added yet"   addButtonLabel="Add Fish" />
-      <InhabitantsSection title="Plants" icon={<Leaf     className="w-6 h-6 text-emerald-600" />} inhabitants={tank.inhabitants?.plants || []} speciesData={allPlants}  linkPrefix="/plants"  onAdd={onAddPlant} onRemove={(sid: string) => onRemoveInhabitant(sid, 'plant')} emptyMessage="No plants added yet" addButtonLabel="Add Plant" />
+      <InhabitantsSection title="Fish"   icon={<FishIcon className="w-5 h-5 text-indigo-600" />} inhabitants={tank.inhabitants?.fish   || []} speciesData={allSpecies} linkPrefix="/species" onAdd={onAddFish}  onRemove={(sid: string) => onRemoveInhabitant(sid, 'fish')}  emptyMessage="No fish added yet"   addButtonLabel="Add Fish" />
+      <InhabitantsSection title="Plants" icon={<Leaf     className="w-5 h-5 text-emerald-600" />} inhabitants={tank.inhabitants?.plants || []} speciesData={allPlants}  linkPrefix="/plants"  onAdd={onAddPlant} onRemove={(sid: string) => onRemoveInhabitant(sid, 'plant')} emptyMessage="No plants added yet" addButtonLabel="Add Plant" />
     </motion.div>
   );
 };
@@ -504,7 +498,7 @@ const RemindersTab = ({ tankId, tankName, onBadgeChange }: { tankId: string; tan
   </motion.div>
 );
 
-// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────────────
+// ─── UTILITY COMPONENTS ─────────────────────────────────────────────────────────
 const CleanStatCard = ({ icon, label, value }: any) => (
   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
     <div className="flex items-center gap-2 mb-2"><div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">{icon}</div><span className="text-xs font-semibold text-white/70 uppercase tracking-wider">{label}</span></div>
@@ -526,49 +520,52 @@ const CleanTabButton = ({ active, onClick, icon, label, badge, badgeColor }: any
   </button>
 );
 
-const CleanSetupCard = ({ icon, label, value, isEmpty }: any) => (
-  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 md:p-5 shadow-sm">
-    <div className="flex items-center gap-3 mb-3"><div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">{icon}</div><span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{label}</span></div>
-    <div className={`text-base md:text-lg font-bold ${isEmpty ? 'text-slate-500 dark:text-slate-400 italic' : 'text-slate-900 dark:text-white'}`}>{value}</div>
+const CompactSetupCard = ({ icon, label, value, isEmpty }: any) => (
+  <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg p-3 flex items-center gap-3">
+    <div className="w-8 h-8 rounded-lg bg-white dark:bg-slate-700 flex items-center justify-center flex-shrink-0">{icon}</div>
+    <div className="flex-1 min-w-0">
+      <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">{label}</div>
+      <div className={`text-sm font-bold truncate ${isEmpty ? 'text-slate-400 dark:text-slate-500 italic' : 'text-slate-900 dark:text-white'}`}>{value}</div>
+    </div>
   </div>
 );
 
-const CleanParamCard = ({ label, value, status }: any) => {
-  const cfg = { good: { Icon: CheckCircle, color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-800' }, warning: { Icon: AlertTriangle, color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-800' }, danger: { Icon: AlertTriangle, color: 'text-red-600 dark:text-red-400', border: 'border-red-200 dark:border-red-800' } }[status as 'good'|'warning'|'danger'];
+const CompactParamCard = ({ label, value, status }: any) => {
+  const cfg = { good: { Icon: CheckCircle, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200 dark:border-emerald-900' }, warning: { Icon: AlertTriangle, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-950/30', border: 'border-amber-200 dark:border-amber-900' }, danger: { Icon: AlertTriangle, color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-950/30', border: 'border-red-200 dark:border-red-900' } }[status as 'good'|'warning'|'danger'];
   return (
-    <div className={`bg-white dark:bg-slate-900 border ${cfg.border} rounded-xl p-4 shadow-sm`}>
-      <div className="flex items-center justify-between mb-2"><span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{label}</span><cfg.Icon className={`w-5 h-5 ${cfg.color}`} /></div>
-      <div className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">{value}</div>
+    <div className={`${cfg.bg} border ${cfg.border} rounded-lg p-3`}>
+      <div className="flex items-center justify-between mb-1"><span className="text-xs font-semibold text-slate-600 dark:text-slate-300">{label}</span><cfg.Icon className={`w-4 h-4 ${cfg.color}`} /></div>
+      <div className="text-base font-bold text-slate-900 dark:text-white">{value}</div>
     </div>
   );
 };
 
 const InhabitantsSection = ({ title, icon, inhabitants, speciesData, linkPrefix, onAdd, onRemove, emptyMessage, addButtonLabel }: any) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 md:p-6">
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5 md:mb-6">
-      <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">{icon}{title} ({inhabitants.length} species)</h2>
-      <button onClick={onAdd} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-sm hover:shadow transition-all w-fit"><Plus className="w-4 h-4" />{addButtonLabel}</button>
+  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+      <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">{icon}{title} ({inhabitants.length})</h2>
+      <button onClick={onAdd} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all w-fit"><Plus className="w-4 h-4" />{addButtonLabel}</button>
     </div>
     {inhabitants.length === 0
-      ? <div className="text-center py-12 text-slate-500 dark:text-slate-400"><p>{emptyMessage}</p></div>
-      : <div className="space-y-3">{inhabitants.map((inh: any, i: number) => {
+      ? <div className="text-center py-8 text-slate-500 dark:text-slate-400 text-sm"><p>{emptyMessage}</p></div>
+      : <div className="space-y-2.5">{inhabitants.map((inh: any, i: number) => {
           const sp = speciesData.find((s: any) => s.id === inh.speciesId);
           if (!sp) return null;
-          return <InhabitantCard key={`${inh.speciesId}-${i}`} name={inh.speciesName} scientificName={sp.taxonomy.scientificName} quantity={inh.quantity} slug={sp.slug} imageUrl={sp.imageUrl} linkPrefix={linkPrefix} onRemove={() => onRemove(inh.speciesId)} />;
+          return <CompactInhabitantCard key={`${inh.speciesId}-${i}`} name={inh.speciesName} scientificName={sp.taxonomy.scientificName} quantity={inh.quantity} slug={sp.slug} imageUrl={sp.imageUrl} linkPrefix={linkPrefix} onRemove={() => onRemove(inh.speciesId)} />;
         })}</div>
     }
   </motion.div>
 );
 
-const InhabitantCard = ({ name, scientificName, quantity, slug, imageUrl, linkPrefix, onRemove }: any) => (
-  <div className="group flex items-center gap-3 md:gap-4 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl p-3 md:p-4 border border-slate-200 dark:border-slate-700 transition-all">
-    {imageUrl ? <img src={imageUrl} alt={name} className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover flex-shrink-0" /> : <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center flex-shrink-0"><span className="text-slate-500 dark:text-slate-400 text-xs font-semibold">No Image</span></div>}
+const CompactInhabitantCard = ({ name, scientificName, quantity, slug, imageUrl, linkPrefix, onRemove }: any) => (
+  <div className="group flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg p-2.5 border border-slate-200 dark:border-slate-700 transition-all">
+    {imageUrl ? <img src={imageUrl} alt={name} className="w-12 h-12 rounded-lg object-cover flex-shrink-0" /> : <div className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center flex-shrink-0"><Sparkles className="w-5 h-5 text-slate-400" /></div>}
     <Link to={`${linkPrefix}/${slug}`} className="flex-1 min-w-0">
-      <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-sm md:text-base truncate">{name}</h3>
-      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 italic truncate">{scientificName}</p>
-      <div className="mt-1 inline-flex items-center gap-1.5 px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded-lg"><Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /><span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Qty: {quantity}</span></div>
+      <h3 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors truncate">{name}</h3>
+      <p className="text-xs text-slate-500 dark:text-slate-400 italic truncate">{scientificName}</p>
+      <div className="mt-1 inline-flex items-center gap-1 px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-[10px] font-bold text-slate-600 dark:text-slate-300">Qty: {quantity}</div>
     </Link>
-    <button onClick={e => { e.preventDefault(); if (confirm(`Remove ${name} from tank?`)) onRemove(); }} className="p-2 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex-shrink-0" title="Remove"><Trash2 className="w-5 h-5" /></button>
+    <button onClick={e => { e.preventDefault(); if (confirm(`Remove ${name}?`)) onRemove(); }} className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors flex-shrink-0" title="Remove"><Trash2 className="w-4 h-4" /></button>
   </div>
 );
 
