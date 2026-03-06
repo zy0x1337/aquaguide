@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Bell, BellOff, Clock, Trash2, ChevronDown, Check } from 'lucide-react';
+import { Bell, BellOff, Clock, Trash2, ChevronDown, Check, Timer } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTankReminders,
@@ -39,6 +39,8 @@ const TYPE_CFG: Record<Reminder['type'], { emoji: string; color: string; bg: str
   parameter_check: { emoji: '🧪', color: 'text-violet-700 dark:text-violet-300', bg: 'bg-violet-50 dark:bg-violet-950/40', border: 'border-violet-200 dark:border-violet-800' },
   filter_clean:    { emoji: '🔧', color: 'text-amber-700 dark:text-amber-300',  bg: 'bg-amber-50 dark:bg-amber-950/40',  border: 'border-amber-200 dark:border-amber-800'  },
 };
+
+const DEFAULT_REMINDER_TYPES: Reminder['type'][] = ['water_change', 'parameter_check', 'filter_clean'];
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -167,10 +169,12 @@ function DateEditor({
   reminder,
   onSave,
   onClose,
+  onSnooze,
 }: {
   reminder: Reminder;
   onSave: (nextDate: string, frequency: Reminder['frequency']) => void;
   onClose: () => void;
+  onSnooze: (days: number) => void;
 }) {
   const next = new Date(reminder.nextDate);
   const nextMidnight = new Date(next.getFullYear(), next.getMonth(), next.getDate());
@@ -207,6 +211,31 @@ function DateEditor({
       className="overflow-hidden"
     >
       <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-4 bg-gray-50/80 dark:bg-gray-800/60">
+
+        {/* Snooze Quick Actions */}
+        <div>
+          <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Quick Snooze</p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => onSnooze(1)}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-all"
+            >
+              <Timer className="w-3.5 h-3.5" />+1d
+            </button>
+            <button
+              onClick={() => onSnooze(3)}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-all"
+            >
+              <Timer className="w-3.5 h-3.5" />+3d
+            </button>
+            <button
+              onClick={() => onSnooze(7)}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-all"
+            >
+              <Timer className="w-3.5 h-3.5" />+1w
+            </button>
+          </div>
+        </div>
 
         <div
           className="flex items-stretch rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden"
@@ -335,11 +364,34 @@ export default function ReminderPanel({
     setEditingId(null);
   };
 
+  const handleSnooze = (reminderId: string, days: number) => {
+    const r = reminders.find(x => x.id === reminderId);
+    if (!r) return;
+    const newDate = new Date(r.nextDate);
+    newDate.setDate(newDate.getDate() + days);
+    updateReminder(reminderId, { nextDate: newDate.toISOString() });
+    load();
+    setEditingId(null);
+  };
+
   const handleComplete = (reminderId: string) => {
     const r = reminders.find(x => x.id === reminderId);
     if (!r) return;
     completeReminder(tankId, r.type);
     load();
+  };
+
+  const handleDelete = (reminderId: string) => {
+    const r = reminders.find(x => x.id === reminderId);
+    if (!r) return;
+    if (DEFAULT_REMINDER_TYPES.includes(r.type)) {
+      alert('Default reminders cannot be deleted. You can disable them instead.');
+      return;
+    }
+    if (confirm('Delete this reminder?')) {
+      deleteReminder(reminderId);
+      load();
+    }
   };
 
   if (!isNotificationSupported()) {
@@ -390,6 +442,7 @@ export default function ReminderPanel({
           const isEditing = editingId === r.id;
           const overdue   = r.enabled && new Date(r.nextDate).getTime() < Date.now();
           const freqLabel = FREQUENCIES.find(f => f.value === r.frequency)?.label;
+          const isDefaultReminder = DEFAULT_REMINDER_TYPES.includes(r.type);
 
           return (
             <div key={r.id}>
@@ -449,12 +502,15 @@ export default function ReminderPanel({
                   >
                     {r.enabled ? <Bell className="w-4 h-4" strokeWidth={2.5} /> : <BellOff className="w-4 h-4" strokeWidth={2.5} />}
                   </button>
-                  <button
-                    onClick={() => { deleteReminder(r.id); load(); }}
-                    className="p-2 rounded-xl text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
-                  >
-                    <Trash2 className="w-4 h-4" strokeWidth={2.5} />
-                  </button>
+                  {!isDefaultReminder && (
+                    <button
+                      onClick={() => handleDelete(r.id)}
+                      className="p-2 rounded-xl text-gray-300 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
+                      title="Delete reminder"
+                    >
+                      <Trash2 className="w-4 h-4" strokeWidth={2.5} />
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -464,6 +520,7 @@ export default function ReminderPanel({
                     reminder={r}
                     onSave={(date, freq) => handleSave(r.id, date, freq)}
                     onClose={() => setEditingId(null)}
+                    onSnooze={(days) => handleSnooze(r.id, days)}
                   />
                 )}
               </AnimatePresence>
