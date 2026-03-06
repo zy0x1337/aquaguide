@@ -14,6 +14,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { allPlants } from '../data/plants';
 import habitatsData from '../data/habitats.json';
 import { allKnowledgeArticles } from '../data/knowledge';
+import { useSettings } from '../hooks/useSettings';
+import { formatLength } from '../utils/unitConversion';
 import type { Region } from '../types/species';
 
 const REGION_CONFIG: Array<{
@@ -50,6 +52,7 @@ const AnimatedNumber = ({ value, suffix = '' }: { value: number; suffix?: string
 
 const HomePage = () => {
   const { user, profile } = useAuth();
+  const { settings } = useSettings();
 
   const featuredSpecies = useMemo(() => allSpecies.slice(0, 4), []);
   const recentSpecies = useMemo(() => [...allSpecies].slice(-8).reverse(), []);
@@ -298,7 +301,7 @@ const HomePage = () => {
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">Discover authentic biotope setups, detailed plant profiles, and master the basics in our knowledge base.</p>
             </motion.div>
 
-            {/* Plants */}
+            {/* Plants - WITH UNIT CONVERSION */}
             <div className="mb-20">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                 <div className="flex items-center gap-3">
@@ -322,7 +325,7 @@ const HomePage = () => {
                         <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4">{plant.taxonomy.scientificName}</p>
                         <div className="grid grid-cols-2 gap-2 mt-auto">
                           <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg"><Shield className="w-3.5 h-3.5 text-emerald-500" /><span className="capitalize truncate">{plant.difficulty}</span></div>
-                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg"><Ruler className="w-3.5 h-3.5 text-emerald-500" /><span className="truncate">{plant.specs.heightCM.max} cm</span></div>
+                          <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg"><Ruler className="w-3.5 h-3.5 text-emerald-500" /><span className="truncate">{formatLength(plant.specs.heightCM.max, settings.unitSystem)}</span></div>
                           <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg"><Activity className="w-3.5 h-3.5 text-emerald-500" /><span className="capitalize truncate">{plant.specs.growthRate}</span></div>
                           <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg"><Droplets className="w-3.5 h-3.5 text-emerald-500" /><span className="capitalize truncate">{plant.parameters.ph.ideal || plant.parameters.ph.min} pH</span></div>
                         </div>
