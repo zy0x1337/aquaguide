@@ -75,6 +75,13 @@ import { bedotiaGeayi } from './red-tailed-silverside';
 import { serpenticobitisOctozona } from './eight-banded-lizard-loach';
 import { microdevarioKubotai } from './emerald-dwarf-rasbora';
 import { garraFlavatra } from './garra-flavatra';
+import { sturisomatichthysAureus } from './golden-whiptail';
+import { hypoptopomaInexspectatum } from './sailfin-catfish';
+import { kryptopterusVitreolus } from './glass-catfish';
+import { hyphessobryconBentosi } from './rosy-tetra';
+import { copellaArnoldi } from './splash-tetra';
+import { hyphessobryconSerpae } from './serpae-tetra';
+import { maylandiaEstherae } from './red-zebra-cichlid';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -153,6 +160,13 @@ export const allSpecies: Species[] = [
   garraFlavatra,
   microdevarioKubotai,
   serpenticobitisOctozona,
+  sturisomatichthysAureus,
+  hypoptopomaInexspectatum,
+  kryptopterusVitreolus,
+  hyphessobryconBentosi,
+  copellaArnoldi,
+  hyphessobryconSerpae,
+  maylandiaEstherae
 ];
 
 export {
@@ -231,5 +245,12 @@ export {
   bedotiaGeayi,
   garraFlavatra,
   microdevarioKubotai,
-  serpenticobitisOctozona
+  serpenticobitisOctozona,
+  sturisomatichthysAureus,
+  hypoptopomaInexspectatum,
+  kryptopterusVitreolus,
+  hyphessobryconBentosi,
+  copellaArnoldi,
+  hyphessobryconSerpae,
+  maylandiaEstherae
 };
