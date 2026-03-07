@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Plus, ArrowRight, Fish, Droplets, Activity,
-  Hammer, Sparkles, RefreshCw, Bell, Sun, Sunset, Moon
+  Sparkles, RefreshCw, Bell, Sun, Sunset, Moon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DashboardStats from '../components/dashboard/DashboardStats';
@@ -33,15 +33,31 @@ import { getReminders } from '../lib/notifications';
 // ─── Greeting helper ──────────────────────────────────────────────────────────
 const getGreeting = () => {
   const h = new Date().getHours();
-  if (h < 12) return { text: 'Good morning',   Icon: Sun,    color: 'text-amber-500'  };
-  if (h < 18) return { text: 'Good afternoon',  Icon: Sunset, color: 'text-orange-500' };
-  return        { text: 'Good evening',    Icon: Moon,   color: 'text-indigo-400' };
+  if (h < 12) return { text: 'Good morning',  Icon: Sun,    color: 'text-amber-500'  };
+  if (h < 18) return { text: 'Good afternoon', Icon: Sunset, color: 'text-orange-500' };
+  return       { text: 'Good evening',   Icon: Moon,   color: 'text-indigo-400' };
 };
 
+// ─── Pure helper: read localStorage right now and return the next reminder ────
+type NextReminder = { title: string; tankId: string; tankName: string; daysLeft: number } | null;
+
+function computeNextReminder(): NextReminder {
+  const enabled = getReminders().filter(r => r.enabled);
+  if (enabled.length === 0) return null;
+  const sorted = [...enabled].sort(
+    (a, b) => new Date(a.nextDate).getTime() - new Date(b.nextDate).getTime()
+  );
+  const next = sorted[0];
+  const daysLeft = Math.ceil(
+    (new Date(next.nextDate).getTime() - Date.now()) / 86_400_000
+  );
+  return { title: next.title, tankId: next.tankId, tankName: next.tankName, daysLeft };
+}
+
 const DashboardPage = () => {
-  const navigate  = useNavigate();
-  const { user }  = useAuth();
-  const greeting  = getGreeting();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const greeting = getGreeting();
 
   const [tanks, setTanks]                   = useState<Tank[]>([]);
   const [stats, setStats]                   = useState<StatsType | null>(null);
@@ -53,7 +69,7 @@ const DashboardPage = () => {
   const [error, setError]                   = useState<string | null>(null);
   const [lastRefreshed, setLastRefreshed]   = useState<Date | null>(null);
   const [displayName, setDisplayName]       = useState<string>('');
-  const [nextReminder, setNextReminder]     = useState<{ title: string; tankId: string; tankName: string; daysLeft: number } | null>(null);
+  const [nextReminder, setNextReminder]     = useState<NextReminder>(null);
 
   // Modal states
   const [isTankSelectionOpen, setIsTankSelectionOpen]       = useState(false);
@@ -63,11 +79,29 @@ const DashboardPage = () => {
   const [isParameterModalOpen, setIsParameterModalOpen]     = useState(false);
   const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
 
+  // Sync reminder strip from localStorage reactively
+  const refreshReminder = useCallback(() => {
+    setNextReminder(computeNextReminder());
+  }, []);
+
   useEffect(() => {
     loadDashboardData();
     loadProfile();
-    loadNextReminder();
-  }, []);
+    refreshReminder(); // initial read
+
+    // Re-run when localStorage is written from ANY tab/page (e.g. TankDetailPage)
+    window.addEventListener('storage', refreshReminder);
+
+    // Re-run when user navigates back to this tab (same-tab SPA navigation
+    // doesn't fire 'storage', but visibilitychange fires when the tab becomes visible)
+    const onVisible = () => { if (document.visibilityState === 'visible') refreshReminder(); };
+    document.addEventListener('visibilitychange', onVisible);
+
+    return () => {
+      window.removeEventListener('storage', refreshReminder);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [refreshReminder]);
 
   const loadProfile = async () => {
     if (!user) return;
@@ -76,19 +110,6 @@ const DashboardPage = () => {
       setDisplayName(data?.display_name || user.email?.split('@')[0] || '');
     } catch { setDisplayName(user.email?.split('@')[0] || ''); }
   };
-
-  // Read reminders from localStorage — only enabled ones
-  const loadNextReminder = useCallback(() => {
-    const allReminders = getReminders();
-    const enabled = allReminders.filter(r => r.enabled);
-    if (enabled.length === 0) { setNextReminder(null); return; }
-
-    // Find the soonest upcoming reminder
-    const sorted = [...enabled].sort((a, b) => new Date(a.nextDate).getTime() - new Date(b.nextDate).getTime());
-    const next   = sorted[0];
-    const daysLeft = Math.ceil((new Date(next.nextDate).getTime() - Date.now()) / 86_400_000);
-    setNextReminder({ title: next.title, tankId: next.tankId, tankName: next.tankName, daysLeft });
-  }, []);
 
   const loadDashboardData = async (isRefresh = false) => {
     try {
@@ -185,7 +206,7 @@ const DashboardPage = () => {
     </div>
   );
 
-  // ─── Main Dashboard (also renders when 0 tanks) ───
+  // ─── Main Dashboard ───
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       <SEOHead title="Dashboard" description="Your aquarium dashboard – monitor tank health and track activities." />
@@ -238,7 +259,7 @@ const DashboardPage = () => {
                 </div>
               )}
               <button
-                onClick={() => { loadDashboardData(true); loadNextReminder(); }}
+                onClick={() => { loadDashboardData(true); refreshReminder(); }}
                 disabled={isRefreshing}
                 className="p-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-xl transition-all"
                 title="Refresh"
@@ -247,13 +268,16 @@ const DashboardPage = () => {
               </button>
               <Link to="/my-tanks"
                 className="flex items-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-all">
-                {stats && stats.totalTanks === 0 ? <><Plus className="w-4 h-4" />Add Tank</> : <><ArrowRight className="w-4 h-4" />View All</>}
+                {stats && stats.totalTanks === 0
+                  ? <><Plus className="w-4 h-4" />Add Tank</>
+                  : <><ArrowRight className="w-4 h-4" />View All</>
+                }
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Next Reminder Strip — only shown when at least one reminder is enabled */}
+        {/* Reminder strip — hidden when no enabled reminders exist */}
         <AnimatePresence>
           {nextReminder && (
             <motion.div
@@ -276,7 +300,6 @@ const DashboardPage = () => {
                     : <span className="text-slate-500">in {nextReminder.daysLeft} days</span>
                   }
                 </p>
-                {/* Link to the correct tank detail page, Reminders tab */}
                 <Link
                   to={`/my-tanks/${nextReminder.tankId}`}
                   className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 hover:underline whitespace-nowrap"
@@ -292,10 +315,8 @@ const DashboardPage = () => {
       {/* ─── Main Content ─── */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
 
-        {/* Stats — only show when tanks exist */}
         {stats && stats.totalTanks > 0 && <DashboardStats stats={stats} />}
 
-        {/* Quick Actions — always visible */}
         <QuickActions
           onAddTank={() => navigate('/my-tanks')}
           onPlanTank={() => navigate('/tank-builder')}
@@ -303,10 +324,8 @@ const DashboardPage = () => {
           onLogMaintenance={handleLogMaintenance}
         />
 
-        {/* Alerts */}
         {alerts.length > 0 && <AlertsPanel alerts={alerts} />}
 
-        {/* Main grid — always visible */}
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
