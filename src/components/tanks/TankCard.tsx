@@ -87,6 +87,8 @@ const TankCard = ({ tank, onDelete }: TankCardProps) => {
             <ParamCard label="Ammonia" value={`${tank.parameters.ammonia}ppm`} status={tank.parameters.ammonia > 0 ? 'danger' : 'good'} />
             <ParamCard label="Nitrite" value={`${tank.parameters.nitrite}ppm`} status={tank.parameters.nitrite > 0 ? 'danger' : 'good'} />
             <ParamCard label="Nitrate" value={`${tank.parameters.nitrate}ppm`} status={tank.parameters.nitrate > 20 ? 'warning' : 'good'} />
+            <ParamCard label="GH" value={tank.parameters.gh != null ? `${tank.parameters.gh}°dH` : '—'} status="good" />
+            <ParamCard label="kH" value={tank.parameters.kh != null ? `${tank.parameters.kh}°dH` : '—'} status="good" />
           </div>
         </div>
 
