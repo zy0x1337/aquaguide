@@ -29,6 +29,7 @@ import {
 import { getAllAlerts, ParameterAlert } from '../lib/supabase/alerts';
 import { addParameterReading, addMaintenanceLog } from '../lib/supabase/tankHistory';
 import { getReminders } from '../lib/notifications';
+import { resolveDisplayName } from '../utils/display-name';
 
 // ─── Greeting helper ──────────────────────────────────────────────────────────
 const getGreeting = () => {
@@ -107,8 +108,11 @@ const DashboardPage = () => {
     if (!user) return;
     try {
       const { data } = await supabase.from('profiles').select('display_name').eq('id', user.id).single();
-      setDisplayName(data?.display_name || user.email?.split('@')[0] || '');
-    } catch { setDisplayName(user.email?.split('@')[0] || ''); }
+      // resolveDisplayName sanitises legacy 'User' values and falls back to email prefix
+      setDisplayName(resolveDisplayName(data?.display_name, user.email));
+    } catch {
+      setDisplayName(resolveDisplayName(null, user.email));
+    }
   };
 
   const loadDashboardData = async (isRefresh = false) => {
