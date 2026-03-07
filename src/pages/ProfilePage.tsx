@@ -9,7 +9,7 @@ import {
   Upload, ArrowLeft, Heart, Leaf, Trash2, Globe, Trophy, Star,
   Target, TrendingUp, MessageSquare, Send, LayoutGrid, Waves,
   ExternalLink, Lock, CheckCircle2, Zap, Award,
-  FlaskConical, BookOpen, Share2, MapPin, Link2, Sparkles, LogIn
+  FlaskConical, BookOpen, Share2, MapPin, Link2, Sparkles, LogIn, Clock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '../hooks/useFavorites';
@@ -36,6 +36,28 @@ interface Achievement {
   category: 'collection' | 'tanks' | 'profile' | 'community' | 'milestone';
   color: string;
 }
+
+interface ActivityEvent {
+  icon: React.ElementType;
+  color: string;
+  bg: string;
+  label: string;
+  sub?: string;
+  badge?: string;
+  badgeColor?: string;
+  timestamp?: Date;
+}
+
+// ─── Relative time helper ──────────────────────────────────────────────────────
+const relativeTime = (date: Date): string => {
+  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diff < 60)    return 'just now';
+  if (diff < 3600)  return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
+  if (diff < 31536000) return `${Math.floor(diff / 2592000)}mo ago`;
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+};
 
 // ─── Per-level gradient definitions ───────────────────────────────────────────
 const LEVEL_GRADIENTS: Record<string, [string, string, string, string]> = {
@@ -212,7 +234,6 @@ const ProfilePage = () => {
   });
 
   const isOwnProfile  = !!user && (!userId || userId === user.id);
-  // A guest is viewing someone else's profile (not logged in at all)
   const isGuestView   = !user && !!userId;
   const favSpecies    = favorites.filter(f => f.item_type === 'species');
   const favPlants     = favorites.filter(f => f.item_type === 'plant');
@@ -261,6 +282,64 @@ const ProfilePage = () => {
     }));
   }, [favorites, userTanksCount, publicTanksCount, avatarUrl, profile, profileUser, unlockedCount, favSpecies, favPlants]);
 
+  // ─── Build activity feed ───────────────────────────────────────────────────
+  const activityFeed = useMemo<ActivityEvent[]>(() => {
+    const events: ActivityEvent[] = [];
+
+    unlockedAchievements.forEach(a => {
+      events.push({
+        icon: Trophy,
+        color: 'text-amber-500',
+        bg: 'bg-amber-50 dark:bg-amber-900/20',
+        label: `Achievement unlocked: ${a.name}`,
+        sub: `+${a.xpReward} XP earned`,
+        badge: 'Achievement',
+        badgeColor: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
+      });
+    });
+
+    featuredTanks.forEach(t => {
+      events.push({
+        icon: Waves,
+        color: 'text-cyan-500',
+        bg: 'bg-cyan-50 dark:bg-cyan-900/20',
+        label: `Tank added: ${t.name}`,
+        sub: `${t.volumeLiters}L · ${t.type.charAt(0).toUpperCase() + t.type.slice(1)}`,
+        badge: 'Tank',
+        badgeColor: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300',
+        timestamp: t.createdAt ? new Date(t.createdAt) : undefined,
+      });
+    });
+
+    favorites.slice(0, 5).forEach(f => {
+      events.push({
+        icon: Heart,
+        color: 'text-rose-500',
+        bg: 'bg-rose-50 dark:bg-rose-900/20',
+        label: `Added to favorites`,
+        sub: f.item_type === 'species' ? '🐠 Fish species' : '🌿 Plant',
+        badge: 'Favorite',
+        badgeColor: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300',
+        timestamp: f.created_at ? new Date(f.created_at) : undefined,
+      });
+    });
+
+    if (profileUser?.created_at) {
+      events.push({
+        icon: User,
+        color: 'text-indigo-500',
+        bg: 'bg-indigo-50 dark:bg-indigo-900/20',
+        label: 'Joined AquaGuide',
+        sub: new Date(profileUser.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+        badge: 'Milestone',
+        badgeColor: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300',
+        timestamp: new Date(profileUser.created_at),
+      });
+    }
+
+    return events.slice(0, 12);
+  }, [unlockedAchievements, featuredTanks, favorites, profileUser]);
+
   const statsRow = [
     { label: 'Tanks',        value: userTanksCount.toString(),                 icon: Waves,    color: 'text-cyan-500'   },
     { label: 'Favorites',    value: favorites.length.toString(),               icon: Heart,    color: 'text-rose-500'   },
@@ -272,7 +351,7 @@ const ProfilePage = () => {
     { id: 'overview',     label: 'Overview',     icon: User       },
     { id: 'favorites',    label: 'Favorites',    icon: Heart,     badge: favorites.length },
     { id: 'achievements', label: 'Achievements', icon: Trophy,    badge: unlockedCount    },
-    { id: 'activity',     label: 'Activity',     icon: TrendingUp },
+    { id: 'activity',     label: 'Activity',     icon: TrendingUp, badge: activityFeed.length },
   ] as const;
 
   useEffect(() => { loadProfile(); }, [userId, user]);       // eslint-disable-line
@@ -521,7 +600,7 @@ const ProfilePage = () => {
                 })}
               </div>
 
-              {/* Tabs – hidden for guests */}
+              {/* Tabs */}
               {!isGuestView && (
                 <div className="flex gap-0 overflow-x-auto no-scrollbar">
                   {tabs.map(tab => {
@@ -557,12 +636,9 @@ const ProfilePage = () => {
         {/* Tab content */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
 
-          {/* ── Guest view: show banner + public tanks only ── */}
           {isGuestView ? (
             <div className="space-y-5">
               <GuestBanner />
-
-              {/* Still show featured (public) tanks since those are readable */}
               {(featuredTanks.length > 0 || tanksLoading) && (
                 <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
                   <div className="flex items-center gap-2 mb-4">
@@ -578,10 +654,10 @@ const ProfilePage = () => {
                             className="group block bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/20 dark:to-blue-950/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-4 hover:border-cyan-400 dark:hover:border-cyan-600 transition-all hover:shadow-md">
                             <div className="flex items-start justify-between mb-2">
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-black text-gray-900 dark:text-white truncate text-sm group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors">{tank.name}</h4>
+                                <h4 className="font-black text-gray-900 dark:text-white truncate text-sm">{tank.name}</h4>
                                 <p className="text-xs text-gray-500 mt-0.5">{tank.volumeLiters}L</p>
                               </div>
-                              <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-cyan-500 transition-colors flex-shrink-0" strokeWidth={2.5} />
+                              <ExternalLink className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" strokeWidth={2.5} />
                             </div>
                             <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold mb-2 ${tankTypeColor(tank.type)}`}>
                               {tank.type.charAt(0).toUpperCase() + tank.type.slice(1)}
@@ -938,36 +1014,61 @@ const ProfilePage = () => {
             {/* ════ ACTIVITY ════════════════════════════════════════════ */}
             {activeTab === 'activity' && (
               <motion.div key="activity" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}>
-                <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
-                  <div className="flex items-center gap-2 mb-5">
-                    <TrendingUp className="w-5 h-5 text-cyan-500" />
-                    <h3 className="font-black text-gray-900 dark:text-white">Recent Activity</h3>
+                {activityFeed.length === 0 ? (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
+                    <TrendingUp className="w-10 h-10 text-gray-300 dark:text-gray-700 mx-auto mb-3" strokeWidth={1.5} />
+                    <h3 className="font-bold text-gray-900 dark:text-white mb-1">No activity yet</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Start by adding a tank, saving favorites, or completing achievements.</p>
                   </div>
-                  <div className="relative">
-                    <div className="absolute left-5 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700" />
-                    <div className="space-y-4">
-                      {[
-                        ...unlockedAchievements.map(a => ({ icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20', label: `Achievement unlocked: ${a.name}`, sub: `+${a.xpReward} XP` })),
-                        ...favorites.slice(0, 3).map(f => ({ icon: Heart, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20', label: 'Saved a favorite', sub: f.item_type === 'species' ? 'Fish species' : 'Plant' })),
-                        ...featuredTanks.slice(0, 2).map(t => ({ icon: Waves, color: 'text-cyan-500', bg: 'bg-cyan-50 dark:bg-cyan-900/20', label: `Tank added: ${t.name}`, sub: `${t.volumeLiters}L ${t.type}` })),
-                        { icon: User, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20', label: 'Joined AquaGuide', sub: profileUser?.created_at ? new Date(profileUser.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '' },
-                      ].slice(0, 10).map((ev, i) => {
-                        const Icon = ev.icon;
-                        return (
-                          <div key={i} className="flex items-start gap-4 pl-1">
-                            <div className={`relative z-10 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 ${ev.bg}`}>
-                              <Icon className={`w-4 h-4 ${ev.color}`} strokeWidth={2} />
-                            </div>
-                            <div className="flex-1 pt-1">
-                              <p className="text-sm font-bold text-gray-900 dark:text-white">{ev.label}</p>
-                              {ev.sub && <p className="text-xs text-gray-500 dark:text-gray-400">{ev.sub}</p>}
-                            </div>
-                          </div>
-                        );
-                      })}
+                ) : (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="w-5 h-5 text-cyan-500" />
+                        <h3 className="font-black text-gray-900 dark:text-white">Recent Activity</h3>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-500">{activityFeed.length}</span>
+                      </div>
+                    </div>
+                    <div className="relative">
+                      <div className="absolute left-[19px] top-2 bottom-2 w-px bg-gray-200 dark:bg-gray-700" />
+                      <div className="space-y-3">
+                        {activityFeed.map((ev, i) => {
+                          const Icon = ev.icon;
+                          return (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.04 }}
+                              className="flex items-start gap-3"
+                            >
+                              <div className={`relative z-10 w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border border-white dark:border-gray-900 shadow-sm ${ev.bg}`}>
+                                <Icon className={`w-4 h-4 ${ev.color}`} strokeWidth={2} />
+                              </div>
+                              <div className="flex-1 min-w-0 pt-1">
+                                <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                                  <p className="text-sm font-bold text-gray-900 dark:text-white leading-tight">{ev.label}</p>
+                                  {ev.badge && (
+                                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${ev.badgeColor}`}>{ev.badge}</span>
+                                  )}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {ev.sub && <p className="text-xs text-gray-500 dark:text-gray-400">{ev.sub}</p>}
+                                  {ev.timestamp && (
+                                    <span className="flex items-center gap-0.5 text-[10px] text-gray-400 dark:text-gray-500">
+                                      <Clock className="w-2.5 h-2.5" />
+                                      {relativeTime(ev.timestamp)}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </motion.div>
             )}
 
