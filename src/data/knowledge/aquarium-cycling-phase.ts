@@ -7,82 +7,82 @@ export const aquariumCyclingPhase: KnowledgeArticle = {
   category: 'maintenance',
   difficulty: 'beginner',
   readingTime: 10,
-  summary: 'Master the nitrogen cycle safely with our fishless cycling guide. Detailed timelines, testing protocols, and troubleshooting to establish a stable biological filter in 4 to 6 weeks.',
+  summary: 'Establish a bulletproof biological foundation using the fishless cycling method. This guide covers the precise 4-to-6-week timeline, testing protocols, and troubleshooting to achieve a fully cycled tank without harming any livestock.',
   
   content: {
-    introduction: 'Every new aquarium must complete the nitrogen cycle before safely housing fish. This biological process converts deadly ammonia waste into harmless nitrate through beneficial bacteria colonization, establishing the foundation for long term tank health.',
+    introduction: 'The nitrogen cycle is the engine of your aquarium. Without a fully established colony of beneficial bacteria, toxic ammonia from fish waste will quickly become lethal. Fishless cycling is the only ethical and reliable method to build this biological filter, allowing you to stock your tank safely from day one.',
     
     sections: [
       {
-        heading: 'Understanding the Nitrogen Cycle',
-        content: 'Three bacterial stages transform fish waste through aerobic oxidation reactions.',
+        heading: 'The Science: How the Cycle Works',
+        content: 'Biological filtration relies on two distinct colonies of nitrifying bacteria working in sequence to detoxify waste.',
         subsections: [
           {
-            subheading: 'Ammonia to Nitrite (Nitrosomonas)',
-            content: 'Ammonia (NH₃ and NH₄⁺) from fish respiration, waste, and decaying organics. Highly toxic above 0.25 ppm, burns gill tissue and suppresses immune system. Nitrosomonas bacteria oxidize ammonia to nitrite, doubling population every 15 to 20 hours under optimal conditions (26 to 28°C, pH 7 to 8).'
+            subheading: 'Stage 1: Ammonia Oxidation (AOB)',
+            content: 'Ammonia (NH₃) released from waste is highly toxic. Ammonia-Oxidizing Bacteria (AOB), primarily *Nitrosomonas* species, colonize your filter media. They oxidize ammonia into nitrite. This colony establishes first, usually within 10–14 days, doubling every 15–20 hours in warm, oxygenated water.'
           },
           {
-            subheading: 'Nitrite to Nitrate (Nitrobacter)',
-            content: 'Nitrite (NO₂⁻) equally toxic to fish, binds hemoglobin preventing oxygen transport causing brown blood disease. Nitrobacter bacteria convert nitrite to nitrate, reproducing slightly slower than Nitrosomonas at 20 to 24 hour doubling time. This second stage takes longer to establish (weeks 2 to 4).'
+            subheading: 'Stage 2: Nitrite Oxidation (NOB)',
+            content: 'Nitrite (NO₂⁻) is the byproduct of stage 1 and is arguably more toxic than ammonia, preventing blood from carrying oxygen. Nitrite-Oxidizing Bacteria (NOB), primarily *Nitrospira* species, convert nitrite into nitrate. This stage is the "bottleneck" of the cycle, often taking 3–4 weeks to mature.'
           },
           {
-            subheading: 'Nitrate Management',
-            content: 'Nitrate (NO₃⁻) is final product, relatively safe below 40 ppm freshwater or 20 ppm saltwater. Not removed by bacteria in typical aquariums (requires anaerobic conditions). Managed via 25 to 50 percent weekly water changes and live plant consumption.'
+            subheading: 'Stage 3: Nitrate Management',
+            content: 'Nitrate (NO₃⁻) is the end product of nitrification. It is far less toxic than ammonia or nitrite but accumulates over time. In a cycled tank, nitrate is controlled through weekly water changes and uptake by live plants. Target levels: < 20 ppm for sensitive species, < 40 ppm generally.'
           }
         ],
         callout: {
           type: 'important',
-          text: 'Fully cycled means 0 ppm ammonia, 0 ppm nitrite, measurable nitrates present after processing 4 ppm ammonia dose in 24 hours.'
+          text: 'A tank is only "cycled" when it can process a 2–4 ppm dose of ammonia into nitrate within 24 hours, leaving 0 ppm ammonia and 0 ppm nitrite.'
         }
       },
       {
-        heading: 'Fishless Cycling Protocol (4 to 6 Weeks)',
-        content: 'Safest method using controlled ammonia source without risking fish lives.',
+        heading: 'Fishless Cycling Protocol (Step-by-Step)',
+        content: 'This method uses pure ammonia, allowing for precise control and rapid colonization compared to "ghost feeding" (fish food), which is unpredictable and dirty.',
         subsections: [
           {
-            subheading: 'Week 1: Setup and Ammonia Addition',
-            content: 'Install all equipment: filter, heater at 26 to 28°C, test kits. Add 2 to 4 ppm ammonia daily using pure ammonium chloride solution or 1 teaspoon fish food per 10 liters (produces ammonia as it decays). Test ammonia, nitrite, nitrate, and pH daily at same time. Log all results to track bacterial colonization progress.'
+            subheading: 'Week 1: Initialization',
+            content: 'Set up equipment: Filter running 24/7, heater set to 26–28°C (accelerates bacteria growth by ~30%), and strong surface agitation for oxygen. Dose ammonium chloride (pure ammonia with no surfactants/detergents) to reach 2–4 ppm. Use an online calculator for precise dosing. Test daily. Ammonia will stay high initially; this is normal.'
           },
           {
-            subheading: 'Week 2 to 3: Nitrite Spike Phase',
-            content: 'Days 7 to 14: Ammonia begins dropping rapidly, nitrite rises (often spiking above 5 ppm). Continue ammonia dosing to feed growing Nitrosomonas colony. Nitrite spike can last 10 to 21 days while Nitrobacter colony catches up. Partial water changes only if nitrite exceeds 10 ppm (stalls cycle at extreme levels). Patience critical: This phase feels longest but indicates progress.'
+            subheading: 'Weeks 2–3: The Nitrite Spike',
+            content: 'Ammonia levels will begin to drop as the AOB colony establishes. Nitrite will appear and skyrocket—often exceeding 5 ppm (off the charts). Continue dosing ammonia to 1–2 ppm daily to feed the bacteria. Do NOT let ammonia hit 0 ppm for more than 24 hours, or the colony may starve. This is the critical "ugly phase"; patience is required.'
           },
           {
-            subheading: 'Week 4 to 6: Cycle Completion',
-            content: 'Both ammonia and nitrite process within 12 to 24 hours of dosing. Nitrates accumulate steadily (10 to 40 ppm range normal). Final stability test: Dose 4 ppm ammonia, test 24 hours later for 0/0/20 plus readings. Pass this test 2 days running = safe to stock fish. Research confirms average 3 to 5 weeks for 20 gallon tanks, 5 to 8 weeks for 55 gallons.'
+            subheading: 'Weeks 4–6: Completion & Testing',
+            content: 'As the NOB colony catches up, nitrite will plummet. Both ammonia and nitrite should process to 0 ppm within 24 hours of dosing. Once parameters hold at 0/0/positive nitrates for 3 consecutive days, the cycle is complete. Perform a large (80–90%) water change to reset nitrates before adding fish.'
           }
         ],
         callout: {
           type: 'tip',
-          text: 'Seeding with established filter media cuts cycling time by 50 percent (2 to 3 weeks typical).'
+          text: 'Speed up the process by 50%: "Seed" the tank with filter media or sponge foam from an established, disease-free aquarium. This introduces mature bacteria instantly.'
         }
       },
       {
-        heading: 'Testing Schedule and Interpretation',
-        content: 'Accurate liquid test kits (API Master Kit) essential over unreliable test strips.',
+        heading: 'Troubleshooting and Maintenance',
+        content: 'Cycles rarely go perfectly smooth. Here is how to solve common stalls.',
         subsections: [
           {
-            subheading: 'Daily Parameters During Cycle',
-            content: 'Ammonia: Should drop from 4 ppm to 0.25 ppm within 24 hours by week 3. Nitrite: Peaks week 2, drops toward 0 ppm by week 5. Nitrate: Steadily accumulates as end product (proves bacteria working). pH: Optimal 7.0 to 7.8 for bacteria (cycle stalls below 6.5). Temperature: Maintain 26 to 28°C (bacteria growth slows dramatically below 20°C).'
+            subheading: 'Why is my cycle stalled?',
+            content: 'The #1 cause of a stalled cycle is a pH crash. Nitrifying bacteria stop working below pH 6.5. Test pH; if it is low, perform a water change to reset buffers. Low oxygen is another culprit: ensure filter output agitates the surface. Temperature below 22°C also significantly slows reproduction.'
           },
           {
-            subheading: 'Timeline Expectations',
-            content: 'Day 1 to 10: Ammonia spike then gradual decline, no nitrite yet. Day 12 to 21: Nitrite spike appears and peaks (ammonia near zero). Day 25 plus: Both toxins process rapidly, nitrates climbing. Variability factors: Temperature (warmer cycles faster), pH (neutral optimal), seeding (cuts time 50 percent).'
+            subheading: 'Testing Protocol',
+            content: 'Use liquid test kits (API Master Kit) for accuracy; strips are often too vague for cycling. Test at the same time daily. Track the trend: Ammonia should fall daily, Nitrite should rise then fall, Nitrate should climb. If Nitrite stays extremely high (>5 ppm) for weeks, perform a partial water change to lower it below 5 ppm, as extreme levels can inhibit the bacteria.'
           }
         ],
         callout: {
           type: 'warning',
-          text: 'Stalled cycle? Check pH above 6.5, temperature above 24°C, adequate oxygenation via surface agitation.'
+          text: 'Never let ammonia or nitrite hit 0 ppm for extended periods during the cycle without dosing more ammonia. Starving the colony can cause it to die off, forcing you to restart.'
         }
       }
     ],
     
     keyTakeaways: [
-      'Fishless cycling: dose 4 ppm ammonia daily until both toxins process in 24 hours',
-      'Expect ammonia drop week 1, nitrite spike weeks 2 to 3, completion weeks 4 to 6',
-      'API Freshwater Master Kit provides accurate testing (avoid strips)',
-      'Maintain 26 to 28°C and pH 7 to 8 for optimal bacteria doubling (every 15 to 20 hours)',
-      'Stock gradually after cycling: hardy inverts week 5, fish week 7 and beyond'
+      'Use pure ammonium chloride for dosing; it is cleaner and more precise than fish food.',
+      'The Nitrite Spike (Weeks 2–3) is the hardest phase; test daily and be patient.',
+      'Maintain pH above 6.5 and Temp 26–28°C for optimal bacteria reproduction.',
+      'Cycle is complete only when 2 ppm ammonia processes to 0/0 in 24 hours.',
+      'Always dechlorinate water; chlorine kills the beneficial bacteria you are trying to grow.'
     ],
     
     relatedTopics: ['nitrogen-cycle', 'water-testing', 'first-fish-stocking', 'filter-media']
@@ -95,7 +95,7 @@ export const aquariumCyclingPhase: KnowledgeArticle = {
         id: 'cycling-timeline-diagram',
         title: 'Fishless Cycling Timeline',
         imageUrl: '/images/knowledge/cycling-timeline-diagram.svg',
-        caption: 'Expected parameter progression over 6 weeks showing ammonia, nitrite, and nitrate curves',
+        caption: 'The characteristic ammonia, nitrite, and nitrate curves over a 6-week cycle.',
         credit: 'AquaGuide Educational Content'
       }
     ]
@@ -109,18 +109,18 @@ export const aquariumCyclingPhase: KnowledgeArticle = {
       type: 'article'
     },
     {
-      title: 'Nitrogen Cycle Overview',
-      author: 'Aquatic Creations Group',
-      url: 'https://aquaticcreationsgroup.com/nitrogen-cycle-overview/',
+      title: 'Fishless Cycling Guide',
+      author: 'Aquarium Co-Op',
+      url: 'https://www.aquariumcoop.com/blogs/aquarium/fishless-cycling',
       type: 'article'
     },
     {
-      title: 'The Ultimate Guide to the Nitrogen Cycle',
-      author: 'Aqua Fish',
-      url: 'https://en.aqua-fish.net/articles/aquarium-bacteria-discussion',
+      title: 'Nitrogen Cycle Overview',
+      author: 'USGS',
+      url: 'https://www.usgs.gov/special-topics/water-science-school/science/nitrogen-and-water',
       type: 'article'
     }
   ],
   
-  lastUpdated: '2026-02-23'
+  lastUpdated: '2024-03-07'
 };
