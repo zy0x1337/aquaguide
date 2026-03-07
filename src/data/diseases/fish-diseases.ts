@@ -5,127 +5,122 @@ import type { Disease } from './index';
 export const fishDiseases: Disease[] = [
   // === PARASITÄR ===
   {
-    id: 'ich',
-    name: 'Ichthyophthirius multifiliis (Ich)',
-    category: 'parasitic',
-    severity: 'high',
-    contagious: true,
-    
-    symptoms: [
-      'Small white spots (1-2mm) resembling salt grains on body, fins, and gills',
-      'Fish rubbing against hardscape (flashing behavior)',
-      'Clamped fins and lethargy',
-      'Labored breathing (if gills are infected)',
-      'Loss of appetite'
-    ],
-    
-    causes: [
-      'Introduced via new fish without proper quarantine',
-      'Stress from sudden temperature drops or poor water quality',
-      'Parasite is present in many tanks but only attacks weakened fish'
-    ],
-    
-    treatment: [
-      'Slowly raise temperature to 28-30°C (82-86°F) to speed up parasite life cycle (check species tolerance first!)',
-      'Perform daily gravel vacuuming to remove fallen cysts (parasite reproduces in substrate)',
-      'Dose medication: Malachite Green + Formalin (e.g., Kordon Rid-Ich Plus) OR Copper-based treatment',
-      'Continue treatment for 3-5 days AFTER all spots disappear (parasite has invisible free-swimming stage)',
-      'Add aeration (higher temps = lower oxygen)'
-    ],
-    
-    prevention: [
-      'Quarantine all new fish for minimum 2 weeks',
-      'Avoid sudden temperature drops (stress triggers outbreaks)',
-      'Maintain stable water parameters (0 ammonia, 0 nitrite)',
-      'Use UV sterilizer to kill free-swimming parasites (optional)'
-    ],
-    
-    notes: 'Ich has a 3-stage life cycle: 1) Feeding stage (on fish), 2) Reproductive stage (in substrate), 3) Free-swimming (infective). You can only kill it in stage 3, which is why prolonged treatment is critical.',
-    affectedSpecies: ['All Freshwater Fish']
-  },
+  "id": "ich",
+  "name": "Ichthyophthirius multifiliis (Ich)",
+  "category": "parasitic",
+  "severity": "high",
+  "contagious": true,
+  
+  "symptoms": [
+    "White spot stage: Distinct white spots (1-2mm) like salt grains on body and fins",
+    "Behavioral stage: Flashing (rubbing against objects) due to irritation",
+    "Advanced stage: Clamped fins, lethargy, and loss of appetite",
+    "Respiratory distress: Gasping at surface if gills are heavily infected"
+  ],
+  
+  "causes": [
+    "Introduction of infected fish or plants without quarantine",
+    "Sudden temperature drops or stress weakening the fish immune system",
+    "Transport stress triggering latent infections in carrier fish"
+  ],
+  
+  "treatment": [
+    "Option A (Heat): Raise temperature slowly to 30°C (86°F) over 24h to accelerate the parasite life cycle. Stop if fish show signs of heat stress. Add extra aeration immediately.",
+    "Option B (Medication): Dose Malachite Green + Formalin combinations (e.g., Kordon Rid-Ich) OR Copper-based treatments. Follow manufacturer dosage strictly.",
+    "Safety Warning: Scaleless fish (Loaches, Catfish) and Tetras are sensitive to medication. Use half-dose or formalin-only products for sensitive species.",
+    "Crucial Step: Perform daily deep gravel vacuuming to remove tomonts (reproductive cysts) from the substrate.",
+    "Duration: Continue treatment for at least 3-5 days AFTER the last visible spot disappears to kill the free-swimming theront stage."
+  ],
+  
+  "prevention": [
+    "Quarantine all new fish for a minimum of 2-4 weeks in a separate tank",
+    "Maintain stable water parameters; avoid rapid temperature fluctuations",
+    "Disinfect nets and equipment shared between tanks",
+    "Use a UV sterilizer to kill free-swimming infectious stages (optional but effective)"
+  ],
+  
+  "notes": "Ich has a complex life cycle. The parasite is only vulnerable to treatment during the free-swimming stage (theront). This is why extended treatment is mandatory, even after spots vanish.",
+  "affectedSpecies": ["All Freshwater Fish"]
+},
 
   {
-    id: 'velvet',
-    name: 'Velvet Disease (Piscinoodinium)',
-    category: 'parasitic',
-    severity: 'critical',
-    contagious: true,
-    
-    symptoms: [
-      'Gold or rust-colored dusty coating on body (often visible under light)',
-      'Extreme flashing (rubbing against objects)',
-      'Rapid breathing (parasites attack gills first)',
-      'Lethargy and loss of appetite',
-      'Clamped fins and isolation from group'
-    ],
-    
-    causes: [
-      'Introduced via new fish or plants',
-      'Poor water quality weakens immune system',
-      'Parasite is photosynthetic (requires light to survive)'
-    ],
-    
-    treatment: [
-      'TURN OFF LIGHTS: Velvet relies on photosynthesis. Keep tank dark for 7-10 days',
-      'Raise temperature to 28-30°C (speeds up life cycle)',
-      'Copper-based medication: CuSO4 at 0.15-0.20 ppm (use test kit!)',
-      'OR Malachite Green + Formalin combination',
-      'Treat for minimum 10 days (parasite has invisible stages)',
-      'Remove carbon from filter (it absorbs medication)'
-    ],
-    
-    prevention: [
-      'Quarantine new fish for 3 weeks (longer than Ich)',
-      'Dip new plants in diluted hydrogen peroxide solution',
-      'Maintain pristine water quality',
-      'Avoid overfeeding (organic waste weakens fish)'
-    ],
-    
-    notes: 'Velvet is deadlier than Ich because it attacks gills first, often killing fish before external symptoms appear. Darkness is your weapon—the parasite cannot survive without light.',
-    affectedSpecies: ['All Freshwater Fish', 'Bettas particularly vulnerable']
-  },
+  "id": "velvet",
+  "name": "Velvet Disease (Piscinoodinium)",
+  "category": "parasitic",
+  "severity": "critical",
+  "contagious": true,
+  
+  "symptoms": [
+    "Visual stage: Distinctive gold or rust-colored 'dusty' coating on skin (visible under angled light)",
+    "Behavioral stage: Severe flashing (rubbing) against substrate due to irritation",
+    "Respiratory stage: Rapid/labored breathing as parasites primarily attack gills",
+    "Advanced stage: Lethargy, clamped fins, and isolation from the school"
+  ],
+  
+  "causes": [
+    "Introduction via infected fish, plants, or contaminated water",
+    "Poor water quality and stress compromising the fish's slime coat",
+    "Life cycle dependency: Parasite contains chlorophyll and requires light to reproduce"
+  ],
+  
+  "treatment": [
+    "Option A (Environmental): Enforce total tank blackout for 7-10 days. The parasite relies on photosynthesis; darkness inhibits reproduction.",
+    "Option B (Medication): Dose Copper Sulfate (CuSO4) at 0.15-0.20 ppm. A copper test kit is mandatory to maintain safe therapeutic levels.",
+    "Option C (Alternative): Malachite Green + Formalin combinations if copper is unavailable.",
+    "Safety Warning: Copper is lethal to invertebrates (shrimp/snails) and toxic to scaleless fish (Loaches, Catfish). Use half-dose or formalin-only for sensitive species.",
+    "Crucial Step: Raise temperature slowly to 28-30°C (82-86°F) to speed up the parasite life cycle, ensuring the medication targets the vulnerable stage.",
+    "Supportive Action: Remove activated carbon from filters as it will absorb medication."
+  ],
+  
+  "prevention": [
+    "Quarantine all new fish for minimum 3 weeks (longer than Ich requires)",
+    "Dip new plants in a diluted potassium permanganate or hydrogen peroxide solution",
+    "Maintain pristine water quality and avoid sudden temperature drops",
+    "Dimming tank lights for new arrivals can help prevent outbreaks"
+  ],
+  
+  "notes": "Velvet is often deadlier than Ich because it attacks the gills first, suffocating fish before external symptoms are obvious. Darkness is a critical weapon in treatment.",
+  "affectedSpecies": ["All Freshwater Fish", "Bettas", "Scaleless Fish (High Risk)"]
+},
 
   {
-    id: 'neon-tetra-disease',
-    name: 'Neon Tetra Disease (NTD)',
-    category: 'parasitic',
-    severity: 'critical',
-    contagious: true,
-    
-    symptoms: [
-      'Loss of color (pale patch starting near dorsal fin)',
-      'White lumps or cysts visible under skin',
-      'Curved spine (S-shape deformity)',
-      'Separation from shoal and restlessness at night',
-      'Extreme weight loss (wasting disease)',
-      'Death within 1-3 weeks of first symptoms'
-    ],
-    
-    causes: [
-      'Caused by Pleistophora hyphessobryconis (Microsporidian parasite)',
-      'Spreads when healthy fish eat infected carcasses or feces',
-      'Most common in wild-caught or poorly quarantined fish'
-    ],
-    
-    treatment: [
-      'THERE IS NO CURE',
-      'Immediately remove infected fish (quarantine or humane euthanasia with Clove Oil)',
-      'Do NOT allow other fish to eat the carcass (this spreads spores)',
-      'Perform 30% water change and maintain pristine parameters',
-      'Monitor remaining fish closely for symptoms'
-    ],
-    
-    prevention: [
-      'Buy only from reputable sources (avoid wild-caught for beginners)',
-      'Strict 3-week quarantine for all new arrivals',
-      'Remove dead fish immediately (within minutes)',
-      'Feed high-quality food to boost immune systems',
-      'Avoid overstocking (stress accelerates spread)'
-    ],
-    
-    notes: 'NTD is 100% fatal once symptoms appear. The parasite destroys muscle tissue from the inside. Despite the name, it affects ALL small tetras, rasboras, and barbs. Prevention is the only defense.',
-    affectedSpecies: ['Neon Tetras', 'Cardinal Tetras', 'Rasboras', 'Small Barbs']
-  },
+  "id": "neon-tetra-disease",
+  "name": "Neon Tetra Disease (NTD)",
+  "category": "parasitic",
+  "severity": "critical",
+  "contagious": true,
+  
+  "symptoms": [
+    "Visual stage: Distinct pale patch appearing behind the dorsal fin (loss of iridescence)",
+    "Progression stage: White or grey cysts visible beneath the skin; spinal deformity (curved spine)",
+    "Behavioral stage: Isolation from the shoal, erratic swimming, and severe restlessness",
+    "Terminal stage: Rapid weight loss ('wasting away') despite eating, leading to death within weeks"
+  ],
+  
+  "causes": [
+    "Causative agent: Pleistophora hyphessobryconis (Microsporidian parasite) infecting muscle tissue",
+    "Transmission: Ingestion of spores from infected carcasses or contaminated feces",
+    "Vector risk: High prevalence in wild-caught fish or inadequate quarantine procedures"
+  ],
+  
+  "treatment": [
+    "Prognosis: There is currently no known cure for NTD. Infected fish will not recover.",
+    "Containment Action: Immediately remove infected fish to a separate quarantine tank or humanely euthanize with Clove Oil.",
+    "Safety Warning: Do NOT allow healthy fish to eat the carcass. Digestion releases infectious spores into the tank.",
+    "Hygiene Step: Perform deep gravel vacuuming and large water changes to remove spores from the substrate.",
+    "Observation: Monitor the remaining population closely for at least 6 months; any fish showing symptoms must be removed immediately."
+  ],
+  
+  "prevention": [
+    "Quarantine all new fish for a minimum of 3-4 weeks in a separate tank",
+    "Purchase only tank-raised fish from reputable breeders; avoid wild-caught imports",
+    "Remove dead fish within minutes to prevent cannibalism",
+    "Disinfect nets and equipment with bleach solution between tanks"
+  ],
+  
+  "notes": "NTD is 100% fatal. The parasite consumes muscle tissue, causing the characteristic wasting and curvature. Despite the name, it affects many small characins, not just Neons.",
+  "affectedSpecies": ["Neon Tetra", "Cardinal Tetra", "Rasboras", "Danios", "Barbs"]
+},
 
   {
     id: 'anchor-worms',
