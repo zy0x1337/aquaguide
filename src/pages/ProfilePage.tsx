@@ -16,6 +16,7 @@ import { useFavorites } from '../hooks/useFavorites';
 import { getFeaturedTanksForUser } from '../lib/supabase/tanks';
 import { copyToClipboard } from '../utils/tank-share';
 import { calculateXP, getLevelInfo, type XPInputs, type LevelInfo } from '../utils/user-level';
+import { resolveDisplayName } from '../utils/display-name';
 import type { Tank } from '../types/tank';
 
 interface SpeciesData { slug: string; common_name: string; scientific_name: string; image_url?: string; }
@@ -48,7 +49,7 @@ interface ActivityEvent {
   timestamp?: Date;
 }
 
-// ─── Relative time helper ──────────────────────────────────────────────────────
+// ─── Relative time helper ──────────────────────────────────────────────
 const relativeTime = (date: Date): string => {
   const diff = Math.floor((Date.now() - date.getTime()) / 1000);
   if (diff < 60)    return 'just now';
@@ -74,7 +75,7 @@ const LEVEL_GRADIENTS: Record<string, [string, string, string, string]> = {
   rose:    ['#f43f5e', '#e11d48', '#ffffff', 'rgba(244,63,94,0.4)'],
 };
 
-// ─── Level badge ──────────────────────────────────────────────────────────────
+// ─── Level badge ────────────────────────────────────────────────────────────────────────────
 const LevelBadge = ({ info, size = 'md' }: { info: LevelInfo; size?: 'sm' | 'md' | 'lg' }) => {
   const [from, to, textColor, borderColor] = LEVEL_GRADIENTS[info.color] ?? LEVEL_GRADIENTS.slate;
   const sizeClasses = {
@@ -102,7 +103,7 @@ const LevelBadge = ({ info, size = 'md' }: { info: LevelInfo; size?: 'sm' | 'md'
   );
 };
 
-// ─── XP bar ───────────────────────────────────────────────────────────────────
+// ─── XP bar ────────────────────────────────────────────────────────────────────────────────
 const XPBar = ({ info }: { info: LevelInfo }) => {
   const [from, to] = LEVEL_GRADIENTS[info.color] ?? LEVEL_GRADIENTS.slate;
   return (
@@ -127,7 +128,7 @@ const XPBar = ({ info }: { info: LevelInfo }) => {
   );
 };
 
-// ─── Guest CTA banner ─────────────────────────────────────────────────────────
+// ─── Guest CTA banner ───────────────────────────────────────────────────────────────────────────
 const GuestBanner = () => (
   <motion.div
     initial={{ opacity: 0, y: 8 }}
@@ -151,7 +152,7 @@ const GuestBanner = () => (
   </motion.div>
 );
 
-// ─── Achievement card ─────────────────────────────────────────────────────────
+// ─── Achievement card ────────────────────────────────────────────────────────────────────────────
 const AchievementCard = ({ a }: { a: Achievement }) => {
   const Icon = a.icon;
   const colorStyles: Record<string, { card: string; icon: string; bar: string; pill: string }> = {
@@ -199,7 +200,7 @@ const AchievementCard = ({ a }: { a: Achievement }) => {
   );
 };
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Main component ────────────────────────────────────────────────────────────────────────────────
 const ProfilePage = () => {
   const { userId } = useParams<{ userId?: string }>();
   const navigate = useNavigate();
@@ -282,7 +283,7 @@ const ProfilePage = () => {
     }));
   }, [favorites, userTanksCount, publicTanksCount, avatarUrl, profile, profileUser, unlockedCount, favSpecies, favPlants]);
 
-  // ─── Build activity feed ───────────────────────────────────────────────────
+  // ─── Build activity feed ────────────────────────────────────────────────────────────────────────
   const activityFeed = useMemo<ActivityEvent[]>(() => {
     const events: ActivityEvent[] = [];
 
@@ -376,7 +377,7 @@ const ProfilePage = () => {
       let emailFallback: string | undefined;
       if (isOwnProfile) {
         const { data: authData } = await supabase.auth.getUser();
-        emailFallback = authData?.user?.email?.split('@')[0];
+        emailFallback = authData?.user?.email;
         if (authData?.user) setProfileUser(authData.user);
       }
 
@@ -388,7 +389,8 @@ const ProfilePage = () => {
         setAvatarUrl(pd.avatar_url);
         setHeaderUrl(pd.header_url);
         setProfile({
-          displayName: pd.display_name || emailFallback || user?.email?.split('@')[0] || '',
+          // resolveDisplayName filters out blank & legacy 'User', falls back to email prefix
+          displayName: resolveDisplayName(pd.display_name, emailFallback || user?.email),
           bio: pd.bio || '',
           location: pd.location || '',
           website: pd.website || '',
@@ -463,7 +465,7 @@ const ProfilePage = () => {
 
   const handleSendFeedback = () => {
     if (!feedbackText.trim()) return;
-    const sub  = encodeURIComponent(`AquaGuide Beta Feedback from ${profile.displayName || 'User'}`);
+    const sub  = encodeURIComponent(`AquaGuide Beta Feedback from ${profile.displayName || user?.email?.split('@')[0] || 'Anonymous'}`);
     const body = encodeURIComponent(feedbackText);
     window.location.href = `mailto:zy0x1337@proton.me?subject=${sub}&body=${body}`;
     setFeedbackText('');
@@ -501,8 +503,8 @@ const ProfilePage = () => {
   return (
     <PageTransition>
       <SEOHead
-        title={`${profile.displayName}'s Profile – AquaGuide`}
-        description={`View ${profile.displayName}'s aquarium profile, favorites and achievements on AquaGuide.`}
+        title={`${profile.displayName || 'Profile'} – AquaGuide`}
+        description={`View ${profile.displayName || 'this user'}'s aquarium profile, favorites and achievements on AquaGuide.`}
       />
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-16">
 
@@ -692,7 +694,7 @@ const ProfilePage = () => {
 
           <AnimatePresence mode="wait">
 
-            {/* ════ OVERVIEW ════════════════════════════════════════════ */}
+            {/* ╔════ OVERVIEW ════════════════════════════════════════════════════╗ */}
             {activeTab === 'overview' && (
               <motion.div key="overview" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} className="space-y-5">
 
@@ -887,7 +889,7 @@ const ProfilePage = () => {
               </motion.div>
             )}
 
-            {/* ════ FAVORITES ═══════════════════════════════════════════ */}
+            {/* ╔════ FAVORITES ═══════════════════════════════════════════════════╗ */}
             {activeTab === 'favorites' && (
               <motion.div key="favorites" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} className="space-y-5">
                 {favSpecies.length > 0 && (
@@ -968,7 +970,7 @@ const ProfilePage = () => {
               </motion.div>
             )}
 
-            {/* ════ ACHIEVEMENTS ════════════════════════════════════════ */}
+            {/* ╔════ ACHIEVEMENTS ═══════════════════════════════════════════════════╗ */}
             {activeTab === 'achievements' && (
               <motion.div key="achievements" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} className="space-y-5">
                 <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-5">
@@ -1026,7 +1028,7 @@ const ProfilePage = () => {
               </motion.div>
             )}
 
-            {/* ════ ACTIVITY ════════════════════════════════════════════ */}
+            {/* ╔════ ACTIVITY ════════════════════════════════════════════════════╗ */}
             {activeTab === 'activity' && (
               <motion.div key="activity" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}>
                 {activityFeed.length === 0 ? (
