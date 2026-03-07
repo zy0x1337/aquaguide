@@ -1,91 +1,84 @@
-import { Plus, Droplets, Wrench, Hammer } from 'lucide-react';
+import { Plus, Droplets, Wrench, Hammer, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface QuickActionsProps {
   onAddTank: () => void;
-  onPlanTank?: () => void;
-  onAddReading?: () => void;
-  onLogMaintenance?: () => void;
+  onPlanTank: () => void;
+  onAddReading: () => void;
+  onLogMaintenance: () => void;
 }
 
 const QuickActions = ({ onAddTank, onPlanTank, onAddReading, onLogMaintenance }: QuickActionsProps) => {
+  const actions = [
+    {
+      label:    'Add Tank',
+      sub:      'Create a new aquarium',
+      icon:     Plus,
+      iconBg:   'bg-indigo-100 dark:bg-indigo-900/30',
+      iconColor:'text-indigo-600 dark:text-indigo-400',
+      glow:     'hover:shadow-indigo-100 dark:hover:shadow-indigo-900/20',
+      onClick:  onAddTank,
+    },
+    {
+      label:    'Log Parameters',
+      sub:      'Record water readings',
+      icon:     Droplets,
+      iconBg:   'bg-cyan-100 dark:bg-cyan-900/30',
+      iconColor:'text-cyan-600 dark:text-cyan-400',
+      glow:     'hover:shadow-cyan-100 dark:hover:shadow-cyan-900/20',
+      onClick:  onAddReading,
+    },
+    {
+      label:    'Log Maintenance',
+      sub:      'Water change, filter, etc.',
+      icon:     Wrench,
+      iconBg:   'bg-amber-100 dark:bg-amber-900/30',
+      iconColor:'text-amber-600 dark:text-amber-400',
+      glow:     'hover:shadow-amber-100 dark:hover:shadow-amber-900/20',
+      onClick:  onLogMaintenance,
+    },
+    {
+      label:    'Tank Builder',
+      sub:      'Plan a new setup',
+      icon:     Hammer,
+      iconBg:   'bg-emerald-100 dark:bg-emerald-900/30',
+      iconColor:'text-emerald-600 dark:text-emerald-400',
+      glow:     'hover:shadow-emerald-100 dark:hover:shadow-emerald-900/20',
+      onClick:  onPlanTank,
+    },
+  ];
+
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
-      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <ActionCard
-          icon={<Plus className="w-5 h-5" />}
-          label="Add Tank"
-          description="Create manually"
-          bg="bg-indigo-50 dark:bg-indigo-950/20"
-          border="border-indigo-200 dark:border-indigo-900"
-          iconBg="bg-indigo-100 dark:bg-indigo-900/40"
-          iconColor="text-indigo-600 dark:text-indigo-400"
-          textColor="text-slate-900 dark:text-white"
-          onClick={onAddTank}
-          delay={0}
-        />
-        <ActionCard
-          icon={<Hammer className="w-5 h-5" />}
-          label="Tank Builder"
-          description="Design with tools"
-          bg="bg-teal-50 dark:bg-teal-950/20"
-          border="border-teal-200 dark:border-teal-900"
-          iconBg="bg-teal-100 dark:bg-teal-900/40"
-          iconColor="text-teal-600 dark:text-teal-400"
-          textColor="text-slate-900 dark:text-white"
-          onClick={onPlanTank}
-          delay={0.05}
-        />
-        <ActionCard
-          icon={<Droplets className="w-5 h-5" />}
-          label="Log Parameters"
-          description="Water readings"
-          bg="bg-blue-50 dark:bg-blue-950/20"
-          border="border-blue-200 dark:border-blue-900"
-          iconBg="bg-blue-100 dark:bg-blue-900/40"
-          iconColor="text-blue-600 dark:text-blue-400"
-          textColor="text-slate-900 dark:text-white"
-          onClick={onAddReading}
-          disabled={!onAddReading}
-          delay={0.1}
-        />
-        <ActionCard
-          icon={<Wrench className="w-5 h-5" />}
-          label="Maintenance"
-          description="Track tasks"
-          bg="bg-purple-50 dark:bg-purple-950/20"
-          border="border-purple-200 dark:border-purple-900"
-          iconBg="bg-purple-100 dark:bg-purple-900/40"
-          iconColor="text-purple-600 dark:text-purple-400"
-          textColor="text-slate-900 dark:text-white"
-          onClick={onLogMaintenance}
-          disabled={!onLogMaintenance}
-          delay={0.15}
-        />
+    <div>
+      <h2 className="text-base font-black text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+        <ChevronRight className="w-4 h-4 text-slate-400" />
+        Quick Actions
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {actions.map((action, i) => {
+          const Icon = action.icon;
+          return (
+            <motion.button
+              key={action.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05, duration: 0.3 }}
+              onClick={action.onClick}
+              className={`group flex flex-col items-start gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600 rounded-xl p-4 text-left transition-all hover:shadow-md ${action.glow}`}
+            >
+              <div className={`p-2.5 rounded-xl ${action.iconBg} transition-transform group-hover:scale-110`}>
+                <Icon className={`w-5 h-5 ${action.iconColor}`} strokeWidth={2} />
+              </div>
+              <div>
+                <p className="text-sm font-black text-slate-900 dark:text-white">{action.label}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{action.sub}</p>
+              </div>
+            </motion.button>
+          );
+        })}
       </div>
     </div>
   );
 };
-
-const ActionCard = ({
-  icon, label, description, bg, border, iconBg, iconColor, textColor, onClick, disabled, delay,
-}: {
-  icon: React.ReactNode; label: string; description: string;
-  bg: string; border: string; iconBg: string; iconColor: string; textColor: string;
-  onClick?: () => void; disabled?: boolean; delay: number;
-}) => (
-  <motion.button
-    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.3 }}
-    onClick={onClick} disabled={disabled}
-    className={`group text-left border ${border} ${bg} rounded-lg p-4 hover:border-slate-300 dark:hover:border-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
-  >
-    <div className={`w-9 h-9 ${iconBg} rounded-lg flex items-center justify-center mb-3`}>
-      <div className={iconColor}>{icon}</div>
-    </div>
-    <h3 className={`font-bold text-sm ${textColor} mb-0.5`}>{label}</h3>
-    <p className="text-xs text-slate-500 dark:text-slate-400">{description}</p>
-  </motion.button>
-);
 
 export default QuickActions;
