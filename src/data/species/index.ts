@@ -72,6 +72,9 @@ import { stiphodonAtropurpureus } from './neon-blue-goby';
 import { aphaniusFasciatus } from './aphanius-fasciatus';
 import { dichotomyctereNigroviridis } from './spotted-green-puffer';
 import { bedotiaGeayi } from './red-tailed-silverside';
+import { serpenticobitisOctozona } from './eight-banded-lizard-loach';
+import { microdevarioKubotai } from './emerald-dwarf-rasbora';
+import { garraFlavatra } from './garra-flavatra';
 
 export const allSpecies: Species[] = [
   africanDwarfFrog,
@@ -146,7 +149,10 @@ export const allSpecies: Species[] = [
   stiphodonAtropurpureus,
   aphaniusFasciatus,
   dichotomyctereNigroviridis,
-  bedotiaGeayi
+  bedotiaGeayi,
+  garraFlavatra,
+  microdevarioKubotai,
+  serpenticobitisOctozona,
 ];
 
 export {
@@ -222,5 +228,8 @@ export {
   stiphodonAtropurpureus,
   aphaniusFasciatus,
   dichotomyctereNigroviridis,
-  bedotiaGeayi
+  bedotiaGeayi,
+  garraFlavatra,
+  microdevarioKubotai,
+  serpenticobitisOctozona
 };
