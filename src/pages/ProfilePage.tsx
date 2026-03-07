@@ -370,7 +370,16 @@ const ProfilePage = () => {
         .from('profiles')
         .select('avatar_url, header_url, display_name, bio, location, website, favorite_species')
         .eq('id', targetUserId).single();
-      const { data: ud } = await supabase.auth.admin.getUserById(targetUserId);
+
+      // Use getUser() for own profile (works client-side without Service-Role key).
+      // For other users' profiles we only have data from the profiles table.
+      let emailFallback: string | undefined;
+      if (isOwnProfile) {
+        const { data: authData } = await supabase.auth.getUser();
+        emailFallback = authData?.user?.email?.split('@')[0];
+        if (authData?.user) setProfileUser(authData.user);
+      }
+
       const { count: tc } = await supabase.from('tanks').select('*', { count: 'exact', head: true }).eq('user_id', targetUserId);
       const { count: pc } = await supabase.from('tanks').select('*', { count: 'exact', head: true }).eq('user_id', targetUserId).eq('is_public', true);
       if (tc !== null) setUserTanksCount(tc);
@@ -378,8 +387,13 @@ const ProfilePage = () => {
       if (pd) {
         setAvatarUrl(pd.avatar_url);
         setHeaderUrl(pd.header_url);
-        setProfile({ displayName: pd.display_name || ud?.user?.email?.split('@')[0] || 'User', bio: pd.bio || '', location: pd.location || '', website: pd.website || '', favoriteSpecies: pd.favorite_species || '' });
-        setProfileUser(ud?.user);
+        setProfile({
+          displayName: pd.display_name || emailFallback || user?.email?.split('@')[0] || '',
+          bio: pd.bio || '',
+          location: pd.location || '',
+          website: pd.website || '',
+          favoriteSpecies: pd.favorite_species || '',
+        });
       }
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
@@ -777,6 +791,7 @@ const ProfilePage = () => {
                             <div className="flex-1 min-w-0">
                               <div className="text-xs font-bold text-gray-900 dark:text-white truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">{data.common_name}</div>
                               <div className="text-[10px] text-gray-500 italic truncate">{data.scientific_name}</div>
+
                             </div>
                           </Link>
                         );
