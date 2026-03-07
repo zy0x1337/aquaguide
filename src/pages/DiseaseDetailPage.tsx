@@ -1,27 +1,30 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, AlertCircle, Stethoscope, ShieldCheck, Activity, AlertTriangle, Thermometer, Syringe, Info } from 'lucide-react';
+import { ArrowLeft, AlertCircle, Stethoscope, ShieldCheck, Activity, AlertTriangle, Info } from 'lucide-react';
 import { diseaseRepository } from '../data/diseases';
 import { SEOHead } from '../components/seo/SEOHead';
 
-// ─── Severity config ──────────────────────────────────────────────────────────
+// ─── Severity config ─────────────────────────────────────────────────────────
 type Severity = 'mild' | 'moderate' | 'severe' | 'critical';
-
-const getSeverity = (disease: any): Severity => {
-  if (disease.severity) return disease.severity as Severity;
-  const treatmentSteps = disease.treatment?.length ?? 0;
-  const isContagious   = !!disease.contagious;
-  const category       = disease.category ?? '';
-  if (category === 'viral')                       return 'critical';
-  if (isContagious && treatmentSteps >= 4)        return 'severe';
-  if (isContagious || treatmentSteps >= 3)        return 'moderate';
-  return 'mild';
-};
 
 const SEVERITY_STYLES: Record<Severity, { label: string; pill: string; dot: string }> = {
   mild:     { label: 'Mild',     pill: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800', dot: 'bg-emerald-500' },
   moderate: { label: 'Moderate', pill: 'bg-amber-100   dark:bg-amber-900/30   text-amber-700   dark:text-amber-300   border border-amber-200   dark:border-amber-800',   dot: 'bg-amber-500'   },
   severe:   { label: 'Severe',   pill: 'bg-orange-100  dark:bg-orange-900/30  text-orange-700  dark:text-orange-300  border border-orange-200  dark:border-orange-800',  dot: 'bg-orange-500'  },
   critical: { label: 'Critical', pill: 'bg-rose-100    dark:bg-rose-900/30    text-rose-700    dark:text-rose-300    border border-rose-200    dark:border-rose-800',    dot: 'bg-rose-500'    },
+};
+
+const getSeverity = (disease: any): Severity => {
+  // If the data already has a valid severity field, use it
+  if (disease.severity && disease.severity in SEVERITY_STYLES) {
+    return disease.severity as Severity;
+  }
+  const treatmentSteps = disease.treatment?.length ?? 0;
+  const isContagious   = !!disease.contagious;
+  const category       = disease.category ?? '';
+  if (category === 'viral')                 return 'critical';
+  if (isContagious && treatmentSteps >= 4)  return 'severe';
+  if (isContagious || treatmentSteps >= 3)  return 'moderate';
+  return 'mild';
 };
 
 const getDifficulty = (disease: any): { label: string; dots: number; color: string } => {
@@ -32,7 +35,7 @@ const getDifficulty = (disease: any): { label: string; dots: number; color: stri
   return            { label: 'Expert',    dots: 4, color: 'bg-rose-500'    };
 };
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Main component ──────────────────────────────────────────────────────────
 const DiseaseDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const disease  = diseaseRepository.getById(slug || '');
@@ -40,7 +43,8 @@ const DiseaseDetailPage = () => {
   if (!disease) return <NotFound />;
 
   const severity   = getSeverity(disease);
-  const sevStyle   = SEVERITY_STYLES[severity];
+  // Double-safe fallback: if severity key somehow still isn't in the map, use mild
+  const sevStyle   = SEVERITY_STYLES[severity] ?? SEVERITY_STYLES.mild;
   const difficulty = getDifficulty(disease);
 
   return (
@@ -62,7 +66,6 @@ const DiseaseDetailPage = () => {
             <span className="px-3 py-1 bg-white/20 backdrop-blur rounded-full border border-white/20 text-xs font-bold uppercase tracking-wide">
               {disease.category}
             </span>
-            {/* Severity badge */}
             <span className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${sevStyle.pill}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${sevStyle.dot}`} />
               {sevStyle.label}
@@ -76,7 +79,7 @@ const DiseaseDetailPage = () => {
 
           <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-white">{disease.name}</h1>
 
-          {disease.affectedSpecies && (
+          {disease.affectedSpecies?.length > 0 && (
             <p className="text-white/80 text-lg font-medium">
               Affects: {disease.affectedSpecies.join(', ')}
             </p>
@@ -87,7 +90,7 @@ const DiseaseDetailPage = () => {
       {/* CONTENT */}
       <main className="max-w-4xl mx-auto px-6 -mt-20 relative z-20">
 
-        {/* Quarantine Banner (contagious only) */}
+        {/* Quarantine Banner */}
         {disease.contagious && (
           <div className="mb-4 flex items-start gap-3 bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 rounded-2xl p-4">
             <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
@@ -108,7 +111,12 @@ const DiseaseDetailPage = () => {
           </div>
           <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-3 text-center">
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Severity</p>
-            <p className={`text-sm font-black ${severity === 'mild' ? 'text-emerald-600' : severity === 'moderate' ? 'text-amber-600' : severity === 'severe' ? 'text-orange-600' : 'text-rose-600'}`}>
+            <p className={`text-sm font-black ${
+              severity === 'mild'     ? 'text-emerald-600 dark:text-emerald-400' :
+              severity === 'moderate' ? 'text-amber-600   dark:text-amber-400'   :
+              severity === 'severe'   ? 'text-orange-600  dark:text-orange-400'  :
+                                        'text-rose-600    dark:text-rose-400'
+            }`}>
               {sevStyle.label}
             </p>
           </div>
@@ -134,7 +142,7 @@ const DiseaseDetailPage = () => {
           {/* SYMPTOMS */}
           <div className="p-8 md:p-10 border-b border-gray-100 dark:border-gray-800">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              <Activity className="w-6 h-6 mr-3 text-indigo-500 dark:text-indigo-400" /> Symptoms & Identification
+              <Activity className="w-6 h-6 mr-3 text-indigo-500 dark:text-indigo-400" /> Symptoms &amp; Identification
             </h2>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
               <ul className="grid md:grid-cols-2 gap-4">
@@ -187,7 +195,7 @@ const DiseaseDetailPage = () => {
           {/* CAUSES & PREVENTION */}
           <div className="p-8 md:p-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              <ShieldCheck className="w-6 h-6 mr-3 text-amber-500 dark:text-amber-400" /> Prevention & Causes
+              <ShieldCheck className="w-6 h-6 mr-3 text-amber-500 dark:text-amber-400" /> Prevention &amp; Causes
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
@@ -219,7 +227,7 @@ const DiseaseDetailPage = () => {
   );
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Helpers ────────────────────────────────────────────────────────────────
 const NotFound = () => (
   <div className="min-h-screen flex items-center justify-center flex-col bg-gray-50 dark:bg-gray-950">
     <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Disease Not Found</h1>
